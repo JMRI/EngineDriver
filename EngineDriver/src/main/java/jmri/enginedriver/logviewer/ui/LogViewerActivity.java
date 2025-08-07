@@ -41,6 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -126,7 +127,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             @Override
             public void onClick(View v) {
                 mainapp.buttonVibration(); // If you want vibration
-                getLogFileList();
+                showLogFileSelectionDialog();
             }
         });
 
@@ -359,7 +360,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         } else {
             saveButton.setVisibility(View.VISIBLE);
             stopSaveButton.setVisibility(View.GONE);
-            shareButton.setVisibility((getLogFileList(false)) ? View.VISIBLE : View.GONE);
+            shareButton.setVisibility((checkHasLogFiles()) ? View.VISIBLE : View.GONE);
             saveInfoTV.setVisibility(View.GONE);
         }
     }
@@ -561,10 +562,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
     }
 
-    public void getLogFileList() {
-        getLogFileList(false);
-    }
-    public boolean getLogFileList(boolean shareLast) {
+    public boolean checkHasLogFiles() {
         mainapp.iplsFileNames = new ArrayList<>();
         mainapp.iplsNames = new ArrayList<>();
 
@@ -572,34 +570,72 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             File dir = new File(context.getExternalFilesDir(null).getPath());
             File[] filesList = dir.listFiles();
             if (filesList != null) {
-                File lastFile = null;
-                String lastFileName = " ";
                 for (File file : filesList) {
-                    String fileName = file.getName();
                     String lowercaseFileName = file.getName().toLowerCase();
                     if ( (lowercaseFileName.startsWith("logcat")) && (lowercaseFileName.endsWith(".txt")) ) {
-                        if (!shareLast) return true; // not sharing. got one, so just exit
-
-                        try {
-                            Log.d(threaded_application.applicationName, activityName + ": getLogFileList(): Found: " + fileName);
-                            if (lastFileName.compareTo(fileName) < 0) {
-                                lastFileName = fileName;
-                                lastFile = file;
-                            }
-                        } catch (Exception e) {
-                            Log.d(threaded_application.applicationName, activityName + ": getLogFileList(): Error trying to parse file name: " + fileName);
-                        }
+                        return true; // got one, so just exit
                     }
-                }
-                if (lastFile!=null) {
-                    shareFile(lastFile, lastFileName);
                 }
             }
         } catch (Exception e) {
-            Log.d(threaded_application.applicationName, activityName + ": getLogFileList(): Error trying to find log files");
+            Log.d(threaded_application.applicationName, activityName + ": checkHasLogFiles(): Error trying to find log files");
         }
 
         return false;
+    }
+
+    public ArrayList<File> getLogFilesForDialog() {
+        ArrayList<File> logFiles = new ArrayList<>();
+        try {
+            File dir = new File(context.getExternalFilesDir(null).getPath());
+            if (dir.exists() && dir.isDirectory()) {
+                File[] filesList = dir.listFiles();
+                if (filesList != null) {
+                    for (File file : filesList) {
+                        String lowercaseFileName = file.getName().toLowerCase();
+                        if (lowercaseFileName.startsWith("logcat") && lowercaseFileName.endsWith(".txt")) {
+                            logFiles.add(file);
+                            Log.d(threaded_application.applicationName, activityName + ": getLogFilesForDialog(): Found: " + file.getName());
+                        }
+                    }
+                    // Optional: Sort the files, e.g., by name or date
+                    Collections.sort(logFiles, (file1, file2) -> file2.getName().compareTo(file1.getName())); // Sort descending by name (newest first if using timestamp)
+                }
+            }
+        } catch (Exception e) {
+            Log.e(threaded_application.applicationName, activityName + ": getLogFilesForDialog(): Error trying to find log files", e);
+            threaded_application.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
+        }
+        return logFiles;
+    }
+
+    private void showLogFileSelectionDialog() {
+        ArrayList<File> logFiles = getLogFilesForDialog();
+
+        if (logFiles.isEmpty()) return;
+
+        // Extract just the file names for display in the dialog
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (File file : logFiles) {
+            fileNames.add(file.getName());
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getApplicationContext().getResources().getString(R.string.shareFileDialogTitle));
+
+        // Convert ArrayList to Array for the dialog
+        final CharSequence[] items = fileNames.toArray(new CharSequence[0]);
+
+        builder.setItems(items, (dialog, which) -> {
+            // 'which' is the index of the selected item
+            File selectedFile = logFiles.get(which);
+            shareFile(selectedFile,selectedFile.getName()); // You'll create this helper method
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void shareFile(File file, String fileName) {

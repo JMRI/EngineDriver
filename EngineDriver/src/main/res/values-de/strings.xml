@@ -1037,6 +1037,7 @@
     <string name="rosterEntryImageHelpText">Nur lokal gespeicherte Bilder. Wenn Ihr Server ein Bild für den LOCO hat, wird diese Auswahl überschrieben.</string>
     <string name="rosterEntryImageRemoveButtonText">Entfernen</string>
     <string name="rosterEntryImageSaveButtonText">Speichern</string>
+    <string name="shareFileDialogTitle">Wählen Sie eine Datei zum Freigeben aus</string>
     <string name="shareFile">Datei freigeben: %s</string>
     <string name="toastNoAppToShare">Keine App zum Teilen der Datei gefunden</string>
     <string name="rosterEntryImageSelectButtonText">Neues Bild</string>
@@ -1184,6 +1185,6 @@
     <string name="toastKidsTimerNoLoco">Erwerben Sie eine Lok, bevor Sie den Timer starten</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Bei Stopp Langes Drücken</string>
     <string name="logviewerStopSave">Stoppen</string>
-    <string name="logviewerShare">Zuletzt teilen</string>
+    <string name="logviewerShare">Aktie</string>
 
 </resources>

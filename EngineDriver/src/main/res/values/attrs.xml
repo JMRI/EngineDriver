@@ -91,6 +91,7 @@
     <attr name="ed_cross_glyph" format="reference" />
     <attr name="ed_read_glyph" format="reference" />
     <attr name="ed_write_glyph" format="reference" />
+    <attr name="ed_write_off_glyph" format="reference" />
 
     <attr name="ed_dccex_glyph_cv_programmer_pom" format="reference" />
     <attr name="ed_dccex_glyph_cv_programmer_prog_track" format="reference" />
@@ -101,5 +102,6 @@
     <attr name="ed_acquire_loco_glyph" format="reference" />
     <attr name="ed_reset_glyph" format="reference" />
     <attr name="ed_save_glyph" format="reference" />
+    <attr name="ed_share_glyph" format="reference" />
 
 </resources>

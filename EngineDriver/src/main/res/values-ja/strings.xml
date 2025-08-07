@@ -941,6 +941,7 @@
     <string name="rosterEntryImageHelpText">ローカルに保存された画像のみ。  サーバーに機関車の画像がある場合、この選択は上書きされます。</string>
     <string name="rosterEntryImageRemoveButtonText">取り除く</string>
     <string name="rosterEntryImageSaveButtonText">保存</string>
+    <string name="shareFileDialogTitle">共有するファイルを選択</string>
     <string name="shareFile">ファイルを共有: %s</string>
     <string name="toastNoAppToShare">ファイルを共有するためのアプリが見つかりません</string>
     <string name="rosterEntryImageSelectButtonText">新しい画像</string>
@@ -1204,6 +1205,6 @@
     <string name="toastKidsTimerNoLoco">タイマーを開始する前に機関車を入手する</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP 停止時に長押し</string>
     <string name="logviewerStopSave">停止</string>
-    <string name="logviewerShare">最後に共有</string>
+    <string name="logviewerShare">共有</string>
 
 </resources>

@@ -974,6 +974,7 @@
     <string name="prefDeviceSoundsMomentumOverrideTitle">Não clique sons de passo de loco</string>
     <string name="rosterEntryImageHelpText">Apenas imagens armazenadas localmente. Se o seu servidor tiver uma imagem para o loco, ele substituirá essa seleção.</string>
     <string name="rosterEntryImageServerImageHelpText">Seu servidor tem uma imagem para o loco. Você não pode alterar a imagem local, pois será automaticamente superajectiva pelo servidor.</string>
+    <string name="shareFileDialogTitle">Selecione um arquivo para compartilhar</string>
     <string name="shareFile">Compartilhar arquivo: %s</string>
     <string name="toastNoAppToShare">Nenhum aplicativo encontrado para compartilhar o arquivo</string>
     <string name="rosterEntryImageSelectButtonText">Nova imagem</string>
@@ -1138,5 +1139,5 @@
     <string name="toastKidsTimerNoLoco">Adquira uma locomotiva antes de iniciar o cronômetro</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOPAR Ao Parar Pressione Longo</string>
     <string name="logviewerStopSave">Parar</string>
-    <string name="logviewerShare">Compartilhar por último</string>
+    <string name="logviewerShare">Compartilhar</string>
 </resources>

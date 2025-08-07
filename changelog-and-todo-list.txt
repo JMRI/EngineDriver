@@ -20,7 +20,7 @@
  * Bug fix for NPE when changing to a throttle screen layout with more possible throttles than the previous one
  * Added Option for single throttle EStop on long press of 'stop' button
  * Cleaned up some commented out code (toast commands that have been replaced with safeToast())
- * Added button to share the last log file
+ * Added button to share the a log file
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message

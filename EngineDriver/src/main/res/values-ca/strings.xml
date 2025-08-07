@@ -1029,6 +1029,7 @@
     <string name="rosterEntryImageHelpText">Imatges emmagatzemades localment. Si el vostre servidor té una imatge per al Loco, sobreescriu aquesta selecció.</string>
     <string name="rosterEntryImageRemoveButtonText">Treure</string>
     <string name="rosterEntryImageSaveButtonText">Estalviar</string>
+    <string name="shareFileDialogTitle">Seleccioneu un fitxer per compartir</string>
     <string name="shareFile">Comparteix fitxer: %s</string>
     <string name="toastNoAppToShare">No s\'ha trobat cap aplicació per compartir el fitxer</string>
     <string name="rosterEntryImageSelectButtonText">Nova imatge</string>
@@ -1195,6 +1196,6 @@
     <string name="toastKidsTimerNoLoco">Adquirir una locomotora abans d\'engegar el temporitzador</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Premsa llarga</string>
     <string name="logviewerStopSave">Atureu-vos</string>
-    <string name="logviewerShare">Comparteix l\'últim</string>
+    <string name="logviewerShare">Comparteix</string>
 
 </resources>

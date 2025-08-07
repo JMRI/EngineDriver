@@ -1136,6 +1136,7 @@
     <string name="rosterEntryImageHelpText">Lokálně uložené obrázky. Pokud má váš server obraz pro LOCO, přepíše tento výběr.</string>
     <string name="rosterEntryImageRemoveButtonText">Odstranit</string>
     <string name="rosterEntryImageSaveButtonText">Uložit</string>
+    <string name="shareFileDialogTitle">Vyberte soubor ke sdílení</string>
     <string name="shareFile">Sdílet soubor: %s</string>
     <string name="toastNoAppToShare">Nebyla nalezena žádná aplikace pro sdílení souboru</string>
     <string name="rosterEntryImageSelectButtonText">Nový vzhled</string>
@@ -1280,6 +1281,6 @@
     <string name="toastKidsTimerNoLoco">Před spuštěním časovače si pořiďte lokomotivu</string>
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Dlouhé stisknutí</string>
     <string name="logviewerStopSave">Zastávka</string>
-    <string name="logviewerShare">Sdílejte jako poslední</string>
+    <string name="logviewerShare">Podíl</string>
 
 </resources>
