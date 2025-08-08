@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".FileReceiverActivity">
+
+    <ProgressBar
+        android:id="@+id/progressBarFileReceiver"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" /> <!-- Initially hidden -->
+
+    <ImageView
+        android:id="@+id/imageViewStatus"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:visibility="gone"
+        app:srcCompat="@drawable/tick_glyph_large_dark" /> <!-- Placeholder, create this drawable -->
+
+    <TextView
+        android:id="@+id/textViewFileReceiverStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/sharedFileProcessing"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/textViewFileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:gravity="center_horizontal"
+        tools:text="filename.txt"/> <!-- Example text for design view -->
+
+    <Button
+        android:id="@+id/buttonCloseReceiver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/close_button"
+        android:visibility="gone"/> <!-- Initially hidden -->
+
+</LinearLayout>
