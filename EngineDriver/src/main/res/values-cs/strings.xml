@@ -477,6 +477,7 @@
     <string name="prefHostImportExportTitle">Ruční import/export na určitý host</string>
     <string name="prefHostImportExportSummary">\'Import\' nebo \'Export\' vašich předvoleb pro určitého hosta do složky \'\\engine_driver\' folder to \'\\Android\\data\\jmri.enginedriver\\files\\\'. Host musí být v seznamu Nedávných připojení.\nObjeví se bezprostředně při výběru volby.\n(Je k dispozici pouze když nejste aktuálně připojen.)</string>
 
+    <string name="prefShareFileNowSummary">Umožňuje okamžitě sdílet konfigurační soubor, uložené předvolby nebo soubor protokolu.</string>
     <string name="prefImportExportOverwite">Soubor \'%1$s\' již existuije. Přepsat?</string>
     <string name="prefImportExportErrorReadingList">Chyba při čtení seznamu Nedávných připojení:</string>
     <string name="prefImportExportErrorReadingFrom">Dovoz \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' selhal! Zřejmě jste ještě neuložili předvolby pro tento host.</string>
@@ -1282,5 +1283,8 @@
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Dlouhé stisknutí</string>
     <string name="logviewerStopSave">Zastávka</string>
     <string name="logviewerShare">Podíl</string>
+    <string name="prefShareFileNowTitle">Sdílejte soubor nastavení nyní!</string>
+    <string name="prefStopButtonLongPressDelayTitle">Tlačítko Stop Dlouhé stisknutí Zpoždění</string>
+    <string name="prefStopButtonLongPressDelaySummary">Kolik milisekund představuje dlouhé stisknutí tlačítek Stop pro zahájení EStop</string>
 
 </resources>

@@ -595,7 +595,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                         String lowercaseFileName = file.getName().toLowerCase();
                         if (lowercaseFileName.startsWith("logcat") && lowercaseFileName.endsWith(".txt")) {
                             logFiles.add(file);
-                            Log.d(threaded_application.applicationName, activityName + ": getLogFilesForDialog(): Found: " + file.getName());
+                            Log.d(threaded_application.applicationName, activityName + ": getFilesForDialog(): Found: " + file.getName());
                         }
                     }
                     // Optional: Sort the files, e.g., by name or date
@@ -603,7 +603,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 }
             }
         } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ": getLogFilesForDialog(): Error trying to find log files", e);
+            Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
             threaded_application.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
         }
         return logFiles;
@@ -621,20 +621,31 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getApplicationContext().getResources().getString(R.string.shareFileDialogTitle));
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.file_list_dialog, null);
+        builder.setView(dialogView);
 
-        // Convert ArrayList to Array for the dialog
-        final CharSequence[] items = fileNames.toArray(new CharSequence[0]);
+        ListView dialogListView = dialogView.findViewById(R.id.file_dialog_listview);
+        Button cancelButton = dialogView.findViewById(R.id.file_dialog_button_cancel);
 
-        builder.setItems(items, (dialog, which) -> {
-            // 'which' is the index of the selected item
-            File selectedFile = logFiles.get(which);
-            shareFile(selectedFile,selectedFile.getName()); // You'll create this helper method
+        // --- Setup ListView ---
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
+                R.layout.file_list_item, // This layout MUST define the font
+                R.id.file_list_item_text,    // The ID of the TextView within logfile_list_item.xml
+                fileNames);
+        dialogListView.setAdapter(listAdapter);
+
+        final AlertDialog dialog = builder.create(); // Create before setting item click listener for ListView
+
+        dialogListView.setOnItemClickListener((parent, view, position, id) -> {
+            File selectedFile = logFiles.get(position);
+//            threaded_application.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
+            shareFile(selectedFile,selectedFile.getName());
+            dialog.dismiss();
         });
 
-        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
 
-        AlertDialog dialog = builder.create();
         dialog.show();
     }
 

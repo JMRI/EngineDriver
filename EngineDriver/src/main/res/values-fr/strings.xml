@@ -726,6 +726,7 @@
     <string name="functionButtonLookForHead">FRONT</string>
     <string name="functionButtonLookForLight">LUMIÈRE</string>
     <string name="functionButtonLookForRear">ARRIÈRE</string>
+    <string name="prefShareFileNowSummary">Vous permet de partager immédiatement un fichier de configuration, des préférences enregistrées ou un fichier journal.</string>
     <string name="prefImportExportOverwite">Le fichier \'%1$s\' existe déjà. Ecraser?</string>
     <string name="prefImportExportErrorReadingList">Erreur sur lecture de la liste de connexions récentes:</string>
     <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
@@ -1187,5 +1188,8 @@
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Sur Arrêt Appui long</string>
     <string name="logviewerStopSave">Arrêt</string>
     <string name="logviewerShare">Partager</string>
+    <string name="prefShareFileNowTitle">Partagez un fichier de paramètres maintenant !</string>
+    <string name="prefStopButtonLongPressDelayTitle">Bouton d\'arrêt, appui long, délai</string>
+    <string name="prefStopButtonLongPressDelaySummary">Combien de millisecondes constitue une longue pression sur les boutons Stop, pour lancer EStop</string>
 
 </resources>
