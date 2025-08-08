@@ -670,6 +670,7 @@
     <string name="functionButtonLookForHead">DAVANT</string>
     <string name="functionButtonLookForLight">LLUM</string>
     <string name="functionButtonLookForRear">DARRERA</string>
+    <string name="prefShareFileNowSummary">Us permet compartir immediatament un fitxer de configuració, preferències desades o fitxer de registre.</string>
     <string name="prefImportExportOverwite">L\'arxiu \'%1$s\' ja existeix. Sobreescriu?</string>
     <string name="prefImportExportErrorReadingList">Error llegint la llista de connexions recents:</string>
     <string name="prefImportExportErrorReadingFrom">Ha fallat l\'importació \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\'! No has desat les preferències per aquest host</string>
@@ -1197,5 +1198,8 @@
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP On Stop Premsa llarga</string>
     <string name="logviewerStopSave">Atureu-vos</string>
     <string name="logviewerShare">Comparteix</string>
+    <string name="prefShareFileNowTitle">Comparteix un fitxer de configuració ara!</string>
+    <string name="prefStopButtonLongPressDelayTitle">Botó Atura Premsa llarga Retard</string>
+    <string name="prefStopButtonLongPressDelaySummary">Quants mil·lisegons constitueixen una pressió llarga dels botons Atura per iniciar EStop</string>
 
 </resources>

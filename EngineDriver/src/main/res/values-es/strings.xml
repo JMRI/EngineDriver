@@ -664,6 +664,7 @@
     <string name="functionButtonLookForHead">ADELANTE</string>
     <string name="functionButtonLookForLight">LUZ</string>
     <string name="functionButtonLookForRear">ATRÁS</string>
+    <string name="prefShareFileNowSummary">Le permite compartir un archivo de configuración, preferencias guardadas o un archivo de registro, de forma inmediata.</string>
     <string name="prefImportExportOverwite">El archivo \'%1$s\' ya existe. ¿Sobreescribir?</string>
     <string name="prefImportExportErrorReadingList">Error leyendo la lista de conexiones recientes:</string>
     <string name="prefImportExportErrorReadingFrom">¡Ha fallado la importación de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\'! No has guardado las preferencias para este host</string>
@@ -1184,5 +1185,8 @@
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Al detenerse, pulsación larga</string>
     <string name="logviewerStopSave">Detener</string>
     <string name="logviewerShare">Compartir</string>
+    <string name="prefShareFileNowTitle">¡Comparte un archivo de configuración ahora!</string>
+    <string name="prefStopButtonLongPressDelayTitle">Retardo de pulsación larga del botón de parada</string>
+    <string name="prefStopButtonLongPressDelaySummary">¿Cuántos milisegundos constituye una pulsación prolongada de los botones de parada para iniciar EStop?</string>
 
 </resources>

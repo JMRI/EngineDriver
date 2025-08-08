@@ -647,6 +647,7 @@
     <string name="prefImportExportErrorReadingList">最近の接続リストの読み取り中にエラーが発生しました:</string>
     <string name="prefImportExportLocoListSummary">「インポート」と「エクスポート」の最近の車両リストに車両を含めます。</string>
     <string name="prefImportExportLocoListTitle">最近の車両リストを含める</string>
+    <string name="prefShareFileNowSummary">構成ファイル、保存された設定、またはログ ファイルをすぐに共有できます。</string>
     <string name="prefImportExportOverwite">ファイル \'%1$s\' は既に存在します。上書きしますか？</string>
     <string name="prefImportExportSummary">設定を「\\Android\\data\\jmri.enginedriver\\files\\\」フォルダに「インポート」または「エクスポート」するか、「リセット」します。 \nオプションを選択するとすぐに発生します。\n(ファイルをコピーすると、環境設定を別の電話に転送できます。)</string>
     <string name="prefImportExportTitle">インポート、エクスポート、またはリセット</string>
@@ -1206,5 +1207,8 @@
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOP 停止時に長押し</string>
     <string name="logviewerStopSave">停止</string>
     <string name="logviewerShare">共有</string>
+    <string name="prefShareFileNowTitle">今すぐ設定ファイルを共有しましょう!</string>
+    <string name="prefStopButtonLongPressDelayTitle">停止ボタン長押し遅延</string>
+    <string name="prefStopButtonLongPressDelaySummary">停止ボタンを長押ししてEStopを開始するまでの所要時間は、何ミリ秒ですか？</string>
 
 </resources>

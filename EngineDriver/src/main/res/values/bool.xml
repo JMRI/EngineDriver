@@ -60,6 +60,8 @@
     <bool name="prefDisableVolumeKeysDefaultValue">false</bool>
     <bool name="prefVolumeKeysFollowLastTouchedThrottleDefaultValue">false</bool>
 
+    <bool name="prefShareFileNowDefaultValue">false</bool>
+
     <bool name="prefGamepadTestNowDefaultValue">false</bool>
     <bool name="prefGamepadOnlyOneGamepadDefaultValue">true</bool>
     <bool name="prefHideDemoServerDefaultValue">false</bool>

@@ -418,6 +418,7 @@
     <string name="prefHostImportExportTitle">Importar/Exportar específico para host Manual</string>
     <string name="prefHostImportExportSummary">\'Importar\' ou \'Exportar\' suas preferências para um host específico para a pasta \'\\Android\\data\\jmri.enginedriver\\files\\\'. P host deve estar em sua lista de conexões recentes.\nOcorrerá IMEDIATAMENTE após a seleção da opção.\n(Somente disponível quando não atualmente conectado.)</string>
 
+    <string name="prefShareFileNowSummary">Permite que você compartilhe um arquivo de configuração, preferências salvas ou arquivo de log imediatamente.</string>
     <string name="prefImportExportOverwite">Arquivo \'%1$s\' já presente. Sobregravar?</string>
     <string name="prefImportExportErrorReadingList">Erro leitura lista conexões recentes:</string>
     <string name="prefImportExportErrorReadingFrom">Importação de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' falhou! Pode não ter salvo ainda as preferências para este host.</string>
@@ -1140,4 +1141,7 @@
     <string name="prefStopButtonEStopOnLongPressTitle">ESTOPAR Ao Parar Pressione Longo</string>
     <string name="logviewerStopSave">Parar</string>
     <string name="logviewerShare">Compartilhar</string>
+    <string name="prefShareFileNowTitle">Compartilhe um arquivo de configurações agora!</string>
+    <string name="prefStopButtonLongPressDelayTitle">Botão de parada Atraso de pressão longa</string>
+    <string name="prefStopButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo nos botões Stop para iniciar o EStop</string>
 </resources>
