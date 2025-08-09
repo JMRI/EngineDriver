@@ -977,6 +977,19 @@
     <string name="rosterEntryImageServerImageHelpText">Seu servidor tem uma imagem para o loco. Você não pode alterar a imagem local, pois será automaticamente superajectiva pelo servidor.</string>
     <string name="shareFileDialogTitle">Selecione um arquivo para compartilhar</string>
     <string name="shareFile">Compartilhar arquivo: %s</string>
+    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Processando arquivo(s) compartilhado(s)...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Processando %d arquivo(s) compartilhado(s)...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Recebeu %d arquivo(s) compartilhado(s)...</string>
+    <string name="sharedFileSavingCount">Salvando %d arquivo(s)</string>
+    <string name="sharedFileSavedCount">Salvar %d arquivo(s)</string>
+    <string name="sharedFileFailedToSaveCount">Falha ao salvar %d arquivo(s)</string>
+    <string name="sharedFileFinished">Processamento de %d arquivos concluído</string>
+    <string name="sharedFileNoUriReceived">Erro: Nenhum arquivo(s) URI recebido(s)</string>
+    <string name="sharedFileNoShareActionDetected">Nenhuma ação de compartilhamento detectada</string>
+    <string name="sharedFileOverwriteChoiceTitle">Conflito de arquivo</string>
+    <string name="sharedFileOverwriteChoiceText">Alguns arquivos podem já existir. Deseja substituir os arquivos existentes?\n\nEscolher "Não" salvará os arquivos conflitantes com um novo nome (por exemplo, nome_do_arquivo_1.ext).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Sim, sobrescrever</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">Não, salvar com novo nome</string>
     <string name="toastNoAppToShare">Nenhum aplicativo encontrado para compartilhar o arquivo</string>
     <string name="rosterEntryImageSelectButtonText">Nova imagem</string>
     <string name="rosterEntryImageRemoveButtonText">Remover</string>

@@ -199,12 +199,16 @@
     <string name="sharedFileReceivedCount">Received %d shared file(s)...</string>
     <string name="sharedFileSavingFile">Saving file(S)...</string>
 <!--    <string name="sharedFileSaved">File Saved: %s</string>-->
-    <string name="sharedFileSavingCount">Saving %d file(s).</string>
-    <string name="sharedFileSavedCount">Save %d file(s).</string>
-    <string name="sharedFileFailedToSaveCount">Failed to save %d file(s).</string>
-    <string name="sharedFileFinished">Finished processing %d files.</string>
-    <string name="sharedFileNoUriReceived">Error: No file(s) URI received.</string>
-    <string name="sharedFileNoShareActionDetected">No share action detected.</string>
+    <string name="sharedFileSavingCount">Saving %d file(s)</string>
+    <string name="sharedFileSavedCount">Save %d file(s)</string>
+    <string name="sharedFileFailedToSaveCount">Failed to save %d file(s)</string>
+    <string name="sharedFileFinished">Finished processing %d files</string>
+    <string name="sharedFileNoUriReceived">Error: No file(s) URI received</string>
+    <string name="sharedFileNoShareActionDetected">No share action detected</string>
+    <string name="sharedFileOverwriteChoiceTitle">File Conflict</string>
+    <string name="sharedFileOverwriteChoiceText">Some files might already exist. Do you want to overwrite existing files?\n\nChoosing \'No\' will save conflicting files with a new name (e.g., filename_1.ext).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Yes, Overwrite</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">No, Save with New Name</string>
 
     <string name="rosterEntryImageSelectButtonText">New image</string>
     <string name="rosterEntryImageRemoveButtonText">Remove</string>

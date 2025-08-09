@@ -1029,6 +1029,19 @@
     <string name="rosterEntryImageSaveButtonText">Sauvegarde</string>
     <string name="shareFileDialogTitle">Sélectionnez un fichier à partager</string>
     <string name="shareFile">Partager le fichier : %s</string>
+    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Traitement des fichiers partagés...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Traitement de %d fichier(s) partagé(s)...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Reçu %d fichier(s) partagé(s)...</string>
+    <string name="sharedFileSavingCount">Enregistrement de %d fichier(s)</string>
+    <string name="sharedFileSavedCount">Enregistrer %d fichier(s)</string>
+    <string name="sharedFileFailedToSaveCount">Échec de l\'enregistrement de %d fichier(s)</string>
+    <string name="sharedFileFinished">Traitement terminé de %d fichiers</string>
+    <string name="sharedFileNoUriReceived">Erreur : aucun fichier URI reçu</string>
+    <string name="sharedFileNoShareActionDetected">Aucune action de partage détectée</string>
+    <string name="sharedFileOverwriteChoiceTitle">Conflit de fichiers</string>
+    <string name="sharedFileOverwriteChoiceText">Certains fichiers existent peut-être déjà. Souhaitez-vous écraser les fichiers existants ?\n\nChoisir « Non » enregistrera les fichiers en conflit sous un nouveau nom (par exemple, nom_fichier_1.ext).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Oui, écraser</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">Non, enregistrer avec un nouveau nom</string>
     <string name="toastNoAppToShare">Aucune application trouvée pour partager le fichier</string>
     <string name="rosterEntryImageSelectButtonText">Nouvelle image</string>
     <string name="rosterEntryImageServerImageHelpText">Le serveur ayant une image de la loco, vous ne pouvez pas remplacer celle-ci par une image locale, qui sera a nouveau remplacee par celle du serveur.</string>

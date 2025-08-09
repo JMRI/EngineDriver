@@ -1139,6 +1139,19 @@
     <string name="rosterEntryImageSaveButtonText">Uložit</string>
     <string name="shareFileDialogTitle">Vyberte soubor ke sdílení</string>
     <string name="shareFile">Sdílet soubor: %s</string>
+    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Zpracovávání sdílených souborů...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Zpracovávání %d sdílených souborů...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Přijato %d sdílených souborů...</string>
+    <string name="sharedFileSavingCount">Ukládání %d souborů</string>
+    <string name="sharedFileSavedCount">Uložit %d souborů</string>
+    <string name="sharedFileFailedToSaveCount">Nepodařilo se uložit %d soubory</string>
+    <string name="sharedFileFinished">Zpracování %d souborů bylo dokončeno</string>
+    <string name="sharedFileNoUriReceived">Chyba: Nebyly přijaty žádné URI souboru</string>
+    <string name="sharedFileNoShareActionDetected">Nebyla zjištěna žádná akce sdílení</string>
+    <string name="sharedFileOverwriteChoiceTitle">Konflikt souborů</string>
+    <string name="sharedFileOverwriteChoiceText">Některé soubory již mohou existovat. Chcete přepsat existující soubory?\n\nVýběrem možnosti \'Ne\' uložíte konfliktní soubory s novým názvem (např. název_souboru_1.přípona).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Ano, přepsat</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">Ne, uložit s novým názvem</string>
     <string name="toastNoAppToShare">Nebyla nalezena žádná aplikace pro sdílení souboru</string>
     <string name="rosterEntryImageSelectButtonText">Nový vzhled</string>
     <string name="rosterEntryImageServerImageHelpText">Váš server má obraz pro LOCO. Můžete změnit místní snímek, protože bude automaticky převaženo jedním na serveru.</string>

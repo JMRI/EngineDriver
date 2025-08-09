@@ -1537,8 +1537,8 @@ public class threaded_application extends Application {
         if (!prefs.getBoolean("show_layout_power_button_preference", false)) return;
 
         if ( (menu == null) ||  (menuItemViewGroup  == null)) {
-            // the menu or button is not available yet. Force an update request to the get it to update ASAP
-            sendMsgDelay(comm_msg_handler, 100, message_type.POWER_STATE_REQUEST);
+//            // the menu or button is not available yet. Force an update request to the get it to update ASAP
+//            sendMsgDelay(comm_msg_handler, 100, message_type.POWER_STATE_REQUEST);
             return;
         }
 

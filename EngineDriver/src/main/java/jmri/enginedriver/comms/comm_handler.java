@@ -455,9 +455,9 @@ public class comm_handler extends Handler {
             commThread.sendPower(msg.arg1);
             break;
          //send command to request the power state.  no argumants
-         case message_type.POWER_STATE_REQUEST:
-            commThread.sendPowerStateRequest();
-            break;
+//         case message_type.POWER_STATE_REQUEST:
+//            commThread.sendPowerStateRequest();
+//            break;
          //send whatever command string comes in obj to Withrottle Server
          case message_type.WIFI_SEND:
             comm_thread.wifiSend(msg.obj.toString());

@@ -1029,6 +1029,19 @@
     <string name="rosterEntryImageServerImageHelpText">Su servidor tiene una imagen para el Loco. No puede cambiar la imagen local, ya que se agregará automáticamente por el en el servidor.</string>
     <string name="shareFileDialogTitle">Seleccione un archivo para compartir</string>
     <string name="shareFile">Compartir archivo: %s</string>
+    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Procesando archivos compartidos...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Procesando %d archivos compartidos...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Se recibieron %d archivos compartidos...</string>
+    <string name="sharedFileSavingCount">Guardando %d archivos</string>
+    <string name="sharedFileSavedCount">Guardar %d archivos</string>
+    <string name="sharedFileFailedToSaveCount">No se pudieron guardar %d archivos</string>
+    <string name="sharedFileFinished">Se terminó de procesar %d archivos</string>
+    <string name="sharedFileNoUriReceived">Error: No se recibió la URI del archivo</string>
+    <string name="sharedFileNoShareActionDetected">No se detectó ninguna acción compartida</string>
+    <string name="sharedFileOverwriteChoiceTitle">Conflicto de archivos</string>
+    <string name="sharedFileOverwriteChoiceText">Es posible que ya existan algunos archivos. ¿Desea sobrescribirlos?\n\nSi selecciona "No", los archivos conflictivos se guardarán con un nuevo nombre (p. ej., nombre_de_archivo_1.ext).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Sí, sobrescribir</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">No, guardar con nuevo nombre</string>
     <string name="toastNoAppToShare">No se encontró ninguna aplicación para compartir el archivo</string>
     <string name="rosterEntryImageSelectButtonText">Nueva imagen</string>
     <string name="rosterEntryImageRemoveButtonText">Remover</string>
