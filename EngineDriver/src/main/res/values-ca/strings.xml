@@ -1032,6 +1032,19 @@
     <string name="rosterEntryImageSaveButtonText">Estalviar</string>
     <string name="shareFileDialogTitle">Seleccioneu un fitxer per compartir</string>
     <string name="shareFile">Comparteix fitxer: %s</string>
+    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">S\'està processant fitxers compartits...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">S\'estan processant %d fitxers compartits...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">S\'han rebut %d fitxers compartits...</string>
+    <string name="sharedFileSavingCount">S\'estan desant %d fitxers</string>
+    <string name="sharedFileSavedCount">Desa %d fitxers</string>
+    <string name="sharedFileFailedToSaveCount">No s\'han pogut desar %d fitxers</string>
+    <string name="sharedFileFinished">S\'han acabat de processar %d fitxers</string>
+    <string name="sharedFileNoUriReceived">Error: no s\'ha rebut cap URI de fitxers</string>
+    <string name="sharedFileNoShareActionDetected">No s\'ha detectat cap acció compartida</string>
+    <string name="sharedFileOverwriteChoiceTitle">Conflicte de fitxers</string>
+    <string name="sharedFileOverwriteChoiceText">Alguns fitxers ja existeixen. Voleu sobreescriure els fitxers existents?\n\nSi escolliu \'No\', es desaran els fitxers en conflicte amb un nom nou (p. ex., nom_fitxer_1.ext).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Sí, sobreescriu</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">No, desa amb un nom nou</string>
     <string name="toastNoAppToShare">No s\'ha trobat cap aplicació per compartir el fitxer</string>
     <string name="rosterEntryImageSelectButtonText">Nova imatge</string>
     <string name="rosterEntryImageServerImageHelpText">El vostre servidor té una imatge per al loco. Podeu canviar la imatge local, ja que s\'acabarà automàticament per la que hi ha al servidor.</string>

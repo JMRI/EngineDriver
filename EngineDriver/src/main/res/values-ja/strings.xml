@@ -944,6 +944,19 @@
     <string name="rosterEntryImageSaveButtonText">保存</string>
     <string name="shareFileDialogTitle">共有するファイルを選択</string>
     <string name="shareFile">ファイルを共有: %s</string>
+    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">共有ファイルを処理しています...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">%d 個の共有ファイルを処理しています...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">%d 個の共有ファイルを受信しました...</string>
+    <string name="sharedFileSavingCount">%d 個のファイルを保存しています</string>
+    <string name="sharedFileSavedCount">%d 個のファイルを保存</string>
+    <string name="sharedFileFailedToSaveCount">%d 個のファイルを保存できませんでした</string>
+    <string name="sharedFileFinished">%d 個のファイルの処理が完了しました</string>
+    <string name="sharedFileNoUriReceived">エラー: ファイル URI が受信されませんでした</string>
+    <string name="sharedFileNoShareActionDetected">共有アクションが検出されませんでした</string>
+    <string name="sharedFileOverwriteChoiceTitle">ファイルの競合</string>
+    <string name="sharedFileOverwriteChoiceText">すでにファイルが存在する可能性があります。既存のファイルを上書きしますか?\n\n「いいえ」を選択すると、競合するファイルは新しい名前（例: filename_1.ext）で保存されます。</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">はい、上書きします</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">いいえ、新しい名前で保存</string>
     <string name="toastNoAppToShare">ファイルを共有するためのアプリが見つかりません</string>
     <string name="rosterEntryImageSelectButtonText">新しい画像</string>
     <string name="rosterEntryImageServerImageHelpText">サーバーには機関車の画像があります。ローカル イメージはサーバー上のイメージによって自動的に上書きされるため、変更することはできません。</string>

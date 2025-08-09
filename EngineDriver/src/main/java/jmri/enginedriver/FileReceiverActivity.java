@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
@@ -37,6 +38,9 @@ public class FileReceiverActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private ImageView imageViewStatus;
     private Button buttonClose;
+
+    // Variable to store user's choice for overwriting files
+    private boolean shouldOverwriteFiles = false; // Default to not overwriting
 
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
@@ -75,7 +79,12 @@ public class FileReceiverActivity extends AppCompatActivity {
                 String tempFileName = getFileName(fileUri, getContentResolver());
                 textViewFileNameDisplay.setText(tempFileName);
                 textViewFileNameDisplay.setVisibility(View.VISIBLE);
-                saveFileAsync(fileUri, "shared_file_");
+                // Show overwrite dialog before saving
+                Uri finalFileUri = fileUri; // effectively final for lambda
+                showOverwriteChoiceDialog(
+                        () -> saveFileAsync(finalFileUri, "shared_file_"), // On "No, Save with New Name" or default
+                        () -> saveFileAsync(finalFileUri, "shared_file_")  // On "Yes, Overwrite"
+                );
             } else {
                 Log.e(threaded_application.applicationName, activityName + "No URI found in SEND action");
                 updateUiForError(getResources().getString(R.string.sharedFileNoUriReceived));
@@ -95,8 +104,12 @@ public class FileReceiverActivity extends AppCompatActivity {
                     Log.d(threaded_application.applicationName, "Processing " + urisList.size() + " files.");
                     textViewFileNameDisplay.setText(getResources().getString(R.string.sharedFileProcessingCount, urisList.size()));
                     textViewFileNameDisplay.setVisibility(View.VISIBLE);
-                    // Process all files
-                    saveMultipleFilesAsync(urisList, "shared_multiple_file_");
+                    // Show overwrite dialog before saving multiple files
+                    ArrayList<Uri> finalUrisList = urisList; // effectively final for lambda
+                    showOverwriteChoiceDialog(
+                            () -> saveMultipleFilesAsync(finalUrisList, "shared_multiple_file_"), // On "No, Save with New Name" or default
+                            () -> saveMultipleFilesAsync(finalUrisList, "shared_multiple_file_")  // On "Yes, Overwrite"
+                    );
                 } else {
                     Log.e(threaded_application.applicationName, "No valid URIs found in SEND_MULTIPLE parcelable list");
                     updateUiForError("Error: No valid file data received for multiple files.");
@@ -209,10 +222,9 @@ public class FileReceiverActivity extends AppCompatActivity {
         // threaded_application.safeToast(getApplicationContext(), errorMessage, Toast.LENGTH_LONG);
     }
 
-    // Renamed to avoid confusion with the async wrapper
     private String doSaveFileToScopedStorage(Uri uri, String filePrefix) {
         ContentResolver contentResolver = getContentResolver();
-        String fileName = getFileName(uri, contentResolver);
+        String originalFileName = getFileName(uri, contentResolver); // Keep original for display/logging
 
         File outputDir = getExternalFilesDir(null);
         if (outputDir == null) {
@@ -224,23 +236,28 @@ public class FileReceiverActivity extends AppCompatActivity {
             return "Error: Cannot create storage directory.";
         }
 
-        File outputFile = new File(outputDir, fileName);
-        int count = 0;
-        String baseName = fileName.lastIndexOf('.') > 0 ? fileName.substring(0, fileName.lastIndexOf('.')) : fileName;
-        String extension = fileName.lastIndexOf('.') > 0 ? fileName.substring(fileName.lastIndexOf('.')) : "";
+        File outputFile = new File(outputDir, originalFileName);
+        String finalFileNameToSave = originalFileName; // This will be the name used for saving
 
-        // Ensure unique filename by appending a number if needed
-        while (outputFile.exists()) {
-            count++;
-            outputFile = new File(outputDir, baseName + "_" + count + extension);
+        if (!shouldOverwriteFiles) { // Only try to make unique if not overwriting
+            int count = 0;
+            String baseName = originalFileName.lastIndexOf('.') > 0 ? originalFileName.substring(0, originalFileName.lastIndexOf('.')) : originalFileName;
+            String extension = originalFileName.lastIndexOf('.') > 0 ? originalFileName.substring(originalFileName.lastIndexOf('.')) : "";
+
+            while (outputFile.exists()) {
+                count++;
+                finalFileNameToSave = baseName + "_" + count + extension;
+                outputFile = new File(outputDir, finalFileNameToSave);
+            }
         }
-        fileName = outputFile.getName(); // Update fileName if it was changed
+        // If shouldOverwriteFiles is true, outputFile will point to the original name,
+        // and FileOutputStream will overwrite it if it exists.
 
         try (InputStream inputStream = contentResolver.openInputStream(uri);
-             OutputStream outputStream = new FileOutputStream(outputFile)) {
+             OutputStream outputStream = new FileOutputStream(outputFile)) { // outputFile uses finalFileNameToSave or originalFileName
             if (inputStream == null) {
                 Log.e(threaded_application.applicationName, activityName + "Failed to open input stream for URI: " + uri);
-                return "Error: Could not read shared file.";
+                return "Error: Could not read shared file (" + originalFileName + ").";
             }
             byte[] buffer = new byte[4096];
             int bytesRead;
@@ -248,16 +265,15 @@ public class FileReceiverActivity extends AppCompatActivity {
                 outputStream.write(buffer, 0, bytesRead);
             }
             Log.i(threaded_application.applicationName, activityName + "File saved successfully: " + outputFile.getAbsolutePath());
-            return "File saved: " + fileName;
+            return "File saved: " + finalFileNameToSave; // Display the name it was actually saved as
         } catch (IOException e) {
-            Log.e(threaded_application.applicationName, activityName + "Error saving file: " + uri, e);
-            return "Error saving file: " + e.getMessage();
+            Log.e(threaded_application.applicationName, activityName + "Error saving file: " + originalFileName, e);
+            return "Error saving " + originalFileName + ": " + e.getMessage();
         } catch (SecurityException e) {
             Log.e(threaded_application.applicationName, activityName + "Security exception, URI permission issue? " + uri, e);
-            return "Error: Permission denied for file access.";
+            return "Error: Permission denied for " + originalFileName + ".";
         }
     }
-
 
     // Helper method to get the file name from a content URI
     private String getFileName(Uri uri, ContentResolver contentResolver) {
@@ -299,5 +315,20 @@ public class FileReceiverActivity extends AppCompatActivity {
         return fileName.replaceAll("[^a-zA-Z0-9._-]", "_");
     }
 
+    private void showOverwriteChoiceDialog(Runnable onConfirmNoOverwrite, Runnable onConfirmOverwrite) {
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.sharedFileOverwriteChoiceTitle))
+                .setMessage(getResources().getString(R.string.sharedFileOverwriteChoiceText))
+                .setPositiveButton(getResources().getString(R.string.sharedFileOverwriteChoicePositiveButtonText), (dialog, which) -> {
+                    shouldOverwriteFiles = true;
+                    onConfirmOverwrite.run(); // Proceed with saving, allowing overwrites
+                })
+                .setNegativeButton(getResources().getString(R.string.sharedFileOverwriteChoiceNegativeButtonText), (dialog, which) -> {
+                    shouldOverwriteFiles = false;
+                    onConfirmNoOverwrite.run(); // Proceed with saving, creating unique names
+                })
+                .setCancelable(false) // User must make a choice
+                .show();
+    }
 
 }

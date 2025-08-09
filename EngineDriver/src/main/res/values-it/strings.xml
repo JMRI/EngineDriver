@@ -971,6 +971,19 @@
     <string name="rosterEntryImageServerImageHelpText">Il tuo server ha un\'immagine per la loco. Puoi cambiare l\'immagine locale in quanto verrà automaticamente sovrascritta da quella sul server.</string>
     <string name="shareFileDialogTitle">Seleziona un file da condividere</string>
     <string name="shareFile">Condividi file: %s</string>
+    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Elaborazione dei file condivisi...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Elaborazione di %d file condivisi...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Ricevuti %d file condivisi...</string>
+    <string name="sharedFileSavingCount">Salvataggio di %d file</string>
+    <string name="sharedFileSavedCount">Salva %d file</string>
+    <string name="sharedFileFailedToSaveCount">Impossibile salvare %d file</string>
+    <string name="sharedFileFinished">Elaborazione di %d file completata</string>
+    <string name="sharedFileNoUriReceived">Errore: nessun file URI ricevuto</string>
+    <string name="sharedFileNoShareActionDetected">Nessuna azione di condivisione rilevata</string>
+    <string name="sharedFileOverwriteChoiceTitle">Conflitto di file</string>
+    <string name="sharedFileOverwriteChoiceText">Alcuni file potrebbero già esistere. Vuoi sovrascrivere i file esistenti?\n\nSelezionando \'No\', i file in conflitto verranno salvati con un nuovo nome (ad esempio, nomefile_1.ext).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Sì, sovrascrivi</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">No, salva con il nuovo nome</string>
     <string name="toastNoAppToShare">Nessuna app trovata per condividere il file</string>
     <string name="rosterEntryImageSelectButtonText">Nuova immagine</string>
     <string name="rosterEntryImageRemoveButtonText">Rimuovere</string>
