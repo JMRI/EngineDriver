@@ -934,8 +934,8 @@
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it 
  * throttle:
+ *   TODO: cater for edge-to-edge enforcement in SDK 36 / Android 16
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
- *   TODO: Tablet Switching Left (1-6) with direction buttons
  *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
  *   TODO: respect "Max Throttle %" from roster entry
