@@ -65,7 +65,6 @@ public class FileReceiverActivity extends AppCompatActivity {
         String action = intent.getAction();
         String type = intent.getType();
 
-        // Show initial processing state
         textViewStatus.setText(getResources().getString(R.string.sharedFileProcessing));
         textViewFileNameDisplay.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
@@ -75,28 +74,40 @@ public class FileReceiverActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             if (fileUri != null) {
-                Log.d(threaded_application.applicationName, activityName + "Received single file URI: " + fileUri);
-                String tempFileName = getFileName(fileUri, getContentResolver());
-                textViewFileNameDisplay.setText(tempFileName);
+                Log.d(threaded_application.applicationName, activityName + " Received single file URI: " + fileUri);
+                String fileName = getFileName(fileUri, getContentResolver());
+                textViewFileNameDisplay.setText(fileName);
                 textViewFileNameDisplay.setVisibility(View.VISIBLE);
-                // Show overwrite dialog before saving
-                Uri finalFileUri = fileUri; // effectively final for lambda
-                showOverwriteChoiceDialog(
-                        () -> saveFileAsync(finalFileUri, "shared_file_"), // On "No, Save with New Name" or default
-                        () -> saveFileAsync(finalFileUri, "shared_file_")  // On "Yes, Overwrite"
-                );
+
+                if (doesFileExist(fileName)) {
+                    showOverwriteChoiceDialog(
+                            () -> saveFileAsync(fileUri, "shared_file_"),
+                            () -> saveFileAsync(fileUri, "shared_file_")
+                    );
+                } else {
+                    // No conflict, proceed to save directly (will not overwrite)
+                    shouldOverwriteFiles = false; // Ensure it's false
+                    saveFileAsync(fileUri, "shared_file_");
+                }
             } else {
-                Log.e(threaded_application.applicationName, activityName + "No URI found in SEND action");
+                Log.e(threaded_application.applicationName, activityName + " No URI found in SEND action");
                 updateUiForError(getResources().getString(R.string.sharedFileNoUriReceived));
             }
-            // Don't finish immediately, wait for saveFileAsync
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
             ArrayList<Parcelable> urisListParcelable = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
             if (urisListParcelable != null && !urisListParcelable.isEmpty()) {
                 ArrayList<Uri> urisList = new ArrayList<>();
+                boolean conflictExists = false;
                 for (Parcelable p : urisListParcelable) {
                     if (p instanceof Uri) {
-                        urisList.add((Uri) p);
+                        Uri currentUri = (Uri) p;
+                        urisList.add(currentUri);
+                        String currentFileName = getFileName(currentUri, getContentResolver());
+                        if (doesFileExist(currentFileName)) {
+                            conflictExists = true;
+                            // No need to check further if one conflict is found
+                            // but we still need to populate urisList fully
+                        }
                     }
                 }
 
@@ -104,12 +115,17 @@ public class FileReceiverActivity extends AppCompatActivity {
                     Log.d(threaded_application.applicationName, "Processing " + urisList.size() + " files.");
                     textViewFileNameDisplay.setText(getResources().getString(R.string.sharedFileProcessingCount, urisList.size()));
                     textViewFileNameDisplay.setVisibility(View.VISIBLE);
-                    // Show overwrite dialog before saving multiple files
-                    ArrayList<Uri> finalUrisList = urisList; // effectively final for lambda
-                    showOverwriteChoiceDialog(
-                            () -> saveMultipleFilesAsync(finalUrisList, "shared_multiple_file_"), // On "No, Save with New Name" or default
-                            () -> saveMultipleFilesAsync(finalUrisList, "shared_multiple_file_")  // On "Yes, Overwrite"
-                    );
+
+                    if (conflictExists) {
+                        showOverwriteChoiceDialog(
+                                () -> saveMultipleFilesAsync(urisList, "shared_multiple_file_"),
+                                () -> saveMultipleFilesAsync(urisList, "shared_multiple_file_")
+                        );
+                    } else {
+                        // No conflicts, proceed to save directly (will not overwrite)
+                        shouldOverwriteFiles = false; // Ensure it's false
+                        saveMultipleFilesAsync(urisList, "shared_multiple_file_");
+                    }
                 } else {
                     Log.e(threaded_application.applicationName, "No valid URIs found in SEND_MULTIPLE parcelable list");
                     updateUiForError("Error: No valid file data received for multiple files.");
@@ -130,6 +146,16 @@ public class FileReceiverActivity extends AppCompatActivity {
         executorService.shutdown(); // Clean up the executor service
     }
 
+    // Helper method to check if a file with the given name already exists
+    private boolean doesFileExist(String fileName) {
+        File outputDir = getExternalFilesDir(null); // Or your specific target directory
+        if (outputDir == null) {
+            Log.w(threaded_application.applicationName, activityName + " Cannot get external files dir to check existence.");
+            return false; // Safest to assume no conflict if dir is inaccessible
+        }
+        File potentialFile = new File(outputDir, fileName);
+        return potentialFile.exists();
+    }
     private void saveMultipleFilesAsync(ArrayList<Uri> uris, String filePrefix) {
         progressBar.setVisibility(View.VISIBLE);
         imageViewStatus.setVisibility(View.GONE);
