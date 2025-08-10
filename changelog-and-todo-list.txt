@@ -974,9 +974,9 @@
  * DCC-EX screen
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  * preferences:
- *   TODO: simplify accessing exported preferences file. Link?
+ *
  * log_viewer:
- *   TODO: simplify accessing log file. Link?
+ *
  *
  * These require changes to WiThrottle Server
  *   add Light control page
