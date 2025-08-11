@@ -1,3 +1,4 @@
+**Version 2.40.204
 **Version 2.40.202
  * Corrected theming of the main power button on the power screen
  * More glyphs and cosmetic changes
