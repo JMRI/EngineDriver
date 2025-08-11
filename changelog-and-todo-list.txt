@@ -2,6 +2,9 @@
  * Corrected theming of the main power button on the power screen
  * More glyphs and cosmetic changes
  * Improve the updating of the toolbar power button on some screen when the app is first opened
+ * Added button and dialog to share log file(s).
+ * Added preference immediate action to share any file from ED scoped storage
+ * Added ability to share files to ED's scoped storage
 **Version 2.40.200
  * added a new separate check for when the app is in background
  * reduce the amount of static text related to log messages
@@ -20,9 +23,6 @@
  * Bug fix for NPE when changing to a throttle screen layout with more possible throttles than the previous one
  * Added Option for single throttle EStop on long press of 'stop' button
  * Cleaned up some commented out code (toast commands that have been replaced with safeToast())
- * Added button to share the a log file.
- * Added preference immediate action to shae any file from ED scoped storage
- * Added ability to share files to ED's scoped storage
 **Version 2.40.198
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message
