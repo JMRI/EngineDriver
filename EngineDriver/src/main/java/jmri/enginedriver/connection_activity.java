@@ -1034,6 +1034,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //only one activity with results here
         set_labels();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // Handle pressing of the back button to request exit

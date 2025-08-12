@@ -51,7 +51,9 @@ dependencies {
     implementation files('libs/java-json.jar')
     implementation files('libs/jmdns-3.5.8.jar')
     implementation 'io.github.esugmbh:mobilecontrol2-sdk:1.1.7'
-    implementation 'com.github.apl-devs:appintro:v4.2.3'
+//    implementation 'com.github.apl-devs:appintro:v4.2.3'
+    implementation 'com.github.AppIntro:appintro:7.0.0-beta02'
+
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'org.slf4j:slf4j-nop:1.7.30'
 }
