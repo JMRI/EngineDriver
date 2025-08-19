@@ -47,8 +47,13 @@
     <string name="gamepad1_test">Prueba 1 de gamepad</string>
     <string name="gamepad2_test">Prueba 2 de gamepad</string>
     <string name="gamepad3_test">Prueba 3 de gamepad</string>
-    <string name="notification_title">Engine Driver está en ejecución</string>
-    <string name="notification_text">Presionar para reabrir Engine Driver</string>
+
+    <string name="notificationInBackgroundTitle">Engine Driver en segundo plano</string>
+    <string name="notificationInBackgroundText">Android puede cerrarlo en cualquier momento sin previo aviso. Toca para volver a abrir.</string>
+    <string name="notificationInBackgroundTextLowMemory">Memoria baja. Engine Driver podría ser eliminado pronto. Pulsa para volver a abrir.</string>
+    <string name="notificationInBackgroundTextKilled">Memoria agotada. Engine Driver ha sido eliminado.</string>
+    <string name="notificationAppWasKilledInBackground">Engine Driver se ve obligado a reiniciarse por Android</string>
+
     <string name="host_ip">Nombre del Host o Dirección</string>
     <string name="port">Puerto</string>
 <!--    <string name="loco_address">Dirección de Locomotora</string>-->
@@ -271,8 +276,12 @@
     <string name="prefSelectiveLeadSoundF1Summary">Para la opción de \'Sonido selectivo de la unidad principal\'</string>
     <string name="prefSelectiveLeadSoundF2Title">Siempre trata F2 como sonido</string>
     <string name="prefSelectiveLeadSoundF2Summary">Para la opción de \'Sonido selectivo de la unidad principal\'</string>
+
     <string name="prefStopOnPhonecallTitle">¿Detiene si se recibe una llamada de teléfono?</string>
     <string name="prefStopOnPhonecallSummary">Detiene Locomotora(s) cuando responda o realice una llamada</string>
+    <string name="prefStopOnBackgroundTitle">¿Detenerse en segundo plano?</string>
+    <string name="prefStopOnBackgroundSummary">EStop todas las locomotoras en todos los aceleradores cuando Engine Driver pasa a segundo plano</string>
+
     <string name="prefStopOnReleaseTitle">¿Detiene al liberar?</string>
     <string name="prefStopOnReleaseSummary">Detiene Locomotora(s) cuando libere desde el Controlador</string>
     <string name="prefSwipeThroughRoutesTitle">¿Deslizar por las rutas?</string>

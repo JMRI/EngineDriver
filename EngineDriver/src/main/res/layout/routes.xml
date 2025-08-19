@@ -117,10 +117,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:padding="2sp"
                         android:drawableLeft="?attr/ed_sort_glyph"
-                        android:paddingLeft="4dp"
-                        android:paddingStart="4dp"
+                        android:padding="0dp"
                         android:text="@string/order"
                         tools:ignore="RtlSymmetry" />
 

@@ -45,8 +45,13 @@
     <string name="gamepad1_test">Teste Gamepad 1</string>
     <string name="gamepad2_test">Teste Gamepad 2</string>
     <string name="gamepad3_test">Teste Gamepad 3</string>
-    <string name="notification_title">Engine Driver está rodando</string>
-    <string name="notification_text">Aperte para reabrir Engine Driver</string>
+
+    <string name="notificationInBackgroundTitle">EngineDriver em segundo plano</string>
+    <string name="notificationInBackgroundText">O Android pode desativá-lo a qualquer momento, sem aviso prévio. Toque para reabrir</string>
+    <string name="notificationInBackgroundTextLowMemory">Memória baixa. O EngineDriver pode ser desativado em breve. Toque para reabrir.</string>
+    <string name="notificationInBackgroundTextKilled">Memória esgotada. EngineDriver foi morto</string>
+    <string name="notificationAppWasKilledInBackground">EngineDriver forçado a reiniciar pelo Android</string>
+
     <string name="host_ip">Nome Host ou Endereço</string>
     <string name="port">Porta</string>
 <!--    <string name="loco_address">Endereço Locomotiva</string>-->
@@ -287,7 +292,11 @@
     <string name="prefSelectiveLeadSoundF2Title">Sempre trate F2 como som</string>
     <string name="prefSelectiveLeadSoundF2Summary">Para a opção \'Selective Lead Unit Sound \'</string>
     <string name="prefStopOnPhonecallTitle">Parar em caso de Chamada?</string>
+
     <string name="prefStopOnPhonecallSummary">Para locomotiva(s) quando uma chamada é recebida ou enviada</string>
+    <string name="prefStopOnBackgroundTitle">Parar em segundo plano?</string>
+    <string name="prefStopOnBackgroundSummary">Pare todas as locomotivas em todos os aceleradores quando o Engine Driver for colocado em segundo plano</string>
+
     <string name="prefStopOnReleaseTitle">Parar ao Libertar?</string>
     <string name="prefStopOnReleaseSummary">Parar Locomotiva(s) ao libertar do Controlador</string>
     <string name="prefSwipeThroughRoutesTitle">Deslizar entre Rotas?</string>

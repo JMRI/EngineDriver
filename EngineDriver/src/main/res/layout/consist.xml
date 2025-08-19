@@ -103,8 +103,7 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/logviewerClose"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:padding="0dp"
                 android:drawableLeft="?attr/ed_cross_glyph"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </RelativeLayout>

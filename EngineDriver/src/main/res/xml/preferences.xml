@@ -1055,6 +1055,13 @@
             android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
+            android:defaultValue="@bool/prefStopOnBackgroundDefaultValue"
+            android:key="prefStopOnBackground"
+            android:summary="@string/prefStopOnBackgroundSummary"
+            android:title="@string/prefStopOnBackgroundTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"

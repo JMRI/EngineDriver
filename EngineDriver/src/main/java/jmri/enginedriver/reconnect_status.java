@@ -91,9 +91,11 @@ public class reconnect_status extends AppCompatActivity {
                     break;
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     shutdown();
+                    break;
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
             }
         }
@@ -134,7 +136,8 @@ public class reconnect_status extends AppCompatActivity {
     };
 
     private void endThisActivity() {
-//        this.finish();                  //end this activity
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        this.finish();                  //end this activity
 //        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);utes
         threaded_application.activityInTransition(activityName);
         startACoreActivity(this, mainapp.getThrottleIntent(), false, 0);
@@ -203,6 +206,7 @@ public class reconnect_status extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.RECONNECT_STATUS;
         if (mainapp.isForcingFinish()) { //expedite
@@ -238,6 +242,10 @@ public class reconnect_status extends AppCompatActivity {
         }
         mainapp.exitDoubleBackButtonInitiated = 0;
         return (super.onKeyDown(key, event));
+    }
+
+    private void disconnect() {
+        this.finish();
     }
 
     private void shutdown() {

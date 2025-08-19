@@ -235,6 +235,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         Log.d(threaded_application.applicationName, activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.SETTINGS;
 
@@ -1072,8 +1073,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         if (numThrottles > max[index]) numThrottles = max[index]; // probably has not had a chance to refresh yet.
 
+
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.num_throttle_dialog);
+        Button cancelButton = dialog.findViewById(R.id.num_throttles_dialog_button_cancel);
+
         List<String> entryList=new ArrayList<>();
         List<String> entryValueList=new ArrayList<>();
         int size = this.getResources().getStringArray(R.array.NumOfThrottlesEntries).length;
@@ -1107,6 +1111,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 dialog.cancel();
             }
         });
+        cancelButton.setOnClickListener(v -> {dialog.dismiss(); reload();} );
         dialog.show();
     }
 
@@ -1486,6 +1491,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             Log.d(threaded_application.applicationName, activityName + ": SettingsFragment onResume()");
             super.onResume();
             threaded_application.activityResumed(activityName);
+            if (parentActivity != null)
+                parentActivity.mainapp.removeNotification(parentActivity.getIntent());
 
             threaded_application.currentActivity = activity_id_type.SETTINGS;
 

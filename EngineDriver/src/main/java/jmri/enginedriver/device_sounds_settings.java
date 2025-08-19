@@ -426,6 +426,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.DEVICE_SOUNDS_SETTINGS;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
@@ -590,6 +591,10 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
+    }
+
+    private void disconnect() {
+        this.finish();
     }
 
     private void shutdown() {

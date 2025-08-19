@@ -274,9 +274,11 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                     break;
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     shutdown();
+                    break;
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
             }
         }
@@ -446,6 +448,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.WEB;
 
@@ -711,6 +714,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
     //handle return from menu items
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         mainapp.webMenuSelected = savedWebMenuSelected;     // restore flag
     }
 
@@ -768,6 +772,11 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         if (urlRestoreStep == 3) {
             webView.loadUrl(noUrl);
         }
+    }
+
+    private void disconnect() {
+        webView.stopLoading();
+        this.finish();
     }
 
     private void shutdown() {

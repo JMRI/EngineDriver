@@ -271,9 +271,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
-                    android:padding="4sp"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
+                    android:padding="0dp"
                     android:drawableLeft="?attr/ed_read_glyph"
                     android:text="@string/DccexReadAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
@@ -284,9 +282,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
-                    android:padding="4sp"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
+                    android:padding="0dp"
                     android:drawableLeft="?attr/ed_write_glyph"
                     android:text="@string/DccexWriteAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
@@ -369,9 +365,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
-                    android:padding="4sp"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
+                    android:padding="0dp"
                     android:drawableLeft="?attr/ed_read_glyph"
                     android:text="@string/DccexReadAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
@@ -382,9 +376,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
-                    android:padding="4sp"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
+                    android:padding="0dp"
                     android:drawableLeft="?attr/ed_write_glyph"
                     android:text="@string/DccexWriteAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
@@ -1276,8 +1268,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/DCCEXclearCommands"
                 android:drawableLeft="?attr/ed_clear_list_glyph"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:padding="0dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
             <Button

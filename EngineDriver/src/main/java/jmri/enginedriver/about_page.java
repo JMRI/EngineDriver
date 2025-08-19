@@ -104,6 +104,7 @@ public class about_page extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.ABOUT;
         if (mainapp.isForcingFinish()) {        //expedite

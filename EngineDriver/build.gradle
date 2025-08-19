@@ -8,6 +8,7 @@ android {
         // cannot be higher than 16 to retain compatibility with ESU MobileControl II
         minSdkVersion 16
         targetSdk 35
+        multiDexEnabled true // Enable multidex
     }
 
     buildTypes {
@@ -33,6 +34,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1' // Add multidex dependency
+
 //    implementation 'com.android.support:design:28.0.0'
 //    implementation 'com.android.support:recyclerview-v7:28.0.0'
 //    implementation 'com.android.support:cardview-v7:28.0.0'

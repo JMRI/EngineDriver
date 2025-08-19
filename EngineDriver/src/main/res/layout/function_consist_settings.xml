@@ -63,8 +63,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/fbResetFunctionLabels"
                 android:drawableLeft="?attr/ed_reset_glyph"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
+                android:padding="0dp"
                 tools:ignore="RtlSymmetry" />
 
             <Button
@@ -77,10 +76,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="4dp"
-                android:paddingLeft="4dp"
-                android:paddingStart="4dp"
-                android:paddingRight="4dp"
-                android:paddingEnd="4dp"
+                android:padding="0dp"
                 android:text="@string/logviewerClose"
                 android:drawableLeft="?attr/ed_cross_glyph"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />

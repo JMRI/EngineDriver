@@ -687,8 +687,7 @@
             android:state_enabled="false"
             android:text="@string/acquire_button"
             android:drawableLeft="?attr/ed_acquire_loco_glyph"
-            android:paddingLeft="8dp"
-            android:paddingStart="8dp"
+            android:padding="6dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
     </RelativeLayout>
 

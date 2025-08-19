@@ -49,7 +49,7 @@
   <style name="normal_button_style" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/original_btn_text_states</item>
     <item name="android:textSize">18sp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/original_sticky_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -81,7 +81,7 @@
   <style name="small_button_style" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/original_btn_text_states</item>
     <item name="android:textSize">14sp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/original_sticky_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -494,7 +494,7 @@
   <style name="normal_button_style_black" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/original_btn_text_states</item>
     <item name="android:textSize">18sp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/round_sticky_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -526,7 +526,7 @@
   <style name="small_button_style_black" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/original_btn_text_states</item>
     <item name="android:textSize">14sp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/round_sticky_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -692,7 +692,7 @@
   <style name="normal_button_style_outline" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/outline_btn_text_states</item>
     <item name="android:textSize">18sp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/outline_sticky_button_states_round</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -720,7 +720,7 @@
   <style name="small_button_style_outline" parent="@android:style/Widget.Button">
     <item name="android:textColor">@color/outline_btn_text_states</item>
     <item name="android:textSize">14sp</item>
-    <item name="android:padding">2dp</item>
+    <item name="android:padding">0dp</item>
 
     <item name="android:background">@drawable/outline_sticky_button_states_round</item>
     <item name="android:layout_marginTop">1dp</item>
@@ -797,7 +797,7 @@
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
 
-  <style name="radion_button_style_outline" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
+  <style name="radio_button_style_outline" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:shadowColor">@color/black</item>
     <item name="android:shadowDx">2</item>

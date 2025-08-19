@@ -49,8 +49,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:text="@string/logviewerClose"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:padding="0dp"
                 android:drawableLeft="?attr/ed_cross_glyph"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -83,10 +82,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="left"
-                android:paddingLeft="6dp"
-                android:paddingStart="6dp"
-                android:paddingRight="6dp"
-                android:paddingEnd="6dp"
+                android:padding="0dp"
                 android:drawableLeft="?attr/ed_write_off_glyph"
                 android:text="@string/logviewerStopSave"
                 android:drawablePadding="0dp"
@@ -102,10 +98,7 @@
                 android:layout_toRightOf="@+id/logviewer_button_save"
                 android:drawableLeft="?attr/ed_share_glyph"
                 android:layout_gravity="left"
-                android:paddingLeft="6dp"
-                android:paddingStart="6dp"
-                android:paddingRight="6dp"
-                android:paddingEnd="6dp"
+                android:padding="0dp"
                 android:drawablePadding="0dp"
                 android:text="@string/logviewerShare"
                 tools:ignore="RtlHardcoded" />

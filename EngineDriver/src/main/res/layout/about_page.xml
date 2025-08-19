@@ -41,8 +41,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:text="@string/logviewerClose"
-            android:paddingLeft="8dp"
-            android:paddingStart="8dp"
             android:drawableLeft="?attr/ed_cross_glyph"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 

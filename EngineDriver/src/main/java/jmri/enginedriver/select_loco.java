@@ -765,6 +765,7 @@ public class select_loco extends AppCompatActivity {
 
     //handle return from ConsistEdit
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case sub_activity_type.CONSIST: // edit consist
                 if (newEngine) {
@@ -2096,6 +2097,7 @@ public class select_loco extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": onResume():");
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.SELECT_LOCO;
         if (mainapp.isForcingFinish()) {     //expedite

@@ -47,8 +47,13 @@
     <string name="gamepad1_test">Test Gamepad 1</string>
     <string name="gamepad2_test">Test Gamepad 2</string>
     <string name="gamepad3_test">Test Gamepad 3</string>
-    <string name="notification_title">Engine driver sta girando</string>
-    <string name="notification_text">Toccare per riaprire Engine Driver</string>
+
+    <string name="notificationInBackgroundTitle">Engine Driver in background</string>
+    <string name="notificationInBackgroundText">Android potrebbe interromperlo in qualsiasi momento senza preavviso. Tocca per riaprire</string>
+    <string name="notificationInBackgroundTextLowMemory">Memoria insufficiente. Engine Driver potrebbe essere chiuso a breve. Tocca per riaprire</string>
+    <string name="notificationInBackgroundTextKilled">Memoria esaurita. Engine Driver è stato eliminato.</string>
+    <string name="notificationAppWasKilledInBackground">Engine Driver costretto a riavviarsi da Android</string>
+
     <string name="host_ip">Nome Host o Indirizzo</string>
     <string name="port">Porta</string>
 <!--    <string name="loco_address">Indirizzo Locomotiva</string>-->
@@ -286,8 +291,12 @@
     <string name="prefSelectiveLeadSoundF1Summary">Per l\'opzione \'Selective Lead Unit Sound \'</string>
     <string name="prefSelectiveLeadSoundF2Title">Tratta sempre F2 come suono</string>
     <string name="prefSelectiveLeadSoundF2Summary">Per l\'opzione \'Selective Lead Unit Sound \'</string>
+
     <string name="prefStopOnPhonecallTitle">Stop incaso di Chiamata?</string>
     <string name="prefStopOnPhonecallSummary">Ferma locomotive quando si riceve o si effettua una chiamata</string>
+    <string name="prefStopOnBackgroundTitle">EStop sullo sfondo?</string>
+    <string name="prefStopOnBackgroundSummary">EStop tutte le locomotive su tutte le manette quando Engine Driver viene portato in background</string>
+
     <string name="prefStopOnReleaseTitle">Stop al Rilascio?</string>
     <string name="prefStopOnReleaseSummary">Stop della locomotiva al rilascio del Controllore</string>
     <string name="prefSwipeThroughRoutesTitle">Scorrere fra le Rotte?</string>

@@ -21,6 +21,7 @@
     <bool name="prefSelectiveLeadSoundF1DefaultValue">false</bool>
     <bool name="prefSelectiveLeadSoundF2DefaultValue">false</bool>
     <bool name="prefStopOnPhonecallDefaultValue">true</bool>
+    <bool name="prefStopOnBackgroundDefaultValue">false</bool>
     <bool name="prefStopOnReleaseDefaultValue">true</bool>
     <bool name="prefDropOnAcquireDefaultValue">false</bool>
     <bool name="prefRosterRecentLocosDefaultValue">true</bool>

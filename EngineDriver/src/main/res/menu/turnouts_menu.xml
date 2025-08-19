@@ -51,6 +51,8 @@
     <item android:id="@+id/power_control_mnu" android:title="@string/power" />
     <item android:id="@+id/dcc_ex_mnu" android:title="@string/app_name_dcc_ex" />
     <item android:id="@+id/withrottle_cv_programmer_mnu" android:title="@string/app_name_withrottle_cv_programmer" />
+    <item android:id="@+id/connect_menu"
+        android:title="@string/app_name_connect" />
     <item android:id="@+id/settings_mnu" android:title="@string/preferences" />
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer" />
     <item android:id="@+id/exit_mnu" android:title="@string/exit" />
