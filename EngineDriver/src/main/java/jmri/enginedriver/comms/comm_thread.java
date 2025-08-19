@@ -31,6 +31,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
@@ -293,6 +294,30 @@ public class comm_thread extends Thread {
         endJmdns();
 //            dlMetadataTask.stop();
         threaded_application.dlRosterTask.stop();
+    }
+
+    protected void delayedAction(int action, long delay) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    switch (action) {
+                        case message_type.SHUTDOWN: {
+                            shutdown(false);
+                            break;
+                        }
+                        case message_type.WIFI_QUIT: {
+                            sendQuit();
+                            break;
+                        }
+                        case message_type.DISCONNECT: {
+                            sendDisconnect();
+                            break;
+                        }
+                    }
+
+                }
+            }, delay);
     }
 
     protected void shutdown(boolean fast) {

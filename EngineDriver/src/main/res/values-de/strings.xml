@@ -49,8 +49,13 @@
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
-    <string name="notification_title">Engine Driver läuft</string>
-    <string name="notification_text">Antippen um Engine Driver wieder zu öffnen</string>
+
+    <string name="notificationInBackgroundTitle">Engine Driver im Hintergrund</string>
+    <string name="notificationInBackgroundText">Android kann es jederzeit ohne Warnung beenden. Tippen Sie hier, um es erneut zu öffnen</string>
+    <string name="notificationInBackgroundTextLowMemory">Wenig Speicher. Engine Driver wird möglicherweise bald beendet. Tippen Sie zum erneuten Öffnen</string>
+    <string name="notificationInBackgroundTextKilled">Speicher erschöpft. Engine Driver wurde beendet.</string>
+    <string name="notificationAppWasKilledInBackground">Engine Driver wird von Android zum Neustart gezwungen</string>
+
     <string name="host_ip">Hostname oder Adresse</string>
     <string name="port">Port</string>
 <!--    <string name="loco_address">Lokadresse</string>-->
@@ -280,8 +285,12 @@
     <string name="prefSelectiveLeadSoundF1Summary">Für die Option \"Selective Lead Unit Sound\"</string>
     <string name="prefSelectiveLeadSoundF2Title">Behandle F2 immer als Sound</string>
     <string name="prefSelectiveLeadSoundF2Summary">Für die Option \"Selective Lead Unit Sound\"</string>
+
     <string name="prefStopOnPhonecallTitle">Stop bei Telefonanruf?</string>
     <string name="prefStopOnPhonecallSummary">Stoppe Lok(s) wenn ein Telefonanruf angenommen oder gewählt wird</string>
+    <string name="prefStopOnBackgroundTitle">EStop im Hintergrund?</string>
+    <string name="prefStopOnBackgroundSummary">EStoppen Sie alle Loks auf allen Fahrreglern, wenn Engine Driver in den Hintergrund verschoben wird</string>
+
     <string name="prefStopOnReleaseTitle">Stop beim Freigeben?</string>
     <string name="prefStopOnReleaseSummary">Stoppe Lok(s) bei Freigabe aus dem Fahrregler</string>
     <string name="prefSwipeThroughRoutesTitle">Wischen durch Fahrstraßen?</string>

@@ -242,18 +242,20 @@ public class comm_handler extends Handler {
             break;
          }
 
-         //Disconnect from the WiThrottle server and Shutdown
-         case message_type.DISCONNECT: {
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): TA Disconnect");
+         // SHUTDOWN - terminate socketWiT and it's done
+         case message_type.DISCONNECT:
+         case message_type.SHUTDOWN: {
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Shutdown");
             mainapp.doFinish = true;
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): TA alert all activities to shutdown");
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): alert all activities to shutdown");
             mainapp.alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
             commThread.stoppingConnection();
 
             // arg1 = 1 means shutdown with no delays
             if (msg.arg1 == 1) {
                commThread.sendDisconnect();
-               commThread.shutdown(false);
+               if (msg.what == message_type.SHUTDOWN)
+                  commThread.shutdown(false);
             } else {
                // At this point TA needs to send the quit message to WiT and then shutdown.
                // However the DISCONNECT message also tells the Throttle activity to release all throttles
@@ -261,13 +263,9 @@ public class comm_handler extends Handler {
                //  release request messages and possibly zero speed messages need to be sent to WiT
                //  for each active throttle and WiT will respond with release messages.
                // So we delay the Quit and shutdown to allow time for all the throttle messages to complete
-               mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1500L, message_type.WIFI_QUIT);
-               if (!mainapp.sendMsgDelay(mainapp.comm_msg_handler, 1600L, message_type.SHUTDOWN)) {
-                  commThread.shutdown(false);
-               }
-               if (mainapp.getServerType().equals("IoTT")) {
-                  comm_thread.wifiSend("<U DISCONNECT>");  // special command to disconnect IoTT clients
-               }
+               commThread.delayedAction(message_type.DISCONNECT,1500);
+               if (msg.what == message_type.SHUTDOWN)
+                  commThread.delayedAction(message_type.SHUTDOWN,1600);
             }
 
             if (mainapp.soundPool != null) {
@@ -492,11 +490,6 @@ public class comm_handler extends Handler {
                }
                mainapp.alert_activities(message_type.TIME_CHANGED, "");
             }
-            break;
-
-         // SHUTDOWN - terminate socketWiT and it's done
-         case message_type.SHUTDOWN:
-            commThread.shutdown(false);
             break;
 
          case message_type.CONNECTION_COMPLETED_CHECK:

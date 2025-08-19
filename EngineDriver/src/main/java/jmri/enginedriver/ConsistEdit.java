@@ -199,9 +199,11 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     break;
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     shutdown();
+                    break;
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
             }
         }
@@ -350,6 +352,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.CONSIST_EDIT;
 
@@ -479,6 +482,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
+    }
+
+    private void disconnect() {
+        this.finish();
     }
 
     private void shutdown() {

@@ -159,6 +159,7 @@ import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
+import jmri.enginedriver.type.notification_type;
 import jmri.enginedriver.type.pref_gamepad_button_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
@@ -1151,8 +1152,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     startNewThrottleActivity();
                     break;
                 case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
+                    shutdown();
+                    break;
+                case message_type.DISCONNECT:
                     disconnect();
                     break;
                 case message_type.WEBVIEW_LOC:      // webview location changed
@@ -1239,6 +1242,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         semiRealisticThrottleSliderPositionUpdate(whichThrottle,0);
                         setTargetSpeed(whichThrottle, 0);
                     }
+                    break;
+
+                case message_type.ESTOP_ONE_THROTTLE:
+                    int whichThrottle = mainapp.throttleCharToInt(response_str.charAt(0));
+                    setSpeed(whichThrottle, 0, speed_commands_from_type.BUTTONS);
                     break;
 
                 case message_type.REOPEN_THROTTLE:
@@ -6165,6 +6173,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             return;
         }
 
+        // was ED killed while it was in background
+        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
+            if (prefForcedRestartReason == restart_reason_type.APP_PUSHED_TO_BACKGROUND) {
+                mainapp.prefsForcedRestart(prefForcedRestartReason);
+                prefs.edit().putBoolean("prefForcedRestart", false).commit();
+                prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+                Intent in = new Intent().setClass(this, connection_activity.class);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            }
+        }
+
         // put pointer to this activity's handler in main app's shared variable
 //        mainapp.throttle_msg_handler = new throttle_handler();
 
@@ -6756,6 +6777,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.THROTTLE;
         if (mainapp.isForcingFinish()) { // expedite
@@ -7044,6 +7066,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // put pointer to this activity's handler in main app's shared variable
         if (mainapp.throttle_msg_handler == null)
             mainapp.throttle_msg_handler = new ThrottleMessageHandler(Looper.getMainLooper());
+
+        // if it was killed in background, clear the save preferences
+        if ( (prefs.getBoolean("prefForcedRestart", false))
+        && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
+            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+            prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+        }
     }
 
     @Override
@@ -7060,9 +7089,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy(): called");
-        super.onDestroy();
         Log.d(threaded_application.applicationName, activityName + ": onDestroy() called");
+        super.onDestroy();
 
         kidsTimerActions(kids_timer_action_type.ENDED, 0);
         kidsTimerActions(kids_timer_action_type.DISABLED, 0);
@@ -7399,7 +7427,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     if (mainapp.throttle_msg_handler != null) {
                         mainapp.checkExit(this);
                     } else { // something has gone wrong and the activity did not shut down properly so force it
-                        disconnect();
+                        shutdown();
                     }
                     return (true); // stop processing this key
                 }
@@ -7490,6 +7518,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void disconnect() {
+        releaseThrottles();
+        webView.stopLoading();
+        mainapp.appIsFinishing = true;
+        this.finish(); // end this activity
+        connection_activity.overridePendingTransition(this, 0, 0);
+    }
+
+    private void shutdown() {
         releaseThrottles();
         webView.stopLoading();
         mainapp.appIsFinishing = true;
@@ -7602,6 +7638,46 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             in = new Intent().setClass(this, function_consist_settings.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
+
+        } else if (item.getItemId() == R.id.connect_menu) {
+            final AlertDialog.Builder b = new AlertDialog.Builder(this);
+            b.setIcon(android.R.drawable.ic_dialog_alert);
+            b.setTitle(R.string.newConnectionTitle);
+            b.setMessage(R.string.newConnectionText);
+            b.setCancelable(true);
+            b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
+                    final Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent in = new Intent().setClass(throttle.this, connection_activity.class);
+                            startActivity(in);
+                            connection_activity.overridePendingTransition(throttle.this, R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }, 2000);
+                }
+            });
+            b.setNegativeButton(R.string.no, null);
+            AlertDialog alert = b.create();
+            alert.show();
+
+            // find positiveButton and negativeButton
+            Button positiveButton = alert.findViewById(android.R.id.button1);
+            Button negativeButton = alert.findViewById(android.R.id.button2);
+            // then get their parent ViewGroup
+            ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
+            int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
+            int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
+            if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
+                // prepare exchange their index in ViewGroup
+                buttonPanelContainer.removeView(positiveButton);
+                buttonPanelContainer.removeView(negativeButton);
+                buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
+                buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+            }
             return true;
 
         } else if (item.getItemId() == R.id.about_mnu) {
@@ -7737,6 +7813,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     // handle return from menu items
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -7749,7 +7826,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     newThrottle = mainapp.throttleCharToInt(data.getCharExtra("whichThrottle", ' '));
                     overrideThrottleNames[newThrottle] = data.getStringExtra("overrideThrottleName");
                 } catch (RuntimeException e) {
-                    Log.e(threaded_application.applicationName, activityName + ": Call to OverrideThrottleName failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+                    Log.e(threaded_application.applicationName, activityName + ": Call to OverrideThrottleName failed. Runtime Exception, OS " + Build.VERSION.SDK_INT + " Message: " + e);
                 }
                 if ((getConsist(newThrottle) != null) && (!getConsist(newThrottle).isActive())) {
                     setNextActiveThrottle(); // if consist on Volume throttle was released, move to next throttle
@@ -7785,7 +7862,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                                     threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                         } catch (RuntimeException e) {
-                            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+                            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): new ToneGenerator failed. Runtime Exception, OS " + Build.VERSION.SDK_INT + " Message: " + e);
                         }
                     }
                     // update GamePad Support

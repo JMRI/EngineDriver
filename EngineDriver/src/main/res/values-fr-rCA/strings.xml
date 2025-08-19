@@ -313,8 +313,6 @@
 
 
     <string name="none">Aucun</string>
-    <string name="notification_text">Appuyer pour ouvrir Engine Driver à nouveau</string>
-    <string name="notification_title">Engine Driver en cours d\'exécution</string>
 
 
     <string name="ok">Ok</string>
@@ -788,6 +786,7 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Ampleur de variation de vitesse</string>
     <string name="prefStopOnDirectionChangeSummary">Freiner le train en mouvement lors d\'un changement de direction.</string>
     <string name="prefStopOnDirectionChangeTitle">Freinage lors d\'un changement de direction?</string>
+
     <string name="prefStopOnPhonecallSummary">Freiner les locomotives lors d\'un appel téléphonique</string>
     <string name="prefStopOnPhonecallTitle">Freinage lors d\'un appel téléphonique?</string>
     <string name="prefStopOnReleaseSummary">Freiner les locomotives lorsqu\'elle est dissociée du régulateur</string>

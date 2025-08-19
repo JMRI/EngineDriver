@@ -49,11 +49,7 @@
                 android:layout_height="40dp"
                 android:text="@string/copy_function_labels"
                 android:drawableLeft="?attr/ed_download_glyph"
-                android:drawablePadding="4dp"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
-                android:paddingRight="4dp"
-                android:paddingEnd="4dp" />
+                android:padding="0dp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -216,14 +212,12 @@
                 android:id="@+id/fb_reset_function_labels"
                 style="?attr/ed_normal_button_condensed_style"
                 android:fontFamily="sans-serif-condensed"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/fbResetFunctionLabels"
                 android:drawableLeft="?attr/ed_reset_glyph"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
-                android:paddingRight="4dp"
-                android:paddingEnd="4dp" />
+                android:padding="0dp" />
 
             <Button
                 android:id="@+id/fb_button_close"
@@ -232,8 +226,7 @@
                 android:layout_gravity="bottom"
                 android:layout_marginTop="30dp"
                 android:text="@string/logviewerClose"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
+                android:padding="0dp"
                 android:drawableLeft="?attr/ed_cross_glyph"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 

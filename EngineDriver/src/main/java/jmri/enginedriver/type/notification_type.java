@@ -17,22 +17,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface restart_reason_type {
+public interface notification_type {
     int NONE = 0;
-    int RESET = 1;
-    int IMPORT = 2;
-    int IMPORT_SERVER_MANUAL = 3;
-    int THEME = 4;
-    int THROTTLE_PAGE = 5;
-    int LOCALE = 6;
-    int IMPORT_SERVER_AUTO = 7;
-    int AUTO_IMPORT = 8; // for local server files
-    int BACKGROUND = 9;
-    int THROTTLE_SWITCH = 10;
-    int FORCE_WIFI = 11;
-    int IMMERSIVE_MODE = 12;
-    int DEAD_ZONE = 13;
-    int SHAKE_THRESHOLD = 14;
-    int GAMEPAD_RESET = 15;
-    int APP_PUSHED_TO_BACKGROUND = 16;
+    int APP_PUSHED_TO_BACKGROUND = 1;
+    int LOW_MEMORY = 2;
+    int APP_KILLED_IN_BACKGROUND = 3;
+    int APP_KILLED_RESTARTED = 4;
 }

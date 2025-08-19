@@ -1,4 +1,10 @@
 **Version 2.40.204
+ * Move to the AndroidX version of the Intro library. (Needed for edge-to-edge in sdk 36)
+ * Upgrade to Gradle 8.12.0
+ * Added close button to the 'number of throttles' dialog
+ * Rework the background notifications and restart process if the app is killed in background
+ * Added preference for - EStop all loco(s) on all throttles(s) when Engine Driver is pushed to background
+ * Improve the position of the glyphs on most of the buttons
 **Version 2.40.202
  * Corrected theming of the main power button on the power screen
  * More glyphs and cosmetic changes
@@ -9,7 +15,7 @@
 **Version 2.40.200
  * added a new separate check for when the app is in background
  * reduce the amount of static text related to log messages
- * wholesale cleanup if the code to 'finish' an activity
+ * wholesale cleanup of the code to 'finish' an activity
  * Additional log messages in select_loco
  * Move to AndroidX libraries
  * Added support for ESU MC Pro. Additional + removed + default options for the MC Pro

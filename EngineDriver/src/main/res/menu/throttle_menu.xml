@@ -143,6 +143,8 @@
 
     <item android:id="@+id/device_sounds_menu"
         android:title="@string/deviceSoundsMenu" />
+    <item android:id="@+id/connect_menu"
+        android:title="@string/app_name_connect" />
     <item android:id="@+id/logviewer_menu"
         android:title="@string/logViewer" />
     <item android:id="@+id/exit_mnu"

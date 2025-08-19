@@ -82,6 +82,7 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
@@ -402,9 +403,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     break;
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     shutdown();
+                    break;
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
                 case message_type.WIT_TURNOUT_NOT_DEFINED:
                     removeTurnoutFromRecentList(msg.obj.toString());
@@ -555,7 +558,21 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         super.onCreate(savedInstanceState);
 
         if (mainapp.isForcingFinish()) {     // expedite
+            this.finish();
             return;
+        }
+
+        // was ED killed while it was in background
+        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
+            if (prefForcedRestartReason == restart_reason_type.APP_PUSHED_TO_BACKGROUND) {
+                mainapp.prefsForcedRestart(prefForcedRestartReason);
+                prefs.edit().putBoolean("prefForcedRestart", false).commit();
+                prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+                Intent in = new Intent().setClass(this, connection_activity.class);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            }
         }
 
         setContentView(R.layout.turnouts);
@@ -789,6 +806,19 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     } // end onCreate
 
     @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        super.onStart();
+
+        // if it was killed in background, clear the save preferences
+        if ( (prefs.getBoolean("prefForcedRestart", false))
+                && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
+            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+            prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+        }
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         threaded_application.activityPaused(activityName);
@@ -801,7 +831,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //        EditText trn = findViewById(R.id.turnout_entry);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null && trn != null) {
-            mainapp.hideSoftKeyboard(trn);
+            mainapp.hideSoftKeyboard(trn, activityName, false);
         }
     }
 
@@ -812,6 +842,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.TURNOUTS;
         if (mainapp.isForcingFinish()) {     //expedite
@@ -974,6 +1005,47 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             startActivityForResult(in, 0);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
+        } else if (item.getItemId() == R.id.connect_menu) {
+            final AlertDialog.Builder b = new AlertDialog.Builder(this);
+            b.setIcon(android.R.drawable.ic_dialog_alert);
+            b.setTitle(R.string.newConnectionTitle);
+            b.setMessage(R.string.newConnectionText);
+            b.setCancelable(true);
+            b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
+                    final Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent in = new Intent().setClass(turnouts.this, connection_activity.class);
+                            startActivity(in);
+                            connection_activity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
+                        }
+                    }, 2000);
+                }
+            });
+            b.setNegativeButton(R.string.no, null);
+            AlertDialog alert = b.create();
+            alert.show();
+
+            // find positiveButton and negativeButton
+            Button positiveButton = alert.findViewById(android.R.id.button1);
+            Button negativeButton = alert.findViewById(android.R.id.button2);
+            // then get their parent ViewGroup
+            ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
+            int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
+            int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
+            if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
+                // prepare exchange their index in ViewGroup
+                buttonPanelContainer.removeView(positiveButton);
+                buttonPanelContainer.removeView(negativeButton);
+                buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
+                buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+            }
+            return true;
+
         } else if (item.getItemId() == R.id.about_mnu) {
             in = new Intent().setClass(this, about_page.class);
             startActivity(in);
@@ -1015,6 +1087,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //handle return from menu items
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //since we always do the same action no need to distinguish between requests
@@ -1023,10 +1096,13 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         refreshRecentTurnoutViewStates();
     }
 
-    private void shutdown() {
+    private void disconnect() {
         this.finish();
     }
 
+    private void shutdown() {
+        this.finish();
+    }
 
     @Override
     protected void attachBaseContext(Context base) {

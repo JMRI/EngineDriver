@@ -731,6 +731,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.GAMEPAD_TEST;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
@@ -887,6 +888,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
+    }
+
+    private void disconnect() {
+        this.finish();
     }
 
     private void shutdown() {

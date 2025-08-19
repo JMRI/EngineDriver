@@ -51,8 +51,13 @@
     <string name="gamepad1_test">Test gamepadu 1</string>
     <string name="gamepad2_test">Test gamepadu 2</string>
     <string name="gamepad3_test">Test gamepadu 3</string>
-    <string name="notification_title">Engine Driver běží</string>
-    <string name="notification_text">Klepnutím znovu otevřete Engine Driver</string>
+
+    <string name="notificationInBackgroundTitle">Engine Driver na pozadí</string>
+    <string name="notificationInBackgroundText">Android jej může kdykoli bez varování zabít. Klepnutím znovu otevřete</string>
+    <string name="notificationInBackgroundTextLowMemory">Málo paměti. Engine Driver může být brzy zabit. Klepnutím znovu otevřete</string>
+    <string name="notificationInBackgroundTextKilled">Vybitá paměť. Engine Driver byl zabit</string>
+    <string name="notificationAppWasKilledInBackground">Engine Driver nucen restartovat Android</string>
+
     <string name="host_ip">Host Name nebo Adresa</string>
     <string name="port">Port</string>
 <!--    <string name="loco_address">Adresa lokomotivy</string>-->
@@ -332,8 +337,12 @@
     <string name="prefSelectiveLeadSoundF1Summary">Pro volbu \'Výběrový zvuk vedoucí lokomotivy\'</string>
     <string name="prefSelectiveLeadSoundF2Title">Vždy zacházet s F2 jako se Zvukem</string>
     <string name="prefSelectiveLeadSoundF2Summary">Pro volbu \'Výběrový zvuk vedoucí lokomotivy\'</string>
+
     <string name="prefStopOnPhonecallTitle">Zastavit při telefonním hovoru?</string>
     <string name="prefStopOnPhonecallSummary">Zastavit lokomotivu při přijetí nebo spuštění telefonního hovoru</string>
+    <string name="prefStopOnBackgroundTitle">EZastavit na pozadí?</string>
+    <string name="prefStopOnBackgroundSummary">EZastavte všechny lokomotivy na všech plynových pedálech, když je Engine Driver posunut na pozadí</string>
+
     <string name="prefStopOnReleaseTitle">Zastavit při Propuštění?</string>
     <string name="prefStopOnReleaseSummary">Zastavit lokomotivu pokud je propuštěna ovladačem</string>
     <string name="prefSwipeThroughRoutesTitle">Přetáhnout přes Trasy?</string>

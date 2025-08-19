@@ -161,9 +161,11 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     break;
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     shutdown();
+                    break;
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
                 case message_type.RESPONSE:    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
@@ -607,6 +609,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.WITHROTTLE_CV_PROGRAMMER;
         if (mainapp.isForcingFinish()) { //expedite
@@ -681,6 +684,10 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         mainapp.witScreenIsOpen = false;
         this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void disconnect() {
+        this.finish();
     }
 
     private void shutdown() {

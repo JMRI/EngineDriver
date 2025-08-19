@@ -70,8 +70,13 @@
     <string name="gamepad1_test">Gamepad\/USB 1 Test</string>
     <string name="gamepad2_test">Gamepad\/USB 2 Test</string>
     <string name="gamepad3_test">Gamepad\/USB 3 Test</string>
-    <string name="notification_title">Engine Driver is running</string>
-    <string name="notification_text">Tap to reopen Engine Driver</string>
+
+    <string name="notificationInBackgroundTitle">Engine Driver in Background</string>
+    <string name="notificationInBackgroundText">Android may kill it at any time without warning. Tap to reopen</string>
+    <string name="notificationInBackgroundTextLowMemory">Memory low. Engine Driver may be killed soon. Tap to reopen</string>
+    <string name="notificationInBackgroundTextKilled">Memory exhausted. Engine Driver has been killed</string>
+    <string name="notificationAppWasKilledInBackground">Engine Driver forced to restart by Android</string>
+
     <string name="host_ip">Host Name or Address</string>
     <string name="port">Port</string>
 <!--    <string name="loco_address">Loco Address</string>-->
@@ -181,6 +186,9 @@
     <string name="exit_title">Exit</string>
     <string name="steal_text">Steal address %1$s?</string>
     <string name="steal_title">Steal</string>
+
+    <string name="newConnectionTitle">New Connection</string>
+    <string name="newConnectionText">Close the connection to this server, then reconnect?</string>
 
     <string name="lightsTextOff">Off</string>
     <string name="lightsTextFollow">Follow Fn Btn</string>
@@ -454,8 +462,12 @@
     <string name="prefSelectiveLeadSoundF1Summary">For the \'Selective Lead Unit Sound\' option</string>
     <string name="prefSelectiveLeadSoundF2Title">Always treat F2 as Sound?</string>
     <string name="prefSelectiveLeadSoundF2Summary">For the \'Selective Lead Unit Sound\' option</string>
+
     <string name="prefStopOnPhonecallTitle">Stop on Phone Call?</string>
     <string name="prefStopOnPhonecallSummary">Stop loco(s) when a phone call is answered or placed</string>
+    <string name="prefStopOnBackgroundTitle">EStop on Background?</string>
+    <string name="prefStopOnBackgroundSummary">EStop all locos on all throttles when Engine Driver is pushed to background</string>
+
     <string name="prefStopOnReleaseTitle">Stop on Release?</string>
     <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
     <string name="prefSwipeThroughRoutesTitle">Swipe through Routes?</string>

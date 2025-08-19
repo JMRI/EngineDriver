@@ -484,11 +484,15 @@ public class connection_activity extends AppCompatActivity implements Permission
                     break;
 
                 case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
                 case message_type.SHUTDOWN:
                     writeSharedPreferencesToFile();
                     mainapp.connectedHostName = "";
                     shutdown();
+                    break;
+                case message_type.DISCONNECT:
+                    writeSharedPreferencesToFile();
+                    mainapp.connectedHostName = "";
+                    disconnect();
                     break;
             }
         }
@@ -681,6 +685,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
 
         threaded_application.currentActivity = activity_id_type.CONNECTION;
         if (this.isFinishing()) {        //if finishing, expedite it
@@ -764,6 +769,10 @@ public class connection_activity extends AppCompatActivity implements Permission
         discovery_list_adapter = null;
         connection_list_adapter = null;
         mainapp = null;
+    }
+
+    private void disconnect() {
+        this.finish();
     }
 
     private void shutdown() {
@@ -1034,6 +1043,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //only one activity with results here
         set_labels();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // Handle pressing of the back button to request exit

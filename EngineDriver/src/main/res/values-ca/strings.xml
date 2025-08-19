@@ -46,8 +46,13 @@
     <string name="gamepad1_test">Prova 1 de gamepad</string>
     <string name="gamepad2_test">Prova 2 de gamepad</string>
     <string name="gamepad3_test">Prova 3 de gamepad</string>
-    <string name="notification_title">Engine Driver està en execució</string>
-    <string name="notification_text">Prémer per reobrir Engine Driver</string>
+
+    <string name="notificationInBackgroundTitle">Engine Driver en segon pla</string>
+    <string name="notificationInBackgroundText">Android pot matar-lo en qualsevol moment sense previ avís. Toca per tornar a obrir</string>
+    <string name="notificationInBackgroundTextLowMemory">Memòria baixa. Engine Driver pot morir aviat. Toca per tornar a obrir</string>
+    <string name="notificationInBackgroundTextKilled">La memòria esgotada. El conductor del motor ha estat assassinat</string>
+    <string name="notificationAppWasKilledInBackground">Engine Driver forçat a reiniciar-se per Android</string>
+
     <string name="host_ip">Nom del Host o Adreça</string>
     <string name="port">Port</string>
 <!--    <string name="loco_address">Adreça de Locomotora</string>-->
@@ -273,8 +278,12 @@
     <string name="prefSelectiveLeadSoundF1Summary">Per a l\'opció de \'Sò selectiu de la unitat principal\'</string>
     <string name="prefSelectiveLeadSoundF2Title">Sempre considereu F2 com a so</string>
     <string name="prefSelectiveLeadSoundF2Summary">Per a l\'opció de \'Sò selectiu de la unitat principal\'</string>
+
     <string name="prefStopOnPhonecallTitle">Atura si reps una trucada de telèfon?</string>
     <string name="prefStopOnPhonecallSummary">Atura Locomotora(es) quan contesti o realitzi una trucada</string>
+    <string name="prefStopOnBackgroundTitle">ESaturar en segon pla?</string>
+    <string name="prefStopOnBackgroundSummary">EStureu totes les locomotores a tots els acceleradors quan Engine Driver es posa en segon pla</string>
+
     <string name="prefStopOnReleaseTitle">Atura al alliberar?</string>
     <string name="prefStopOnReleaseSummary">Atura Locomotora(es) quan l\'alliberi des del Controlador</string>
     <string name="prefSwipeThroughRoutesTitle">Lliscar per les rutes?</string>

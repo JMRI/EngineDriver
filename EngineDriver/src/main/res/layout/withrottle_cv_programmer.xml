@@ -200,11 +200,9 @@
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".25"
-                    android:padding="4sp"
+                    android:padding="6sp"
                     android:maxWidth="30sp"
                     android:text="@string/DccexWriteAddressButtonLabel"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
                     android:drawableLeft="?attr/ed_write_glyph"
                     tools:ignore="RtlSymmetry,VisualLintButtonSize" />
 
@@ -363,8 +361,7 @@
                     android:layout_centerHorizontal="true"
                     android:text="@string/DCCEXclearCommands"
                     android:drawableLeft="?attr/ed_clear_list_glyph"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
+                    android:padding="0dp"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
 
                 <Button
@@ -374,8 +371,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/logviewerClose"
-                    android:paddingLeft="8dp"
-                    android:paddingStart="8dp"
+                    android:padding="0dp"
                     android:drawableLeft="?attr/ed_cross_glyph"
                     tools:ignore="RtlHardcoded,RtlSymmetry,RelativeOverlap" />
 

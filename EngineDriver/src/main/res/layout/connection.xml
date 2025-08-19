@@ -83,10 +83,7 @@
             android:text="@string/connect_button"
             android:enabled="false"
             android:drawableLeft="?attr/ed_connect_glyph"
-            android:paddingLeft="6dp"
-            android:paddingStart="6dp"
-            android:paddingRight="4dp"
-            android:paddingEnd="4dp"
+            android:padding="0dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     </RelativeLayout>
@@ -158,8 +155,6 @@
             android:layout_alignParentRight="true"
             android:text="@string/clearLocoList"
             android:drawableLeft="?attr/ed_clear_list_glyph"
-            android:paddingLeft="4dp"
-            android:paddingStart="4dp"
             tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
     </RelativeLayout>
