@@ -61,9 +61,29 @@ public class intro_permissions extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            permissionId = Integer.parseInt(Objects.requireNonNull(getArguments().getString("id")));
+            permissionId = Integer.parseInt(getArguments().getString("id"));
             permissionLabel = getArguments().getString("label");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // User is viewing the fragment,
+        // or fragment is inside the screen
+        introPermissionLabel.setText(permissionLabel);
+        if (!askedThisSession) {
+            PermissionsHelper phi = PermissionsHelper.getInstance();
+            phi.setIsDialogOpen(false);
+            if (!phi.isPermissionGranted(this.getActivity(), permissionId)) {
+                shouldShowRequestPermissionRationale(PermissionsHelper.getManifestPermissionId(permissionId));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    phi.requestNecessaryPermissions(this.getActivity(), permissionId);
+                }
+            }
+        }
+        askedThisSession = true;
     }
 
     @Override
