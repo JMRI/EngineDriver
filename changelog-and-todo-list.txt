@@ -5,6 +5,7 @@
  * Rework the background notifications and restart process if the app is killed in background
  * Added preference for - EStop all loco(s) on all throttles(s) when Engine Driver is pushed to background
  * Improve the position of the glyphs on most of the buttons
+ * Bug fix for the Power Screen when an EX-CS has one of the tracks set for AUTO
 **Version 2.40.202
  * Corrected theming of the main power button on the power screen
  * More glyphs and cosmetic changes
