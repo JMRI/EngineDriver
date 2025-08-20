@@ -546,6 +546,9 @@ public class threaded_application extends Application {
      * to return to when reopening.
      */
 
+    // -----------------------------------------------------------------------------------------------------------------------------------
+    // Notifications
+
     private void createNotificationChannelAndManager(Intent notificationIntent) {
 
         if (notificationManager == null) {
@@ -584,6 +587,7 @@ public class threaded_application extends Application {
                 // Add as notification
                 notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.createNotificationChannel(notificationChannel);
+
             } else {
                 //noinspection deprecation
                 notificationCompatBuilder =
@@ -626,6 +630,7 @@ public class threaded_application extends Application {
                     PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             notificationManager.notify(ED_NOTIFICATION_ID, notificationBuilder.build());
+
         } else {
             notificationCompatBuilder.setContentText(notificationText);
 
@@ -661,6 +666,10 @@ public class threaded_application extends Application {
         createNotificationChannelAndManager(notificationIntent);
         notificationManager.cancel(ED_NOTIFICATION_ID);
     }
+
+    // Notifications
+    // -----------------------------------------------------------------------------------------------------------------------------------
+
 
     @Override
     public void onCreate() {
