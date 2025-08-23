@@ -1021,11 +1021,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
 
-            if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
+//            if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
                 forceRestartAppOnPreferencesClose = true;
-            } else {
-                forceReLaunchAppOnPreferencesClose = true;
-            }
+//            } else {
+//                forceReLaunchAppOnPreferencesClose = true;
+//            }
             forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
         }
     }
