@@ -8646,11 +8646,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();
 
-        if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
+//        if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
             forceRestartApp(restart_reason_type.THROTTLE_SWITCH);
-        } else {
-            forceReLaunchApp(restart_reason_type.THROTTLE_SWITCH);
-        }
+//        } else {
+//            forceReLaunchApp(restart_reason_type.THROTTLE_SWITCH);
+//        }
     }
 
     //listeners for the Pause Speed Button
