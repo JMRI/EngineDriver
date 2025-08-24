@@ -1,3 +1,4 @@
+**Version 2.41.206
 **Version 2.41.204
  * Last version of Engine Driver to support Android 4.x
  * Fix for Switching Throttle layouts going back to the connection screen
