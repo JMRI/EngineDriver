@@ -403,57 +403,57 @@
         </ScrollView>
 
 
-<!--        <TableLayout-->
-<!--            android:layout_width="fill_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_margin="3dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:paddingLeft="6dp"-->
-<!--            android:paddingRight="6dp">-->
+        <!--        <TableLayout-->
+        <!--            android:layout_width="fill_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_margin="3dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:paddingLeft="6dp"-->
+        <!--            android:paddingRight="6dp">-->
 
-<!--            <TableRow android:gravity="center_horizontal">-->
+        <!--            <TableRow android:gravity="center_horizontal">-->
 
-                <LinearLayout
-                    android:layout_margin="3dp"
-                    android:layout_weight=".6"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+        <LinearLayout
+            android:layout_margin="3dp"
+            android:layout_weight=".6"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/gamepad_test_button_reset"
-                    style="?attr/ed_normal_button_condensed_style"
-                    android:layout_height="40dp"
-                    android:text="@string/gamepadTestReset"
-                    android:drawableLeft="?attr/ed_reset_glyph"
-                    android:padding="0dp" />
+            <Button
+                android:id="@+id/gamepad_test_button_reset"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_height="40dp"
+                android:text="@string/gamepadTestReset"
+                android:drawableLeft="?attr/ed_reset_glyph"
+                android:padding="0dp" />
 
-                <Button
-                    android:id="@+id/gamepad_test_button_cancel"
-                    style="?attr/ed_normal_button_condensed_style"
-                    android:layout_height="40dp"
-                    android:text="@string/gamepadTestCancel"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:padding="0dp"
-                    android:drawableLeft="?attr/ed_cross_glyph"
-                    tools:ignore="RtlHardcoded,RtlSymmetry,ButtonOrder" />
+            <Button
+                android:id="@+id/gamepad_test_button_cancel"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_height="40dp"
+                android:text="@string/gamepadTestCancel"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:padding="0dp"
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry,ButtonOrder" />
 
-                <Button
-                    android:id="@+id/gamepad_test_button_skip"
-                    style="?attr/ed_normal_button_condensed_style"
-                    android:layout_height="40dp"
-                    android:layout_gravity="right"
-                    android:text="@string/gamepadTestSkip"
-                    tools:ignore="RtlHardcoded"
-                    android:padding="0dp" />
-<!--            </TableRow>-->
+            <Button
+                android:id="@+id/gamepad_test_button_skip"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:text="@string/gamepadTestSkip"
+                tools:ignore="RtlHardcoded"
+                android:padding="0dp" />
+            <!--            </TableRow>-->
 
-<!--        </TableLayout>-->
+            <!--        </TableLayout>-->
         </LinearLayout>
 
     </LinearLayout>

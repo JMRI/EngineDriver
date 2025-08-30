@@ -297,27 +297,27 @@ public class comm_thread extends Thread {
     }
 
     protected void delayedAction(int action, long delay) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    switch (action) {
-                        case message_type.SHUTDOWN: {
-                            shutdown(false);
-                            break;
-                        }
-                        case message_type.WIFI_QUIT: {
-                            sendQuit();
-                            break;
-                        }
-                        case message_type.DISCONNECT: {
-                            sendDisconnect();
-                            break;
-                        }
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                switch (action) {
+                    case message_type.SHUTDOWN: {
+                        shutdown(false);
+                        break;
                     }
-
+                    case message_type.WIFI_QUIT: {
+                        sendQuit();
+                        break;
+                    }
+                    case message_type.DISCONNECT: {
+                        sendDisconnect();
+                        break;
+                    }
                 }
-            }, delay);
+
+            }
+        }, delay);
     }
 
     protected void shutdown(boolean fast) {
@@ -580,7 +580,7 @@ public class comm_thread extends Thread {
                     if (fn < 10) { // special case for attached keyboards keys 0-9
 //                        if (mainapp.numericKeyIsPressed[fn] == 0) {  // key down
 //                        newfState = (mainapp.numericKeyFunctionStateAtTimePressed[fn]==0) ? 1 : 0;
-                            // do nothing
+                        // do nothing
 //                        } else if (mainapp.numericKeyIsPressed[fn] == 1) { // key is up
                         if (mainapp.numericKeyIsPressed[fn] == 1) { // key is up
                             newfState = (mainapp.numericKeyFunctionStateAtTimePressed[fn] == 0) ? 1 : 0;
@@ -758,9 +758,9 @@ public class comm_thread extends Thread {
                 case 'C':
                     translatedState = "C";
                 case '2': { // toggle
-                     if (cs.equals("4")) {
-                            translatedState = "C";
-                     }
+                    if (cs.equals("4")) {
+                        translatedState = "C";
+                    }
                 }
             }
             String msgTxt = "<T " + to_id + " " + translatedState + ">";              // format <T id 0|1|T|C>
@@ -790,7 +790,7 @@ public class comm_thread extends Thread {
                         }
                     }
                     if (routeType.equals("A")) // automation
-                       msgTxt = msgTxt + " " + whichLoco.substring(1);
+                        msgTxt = msgTxt + " " + whichLoco.substring(1);
                 }
             } catch (Exception ignored) {
             }
@@ -946,7 +946,7 @@ public class comm_thread extends Thread {
 //            for (Consist.ConLoco l : con.getLocos()) {
 //                msgTxt = String.format("<t %s>", l.getAddress().substring(1,l.getAddress().length()));
 //                wifiSend(msgTxt);
-////                Log.d(threaded_application.applicationName, activityName + ": sendRequestDir(): DCC-EX: " + msgTxt);
+    ////                Log.d(threaded_application.applicationName, activityName + ": sendRequestDir(): DCC-EX: " + msgTxt);
 //            }
 //        }
 //    }
@@ -1093,7 +1093,7 @@ public class comm_thread extends Thread {
 
                     } else if (com2 == 'L') { //list of function buttons
                         if ( (mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
-                        || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overridden by the preference
+                                || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overridden by the preference
                             String lead = mainapp.consists[whichThrottle].getLeadAddr();
                             if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist
                                 processRosterFunctionString("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
@@ -1470,7 +1470,7 @@ public class comm_thread extends Thread {
         String oldState = mainapp.power_state;
         String responseStr;
         if ( (args.length==1)   // <p0|1>
-        || ((args.length==2) && (args[0].length()==1) && (args[1].charAt(0)<='2')) ) {  // <p 0|1>
+                || ((args.length==2) && (args[0].length()==1) && (args[1].charAt(0)<='2')) ) {  // <p 0|1>
             char power;
             if ( (args[0].length() == 1) && (args[1].charAt(0) <= '2') ) {  // <p 0|1 A...
                 power = args[1].charAt(0);
@@ -1580,8 +1580,8 @@ public class comm_thread extends Thread {
 //        if (args.length>=2) {
         trackNo = args[1].charAt(0)-65;
         if ( (trackNo>=0) && (trackNo<= threaded_application.DCCEX_MAX_TRACKS) ) {
-            int trackTypeIndex = -1
-;               boolean needsId = false;
+            int trackTypeIndex = -1;
+            boolean needsId = false;
             for (int i=0; i<TRACK_TYPES.length; i++) {
                 if (type.equals(TRACK_TYPES[i])) {
                     trackTypeIndex = i;
@@ -1959,7 +1959,7 @@ public class comm_thread extends Thread {
                 }
                 if ((ready) && (!mainapp.dccexTurnoutsFullyReceived) ) {
                     mainapp.dccexTurnoutString = getTurnoutsString(noTurnouts);
-                    
+
                     processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{2]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{4]\\["
@@ -2017,7 +2017,7 @@ public class comm_thread extends Thread {
         }
         return turnoutsStringBuilder.toString();
     }
-    
+
     private static void processDccexRoutes(String [] args) {
         if (args != null)  {
             if ( (args.length == 1)  // no Routes <jA>
@@ -2052,7 +2052,7 @@ public class comm_thread extends Thread {
                 }
                 if (ready) {
                     mainapp.dccexRouteString = getRoutesString(noRoutes);
-                    
+
                     processRouteTitles("PRT]\\[Routes}|{Route]\\["
                             + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
                             + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
@@ -2114,7 +2114,7 @@ public class comm_thread extends Thread {
             }
         }
     } // end processDccexRoutes()
-    
+
     private static String getRoutesString(boolean noRoutes) {
         StringBuilder routesStringBuilder = new StringBuilder();
         routesStringBuilder.append("PRL");
@@ -2127,7 +2127,7 @@ public class comm_thread extends Thread {
         }
         return routesStringBuilder.toString();
     }
-    
+
     static void processDccexRouteUpdate(String [] args) {
         if (args != null) {
             int pos = -1;
@@ -2514,12 +2514,12 @@ public class comm_thread extends Thread {
                 } catch (Exception except) {
                     if (!firstConnect) {
                         threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
-                                                      mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
+                                mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
                     }
                     if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) { //show additional message if using mobile data
                         Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
                         threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI,
-                                                            mainapp.client_type), Toast.LENGTH_LONG);
+                                mainapp.client_type), Toast.LENGTH_LONG);
                     }
                     socketOk = false;
                 }

@@ -47,9 +47,9 @@
     <string name="gamepad3_test">Teste Gamepad 3</string>
 
     <string name="notificationInBackgroundTitle">EngineDriver em segundo plano</string>
-    <string name="notificationInBackgroundText">O Android pode desativá-lo a qualquer momento, sem aviso prévio. Toque para reabrir</string>
-    <string name="notificationInBackgroundTextLowMemory">Memória baixa. O EngineDriver pode ser desativado em breve. Toque para reabrir.</string>
-    <string name="notificationInBackgroundTextKilled">Memória esgotada. EngineDriver foi morto</string>
+    <string name="notificationInBackgroundText">☠️O Android pode desativá-lo a qualquer momento, sem aviso prévio. Toque para reabrir</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Memória baixa. O EngineDriver pode ser desativado em breve. Toque para reabrir.</string>
+    <string name="notificationInBackgroundTextKilled">☠️Memória esgotada. EngineDriver foi morto</string>
     <string name="notificationAppWasKilledInBackground">EngineDriver forçado a reiniciar pelo Android</string>
 
     <string name="host_ip">Nome Host ou Endereço</string>
@@ -125,7 +125,7 @@
     <string name="press_to_toggle">Apertar botão para mudar o estado de energia da maquete</string>
     <string name="power_control_not_allowed">Controle de Energia não permitido. Mudar em Preferências no servidor.</string>
     <string name="reconnect_label">Status Tentativas de Re-conexão</string>
-    <string name="reconnect_help">Tentando reconectar automaticamente. Aguarde para re-conectar ou aperte a seta Atrás para Sair.</string>
+    <string name="reconnect_help">Tentando reconectar automaticamente. \nAguarde para re-conectar ou aperte a seta Atrás para Sair.</string>
     <string name="reconnect_success">RE-CONECTADO. Retomando oerações normais.</string>
     <string name="fs_edit_notice">AVISO:mudanças das Funções Padrão será perdida ao sair - SD Card não encontrada.</string>
     <string name="ca_recent_conn_notice">Conexões Recentes indisponíveis - SD Card não encontrada.</string>
@@ -1022,7 +1022,7 @@
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nome da rede inacessível. A descoberta de servidor pode ser limitada.</string>
     <string name="statusThreadedAppNotConnected">Não conectado a uma rede. Verifique as configurações do WiFi.\n\n nova tentativa</string>
     <string name="statusThreadedAppUnableToConnect">Incapaz de conectar ao servidor a %1$s:%2$s de %3$s. Representando</string>
-    <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$dms segundos. Verifique se o servidor Withrottle está em execução. Representando</string>
+    <string name="statusThreadedAppNoResponse">Nenhuma resposta do servidor %1$s:%2$s por %3$dms segundos. Verifique se o servidor está em execução. Representando</string>
     <string name="toastImportExportCouldNotParseAddress">Não foi possível analisar o endereço\n%1$s</string>
     <string name="toastNumThrottles">O tipo de tela do acelerador escolhido não suporta muitos acelerações. Reduzindo para %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Máx</string>

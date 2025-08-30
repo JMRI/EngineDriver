@@ -251,35 +251,35 @@
 
             </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/witWriteInfoLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="0sp"-->
-<!--                android:background="#00000000"-->
-<!--                android:orientation="vertical">-->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/witWriteInfoLayout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="0sp"-->
+            <!--                android:background="#00000000"-->
+            <!--                android:orientation="vertical">-->
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="fill_parent"-->
-<!--                    android:layout_height="2dp"-->
-<!--                    android:layout_marginTop="6sp"-->
-<!--                    android:background="#888888"-->
-<!--                    android:orientation="vertical" />-->
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="fill_parent"-->
+            <!--                    android:layout_height="2dp"-->
+            <!--                    android:layout_marginTop="6sp"-->
+            <!--                    android:background="#888888"-->
+            <!--                    android:orientation="vertical" />-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/witWriteInfoLabel"-->
-<!--                    style="?attr/floating_text_style"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="end"-->
-<!--                    android:layout_marginTop="1sp"-->
-<!--                    android:layout_marginBottom="1sp"-->
-<!--                    android:padding="2sp"-->
-<!--                    android:text=""-->
-<!--                    android:textAlignment="viewEnd"-->
-<!--                    android:textColor="?android:attr/textColorSecondary" />-->
+            <!--                <TextView-->
+            <!--                    android:id="@+id/witWriteInfoLabel"-->
+            <!--                    style="?attr/floating_text_style"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="end"-->
+            <!--                    android:layout_marginTop="1sp"-->
+            <!--                    android:layout_marginBottom="1sp"-->
+            <!--                    android:padding="2sp"-->
+            <!--                    android:text=""-->
+            <!--                    android:textAlignment="viewEnd"-->
+            <!--                    android:textColor="?android:attr/textColorSecondary" />-->
 
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -288,96 +288,96 @@
                 android:orientation="vertical"
                 android:paddingTop="2dp" />
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/wit_WitResponsesAndSendsLayout"-->
-<!--                android:layout_width="fill_parent"-->
-<!--                android:layout_height="0sp"-->
-<!--                android:layout_marginTop="0sp"-->
-<!--                android:layout_weight=".4"-->
-<!--                android:background="#00000000"-->
-<!--                android:orientation="vertical"-->
-<!--                android:weightSum="1"-->
-<!--                tools:ignore="NestedWeights">-->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/wit_WitResponsesAndSendsLayout"-->
+            <!--                android:layout_width="fill_parent"-->
+            <!--                android:layout_height="0sp"-->
+            <!--                android:layout_marginTop="0sp"-->
+            <!--                android:layout_weight=".4"-->
+            <!--                android:background="#00000000"-->
+            <!--                android:orientation="vertical"-->
+            <!--                android:weightSum="1"-->
+            <!--                tools:ignore="NestedWeights">-->
 
-<!--                <ScrollView-->
-<!--                    android:id="@+id/wit_WitResponsesScrollView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    android:layout_weight=".7">-->
+            <!--                <ScrollView-->
+            <!--                    android:id="@+id/wit_WitResponsesScrollView"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="0dp"-->
+            <!--                    android:layout_weight=".7">-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/wit_WitResponsesLabel"-->
-<!--                        style="?attr/floating_text_style"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="8sp"-->
-<!--                        android:text=""-->
-<!--                        android:textSize="12sp" />-->
+            <!--                    <TextView-->
+            <!--                        android:id="@+id/wit_WitResponsesLabel"-->
+            <!--                        style="?attr/floating_text_style"-->
+            <!--                        android:layout_width="match_parent"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_marginTop="8sp"-->
+            <!--                        android:text=""-->
+            <!--                        android:textSize="12sp" />-->
 
-<!--                </ScrollView>-->
+            <!--                </ScrollView>-->
 
-                <ScrollView
-                    android:id="@+id/wit_WitSendsScrollView"
+            <ScrollView
+                android:id="@+id/wit_WitSendsScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".4"
+                tools:ignore="NestedWeights">
+
+                <TextView
+                    android:id="@+id/wit_WitSendsLabel"
+                    style="?attr/floating_text_style"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".4"
-                    tools:ignore="NestedWeights">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8sp"
+                    android:text=""
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/wit_WitSendsLabel"
-                        style="?attr/floating_text_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8sp"
-                        android:text=""
-                        android:textSize="12sp" />
-
-                </ScrollView>
-<!--            </LinearLayout>-->
+            </ScrollView>
+            <!--            </LinearLayout>-->
 
         </LinearLayout>
 
-<!--        <TableLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_gravity="center_horizontal"-->
-<!--            android:layout_margin="3dp"-->
-<!--            android:layout_weight=".08"-->
-<!--            android:paddingLeft="6dp"-->
-<!--            android:paddingRight="6dp">-->
+        <!--        <TableLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            android:layout_gravity="center_horizontal"-->
+        <!--            android:layout_margin="3dp"-->
+        <!--            android:layout_weight=".08"-->
+        <!--            android:paddingLeft="6dp"-->
+        <!--            android:paddingRight="6dp">-->
 
-            <RelativeLayout
-                android:id="@+id/withrottle_cv_programmer_bottom_button_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="0sp"
-                android:layout_margin="0sp"
-                android:layout_weight=".08"
-                android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/withrottle_cv_programmer_bottom_button_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="0sp"
+            android:layout_margin="0sp"
+            android:layout_weight=".08"
+            android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/wit_WitClearCommandsButton"
-                    style="?attr/ed_normal_button_condensed_style"
-                    android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/DCCEXclearCommands"
-                    android:drawableLeft="?attr/ed_clear_list_glyph"
-                    android:padding="0dp"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+            <Button
+                android:id="@+id/wit_WitClearCommandsButton"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/DCCEXclearCommands"
+                android:drawableLeft="?attr/ed_clear_list_glyph"
+                android:padding="0dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-                <Button
-                    android:id="@+id/withrottle_cv_programmer_button_close"
-                    style="?attr/ed_normal_button_condensed_style"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/logviewerClose"
-                    android:padding="0dp"
-                    android:drawableLeft="?attr/ed_cross_glyph"
-                    tools:ignore="RtlHardcoded,RtlSymmetry,RelativeOverlap" />
+            <Button
+                android:id="@+id/withrottle_cv_programmer_button_close"
+                style="?attr/ed_normal_button_condensed_style"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/logviewerClose"
+                android:padding="0dp"
+                android:drawableLeft="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry,RelativeOverlap" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-<!--        </TableLayout>-->
+        <!--        </TableLayout>-->
 
     </LinearLayout>
 </LinearLayout>

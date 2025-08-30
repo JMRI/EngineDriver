@@ -21,6 +21,7 @@
         <TextView
             android:id="@+id/ip_label"
             style="?android:attr/listSeparatorTextViewStyle"
+            android:fontFamily="sans-serif-condensed"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
             android:text="@string/host_ip"
@@ -60,6 +61,7 @@
         <TextView
             android:id="@+id/port_title"
             style="?android:attr/listSeparatorTextViewStyle"
+            android:fontFamily="sans-serif-condensed"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
             android:layout_above="@id/port"
@@ -91,6 +93,7 @@
     <TextView
         android:id="@+id/discoveredServersHeading"
         style="?android:attr/listSeparatorTextViewStyle"
+        android:fontFamily="sans-serif-condensed"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/discovered_services"
@@ -135,6 +138,7 @@
         <TextView
             android:id="@+id/recent_connections_heading"
             style="?android:attr/listSeparatorTextViewStyle"
+            android:fontFamily="sans-serif-condensed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/recent_connections"
@@ -184,6 +188,7 @@
 
         <TextView
             android:id="@+id/cons_DccexConnectionOption_heading"
+            android:fontFamily="sans-serif-condensed"
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

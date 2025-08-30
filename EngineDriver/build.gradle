@@ -8,7 +8,6 @@ android {
         // cannot be higher than 16 to retain compatibility with ESU MobileControl II
         minSdkVersion 16
         targetSdk 35
-        multiDexEnabled true // Enable multidex
     }
 
     buildTypes {
@@ -34,8 +33,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.multidex:multidex:2.0.1' // Add multidex dependency
-
 //    implementation 'com.android.support:design:28.0.0'
 //    implementation 'com.android.support:recyclerview-v7:28.0.0'
 //    implementation 'com.android.support:cardview-v7:28.0.0'
@@ -54,9 +51,7 @@ dependencies {
     implementation files('libs/java-json.jar')
     implementation files('libs/jmdns-3.5.8.jar')
     implementation 'io.github.esugmbh:mobilecontrol2-sdk:1.1.7'
-//    implementation 'com.github.apl-devs:appintro:v4.2.3'
-    implementation 'com.github.AppIntro:appintro:7.0.0-beta02'
-
+    implementation 'com.github.apl-devs:appintro:v4.2.3'
     implementation 'org.slf4j:slf4j-api:1.7.30'
     implementation 'org.slf4j:slf4j-nop:1.7.30'
 }

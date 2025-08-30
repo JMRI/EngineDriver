@@ -281,8 +281,13 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                         reopenThrottlePage();
                     break;
 
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
                 default:
                     break;
+
 
             }
         }
@@ -340,7 +345,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 sLocos.setSelection(getArrayIndex(LOCOS, aLocos.get(ndx)));
 //                if ((!isSpecial) && (mainapp.isDCCEX)
                 if ( (!isSpecial)
-                    && (!mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL) )
+                        && (!mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL) )
                 ) { // if it is for DCC-EX only, don't show the lead/trail etc options
                     sLocos.setVisibility(View.GONE);
                     findViewById(R.id.function_consist_LocosHeader).setVisibility(View.GONE);
@@ -461,6 +466,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         move_view_to_settings();        //sync settings array to view
         if (!settingsCurrent)
@@ -533,8 +539,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 //                    initSettingsImpl();
 //                    break;
 //                default:
-                    // do nothing
-                    Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Unrecognised permissions request code: " + requestCode);
+            // do nothing
+            Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }

@@ -16,11 +16,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
     <string name="exit">Sortir</string>
     <string name="functionDefaultSettings">Funcions per defecte</string>
-<!--    <string name="fb_label">Etiquetes de funcions</string>-->
+    <!--    <string name="fb_label">Etiquetes de funcions</string>-->
     <string name="functionLatchingSettings">Configuració de bloqueig de funcions</string>
     <string name="fb_column_label">Etiqueta</string>
     <string name="fb_column_function">Func#</string>
-<!--    <string name="function_buttons">botons_de_funcions</string>-->
+    <!--    <string name="function_buttons">botons_de_funcions</string>-->
     <string name="introMenu">Introducció</string>
 
     <string name="app_description">Engine Driver - Un Controlador per al teu telèfon Android. Aquesta aplicació permet connectar a servidors Withrottle com el JMRI, DCC-EX, MRC o Digitrax, i tripular les teves Locomotores. La velocitat, la direcció, i més de 32 funcions DCC estan suportades per a una o dues Locomotores</string>
@@ -48,9 +48,9 @@
     <string name="gamepad3_test">Prova 3 de gamepad</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver en segon pla</string>
-    <string name="notificationInBackgroundText">Android pot matar-lo en qualsevol moment sense previ avís. Toca per tornar a obrir</string>
-    <string name="notificationInBackgroundTextLowMemory">Memòria baixa. Engine Driver pot morir aviat. Toca per tornar a obrir</string>
-    <string name="notificationInBackgroundTextKilled">La memòria esgotada. El conductor del motor ha estat assassinat</string>
+    <string name="notificationInBackgroundText">☠️Android pot matar-lo en qualsevol moment sense previ avís. Toca per tornar a obrir</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Memòria baixa. Engine Driver pot morir aviat. Toca per tornar a obrir</string>
+    <string name="notificationInBackgroundTextKilled">☠️La memòria esgotada. El conductor del motor ha estat assassinat</string>
     <string name="notificationAppWasKilledInBackground">Engine Driver forçat a reiniciar-se per Android</string>
 
     <string name="host_ip">Nom del Host o Adreça</string>
@@ -123,7 +123,7 @@
     <string name="press_to_toggle">Prèm per canviar l\'estat de la corrent de via</string>
     <string name="power_control_not_allowed">Control de corrent de via no permès. Modifica\'l a preferències/configuració en el servidor</string>
     <string name="reconnect_label">Intenta reconnectar</string>
-    <string name="reconnect_help">Intenta reconnectar automàticament. Espera per a la reconnexió o prem fletxa/enrere per a sortir</string>
+    <string name="reconnect_help">Intenta reconnectar automàticament. \nEspera per a la reconnexió o prem fletxa/enrere per a sortir</string>
     <string name="reconnect_success">RECONNECTAT. Continuem funcionant</string>
     <string name="fs_edit_notice">ALERTA: els canvis dels paràmetres per defecte de les funcions es perdràn al sortir - No s\'ha trobat targeta SD</string>
     <string name="ca_recent_conn_notice">No estan disponibles les connexions recents - No s\'ha trobat targeta SD</string>
@@ -671,7 +671,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Error en iniciar el fluxe del socket_WiT: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Error en crear el fluxe de sortida, Excepció IO: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Error dormint el fluxe de sortida, Excepció Interrumpida: %1$s</string>
-    <string name="statusThreadedAppNoResponse">No hi ha hagut resposta des del servidor %1$s:%2$s en %3$dms. Verifica que el servidor WiThrottle s\'estigui executant.\n\nReintenta</string>
+    <string name="statusThreadedAppNoResponse">No hi ha hagut resposta des del servidor %1$s:%2$s en %3$dms. Verifica que el servidor s\'estigui executant.\n\nReintenta</string>
     <string name="statusThreadedAppUnableToConnect">No s\'ha pogut connectar al servidor a %1$s:%2$s des de %3$s.\n\nReintentant</string>
     <string name="functionButtonLookForWhistle">XIULET</string>
     <string name="functionButtonLookForHorn">BOTZINA</string>

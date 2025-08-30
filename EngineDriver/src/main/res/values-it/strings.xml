@@ -49,9 +49,9 @@
     <string name="gamepad3_test">Test Gamepad 3</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver in background</string>
-    <string name="notificationInBackgroundText">Android potrebbe interromperlo in qualsiasi momento senza preavviso. Tocca per riaprire</string>
-    <string name="notificationInBackgroundTextLowMemory">Memoria insufficiente. Engine Driver potrebbe essere chiuso a breve. Tocca per riaprire</string>
-    <string name="notificationInBackgroundTextKilled">Memoria esaurita. Engine Driver è stato eliminato.</string>
+    <string name="notificationInBackgroundText">☠️Android potrebbe interromperlo in qualsiasi momento senza preavviso. Tocca per riaprire</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Memoria insufficiente. Engine Driver potrebbe essere chiuso a breve. Tocca per riaprire</string>
+    <string name="notificationInBackgroundTextKilled">☠️Memoria esaurita. Engine Driver è stato eliminato.</string>
     <string name="notificationAppWasKilledInBackground">Engine Driver costretto a riavviarsi da Android</string>
 
     <string name="host_ip">Nome Host o Indirizzo</string>
@@ -126,7 +126,7 @@
     <string name="press_to_toggle">Premere il tasto per cambiare lo stato di energia del plastico</string>
     <string name="power_control_not_allowed">Controllo di Energia non permesso. Cambiare in Preferenze/Impostazioni sul server.</string>
     <string name="reconnect_label">Status Tentativi di Riconnessione</string>
-    <string name="reconnect_help">Tentando riconnettere autimaticamente. Attendere la riconnessione o premere la freccia Indietro per Uscire.</string>
+    <string name="reconnect_help">Tentando riconnettere autimaticamente. \nAttendere la riconnessione o premere la freccia Indietro per Uscire.</string>
     <string name="reconnect_success">RICONNESSO. Riprendendo operazioni normali.</string>
     <string name="fs_edit_notice">AVVISO: cambiamenti delle funzioni standard saranno perduti all\'uscita - SD Card non trovata.</string>
     <string name="ca_recent_conn_notice">Connessioni Recenti indisponibili - SD Card non trovata</string>
@@ -1016,7 +1016,7 @@
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nome della rete inaccessibile. Il rilevamento del server potrebbe essere limitato.</string>
     <string name="statusThreadedAppNotConnected">Non connesso a una rete. Controllare le impostazioni WiFi.\n\n ReTring</string>
     <string name="statusThreadedAppUnableToConnect">Impossibile connettersi al server a %1$s:%2$s da %3$s. Riprovare</string>
-    <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$dms secondi. Verificare che il server Withrottle sia in esecuzione. Riprovare</string>
+    <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$dms secondi. Verificare che il server sia in esecuzione. Riprovare</string>
     <string name="toastImportExportCouldNotParseAddress">Impossibile analizzare l\'indirizzo\n%1$s</string>
     <string name="toastNumThrottles">Il tipo di schermo dell\'acceleratore scelto non supporta così tante frotte. Ridurre a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>

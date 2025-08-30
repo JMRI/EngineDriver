@@ -103,7 +103,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private static String location = null;
     private Spinner locationSpinner;
 
-//    private GestureDetector myGesture;
+    //    private GestureDetector myGesture;
     private Menu activityMenu;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
@@ -412,6 +412,14 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.WIT_TURNOUT_NOT_DEFINED:
                     removeTurnoutFromRecentList(msg.obj.toString());
                     break;
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -920,6 +928,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
@@ -1014,6 +1023,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             b.setCancelable(true);
             b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    threaded_application.activityInTransition(activityName);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
                     final Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
@@ -1298,8 +1308,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 3;
             } catch (Exception except) {
                 Log.e(threaded_application.applicationName, activityName
-                                + ": deleteRecentTurnoutsListFile: Turnouts: Error retrieving maximum_recent_locos_preference "
-                                + except.getMessage());
+                        + ": deleteRecentTurnoutsListFile: Turnouts: Error retrieving maximum_recent_locos_preference "
+                        + except.getMessage());
                 numberOfRecentTurnoutsToWrite = 20;
             }
 

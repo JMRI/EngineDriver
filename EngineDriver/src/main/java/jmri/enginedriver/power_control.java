@@ -108,6 +108,14 @@ public class power_control extends AppCompatActivity {
                 case message_type.RECEIVED_TRACKS:
                     refreshDccexTracksView();
                     break;
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -423,6 +431,7 @@ public class power_control extends AppCompatActivity {
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

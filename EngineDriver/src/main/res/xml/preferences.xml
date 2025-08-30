@@ -453,7 +453,7 @@
             android:summary="@string/prefHideFunctionButtonsOfNonSelectedThrottleSummary"
             android:title="@string/prefHideFunctionButtonsOfNonSelectedThrottleTitle"
             android:layout="@layout/checkbox_no_icon" />
-        
+
         <ListPreference
             android:defaultValue="@string/prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue"
             android:key="prefSimpleThrottleLayoutShowFunctionButtonCount"
@@ -2392,7 +2392,7 @@
         android:layout="@layout/category_icon_left"
         android:icon="@drawable/category_import_black" >
 
-    <PreferenceScreen
+        <PreferenceScreen
             android:layout="@layout/checkbox_icon_left_highlight"
             android:icon="?attr/ed_folder_icon"
             android:key="importExport_preferences"
@@ -2400,12 +2400,12 @@
             android:summary="@string/prefThrottleImportExportSummary"
             android:persistent="false">
 
-        <PreferenceCategory
-            android:title="@string/prefThrottleImportExportTitle"
-            android:layout="@layout/category_icon_left"
-            android:icon="@drawable/category_import_black">
+            <PreferenceCategory
+                android:title="@string/prefThrottleImportExportTitle"
+                android:layout="@layout/category_icon_left"
+                android:icon="@drawable/category_import_black">
 
-            <ListPreference
+                <ListPreference
                     android:defaultValue="@string/prefImportExportDefaultValue"
                     android:entries="@array/prefImportExportEntries"
                     android:entryValues="@array/prefImportExportEntryValues"
@@ -2472,12 +2472,12 @@
                     android:title="@string/prefShowTimeOnLogEntryTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefShareFileNowDefaultValue"
-                    android:key="prefShareFileNow"
-                    android:summary="@string/prefShareFileNowSummary"
-                    android:title="@string/prefShareFileNowTitle"
-                    android:layout="@layout/checkbox_no_icon" />
+<!--                <CheckBoxPreference-->
+<!--                    android:defaultValue="@bool/prefShareFileNowDefaultValue"-->
+<!--                    android:key="prefShareFileNow"-->
+<!--                    android:summary="@string/prefShareFileNowSummary"-->
+<!--                    android:title="@string/prefShareFileNowTitle"-->
+<!--                    android:layout="@layout/checkbox_no_icon" />-->
 
             </PreferenceCategory>
         </PreferenceScreen>

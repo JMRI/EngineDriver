@@ -51,9 +51,9 @@
     <string name="gamepad3_test">Gamepad 3 Test</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver im Hintergrund</string>
-    <string name="notificationInBackgroundText">Android kann es jederzeit ohne Warnung beenden. Tippen Sie hier, um es erneut zu öffnen</string>
-    <string name="notificationInBackgroundTextLowMemory">Wenig Speicher. Engine Driver wird möglicherweise bald beendet. Tippen Sie zum erneuten Öffnen</string>
-    <string name="notificationInBackgroundTextKilled">Speicher erschöpft. Engine Driver wurde beendet.</string>
+    <string name="notificationInBackgroundText">☠️Android kann es jederzeit ohne Warnung beenden. Tippen Sie hier, um es erneut zu öffnen</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Wenig Speicher. Engine Driver wird möglicherweise bald beendet. Tippen Sie zum erneuten Öffnen</string>
+    <string name="notificationInBackgroundTextKilled">☠️Speicher erschöpft. Engine Driver wurde beendet.</string>
     <string name="notificationAppWasKilledInBackground">Engine Driver wird von Android zum Neustart gezwungen</string>
 
     <string name="host_ip">Hostname oder Adresse</string>
@@ -123,7 +123,7 @@
     <string name="press_to_toggle">Knopf drücken um Anlagenstrom Ein/Aus zu schalten</string>
     <string name="power_control_not_allowed">Steuerung des Anlagenstroms nicht erlaubt. Ändere die Einstellungen auf dem Server.</string>
     <string name="reconnect_label">Wiederverbindungsstatus</string>
-    <string name="reconnect_help">Versuche automatisch neu zu verbinden. Warte auf Wiederverbindung oder drücke Zurück-Pfeil zum Beenden.</string>
+    <string name="reconnect_help">Versuche automatisch neu zu verbinden. \nWarte auf Wiederverbindung oder drücke Zurück-Pfeil zum Beenden.</string>
     <string name="reconnect_success">WIEDER VERBUNDEN. Normaler Betrieb wird aufgenommen.</string>
     <string name="fs_edit_notice">WARNUNG: Änderungen der Standardfunktionseinstellungen gehen beim Beenden verloren - Keine SD Karte gefunden.</string>
     <string name="ca_recent_conn_notice">Letzte Verbindungen nicht verfügbar - Keine SD Karte gefunden.</string>
@@ -512,7 +512,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Fehler beim Starten von socket_WiT-Thread: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Fehler beim Erstellen des Ausgabestreams, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Fehler beim Einschläfern des Threads, InterruptedException: %1$s</string>
-    <string name="statusThreadedAppNoResponse">Keine Antwort vom Server %1$s:%2$s für %3$dms. Überprüfe, ob der WiThrottle Server läuft.\n\nVersuche erneut</string>
+    <string name="statusThreadedAppNoResponse">Keine Antwort vom Server %1$s:%2$s für %3$dms. Überprüfe, ob der Server läuft.\n\nVersuche erneut</string>
     <string name="statusThreadedAppUnableToConnect">Kann nicht mit Server unter %1$s:%2$s von %3$s verbinden.\n\nVersuche erneut</string>
 
     <string name="toastDoubleBackButtonToExit">Drücken Sie erneut „Zurück“, um Engine Driver zu verlassen</string>

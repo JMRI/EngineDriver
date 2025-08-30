@@ -50,9 +50,9 @@
     <string name="gamepad3_test">Gamepad 3 Test</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver en arrière-plan</string>
-    <string name="notificationInBackgroundText">Android peut le désactiver à tout moment sans avertissement. Appuyez pour rouvrir.</string>
-    <string name="notificationInBackgroundTextLowMemory">Mémoire faible. Engine Driver pourrait bientôt être arrêté. Appuyez pour rouvrir.</string>
-    <string name="notificationInBackgroundTextKilled">Mémoire épuisée. Engine Driver a été arrêté.</string>
+    <string name="notificationInBackgroundText">☠️Android peut le désactiver à tout moment sans avertissement. Appuyez pour rouvrir.</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Mémoire faible. Engine Driver pourrait bientôt être arrêté. Appuyez pour rouvrir.</string>
+    <string name="notificationInBackgroundTextKilled">☠️Mémoire épuisée. Engine Driver a été arrêté.</string>
     <string name="notificationAppWasKilledInBackground">Engine Driver forcé à redémarrer par Android</string>
 
     <string name="host_ip">Nom ou adresse du serveur</string>
@@ -122,7 +122,7 @@
     <string name="press_to_toggle">Appuyer pour changer l état de l alimentation du réseau</string>
     <string name="power_control_not_allowed">La commande de l alimentation n est pas disponible. Modifier les préférences depuis le serveur.</string>
     <string name="reconnect_label">Etat de la tentative de reconnexion</string>
-    <string name="reconnect_help">Essai de reconnexion automatique. Attendre la reconnexion, ou appuyer sur fleche arrière pour sortir.</string>
+    <string name="reconnect_help">Essai de reconnexion automatique. \nAttendre la reconnexion, ou appuyer sur fleche arrière pour sortir.</string>
     <string name="reconnect_success">RECONNECTION OK, reprise du fonctionnement normal.</string>
     <string name="fs_edit_notice">ATTENTION: les modifications de paramétrage seront perdues à la sortie du programme - carte SD absente!</string>
     <string name="ca_recent_conn_notice">Les connexions récentes ne sont pas disponibles - aucune carte SD.</string>
@@ -523,7 +523,7 @@
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Pas d autorisation d acces a la localisation</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Le nom du reseau est inacessible, la decouverte du serveur est limitee</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
-    <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur WiThrottle fonctionne.\n\nRetrying</string>
+    <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur fonctionne.\n\nRetrying</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
     <string name="toastDoubleBackButtonToExit">Appuyer a nouveau sur \'Retour\' pour quitter Engine Driver</string>
     <string name="toastUnableToSetBrightness">Impossible de régler la luminosité automatique ou adaptative.</string>

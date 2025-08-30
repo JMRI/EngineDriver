@@ -93,7 +93,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private static String location = null;
     private Spinner locationSpinner;
 
-//    private GestureDetector myGesture;
+    //    private GestureDetector myGesture;
     private Menu activityMenu;
 
     private LinearLayout screenNameLine;
@@ -128,13 +128,13 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 String b;
                 switch (mainapp.routesOrder) {
                     case sort_type.NAME: {
-                    a = threaded_application.formatNumberInName(arg0.get("rt_user_name"));
-                    b = threaded_application.formatNumberInName(arg1.get("rt_user_name"));
+                        a = threaded_application.formatNumberInName(arg0.get("rt_user_name"));
+                        b = threaded_application.formatNumberInName(arg1.get("rt_user_name"));
                         break;
                     }
                     case sort_type.ID: {
-                    a = threaded_application.formatNumberInName(arg0.get("rt_system_name"));
-                    b = threaded_application.formatNumberInName(arg1.get("rt_system_name"));
+                        a = threaded_application.formatNumberInName(arg0.get("rt_system_name"));
+                        b = threaded_application.formatNumberInName(arg1.get("rt_system_name"));
                         break;
                     }
                     case sort_type.POSITION:
@@ -347,9 +347,14 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                 case message_type.DISCONNECT:
                     disconnect();
                     break;
-                default:
-                    // do nothing
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
                     break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -364,7 +369,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     public class button_listener implements View.OnClickListener {
-        char whichCommand; //always '2' 
+        char whichCommand; //always '2'
 
         public button_listener(char new_command) {
             whichCommand = new_command;
@@ -681,6 +686,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
@@ -743,7 +749,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         // Handle all of the possible menu actions.
         Intent in;
         if ( (item.getItemId() == R.id.throttle_button_mnu )
-        || (item.getItemId() == R.id.throttle_mnu) ) {
+                || (item.getItemId() == R.id.throttle_mnu) ) {
             in = mainapp.getThrottleIntent();
             startACoreActivity(this, in, false, 0);
             if (item.getItemId() == R.id.throttle_button_mnu ) { mainapp.buttonVibration(); }
@@ -760,24 +766,32 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         } else if (item.getItemId() == R.id.exit_mnu) {
             mainapp.checkAskExit(this);
             return true;
+
         } else if (item.getItemId() == R.id.power_control_mnu) {
+            threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, power_control.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.settings_mnu) {
+            threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, SettingsActivity.class);
             startActivityForResult(in, 0);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
+            threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, dcc_ex.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.logviewer_menu) {
-            Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-            startActivity(logviewer);
+            threaded_application.activityInTransition(activityName);
+            in = new Intent().setClass(this, LogViewerActivity.class);
+            startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
@@ -789,11 +803,13 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             b.setCancelable(true);
             b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    threaded_application.activityInTransition(activityName);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
                     final Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            threaded_application.activityInTransition(activityName);
                             Intent in = new Intent().setClass(routes.this, connection_activity.class);
                             startActivity(in);
                             connection_activity.overridePendingTransition(routes.this, R.anim.fade_in, R.anim.fade_out);
@@ -822,10 +838,12 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             return true;
 
         } else if (item.getItemId() == R.id.about_mnu) {
+            threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, about_page.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.EmerStop) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();

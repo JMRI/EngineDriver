@@ -22,6 +22,7 @@ import static jmri.enginedriver.threaded_application.context;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -37,6 +38,9 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -55,7 +59,7 @@ public class reconnect_status extends AppCompatActivity {
     private String prog = "";
     private boolean backOk = true;
     private boolean retryFirst = false;
-    private Menu RCMenu;
+//    private Menu RCMenu;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
@@ -138,7 +142,7 @@ public class reconnect_status extends AppCompatActivity {
     private void endThisActivity() {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         this.finish();                  //end this activity
-//        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);utes
+
         threaded_application.activityInTransition(activityName);
         startACoreActivity(this, mainapp.getThrottleIntent(), false, 0);
     }
@@ -180,6 +184,14 @@ public class reconnect_status extends AppCompatActivity {
 
             mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
         }
+
+        Button exitButton = findViewById(R.id.reconnect_exit_button);
+        ExitButtonListener exitButtonListener = new ExitButtonListener(this);
+        exitButton.setOnClickListener(exitButtonListener);
+
+        Button connectButton = findViewById(R.id.reconnect_new_connection_button);
+        ConnectButtonListener connectButtonListener = new ConnectButtonListener(this);
+        connectButton.setOnClickListener(connectButtonListener);
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -258,14 +270,14 @@ public class reconnect_status extends AppCompatActivity {
     }
 
     // common startActivity()
-    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    // used for swipes for the main activities only - Throttle, Turnouts, Routes, Web
     protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
             threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options = ActivityOptions.makeCustomAnimation(context, R.anim.fade_in, R.anim.fade_out);
             startActivity(in, options.toBundle());
-//            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -273,7 +285,7 @@ public class reconnect_status extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.reconnect_status_menu, menu);
-        RCMenu = menu;
+//        RCMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -284,8 +296,8 @@ public class reconnect_status extends AppCompatActivity {
             mainapp.checkAskExit(this, true);
             return true;
         } else if (item.getItemId() == R.id.logviewer_menu) {
-            Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
-            startActivity(logviewer);
+            Intent in = new Intent().setClass(this, LogViewerActivity.class);
+            startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else {
@@ -293,4 +305,60 @@ public class reconnect_status extends AppCompatActivity {
         }
     }
 
+    public class ExitButtonListener implements View.OnClickListener {
+        Activity thisActivity;
+
+        ExitButtonListener(Activity activity) {
+            thisActivity = activity;
+        }
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            mainapp.checkAskExit(thisActivity, true);
+        }
+    }
+
+    public class ConnectButtonListener implements View.OnClickListener {
+        Activity thisActivity;
+
+        ConnectButtonListener(Activity activity) {
+            thisActivity = activity;
+        }
+        public void onClick(View v) {
+
+            final AlertDialog.Builder b = new AlertDialog.Builder(thisActivity);
+            b.setIcon(android.R.drawable.ic_dialog_alert);
+            b.setTitle(R.string.newConnectionTitle);
+            b.setMessage(R.string.newConnectionText);
+            b.setCancelable(true);
+            b.setPositiveButton(R.string.yes, (dialog, id) -> {
+                threaded_application.activityInTransition(activityName);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    Intent in = new Intent().setClass(thisActivity, connection_activity.class);
+                    startActivity(in);
+                    connection_activity.overridePendingTransition(thisActivity, R.anim.fade_in, R.anim.fade_out);
+                }, 2000);
+            });
+            b.setNegativeButton(R.string.no, null);
+            AlertDialog alert = b.create();
+            alert.show();
+
+            // find positiveButton and negativeButton
+            Button positiveButton = alert.findViewById(android.R.id.button1);
+            Button negativeButton = alert.findViewById(android.R.id.button2);
+            // then get their parent ViewGroup
+            ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
+            int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
+            int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
+            if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
+                // prepare exchange their index in ViewGroup
+                buttonPanelContainer.removeView(positiveButton);
+                buttonPanelContainer.removeView(negativeButton);
+                buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
+                buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+            }
+
+        }
+    }
 }

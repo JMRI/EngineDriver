@@ -233,11 +233,11 @@ public class comm_handler extends Handler {
             mainapp.alert_activities(message_type.RELAUNCH_APP, "");
 
             Intent intent = mainapp.getBaseContext().getPackageManager().getLaunchIntentForPackage(mainapp.getBaseContext().getPackageName());
-             if (intent != null) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mainapp.startActivity(intent);
-             }
+            if (intent != null) {
+               intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+               mainapp.startActivity(intent);
+            }
             Runtime.getRuntime().exit(0); // really force the kill
             break;
          }
@@ -452,7 +452,7 @@ public class comm_handler extends Handler {
          case message_type.POWER_CONTROL:
             commThread.sendPower(msg.arg1);
             break;
-         //send command to request the power state.  no argumants
+         //send command to request the power state.  no arguments
 //         case message_type.POWER_STATE_REQUEST:
 //            commThread.sendPowerStateRequest();
 //            break;
@@ -577,6 +577,10 @@ public class comm_handler extends Handler {
             break;
 
          case message_type.REOPEN_THROTTLE:
+            mainapp.alert_activities(msg.what, "");
+            break;
+
+         case message_type.LOW_MEMORY:
             mainapp.alert_activities(msg.what, "");
             break;
       }

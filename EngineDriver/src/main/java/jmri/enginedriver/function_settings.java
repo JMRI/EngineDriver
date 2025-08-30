@@ -337,8 +337,13 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                         reopenThrottlePage();
                     break;
 
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
                 default:
                     break;
+
             }
         }
     }
@@ -537,6 +542,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         move_view_to_settings();        //sync settings array to view
         if ( (!settingsCurrent)
                 || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels))
@@ -606,14 +612,14 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 et.setText(sVal);
                 isValid = false;
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
-                                                Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
+                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
-                                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
+                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             prefs.edit().putString(key, defaultVal).commit();
@@ -621,7 +627,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             et.setText(sVal);
             isValid = false;
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
-                                        Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
+                    Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
         if (isValid) sVal = Integer.toString(newVal);
         return sVal;
@@ -719,8 +725,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 //                    initSettingsImpl();
 //                    break;
 //                default:
-                    // do nothing
-                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
+            // do nothing
+            Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }

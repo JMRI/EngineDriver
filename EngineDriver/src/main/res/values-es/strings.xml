@@ -49,9 +49,9 @@
     <string name="gamepad3_test">Prueba 3 de gamepad</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver en segundo plano</string>
-    <string name="notificationInBackgroundText">Android puede cerrarlo en cualquier momento sin previo aviso. Toca para volver a abrir.</string>
-    <string name="notificationInBackgroundTextLowMemory">Memoria baja. Engine Driver podría ser eliminado pronto. Pulsa para volver a abrir.</string>
-    <string name="notificationInBackgroundTextKilled">Memoria agotada. Engine Driver ha sido eliminado.</string>
+    <string name="notificationInBackgroundText">☠️Android puede cerrarlo en cualquier momento sin previo aviso. Toca para volver a abrir.</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Memoria baja. Engine Driver podría ser eliminado pronto. Pulsa para volver a abrir.</string>
+    <string name="notificationInBackgroundTextKilled">☠️Memoria agotada. Engine Driver ha sido eliminado.</string>
     <string name="notificationAppWasKilledInBackground">Engine Driver se ve obligado a reiniciarse por Android</string>
 
     <string name="host_ip">Nombre del Host o Dirección</string>
@@ -122,7 +122,7 @@
     <string name="press_to_toggle">Pulsa para cambiar el estado de la tensión de vía</string>
     <string name="power_control_not_allowed">Control de tensión de vía no permitido. Modifícalo en preferencias/configuración en el servidor</string>
     <string name="reconnect_label">Intenta reconectar</string>
-    <string name="reconnect_help">Intenta la reconexión automáticamente. Espera para la reconexión o presiona flecha/atrás para salir</string>
+    <string name="reconnect_help">Intenta la reconexión automáticamente. \nEspera para la reconexión o presiona flecha/atrás para salir</string>
     <string name="reconnect_success">RECONECTADO. Continuamos funcionando</string>
     <string name="fs_edit_notice">ATENCIÓN: los cambios de los parámetros por defecto de las funciones se perderán al salir - No se ha encontrado tarjeta SD</string>
     <string name="ca_recent_conn_notice">No están disponibles las conexiones recientes - No se ha encontrado tarjeta SD</string>
@@ -665,7 +665,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Error al iniciar el flujo del socket_WiT: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Error al crear el flujo de salida. Excepción IO: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Error durmiendo el flujo de salida. Excepción interrumpida: %1$s</string>
-    <string name="statusThreadedAppNoResponse">No ha habido respuesta desde el servidor %1$s:%2$s en %3$dms. Verifica que el servidor WiThrottle se está ejecutando.\n\nReintenta</string>
+    <string name="statusThreadedAppNoResponse">No ha habido respuesta desde el servidor %1$s:%2$s en %3$dms. Verifica que el servidor se está ejecutando.\n\nReintenta</string>
     <string name="statusThreadedAppUnableToConnect">No se puede conectar al servidor a %1$s:%2$s de %3$s. Volver a intentar</string>
     <string name="functionButtonLookForWhistle">SILBATO</string>
     <string name="functionButtonLookForHorn">BOZINA</string>

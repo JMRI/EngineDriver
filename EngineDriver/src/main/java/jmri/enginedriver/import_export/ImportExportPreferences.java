@@ -664,6 +664,24 @@ public class ImportExportPreferences {
         recentLocoFunctionsList.remove(position);
     }
 
+    public String findRecentLocoFunctions(int locoAddress, int locoAddressSize, String locoName) {
+        // check if it is already in the list and remove it
+        String functions = "";
+        for (int i = 0; i < recentLocoAddressList.size(); i++) {
+            Log.d(threaded_application.applicationName, activityName + ": findRecentLocoEntry(): locoName='"+locoName+"', address=" + locoAddress);
+            if (locoAddress == recentLocoAddressList.get(i)
+                    && locoAddressSize == recentLocoAddressSizeList.get(i)
+                    && locoName.equals(recentLocoNameList.get(i))) {
+
+                functions = recentLocoFunctionsList.get(i);
+                Log.d(threaded_application.applicationName, activityName + ": findRecentLocoEntry(): Loco '"+ locoName + "' removed from Recents");
+                break;
+            }
+        }
+        return functions;
+    }
+
+
     private String addOneConsistAddress(String line, Integer start, Integer end,
                                         ArrayList<Integer> tempRecentConsistLocoAddressList_inner,
                                         ArrayList<Integer> tempRecentConsistAddressSizeList_inner,

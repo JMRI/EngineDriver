@@ -205,6 +205,14 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                 case message_type.DISCONNECT:
                     disconnect();
                     break;
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -459,6 +467,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra

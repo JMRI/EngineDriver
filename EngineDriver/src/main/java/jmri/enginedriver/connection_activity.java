@@ -153,7 +153,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     boolean prefAllowMobileData = false;
     boolean prefDccexConnectionOption = false;
-//    boolean prefAlwaysUseFunctionsFromServer = false;
+    //    boolean prefAlwaysUseFunctionsFromServer = false;
     TextView dccexConnectionOptionLabel;
     Spinner dccexConnectionOptionSpinner;
     String [] dccexConnectionOptionEntriesArray;
@@ -431,7 +431,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         tm = discovery_list.get(index);
 //                        if (tm.get("host_name").equals(found_host_name)) {
                         if ( (tm.get("ip_address").equals(found_ip_address))
-                        && (tm.get("port").equals(found_port)) ) {
+                                && (tm.get("port").equals(found_port)) ) {
                             entryExists = true;
                             break;
                         }
@@ -1035,7 +1035,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else {
-                return super.onOptionsItemSelected(item);
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -1264,8 +1264,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                    connect();
 //                    break;
 //                default:
-                    // do nothing
-                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
+            // do nothing
+            Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }
@@ -1311,7 +1311,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             prefs.edit().putString("prefUseDccexProtocol", mainapp.prefUseDccexProtocol).commit();  //set the preference
 
             if ( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES))
-            || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.NO)) ) {
+                    || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.NO)) ) {
                 dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
             } else { // if (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
                 dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEXplusAutoHint);
@@ -1353,7 +1353,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
 
         mainapp.isDCCEX = ( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
-                       && ((serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) || (serverPort==2560)) );
+                && ((serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) || (serverPort==2560)) );
     }
 
     void adjustToolbarSize(Menu menu) {
