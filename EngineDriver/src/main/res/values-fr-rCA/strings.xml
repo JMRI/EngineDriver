@@ -899,7 +899,7 @@
     <string name="RecentConsistsNameEditText">Nom de l\'unité multiple</string>
     <string name="RecentConsistsNameEditTitle">Nom récent de l\'unité multiple</string>
     <string name="RecentsNameEditText">Nom de la locomotive</string>
-    <string name="reconnect_help">Tentative de reconnexion automatique.  Patienter pour la reconnexion ou appuyer sur \'Précédent\' pour terminer.</string>
+    <string name="reconnect_help">Tentative de reconnexion automatique. \nPatienter pour la reconnexion ou appuyer sur \'Précédent\' pour terminer.</string>
     <string name="reconnect_label">État de la tentative de reconnexion</string>
     <string name="reconnect_success">RECONNEXION RÉUSSIE.  Reprise normale des opérations.</string>
     <string name="release">Libération</string>
@@ -932,7 +932,7 @@
     <string name="sl_recent_engine_notice">Locomotives récemment utilisées sont indisponibles - Aucune carte SD détectée.</string>
     <string name="soundsButtonHornShortDefaultValue">Klaxon bref</string>
 
-    <string name="statusThreadedAppNoResponse" tools:ignore="TypographyEllipsis">Aucune réponse du serveur %1$s:%2$s depuis %3$dms secondes.  Vérifier le bon fonctionnement du serveur WiThrottle.  Nouvelle tentative...</string>
+    <string name="statusThreadedAppNoResponse" tools:ignore="TypographyEllipsis">Aucune réponse du serveur %1$s:%2$s depuis %3$dms secondes.  Vérifier le bon fonctionnement du serveur.  Nouvelle tentative...</string>
 
     <string name="statusThreadedAppNotConnected" tools:ignore="TypographyEllipsis">Aucune connexion réseau.  Vérifier les paramètres Wi-Fi.  Nouvelle tentative...</string>
     <string name="statusThreadedAppNotconnectedToWifi">Aucune connexion Wi-Fi</string>

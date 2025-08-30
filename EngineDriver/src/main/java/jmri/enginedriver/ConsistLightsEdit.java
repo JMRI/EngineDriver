@@ -76,7 +76,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     private Menu CLEMenu;
     private ArrayList<HashMap<String, String>> consistList;
     private SimpleAdapter consistListAdapter;
-//    private ArrayList<ConLoco> consistObjList;
+    //    private ArrayList<ConLoco> consistObjList;
     private Consist consist;
     private int result;                     // set to RESULT_FIRST_USER when something is edited
 
@@ -184,6 +184,14 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                 case message_type.DISCONNECT:
                     disconnect();
                     break;
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -445,6 +453,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra

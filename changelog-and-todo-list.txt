@@ -1,6 +1,10 @@
 **Version 2.41.206
-**Version 2.41.204
  * Last version of Engine Driver to support Android 4.x
+ * Removed ability to share files to ED's scoped storage. Incompatible with version Android 4.x
+ * Additional buttons on the Reconnection Screen
+ * Partial rewrite of the activity switch handling in WebActivity to make it consistent with the other activities. The rest will wait till Android 5
+ * Fix for missing function labels when selecting from recent locos or recent consists
+**Version 2.41.204
  * Fix for Switching Throttle layouts going back to the connection screen
  * Move to the AndroidX version of the Intro library. (Needed for edge-to-edge in sdk 36)
  * Upgrade to Gradle 8.12.1

@@ -280,6 +280,14 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 case message_type.DISCONNECT:
                     disconnect();
                     break;
+
+                case message_type.LOW_MEMORY:
+//                    endThisActivity();
+                    break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -439,7 +447,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
 
-    } // end onCreate
+    } // end onCreate()
 
     @Override
     public void onResume() {
@@ -492,7 +500,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             ov.removeOnGestureListener(this);
             ov.setEventsInterceptionEnabled(false);
         }
-    }
+    } // end onresume()
 
     @Override
     public void onPause() {
@@ -565,12 +573,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         state.putBundle("webViewState", bundle);
     }
 
-    public class close_button_listener implements View.OnClickListener {
-        public void onClick(View v) {
-            navigateAway();
-            mainapp.buttonVibration();
-        }
-    }
+//    public class close_button_listener implements View.OnClickListener {
+//        public void onClick(View v) {
+//            navigateAway();
+//            mainapp.buttonVibration();
+//        }
+//    }
 
     private void pauseWebView() {
         if (webView != null) {
@@ -604,7 +612,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 webView.goBack();
                 return true;
             }
-            navigateAway(true, null); // don't really finish the activity here
+//            navigateAway(true, null); // don't really finish the activity here
+            Intent in = new Intent().setClass(this, throttle.class);
+            startACoreActivity(this, in, false, 0);
             return true;
         }
         mainapp.exitDoubleBackButtonInitiated = 0;
@@ -663,42 +673,61 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         switch (item.getItemId()) {
             case R.id.throttle_button_mnu:
             case R.id.throttle_mnu:
-                navigateAway(true, null);
+//                navigateAway(true, null);
+                in = mainapp.getThrottleIntent();
+                startACoreActivity(this, in, false, 0);
                 return true;
+
             case R.id.turnouts_mnu:
-                navigateAway(true, turnouts.class);
+//                navigateAway(true, turnouts.class);
+                in = new Intent().setClass(this, turnouts.class);
+                startACoreActivity(this, in, false, 0);
                 return true;
+
             case R.id.routes_mnu:
-                navigateAway(true, routes.class);
+//                navigateAway(true, routes.class);
+                in = new Intent().setClass(this, routes.class);
+                startACoreActivity(this, in, false, 0);
                 return true;
+
             case R.id.exit_mnu:
                 mainapp.checkAskExit(this);
                 return true;
+
             case R.id.power_control_mnu:
+                threaded_application.activityInTransition(activityName);
                 navigateAway(false, power_control.class);
                 return true;
 /*            case R.id.preferences_mnu:
                 navigateAway(false, SettingsActivity.class);
                 return true;*/
             case R.id.settings_mnu:
+                threaded_application.activityInTransition(activityName);
                 in = new Intent().setClass(this, SettingsActivity.class);
                 startActivityForResult(in, 0);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
+
             case R.id.EmerStop:
                 mainapp.sendEStopMsg();
                 mainapp.buttonVibration();
                 return true;
+
             case R.id.logviewer_menu:
+                threaded_application.activityInTransition(activityName);
                 navigateAway(false, LogViewerActivity.class);
                 return true;
+
             case R.id.about_mnu:
+                threaded_application.activityInTransition(activityName);
                 navigateAway(false, about_page.class);
                 return true;
+
             case R.id.flashlight_button:
                 mainapp.toggleFlashlightActionView(this, WMenu, findViewById(R.id.flashlight_button));
                 mainapp.buttonVibration();
                 return true;
+
             case R.id.powerLayoutButton:
                 if (!mainapp.isPowerControlAllowed()) {
                     mainapp.powerControlNotAllowedDialog(WMenu);
@@ -822,9 +851,10 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     // common startActivity()
-    // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
+    // used for swipes for the main activities only - Throttle, Turnouts, Routes, Web
     void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
         if (activity != null && in != null) {
+            mainapp.webMenuSelected = false;
             threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;

@@ -103,5 +103,6 @@ public interface message_type {
     int REOPEN_THROTTLE = 81;
     int ESTOP_ONE_THROTTLE = 82;
 //    int POWER_STATE_REQUEST = 83;  // not implemented
+    int LOW_MEMORY = 83;
 
 }

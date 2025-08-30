@@ -544,7 +544,7 @@ public class select_loco extends AppCompatActivity {
             releaseButton1.setVisibility(GONE);
 
             for (int i = 0; i < 2; i++) {
-            consistOptionsLayout[i].setVisibility(GONE);
+                consistOptionsLayout[i].setVisibility(GONE);
             }
         }
 
@@ -631,6 +631,14 @@ public class select_loco extends AppCompatActivity {
                     Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): DISCONNECT");
                     endThisActivity();
                     break;
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -837,7 +845,7 @@ public class select_loco extends AppCompatActivity {
 
                             // resize bitmap
                             Bitmap resizedBitmap = Bitmap.createScaledBitmap(roughBitmap, (int) (roughBitmap.getWidth() * values[0]),
-                                                                            (int) (roughBitmap.getHeight() * values[4]), true);
+                                    (int) (roughBitmap.getHeight() * values[4]), true);
 
                             int degree = getRotateDegreeFromExif(image_file.getPath());
                             Matrix matrix = new Matrix();
@@ -866,6 +874,7 @@ public class select_loco extends AppCompatActivity {
                 break;
         }
     }
+
     private void imageFileFoundButCannotBeLoaded() {
         Log.d(threaded_application.applicationName, activityName + ": onActivityResult(): load image - image file found but could not loaded");
     }
@@ -1151,12 +1160,12 @@ public class select_loco extends AppCompatActivity {
                 consistName = importExportPreferences.recentConsistNameList.get(whichEntryIsBeingUpdated - 1);
             }
             importExportPreferences.addRecentConsistToList(0,consistName,
-                                                                    tempRecentConsistLocoAddressList_inner,
-                                                                    tempRecentConsistAddressSizeList_inner,
-                                                                    tempRecentConsistDirectionList_inner,
-                                                                    tempRecentConsistSourceList_inner,
-                                                                    tempRecentConsistRosterNameList_inner,
-                                                                    tempRecentConsistLightList_inner);
+                    tempRecentConsistLocoAddressList_inner,
+                    tempRecentConsistAddressSizeList_inner,
+                    tempRecentConsistDirectionList_inner,
+                    tempRecentConsistSourceList_inner,
+                    tempRecentConsistRosterNameList_inner,
+                    tempRecentConsistLightList_inner);
 
         }
         importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
@@ -1407,16 +1416,14 @@ public class select_loco extends AppCompatActivity {
                 sWhichThrottle += locoName;
                 acquireLoco(true, -1);
                 if (!functions.isEmpty()) {
-                    if ( (locoSource == source_type.ROSTER)
-                    || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overridden by the preference
                         String addrStr = ((locoAddressSize == 0) ? "S" : "L") + locoAddress;
                         String lead = mainapp.consists[whichThrottle].getLeadAddr();
                         if (lead.equals(addrStr)) {                        //*** temp - only process if for lead engine in consist
                             LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels("RF29}|{1234(L)]\\[" + functions);  //prepend some stuff to match old-style
                             mainapp.function_labels[whichThrottle] = functionLabelsMap;
-                            mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
                         }
-                    }
+                } else {
+                    mainapp.function_labels[whichThrottle] = new LinkedHashMap<>(mainapp.function_labels_default);
                 }
                 mainapp.buttonVibration();
             }
@@ -1468,6 +1475,16 @@ public class select_loco extends AppCompatActivity {
                     dir = importExportPreferences.recentConsistDirectionList.get(actualPostion).get(i);
                     if (dir == direction_type.BACKWARD) {
                         consist.setBackward(sAddr, true);
+                    }
+
+                    if ((i == 0)) {  //lead loco. get the functions from the recent locos list
+                        String functions = importExportPreferences.findRecentLocoFunctions(locoAddress, locoAddressSize, locoName);
+                        if (!functions.isEmpty()) {
+                            LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels("RF29}|{1234(L)]\\[" + functions);  //prepend some stuff to match old-style
+                            mainapp.function_labels[whichThrottle] = functionLabelsMap;
+                        }
+                    } else {
+                        mainapp.function_labels[whichThrottle] = new LinkedHashMap<>(mainapp.function_labels_default);
                     }
 
                     light = importExportPreferences.recentConsistLightList.get(actualPostion).get(i);
@@ -1582,7 +1599,7 @@ public class select_loco extends AppCompatActivity {
                 }
                 if ("loco".equals(rosterEntryType)) {
                     locoName = rosterNameString;
-                    sWhichThrottle += rosterNameString;     //append rostername if type is loco (not consist) 
+                    sWhichThrottle += rosterNameString;     //append rostername if type is loco (not consist)
                 }
                 locoSource = source_type.ROSTER;
 
@@ -2183,10 +2200,12 @@ public class select_loco extends AppCompatActivity {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
+
         } else if (item.getItemId() == R.id.flashlight_button) {
             mainapp.toggleFlashlightActionView(this, SMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
+
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(SMenu);

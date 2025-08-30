@@ -549,6 +549,7 @@ public class threaded_application extends Application {
     // -----------------------------------------------------------------------------------------------------------------------------------
     // Notifications
 
+
     private void createNotificationChannelAndManager(Intent notificationIntent) {
 
         if (notificationManager == null) {
@@ -799,7 +800,8 @@ public class threaded_application extends Application {
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
                 if (!isInBackground) {                              // if just went into bkg
                     isInBackground = true;
-                    addNotification(runningActivity.getIntent(), notification_type.APP_PUSHED_TO_BACKGROUND);
+                    if (runningActivity != null)
+                        addNotification(runningActivity.getIntent(), notification_type.APP_PUSHED_TO_BACKGROUND);
                     prefs.edit().putBoolean("prefForcedRestart", true).commit();
                     prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.APP_PUSHED_TO_BACKGROUND).commit();
 
@@ -817,8 +819,10 @@ public class threaded_application extends Application {
                 if ( (level == ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) ) {
                     if (!isActivityVisible()) {   // double check it is in background
 //                        updateNotification(getResources().getString(R.string.notificationInBackgroundTextLowMemory));
-                        removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
-                        addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
+                        if (runningActivity != null) {
+                            removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
+                            addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
+                        }
                     }
                 }
                 else if (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE) {
@@ -1705,7 +1709,7 @@ public class threaded_application extends Application {
         }
     }
 
-    // forward a message to all running activities 
+    // forward a message to all running activities
     public void alert_activities(int msgType, String msgBody) {
         try {
             sendMsg(connection_msg_handler, msgType, msgBody);
@@ -1858,7 +1862,7 @@ public class threaded_application extends Application {
         if ( (port > 0) || (defaultUrl.toLowerCase().startsWith("http")) ) {
             if (defaultUrl.toLowerCase().startsWith("http")) { //if url starts with http, use it as is
                 url = defaultUrl;
-            } else { //, else prepend servername and port and slash if needed           
+            } else { //, else prepend servername and port and slash if needed
                 url = "http://" + host_ip + ":" + port + (defaultUrl.startsWith("/") ? "" : "/") + defaultUrl;
             }
         }
@@ -2443,7 +2447,7 @@ public class threaded_application extends Application {
         });
     }
 
-    public int getMaxThottlesForScreen(String throttleScreenType) {
+    public int getMaxThrottlesForScreen(String throttleScreenType) {
         switch (throttleScreenType) {
             case throttle_screen_type.SIMPLE:
                 return max_throttles_current_screen_type.SIMPLE;
@@ -3300,9 +3304,9 @@ public class threaded_application extends Application {
         int fadeIn = R.anim.fade_in;
         if (swipe) {
             if (deltaX > 0.0) {
-                    fadeIn = R.anim.push_right_in;
+                fadeIn = R.anim.push_right_in;
             } else {
-                    fadeIn = R.anim.push_left_in;
+                fadeIn = R.anim.push_left_in;
             }
         }
         return fadeIn;
@@ -3312,9 +3316,9 @@ public class threaded_application extends Application {
         int fadeOut = R.anim.fade_out;
         if (swipe) {
             if (deltaX > 0.0) {
-                    fadeOut = R.anim.push_right_out;
+                fadeOut = R.anim.push_right_out;
             } else {
-                    fadeOut = R.anim.push_left_out;
+                fadeOut = R.anim.push_left_out;
             }
         }
         return fadeOut;

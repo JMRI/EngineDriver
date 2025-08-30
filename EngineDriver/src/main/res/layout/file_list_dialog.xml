@@ -13,12 +13,12 @@
         android:text="@string/shareFileDialogTitle"
         android:textSize="20sp" />
 
-        <ListView
-            android:id="@+id/file_dialog_listview"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"/>
+    <ListView
+        android:id="@+id/file_dialog_listview"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -113,14 +113,14 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                 et.setText(sVal);
                 isValid = false;
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
-                                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
+                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
-                                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
+                        Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             prefs.edit().putString(key, defaultVal).commit();
@@ -128,7 +128,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             et.setText(sVal);
             isValid = false;
             threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
-                                    Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
+                    Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
         if (isValid) sVal = Integer.toString(newVal);
         return sVal;
@@ -463,6 +463,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     // end current activity
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         setResult(result, resultIntent);
@@ -491,6 +492,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         } else {
             mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
         }
+
         adjustToolbarSize(menu);
 
         return  super.onCreateOptionsMenu(menu);
@@ -546,8 +548,13 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                         endThisActivity();
                     break;
 
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
                 default:
                     break;
+
             }
         }
     }

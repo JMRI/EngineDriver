@@ -325,9 +325,9 @@
     <string name="no">いいえ</string>
     <string name="none">なし</string>
     <string name="notificationInBackgroundTitle">バックグラウンドでの Engine Driver</string>
-    <string name="notificationInBackgroundText">Androidは警告なしにいつでも終了する可能性があります。タップして再度開きます</string>
-    <string name="notificationInBackgroundTextLowMemory">メモリ不足です。Engine Driver は間もなく終了する可能性があります。タップして再度開いてください</string>
-    <string name="notificationInBackgroundTextKilled">メモリ不足のため、Engine Driverが強制終了されました</string>
+    <string name="notificationInBackgroundText">☠️Androidは警告なしにいつでも終了する可能性があります。タップして再度開きます</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️メモリ不足です。Engine Driver は間もなく終了する可能性があります。タップして再度開いてください</string>
+    <string name="notificationInBackgroundTextKilled">☠️メモリ不足のため、Engine Driverが強制終了されました</string>
     <string name="notificationAppWasKilledInBackground">Android によって Engine Driver が強制的に再起動されました</string>
 
 
@@ -985,7 +985,7 @@
     <string name="sl_recent_engine_notice">最近のロコは利用できません - SD カードが見つかりません。</string>
     <string name="soundsButtonHornShortDefaultValue">ホーンショート</string>
 
-    <string name="statusThreadedAppNoResponse">サーバー %1$s:%2$s から %3$dms 秒間応答がありませんでした。 WiThrottle サーバーが実行されていることを確認します。再試行中</string>
+    <string name="statusThreadedAppNoResponse">サーバー %1$s:%2$s から %3$dms 秒間応答がありませんでした。 サーバーが実行されていることを確認します。再試行中</string>
 
     <string name="statusThreadedAppServerDiscoveryNoLocationService">「位置情報を使用する」Android システム設定が無効になっています。</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">ACCESS_FINE_LOCATION 権限が付与されていません。</string>

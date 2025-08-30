@@ -220,7 +220,7 @@
                         android:layout_gravity="center_vertical"
                         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
-            </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/DccexTrackPower3layout"

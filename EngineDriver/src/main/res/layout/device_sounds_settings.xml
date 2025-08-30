@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8sp"
                     android:text="@string/prefDeviceSounds0Summary"
-                     />
+                    />
 
                 <Spinner
                     android:id="@+id/dss_throttle0"
@@ -115,7 +115,7 @@
                         android:layout_weight=".7"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsMomentumSummary"
-                         />
+                        />
 
                     <EditText
                         android:id="@+id/dss_DeviceSoundsMomentum"
@@ -169,7 +169,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                     android:orientation="horizontal">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsLocoVolume_label"
@@ -179,18 +179,18 @@
                         android:layout_weight=".7"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsLocoVolumeSummary"
-                         />
+                        />
 
-                     <Spinner
-                         android:id="@+id/dss_DeviceSoundsLocoVolume"
-                         android:layout_width="0dp"
-                         android:layout_weight=".3"
-                         android:layout_height="wrap_content"
-                         android:ellipsize="none"
-                         android:paddingLeft="20dp"
-                         android:paddingRight="20dp"
-                         android:text="100"
-                         tools:ignore="RtlHardcoded, HardcodedText" />
+                    <Spinner
+                        android:id="@+id/dss_DeviceSoundsLocoVolume"
+                        android:layout_width="0dp"
+                        android:layout_weight=".3"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="none"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="100"
+                        tools:ignore="RtlHardcoded, HardcodedText" />
 
                 </LinearLayout>
 
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsBellVolumeSummary"
-                         />
+                        />
 
                     <Spinner
                         android:id="@+id/dss_DeviceSoundsBellVolume"
@@ -235,7 +235,7 @@
                         android:layout_height="wrap_content"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsHornVolumeSummary"
-                         />
+                        />
 
                     <Spinner
                         android:id="@+id/dss_DeviceSoundsHornVolume"

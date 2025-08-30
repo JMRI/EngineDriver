@@ -15,8 +15,8 @@
 -->
 <resources>
     <bool name="prefIncreaseSliderHeightDefaultValue">false</bool>
-<!--    <bool name="prefUseOneThrottleDefaultValue">false</bool>-->
-<!--    <bool name="prefUseTwoThrottleDefaultValue">false</bool>-->
+    <!--    <bool name="prefUseOneThrottleDefaultValue">false</bool>-->
+    <!--    <bool name="prefUseTwoThrottleDefaultValue">false</bool>-->
     <bool name="prefSelectiveLeadSoundDefaultValue">true</bool>
     <bool name="prefSelectiveLeadSoundF1DefaultValue">false</bool>
     <bool name="prefSelectiveLeadSoundF2DefaultValue">false</bool>
@@ -49,14 +49,14 @@
     <bool name="prefOverrideWiThrottlesFunctionLatchingDefaultValue">false</bool>
     <bool name="prefOverrideRosterWithNoFunctionLabelsDefaultValue">false</bool>
     <bool name="prefConsistLightsLongClickDefaultValue">false</bool>
-<!--    <bool name="prefGamePadMultipleDevicesDefaultValue">true</bool>-->
+    <!--    <bool name="prefGamePadMultipleDevicesDefaultValue">true</bool>-->
     <bool name="prefSwapForwardReverseButtonsDefaultValue">false</bool>
     <bool name="prefSwapForwardReverseButtonsLongPressDefaultValue">false</bool>
     <bool name="prefGamepadTestEnforceTestingDefaultValue">true</bool>
     <bool name="prefGamepadTestEnforceTestingSimpleDefaultValue">false</bool>
     <bool name="prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue">true</bool>
     <bool name="prefImportExportLocoListDefaultValue">true</bool>
-<!--    <bool name="prefAutoImportExportDefaultValue">false</bool>-->
+    <!--    <bool name="prefAutoImportExportDefaultValue">false</bool>-->
 
     <bool name="prefDisableVolumeKeysDefaultValue">false</bool>
     <bool name="prefVolumeKeysFollowLastTouchedThrottleDefaultValue">false</bool>
@@ -92,9 +92,9 @@
     <bool name="prefPauseSpeedButtonDefaultValue">false</bool>
     <bool name="prefPauseAlternateButtonDefaultValue">false</bool>
     <bool name="prefHapticFeedbackButtonsDefaultValue">false</bool>
-<!--
-    <bool name="prefPauseSpeedReverseDefaultValue">false</bool>
--->
+    <!--
+        <bool name="prefPauseSpeedReverseDefaultValue">false</bool>
+    -->
     <bool name="prefBackgroundImageDefaultValue">false</bool>
     <bool name="prefSpeedButtonsSpeedStepDecrementDefaultValue">true</bool>
     <bool name="prefAllowMobileDataDefaultValue">false</bool>

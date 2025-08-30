@@ -824,7 +824,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @SuppressLint("ApplySharedPref")
     protected void kidsTimerActions(int action, int arg) {
         if ((kidsTimerRunning == kids_timer_action_type.DISABLED)
-            && (action != kids_timer_action_type.ENABLED) ) return;
+                && (action != kids_timer_action_type.ENABLED) ) return;
 
         switch (action) {
             case kids_timer_action_type.DISABLED:
@@ -2350,7 +2350,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         limitSpeedMax[whichThrottle] = Math.round(maxSpeedStep * ((float) prefLimitSpeedPercent) / 100);
     }
 
-    //get max speedstep based on Preferences 
+    //get max speedstep based on Preferences
     //unless pref is set to AUTO in which case just return the input value
     private int getSpeedSteps(int maxStep) {
         if (speedStepPref != speed_step_type.STEPS_AUTO) {
@@ -3250,7 +3250,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //                                dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
 //                            }
 //                        }
-                          GamepadFeedbackSound(dirChangeFailed);
+                        GamepadFeedbackSound(dirChangeFailed);
                     } // else do nothing
                     whichLastGamepadButtonPressed = -1;  // reset the count
                     gamePadDoublePressStopTime = 0; // reset the time
@@ -3426,13 +3426,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SPEAK_CURRENT_SPEED)) {
 // -----------
-                tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE, whichThrottle, true
-                        , whichLastGamepad1
-                        , getDisplaySpeedFromCurrentSliderPosition(whichThrottle, true)
-                        , 0
-                        , getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle)
-                        , isSemiRealisticTrottle
-                        , getConsistAddressString(whichThrottle));
+            tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE, whichThrottle, true
+                    , whichLastGamepad1
+                    , getDisplaySpeedFromCurrentSliderPosition(whichThrottle, true)
+                    , 0
+                    , getSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle)
+                    , isSemiRealisticTrottle
+                    , getConsistAddressString(whichThrottle));
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.NEUTRAL)) {
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 boolean dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.NEUTRAL);
@@ -3627,7 +3627,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         } else if ((isSemiRealisticTrottle) && (keyCode == KEYCODE_COMMA) ) { // semi-realistic throttle - decrease load
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                                decrementLoadSliderPosition(whichThrottle);
+                decrementLoadSliderPosition(whichThrottle);
             }
         } else if ((isSemiRealisticTrottle) && (keyCode == KEYCODE_PERIOD)) { // semi-realistic throttle - increase load
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
@@ -4686,7 +4686,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     private void updateEsuMc2ZeroTrim() {
         if (!IS_ESU_MCII) return;
-        
+
         int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
         Log.d(threaded_application.applicationName, activityName + ": updateEsuMc2ZeroTrim(): ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
 
@@ -7069,7 +7069,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // if it was killed in background, clear the save preferences
         if ( (prefs.getBoolean("prefForcedRestart", false))
-        && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
+                && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
             prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
         }
@@ -7592,10 +7592,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             in = new Intent().setClass(this, turnouts.class);
             startACoreActivity(this, in, false, 0);
             return true;
+
         } else if (item.getItemId() == R.id.routes_mnu) {
             in = new Intent().setClass(this, routes.class);
             startACoreActivity(this, in, false, 0);
             return true;
+
         } else if (item.getItemId() == R.id.web_mnu) {
             in = new Intent().setClass(this, web_activity.class);
             startACoreActivity(this, in, false, 0);
@@ -7605,6 +7607,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (item.getItemId() == R.id.exit_mnu) {
             mainapp.checkAskExit(this);
             return true;
+
         } else if (item.getItemId() == R.id.power_control_mnu) {
             in = new Intent().setClass(this, power_control.class);
             startActivity(in);
@@ -7634,6 +7637,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.function_consist_settings_mnu) {
             in = new Intent().setClass(this, function_consist_settings.class);
             startActivity(in);
@@ -7648,6 +7652,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             b.setCancelable(true);
             b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    threaded_application.activityInTransition(activityName);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
                     final Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
@@ -7685,6 +7690,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.logviewer_menu) {
             Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
             startActivity(logviewer);
@@ -7701,6 +7707,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             mainapp.buttonVibration();
             return true;
+
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
                 mainapp.powerControlNotAllowedDialog(TMenu);
@@ -7722,24 +7729,28 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             startActivityForResult(consistEdit2, sub_activity_type.CONSIST);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.EditConsist2_menu) {
             Intent consistEdit3 = new Intent().setClass(this, ConsistEdit.class);
             consistEdit3.putExtra("whichThrottle", '2');
             startActivityForResult(consistEdit3, sub_activity_type.CONSIST);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.EditLightsConsist0_menu) {
             Intent consistLightsEdit = new Intent().setClass(this, ConsistLightsEdit.class);
             consistLightsEdit.putExtra("whichThrottle", '0');
             startActivityForResult(consistLightsEdit, sub_activity_type.CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.EditLightsConsist1_menu) {
             Intent consistLightsEdit2 = new Intent().setClass(this, ConsistLightsEdit.class);
             consistLightsEdit2.putExtra("whichThrottle", '1');
             startActivityForResult(consistLightsEdit2, sub_activity_type.CONSIST_LIGHTS);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.EditLightsConsist2_menu) {
             Intent consistLightsEdit3 = new Intent().setClass(this, ConsistLightsEdit.class);
             consistLightsEdit3.putExtra("whichThrottle", '2');
@@ -7753,18 +7764,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             setGamepadIndicator();
             tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET);
             return true;
+
         } else if (item.getItemId() == R.id.gamepad_test_mnu1) {
             in = new Intent().setClass(this, gamepad_test.class);
             in.putExtra("whichGamepadNo", "0");
             startActivityForResult(in, sub_activity_type.GAMEPAD_TEST);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.gamepad_test_mnu2) {
             in = new Intent().setClass(this, gamepad_test.class);
             in.putExtra("whichGamepadNo", "1");
             startActivityForResult(in, sub_activity_type.GAMEPAD_TEST);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
+
         } else if (item.getItemId() == R.id.gamepad_test_mnu3) {
             in = new Intent().setClass(this, gamepad_test.class);
             in.putExtra("whichGamepadNo", "2");
@@ -7775,6 +7789,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (item.getItemId() == R.id.timer_mnu) {
             showTimerPasswordDialog();
             return true;
+
         } else if (item.getItemId() == R.id.timer_button) {
             if (mainapp.consists[0].isActive()) {
                 prefKidsTime = Integer.parseInt(prefKidsTimerButtonDefault) * 60000;
@@ -7790,13 +7805,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.toggleFlashlightActionView(this, TMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
+
         } else if (item.getItemId() == R.id.throttle_switch_button) {
             switchThrottleScreenType();
             mainapp.buttonVibration();
             return true;
+
         } else if (item.getItemId() == R.id.web_view_button) {
             showHideWebView("");
             return true;
+
         } else if (item.getItemId() == R.id.esu_mc2_knob_button) {
             toggleEsuMc2Knob(this, TMenu);
             return true;
@@ -8305,7 +8323,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
 
                 if (passwordText.equals(prefKidsTimerDemoModePassword)) { //Demo Mode
-                 kidsTimerActions(kids_timer_action_type.DEMO, 0);
+                    kidsTimerActions(kids_timer_action_type.DEMO, 0);
                     prefs.edit().putString("prefKidsTimer", PREF_KIDS_TIMER_NONE).commit();  //reset the preference
                     getKidsTimerPrefs();
                 }
@@ -8626,7 +8644,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
 
-        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThottlesForScreen(prefThrottleScreenType);
+        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(prefThrottleScreenType);
 
         if (!webViewLocation.equals(keepWebViewLocation)) {
             showHideWebView("");
@@ -8646,7 +8664,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();
 
-//        if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
+//        if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThrottlesForScreen(prefThrottleScreenType)) {
             forceRestartApp(restart_reason_type.THROTTLE_SWITCH);
 //        } else {
 //            forceReLaunchApp(restart_reason_type.THROTTLE_SWITCH);
@@ -9043,7 +9061,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected int getNewSemiRealisticThrottleSliderNotches() {return 100; }
     void setBrakeSliderPositionPcnt(int whichThrottle, float newPositionPcnt) {}
 
-        private class SemiRealisticGamepadRptUpdater implements Runnable {
+    private class SemiRealisticGamepadRptUpdater implements Runnable {
         int whichThrottle;
         int stepMultiplier;
 

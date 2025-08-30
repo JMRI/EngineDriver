@@ -53,9 +53,9 @@
     <string name="gamepad3_test">Test gamepadu 3</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver na pozadí</string>
-    <string name="notificationInBackgroundText">Android jej může kdykoli bez varování zabít. Klepnutím znovu otevřete</string>
-    <string name="notificationInBackgroundTextLowMemory">Málo paměti. Engine Driver může být brzy zabit. Klepnutím znovu otevřete</string>
-    <string name="notificationInBackgroundTextKilled">Vybitá paměť. Engine Driver byl zabit</string>
+    <string name="notificationInBackgroundText">☠️Android jej může kdykoli bez varování zabít. Klepnutím znovu otevřete</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Málo paměti. Engine Driver může být brzy zabit. Klepnutím znovu otevřete</string>
+    <string name="notificationInBackgroundTextKilled">☠️Vybitá paměť. Engine Driver byl zabit</string>
     <string name="notificationAppWasKilledInBackground">Engine Driver nucen restartovat Android</string>
 
     <string name="host_ip">Host Name nebo Adresa</string>
@@ -141,7 +141,7 @@
     <string name="press_to_toggle">Stiskněte tlačítko pro přepnutí stavu napájení kolejiště</string>
     <string name="power_control_not_allowed">Ovládání napájení není povoleno. Změňte v předvolbách/nastavení na serveru.</string>
     <string name="reconnect_label">Stav pokusu o znovupřipojení</string>
-    <string name="reconnect_help">Pokoušet se o znovupřipojení automaticky. Počtejte na znovupřipojení nebo stskněte Šipka zpět pro Konec.</string>
+    <string name="reconnect_help">Pokoušet se o znovupřipojení automaticky. \nPočtejte na znovupřipojení nebo stskněte Šipka zpět pro Konec.</string>
     <string name="reconnect_success">Znovupřipojeno. Normální provoz obnoven.</string>
     <string name="fs_edit_notice">Varování: změny výchozího nastavení se při ukončení ztratí – nebyla nalezena SD karta.</string>
     <string name="ca_recent_conn_notice">Nedávná připojení nejsou k dispozici – nebyla nalezena SD karta.</string>
@@ -648,7 +648,7 @@
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Oprávnění ACCESS_FINE_LOCATION nebylo uděleno.</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Název sítě je nedostupný. Zjišťování serveru může být omezené.</string>
     <string name="statusThreadedAppNotConnected">Není připojení k síti.  Zkontrolujte WiFi nastavení.\n\nOpakování</string>
-    <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$dms. Zkontrolujte zdali je WiThrottle server spuštěný.\n\nOpakování</string>
+    <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$dms. Zkontrolujte zdali je server spuštěný.\n\nOpakování</string>
     <string name="statusThreadedAppUnableToConnect">Nemohu se připojit na server %1$s:%2$s z %3$s.\n\nOpakování</string>
 
     <!--    Toast messages for the Throttle page-->

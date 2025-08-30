@@ -69,8 +69,8 @@
   <style name="normal_button2_style" parent="normal_button_style">
   </style>
   <style name="normal_button_condensed_style" parent="normal_button_style">
-      <item name="fontFamily">sans-serif-condensed</item>
-      <item name="android:layout_height">40dp</item>
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:layout_height">40dp</item>
   </style>
 
   <style name="loco_select_button_style" parent="normal_button_style">
@@ -407,8 +407,8 @@
   </style>
 
   <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog.Alert">
-<!--    <item name="android:windowBackground">@color/transparent</item>-->
-<!--    <item name="android:windowBackground">@color/solidBlack</item>-->
+    <!--    <item name="android:windowBackground">@color/transparent</item>-->
+    <!--    <item name="android:windowBackground">@color/solidBlack</item>-->
     <item name="android:background">@color/darkGrey</item>
     <item name="android:panelColorBackground">@color/darkGrey</item>
     <item name="android:textSize">16sp</item>
@@ -513,12 +513,12 @@
   </style>
   <style name="normal_button2_style_black" parent="normal_button_style_black">
   </style>
-    <style name="normal_button_condensed_style_black" parent="normal_button_style_black">
-        <item name="fontFamily">sans-serif-condensed</item>
-        <item name="android:layout_height">40dp</item>
-    </style>
+  <style name="normal_button_condensed_style_black" parent="normal_button_style_black">
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:layout_height">40dp</item>
+  </style>
 
-    <style name="loco_select_button_style_black" parent="normal_button_style_black">
+  <style name="loco_select_button_style_black" parent="normal_button_style_black">
     <item name="android:textColor">@color/original_btn_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
@@ -707,12 +707,12 @@
   </style>
   <style name="normal_button2_style_outline" parent="normal_button_style_outline">
   </style>
-    <style name="normal_button_condensed_style_outline" parent="normal_button_style_outline">
-        <item name="fontFamily">sans-serif-condensed</item>
-        <item name="android:layout_height">40dp</item>
-    </style>
+  <style name="normal_button_condensed_style_outline" parent="normal_button_style_outline">
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:layout_height">40dp</item>
+  </style>
 
-    <style name="loco_select_button_style_outline" parent="normal_button_style_outline">
+  <style name="loco_select_button_style_outline" parent="normal_button_style_outline">
     <item name="android:textColor">@color/outline_btn_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
@@ -844,7 +844,7 @@
 
   <style name="small_heading_style_ultra" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#ffffff</item>
-<!--    <item name="android:background">#5b5b5b</item>-->
+    <!--    <item name="android:background">#5b5b5b</item>-->
     <item name="android:background">@drawable/ultra_small_heading_style</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
@@ -1068,7 +1068,7 @@
 
   <style name="small_heading_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>
-<!--    <item name="android:background">@color/heading_colorful</item>-->
+    <!--    <item name="android:background">@color/heading_colorful</item>-->
     <item name="android:background">@drawable/colorful_small_heading_style</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
@@ -1421,10 +1421,10 @@
     <item name="android:textColor">@color/primary_colorful</item>
   </style>
 
-<!--  <style name="PreferenceScreen_colorful">-->
-<!--    <item name="android:textColor">@color/primary_colorful</item>-->
-<!--    <item name="android:background">@color/windowBackground_colorful</item>-->
-<!--  </style>-->
+  <!--  <style name="PreferenceScreen_colorful">-->
+  <!--    <item name="android:textColor">@color/primary_colorful</item>-->
+  <!--    <item name="android:background">@color/windowBackground_colorful</item>-->
+  <!--  </style>-->
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

@@ -27,6 +27,7 @@ import android.os.Message;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -185,6 +186,7 @@ public class about_page extends AppCompatActivity {
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -216,8 +218,13 @@ public class about_page extends AppCompatActivity {
                         endThisActivity();
                     break;
 
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
                 default:
                     break;
+
             }
         }
     }

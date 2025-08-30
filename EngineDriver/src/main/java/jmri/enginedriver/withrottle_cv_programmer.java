@@ -71,7 +71,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     private EditText etWitCv;
     private EditText etWitCvValue;
 
-//    private String witAddress = "";
+    //    private String witAddress = "";
     private EditText etWitAddressValue;
 
 
@@ -83,9 +83,9 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 //    private LinearLayout witWriteInfoLayout;
 //    private TextView witWriteInfoLabel;
 
-//    private TextView witResponsesLabel;
+    //    private TextView witResponsesLabel;
     private TextView witSendsLabel;
-//    private String witResponsesStr = "";
+    //    private String witResponsesStr = "";
     private String witSendsStr = "";
 
     ArrayList<String> witResponsesListHtml = new ArrayList<>();
@@ -177,6 +177,14 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                         }
                     }
                     break;
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+                default:
+                    break;
+
             }
         }
     }
@@ -321,7 +329,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     if (addr>maxAddr) {
                         addr = -1;
                         threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax,
-                                                    txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
+                                txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
                         etWitAddressValue.setText(""); //clear the bad entry
                     }
                 }
@@ -433,7 +441,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         witSendsLabel.setText(Html.fromHtml(witSendsStr));
     }
 
-//    void displayCommands(String msg, boolean inbound) {
+    //    void displayCommands(String msg, boolean inbound) {
     void displayCommands(String msg) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
         String currentTime = sdf.format(new Date());
@@ -441,7 +449,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 //        if (inbound) {
 //            witResponsesListHtml.add("<small><small>" + currentTime + " </small></small> ◄ : <b>" + Html.escapeHtml(msg) + "</b><br />");
 //        } else {
-            witSendsListHtml.add("<small><small>" + currentTime + " </small></small> ► : <i>" + Html.escapeHtml(msg) + "</i><br />");
+        witSendsListHtml.add("<small><small>" + currentTime + " </small></small> ► : <i>" + Html.escapeHtml(msg) + "</i><br />");
 //        }
         if (witResponsesListHtml.size() > 40) {
             witResponsesListHtml.remove(0);
@@ -691,6 +699,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         mainapp.witScreenIsOpen = false;
         this.finish();  //end this activity
@@ -762,7 +771,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
             mainapp.buttonVibration();
             return true;
         } else {
-                return super.onOptionsItemSelected(item);
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -903,32 +912,32 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 //        btn.setBackground(img);
 //    }
 
-   String num2binStr(int val, int bits) { // bits = number of bits to return - dictates the max val allowed
-       StringBuilder rslt = new StringBuilder();
-       double tempVal = val;
-       for (int i = bits; i >= 0; i--) {
-           if (tempVal >= Math.pow(2, i)) {
-               rslt.append("1");
-               tempVal = tempVal - Math.pow(2, i);
-           } else {
-               rslt.append("0");
-           }
-       }
-       while (rslt.length() > bits) {
-           rslt = new StringBuilder(rslt.substring(1));  // remove the leading 0
-       }
-       return rslt.toString();
-   }
+    String num2binStr(int val, int bits) { // bits = number of bits to return - dictates the max val allowed
+        StringBuilder rslt = new StringBuilder();
+        double tempVal = val;
+        for (int i = bits; i >= 0; i--) {
+            if (tempVal >= Math.pow(2, i)) {
+                rslt.append("1");
+                tempVal = tempVal - Math.pow(2, i);
+            } else {
+                rslt.append("0");
+            }
+        }
+        while (rslt.length() > bits) {
+            rslt = new StringBuilder(rslt.substring(1));  // remove the leading 0
+        }
+        return rslt.toString();
+    }
 
-   int str2Bin(String val) {
-       double rslt = 0.0;
+    int str2Bin(String val) {
+        double rslt = 0.0;
         for (int i=0; i<val.length(); i++) {
             if (val.charAt(i)=='1') {
                 rslt = rslt + Math.pow(2,val.length()-1-i);
             }
         }
-       return (int) rslt;
-   }
+        return (int) rslt;
+    }
 
     void adjustToolbarSize(Menu menu) {
         ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();

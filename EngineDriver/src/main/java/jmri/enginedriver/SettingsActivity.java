@@ -42,7 +42,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 
-import androidx.core.content.FileProvider;
+//import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -56,16 +56,13 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -77,7 +74,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -357,100 +353,100 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
-    @SuppressLint("ApplySharedPref")
-    public void shareFileNow() {
+//    @SuppressLint("ApplySharedPref")
+//    public void shareFileNow() {
+//
+//        boolean result = prefs.getBoolean("prefShareFileNow", getResources().getBoolean(R.bool.prefShareFileNowDefaultValue));
+//
+//        if (result) {
+//            prefs.edit().putBoolean("prefShareFileNow", false).commit();  //reset the preference
+//            showFileSelectionDialog();
+//        }
+//    }
+//
+//    public ArrayList<File> getFilesForDialog() {
+//        ArrayList<File> logFiles = new ArrayList<>();
+//        try {
+//            File dir = new File(context.getExternalFilesDir(null).getPath());
+//            if (dir.exists() && dir.isDirectory()) {
+//                File[] filesList = dir.listFiles();
+//                if (filesList != null) {
+//                    for (File file : filesList) {
+//                        logFiles.add(file);
+//                        Log.d(threaded_application.applicationName, activityName + ": getFilesForDialog(): Found: " + file.getName());
+//                    }
+//                    Collections.sort(logFiles, (file1, file2) -> file1.getName().compareTo(file2.getName()));
+//                }
+//            }
+//        } catch (Exception e) {
+//            Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
+//            threaded_application.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
+//        }
+//        return logFiles;
+//    }
 
-        boolean result = prefs.getBoolean("prefShareFileNow", getResources().getBoolean(R.bool.prefShareFileNowDefaultValue));
+//    private void showFileSelectionDialog() {
+//        ArrayList<File> logFiles = getFilesForDialog();
+//
+//        if (logFiles.isEmpty()) return;
+//
+//        // Extract just the file names for display in the dialog
+//        ArrayList<String> fileNames = new ArrayList<>();
+//        for (File file : logFiles) {
+//            fileNames.add(file.getName());
+//        }
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        View dialogView = inflater.inflate(R.layout.file_list_dialog, null);
+//        builder.setView(dialogView);
+//
+//        ListView dialogListView = dialogView.findViewById(R.id.file_dialog_listview);
+//        Button cancelButton = dialogView.findViewById(R.id.file_dialog_button_cancel);
+//
+//        // --- Setup ListView ---
+//        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
+//                R.layout.file_list_item, // This layout MUST define the font
+//                R.id.file_list_item_text,    // The ID of the TextView within logfile_list_item.xml
+//                fileNames);
+//        dialogListView.setAdapter(listAdapter);
+//
+//        final AlertDialog dialog = builder.create(); // Create before setting item click listener for ListView
+//
+//        dialogListView.setOnItemClickListener((parent, view, position, id) -> {
+//            File selectedFile = logFiles.get(position);
+////            threaded_application.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
+//            shareFile(selectedFile,selectedFile.getName());
+//            dialog.dismiss();
+//        });
+//
+//        cancelButton.setOnClickListener(v -> {dialog.dismiss(); reload();} );
+//
+//        dialog.show();
+//    }
 
-        if (result) {
-            prefs.edit().putBoolean("prefShareFileNow", false).commit();  //reset the preference
-            showFileSelectionDialog();
-        }
-    }
-
-    public ArrayList<File> getFilesForDialog() {
-        ArrayList<File> logFiles = new ArrayList<>();
-        try {
-            File dir = new File(context.getExternalFilesDir(null).getPath());
-            if (dir.exists() && dir.isDirectory()) {
-                File[] filesList = dir.listFiles();
-                if (filesList != null) {
-                    for (File file : filesList) {
-                        logFiles.add(file);
-                        Log.d(threaded_application.applicationName, activityName + ": getFilesForDialog(): Found: " + file.getName());
-                    }
-                    Collections.sort(logFiles, (file1, file2) -> file1.getName().compareTo(file2.getName()));
-                }
-            }
-        } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
-            threaded_application.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
-        }
-        return logFiles;
-    }
-
-    private void showFileSelectionDialog() {
-        ArrayList<File> logFiles = getFilesForDialog();
-
-        if (logFiles.isEmpty()) return;
-
-        // Extract just the file names for display in the dialog
-        ArrayList<String> fileNames = new ArrayList<>();
-        for (File file : logFiles) {
-            fileNames.add(file.getName());
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.file_list_dialog, null);
-        builder.setView(dialogView);
-
-        ListView dialogListView = dialogView.findViewById(R.id.file_dialog_listview);
-        Button cancelButton = dialogView.findViewById(R.id.file_dialog_button_cancel);
-
-        // --- Setup ListView ---
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
-                R.layout.file_list_item, // This layout MUST define the font
-                R.id.file_list_item_text,    // The ID of the TextView within logfile_list_item.xml
-                fileNames);
-        dialogListView.setAdapter(listAdapter);
-
-        final AlertDialog dialog = builder.create(); // Create before setting item click listener for ListView
-
-        dialogListView.setOnItemClickListener((parent, view, position, id) -> {
-            File selectedFile = logFiles.get(position);
-//            threaded_application.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
-            shareFile(selectedFile,selectedFile.getName());
-            dialog.dismiss();
-        });
-
-        cancelButton.setOnClickListener(v -> {dialog.dismiss(); reload();} );
-
-        dialog.show();
-    }
-
-    private void shareFile(File file, String fileName) {
-        Uri fileUri = FileProvider.getUriForFile(
-                this,
-                getApplicationContext().getPackageName() + ".fileprovider",
-                file
-        );
-        shareFile(fileUri, fileName);
-    }
-    private void shareFile(Uri fileUri, String fileName) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("*/*"); // Set the MIME type of the file
-        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // Important for granting temporary read access
-
-        // Verify that there are apps available to handle this intent
-        if (shareIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
-        } else {
-            threaded_application.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
-        }
-        this.reload();
-    }
+//    private void shareFile(File file, String fileName) {
+//        Uri fileUri = FileProvider.getUriForFile(
+//                this,
+//                getApplicationContext().getPackageName() + ".fileprovider",
+//                file
+//        );
+//        shareFile(fileUri, fileName);
+//    }
+//    private void shareFile(Uri fileUri, String fileName) {
+//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//        shareIntent.setType("*/*"); // Set the MIME type of the file
+//        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+//        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // Important for granting temporary read access
+//
+//        // Verify that there are apps available to handle this intent
+//        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+//            startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
+//        } else {
+//            threaded_application.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
+//        }
+//        this.reload();
+//    }
 
     public void reload() {
         // restart the activity so all the preferences show correctly based on what was imported / hidden
@@ -650,10 +646,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         }
                     }
                     break;
+
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File Found");
                     loadSharedPreferencesFromFile(prefs, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, restart_reason_type.IMPORT_SERVER_MANUAL);
                     break;
+
                 case message_type.IMPORT_SERVER_MANUAL_FAIL:
                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File not Found");
                     prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
@@ -667,6 +665,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.SETTINGS)
                         endThisActivity();
+                    break;
+
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+                default:
                     break;
 
             }
@@ -810,6 +815,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         setResult(result);
         this.finish();  //end this activity
@@ -1021,7 +1027,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             SharedPreferences.Editor prefEdit = sharedPreferences.edit();
             prefEdit.commit();
 
-//            if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThottlesForScreen(prefThrottleScreenType)) {
+//            if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThrottlesForScreen(prefThrottleScreenType)) {
                 forceRestartAppOnPreferencesClose = true;
 //            } else {
 //                forceReLaunchAppOnPreferencesClose = true;
@@ -1763,7 +1769,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
                 parentActivity.prefThrottleScreenTypeOriginal = parentActivity.prefThrottleScreenType;
-                parentActivity.maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThottlesForScreen(parentActivity.prefThrottleScreenTypeOriginal);
+                parentActivity.maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(parentActivity.prefThrottleScreenTypeOriginal);
 
                 parentActivity.prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", parentActivity.getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
                 parentActivity.prefDisplaySemiRealisticThrottleNotchesOriginal = parentActivity.prefDisplaySemiRealisticThrottleNotches;
@@ -2174,9 +2180,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.result = RESULT_GAMEPAD;
                         break;
 
-                    case "prefShareFileNow":
-                        parentActivity.shareFileNow();
-                        break;
+//                    case "prefShareFileNow":
+//                        parentActivity.shareFileNow();
+//                        break;
 
                     case "prefBackgroundImage":
                         parentActivity.prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);

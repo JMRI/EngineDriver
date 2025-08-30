@@ -25,16 +25,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.github.appintro.AppIntro2;
-import com.github.appintro.AppIntroFragment;
-import com.github.appintro.model.SliderPage;
+import com.github.paolorotolo.appintro.AppIntro2;
+import com.github.paolorotolo.appintro.AppIntroFragment;
+import com.github.paolorotolo.appintro.model.SliderPage;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.R;
@@ -47,7 +46,9 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     private boolean introComplete = false;
     private SharedPreferences prefs;
+    //    private String prefThrottleType  = "";
     private String originalPrefTheme  = "";
+//    private String originalPrefThrottleType  = "";
 
     private threaded_application mainapp;    //pointer back to application
 
@@ -72,7 +73,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
         sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
         sliderPage0.setImageDrawable(R.drawable.intro_welcome);
-        sliderPage0.setBackgroundColor(getResources().getColor(R.color.intro_background));
+        sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
 //        int slideNumber = 1;  // how many preceding slides
@@ -297,8 +298,8 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         setBarColor(getResources().getColor(R.color.intro_buttonbar_background));
 
         // Hide Skip/Done button.
-//        showSkipButton(false);
-//        setProgressButtonEnabled(true);
+        showSkipButton(false);
+        setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
         setVibrate(false);

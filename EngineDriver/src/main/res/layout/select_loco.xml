@@ -865,23 +865,23 @@
         android:padding="8sp"
         android:text="@string/rosterEmpty" />
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/roster_list_group"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="0.44"-->
-<!--        android:orientation="vertical">-->
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/roster_list_group"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="0.44"-->
+    <!--        android:orientation="vertical">-->
 
-<!--        <jmri.enginedriver.util.TransparentListView-->
-        <ListView
-            android:id="@+id/roster_list"
-            style="?attr/EDListView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.44"
-            android:animateLayoutChanges="true" />
+    <!--        <jmri.enginedriver.util.TransparentListView-->
+    <ListView
+        android:id="@+id/roster_list"
+        style="?attr/EDListView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.44"
+        android:animateLayoutChanges="true" />
 
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/recent_locos_list_header_group"
@@ -963,41 +963,41 @@
             android:text="@string/recent_consists"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/ed_background_highlight_secondary"
-                android:paddingTop="8dp"
-                android:paddingBottom="6dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/ed_background_highlight_secondary"
+            android:paddingTop="8dp"
+            android:paddingBottom="6dp">
 
-                <Button
-                    android:id="@+id/recent_consists_sort"
-                    style="?attr/ed_small_button_condensed_text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/order"
-                    android:drawableLeft="?attr/ed_sort_glyph"
-                    android:paddingLeft="4dp"
-                    android:paddingStart="4dp"
-                    tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
+            <Button
+                android:id="@+id/recent_consists_sort"
+                style="?attr/ed_small_button_condensed_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="24sp"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="6dp"
+                android:text="@string/order"
+                android:drawableLeft="?attr/ed_sort_glyph"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
 
-                <Button
-                    android:id="@+id/clear_consists_list_button"
-                    style="?attr/ed_small_button_condensed_text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/clearLocoList"
-                    android:drawableLeft="?attr/ed_clear_list_glyph"
-                    android:paddingLeft="4dp"
-                    android:paddingStart="4dp"
-                    tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
+            <Button
+                android:id="@+id/clear_consists_list_button"
+                style="?attr/ed_small_button_condensed_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="24sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/clearLocoList"
+                android:drawableLeft="?attr/ed_clear_list_glyph"
+                android:paddingLeft="4dp"
+                android:paddingStart="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
