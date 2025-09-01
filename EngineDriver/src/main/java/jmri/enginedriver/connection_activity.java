@@ -683,6 +683,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     @Override
     public void onResume() {
+        Log.d(threaded_application.applicationName, activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
@@ -691,6 +692,9 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
         }
+        // in case the app was restarted by Android after being killed in background
+        mainapp.alert_activities(message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION, "");
+
         mainapp.exitDoubleBackButtonInitiated = 0;
 //        if (this.runIntro) {        //if going to run the intro, expedite it
         if (mainapp.introIsRunning) {        //if going to run the intro, expedite it

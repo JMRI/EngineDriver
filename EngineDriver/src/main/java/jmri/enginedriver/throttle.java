@@ -1252,6 +1252,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.REOPEN_THROTTLE:
                     // ignore
                     break;
+
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
+                    endThisActivity();
+                    break;
+
             }
         }
     }
@@ -7521,6 +7526,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         releaseThrottles();
         webView.stopLoading();
         mainapp.appIsFinishing = true;
+        this.finish(); // end this activity
+        connection_activity.overridePendingTransition(this, 0, 0);
+    }
+
+    private void endThisActivity() {
+        releaseThrottles();
+        webView.stopLoading();
         this.finish(); // end this activity
         connection_activity.overridePendingTransition(this, 0, 0);
     }

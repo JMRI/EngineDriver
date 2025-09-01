@@ -109,6 +109,7 @@ public class power_control extends AppCompatActivity {
                     refreshDccexTracksView();
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;

@@ -348,6 +348,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                     disconnect();
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;

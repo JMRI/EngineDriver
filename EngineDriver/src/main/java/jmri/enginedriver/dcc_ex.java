@@ -271,6 +271,7 @@ public class dcc_ex extends AppCompatActivity {
                     }
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;

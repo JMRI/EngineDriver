@@ -281,6 +281,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                     disconnect();
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
 //                    endThisActivity();
                     break;
