@@ -632,6 +632,7 @@ public class select_loco extends AppCompatActivity {
                     endThisActivity();
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;
@@ -1574,6 +1575,7 @@ public class select_loco extends AppCompatActivity {
 
             String rosterEntryIcon = hm.get("roster_icon");
             if (rosterEntryIcon != null) {
+//                String imgFileName = "";
 //                String imgFileName = "";
                 ViewGroup vg = (ViewGroup) v;
                 if (vg!=null) {

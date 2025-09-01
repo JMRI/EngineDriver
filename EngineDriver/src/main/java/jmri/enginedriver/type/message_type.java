@@ -104,5 +104,6 @@ public interface message_type {
     int ESTOP_ONE_THROTTLE = 82;
 //    int POWER_STATE_REQUEST = 83;  // not implemented
     int LOW_MEMORY = 83;
+    int TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION = 84;
 
 }

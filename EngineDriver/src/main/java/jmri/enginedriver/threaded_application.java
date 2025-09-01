@@ -508,6 +508,7 @@ public class threaded_application extends Application {
 
     static boolean activityVisible = false;
     static boolean activityInTransition = false;
+    static String lastActivityName = "unknown";
 
     // ESU MC 2/Pro
     public String prefEsuMc2SliderType = "esu";
@@ -526,16 +527,31 @@ public class threaded_application extends Application {
     public static void activityResumed(String activityName) {
         activityVisible = true;
         activityInTransition = false;
+        lastActivityName = activityName;
         Log.d(applicationName, "t_a: activityResumed("+activityName+")");
     }
 
+    public static void activityPaused() {
+        activityPaused(lastActivityName);
+    }
     public static void activityPaused(String activityName) {
         activityVisible = false;
+        lastActivityName = activityName;
         Log.d(applicationName, "t_a: activityPaused("+activityName+")");
+    }
+
+    public static void activityNotInTransition() {
+        activityNotInTransition(lastActivityName);
+    }
+    public static void activityNotInTransition(String activityName) {
+        activityInTransition = false;
+        lastActivityName = activityName;
+        Log.d(applicationName, "t_a: activityNotInTransition("+activityName+")");
     }
 
     public static void activityInTransition(String activityName) {
         activityInTransition = true;
+        lastActivityName = activityName;
         Log.d(applicationName, "t_a: activityInTransition("+activityName+")");
     }
 
@@ -800,6 +816,8 @@ public class threaded_application extends Application {
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
                 if (!isInBackground) {                              // if just went into bkg
                     isInBackground = true;
+                    activityPaused();
+                    activityNotInTransition();
                     if (runningActivity != null)
                         addNotification(runningActivity.getIntent(), notification_type.APP_PUSHED_TO_BACKGROUND);
                     prefs.edit().putBoolean("prefForcedRestart", true).commit();
@@ -815,23 +833,23 @@ public class threaded_application extends Application {
                         }
                     }
                 }
-
-                if ( (level == ComponentCallbacks2.TRIM_MEMORY_BACKGROUND) ) {
-                    if (!isActivityVisible()) {   // double check it is in background
+            }
+            if ( (level == ComponentCallbacks2.TRIM_MEMORY_BACKGROUND)
+            || (level == ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE) ) {
+                if (!isActivityVisible()) {   // double check it is in background
 //                        updateNotification(getResources().getString(R.string.notificationInBackgroundTextLowMemory));
-                        if (runningActivity != null) {
-                            removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
-                            addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
-                        }
+                    if (runningActivity != null) {
+                        removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
+                        addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
                     }
                 }
-                else if (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE) {
-                    if (!isActivityVisible()) {   // double check it is in background
-                        // disconnect and shutdown
-                        safeToast(getResources().getString(R.string.notificationInBackgroundTextKilled),Toast.LENGTH_LONG);
-                        sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);
-                        exitConfirmed = true;
-                    }
+            } else if ( (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE)
+                    || (level == ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL) ){
+                if (!isActivityVisible()) {   // double check it is in background
+                    // disconnect and shutdown
+                    safeToast(getResources().getString(R.string.notificationInBackgroundTextKilled),Toast.LENGTH_LONG);
+                    sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);
+                    exitConfirmed = true;
                 }
             }
         }

@@ -206,6 +206,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     disconnect();
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;

@@ -178,6 +178,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     }
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;

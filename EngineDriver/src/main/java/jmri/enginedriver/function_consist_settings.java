@@ -281,6 +281,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                         reopenThrottlePage();
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;

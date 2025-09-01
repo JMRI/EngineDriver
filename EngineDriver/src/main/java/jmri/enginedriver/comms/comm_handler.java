@@ -76,6 +76,7 @@ public class comm_handler extends Handler {
 
          //Start or Stop jmdns stuff, or add "fake" discovered servers
          case message_type.SET_LISTENER:
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SET_LISTENER");
             if (mainapp.client_ssid != null &&
                     mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
                Log.d(threaded_application.applicationName, activityName + ": handleMessage(): DCCEX SSID found");
@@ -126,6 +127,7 @@ public class comm_handler extends Handler {
 
          //Connect to the WiThrottle server.
          case message_type.CONNECT:
+             Log.d(threaded_application.applicationName, activityName + ": handleMessage(): CONNECT");
 
             //The IP address is stored in the obj as a String, the port is stored in arg1.
             String new_host_ip = msg.obj.toString();
@@ -140,7 +142,7 @@ public class comm_handler extends Handler {
             }
 
             //clear app.thread shared variables so they can be reinitialized
-            mainapp.initShared();
+            mainapp. initShared();
             mainapp.fastClockSeconds = 0L;
 
             //store ip and port in global variables
@@ -580,6 +582,7 @@ public class comm_handler extends Handler {
             mainapp.alert_activities(msg.what, "");
             break;
 
+         case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
          case message_type.LOW_MEMORY:
             mainapp.alert_activities(msg.what, "");
             break;

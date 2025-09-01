@@ -413,6 +413,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     removeTurnoutFromRecentList(msg.obj.toString());
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;

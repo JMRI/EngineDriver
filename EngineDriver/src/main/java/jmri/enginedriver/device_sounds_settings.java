@@ -548,6 +548,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                         endThisActivity();
                     break;
 
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;
