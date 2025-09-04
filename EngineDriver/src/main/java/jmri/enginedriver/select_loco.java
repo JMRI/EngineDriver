@@ -663,7 +663,7 @@ public class select_loco extends AppCompatActivity {
     boolean saveUpdateList;         // save value across ConsistEdit activity 
     boolean newEngine;              // save value across ConsistEdit activity
 
-    void acquireLoco(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
+    boolean acquireLoco(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
         Log.d(threaded_application.applicationName, activityName + ": acquireLoco()");
         String roster_name = "";
         String sAddr = importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, true);
@@ -685,7 +685,7 @@ public class select_loco extends AppCompatActivity {
             else if (mainapp.consists[whichThrottle] == null)
                 Log.d(threaded_application.applicationName, activityName + ": acquireLoco(): consists[" + whichThrottle + "] is null");
             endThisActivity();
-            return;
+            return false;
         }
 
         Consist consist = mainapp.consists[whichThrottle];
@@ -697,7 +697,7 @@ public class select_loco extends AppCompatActivity {
                     overrideThrottleName = "";
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected, sAddr), Toast.LENGTH_SHORT);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);  // send the acquire message anyway
-                    return;
+                    return false;
                 }
             }
         }
@@ -715,7 +715,7 @@ public class select_loco extends AppCompatActivity {
             } else { // already have it so don't do anything
                 result = RESULT_OK;
                 endThisActivity();
-                return;
+                return false;
             }
         }
         Log.d(threaded_application.applicationName, activityName + ": acquireLoco(): sAddr:'" + sAddr +"'");
@@ -764,6 +764,7 @@ public class select_loco extends AppCompatActivity {
                 }
             }
         }
+        return true;
     }
 
     void processRosterFunctionString(String responseStr, int whichThrottle) {
@@ -927,7 +928,11 @@ public class select_loco extends AppCompatActivity {
         importExportPreferences.recentLocoSourceList = new ArrayList<>();
         importExportPreferences.recentLocoFunctionsList = new ArrayList<>();
         if (reload) {
-            recentLocosList = new ArrayList<>();
+            if (recentLocosList == null) {
+                recentLocosList = new ArrayList<>();
+            } else {
+                recentLocosList.clear();
+            }
         }
 
         rbRecent = findViewById(R.id.select_loco_method_recent_button);
@@ -957,7 +962,7 @@ public class select_loco extends AppCompatActivity {
                         importExportPreferences.recentLocoSourceList.get(i)));   // the small loco address field at the top of the row
                 hm.put("locoAddress", Integer.toString(importExportPreferences.recentLocoAddressList.get(i)));
                 hm.put("addressSize", Integer.toString(importExportPreferences.recentLocoAddressSizeList.get(i)));
-                hm.put("locoSource", Integer.toString(importExportPreferences.recentLocoAddressSizeList.get(i)));
+                hm.put("locoSource", Integer.toString(importExportPreferences.recentLocoSourceList.get(i)));
                 hm.put("last_used", Integer.toString(i));
                 hm.put("functions", importExportPreferences.recentLocoFunctionsList.get(i));
                 recentLocosList.add(hm);
@@ -1015,7 +1020,11 @@ public class select_loco extends AppCompatActivity {
         RadioButton myRadioButton = findViewById(R.id.select_consists_method_recent_button);
 
         if (reload) {
-            recentConsistsList = new ArrayList<>();
+            if (recentConsistsList == null) {
+                recentConsistsList = new ArrayList<>();
+            } else {
+                recentLocosList.clear();
+            }
         }
 
         //if no SD Card present then there is no recent consists list
@@ -1187,10 +1196,15 @@ public class select_loco extends AppCompatActivity {
             Spinner spinner = findViewById(R.id.address_length);
             locoAddressSize = spinner.getSelectedItemPosition();
             locoName = importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, false);
-            sWhichThrottle += locoName;
+
             locoSource = source_type.ADDRESS;
 
-            acquireLoco(true, -1);
+            String keepsWhichThrottle = sWhichThrottle;
+            sWhichThrottle += locoName;
+            if (!acquireLoco(true, -1)) {
+                sWhichThrottle = keepsWhichThrottle;
+            }
+
             mainapp.hideSoftKeyboard(v, activityName);
             mainapp.buttonVibration();
         }
@@ -1414,18 +1428,24 @@ public class select_loco extends AppCompatActivity {
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, false), true);
                 }
 
+                String keepsWhichThrottle = sWhichThrottle;
                 sWhichThrottle += locoName;
-                acquireLoco(true, -1);
-                if (!functions.isEmpty()) {
+                if (acquireLoco(true, -1)) {
+                    if (!functions.isEmpty()) {
                         String addrStr = ((locoAddressSize == 0) ? "S" : "L") + locoAddress;
                         String lead = mainapp.consists[whichThrottle].getLeadAddr();
                         if (lead.equals(addrStr)) {                        //*** temp - only process if for lead engine in consist
                             LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels("RF29}|{1234(L)]\\[" + functions);  //prepend some stuff to match old-style
                             mainapp.function_labels[whichThrottle] = functionLabelsMap;
+//                            mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
                         }
+                    } else {
+                        mainapp.function_labels[whichThrottle] = new LinkedHashMap<>(mainapp.function_labels_default);
+                    }
                 } else {
-                    mainapp.function_labels[whichThrottle] = new LinkedHashMap<>(mainapp.function_labels_default);
+                    sWhichThrottle = keepsWhichThrottle;
                 }
+
                 mainapp.buttonVibration();
             }
         }
@@ -1599,6 +1619,7 @@ public class select_loco extends AppCompatActivity {
                     threaded_application.safeToast("ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT);
                     return; //get out, don't try to acquire
                 }
+                String keepsWhichThrottle = sWhichThrottle;
                 if ("loco".equals(rosterEntryType)) {
                     locoName = rosterNameString;
                     sWhichThrottle += rosterNameString;     //append rostername if type is loco (not consist)
@@ -1609,7 +1630,9 @@ public class select_loco extends AppCompatActivity {
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
 
                 overrideThrottleName = rosterNameString;
-                acquireLoco(bRosterRecent, -1);
+                if (!acquireLoco(bRosterRecent, -1)) {
+                    sWhichThrottle = keepsWhichThrottle;
+                }
                 mainapp.hideSoftKeyboard(v, activityName);
                 mainapp.buttonVibration();
             }
