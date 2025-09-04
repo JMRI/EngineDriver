@@ -4,6 +4,9 @@
  * Additional buttons on the Reconnection Screen
  * Partial rewrite of the activity switch handling in WebActivity to make it consistent with the other activities. The rest will wait till Android 5
  * Fix for missing function labels when selecting from recent locos or recent consists
+ * bug fix - extra entry added to recent locos list for long addresses
+ * bug bix - clearing recent locos and consists with a swipe left invalid entries
+ * bug fix - selecting the same loco again would prepend the loco to the next selection
 **Version 2.41.204
  * Fix for Switching Throttle layouts going back to the connection screen
  * Move to the AndroidX version of the Intro library. (Needed for edge-to-edge in sdk 36)
