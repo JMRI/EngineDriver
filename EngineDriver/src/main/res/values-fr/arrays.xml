@@ -524,8 +524,8 @@
     <string-array name="prefEsuMc2SliderTypeEntries">  <!-- display version -->
         <item>Aucun</item>
         <item>3 niveaux de freinage</item>
-        <item>Luminosité de l\'écran</item>
-        <item>Use Semi-Realistic Throttle setting</item>
+        <item>Luminosité Ecran</item>
+        <item>Utiliser un réglage d\'accélérateur semi-réaliste</item>
     </string-array>
 
     <string-array name="deviceSoundsEntries">  <!-- display version -->

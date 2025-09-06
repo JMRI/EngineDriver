@@ -49,11 +49,11 @@
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
 
-    <string name="notificationInBackgroundTitle">Engine Driver en arrière-plan</string>
-    <string name="notificationInBackgroundText">☠️Android peut le désactiver à tout moment sans avertissement. Appuyez pour rouvrir.</string>
-    <string name="notificationInBackgroundTextLowMemory">☠️Mémoire faible. Engine Driver pourrait bientôt être arrêté. Appuyez pour rouvrir.</string>
-    <string name="notificationInBackgroundTextKilled">☠️Mémoire épuisée. Engine Driver a été arrêté.</string>
-    <string name="notificationAppWasKilledInBackground">Engine Driver forcé à redémarrer par Android</string>
+    <string name="notificationInBackgroundTitle">Engine Driver en arriere-plan</string>
+    <string name="notificationInBackgroundText">☠️Android peux tuer a tout moment sans avertir. Appuyer por rouvrir</string>
+    <string name="notificationInBackgroundTextLowMemory">☠️Memoire saturee, Android peux tuer Engine Driver, appuyer pour reactiver</string>
+    <string name="notificationInBackgroundTextKilled">☠️Memoire saturee, Process Engine Driver arreté</string>
+    <string name="notificationAppWasKilledInBackground">Engine Driver redémarré par Android</string>
 
     <string name="host_ip">Nom ou adresse du serveur</string>
     <string name="port">Port</string>
@@ -287,8 +287,8 @@
 
     <string name="prefStopOnPhonecallTitle">Arrêt si appel téléphone?</string>
     <string name="prefStopOnPhonecallSummary">Arreter locomotive(s) si appel téléphone</string>
-    <string name="prefStopOnBackgroundTitle">Arrêt en arrière-plan ?</string>
-    <string name="prefStopOnBackgroundSummary">Arrêtez toutes les locomotives sur toutes les manettes lorsque Engine Driver est mis en arrière-plan</string>
+    <string name="prefStopOnBackgroundTitle">Arret d urgence en arriere plan ?</string>
+    <string name="prefStopOnBackgroundSummary">Arret d urgence complet si Engine Driver bascule en arriere Plan</string>
 
     <string name="prefStopOnReleaseTitle">Arrêt sur libération locomotive?</string>
     <string name="prefStopOnReleaseSummary">Arret de la locomotive quand elle est détachée du régulateur</string>
@@ -351,7 +351,7 @@
     <string name="prefSliderLeftMarginTitle">Marge pour curseur de vitesse</string>
     <string name="prefSliderLeftMarginSummary">Nombre de pixels pour marge curseur</string>
 
-    <string name="prefStopButtonEStopOnLongPressSummary">ESTOP toutes les locomotives sur la manette actuelle en appuyant longuement sur le bouton Stop</string>
+    <string name="prefStopButtonEStopOnLongPressSummary">Arret de toutes les locomotives de la commande actuelle par appui long sur STOP</string>
     <string name="PrefConnectToFirstServerTitle">Connexion automatique sur le 1er serveur WiThrottle?</string>
     <string name="PrefConnectToFirstServerSummary">Connexion automatique sur le 1er serveur WiThrottle découvert?</string>
     <string name="prefDisplayClockTitle">Affichage Horloge rapide</string>
@@ -523,7 +523,7 @@
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Pas d autorisation d acces a la localisation</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Le nom du reseau est inacessible, la decouverte du serveur est limitee</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
-    <string name="statusThreadedAppNoResponse">Pas de réponse du serveur %1$s:%2$s pendant %3$dms. Verifier que le serveur fonctionne.\n\nRetrying</string>
+    <string name="statusThreadedAppNoResponse">Pas de reponse du serveur %1$s:%2$s depuis %3$s seconds. Verifier qu il fonctionne. Nouvelle tentative</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
     <string name="toastDoubleBackButtonToExit">Appuyer a nouveau sur \'Retour\' pour quitter Engine Driver</string>
     <string name="toastUnableToSetBrightness">Impossible de régler la luminosité automatique ou adaptative.</string>
@@ -541,7 +541,7 @@
     <string name="toastSwipeUpDownScreenDimmed">Luminosité réduite. Faire glisser vers le haut pour augmenter.</string>
     <string name="toastSwipeUpViewHidden">Vue Web cachée. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastThrottleAlertEstop">Alerte: Locomotive %1$s en arret URGENCE</string>
-    <string name="toastKidsTimerDemoMode">Mode démo. Minuterie non démarrée.</string>
+    <string name="toastKidsTimerDemoMode">Mode Démo, timer non demarré</string>
     <string name="toastPreferencesOutsideLimits">Valeur entrée hors limites (%1$s-%2$s). Reset à %3$s.</string>
     <string name="toastPreferencesNotNumeric">Valeur entrée non numérique (%1$s-%2$s). Reset à %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Préférences remises aux valeurs par défaut</string>
@@ -638,7 +638,7 @@
     <string name="lightsTextUnknown">Inconnu</string>
 
     <string name="logviewerClose">Fermer</string>
-    <string name="logviewerSave">Commencer</string>
+    <string name="logviewerSave">Démarrage</string>
 
     <string name="prefLocaleTitle">Localisation</string>
     <string name="prefLocaleSummary">Langue à utiliser.\nATTENTION! Les touches de directions seront réinitialisées.</string>
@@ -720,14 +720,14 @@
     <string name="introButtonsSummary">Choisissez comment controler la vitesse de vos trains.</string>
     <string name="introButtonsSlider">Curseur Seul\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Curseur + Touches\n(pas possible si \'Big Buttons\')</string>
-    <string name="introButtonsNoSlider">Touches de vitesse seulement</string>
+    <string name="introButtonsNoSlider">Aucun curseur ni bouto, recommandation pour Mobile Control Pro ou 2 ESU</string>
     <string name="introButtonsNoSliderOrButtons">Aucun curseur ni bouton recommandé pour ESU MC 2/Pro</string>
     <string name="introDccexTitle">Options pour station de commande EX</string>
     <string name="introDccexSummary">Engine Driver permet des foncstionnalités supplémentaires, par exemple la programmation directe de CV sur une centrale DCC-EX (et pas via JMRI)
         \n\nSi vous repondez \'Oui\' ci-dessous, Engine Driver utiliserales commandes natives DCC-EX et pas celle de WiThrottle si le nom du serveur contient \'DCC-EX\' or \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Oui, j\'utiliserai une centrale EX-</string>
     <string name="introDccexQuestionNo">Non, je n\'utiliserai pas une centrale EX-</string>
-    <string name="introEsuMc2QuestionNo">Non, je choisirai mes propres paramètres</string>
+    <string name="introEsuMc2QuestionNo">Non, choix personnalisé des réglages</string>
     <string name="introbackButtonPress">Merci de redémarrer Engine Driver pour terminer cette introduction.</string>
     <string name="functionButtonLookForWhistle">SIFFLET</string>
     <string name="functionButtonLookForHorn">KLAXON</string>
@@ -735,7 +735,7 @@
     <string name="functionButtonLookForHead">FRONT</string>
     <string name="functionButtonLookForLight">LUMIÈRE</string>
     <string name="functionButtonLookForRear">ARRIÈRE</string>
-    <string name="prefShareFileNowSummary">Vous permet de partager immédiatement un fichier de configuration, des préférences enregistrées ou un fichier journal.</string>
+    <string name="prefShareFileNowSummary">Vous permet de partager un fichier de parametra ou un fichier de trace (log file) immediatement</string>
     <string name="prefImportExportOverwite">Le fichier \'%1$s\' existe déjà. Ecraser?</string>
     <string name="prefImportExportErrorReadingList">Erreur sur lecture de la liste de connexions récentes:</string>
     <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
@@ -774,7 +774,25 @@
     <string name="prefKidsSectionTitle">Préférences pour les enfants</string>
     <string name="prefKidsSectionSummary">Options pour les jeunes enfants.</string>
     <string name="prefKidsHelpTitle">Notes pour la durée de jeu:</string>
-    <string name="prefKidsHelpSummary">- sélectionnez d abord la locomotive. \n- Le Timer commencera à la première augmentation de vitesse. \n- Vous devez revenir à cette préférence pour réinitialiser le délai (ou l effacer) après le délai. \n \nRecommandations: \n- Désactivez les touches de volume. \n- Désactiver \'Balayage des aiguillages \'. \n- Désactivation \'Balayage des itinéraires \'. \n- Désactiver EStop.</string>
+    <string name="prefKidsHelpSummary">"- choisir une loco avant de démarrer une première fois.
+        \n- Le delai demarre au premier changement de vitesse.
+        \n- A la fin du delai:
+        \n\u00A0 - Cliquer sur menu overflow.
+        \n\u00A0 \u00A0   seule l option \'Delai\' sera disponible.
+        \n\u00A0 - Cliquer \'Delai\' un mot de passe sera alors demandé.
+        \n\u00A0 - Entrer l une des mots de passe pour soit:
+        \n\u00A0 \u00A0 - redemarrer un delai identique, ou
+        \n\u00A0 \u00A0 - arreter/ supprimer le delai en cours.
+        \n
+        \nRecommendations:
+        \n- Activer:
+        \n\u00A0 - Mode immersif
+        \n\u00A0 - Bouton Delai sur barre Action
+        \n- Desactiver
+        \n\u00A0 - les touches volume
+        \n\u00A0 - Balayer via - Aiguillages, Routes, Web
+        \n\u00A0 - Balayage Haut ou Bas des preferences
+        \n\u00A0 - Tous boutons de la barre d action sauf Delai"</string>
     <string name="prefKidsTimerTitle">Temps maximum de fonctionnement</string>
     <string name="prefKidsTimerSummary">Reduire le temps de fonctionnement de la locomotive. Ainsi, chaque enfant aura le même temps de jeu.</string>
     <string name="app_name_throttle_kids_running">%1$s sec. restant</string>
@@ -991,7 +1009,7 @@
     <string name="prefKidsTimerButtonDefaultSummary">Durée minuterie si activation via barre d outils</string>
     <string name="prefKidsTimerButtonDefaultTitle">Valeur par défaut de la touche</string>
     <string name="prefKidsTimerButtonSummary">Affiche la touche TIMER pour activer la minuterie</string>
-    <string name="prefKidsTimerKioskModeSummary">Activer l\'épinglage d\'écran (mode kiosque) lorsque le minuteur démarre</string>
+    <string name="prefKidsTimerKioskModeSummary">Epingler l ecran (mode kiosque) au demarrage du delai</string>
     <string name="prefKidsTimerButtonTitle">Affichage de la touche TIMER?</string>
     <string name="prefKidsTimerEnableReverseSummary">Activavtion touche REVERSE</string>
     <string name="prefKidsTimerEnableReverseTitle">Autoriser inversion de sens (REVERSE)</string>
@@ -1036,22 +1054,22 @@
     <string name="rosterEntryImageHelpText">Uniquement les images stockées localement. S\'il existe une image sur le serveur, elle remplacera l image locale.</string>
     <string name="rosterEntryImageRemoveButtonText">Supprimer</string>
     <string name="rosterEntryImageSaveButtonText">Sauvegarde</string>
-    <string name="shareFileDialogTitle">Sélectionnez un fichier à partager</string>
-    <string name="shareFile">Partager le fichier : %s</string>
-    <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Traitement des fichiers partagés...</string>
+    <string name="shareFileDialogTitle">Choix du ficheir a partager</string>
+    <string name="shareFile">Partage fichier: %s</string>
+    <string name="sharedFileProcessing">Traitement en cours des fichiers partagés</string>
     <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Traitement de %d fichier(s) partagé(s)...</string>
     <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Reçu %d fichier(s) partagé(s)...</string>
-    <string name="sharedFileSavingCount">Enregistrement de %d fichier(s)</string>
-    <string name="sharedFileSavedCount">Enregistrer %d fichier(s)</string>
-    <string name="sharedFileFailedToSaveCount">Échec de l\'enregistrement de %d fichier(s)</string>
-    <string name="sharedFileFinished">Traitement terminé de %d fichiers</string>
-    <string name="sharedFileNoUriReceived">Erreur : aucun fichier URI reçu</string>
-    <string name="sharedFileNoShareActionDetected">Aucune action de partage détectée</string>
-    <string name="sharedFileOverwriteChoiceTitle">Conflit de fichiers</string>
-    <string name="sharedFileOverwriteChoiceText">Certains fichiers existent peut-être déjà. Souhaitez-vous écraser les fichiers existants ?\n\nChoisir « Non » enregistrera les fichiers en conflit sous un nouveau nom (par exemple, nom_fichier_1.ext).</string>
-    <string name="sharedFileOverwriteChoicePositiveButtonText">Oui, écraser</string>
-    <string name="sharedFileOverwriteChoiceNegativeButtonText">Non, enregistrer avec un nouveau nom</string>
-    <string name="toastNoAppToShare">Aucune application trouvée pour partager le fichier</string>
+    <string name="sharedFileSavingCount">Enregistrement %d fichier(s)</string>
+    <string name="sharedFileSavedCount">Enregistré %d fichier(s)</string>
+    <string name="sharedFileFailedToSaveCount">Echec enregistrement %d fichier(s)</string>
+    <string name="sharedFileFinished">Fin traitement %d fichier(s)</string>
+    <string name="sharedFileNoUriReceived">Erreur: aucun fichier reçu</string>
+    <string name="sharedFileNoShareActionDetected">Aucune action de partage detectée</string>
+    <string name="sharedFileOverwriteChoiceTitle">conflit de fichier</string>
+    <string name="sharedFileOverwriteChoiceText">Certains fichiers existent déjà. Effacement des anciens fichiers? \n\nChoisir \'Non\' conservera les fichiers en conflit avec une extension differente (Par exemple nom+ _1.ext).</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">Oui, effacer</string>
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">Non enregistrer avec nouveau nom</string>
+    <string name="toastNoAppToShare">Aucune application trouvée pour ce partage</string>
     <string name="rosterEntryImageSelectButtonText">Nouvelle image</string>
     <string name="rosterEntryImageServerImageHelpText">Le serveur ayant une image de la loco, vous ne pouvez pas remplacer celle-ci par une image locale, qui sera a nouveau remplacee par celle du serveur.</string>
     <string name="prefGamepadOnlyOneGamepadSummary">Si actif, Engine Driver ne verifiera pas si plusieurs Gamepads</string>
@@ -1196,22 +1214,22 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Action du bouton STOP</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Choix action du bouton STOP</string>
     <string name="statusThreadedAppNoLocationService">SSID inaccessible</string>
-    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
-    <string name="introEsuMc2Summary">L\'écran de l\'ESU Mobile Control 2/Pro est limité et les commandes physiques rendent certaines commandes à l\'écran d\'Engine Driver superflues. Si vous sélectionnez « Oui » ci-dessous, certains paramètres seront modifiés pour optimiser l\'utilisation de l\'écran de l\'ESU MC2/Pro.</string>
-    <string name="introEsuMc2QuestionYes">Oui, utilisez les paramètres recommandés</string>
+    <string name="introEsuMc2Title">ESU Mobile Control Pro ou 2</string>
+    <string name="introEsuMc2Summary">L ecran de la Mobile Control Pro ou 2 est limité et certains boutons sont redondants avec d autres écrans Engine Driver. Si vous choisissez Oui, quelques réglages seront modifiés pour mieux s adapter a la commande Moble Control Pro / 2</string>
+    <string name="introEsuMc2QuestionYes">Oui, utilisation des réglages recommandés</string>
     <string name="prefEsuMc2SliderTypeTitle">Type de curseur</string>
-    <string name="prefEsuMc2SliderTypeSummary">Définir ce que fera le curseur</string>
-    <string name="prefToolbarButtonSizeTitle">Bouton de la barre d\\\'outils</string>
-    <string name="prefToolbarButtonSizeSummary">Définissez la taille des boutons de la barre d\\\'outils. (Redémarrage requis)</string>
-    <string name="prefKidsTimerKioskModeTitle">Mode kiosque ?</string>
-    <string name="prefKidsTimerDemoModePasswordTitle">Mot de passe du mode démo</string>
-    <string name="prefKidsTimerDemoModePasswordSummary">Mot de passe pour remplacer le minuteur (mode démo) sans le désactiver</string>
-    <string name="toastKidsTimerNoLoco">Acquérir une locomotive avant de démarrer le chronomètre</string>
-    <string name="prefStopButtonEStopOnLongPressTitle">ESTOP Sur Arrêt Appui long</string>
-    <string name="logviewerStopSave">Arrêt</string>
+    <string name="prefEsuMc2SliderTypeSummary">Definir action du ciurseur</string>
+    <string name="prefToolbarButtonSizeTitle">Bouton sur barre d outils</string>
+    <string name="prefToolbarButtonSizeSummary">Definir taille des boutons sur barre d outils (redemarrage necessaire)</string>
+    <string name="prefKidsTimerKioskModeTitle">Mode Kiosque ?</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">Mode passe pour modifier Delai du mode démo</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">Mot de passe pour cahnger le Delai sans modifier celui du mode demo</string>
+    <string name="toastKidsTimerNoLoco">Choisir une loco avant de demarrer un delai</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">Arret urgence par appui long sur STOP</string>
+    <string name="logviewerStopSave">Arret</string>
     <string name="logviewerShare">Partager</string>
-    <string name="prefShareFileNowTitle">Partagez un fichier de paramètres maintenant !</string>
-    <string name="prefStopButtonLongPressDelayTitle">Bouton d\'arrêt, appui long, délai</string>
-    <string name="prefStopButtonLongPressDelaySummary">Combien de millisecondes constitue une longue pression sur les boutons Stop, pour lancer EStop</string>
+    <string name="prefShareFileNowTitle">Partage un fichier de parametrage</string>
+    <string name="prefStopButtonLongPressDelayTitle">Delai pour appui long sur STOP</string>
+    <string name="prefStopButtonLongPressDelaySummary">Duree en millisecondes pour prise en compte arret d urgence par appui long sur STOP</string>
 
 </resources>

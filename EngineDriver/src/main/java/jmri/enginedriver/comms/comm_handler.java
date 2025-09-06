@@ -142,7 +142,7 @@ public class comm_handler extends Handler {
             }
 
             //clear app.thread shared variables so they can be reinitialized
-            mainapp. initShared();
+            mainapp.initShared();
             mainapp.fastClockSeconds = 0L;
 
             //store ip and port in global variables
