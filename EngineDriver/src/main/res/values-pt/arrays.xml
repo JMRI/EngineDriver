@@ -61,7 +61,7 @@
         <item>Nenhum</item>
         <item>3 níveis de freio decodificador</item>
         <item>Brilho da tela</item>
-        <item>Use Semi-Realistic Throttle setting</item>
+        <item>Use a configuração de aceleração semi-realista</item>
     </string-array>
 
     <string-array name="WebViewLocationEntries">  <!-- display version -->

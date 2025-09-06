@@ -1,3 +1,6 @@
+**Version 2.41.208
+ * Additional French translations by Alain Carasso
+ * Additional Google translations
 **Version 2.41.206
  * Last version of Engine Driver to support Android 4.x
  * Removed ability to share files to ED's scoped storage. Incompatible with version Android 4.x
