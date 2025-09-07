@@ -417,7 +417,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/acquire_and_currnt_locos_layout"
+            android:id="@+id/acquire_and_current_locos_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
@@ -498,7 +498,7 @@
                     tools:ignore="TouchTargetSizeCheck" />
             </RadioGroup>
 
-            <!--            spinner is implmented but not shown -->
+            <!--            spinner is implemented but not shown -->
             <Spinner
                 android:id="@+id/select_loco_method_spinner"
                 android:layout_width="wrap_content"
@@ -785,28 +785,46 @@
             android:fontFamily="@font/notoemoji_variablefont_wght"
             tools:ignore="RtlHardcoded" />
 
-        <EditText
-            android:id="@+id/filter_roster_text"
-            style="?attr/edit_label_condensed_text_style"
-            android:layout_width="70sp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="6dp"
-            android:layout_toRightOf="@+id/roster_list_filter_by_label"
-            android:hint="@string/FilterRosterListHint"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:maxLength="10"
-            android:paddingTop="2dp"
-            android:paddingBottom="0dp"
-            android:shadowColor="#FFFFFFFF"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="0.2"
-            android:singleLine="true"
-            android:textSize="16sp"
-            tools:ignore="RtlHardcoded,TouchTargetSizeCheck" />
+            <RelativeLayout
+                android:id="@+id/filter_roster_text_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/roster_list_filter_by_label">
+
+                <EditText
+                        android:id="@+id/filter_roster_text"
+                        style="?attr/edit_label_condensed_text_style"
+                        android:background="@android:color/transparent"
+                        android:layout_width="70sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="6dp"
+                        android:hint="@string/FilterRosterListHint"
+                        android:imeOptions="actionDone"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:maxLength="10"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="0dp"
+                        android:shadowColor="#FFFFFFFF"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="0.2"
+                        android:singleLine="true"
+                        android:textSize="16sp"
+                        tools:ignore="RtlHardcoded,TouchTargetSizeCheck" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/filter_roster_text"
+                    android:layout_alignStart="@id/filter_roster_text"
+                    android:layout_alignLeft="@id/filter_roster_text"
+                    android:layout_alignEnd="@id/filter_roster_text"
+                    android:layout_alignRight="@id/filter_roster_text"
+                    android:background="@color/grey" />
+
+            </RelativeLayout>
 
         <TextView
             android:id="@+id/roster_list_filter_owner_label"
@@ -819,7 +837,7 @@
             android:paddingBottom="6sp"
             android:paddingLeft="4sp"
             android:paddingRight="0sp"
-            android:layout_toRightOf="@+id/filter_roster_text"
+            android:layout_toRightOf="@+id/filter_roster_text_layout"
             android:text="@string/FilterRosterListFilterOwnerLabel"
             android:fontFamily="@font/notoemoji_variablefont_wght"
             tools:ignore="RtlHardcoded" />

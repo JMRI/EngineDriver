@@ -128,7 +128,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //            }
 //        });
 //
-//        showHideSaveButton();
+        showHideSaveButton();
 
         logReaderTask = new LogReaderTask();
 
@@ -368,13 +368,13 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         if (!mainapp.logSaveFilename.isEmpty()) {
             saveButton.setVisibility(View.GONE);
             stopSaveButton.setVisibility(View.VISIBLE);
-            shareButton.setVisibility(View.GONE);
+//            shareButton.setVisibility(View.GONE);
             saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
             saveInfoTV.setVisibility(View.GONE);
         } else {
             saveButton.setVisibility(View.VISIBLE);
             stopSaveButton.setVisibility(View.GONE);
-            shareButton.setVisibility((checkHasLogFiles()) ? View.VISIBLE : View.GONE);
+//            shareButton.setVisibility((checkHasLogFiles()) ? View.VISIBLE : View.GONE);
             saveInfoTV.setVisibility(View.GONE);
         }
     }
