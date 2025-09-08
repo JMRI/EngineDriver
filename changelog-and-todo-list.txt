@@ -931,6 +931,7 @@
  *   TODO: toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
+ *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
