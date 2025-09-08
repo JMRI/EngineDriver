@@ -369,7 +369,7 @@ public class threaded_application extends Application {
 
     public boolean shownRosterTurnouts = false;
     public boolean firstWebActivity = false;
-    private boolean exitConfirmed = false;
+    public boolean exitConfirmed = false;
     /** @noinspection FieldCanBeLocal*/
     private ApplicationLifecycleHandler lifecycleHandler;
     public static Context context;
@@ -645,7 +645,7 @@ public class threaded_application extends Application {
             notificationBuilder.setContentText(notificationText);
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
                     PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
+            notificationBuilder.setContentIntent(contentIntent);
             notificationManager.notify(ED_NOTIFICATION_ID, notificationBuilder.build());
 
         } else {
@@ -810,9 +810,10 @@ public class threaded_application extends Application {
 
         @Override
         public void onTrimMemory(int level) {
+            Log.d(applicationName, "t_a: ALO/ALH: onTrimMemory(): " + level);
             if (exitConfirmed) return;
 
-            Log.d(applicationName, "t_a: ALO/ALH: onTrimMemory(): " + level);
+            Log.d(applicationName, "t_a: ALO/ALH: onTrimMemory(): " + level + " - Not Exiting");
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
                 if (!isInBackground) {                              // if just went into bkg
                     isInBackground = true;

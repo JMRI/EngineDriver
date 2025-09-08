@@ -682,6 +682,13 @@ public class connection_activity extends AppCompatActivity implements Permission
     } //end onCreate
 
     @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+        mainapp.exitConfirmed = false;
+    }
+
+    @Override
     public void onResume() {
         Log.d(threaded_application.applicationName, activityName + ": onResume()");
         super.onResume();
