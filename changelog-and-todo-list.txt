@@ -1,6 +1,9 @@
 **Version 2.41.208
  * Additional French translations by Alain Carasso
  * Additional Google translations
+ * bug fix - log screen - save log button not visible
+ * bug fix - notification going into background would not always show, particularly if ED had been restarted.
+ * bug fix - unable to click on notification to reopen on later versions of android
 **Version 2.41.206
  * Last version of Engine Driver to support Android 4.x
  * Removed ability to share files to ED's scoped storage. Incompatible with version Android 4.x
