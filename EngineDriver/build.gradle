@@ -29,7 +29,7 @@ android {
         abortOnError false
     }
     namespace 'jmri.enginedriver'
-    compileSdk 35
+    compileSdk 36
 }
 
 dependencies {
@@ -52,8 +52,8 @@ dependencies {
     implementation files('libs/jmdns-3.5.8.jar')
     implementation 'io.github.esugmbh:mobilecontrol2-sdk:1.1.7'
     implementation 'com.github.apl-devs:appintro:v4.2.3'
-    implementation 'org.slf4j:slf4j-api:1.7.30'
-    implementation 'org.slf4j:slf4j-nop:1.7.30'
+    implementation 'org.slf4j:slf4j-api:2.0.17'
+    implementation 'org.slf4j:slf4j-nop:2.0.17'
 }
 
 allprojects {

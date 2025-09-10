@@ -4,6 +4,8 @@
  * bug fix - log screen - save log button not visible
  * bug fix - notification going into background would not always show, particularly if ED had been restarted.
  * bug fix - unable to click on notification to reopen on later versions of android
+ * remove no-longer-supported references to jcenter() repository
+ * Upgrade to Gradle 8.13.0
 **Version 2.41.206
  * Last version of Engine Driver to support Android 4.x
  * Removed ability to share files to ED's scoped storage. Incompatible with version Android 4.x
@@ -627,7 +629,7 @@
  * postpone sending of "Q"uit message until Throttle has a chance to send stops
  * prevent entry of new lines in text fields (Throttle Name, initial web, etc.)
 **Version 2.14
- * request and show function labels for JMRI consists - mstevetodd  
+ * request and show function labels for JMRI consists - mstevetodd
  * show activeProfile on About page - mstevetodd
  * Prevent direction change while moving - Peter Akers,
  * Decrease Loco No. button Height - Peter Akers,
@@ -666,10 +668,10 @@
  * fix issue with volume button changing wrong loco speed when unused throttle has the "v" - mstevetodd
  * Catch additional exceptions when starting jmDNS listener (NoSuchMethodError reported to Store) - mstevetodd
  * update system list for turnout prefixes - mstevetodd
- * Modified handling of consists so that Locos are not visible unless WiT reports that they have been acquired (via the MT+ message). - Robin Becker  
- * Also TA does not pulse the outbound heartbeat for a throttle unless the lead loco has been acquired. - Robin Becker  
- * Adjusted the scaling of loco/consist on Throttle and SelectLoco screens to better utilize the actual textView size. - Robin Becker  
- * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap. - Robin Becker  
+ * Modified handling of consists so that Locos are not visible unless WiT reports that they have been acquired (via the MT+ message). - Robin Becker
+ * Also TA does not pulse the outbound heartbeat for a throttle unless the lead loco has been acquired. - Robin Becker
+ * Adjusted the scaling of loco/consist on Throttle and SelectLoco screens to better utilize the actual textView size. - Robin Becker
+ * Widened the Throw, Close and Toggle buttons on the Turnouts screen so the label text does not wrap. - Robin Becker
  * Adjusted size of the Power icon so it is square. - Robin Becker
  * corrected number of default function buttons to 28 - mstevetodd
  * added option to show JMRI fast-clock in title bar - Robin Becker
@@ -698,7 +700,7 @@
  * avoid NPE when heartbeat comes as loco removed (Robin Becker)
 **Version 2.8.1
  * fix default for "Drop Before Acquire" if never set, should be off
- * add click sounds to function and direction buttons, to match other buttons 
+ * add click sounds to function and direction buttons, to match other buttons
 **Version 2.8 (mstevetodd)
  * only show loco and release button for # of throttles allowed
 **Version 2.8 (Robin Becker)
@@ -722,7 +724,7 @@
  * Fixed nullPointException for new ConsistEdit, user can't consist with drop loco before acquire pref On.
  * Can go to ConsistEdit screen from throttle menu when there is a consist for a throttle slot and can choose which throttle to edit.
  * Can now clear recent connection and locos list with button.
- * Added third throttle slot. 
+ * Added third throttle slot.
  * User can select how many throttles to display (1 to 3).
  * Fixed problem when sending the quit "Q" command to JMRI, now the throttle name is removed from JMRI WiFi Throttle list.
  * Displays OnGoing Notification to user that Engine Driver is running.
@@ -786,14 +788,14 @@
 **Version 2.1
  * new user pref to select orientation on Throttle (default to portrait)
  * stop javascript refresh on exit (by loading a "blank" page)
- * rearranged prefs                                                                          
+ * rearranged prefs
 **Version 2.0
  * connect to discovered servers using IP instead of verifying name (avoids timeout on non-DNS network)
  * change server list items to display system name and ip address
  * move "web" menu item higher in list so it always shows in Throttle (instead of under More)
  * only show/use ipv4 address
  * implement serviceRemoved to remove ended servers from discovered list
- * web page links now open inside ED instead of external browser 
+ * web page links now open inside ED instead of external browser
  * added prefs for "Initial Web Page" and Web View Location
  * initial version of web page on throttle page, Bottom only, 50%
  * prevent ConcurrentModificationException crash (reported to market)
@@ -803,7 +805,7 @@
  * send resizing parm with image retrieval (also added code to JMRI to take advantage of this)
  * moved roster.xml loading to an async thread
  * upgraded imagedownloader
- * catch NPE in withrottle_send (reported to Market) - (rbecker) 
+ * catch NPE in withrottle_send (reported to Market) - (rbecker)
  * improved handling of connection loss, including reconnect (rbecker)
 **Version 1.8
  * Add try/catch for ScrollView.onTouchEvent, reported to dev console (rbecker)
@@ -812,7 +814,7 @@
  * show consist details unless name is > 4
  * Removed unneeded host name lookups to speed connection on some networks, including 2 in jmDNS
  * Turned off speed step handling (for now)
- * Fixed crash  (reported to dev console) in routes, turnouts and power when response was < 3 chars  
+ * Fixed crash  (reported to dev console) in routes, turnouts and power when response was < 3 chars
  * catch error "Thread already started" message (reported to dev console)
  * reduce height of roster entries if icon not used
 **Version 1.7
@@ -821,9 +823,9 @@
  * added animations to all page transitions (rbecker)
  * added menus to routes and turnouts activities (rbecker)
  * fixed initial height on throttle (rbecker)
- * show feedback on Stop button (rbecker) 
+ * show feedback on Stop button (rbecker)
  * fixed intermittent failure to get functions from roster (rbecker)
- * handle strange speeds sent by eStop and show message (rbecker) 
+ * handle strange speeds sent by eStop and show message (rbecker)
  * add prompt before disconnecting (rbecker)
  * moved socket read and heartbeat into classes (rbecker)
  * now checks for WiT even when no loco selected (rbecker)
@@ -836,7 +838,7 @@
 **Version 1.6
  * Began adding Multithrottle support (serious rigged version, 2.0+ only)
  * Mirror speed and direction from server (on heartbeat, 2.0+ only)
- * Show warning on client if server goes away while loco selected 
+ * Show warning on client if server goes away while loco selected
  * Improved appearance of buttons
  * Fixed incorrect heartbeat request when not enabled on server side
  * Shrink the font for loco strings instead of growing the buttons
@@ -876,7 +878,7 @@
  *  moved directory creation to connect message handler, removed writeable check altogether, and added toast messages on file read/writes
  *  moved read of connections_list.txt to onStart so it shows immediately
  *  use volume button for speed of first loco (only if selected)
- *  add existing consists to select list in select loco, formatting name as addr1+addr2+addr3, etc. 
+ *  add existing consists to select list in select loco, formatting name as addr1+addr2+addr3, etc.
  *  improved handling of discovery listener, turn it off and on, and don't add duplicates
  *  get qualified name of server and use it in discovery list, (verify it resolves first)
  *  added preference to hide route system names
@@ -891,7 +893,7 @@
  *Version 0.8 - changes/additions by mstevetodd
  *  added NCE to hardware system list (oversight)
  *  added preference to default Long/Short/Auto for loco address length
- *  leading 0 was treated as octal in select_loco, made it stop doing that 
+ *  leading 0 was treated as octal in select_loco, made it stop doing that
  *  show disabled Copy button in function settings
  *Version 0.7 - changes/additions by mstevetodd
  *  prevent acquire with blank loco address (was crashing)
@@ -909,7 +911,7 @@
  *  added 29 function buttons for both throttles, using scrollers
  *  disable buttons and slider and shrink screen usage for unselected loco
  *  adjust function buttons to indicate current state from WiT server
- *  added release buttons to sl activity 
+ *  added release buttons to sl activity
  *Version 0.3 - changes/additions by mstevetodd
  *   function labels for throttle, hiding unused
  *   separate rev-stop-fwd buttons
@@ -957,7 +959,7 @@
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
- *   TODO: check for error on send and do something with it 
+ *   TODO: check for error on send and do something with it
  * throttle:
  *   TODO: cater for edge-to-edge enforcement in SDK 36 / Android 16
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
