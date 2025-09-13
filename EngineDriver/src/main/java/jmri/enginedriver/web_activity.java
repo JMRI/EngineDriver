@@ -614,7 +614,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 return true;
             }
 //            navigateAway(true, null); // don't really finish the activity here
-            Intent in = new Intent().setClass(this, throttle.class);
+            Intent in = mainapp.getThrottleIntent();
             startACoreActivity(this, in, false, 0);
             return true;
         }
