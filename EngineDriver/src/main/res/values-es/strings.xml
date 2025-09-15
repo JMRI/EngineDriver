@@ -1094,7 +1094,13 @@
     <string name="prefActionBarShowDccExButtonTitle">¿Botón DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Acción</string>
     <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(excluir \'&lt;\' y \'&gt;\')</small></small></string>
-    <string name="DCCEXclearCommands">Claro</string>
+    <string name="DccexClearCommands">Claro</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">Pedazos</string>
+    <string name="cvBitCalculatorTitle">Calculadora de bits CV</string>
+    <string name="cvBitCalculatorCvValueLabel">Valor CV (decimal)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Pedazos:</string>
+
     <string name="DccexConnectionOptionTitle">Protocolo de conexión</string>
     <string name="DccexFailed" tools:ignore="Typos">Accion: Fallida</string>
     <string name="DccexNextCommandButtonLabel">Próximo</string>
@@ -1107,8 +1113,8 @@
     <string name="witWriteAddressLabel">Dirección DCC</string>
     <string name="witPomWarning">Notas: - Esto no funcionará en algunos sistemas DCC. - Se evita el cambio de dirección de locomotora - CV 1, 17 y 2. 18 y bit 5 de CV 29.\n\nUtilizar con precaución.</string>
     <string name="witPomMaxValueWarning">El valor \'%1$s\' excede el máximo admitido (\'%2$s\')</string>
-    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommandsLabel">CMD comunes</string>
+    <string name="DccexCommonCvsLabel">NMRA CVs</string>
+    <string name="DccexCommonCommandsLabel">CMD comunes</string>
     <string name="DCCEXsetTrackButtonLabel">Colocar</string>
     <string name="DccexSucceeded">Acción tuvo éxito</string>
     <string name="DCCEXturnoutClosed">Cerrado</string>

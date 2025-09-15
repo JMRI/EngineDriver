@@ -1,4 +1,5 @@
 **Version 2.41.210
+ * Last version of Engine Driver to support Android 4.x
  * Bug Fix - If you try to close the Web screen if using anything other than the default throttle layout, ED will crash.
  * CV Bit Calculator added to the DCC-EX page
 **Version 2.41.208
@@ -10,7 +11,6 @@
  * remove no-longer-supported references to jcenter() repository
  * Upgrade to Gradle 8.13.0
 **Version 2.41.206
- * Last version of Engine Driver to support Android 4.x
  * Removed ability to share files to ED's scoped storage. Incompatible with version Android 4.x
  * Additional buttons on the Reconnection Screen
  * Partial rewrite of the activity switch handling in WebActivity to make it consistent with the other activities. The rest will wait till Android 5

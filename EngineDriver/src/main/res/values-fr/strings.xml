@@ -1102,7 +1102,13 @@
     <string name="prefActionBarShowDccExButtonTitle">Bouton DCC-EX ?</string>
     <string name="DCCEXactionTypeLabel">Action</string>
     <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclure \'&lt;\' et \'&gt;\')</small></small></string>
-    <string name="DCCEXclearCommands">Efface</string>
+    <string name="DccexClearCommands">Efface</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">Morceaux</string>
+    <string name="cvBitCalculatorTitle">Calculateur de bits CV</string>
+    <string name="cvBitCalculatorCvValueLabel">Valeur CV (décimal)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Morceaux:</string>
+
     <string name="DccexConnectionOptionTitle">Protocole de connexion</string>
     <string name="DccexFailed">Action echouee</string>
     <string name="DccexNextCommandButtonLabel">Suivant</string>
@@ -1115,8 +1121,8 @@
     <string name="witWriteAddressLabel">Adresse DCC</string>
     <string name="witPomWarning">"Remarques:\n- Ceci ne fonctionnera pas avec certains systèmes DCC.\n- Le changement d adresse de la locomotive sera bloqué - CV 1, 17 &amp; 18 et le bit 5 du CV 29.\n\nUtiliser avec prudence."</string>
     <string name="witPomMaxValueWarning">La valeur \'%1$s\' depassee la valeur maxi supportee (\'%2$s\')</string>
-    <string name="DCCEXcommonCvsLabel">CVs NMRA</string>
-    <string name="DCCEXcommonCommandsLabel">Commandes CMD courantes</string>
+    <string name="DccexCommonCvsLabel">CVs NMRA</string>
+    <string name="DccexCommonCommandsLabel">Commandes CMD courantes</string>
     <string name="DCCEXsetTrackButtonLabel">Poser</string>
     <string name="DccexSucceeded">Action effectuée!</string>
     <string name="DCCEXturnoutClosed">Fermé</string>

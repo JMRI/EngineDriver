@@ -1104,7 +1104,13 @@
     <string name="prefActionBarShowDccExButtonTitle">Botó DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Acció</string>
     <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclou \'&lt;\' i \'&gt;\')</small></small></string>
-    <string name="DCCEXclearCommands">Clar</string>
+    <string name="DccexClearCommands">Clar</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">Bits</string>
+    <string name="cvBitCalculatorTitle">Calculadora de bits de CV</string>
+    <string name="cvBitCalculatorCvValueLabel">Valor del CV (decimal)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
+
     <string name="DccexConnectionOptionTitle">Protocol de connexió</string>
     <string name="DccexFailed">L\'acció ha fallat</string>
     <string name="DccexNextCommandButtonLabel">Pròxim</string>
@@ -1117,8 +1123,8 @@
     <string name="witWriteAddressLabel">Adreça DCC</string>
     <string name="witPomWarning">Notes: - Això no funcionarà en alguns sistemes DCC. - S\'ha impedit el canvi d\'adreça de lloc - CV 1, 17 &amp; 18 i el bit 5 de CV 29. \n\nFeu servir amb precaució.</string>
     <string name="witPomMaxValueWarning">El valor \'%1$s\' supera el màxim admès (\'%2$s\')</string>
-    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommandsLabel">CMD comuns</string>
+    <string name="DccexCommonCvsLabel">NMRA CVs</string>
+    <string name="DccexCommonCommandsLabel">CMD comuns</string>
     <string name="DCCEXsetTrackButtonLabel">Conjunt</string>
     <string name="DccexSucceeded">L\'acció va tenir èxit</string>
     <string name="DCCEXturnoutClosed">Tancada</string>

@@ -401,7 +401,7 @@
                     android:layout_weight=".2"
                     android:gravity="end"
                     android:padding="2sp"
-                    android:text="@string/DCCEXcommonCvsLabel"
+                    android:text="@string/DccexCommonCvsLabel"
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp" />
@@ -1147,7 +1147,7 @@
                     android:layout_weight=".3"
                     android:gravity="end"
                     android:padding="2sp"
-                    android:text="@string/DCCEXcommonCommandsLabel"
+                    android:text="@string/DccexCommonCommandsLabel"
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp" />
@@ -1275,7 +1275,7 @@
                 style="?attr/ed_normal_button_condensed_style"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
-                android:text="@string/DCCEXclearCommands"
+                android:text="@string/DccexClearCommands"
                 android:drawableLeft="?attr/ed_clear_list_glyph"
                 android:padding="0dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />

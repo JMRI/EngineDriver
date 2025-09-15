@@ -1094,7 +1094,13 @@
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX-Taste?</string>
     <string name="DCCEXactionTypeLabel">Aktion</string>
     <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(ausschließen \'&lt;\' und \'&gt;\')</small></small></string>
-    <string name="DCCEXclearCommands">Leeren</string>
+    <string name="DccexClearCommands">Leeren</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">Bits</string>
+    <string name="cvBitCalculatorTitle">CV-Bit-Rechner</string>
+    <string name="cvBitCalculatorCvValueLabel">CV-Wert (dezimal)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
+
     <string name="DccexConnectionOptionTitle">Verbindungsprotokoll</string>
     <string name="DccexFailed">Aktion: fehlgeschlagen</string>
     <string name="DccexNextCommandButtonLabel">Nächste</string>
@@ -1107,8 +1113,8 @@
     <string name="witWriteAddressLabel">DCC-Adresse</string>
     <string name="witPomWarning">Hinweise: - Dies funktioniert auf einigen DCC-Systemen nicht. - Änderung der Lokadresse wird verhindert – CVs 1, 17 &amp; 18 und Bit 5 von CV 29. \n\nMit Vorsicht verwenden.</string>
     <string name="witPomMaxValueWarning">Der Wert „%1$s“ überschreitet den maximal unterstützten Wert (‚%2$s‘).</string>
-    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommandsLabel">Wichtige CMDs</string>
+    <string name="DccexCommonCvsLabel">NMRA CVs</string>
+    <string name="DccexCommonCommandsLabel">Wichtige CMDs</string>
     <string name="DCCEXsetTrackButtonLabel">Set</string>
     <string name="DccexSucceeded">Aktion erfolgreich</string>
     <string name="DCCEXturnoutClosed">Geradeaus</string>
