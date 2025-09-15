@@ -177,7 +177,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
     float vn = 4; // DCC-EC Version number
 
-    Button openDialogButton;
+    Button openCvCalculatorDialogButton;
 
     //**************************************
 
@@ -998,8 +998,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
 
 
-        openDialogButton = findViewById(R.id.dexc_cvBitCalculatorButton); // Get the button from your layout
-        openDialogButton.setOnClickListener(new View.OnClickListener() {
+        openCvCalculatorDialogButton = findViewById(R.id.dexc_cvBitCalculatorButton); // Get the button from your layout
+        openCvCalculatorDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCvBitCalculatorDialog();
@@ -1466,7 +1466,12 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
 
     private void showCvBitCalculatorDialog() {
-        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance();
+        int intialValue = 0;
+        try {
+            intialValue = Integer.parseInt(etDccexCvValue.getText().toString());
+        } catch (Exception ignored) {
+        }
+        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue);
         cvBitCalculatorDialogFragment.setOnConfirmListener(this); // Set the listener
         cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "CustomInputDialogFragment");
     }
@@ -1474,15 +1479,13 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     // Implementation of the OnConfirmListener interface
     @Override
     public void onConfirm(String inputText, List<Boolean> checkboxStates) {
+
         // Handle the data from the dialog here
         Log.d("DCC_EX_DIALOG", "Input Text: " + inputText);
         Log.d("DCC_EX_DIALOG", "Checkbox States: " + checkboxStates.toString());
 
-        // Example: Show a Toast
-//        Toast.makeText(this, "Text: " + inputText + "\nOptions: " + checkboxStates.toString(), Toast.LENGTH_LONG).show();
-
-        // You can now use 'inputText' and 'checkboxStates' as needed
-        // For example, send a command, update UI, save to preferences, etc.
+        etDccexCvValue.setText(inputText);
+        dccexCvValue = etDccexCvValue.getText().toString();
     }
 
 }

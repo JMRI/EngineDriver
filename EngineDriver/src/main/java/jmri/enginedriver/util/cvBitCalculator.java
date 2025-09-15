@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jmri.enginedriver.R;
@@ -23,7 +24,7 @@ public class cvBitCalculator extends DialogFragment {
 
     private EditText editText;
     private CheckBox[] checkBoxes = new CheckBox[8];
-//    private Button buttonConfirm;
+    private Button buttonConfirm;
     private Button buttonClose;
 
     // To prevent feedback loops between EditText and CheckBoxes
@@ -37,8 +38,11 @@ public class cvBitCalculator extends DialogFragment {
 
     private OnConfirmListener listener;
 
-    public static cvBitCalculator newInstance() {
-        return new cvBitCalculator();
+    public static cvBitCalculator newInstance(int initialValue) {        cvBitCalculator fragment = new cvBitCalculator();
+        Bundle args = new Bundle();
+        args.putInt("initialValue", initialValue); // Use a key to store the value
+        fragment.setArguments(args);
+        return fragment;
     }
 
     // Call this method to set the listener from the hosting Activity/Fragment
@@ -53,7 +57,27 @@ public class cvBitCalculator extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.cv_bit_calculator_dialog, null); // Use your layout file name
 
+        checkBoxes[0] = view.findViewById(R.id.cv_bit_calculator_bit_0);
+        checkBoxes[1] = view.findViewById(R.id.cv_bit_calculator_bit_1);
+        checkBoxes[2] = view.findViewById(R.id.cv_bit_calculator_bit_2);
+        checkBoxes[3] = view.findViewById(R.id.cv_bit_calculator_bit_3);
+        checkBoxes[4] = view.findViewById(R.id.cv_bit_calculator_bit_4);
+        checkBoxes[5] = view.findViewById(R.id.cv_bit_calculator_bit_5);
+        checkBoxes[6] = view.findViewById(R.id.cv_bit_calculator_bit_6);
+        checkBoxes[7] = view.findViewById(R.id.cv_bit_calculator_bit_7);
+
         editText = view.findViewById(R.id.cv_bit_calculator_edit_text_input);
+
+        // Retrieve the initial value from arguments
+        if (getArguments() != null) {
+            int initialValue = getArguments().getInt("initialValue", 0); // Default to 0 if not found
+            editText.setText(String.valueOf(initialValue));
+            isUpdatingFromEditText = true;
+            setCheckboxes(initialValue);
+            isUpdatingFromEditText = false;
+            // The TextWatcher on editText will automatically update the checkboxes
+        }
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -67,48 +91,8 @@ public class cvBitCalculator extends DialogFragment {
                 isUpdatingFromEditText = true; // Signal that EditText is causing updates
 
                 String currentText = s.toString();
-                if (currentText.isEmpty()) {
-                    // Clear all checkboxes if the input is empty
-                    for (CheckBox checkBox : checkBoxes) {
-                        checkBox.setChecked(false);
-                    }
-                    isUpdatingFromEditText = false;
-                    return;
-                }
+                setCheckboxes(currentText);
 
-                try {
-                    int number = Integer.parseInt(currentText);
-                    // Ensure the number is within the valid range for 8 bits (0-255)
-                    if (number < 0 || number > 255) {
-                        // Optionally, show an error or clear checkboxes
-                        // For now, let's clear them if out of range
-                        for (CheckBox checkBox : checkBoxes) {
-                            checkBox.setChecked(false);
-                        }
-                        // You might want to provide feedback to the user here
-                        // e.g., editText.setError("Value must be between 0 and 255");
-                        isUpdatingFromEditText = false;
-                        return;
-                    }
-
-                    for (int i = 0; i < checkBoxes.length; i++) {
-                        // Check if the i-th bit is set
-                        if ((number & (1 << i)) != 0) {
-                            checkBoxes[i].setChecked(true);
-                        } else {
-                            checkBoxes[i].setChecked(false);
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                    // Handle cases where the input is not a valid integer
-                    // For example, if the user types "abc"
-                    // Clear all checkboxes
-                    for (CheckBox checkBox : checkBoxes) {
-                        checkBox.setChecked(false);
-                    }
-                    // You might want to provide feedback to the user here
-                    // e.g., editText.setError("Invalid number");
-                }
                 isUpdatingFromEditText = false;
             }
 
@@ -117,15 +101,6 @@ public class cvBitCalculator extends DialogFragment {
 
             }
         });
-
-        checkBoxes[0] = view.findViewById(R.id.cv_bit_calculator_bit_0);
-        checkBoxes[1] = view.findViewById(R.id.cv_bit_calculator_bit_1);
-        checkBoxes[2] = view.findViewById(R.id.cv_bit_calculator_bit_2);
-        checkBoxes[3] = view.findViewById(R.id.cv_bit_calculator_bit_3);
-        checkBoxes[4] = view.findViewById(R.id.cv_bit_calculator_bit_4);
-        checkBoxes[5] = view.findViewById(R.id.cv_bit_calculator_bit_5);
-        checkBoxes[6] = view.findViewById(R.id.cv_bit_calculator_bit_6);
-        checkBoxes[7] = view.findViewById(R.id.cv_bit_calculator_bit_7);
 
         for (int i = 0; i < checkBoxes.length; i++) {
             checkBoxes[i].setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -138,7 +113,7 @@ public class cvBitCalculator extends DialogFragment {
             });
         }
 
-//        buttonConfirm = view.findViewById(R.id.cv_bit_calculator_button_confirm);
+        buttonConfirm = view.findViewById(R.id.cv_bit_calculator_button_confirm);
         buttonClose = view.findViewById(R.id.cv_bit_calculator_button_close);
 
         builder.setView(view);
@@ -148,17 +123,22 @@ public class cvBitCalculator extends DialogFragment {
 
         Dialog dialog = builder.create();
 
-//        buttonConfirm.setOnClickListener(v -> {
-//            String inputText = editText.getText().toString();
-//            List<Boolean> checkboxStates = new ArrayList<>();
-//            for (CheckBox checkBox : checkBoxes) {
-//                checkboxStates.add(checkBox.isChecked());
-//            }
-//            if (listener != null) {
-//                listener.onConfirm(inputText, checkboxStates);
-//            }
-//            dismiss(); // Close the dialog
-//        });
+        buttonConfirm.setOnClickListener(v -> {
+            String inputText = editText.getText().toString();
+            try {
+                if ((inputText.isEmpty()) || (Integer.parseInt(inputText) > 255)) inputText = "";
+            } catch (Exception ignored) {
+                inputText = "";
+            }
+            List<Boolean> checkboxStates = new ArrayList<>();
+            for (CheckBox checkBox : checkBoxes) {
+                checkboxStates.add(checkBox.isChecked());
+            }
+            if (listener != null) {
+                listener.onConfirm(inputText, checkboxStates);
+            }
+            dismiss(); // Close the dialog
+        });
 
         buttonClose.setOnClickListener(v -> dismiss()); // Close the dialog
 
@@ -182,5 +162,41 @@ public class cvBitCalculator extends DialogFragment {
         // editText.setSelection(editText.getText().length()); // Optional: move cursor to end
     }
 
+    private void setCheckboxes(int number) {
+        for (int i = 0; i < checkBoxes.length; i++) {
+            // Check if the i-th bit is set
+            if ((number & (1 << i)) != 0) {
+                checkBoxes[i].setChecked(true);
+            } else {
+                checkBoxes[i].setChecked(false);
+            }
+        }
+    }
+
+    private void setCheckboxes(String currentText) {
+        if (currentText.isEmpty()) {
+            clearCheckboxes();
+            return;
+        }
+
+        try {
+            int number = Integer.parseInt(currentText);
+            // Ensure the number is within the valid range for 8 bits (0-255)
+            if (number < 0 || number > 255) {
+                clearCheckboxes();
+                return;
+            }
+            setCheckboxes(number);
+
+        } catch (NumberFormatException e) {
+            clearCheckboxes();
+        }
+    }
+
+    private void clearCheckboxes() {
+        for (CheckBox checkBox : checkBoxes) {
+            checkBox.setChecked(false);
+        }
+    }
 }
 
