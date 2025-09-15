@@ -1035,7 +1035,13 @@
     <string name="prefActionBarShowDccExButtonTitle">Pulsante DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Azione</string>
     <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(esclude \'&lt;\' e \'&gt;\')</small></small></string>
-    <string name="DCCEXclearCommands">Chiaro</string>
+    <string name="DccexClearCommands">Chiaro</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">Pezzi</string>
+    <string name="cvBitCalculatorTitle">Calcolatrice CV Bit</string>
+    <string name="cvBitCalculatorCvValueLabel">Valore CV (decimale)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Pezzi:</string>
+
     <string name="DccexConnectionOptionTitle">Protocollo di connessione</string>
     <string name="DccexFailed">L\'azione non è riuscita</string>
     <string name="DccexNextCommandButtonLabel">Prossimo</string>
@@ -1048,8 +1054,8 @@
     <string name="witWriteAddressLabel">Indirizzo DCC</string>
     <string name="witPomWarning">Note: - Questo non funzionerà su alcuni sistemi DCC. - Il cambio dell\'indirizzo della locomotiva è impedito - CV 1, 17 e amp; 18 e bit 5 del CV 29.\n\nUtilizzare con cautela.</string>
     <string name="witPomMaxValueWarning">Il valore \'%1$s\' supera il massimo supportato (\'%2$s\')</string>
-    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommandsLabel">CMD comuni</string>
+    <string name="DccexCommonCvsLabel">NMRA CVs</string>
+    <string name="DccexCommonCommandsLabel">CMD comuni</string>
     <string name="DCCEXsetTrackButtonLabel">Impostare</string>
     <string name="DccexSucceeded">L\'azione è riuscita</string>
     <string name="DCCEXturnoutClosed">Chiuso</string>

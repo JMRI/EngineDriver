@@ -75,9 +75,9 @@
 
 
 
-    <string name="DCCEXclearCommands">Effacer</string>
+    <string name="DccexClearCommands">Effacer</string>
 
-    <string name="DCCEXcommonCvsLabel">CV du NMRA</string>
+    <string name="DccexCommonCvsLabel">CV du NMRA</string>
 
     <string name="DccexFailed">Action échouée</string>
     <string name="dccExFunctionSettings">DCC-EX - Réglages des fonctions</string>

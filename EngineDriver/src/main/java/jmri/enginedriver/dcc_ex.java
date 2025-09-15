@@ -57,13 +57,15 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.util.cvBitCalculator;
 
-public class dcc_ex extends AppCompatActivity {
+public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfirmListener {
     static final String activityName = "dcc_ex";
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -174,6 +176,8 @@ public class dcc_ex extends AppCompatActivity {
     ImageButton dccexTrackManagerButton;
 
     float vn = 4; // DCC-EC Version number
+
+    Button openCvCalculatorDialogButton;
 
     //**************************************
 
@@ -984,7 +988,7 @@ public class dcc_ex extends AppCompatActivity {
 //        ScrollView dccexResponsesScrollView = findViewById(R.id.dexc_DccexResponsesScrollView);
 //        ScrollView dccexSendsScrollView = findViewById(R.id.dexc_DccexSendsScrollView);
 
-        clearCommandsButton = findViewById(R.id.dexc_DCCEXclearCommandsButton);
+        clearCommandsButton = findViewById(R.id.dcc_ex_clearCommandsButton);
         ClearCommandsButtonListener clearCommandsButtonListener = new ClearCommandsButtonListener();
         clearCommandsButton.setOnClickListener(clearCommandsButtonListener);
 
@@ -992,6 +996,15 @@ public class dcc_ex extends AppCompatActivity {
 //            hide_sends_button_listener hideSendsClickListener = new hide_sends_button_listener();
 //            hideSendsButton.setOnClickListener(hideSendsClickListener);
 
+
+
+        openCvCalculatorDialogButton = findViewById(R.id.dexc_cvBitCalculatorButton); // Get the button from your layout
+        openCvCalculatorDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCvBitCalculatorDialog();
+            }
+        });
 
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_TRACKS, "");
 
@@ -1450,4 +1463,29 @@ public class dcc_ex extends AppCompatActivity {
             }
         }
     }
+
+
+    private void showCvBitCalculatorDialog() {
+        int intialValue = 0;
+        try {
+            intialValue = Integer.parseInt(etDccexCvValue.getText().toString());
+        } catch (Exception ignored) {
+        }
+        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue);
+        cvBitCalculatorDialogFragment.setOnConfirmListener(this); // Set the listener
+        cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "CustomInputDialogFragment");
+    }
+
+    // Implementation of the OnConfirmListener interface
+    @Override
+    public void onConfirm(String inputText, List<Boolean> checkboxStates) {
+
+        // Handle the data from the dialog here
+        Log.d("DCC_EX_DIALOG", "Input Text: " + inputText);
+        Log.d("DCC_EX_DIALOG", "Checkbox States: " + checkboxStates.toString());
+
+        etDccexCvValue.setText(inputText);
+        dccexCvValue = etDccexCvValue.getText().toString();
+    }
+
 }

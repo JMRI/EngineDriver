@@ -77,9 +77,15 @@
     <string name="DCCEXactionTypeLabel">アクション</string>
     <string name="DCCEXbuttonDefaultFunctions">デフォルトのFns</string>
     <string name="DCCEXbuttonTrackManager">トラックマネージャー</string>
-    <string name="DCCEXclearCommands">クリア</string>
-    <string name="DCCEXcommonCommandsLabel">一般的な CMD</string>
-    <string name="DCCEXcommonCvsLabel">NMRA 履歴書</string>
+    <string name="DccexClearCommands">クリア</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">ビット</string>
+    <string name="cvBitCalculatorTitle">CVビット計算機</string>
+    <string name="cvBitCalculatorCvValueLabel">CV値（小数点）</string>
+    <string name="cvBitCalculatorCvBitsLabel">ビット:</string>
+
+    <string name="DccexCommonCommandsLabel">一般的な CMD</string>
+    <string name="DccexCommonCvsLabel">NMRA 履歴書</string>
     <string name="DccexConnectionOptionTitle">接続プロトコル</string>
     <string name="DccexFailed">アクションが失敗しました</string>
     <string name="dccExFunctionSettings">DCC-EX ファンクション設定</string>

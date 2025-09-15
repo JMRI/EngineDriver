@@ -1192,7 +1192,13 @@
     <string name="prefActionBarShowDccExButtonTitle">Tlačítko DCC-EX?</string>
     <string name="DCCEXactionTypeLabel">Akce</string>
     <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(vyloučit \'&lt;\' a \'&gt;\')</small></small></string>
-    <string name="DCCEXclearCommands">Průhledná</string>
+    <string name="DccexClearCommands">Průhledná</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">Bity</string>
+    <string name="cvBitCalculatorTitle">CV bitová kalkulačka</string>
+    <string name="cvBitCalculatorCvValueLabel">Hodnota CV (desítková)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Bity:</string>
+
     <string name="DccexConnectionOptionTitle">Protokol připojení</string>
     <string name="DccexFailed">Akce selhala</string>
     <string name="DccexNextCommandButtonLabel">další</string>
@@ -1205,8 +1211,8 @@
     <string name="witWriteAddressLabel">Adresa DCC</string>
     <string name="witPomWarning">Poznámky: - Toto nebude fungovat na některých systémech DCC. - Změna adresy lokomotivy je zabráněna - CV 1, 17 &amp; 18 a bit 5 CV 29. \n\nPoužívejte opatrně.</string>
     <string name="witPomMaxValueWarning">Hodnota \'%1$s\' překračuje maximální podporovanou hodnotu (\'%2$s\')</string>
-    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommandsLabel">Běžné CMD</string>
+    <string name="DccexCommonCvsLabel">NMRA CVs</string>
+    <string name="DccexCommonCommandsLabel">Běžné CMD</string>
     <string name="DCCEXsetTrackButtonLabel">Soubor</string>
     <string name="DccexSucceeded">Akce uspěla</string>
     <string name="DCCEXturnoutClosed">ZAVŘENO</string>

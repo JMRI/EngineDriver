@@ -1598,15 +1598,20 @@
     <string name="DccexNextCommandButtonLabel">Next</string>
     <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' &amp; \'&gt;\')</small></small></string>
     <!--    <string name="DccexHideSends">Hide Sends</string>-->
-    <string name="DCCEXclearCommands">Clear</string>
+    <string name="DccexClearCommands">Clear</string>
+
+    <string name="DccexCvBitCalculatorButtonLabel">Bits</string>
+    <string name="cvBitCalculatorTitle">CV Bit Calculator</string>
+    <string name="cvBitCalculatorCvValueLabel">CV Value (decimal)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
 
     <string name="witActionTypeLabel">Action</string>
     <string name="witWriteAddressLabel">DCC Address</string>
     <string name="witPomWarning">Notes: - This will not work on some DCC systems. - Loco Address change is prevented - CVs 1, 17 &amp; 18 and bit 5 of CV 29.           Use with Caution.</string>
     <string name="witPomMaxValueWarning">Value \'%1$s\' exceeds max supported (\'%2$s\')</string>
 
-    <string name="DCCEXcommonCvsLabel">NMRA CVs</string>
-    <string name="DCCEXcommonCommandsLabel" >Common CMDs</string>
+    <string name="DccexCommonCvsLabel">NMRA CVs</string>
+    <string name="DccexCommonCommandsLabel">Common CMDs</string>
 
     <string name="DCCEXsetTrackButtonLabel">Set</string>
     <string name="DCCEXJoinTrackButtonLabel">Join</string>

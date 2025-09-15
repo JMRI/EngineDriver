@@ -792,6 +792,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                     getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
             String url = mainapp.createUrl(mainapp.defaultWebViewURL);
             if (url != null) {      // if port is valid
+                Log.d(threaded_application.applicationName, activityName + ": urlRestore(): loading: " +url);
                 webView.loadUrl(url);
             }
             else {
@@ -802,6 +803,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         if (urlRestoreStep == 3) {
             webView.loadUrl(noUrl);
         }
+
     }
 
     private void disconnect() {
