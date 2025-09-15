@@ -145,7 +145,7 @@
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
         <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
@@ -319,7 +319,7 @@
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
         <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
@@ -486,7 +486,7 @@
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
         <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 
@@ -653,7 +653,7 @@
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
         <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 
@@ -821,7 +821,7 @@
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_light</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
         <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
@@ -1002,7 +1002,7 @@
         <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
         <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
         <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_dark</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
         <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 
