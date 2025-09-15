@@ -1,5 +1,6 @@
 **Version 2.41.210
  * Bug Fix - If you try to close the Web screen if using anything other than the default throttle layout, ED will crash.
+ * CV Bit Calculator added to the DCC-EX page
 **Version 2.41.208
  * Additional French translations by Alain Carasso
  * Additional Google translations
@@ -957,13 +958,16 @@
  *   TODO: Add option to choose which server to automatically connect to
  *   TODO: Add DCC-EX to "Auto-connect to first server?"
  *   TODO: Why does the first connection attempt fail sometimes
+ * at connection or close connection / exit app
+ *   TODO: a) option to save and re-request selected locos. (e.g. 6-throttle layout with the same locos)  Optionally, by server
+ *   TODO: b) add preference for automatically loading locos on connection into multiple throttles.  Optionally, by server
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it
  * throttle:
- *   TODO: cater for edge-to-edge enforcement in SDK 36 / Android 16
+ *   TODO: cater for edge-to-edge enforcement in SDK 36 / Android 16 (only the throttle screen is still impacted due to immersive mode)
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
  *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
@@ -995,15 +999,13 @@
  *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
- *   TODO: a) option to save and re-request selected locos, (6-throttle layout with the same locos)
- *   TODO: b) add preference for automatically loading locos on connection into multiple throttles
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from
  * DCC-EX screen
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  * preferences:
- *
+ *   TODO: add search feature
  * log_viewer:
  *
  *

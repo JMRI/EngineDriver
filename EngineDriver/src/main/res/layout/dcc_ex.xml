@@ -412,7 +412,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="0dp"
-                    android:layout_weight=".8"
+                    android:layout_weight=".7"
                     android:ellipsize="none"
                     android:paddingLeft="0dp"
                     android:paddingTop="0dp"
@@ -420,6 +420,15 @@
                     android:paddingBottom="2dp"
                     android:text=""
                     tools:ignore="RtlHardcoded" />
+
+                <Button
+                    android:id="@+id/dexc_cvBitCalculatorButton"
+                    style="?attr/ed_small_button_condensed_text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="26dp"
+                    android:layout_weight=".10"
+                    android:padding="2sp"
+                    android:text="@string/DccexCvBitCalculatorButtonLabel" />
 
             </LinearLayout>
 
@@ -1262,7 +1271,7 @@
             android:paddingRight="6dp" >
 
             <Button
-                android:id="@+id/dexc_DCCEXclearCommandsButton"
+                android:id="@+id/dcc_ex_clearCommandsButton"
                 style="?attr/ed_normal_button_condensed_style"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
