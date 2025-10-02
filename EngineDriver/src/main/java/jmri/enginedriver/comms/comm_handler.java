@@ -244,35 +244,40 @@ public class comm_handler extends Handler {
             break;
          }
 
-         // SHUTDOWN - terminate socketWiT and it's done
-         case message_type.DISCONNECT:
+         case message_type.DISCONNECT:{
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): DISCONNECT");
+
+            commThread.sendQuit();
+
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): alert all activities to disconnect");
+            mainapp.alert_activities(message_type.DISCONNECT, "");     //tell all activities to finish()
+            commThread.stoppingConnection();
+
+            commThread.sendDisconnect();
+
+            if (mainapp.soundPool != null) mainapp.soundPool.autoPause();
+            break;
+         }
+
          case message_type.SHUTDOWN: {
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Shutdown");
+            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SHUTDOWN");
             mainapp.doFinish = true;
+
+            commThread.sendQuit();
+
             Log.d(threaded_application.applicationName, activityName + ": handleMessage(): alert all activities to shutdown");
             mainapp.alert_activities(message_type.SHUTDOWN, "");     //tell all activities to finish()
             commThread.stoppingConnection();
 
-            // arg1 = 1 means shutdown with no delays
-            if (msg.arg1 == 1) {
+            if (msg.arg1 == 1) { // arg1 = 1 means shutdown with no delays
                commThread.sendDisconnect();
-               if (msg.what == message_type.SHUTDOWN)
-                  commThread.shutdown(false);
+               commThread.shutdown(false);
             } else {
-               // At this point TA needs to send the quit message to WiT and then shutdown.
-               // However the DISCONNECT message also tells the Throttle activity to release all throttles
-               // and that process can take some time:
-               //  release request messages and possibly zero speed messages need to be sent to WiT
-               //  for each active throttle and WiT will respond with release messages.
-               // So we delay the Quit and shutdown to allow time for all the throttle messages to complete
-               commThread.delayedAction(message_type.DISCONNECT,1500);
-               if (msg.what == message_type.SHUTDOWN)
-                  commThread.delayedAction(message_type.SHUTDOWN,1600);
+//               commThread.delayedAction(message_type.WIFI_QUIT,1000);
+               commThread.delayedAction(message_type.SHUTDOWN,1500);
             }
 
-            if (mainapp.soundPool != null) {
-               mainapp.soundPool.autoPause();
-            }
+            if (mainapp.soundPool != null) mainapp.soundPool.autoPause();
             break;
          }
 
@@ -368,6 +373,28 @@ public class comm_handler extends Handler {
             String [] args = msg.obj.toString().split(" ");
 //            String rslt = "";
             comm_thread.sendWriteDirectDccCommand(args);
+            break;
+         }
+
+         case message_type.WRITE_ADVANCED_CONSIST_ADD: { // WiThrottle only
+            String [] args = msg.obj.toString().split(" ");
+            comm_thread.sendAdvancedConsistAddLoco(args);
+            break;
+         }
+
+         case message_type.WRITE_ADVANCED_CONSIST_REMOVE: { // WiThrottle only
+            String [] args = msg.obj.toString().split(" ");
+            comm_thread.sendAdvancedConsistRemoveLoco(args);
+            break;
+         }
+
+         case message_type.READ_DCCEX_LOCO_ADDRESS: { // DCC-EX only
+            comm_thread.sendDccexGetLocoAddress();
+            break;
+         }
+
+         case message_type.READ_DCCEX_CONSIST_ADDRESS: { // DCC-EX only
+            comm_thread.sendDccexGetConsistAddress();
             break;
          }
 

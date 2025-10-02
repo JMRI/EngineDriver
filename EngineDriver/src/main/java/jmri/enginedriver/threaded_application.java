@@ -1730,6 +1730,8 @@ public class threaded_application extends Application {
 
     // forward a message to all running activities
     public void alert_activities(int msgType, String msgBody) {
+        Log.d(threaded_application.applicationName, activityName + ": alert_activities(): " + msgType + " : " + msgBody);
+
         try {
             sendMsg(connection_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {

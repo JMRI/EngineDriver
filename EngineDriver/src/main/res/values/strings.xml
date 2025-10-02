@@ -1604,6 +1604,15 @@
     <string name="cvBitCalculatorTitle">CV Bit Calculator</string>
     <string name="cvBitCalculatorCvValueLabel">CV Value (decimal)</string>
     <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirm</string>
+
+    <string name="advancedConsistToolTitle">Advanced Consist Tool (CV19)</string>
+    <string name="advancedConsistToolConsistAddressLabel">Consist Address</string>
+    <string name="advancedConsistToolLocoAddressLabel">Loco Address</string>
+    <string name="advancedConsistToolLocoFacingLabel">Face forward?</string>
+    <string name="advancedConsistToolAddButtonLabel">Add</string>
+    <string name="advancedConsistToolRemoveButtonLabel">Remove</string>
+    <string name="advancedConsistToolButtonLabel">Advanced Consists</string>
 
     <string name="witActionTypeLabel">Action</string>
     <string name="witWriteAddressLabel">DCC Address</string>

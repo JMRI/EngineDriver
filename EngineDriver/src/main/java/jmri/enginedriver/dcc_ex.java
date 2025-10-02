@@ -293,7 +293,12 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             dccexInfoStr = "";
             resetTextField(WHICH_ADDRESS);
             mainapp.buttonVibration();
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_DECODER_ADDRESS, "*", -1);
+//            if (vn < 5.004044) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_DECODER_ADDRESS, "*", -1);
+//            } else {
+//                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.READ_DCCEX_CONSIST_ADDRESS, "");
+//                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.READ_DCCEX_LOCO_ADDRESS, "");
+//            }
             refreshDccexView();
             mainapp.hideSoftKeyboard(v);
         }
@@ -1473,7 +1478,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         }
         cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue);
         cvBitCalculatorDialogFragment.setOnConfirmListener(this); // Set the listener
-        cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "CustomInputDialogFragment");
+        cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "cvBitCalculatorDialogFragment");
     }
 
     // Implementation of the OnConfirmListener interface
