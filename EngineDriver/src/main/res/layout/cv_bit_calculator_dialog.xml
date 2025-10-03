@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -10,7 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cvBitCalculatorTitle"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
@@ -202,7 +205,8 @@
                 android:id="@+id/cv_bit_calculator_bit_0_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"/>
+                android:text="0"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
     </LinearLayout>
 
@@ -214,18 +218,24 @@
 
         <Button
             android:id="@+id/cv_bit_calculator_button_close"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="?attr/ed_cross_glyph"
+            android:drawablePadding="5dp"
             android:text="@string/close_button"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_marginRight="8dp"
-            android:layout_marginEnd="8dp"/>
+            tools:ignore="RtlHardcoded" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/cv_bit_calculator_button_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm"
+            android:text="@string/dccexCvBitCalculatorConfirmButtonLabel"
             style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 

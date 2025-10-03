@@ -106,6 +106,7 @@ import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.address_type;
 
+import jmri.enginedriver.util.AdvancedConsistTool;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
@@ -2212,6 +2213,9 @@ public class select_loco extends AppCompatActivity {
             mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
         }
 
+        MenuItem mi = menu.findItem(R.id.advancedConsistButton);
+        mi.setVisible(!mainapp.isDCCEX);
+
         adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
@@ -2239,6 +2243,13 @@ public class select_loco extends AppCompatActivity {
             }
             mainapp.buttonVibration();
             return true;
+
+        } else if (item.getItemId() == R.id.advancedConsistButton) {
+            AdvancedConsistTool advancedConsistToolDialogFragment = AdvancedConsistTool.newInstance();
+            advancedConsistToolDialogFragment.show(getSupportFragmentManager(), "AdvancedConsistDialogFragment");
+            mainapp.buttonVibration();
+            return true;
+
         } else {
             return super.onOptionsItemSelected(item);
         }

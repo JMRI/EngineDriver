@@ -105,5 +105,9 @@ public interface message_type {
 //    int POWER_STATE_REQUEST = 83;  // not implemented
     int LOW_MEMORY = 83;
     int TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION = 84;
+    int WRITE_ADVANCED_CONSIST_ADD = 85;
+    int WRITE_ADVANCED_CONSIST_REMOVE = 86;
+    int READ_DCCEX_LOCO_ADDRESS = 87;
+    int READ_DCCEX_CONSIST_ADDRESS = 88;
 
 }

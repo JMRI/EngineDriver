@@ -30,6 +30,7 @@
         <item name="android:buttonBarStyle">@style/dialogButtonBar_colorful</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/NegativeButtonStyle_colorful</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle_colorful</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
     </style>
 
     <style name="NegativeButtonStyle_colorful" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">

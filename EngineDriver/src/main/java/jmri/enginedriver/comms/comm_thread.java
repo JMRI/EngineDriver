@@ -286,6 +286,7 @@ public class comm_thread extends Thread {
     }
 
     protected void stoppingConnection() {
+        Log.d(threaded_application.applicationName, activityName + ": stoppingConnection(): ");
         heart.stopHeartbeat();
         if (phone != null) {
             phone.disable();
@@ -341,7 +342,7 @@ public class comm_thread extends Thread {
             threaded_application.flashlight.teardown();
         }
         mainapp.flashState = false;
-        Log.d(threaded_application.applicationName, activityName + ": Shutdown(): end)");
+        Log.d(threaded_application.applicationName, activityName + ": Shutdown(): end");
     }
 
     /* ******************************************************************************************** */
@@ -509,6 +510,7 @@ public class comm_thread extends Thread {
     }
 
     protected void sendDisconnect() {
+        Log.d(threaded_application.applicationName, activityName + ": sendDisconnect(): ");
         if (!mainapp.isDCCEX) { // not DCC-EX
             wifiSend("Q");
             shutdown(true);
@@ -838,6 +840,7 @@ public class comm_thread extends Thread {
     }
 
     protected void sendQuit() {
+        Log.d(threaded_application.applicationName, activityName + ": sendQuit(): ");
         if (!mainapp.isDCCEX) { // not DCC-EX
             if (socketWiT != null && socketWiT.SocketGood())
                 wifiSend("Q");
@@ -1021,6 +1024,49 @@ public class comm_thread extends Thread {
         }
     }
 
+    @SuppressLint("DefaultLocale")
+    public static void sendDccexGetLocoAddress() {
+        if (mainapp.isDCCEX) { // DCC-EX only  from version 5.4.44
+            wifiSend("<R LOCOID>");
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static void sendDccexGetConsistAddress() {
+        if (mainapp.isDCCEX) { // DCC-EX only  from version 5.4.44
+            wifiSend("<R CONSIST>");
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static void sendAdvancedConsistAddLoco(String [] args) {
+        if (!mainapp.isDCCEX) { // WiThrottle only
+            if (args.length>=4) {
+                String msgTxt = String.format("RC+<;>%s<;>%s<:>%s<;>%s", args[0], args[1], args[2], args[3]);  //consist address + loco to add + direction (true or false)
+                wifiSend(msgTxt);
+            }
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static void sendAdvancedConsistRemoveLoco(String [] args) {
+        if (!mainapp.isDCCEX) { // WiThrottle only
+            if (args.length>=2) {
+                String msgTxt = String.format("RC-<;>%s<:>%s", args[0], args[1]);  //consist address + loco to remove
+                wifiSend(msgTxt);
+            }
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static void sendAdvancedConsistRemoveConsist(String [] args) {
+        if (!mainapp.isDCCEX) { // WiThrottle only
+            if (args.length==1) {
+                String msgTxt = String.format("RCR<;>%s", args[0]);  //consist address to remove
+                wifiSend(msgTxt);
+            }
+        }
+    }
 
     /* ******************************************************************************************** */
     /* ******************************************************************************************** */
@@ -2396,7 +2442,7 @@ public class comm_thread extends Thread {
     //send formatted msg to the socket using multithrottle format
     //  intermessage gap enforced by requeueing messages as needed
     protected static void wifiSend(String msg) {
-//            Log.d(threaded_application.applicationName, activityName + ": wifiSend(): WiT send '" + msg + "'");
+        Log.d(threaded_application.applicationName, activityName + ": wifiSend(): WiT send '" + msg + "'");
         if (msg == null) { //exit if no message
             Log.d(threaded_application.applicationName, activityName + ": wifiSend(): --> null msg");
             return;
@@ -2571,6 +2617,7 @@ public class comm_thread extends Thread {
         }
 
         public void disconnect(boolean shutdown, boolean fastShutdown) {
+            Log.d(threaded_application.applicationName, activityName + ": SocketWifi: disconnect()");
             if (shutdown) {
                 endRead = true;
                 if (!fastShutdown) {
