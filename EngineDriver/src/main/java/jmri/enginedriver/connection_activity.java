@@ -443,6 +443,11 @@ public class connection_activity extends AppCompatActivity implements Permission
                         if (prefs.getBoolean("connect_to_first_server_preference", false)) {
                             connectA();
                         }
+
+                        String prefAutoServerConnect = prefs.getString("prefAutoServerConnect","").toLowerCase();
+                        if ( (!prefAutoServerConnect.isEmpty()) && (found_host_name != null) && (found_host_name.toLowerCase().equals(prefAutoServerConnect)) ) {
+                            connectA();
+                        }
                     }
                     break;
 

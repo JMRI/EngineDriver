@@ -202,6 +202,17 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                     }
                     refreshDccexView();
                     break;
+
+                case message_type.RECEIVED_CONSIST_ADDRESS:
+                    String consist_response_str = msg.obj.toString();
+                    if (!consist_response_str.equals("0")) {
+                        dccexInfoStr = String.format(getApplicationContext().getResources().getString(R.string.dccexInCv19Consist), consist_response_str);
+                    } else {
+                        dccexInfoStr = getApplicationContext().getResources().getString(R.string.dccexNotInCv19Consist);
+                    }
+                    refreshDccexView();
+                    break;
+
                 case message_type.RECEIVED_CV:
                     String cvResponseStr = msg.obj.toString();
                     if (!cvResponseStr.isEmpty()) {
@@ -293,12 +304,12 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             dccexInfoStr = "";
             resetTextField(WHICH_ADDRESS);
             mainapp.buttonVibration();
-//            if (vn < 5.004044) {
+            if (vn < 5.004046) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_DECODER_ADDRESS, "*", -1);
-//            } else {
-//                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.READ_DCCEX_CONSIST_ADDRESS, "");
-//                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.READ_DCCEX_LOCO_ADDRESS, "");
-//            }
+            } else {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.READ_DCCEX_LOCO_ADDRESS, "");
+                mainapp.sendMsgDelay(mainapp.comm_msg_handler, 2000, message_type.READ_DCCEX_CONSIST_ADDRESS, "");
+            }
             refreshDccexView();
             mainapp.hideSoftKeyboard(v);
         }
@@ -1476,7 +1487,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             intialValue = Integer.parseInt(etDccexCvValue.getText().toString());
         } catch (Exception ignored) {
         }
-        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue);
+        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue, mainapp.getSelectedTheme(false));
         cvBitCalculatorDialogFragment.setOnConfirmListener(this); // Set the listener
         cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "cvBitCalculatorDialogFragment");
     }

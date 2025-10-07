@@ -1429,8 +1429,13 @@ public class comm_thread extends Thread {
                         case 'r':
                             if (args.length<=2) { // response from a request for a loco id (the Drive away feature, and also the Address read)
                                 processDccexRequestLocoIdResponse(args);
-                            } else { // response from a CV write
-                                processDccexRequestCvResponse(args);
+                            } else {
+                                try {  // see if the second argument is "LOCOID" or "CONSIST", which is a special type of loco id request
+                                    int val = Integer.parseInt(args[1]);
+                                    processDccexRequestCvResponse(args); // response from a CV write
+                                } catch (Exception ignored) {
+                                    processDccexRequestLocoIdResponse(args); //second argument will be "LOCOID" or "CONSIST"
+                                }
                             }
                             skipAlert = true;
                             break;
@@ -1746,35 +1751,49 @@ public class comm_thread extends Thread {
 
         if (requestLocoIdForWhichThrottleDCCEX!=-1) { // if -1, request came from the CV read/write screen
             if (!(args[1].charAt(0) =='-')) {
-                String addrStr = args[1];
-                if (Integer.parseInt(args[1]) <= 127) {
-                    addrStr = "S" + addrStr;
-                } else {
-                    addrStr = "L" + addrStr;
-                }
-                Consist con = mainapp.consists[requestLocoIdForWhichThrottleDCCEX];
-                if (con.isWaitingOnID()) { //we were waiting for this response to get address
-                    Consist.ConLoco conLoco = new Consist.ConLoco(addrStr);
-                    conLoco.setFunctionLabelDefaults(mainapp, requestLocoIdForWhichThrottleDCCEX);
-                    //look for RosterEntry which matches address returned
-                    String rn = mainapp.getRosterNameFromAddress(conLoco.getFormatAddress(), true);
-                    if (!rn.isEmpty()) {
-                        conLoco.setIsFromRoster(true);
-                        conLoco.setRosterName(rn);
+
+                if (args.length<=2) {
+
+                    String addrStr = args[1];
+                    if (Integer.parseInt(args[1]) <= 127) {
+                        addrStr = "S" + addrStr;
+                    } else {
+                        addrStr = "L" + addrStr;
                     }
-                    con.add(conLoco);
-                    con.setWhichSource(addrStr, 1); //entered by address, not roster
-                    con.setConfirmed(addrStr);
-                    mainapp.addLocoToRecents(conLoco); //DCC-EX
+                    Consist con = mainapp.consists[requestLocoIdForWhichThrottleDCCEX];
+                    if (con.isWaitingOnID()) { //we were waiting for this response to get address
+                        Consist.ConLoco conLoco = new Consist.ConLoco(addrStr);
+                        conLoco.setFunctionLabelDefaults(mainapp, requestLocoIdForWhichThrottleDCCEX);
+                        //look for RosterEntry which matches address returned
+                        String rn = mainapp.getRosterNameFromAddress(conLoco.getFormatAddress(), true);
+                        if (!rn.isEmpty()) {
+                            conLoco.setIsFromRoster(true);
+                            conLoco.setRosterName(rn);
+                        }
+                        con.add(conLoco);
+                        con.setWhichSource(addrStr, 1); //entered by address, not roster
+                        con.setConfirmed(addrStr);
+                        mainapp.addLocoToRecents(conLoco); //DCC-EX
 
 //                    sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX, 0);
-                    sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX);
-                    sendJoinDCCEX();
-                    mainapp.alert_activities(message_type.REQUEST_REFRESH_THROTTLE, "");
+                        sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX);
+                        sendJoinDCCEX();
+                        mainapp.alert_activities(message_type.REQUEST_REFRESH_THROTTLE, "");
 
-                } else {
-                    mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[1]);  //send response to running activities
+                    } else {
+                        mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[2]);  //send response to running activities
+                    }
+
+                } else { // the second argument should be "LOCOID" or "CONSIST", which are a special type of loco id request only used on the CV writing page
+                    if (!(args[2].charAt(0) =='-')) {
+                        if (args[1].equals("LOCOID")) {
+                            mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[2]);  //send response to running activities
+                        } else if (args[1].equals("CONSIST")) {
+                            mainapp.alert_activities(message_type.RECEIVED_CONSIST_ADDRESS, args[2]);  //send response to running activities
+                        }
+                    }
                 }
+
             }  else {// else {} did not succeed
                 threaded_application.safeToast(R.string.DCCEXrequestLocoIdFailed, LENGTH_SHORT);
             }

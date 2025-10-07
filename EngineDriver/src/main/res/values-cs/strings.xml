@@ -1315,4 +1315,11 @@
     <string name="prefStopButtonLongPressDelayTitle">Tlačítko Stop Dlouhé stisknutí Zpoždění</string>
     <string name="prefStopButtonLongPressDelaySummary">Kolik milisekund představuje dlouhé stisknutí tlačítek Stop pro zahájení EStop</string>
 
+    <string name="autoServerConnectTitle">Automatické připojení k serveru</string>
+    <string name="autoServerConnectLabel">Název serveru</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Získejte aktuální server</string>
+    <string name="prefAutoServerConnectSummary">V případě zjištění se automaticky připojit k pojmenovanému serveru</string>
+    <string name="prefAutoServerConnectTitle">Automatické připojení k pojmenovanému serveru</string>
+    <string name="dccexInCv19Consist">Loko je v CV19 Skládá se: %s</string>
+    <string name="dccexNotInCv19Consist">Loco NENÍ v CV19 Consist</string>
 </resources>

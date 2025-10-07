@@ -1168,4 +1168,11 @@
     <string name="prefStopButtonLongPressDelayTitle">Ritardo pressione prolungata pulsante Stop</string>
     <string name="prefStopButtonLongPressDelaySummary">Quanti millisecondi costituiscono una pressione prolungata sui pulsanti Stop per avviare EStop</string>
 
+    <string name="autoServerConnectTitle">Connessione automatica al server</string>
+    <string name="autoServerConnectLabel">Nome del server</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Ottieni il server attuale</string>
+    <string name="prefAutoServerConnectSummary">Connettiti automaticamente a un server denominato se scoperto</string>
+    <string name="prefAutoServerConnectTitle">Connessione automatica al server denominato</string>
+    <string name="dccexInCv19Consist">Loco è in un CV19 Consist: %s</string>
+    <string name="dccexNotInCv19Consist">Loco NON è in un CV19 Consist</string>
 </resources>

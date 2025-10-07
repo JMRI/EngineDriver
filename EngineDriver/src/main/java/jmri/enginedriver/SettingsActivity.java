@@ -43,6 +43,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 
 //import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -88,6 +89,7 @@ import jmri.enginedriver.type.message_type;
 
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.pref_import_type;
+import jmri.enginedriver.util.AutoServerConnectDialogFragmentCompat;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
@@ -1272,6 +1274,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefBackgroundImagePosition", !enable);
     }
 
+    private void showHideAutoConnectPreferences(PreferenceScreen prefScreen) {
+        boolean enable = prefs.getBoolean("connect_to_first_server_preference", false);
+        enableDisablePreference(prefScreen, "prefAutoServerConnect", !enable);
+    }
+
     private void showHideprefprefThrottleSwitchButtonCycleAllPreferences(PreferenceScreen prefScreen) {
         boolean enable = !prefThrottleSwitchButtonCycleAll;
         enableDisablePreference(prefScreen, "prefThrottleSwitchOption1", enable);
@@ -1469,7 +1476,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //        static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
 //        static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
 
-        private threaded_application mainapp;  // hold pointer to mainapp
+        public threaded_application mainapp;  // hold pointer to mainapp
         private SharedPreferences prefs;
 
         private String prefThemeOriginal = "Default";
@@ -1676,8 +1683,39 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                                 getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
                         break;
 
+                    case "connect_to_first_server_preference":
+                        parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
+                        break;
+
                 }
             }
+        }
+
+        @Override
+        public void onDisplayPreferenceDialog(Preference preference) {
+            // Check if this is the preference we want to handle
+            if (preference.getKey().equals("prefAutoServerConnect")) {
+                // Create and show our custom dialog
+                DialogFragment dialogFragment = AutoServerConnectDialogFragmentCompat.newInstance(preference.getKey());
+                dialogFragment.setTargetFragment(this, 0);
+
+                // Use getFragmentManager() for the v7 support library
+                dialogFragment.show(getFragmentManager(), null); // Tag can be null or a custom string
+            } else {
+                // Let the default implementation handle all other preferences
+                super.onDisplayPreferenceDialog(preference);
+            }
+        }
+
+        /**
+         * Public accessor to get the current server description from the main application context.
+         * @return A string describing the current server, or an empty string if not available.
+         */
+        public String getConnectedHostname() {
+            if (mainapp != null) {
+                return mainapp.connectedHostName;
+            }
+            return "";
         }
 
         @SuppressLint("ApplySharedPref")
@@ -1794,6 +1832,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 parentActivity.prefThrottleSwitchButtonDisplay = prefs.getBoolean("prefThrottleSwitchButtonDisplay", false);
 
                 setSwipeThroughWebPreference();
+
+                parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
 
                 advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
                 hideAdvancedPreferences();

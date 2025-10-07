@@ -397,6 +397,12 @@ public class comm_handler extends Handler {
             comm_thread.sendDccexGetConsistAddress();
             break;
          }
+         case message_type.RECEIVED_CONSIST_ADDRESS: {
+            if (!mainapp.doFinish) {
+               mainapp.alert_activities(message_type.RECEIVED_CONSIST_ADDRESS, msg.obj.toString());
+            }
+            break;
+         }
 
          case message_type.RECEIVED_CV: {
             if (!mainapp.doFinish) {
