@@ -4,6 +4,8 @@
  * CV Bit Calculator added to the DCC-EX page
  * bug fix for not closing the connection in the correct sequence
  * Experimental CV19 Consist tool
+ * Better handle CV19 consists when reading a loco address - DCC-EX - requires EX-CS V5.5.46 or later
+ * Preference to automatically connect to a named server if discovered
 **Version 2.41.208
  * Additional French translations by Alain Carasso
  * Additional Google translations
@@ -957,7 +959,6 @@
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add "Check for Updates" link to first menu and to About page.
- *   TODO: Add option to choose which server to automatically connect to
  *   TODO: Add DCC-EX to "Auto-connect to first server?"
  *   TODO: Why does the first connection attempt fail sometimes
  * at connection or close connection / exit app
@@ -1012,7 +1013,6 @@
  *
  *
  * These require changes to WiThrottle Server
- *   add Light control page
  *   resend turnout and routes when items are added or removed, by adding listeners to WiT
  *   resend roster list when items are added or removed, by adding listeners to WiT
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)

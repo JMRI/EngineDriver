@@ -1,6 +1,7 @@
 package jmri.enginedriver.util;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -38,9 +39,11 @@ public class cvBitCalculator extends DialogFragment {
 
     private OnConfirmListener listener;
 
-    public static cvBitCalculator newInstance(int initialValue) {        cvBitCalculator fragment = new cvBitCalculator();
+    public static cvBitCalculator newInstance(int initialValue, int themeResId) {
+        cvBitCalculator fragment = new cvBitCalculator();
         Bundle args = new Bundle();
         args.putInt("initialValue", initialValue); // Use a key to store the value
+        args.putInt("themeResId", themeResId); // Store the theme
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,9 +53,30 @@ public class cvBitCalculator extends DialogFragment {
         this.listener = listener;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            int themeResId = getArguments().getInt("themeResId");
+            if (themeResId != 0) {
+                setStyle(DialogFragment.STYLE_NORMAL, themeResId);
+            }
+        }
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        int themeResId = 0;
+        if (getArguments() != null) {
+            themeResId = getArguments().getInt("themeResId");
+        }
+
+        Context themedContext = requireActivity();
+        if (themeResId != 0) {
+            themedContext = new androidx.appcompat.view.ContextThemeWrapper(requireActivity(), themeResId);
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.cv_bit_calculator_dialog, null); // Use your layout file name

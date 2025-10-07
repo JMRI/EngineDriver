@@ -1230,4 +1230,11 @@
     <string name="prefStopButtonLongPressDelayTitle">Botó Atura Premsa llarga Retard</string>
     <string name="prefStopButtonLongPressDelaySummary">Quants mil·lisegons constitueixen una pressió llarga dels botons Atura per iniciar EStop</string>
 
+    <string name="autoServerConnectTitle">Connexió automàtica del servidor</string>
+    <string name="autoServerConnectLabel">Nom del servidor</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Obteniu el servidor actual</string>
+    <string name="prefAutoServerConnectSummary">Connecteu-vos automàticament a un servidor anomenat si es descobreix</string>
+    <string name="prefAutoServerConnectTitle">Connexió automàtica al servidor amb nom</string>
+    <string name="dccexInCv19Consist">Loco està en una CV19 Consisteix: %s</string>
+    <string name="dccexNotInCv19Consist">Loco NO està en un CV19 Consisteix</string>
 </resources>

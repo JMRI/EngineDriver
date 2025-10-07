@@ -1238,4 +1238,11 @@
     <string name="prefStopButtonLongPressDelayTitle">Delai pour appui long sur STOP</string>
     <string name="prefStopButtonLongPressDelaySummary">Duree en millisecondes pour prise en compte arret d urgence par appui long sur STOP</string>
 
+    <string name="autoServerConnectTitle">Connexion automatique au serveur</string>
+    <string name="autoServerConnectLabel">Nom du serveur</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Obtenir le serveur actuel</string>
+    <string name="prefAutoServerConnectSummary">Se connecter automatiquement à un serveur nommé s\'il est découvert</string>
+    <string name="prefAutoServerConnectTitle">Connexion automatique au serveur nommé</string>
+    <string name="dccexInCv19Consist">La locomotive fait partie d\'un CV19 composé de : %s</string>
+    <string name="dccexNotInCv19Consist">La locomotive n\'est PAS dans une composition CV19</string>
 </resources>

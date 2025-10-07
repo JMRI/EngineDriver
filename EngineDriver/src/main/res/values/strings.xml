@@ -1606,6 +1606,12 @@
     <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirm</string>
 
+    <string name="autoServerConnectTitle">Auto Server Connect</string>
+    <string name="autoServerConnectLabel">Server name</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Get Current Server</string>
+    <string name="prefAutoServerConnectSummary">Automatically connect to a named server if discovered</string>
+    <string name="prefAutoServerConnectTitle">Auto connect to named server</string>
+
     <string name="advancedConsistToolTitle">Advanced Consist Tool (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">Consist Address</string>
     <string name="advancedConsistToolLocoAddressLabel">Loco Address</string>
@@ -1627,6 +1633,8 @@
 
     <string name="DccexSucceeded">Action Succeeded</string>
     <string name="DccexFailed">Action Failed</string>
+    <string name="dccexInCv19Consist">Loco is in a CV19 Consist: %s</string>
+    <string name="dccexNotInCv19Consist">Loco is NOT in a CV19 Consist</string>
 
     <string name="DCCEXbuttonCvProgrammerProgTrack" translatable="false">CVs PROG</string>
     <string name="DCCEXbuttonCvProgrammerPoM" translatable="false">CVs PoM</string>

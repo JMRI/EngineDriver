@@ -109,5 +109,6 @@ public interface message_type {
     int WRITE_ADVANCED_CONSIST_REMOVE = 86;
     int READ_DCCEX_LOCO_ADDRESS = 87;
     int READ_DCCEX_CONSIST_ADDRESS = 88;
+    int RECEIVED_CONSIST_ADDRESS = 89;
 
 }

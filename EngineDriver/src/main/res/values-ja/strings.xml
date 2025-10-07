@@ -1237,4 +1237,11 @@
     <string name="prefStopButtonLongPressDelayTitle">停止ボタン長押し遅延</string>
     <string name="prefStopButtonLongPressDelaySummary">停止ボタンを長押ししてEStopを開始するまでの所要時間は、何ミリ秒ですか？</string>
 
+    <string name="autoServerConnectTitle">自動サーバー接続</string>
+    <string name="autoServerConnectLabel">サーバー名</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">現在のサーバーを取得</string>
+    <string name="prefAutoServerConnectSummary">名前付きサーバーが検出された場合は自動的に接続します</string>
+    <string name="prefAutoServerConnectTitle">名前付きサーバーに自動接続</string>
+    <string name="dccexInCv19Consist">機関車はCV19編成です: %s</string>
+    <string name="dccexNotInCv19Consist">機関車はCV19編成ではありません</string>
 </resources>

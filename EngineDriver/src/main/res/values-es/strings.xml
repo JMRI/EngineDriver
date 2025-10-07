@@ -1217,4 +1217,11 @@
     <string name="prefStopButtonLongPressDelayTitle">Retardo de pulsación larga del botón de parada</string>
     <string name="prefStopButtonLongPressDelaySummary">¿Cuántos milisegundos constituye una pulsación prolongada de los botones de parada para iniciar EStop?</string>
 
+    <string name="autoServerConnectTitle">Conexión automática al servidor</string>
+    <string name="autoServerConnectLabel">Nombre del servidor</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Obtener el servidor actual</string>
+    <string name="prefAutoServerConnectSummary">Conectarse automáticamente a un servidor designado si se descubre</string>
+    <string name="prefAutoServerConnectTitle">Conectarse automáticamente al servidor nombrado</string>
+    <string name="dccexInCv19Consist">Loco está en un CV19 Consist: %s</string>
+    <string name="dccexNotInCv19Consist">Loco NO está en un CV19 Consist</string>
 </resources>

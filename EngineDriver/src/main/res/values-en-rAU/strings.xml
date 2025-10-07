@@ -111,4 +111,6 @@
     <string name="toastDccexInvalidRosterId">Invalid Roster id \'%1$s\'. Entire Roster, Points, Routes lists will likely fail to load.</string>
     <string name="prefDccexSequenceItemRequestsSummary">Wait for all items of one type (Roster, Points, Routes and Tracks) are retrieved before asking for all the next type.</string>
 
+    <string name="dccexInCv19Consist">Loco is in a CV19 Consist (MU): %s</string>
+    <string name="dccexNotInCv19Consist">Loco is NOT in a CV19 Consist (MU)</string>
 </resources>

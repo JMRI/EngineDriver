@@ -1172,4 +1172,12 @@
     <string name="prefShareFileNowTitle">Compartilhe um arquivo de configurações agora!</string>
     <string name="prefStopButtonLongPressDelayTitle">Botão de parada Atraso de pressão longa</string>
     <string name="prefStopButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo nos botões Stop para iniciar o EStop</string>
+
+    <string name="autoServerConnectTitle">Conexão automática do servidor</string>
+    <string name="autoServerConnectLabel">Nome do servidor</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Obter servidor atual</string>
+    <string name="prefAutoServerConnectSummary">Conectar-se automaticamente a um servidor nomeado se descoberto</string>
+    <string name="prefAutoServerConnectTitle">Conexão automática ao servidor nomeado</string>
+    <string name="dccexInCv19Consist">Loco está em um CV19 Consiste: %s</string>
+    <string name="dccexNotInCv19Consist">Loco NÃO está em uma composição CV19</string>
 </resources>
