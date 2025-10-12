@@ -486,6 +486,10 @@
     <string name="prefRosterRecentLocoNamesTitle">Roster Names in Recent Locos?</string>
     <string name="prefRosterRecentLocoNamesSummary">Include Loco names from the roster in Recent list if a matching address is found</string>
 
+    <string name="prefThrottlesLocosTitle">Reload last used locos?</string>
+    <string name="prefThrottlesLocosSummary">On connection, automatically load the locos you had acquired in the previous session.</string>
+    <string name="prefThrottlesLocosToast">Previous locos will load if available</string>
+
     <string name="prefRosterFilterTitle">Filter Roster</string>
     <string name="prefRosterFilterSummary">Only show roster entries containing…</string>
     <string name="prefRosterFilterDefaultValue" translatable="false" />

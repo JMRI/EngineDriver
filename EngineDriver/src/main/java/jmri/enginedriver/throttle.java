@@ -159,7 +159,6 @@ import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
-import jmri.enginedriver.type.notification_type;
 import jmri.enginedriver.type.pref_gamepad_button_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
@@ -570,7 +569,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private boolean prefKidsTimerEnableReverse = false;
     private boolean prefKidsTimerKioskMode = false;
     private String passwordText = "";
-
 
     // For ESU MobileControlII
     protected static final boolean IS_ESU_MCII = MobileControl2.isMobileControl2();
@@ -6774,7 +6772,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             toolbar.showOverflowMenu();
         }
 
+        if (prefs.getBoolean("prefThrottlesLocos",getResources().getBoolean(R.bool.prefThrottlesLocosDefaultValue))) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mainapp.safeToastInstructional(R.string.prefThrottlesLocosToast, Toast.LENGTH_LONG);
+                    int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
+                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, numThrottles);
+                    set_labels();
+                }
+            }, 4000);
+        }
+
     } // end of onCreate()
+
 
     @SuppressLint("ApplySharedPref")
     @Override

@@ -919,6 +919,7 @@ public class select_loco extends AppCompatActivity {
         }
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
     }
 
     private void refreshRecentLocosList(boolean reload) {

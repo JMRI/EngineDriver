@@ -2836,6 +2836,7 @@ public class threaded_application extends Application {
 
         importExportPreferences.writeRecentLocosListToFile(prefs);
         Log.d(applicationName, "t_a: Loco '" + locoName + "' added to Recents");
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
 
     }
 

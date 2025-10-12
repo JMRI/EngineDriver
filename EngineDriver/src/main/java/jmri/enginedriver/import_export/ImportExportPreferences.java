@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.type.Loco;
 import jmri.enginedriver.type.address_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
@@ -65,6 +66,7 @@ public class ImportExportPreferences {
     public static final String RECENT_TURNOUTS_FILENAME = "recent_turnouts_list.txt";
     private static final String RECENT_CONSISTS_FILENAME = "recent_consist_list.txt";
     private static final String RECENT_ENGINES_FILENAME = "recent_engine_list.txt";
+    private static final String THROTTLES_ENGINES_FILENAME = "throttles_engines_list.txt";
 
     public ArrayList<Integer> recentLocoAddressList;
     public ArrayList<Integer> recentLocoAddressSizeList; // Look at address_type.java
@@ -897,8 +899,133 @@ public class ImportExportPreferences {
         }
     }
 
+    @SuppressLint("DefaultLocale")
+    public void writeThrottlesEnginesListToFile(threaded_application mainapp, int numThrottles) {
+        Log.d(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Writing throttles engines list to file");
 
-    @SuppressLint("ApplySharedPref")
+        File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
+
+        PrintWriter list_output;
+        try {
+            list_output = new PrintWriter(throttles_engines_list_file);
+            if (numThrottles > 0) {
+                for (int whichThrottle = 0; whichThrottle < numThrottles; whichThrottle++) {
+                    Consist con = mainapp.consists[whichThrottle];
+
+                    StringBuilder throttleLocoStrBuilder = new StringBuilder();
+                    for (Consist.ConLoco l : con.getLocos()) {
+                        int dir = l.isBackward() ? 1 : 0;
+                        String name = l.getFormatAddress();
+                        if (l.getRosterName() != null) name = l.getRosterName();
+                        throttleLocoStrBuilder.append(String.format("%d<,>%s<,>%s<,>%d<,>%d<;>",
+                                l.getIntAddress(), name, l.getAddress(), l.getWhichSource(), dir));
+                    }
+//                    list_output.format("%s<~>%d%s", mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_"), whichThrottle, throttleLocoStrBuilder.toString());
+                    list_output.format("%d<~>%s", whichThrottle, throttleLocoStrBuilder.toString());
+                    list_output.format("\n");
+                }
+            }
+            list_output.flush();
+            list_output.close();
+            Log.d(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Write throttles engines list to file completed successfully");
+        } catch (IOException except) {
+            Log.e(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Error creating a PrintWriter, IOException: "
+                            + except.getMessage());
+        }
+    }
+
+    public void loadThrottlesEnginesListFromFile(threaded_application mainapp, int numThrottles) {
+        Log.d(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Reading throttles engines list from file");
+
+        File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
+        if (throttles_engines_list_file.exists()) {
+            try {
+                BufferedReader list_reader = new BufferedReader(
+                        new FileReader(throttles_engines_list_file));
+                while (list_reader.ready()) {
+                    String line = list_reader.readLine();
+                    String[] splitLine = line.split("<~>", -1);
+                    int whichThrottle = Integer.parseInt(splitLine[0]);
+                    if (!splitLine[1].isEmpty()) { // has locos
+                        String[] splitLocos = splitLine[1].split("<;>", -1);
+                        int numberInConsist = splitLocos.length;
+                        for ( int i=0; i<numberInConsist; i++ ) {
+                            if (!splitLocos[i].isEmpty()) {
+                                String[] splitOneLoco = splitLocos[i].split("<,>", -1);
+                                int address = Integer.parseInt(splitOneLoco[0]);
+                                String locoName = splitOneLoco[1];
+                                String locoAddress = splitOneLoco[2];
+                                int locoSource = Integer.parseInt(splitOneLoco[3]);
+                                boolean locoIsBackwards = (Integer.parseInt(splitOneLoco[4]) == 1) ? true : false;
+                                Loco l = new Loco(locoAddress);
+                                l.setDesc(locoName);
+                                if (locoSource != source_type.ADDRESS) {
+//                                    locoName = mainapp.findLocoNameInRoster(locoName);  // confirm that the loco is actually in the roster
+                                    l.setRosterName(locoName);
+                                    l.setIsFromRoster(true);
+                                } else {
+                                    l.setRosterName(null); //make sure rosterName is null
+                                }
+
+                                // see if we can find it in the recents list and load the function labels
+                                if (recentLocoAddressList == null) {
+                                    loadRecentLocosListFromFile();
+                                }
+                                boolean found = false;
+                                if ( (recentLocoAddressList != null) && (!recentLocoAddressList.isEmpty()) ) {
+                                    for (int j = 0; j < recentLocoAddressList.size(); j++) {
+                                        if (recentLocoAddressList.get(j) == address) {
+                                            l.setFunctionLabels(recentLocoFunctionsList.get(j));
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!found) {
+//                                    l.setFunctionLabels("");
+                                    l.setFunctionLabelDefaults(mainapp, whichThrottle);
+                                }
+
+                                Consist consist = mainapp.consists[whichThrottle];
+
+                                boolean result = true;
+                                // if we already have it show message and request it anyway
+                                if (!consist.isEmpty()) {
+                                    for (int j = 0; j <= consist.size(); j++) {
+                                        if (consist.getLoco(locoAddress) != null) {
+                                            threaded_application.safeToast(context.getResources().getString(R.string.toastLocoAlreadySelected, locoAddress), Toast.LENGTH_SHORT);
+                                            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, locoAddress, whichThrottle);  // send the acquire message anyway
+                                            result = false;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (result) {
+                                    consist.add(l);
+                                    consist.setWhichSource(locoAddress, locoSource);
+                                    consist.setTrailAddr(l.getAddress());
+                                    if (i == 0) {
+                                        consist.setLeadAddr(l.getAddress());
+                                    }
+                                    consist.setBackward(locoAddress, locoIsBackwards);
+                                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, locoAddress, whichThrottle);
+                                }
+                            }
+                        }
+                    }
+                }
+                list_reader.close();
+                Log.d(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Read throttles engines list from file completed successfully");
+
+            } catch(IOException except){
+                Log.e(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Error reading throttles engines list. "
+                        + except.getMessage());
+            }
+        }
+    }
+
+        @SuppressLint("ApplySharedPref")
     private void saveIntListDataToPreferences(ArrayList<Integer> list, String listName, SharedPreferences sharedPreferences) {
         sharedPreferences.edit().putInt(listName +"_size", list.size()).commit();
         int prefInt;
