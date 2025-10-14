@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import jmri.enginedriver.type.Consist;
@@ -972,9 +973,11 @@ public class ImportExportPreferences {
                                     loadRecentLocosListFromFile();
                                 }
                                 boolean found = false;
+                                String functions = "";
                                 if ( (recentLocoAddressList != null) && (!recentLocoAddressList.isEmpty()) ) {
                                     for (int j = 0; j < recentLocoAddressList.size(); j++) {
                                         if (recentLocoAddressList.get(j) == address) {
+                                            functions = recentLocoFunctionsList.get(j);
                                             l.setFunctionLabels(recentLocoFunctionsList.get(j));
                                             found = true;
                                             break;
@@ -1010,6 +1013,16 @@ public class ImportExportPreferences {
                                     }
                                     consist.setBackward(locoAddress, locoIsBackwards);
                                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, locoAddress, whichThrottle);
+
+
+                                    if ( (i==0) && (found) ) { //first only
+                                        if (!functions.isEmpty()) {
+                                            LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels("RF29}|{1234(L)]\\[" + functions);  //prepend some stuff to match old-style
+                                            mainapp.function_labels[whichThrottle] = functionLabelsMap;
+                                        } else {
+                                            mainapp.function_labels[whichThrottle] = new LinkedHashMap<>(mainapp.function_labels_default);
+                                        }
+                                    }
                                 }
                             }
                         }
