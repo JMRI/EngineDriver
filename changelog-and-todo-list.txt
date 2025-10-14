@@ -993,6 +993,7 @@
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
+ *   TODO: pref to send 'd'isconnect instead of 'r'elease (WiThrottle only)
  *   TODO: allow user to specify which loco to get labels from
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
