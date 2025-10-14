@@ -1224,4 +1224,8 @@
     <string name="prefAutoServerConnectTitle">Conectarse automáticamente al servidor nombrado</string>
     <string name="dccexInCv19Consist">Loco está en un CV19 Consist: %s</string>
     <string name="dccexNotInCv19Consist">Loco NO está en un CV19 Consist</string>
+
+    <string name="prefThrottlesLocosTitle">¿Recargar las últimas locomotoras utilizadas?</string>
+    <string name="prefThrottlesLocosSummary">Al conectarse, cargará automáticamente las locomotoras que había adquirido en la sesión anterior.</string>
+    <string name="prefThrottlesLocosToast">Las locomotoras anteriores se cargarán si están disponibles</string>
 </resources>

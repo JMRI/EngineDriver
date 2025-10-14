@@ -1180,4 +1180,8 @@
     <string name="prefAutoServerConnectTitle">Conexão automática ao servidor nomeado</string>
     <string name="dccexInCv19Consist">Loco está em um CV19 Consiste: %s</string>
     <string name="dccexNotInCv19Consist">Loco NÃO está em uma composição CV19</string>
+
+    <string name="prefThrottlesLocosTitle">Recarregar as últimas locomotivas usadas?</string>
+    <string name="prefThrottlesLocosSummary">Na conexão, carregue automaticamente as locomotivas que você adquiriu na sessão anterior.</string>
+    <string name="prefThrottlesLocosToast">As locomotivas anteriores serão carregadas se disponíveis</string>
 </resources>

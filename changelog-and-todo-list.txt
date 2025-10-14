@@ -6,6 +6,7 @@
  * Experimental CV19 Consist tool
  * Better handle CV19 consists when reading a loco address - DCC-EX - requires EX-CS V5.5.46 or later
  * Preference to automatically connect to a named server if discovered
+ * New preference for, on connection, automatically load the locos you had acquired in the previous session
 **Version 2.41.208
  * Additional French translations by Alain Carasso
  * Additional Google translations

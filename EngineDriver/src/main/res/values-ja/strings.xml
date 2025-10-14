@@ -1244,4 +1244,8 @@
     <string name="prefAutoServerConnectTitle">名前付きサーバーに自動接続</string>
     <string name="dccexInCv19Consist">機関車はCV19編成です: %s</string>
     <string name="dccexNotInCv19Consist">機関車はCV19編成ではありません</string>
+
+    <string name="prefThrottlesLocosTitle">最後に使用した機関車をリロードしますか?</string>
+    <string name="prefThrottlesLocosSummary">接続時に、前回のセッションで取得した機関車を自動的にロードします。</string>
+    <string name="prefThrottlesLocosToast">以前の機関車は利用可能な場合はロードされます</string>
 </resources>

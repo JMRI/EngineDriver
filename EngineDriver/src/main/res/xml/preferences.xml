@@ -1926,6 +1926,15 @@
             android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefThrottlesLocosDefaultValue"
+            android:key="prefThrottlesLocos"
+            android:summary="@string/prefThrottlesLocosSummary"
+            android:title="@string/prefThrottlesLocosTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="ConsistLightsLongClickPreference"
             android:summary="@string/prefConsistLightsLongClickSummary"

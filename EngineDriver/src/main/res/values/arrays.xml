@@ -2392,6 +2392,7 @@
         <item>stop_on_release_preference</item>
         <item>drop_on_acquire_preference</item>
         <item>SelLocoWhileMovingPreference</item>
+        <item>prefThrottlesLocos</item>
         <item>default_address_length</item>
         <item>roster_recent_locos_preference</item>
         <item>prefRosterRecentLocoNames</item>
@@ -2415,6 +2416,7 @@
         <item>prefFeedbackWhenGoingToBackground</item>
         <item>maximum_recent_connections_preference</item>
         <item>prefHideDemoServer</item>
+        <item>autoServerConnect</item>
         <item>prefAllowMobileData</item>
         <item>prefConnectTimeoutMs</item>
         <item>prefSocketTimeoutMs</item>

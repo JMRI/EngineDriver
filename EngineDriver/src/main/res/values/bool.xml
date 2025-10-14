@@ -26,6 +26,7 @@
     <bool name="prefDropOnAcquireDefaultValue">false</bool>
     <bool name="prefRosterRecentLocosDefaultValue">true</bool>
     <bool name="prefRosterRecentLocoNamesDefaultValue">true</bool>
+    <bool name="prefThrottlesLocosDefaultValue">false</bool>
     <bool name="prefHideSystemRouteNamesDefaultValue">false</bool>
     <bool name="prefHideIfNoUserNameDefaultValue">true</bool>
     <bool name="prefShowEmergencyStopButtonDefaultValue">false</bool>
