@@ -1322,4 +1322,8 @@
     <string name="prefAutoServerConnectTitle">Automatické připojení k pojmenovanému serveru</string>
     <string name="dccexInCv19Consist">Loko je v CV19 Skládá se: %s</string>
     <string name="dccexNotInCv19Consist">Loco NENÍ v CV19 Consist</string>
+
+    <string name="prefThrottlesLocosTitle">Znovu načíst naposledy použité lokomotivy?</string>
+    <string name="prefThrottlesLocosSummary">Při připojení automaticky načte lokomotivy, které jste získali v předchozí relaci.</string>
+    <string name="prefThrottlesLocosToast">Předchozí lokomotivy se načtou, pokud jsou k dispozici</string>
 </resources>

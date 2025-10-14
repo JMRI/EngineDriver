@@ -1222,4 +1222,8 @@
     <string name="prefAutoServerConnectTitle">Automatische Verbindung zum benannten Server</string>
     <string name="dccexInCv19Consist">Lok ist in einem CV19-Verbund: %s</string>
     <string name="dccexNotInCv19Consist">Die Lok ist NICHT in einem CV19-Verbund enthalten</string>
+
+    <string name="prefThrottlesLocosTitle">Zuletzt verwendete Loks neu laden?</string>
+    <string name="prefThrottlesLocosSummary">Beim Verbinden werden automatisch die Loks geladen, die Sie in der vorherigen Sitzung erworben haben.</string>
+    <string name="prefThrottlesLocosToast">Vorherige Loks werden geladen, sofern verfügbar</string>
 </resources>
