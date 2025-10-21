@@ -86,6 +86,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
+        <item name="ed_search_button">@drawable/original_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
         <item name="ed_power_green_red_button">@drawable/original_toolbar_power_green_red</item>
@@ -132,6 +133,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_light</item>
         <item name="ed_select_loco_glyph_consist_order">
             @drawable/select_loco_glyph_consist_order_light
         </item>
@@ -257,6 +259,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/outline_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/outline_toolbar_button_estop</item>
+        <item name="ed_search_button">@drawable/outline_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/outline_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/outline_power_green</item>
         <item name="ed_power_green_red_button">@drawable/outline_power_green_red</item>
@@ -304,6 +307,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_light</item>
         <item name="ed_select_loco_glyph_consist_order">
             @drawable/select_loco_glyph_consist_order_light
         </item>
@@ -358,7 +362,9 @@
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
+        <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
@@ -427,6 +433,8 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/outline_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/outline_toolbar_button_estop</item>
+        <item name="ed_search_button">@drawable/outline_toolbar_button_search</item>
+        <item name="ed_timer_button">@drawable/outline_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/outline_power_green</item>
         <item name="ed_power_green_red_button">@drawable/outline_power_green_red</item>
         <item name="ed_power_yellow_button">@drawable/outline_power_yellow</item>
@@ -471,6 +479,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_dark</item>
         <item name="ed_select_loco_glyph_consist_order">
             @drawable/select_loco_glyph_consist_order_dark
         </item>
@@ -594,6 +603,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/ultra_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/ultra_toolbar_button_estop</item>
+        <item name="ed_search_button">@drawable/ultra_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/ultra_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/ultra_power_green</item>
         <item name="ed_power_green_red_button">@drawable/ultra_power_green_red</item>
@@ -638,6 +648,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_dark</item>
         <item name="ed_select_loco_glyph_consist_order">
             @drawable/select_loco_glyph_consist_order_dark
         </item>
@@ -771,6 +782,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
+        <item name="ed_search_button">@drawable/original_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
         <item name="ed_power_green_red_button">@drawable/original_toolbar_power_green_red</item>
@@ -806,6 +818,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_light</item>
         <item name="ed_select_loco_glyph_consist_order">
             @drawable/select_loco_glyph_consist_order_light
         </item>
@@ -943,6 +956,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/neon_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/neon_toolbar_button_estop</item>
+        <item name="ed_search_button">@drawable/neon_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/neon_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/neon_toolbar_power_green</item>
         <item name="ed_power_green_red_button">@drawable/neon_toolbar_power_green_red</item>
@@ -987,6 +1001,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_dark</item>
         <item name="ed_select_loco_glyph_consist_order">
             @drawable/select_loco_glyph_consist_order_dark
         </item>

@@ -95,6 +95,7 @@
     <string name="powerWillNotWork">JMRI té el control d\'alimentació WiThrottle apagat.\nEliminarà la tecla de corrent de via.\nEs mostrarà de nou quan s\'activi en el JMRI</string>
 <!--    <string name="current_locos">Lomotores seleccionades actualment</string>-->
     <string name="release">Allibera</string>
+    <string name="dispatch">Publicació</string>
 <!--    <string name="releaseThrottleNumber">Allibera Controlador %1$s</string>-->
     <string name="releaseThrottleLocos">Allibera\n %1$s</string>
     <string name="roster_available">Flota - disponible</string>
@@ -346,8 +347,8 @@
     <string name="prefSliderLeftMarginSummary">Número de píxels per a compensar els marges dels controls lliscants de la velocitat del Controlador</string>
 
     <string name="prefStopButtonEStopOnLongPressSummary">ATURA totes les locomotores a l\'accelerador actual amb una pressió llarga del botó Stop</string>
-    <string name="PrefConnectToFirstServerTitle">Auto-Connecta al primer servidor WiThrottle?</string>
-    <string name="PrefConnectToFirstServerSummary">Connecta automàticament al primer servidor WiThrottle descobert?</string>
+    <string name="PrefConnectToFirstServerTitle">Auto-Connecta al primer servidor?</string>
+    <string name="PrefConnectToFirstServerSummary">Connecta automàticament al primer servidor descobert?</string>
     <string name="prefDisplayClockTitle">Pantalla de rellotge ràpid</string>
     <string name="prefDisplayClockSummary">Estableix el format del rellotge ràpid en la pantalla de Controlador i web</string>
 
@@ -1241,4 +1242,9 @@
     <string name="prefThrottlesLocosTitle">Tornar a carregar les darreres locomotores utilitzades?</string>
     <string name="prefThrottlesLocosSummary">En connectar-se, carregueu automàticament les locomotores que havíeu adquirit a la sessió anterior.</string>
     <string name="prefThrottlesLocosToast">Les locomotores anteriors es carregaran si estan disponibles</string>
+
+    <string name="prefUseDispatchCommandTitle">Enviament en lloc d\'Alliberament</string>
+    <string name="prefUseDispatchCommandSummary">Utilitzeu l\'ordre \'d\'ispatch de WiThrottle en comptes de l\'ordre \'r\'alliberar quan allibereu una locomotora</string>
+    <string name="prefShowDispatchButtonTitle">Mostra el botó d\'enviament</string>
+    <string name="prefShowDispatchButtonSummary">Mostra un botó a la pantalla Selecciona locomotora per utilitzar l\'ordre \'d\'ispatch de WiThrottle en lloc de l\'ordre \'r\'release en alliberar una locomotora.</string>
 </resources>

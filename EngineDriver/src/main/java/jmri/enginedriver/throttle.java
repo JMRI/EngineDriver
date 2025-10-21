@@ -6782,11 +6782,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, numThrottles);
                     set_labels();
                 }
-            }, 4000);
+            }, 2000);
         }
 
     } // end of onCreate()
-
 
     @SuppressLint("ApplySharedPref")
     @Override

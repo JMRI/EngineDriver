@@ -2389,6 +2389,8 @@
         <item>prefTts</item>  <!-- PreferenceScreen -->
 
         <!-- Select Loco Preferences -->
+        <item>prefUseDispatchCommand</item>
+        <item>prefShowDispatchButton</item>
         <item>stop_on_release_preference</item>
         <item>drop_on_acquire_preference</item>
         <item>SelLocoWhileMovingPreference</item>
@@ -2413,6 +2415,7 @@
         <item>prefAlwaysUseFunctionsFromServer</item>
 
         <!-- Connect Preferences -->
+        <item>prefAutoServerConnect</item>
         <item>prefFeedbackWhenGoingToBackground</item>
         <item>maximum_recent_connections_preference</item>
         <item>prefHideDemoServer</item>

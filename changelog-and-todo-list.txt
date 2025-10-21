@@ -1,12 +1,17 @@
 **Version 2.41.210
  * Last version of Engine Driver to support Android 4.x
  * Bug Fix - If you try to close the Web screen if using anything other than the default throttle layout, ED will crash.
- * CV Bit Calculator added to the DCC-EX page
- * bug fix for not closing the connection in the correct sequence
+ * CV Bit Calculator added to the DCC-EX page + plus special support for CV29
+ * Bug Fix - for not closing the connection in the correct sequence
  * Experimental CV19 Consist tool
  * Better handle CV19 consists when reading a loco address - DCC-EX - requires EX-CS V5.5.46 or later
- * Preference to automatically connect to a named server if discovered
+ * Additional Google translations
+ * New preference to automatically connect to a named server if discovered
  * New preference for, on connection, automatically load the locos you had acquired in the previous session
+ * New preference to use the WiThrottle 'd'ispatch command instead of the 'r'elease command when releasing a loco
+ * New preference to add a 'd'ispatch button to the select loco screen
+ * Moved the 'immersive mode' preference to the top level
+ * Search feature added to Preferences. (Unable to customise the icon. Will leave that till later.)
 **Version 2.41.208
  * Additional French translations by Alain Carasso
  * Additional Google translations
@@ -937,8 +942,11 @@
  */
 /*
  * general/global
- *   TODO: change config files to use db instead of .txt files, turn off sd card permission
- *   TODO: toast messages on release of loco (even on Exit) and update of preferences
+ *   TODO: High Priority! Cater for edge-to-edge enforcement in SDK 36 / Android 16 (Primarily the throttle screen is still impacted due to immersive mode)
+ *   TODO: Move fully to AndroidX, which means dropping support for Android 4.x
+ *   TODO: Once on AndroidX, reinstate the document sharing functions.  (Code is still there, just commented out)
+ *   TODO: change config files to use db instead of .txt files
+ *   TODO: Add toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.
@@ -963,15 +971,13 @@
  *   TODO: Add DCC-EX to "Auto-connect to first server?"
  *   TODO: Why does the first connection attempt fail sometimes
  * at connection or close connection / exit app
- *   TODO: a) option to save and re-request selected locos. (e.g. 6-throttle layout with the same locos)  Optionally, by server
- *   TODO: b) add preference for automatically loading locos on connection into multiple throttles.  Optionally, by server
+ *   TODO: add option to save and automatically load locos on connection to be server specific
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it
  * throttle:
- *   TODO: cater for edge-to-edge enforcement in SDK 36 / Android 16 (only the throttle screen is still impacted due to immersive mode)
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
  *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
@@ -993,7 +999,6 @@
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
- *   TODO: pref to send 'd'isconnect instead of 'r'elease (WiThrottle only)
  *   TODO: allow user to specify which loco to get labels from
  *   TODO: manually create roster entries (function labels) and store on device
  *   TODO: handle roster entry names with forward slash
@@ -1009,8 +1014,9 @@
  *   TODO: let user explicitly choose the loco to pull function labels from
  * DCC-EX screen
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
+ *   TODO: add immersive mode to get extra screen space
  * preferences:
- *   TODO: add search feature
+ *   TODO: fix the searchView button icon.
  * log_viewer:
  *
  *

@@ -395,8 +395,8 @@
     <string name="prefConnectTimeoutMsSummary">Delai de connexion initiale par défaut.</string>
     <string name="prefConnectTimeoutMsTitle">Délai de connexion initiale</string>
 
-    <string name="PrefConnectToFirstServerSummary">Connexion automatique au premier serveur WiThrottle découvert?</string>
-    <string name="PrefConnectToFirstServerTitle">Connexion automatique au premier serveur WiThrottle découvert?</string>
+    <string name="PrefConnectToFirstServerSummary">Connexion automatique au premier serveur découvert?</string>
+    <string name="PrefConnectToFirstServerTitle">Connexion automatique au premier serveur découvert?</string>
     <string name="prefConsistFollowAction1Summary">Préciser quelles locomotives de l\'unité multiple doivent réagir aux commandes de phares.</string>
 
     <string name="prefConsistFollowAction2Summary">Préciser quelles locomotives de l\'unité multiple doivent réagir aux fonctions trouvées.</string>
@@ -903,6 +903,7 @@
     <string name="reconnect_label">État de la tentative de reconnexion</string>
     <string name="reconnect_success">RECONNEXION RÉUSSIE.  Reprise normale des opérations.</string>
     <string name="release">Libération</string>
+    <string name="dispatch">Libérer</string>
     <string name="releaseThrottleLocos">Libération\n %1$s</string>
 
     <string name="reverse">Marche Arr.</string>

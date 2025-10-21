@@ -43,6 +43,8 @@ import android.os.Message;
 import android.provider.MediaStore;
 
 //import androidx.core.content.FileProvider;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
@@ -142,7 +144,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private String prefThrottleScreenType = "Default";
     private String prefThrottleScreenTypeOriginal = "Default";
-    private int maxThrottlesCurrentScreenTypeOriginal = 1;
     private int prefDisplaySemiRealisticThrottleNotches = 100;
     private int prefDisplaySemiRealisticThrottleNotchesOriginal = 100;
     protected boolean prefBackgroundImage = false;
@@ -155,25 +156,26 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private boolean ignoreThisThrottleNumChange = false;
 
+    private String currentSearchQuery = "";
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ": onCreate()");
 
+        mainapp = (threaded_application) this.getApplication();
+        mainapp.applyTheme(this,true);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment;
-        if (savedInstanceState == null) {
+                if (savedInstanceState == null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragment = new SettingsFragment().newInstance("Advanced Setting");
-            fragmentTransaction.add(R.id.settings_preferences_frame, fragment);
+                    Fragment settingsFragment = new SettingsFragment().newInstance("Advanced Setting");
+            fragmentTransaction.add(R.id.settings_preferences_frame, settingsFragment);
             fragmentTransaction.commit();
         }
-
-        mainapp = (threaded_application) this.getApplication();
-        mainapp.applyTheme(this,true);
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
@@ -278,12 +280,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
         priorPrefConsistFollowRuleStyle = prefConsistFollowRuleStyle;
     }
-
-//    @Override
-//    protected void onStart() {
-//        Log.d(threaded_application.applicationName, activityName + ": onStart()");
-//        super.onStart();
-//    }
 
     @Override
     protected void onDestroy() {
@@ -471,6 +467,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         } else {
             threaded_application.safeToast(R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG);
         }
+    }
+
+    public String getCurrentSearchQuery() {
+        return currentSearchQuery;
     }
 
     public void overwriteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
@@ -725,11 +725,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //
 //            try {
 //                URL url = new URL(n_url);
-//                URLConnection conection = url.openConnection();
-//                conection.connect();
+//                URLConnection connection = url.openConnection();
+//                connection.connect();
 //
 //                // to help show a 0-100% progress bar
-//                int lengthOfFile = conection.getContentLength();
+//                int lengthOfFile = connection.getContentLength();
 //
 //                // download the file
 //                InputStream input = new BufferedInputStream(url.openStream(),
@@ -848,6 +848,59 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
         }
 
+        MenuItem searchItem = menu.findItem(R.id.search_button);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false; // Handled by onQueryTextChange
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    currentSearchQuery = newText; // Store the query
+                    Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.settings_preferences_frame);
+                    if (currentFragment instanceof SettingsFragment) {
+                        ((SettingsFragment) currentFragment).filterPreferences(newText);
+                    } else if (currentFragment instanceof SettingsSubScreenFragment) {
+                        ((SettingsSubScreenFragment) currentFragment).filterPreferences(newText);
+                    }
+                    return true;
+                }
+            });
+        }
+
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(@NonNull MenuItem item) {
+                return true; // Allow expand
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(@NonNull MenuItem item) {
+                currentSearchQuery = ""; // Clear stored query
+                // Re-filter with empty string to show all
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.settings_preferences_frame);
+                if (currentFragment instanceof SettingsFragment) {
+                    ((SettingsFragment) currentFragment).filterPreferences("");
+                } else if (currentFragment instanceof SettingsSubScreenFragment) {
+                    ((SettingsSubScreenFragment) currentFragment).filterPreferences("");
+                }
+                return true; // Allow collapse
+            }
+        });
+
+        // Restore search view state if activity is recreated
+        if (currentSearchQuery != null && !currentSearchQuery.isEmpty()) {
+            searchItem.expandActionView();
+            if (searchView != null) {
+                searchView.setQuery(currentSearchQuery, false);
+                searchView.clearFocus();
+            }
+        }
+
         adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
@@ -943,7 +996,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     /** @noinspection SameParameterValue, SameParameterValue */
     @SuppressLint("ApplySharedPref")
     protected void limitIntArrayPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
-        Log.d(threaded_application.applicationName, activityName + ": limitIntArraryPrefValue()");
+        Log.d(threaded_application.applicationName, activityName + ": limitIntArrayPrefValue()");
 
         String prefValue = sharedPreferences.getString(key, defaultVal).trim();
         String[] prefValues = threaded_application.splitByString(prefValue, " ");
@@ -1228,7 +1281,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         enableDisablePreference(prefScreen, "prefGamePadFeedbackVolume", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamePadSpeedArrowsThrottleRepeatDelay", thisEnabled);
-        enableDisablePreference(prefScreen, "prefGamepadprefGamePadDoublePressStop", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamePadDoublePressStop", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamepadSwapForwardReverseWithScreenButtons", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamepadTestEnforceTesting", thisEnabled);
         enableDisablePreference(prefScreen, "prefGamepadTestNow", thisEnabled);
@@ -1279,7 +1332,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefAutoServerConnect", !enable);
     }
 
-    private void showHideprefprefThrottleSwitchButtonCycleAllPreferences(PreferenceScreen prefScreen) {
+    private void showHideDispatchPreferences(PreferenceScreen prefScreen) {
+        boolean enableCmd = prefs.getBoolean("prefUseDispatchCommand", false);
+        boolean enableButton = prefs.getBoolean("prefShowDispatchButton", false);
+        if (enableCmd & enableButton) {enableCmd = false; enableButton = false;} // in case both are enabled accidentally
+        if (mainapp.isDCCEX) {enableCmd = true; enableButton = true;}
+        enableDisablePreference(prefScreen, "prefShowDispatchButton", !enableCmd);
+        enableDisablePreference(prefScreen, "prefUseDispatchCommand", !enableButton);
+    }
+
+    private void showHidePrefThrottleSwitchButtonCycleAllPreferences(PreferenceScreen prefScreen) {
         boolean enable = !prefThrottleSwitchButtonCycleAll;
         enableDisablePreference(prefScreen, "prefThrottleSwitchOption1", enable);
         enableDisablePreference(prefScreen, "prefThrottleSwitchOption2", enable);
@@ -1362,7 +1424,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefHideFunctionButtonsOfNonSelectedThrottle", enable);
     }
 
-    private void showHideSemiRealisticthrottlePreferences(PreferenceScreen prefScreen) {
+    private void showHideSemiRealisticThrottlePreferences(PreferenceScreen prefScreen) {
         String prefDisplaySemiRealisticThrottleDecoderBrakeType = prefs.getString("prefDisplaySemiRealisticThrottleDecoderBrakeType", getApplicationContext().getResources().getString(R.string.prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue));
 
         boolean enable = prefDisplaySemiRealisticThrottleDecoderBrakeType.equals("esu");
@@ -1504,9 +1566,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 setPreferencesFromResource(R.xml.preferences, rootKey);
 
             Activity a = getActivity();
-//            if(a instanceof SettingsActivity) {
-                parentActivity = (SettingsActivity) a;
-//            }
+            parentActivity = (SettingsActivity) a;
 
             setPreferencesUI();
         }
@@ -1526,6 +1586,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             setPreferencesUI();
 
+            // Re-apply filter on resume
+            if (parentActivity != null) {
+                filterPreferences(parentActivity.getCurrentSearchQuery());
+            }
         }
 
         @Override
@@ -1578,7 +1642,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefDeviceSounds1":
                         mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
                         mainapp.soundsReloadSounds = true;
-                        // the sounds will actually be relaoded in the throttle.onResume()
+                        // the sounds will actually be reloaded in the throttle.onResume()
 //                        iplsLoader.loadSounds();
                         break;
                     case "maximum_throttle_preference":
@@ -1685,6 +1749,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                     case "connect_to_first_server_preference":
                         parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefUseDispatchCommand":
+                        sharedPreferences.edit().putBoolean("prefShowDispatchButton", false).commit();
+                        parentActivity.showHideDispatchPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefShowDispatchButton":
+                        sharedPreferences.edit().putBoolean("prefUseDispatchCommand", false).commit();
+                        parentActivity.showHideDispatchPreferences(getPreferenceScreen());
                         break;
 
                 }
@@ -1808,7 +1882,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
                 parentActivity.prefThrottleScreenTypeOriginal = parentActivity.prefThrottleScreenType;
-                parentActivity.maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(parentActivity.prefThrottleScreenTypeOriginal);
 
                 parentActivity.prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", parentActivity.getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
                 parentActivity.prefDisplaySemiRealisticThrottleNotchesOriginal = parentActivity.prefDisplaySemiRealisticThrottleNotches;
@@ -1834,6 +1907,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 setSwipeThroughWebPreference();
 
                 parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
+
+                parentActivity.showHideDispatchPreferences(getPreferenceScreen());
 
                 advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
                 hideAdvancedPreferences();
@@ -1971,6 +2046,53 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             }
         }
 
+        public void filterPreferences(String query) {
+            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase().trim());
+        }
+
+        private boolean filterRecursive(Preference preference, String query) {
+            if (preference == null) {
+                return false;
+            }
+
+            if (preference instanceof PreferenceGroup) {
+                PreferenceGroup group = (PreferenceGroup) preference;
+                boolean hasVisibleChild = false;
+
+                // CRITICAL: Iterate over a stable snapshot of the children to prevent crashes.
+                List<Preference> children = new ArrayList<>(group.getPreferenceCount());
+                for (int i = 0; i < group.getPreferenceCount(); i++) {
+                    children.add(group.getPreference(i));
+                }
+
+                // We recurse on the children first (bottom-up).
+                for (Preference child : children) {
+                    // The || ensures we process all children and don't short-circuit.
+                    hasVisibleChild = filterRecursive(child, query) || hasVisibleChild;
+                }
+
+                // Now, check the group's own title.
+                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+                boolean selfMatches = !query.isEmpty() && title.contains(query);
+
+                // A group is visible if it matches or has a visible child.
+                boolean isVisible = hasVisibleChild || selfMatches;
+                preference.setVisible(isVisible);
+                return isVisible;
+            }
+
+            // For a leaf preference (not a group).
+            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase() : "";
+            if (title.equals("roster in recent locos?"))
+                Log.d(threaded_application.applicationName, activityName + ": filterRecursive(): " + title);
+            boolean isVisible = query.isEmpty() || title.contains(query) || summary.contains(query);
+            try {
+                preference.setVisible(isVisible);
+            } catch (Exception ignored) {}
+            return isVisible;
+        }
+
         private PreferenceGroup getParent(PreferenceGroup groupToSearchIn, Preference preference) {
             for (int i = 0; i < groupToSearchIn.getPreferenceCount(); ++i) {
                 Preference child = groupToSearchIn.getPreference(i);
@@ -2016,7 +2138,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 
             // rootKey is the name of preference sub screen key name , here--customPrefKey
-            setPreferencesFromResource(R.xml.preferences, rootKey);
+            setPreferencesFromResource(R.xml.preferences, rootKey); // Call this only ONCE.
             Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences(): of the sub screen " + rootKey);
 
             Activity a = getActivity();
@@ -2028,21 +2150,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             parentActivity.isInSubScreen = true;
 
-            parentActivity.setGamePadPrefLabels(getPreferenceScreen(), parentActivity.prefs);
-            parentActivity.prefs.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
-
-            parentActivity.prefBackgroundImage = parentActivity.prefs.getBoolean("prefBackgroundImage", false);
-            parentActivity.showHideBackgroundImagePreferences(getPreferenceScreen());
-            parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
-            parentActivity.showHideprefprefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
-            parentActivity.showHideWebSwipePreferences(getPreferenceScreen());
-            parentActivity.showHideTTSPreferences(getPreferenceScreen());
-            parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
-            parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
-            parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
-            parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
-            parentActivity.showHideSemiRealisticthrottlePreferences(getPreferenceScreen());
-            parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
+            showHideAll();
 
             // option is only available when there is no current connection
 
@@ -2061,6 +2169,25 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             advancedSubPreferences = getResources().getStringArray(R.array.advancedSubPreferences);
             hideAdvancedSubPreferences();
+        }
+
+        @SuppressLint("ApplySharedPref")
+        private void showHideAll() {
+            parentActivity.setGamePadPrefLabels(getPreferenceScreen(), parentActivity.prefs);
+            parentActivity.prefs.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
+
+            parentActivity.prefBackgroundImage = parentActivity.prefs.getBoolean("prefBackgroundImage", false);
+            parentActivity.showHideBackgroundImagePreferences(getPreferenceScreen());
+            parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
+            parentActivity.showHidePrefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
+            parentActivity.showHideWebSwipePreferences(getPreferenceScreen());
+            parentActivity.showHideTTSPreferences(getPreferenceScreen());
+            parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
+            parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+            parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
+            parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
+            parentActivity.showHideSemiRealisticThrottlePreferences(getPreferenceScreen());
+            parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
         }
 
         @Override
@@ -2083,6 +2210,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.priorPrefConsistFollowRuleStyle = parentActivity.prefConsistFollowRuleStyle;
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
 //            showHideLeftRightSwipePreferences();
+
+            // Re-apply filter on resume
+            if (parentActivity != null) {
+                filterPreferences(parentActivity.getCurrentSearchQuery());
+            }
         }
 
         @Override
@@ -2132,6 +2264,49 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             } catch (Exception except) {
                 Log.d(threaded_application.applicationName, activityName + ": removeSubPreference: failed: " + preference);
             }
+        }
+
+        public void filterPreferences(String query) {
+            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase().trim());
+        }
+
+        private boolean filterRecursive(Preference preference, String query) {
+            if (preference == null) {
+                return false;
+            }
+
+            if (preference instanceof PreferenceGroup) {
+                PreferenceGroup group = (PreferenceGroup) preference;
+                boolean hasVisibleChild = false;
+
+                // CRITICAL: Iterate over a stable snapshot of the children to prevent crashes.
+                List<Preference> children = new ArrayList<>(group.getPreferenceCount());
+                for (int i = 0; i < group.getPreferenceCount(); i++) {
+                    children.add(group.getPreference(i));
+                }
+
+                // We recurse on the children first (bottom-up).
+                for (Preference child : children) {
+                    // The || ensures we process all children and don't short-circuit.
+                    hasVisibleChild = filterRecursive(child, query) || hasVisibleChild;
+                }
+
+                // Now, check the group's own title.
+                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+                boolean selfMatches = !query.isEmpty() && title.contains(query);
+
+                // A group is visible if it matches or has a visible child.
+                boolean isVisible = hasVisibleChild || selfMatches;
+                preference.setVisible(isVisible);
+                return isVisible;
+            }
+
+            // For a leaf preference (not a group).
+            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase() : "";
+            boolean isVisible = query.isEmpty() || title.contains(query) || summary.contains(query);
+            preference.setVisible(isVisible);
+            return isVisible;
         }
 
         private void hideAdvancedSubPreferences() {
@@ -2327,7 +2502,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
 
                     case "prefDisplaySemiRealisticThrottleDecoderBrakeType":
-                        parentActivity.showHideSemiRealisticthrottlePreferences(getPreferenceScreen());
+                        parentActivity.showHideSemiRealisticThrottlePreferences(getPreferenceScreen());
                         break;
                     case "prefSemiRealisticMaximumBrakePcnt":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "70");
@@ -2368,7 +2543,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
                     case "prefThrottleSwitchButtonCycleAll":
                         parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
-                        parentActivity.showHideprefprefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
+                        parentActivity.showHidePrefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
                         break;
                 }
             }
@@ -2389,7 +2564,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             MenuItem item = menu.getItem(i);
             View itemChooser = item.getActionView();
 
-            if (itemChooser != null) {
+            if ( (itemChooser != null) && (itemChooser.getLayoutParams() != null) ){
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 

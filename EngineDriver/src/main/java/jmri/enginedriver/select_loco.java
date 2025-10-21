@@ -206,6 +206,9 @@ public class select_loco extends AppCompatActivity {
     LinearLayout selectLocoMethodButtonsLayout;
     RadioGroup selectLocoMethodRadioButtonsGroup;
 
+    LinearLayout dispatchButtonLayout;
+    Button dispatchButton;
+
     private int maxAddr = 9999;
 
     // populate the on-screen roster view from global hashmap
@@ -456,6 +459,15 @@ public class select_loco extends AppCompatActivity {
         currentLocosLayout[0] = findViewById(R.id.current_locos_layout0);
         currentLocosLayout[1] = findViewById(R.id.current_locos_layout1);
 
+        boolean prefShowDispatchButton = prefs.getBoolean("prefShowDispatchButton", false);
+        if (mainapp.isDCCEX) prefShowDispatchButton = false; // not relevant to DCC-EX
+
+        ImageButton dispatchButton1 = findViewById(R.id.dispatch_button1);
+        dispatchButton1.setOnClickListener(new DispatchButtonListener(whichThrottle));
+        dispatchButton1.setVisibility(prefShowDispatchButton ? View.VISIBLE : View.GONE);
+        LinearLayout dispatchButtonLayout1 = findViewById(R.id.dispatch_button_layout1);
+        dispatchButtonLayout1.setVisibility(prefShowDispatchButton ? View.VISIBLE : View.GONE);
+
         Button releaseButton0 = findViewById(R.id.release_button0);
         releaseButton0.setVisibility(View.GONE);
         ImageButton releaseButton1 = findViewById(R.id.release_button1);
@@ -659,6 +671,15 @@ public class select_loco extends AppCompatActivity {
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);
         mainapp.consists[whichThrottle].release();
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass 0, 1 or 2 in message
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
+    }
+
+   // request dispatch of specified throttle
+    void dispatchLoco(int whichThrottle) {
+        Log.d(threaded_application.applicationName, activityName + ": dispatchLoco()");
+        mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);  //not relevant to DCC-EX
+        mainapp.consists[whichThrottle].release();
+        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISPATCH, "", whichThrottle); // pass 0, 1 or 2 in message
         importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
     }
 
@@ -1239,6 +1260,25 @@ public class select_loco extends AppCompatActivity {
             mainapp.buttonVibration();
 
             releaseLoco(_throttle);
+            overrideThrottleName = "";
+            mainapp.hideSoftKeyboard(v, activityName);
+            endThisActivity();
+            mainapp.buttonVibration();
+        }
+    }
+
+    public class DispatchButtonListener implements View.OnClickListener {
+        final int _throttle;
+
+        DispatchButtonListener(int throttle) {
+            _throttle = throttle;
+        }
+
+        public void onClick(View v) {
+            Log.d(threaded_application.applicationName, activityName + ": DispatchButtonListener(): onClick()");
+            mainapp.buttonVibration();
+
+            dispatchLoco(_throttle);
             overrideThrottleName = "";
             mainapp.hideSoftKeyboard(v, activityName);
             endThisActivity();

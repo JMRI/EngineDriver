@@ -96,6 +96,7 @@
     <string name="powerWillNotWork">Stromschalter - Engine Driver</string>
 <!--    <string name="current_locos">Aktuell gewählte Loks</string>-->
     <string name="release">Freigeben</string>
+    <string name="dispatch">Freigeben</string>
 <!--    <string name="releaseThrottleNumber">Fahrregler %1$s freigeben</string>-->
     <string name="releaseThrottleLocos">\n%1$s freigeben</string>
     <string name="roster_available">Serverliste – Verfügbar</string>
@@ -357,7 +358,7 @@
 
     <string name="prefStopButtonEStopOnLongPressSummary">ESTOP alle Lokomotiven auf dem aktuellen Fahrregler durch langes Drücken der Stopp-Taste</string>
     <string name="PrefConnectToFirstServerTitle">AutoVerbindung mit erstem Server?</string>
-    <string name="PrefConnectToFirstServerSummary">Automatisch mit zuerst gefundenem WiThrottle Server verbinden?</string>
+    <string name="PrefConnectToFirstServerSummary">Automatisch mit zuerst gefundenem Server verbinden?</string>
     <string name="prefDisplayClockTitle">Anzeige Schnelle Uhr</string>
     <string name="prefDisplayClockSummary">Format einstellen für Schnelle Uhr in Fahrregler- und Webanzeigen.</string>
 
@@ -1226,4 +1227,9 @@
     <string name="prefThrottlesLocosTitle">Zuletzt verwendete Loks neu laden?</string>
     <string name="prefThrottlesLocosSummary">Beim Verbinden werden automatisch die Loks geladen, die Sie in der vorherigen Sitzung erworben haben.</string>
     <string name="prefThrottlesLocosToast">Vorherige Loks werden geladen, sofern verfügbar</string>
+
+    <string name="prefUseDispatchCommandTitle">Versenden statt Freigeben</string>
+    <string name="prefUseDispatchCommandSummary">Verwenden Sie den WiThrottle-Befehl „d“ anstelle des Befehls „r“ beim Freigeben einer Lok</string>
+    <string name="prefShowDispatchButtonTitle">Schaltfläche „Versand anzeigen“</string>
+    <string name="prefShowDispatchButtonSummary">Zeigen Sie auf dem Bildschirm „Lok auswählen“ eine Schaltfläche an, um beim Freigeben einer Lok den WiThrottle-Befehl „d“ statt „r“ zu verwenden.</string>
 </resources>

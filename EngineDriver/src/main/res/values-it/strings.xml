@@ -99,6 +99,7 @@
     <string name="powerWillNotWork">JMRI ha regolato il  controllo di energia WiThrottle su spento.\nRimuoverà adesso l\'icona di energia.\nMostrerà di nuovo quando la regolazione di JMRI sarà su acceso.</string>
 <!--    <string name="current_locos">Locomotive Attualmente Selezionate</string>-->
     <string name="release">Rilasciare</string>
+    <string name="dispatch">Pubblicazione</string>
 <!--    <string name="releaseThrottleNumber">Rilasciare Acceleratore %1$s</string>-->
     <string name="releaseThrottleLocos">Rilasciare\n%1$s</string>
     <string name="roster_available">Elenco - disponibile</string>
@@ -371,8 +372,8 @@
     <string name="prefSliderLeftMarginSummary">Numero di pixels di dislocamento dei bordi del controllo di velocità.</string>
 
     <string name="prefStopButtonEStopOnLongPressSummary">Arresta di emergenza tutte le locomotive con l\'acceleratore corrente premendo a lungo il pulsante Stop</string>
-    <string name="PrefConnectToFirstServerTitle">Auto-Connessione al primo Server WiThrottle?</string>
-    <string name="PrefConnectToFirstServerSummary">Connessione automatica al primo Server WiThrottle trovato?</string>
+    <string name="PrefConnectToFirstServerTitle">Auto-Connessione al primo Server?</string>
+    <string name="PrefConnectToFirstServerSummary">Connessione automatica al primo Server trovato?</string>
     <string name="prefDisplayClockTitle">Mostrare Orologio Veloce</string>
     <string name="prefDisplayClockSummary">Impostare Formato di Visualizzazione dell\'Orologio Veloce negli schermi Controllore e Web.</string>
 
@@ -1179,4 +1180,9 @@
     <string name="prefThrottlesLocosTitle">Ricaricare le ultime locomotive utilizzate?</string>
     <string name="prefThrottlesLocosSummary">Al momento della connessione, carica automaticamente le locomotive che hai acquisito nella sessione precedente.</string>
     <string name="prefThrottlesLocosToast">Le locomotive precedenti verranno caricate se disponibili</string>
+
+    <string name="prefUseDispatchCommandTitle">Inviare invece di rilasciare</string>
+    <string name="prefUseDispatchCommandSummary">Utilizzare il comando WiThrottle \'d\'ispatch invece del comando \'r\'elease quando si rilascia una locomotiva</string>
+    <string name="prefShowDispatchButtonTitle">Mostra pulsante Spedizione</string>
+    <string name="prefShowDispatchButtonSummary">Mostra un pulsante nella schermata Seleziona locomotiva per utilizzare il comando WiThrottle \'d\'ispatch invece del comando \'r\'elease quando si rilascia una locomotiva</string>
 </resources>

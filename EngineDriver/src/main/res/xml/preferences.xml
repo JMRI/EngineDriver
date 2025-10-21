@@ -506,6 +506,15 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
+            android:key="prefThrottleViewImmersiveMode"
+            android:summary="@string/prefThrottleViewImmersiveModeSummary"
+            android:title="@string/prefThrottleViewImmersiveModeTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
         <PreferenceScreen
             android:icon="?attr/ed_folder_icon"
             android:key="swipe_up_down_preferences"
@@ -518,15 +527,6 @@
                 android:title="@string/prefSwipeUpDownTitle"
                 android:layout="@layout/category_icon_left"
                 android:icon="@drawable/category_swipe_up_down_black">
-
-                <CheckBoxPreference
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
-                    android:key="prefThrottleViewImmersiveMode"
-                    android:summary="@string/prefThrottleViewImmersiveModeSummary"
-                    android:title="@string/prefThrottleViewImmersiveModeTitle"
-                    android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
                     android:layout_width="wrap_content"
@@ -1860,6 +1860,20 @@
         android:title="@string/prefSelectLocoTitle"
         android:layout="@layout/category_icon_left"
         android:icon="@drawable/category_select_black" >
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefUseDispatchCommand"
+            android:summary="@string/prefUseDispatchCommandSummary"
+            android:title="@string/prefUseDispatchCommandTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefShowDispatchButton"
+            android:summary="@string/prefShowDispatchButtonSummary"
+            android:title="@string/prefShowDispatchButtonTitle"
+            android:layout="@layout/checkbox_no_icon" />
 
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"

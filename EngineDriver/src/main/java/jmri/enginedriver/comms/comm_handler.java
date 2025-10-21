@@ -199,6 +199,27 @@ public class comm_handler extends Handler {
             break;
          }
 
+         //Dispatch one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
+         // generally acts like a release,but sends the WiThrollte 'd' command instead
+         case message_type.DISPATCH: {
+            String addr = msg.obj.toString();
+            final int whichThrottle = msg.arg1;
+            final boolean releaseAll = (addr.isEmpty());
+
+            if (releaseAll || mainapp.consists[whichThrottle].isEmpty()) {
+               addr = "";
+               mainapp.function_labels[whichThrottle] = new LinkedHashMap<>();
+               mainapp.function_states[whichThrottle] = new boolean[threaded_application.MAX_FUNCTION_NUMBER +1];
+            }
+            if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
+                    mainapp.getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
+               comm_thread.sendSpeedZero(whichThrottle);
+            }
+
+            commThread.sendDispatchLoco(addr, whichThrottle);
+            break;
+         }
+
          //estop requested.   arg1 holds whichThrottle
          //  M0A*<;>X  was(0X)
          case message_type.ESTOP: {
