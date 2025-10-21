@@ -1370,7 +1370,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 }
                 rslt = rslt + cv29AnalogueMode + "<br />";
 
-                // bit 4 is Railcom
+                // bit 3 is Railcom  (4th item)
 
                 if (mainapp.bitExtracted(cvValue, 1, 5) == 0) {
                     cv29SpeedTable = getApplicationContext().getResources().getString(R.string.cv29SpeedTableNo);
@@ -1482,12 +1482,18 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
 
     private void showCvBitCalculatorDialog() {
+        int initialCv = 0;
+        try {
+            initialCv = Integer.parseInt(etDccexCv.getText().toString());
+        } catch (Exception ignored) {
+        }
+
         int intialValue = 0;
         try {
             intialValue = Integer.parseInt(etDccexCvValue.getText().toString());
         } catch (Exception ignored) {
         }
-        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue, mainapp.getSelectedTheme(false));
+        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue, initialCv, mainapp.getSelectedTheme(false));
         cvBitCalculatorDialogFragment.setOnConfirmListener(this); // Set the listener
         cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "cvBitCalculatorDialogFragment");
     }

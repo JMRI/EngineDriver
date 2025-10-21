@@ -17,6 +17,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
+    <item
+        android:id="@+id/search_button"
+        android:title="@string/FilterRosterListFilterByLabel"
+        android:visible="true"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+
+<!--    app:actionLayout="@layout/toolbar_button_search"-->
+<!--    android:icon="?attr/ed_search_button"-->
+
     <item android:id="@+id/flashlight_button"
         app:actionLayout="@layout/toolbar_button_flashlight_off"
         android:title="@string/flashlightAction"

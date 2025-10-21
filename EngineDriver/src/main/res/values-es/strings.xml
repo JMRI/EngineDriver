@@ -94,6 +94,7 @@
     <string name="powerWillNotWork">JMRI tiene el control de alimentación WiThrottle apagado.\nEliminará el icono de tensión de vía.\nSe mostrará de nuevo cuando se active en el JMRI</string>
 <!--    <string name="current_locos">Lomotoras seleccionadas actualmente</string>-->
     <string name="release">Libera</string>
+    <string name="dispatch">Liberar</string>
 <!--    <string name="releaseThrottleNumber">Libera Controlador %1$s</string>-->
     <string name="releaseThrottleLocos">Libera\n %1$s</string>
     <string name="roster_available">Flota - disponible</string>
@@ -344,8 +345,8 @@
     <string name="prefSliderLeftMarginSummary">Número de píxeles para compensar los márgenes de los controles deslizantes de la velocidad del Controlador</string>
 
     <string name="prefStopButtonEStopOnLongPressSummary">ESTOP todas las locomotoras en el acelerador actual con una pulsación prolongada del botón de parada</string>
-    <string name="PrefConnectToFirstServerTitle">¿Auto-Conecta al primer servidor WiThrottle?</string>
-    <string name="PrefConnectToFirstServerSummary">¿Conecta automáticamente al primer servidor WiThrottle descubierto?</string>
+    <string name="PrefConnectToFirstServerTitle">¿Auto-Conecta al primer servidor?</string>
+    <string name="PrefConnectToFirstServerSummary">¿Conecta automáticamente al primer servidor descubierto?</string>
     <string name="prefDisplayClockTitle">Pantalla de reloj rápido</string>
     <string name="prefDisplayClockSummary">Establece el formato para el reloj rápido en pantalla de Controlador y web. </string>
 
@@ -1228,4 +1229,9 @@
     <string name="prefThrottlesLocosTitle">¿Recargar las últimas locomotoras utilizadas?</string>
     <string name="prefThrottlesLocosSummary">Al conectarse, cargará automáticamente las locomotoras que había adquirido en la sesión anterior.</string>
     <string name="prefThrottlesLocosToast">Las locomotoras anteriores se cargarán si están disponibles</string>
+
+    <string name="prefUseDispatchCommandTitle">Despachar en lugar de liberar</string>
+    <string name="prefUseDispatchCommandSummary">Utilice el comando WiThrottle \'d\'ispatch en lugar del comando \'r\'elease al liberar una locomotora</string>
+    <string name="prefShowDispatchButtonTitle">Mostrar botón de Despacho</string>
+    <string name="prefShowDispatchButtonSummary">Mostrar un botón en la pantalla Seleccionar locomotora para usar el comando \'d\'ispatch de WiThrottle en lugar del comando \'r\'elease al liberar una locomotora</string>
 </resources>

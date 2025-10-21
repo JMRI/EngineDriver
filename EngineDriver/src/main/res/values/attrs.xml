@@ -41,6 +41,7 @@
     <attr name="ed_esu_mc2_knob_on_button" format="reference" />
     <attr name="ed_esu_mc2_knob_off_button" format="reference" />
     <attr name="ed_estop_button" format="reference" />
+    <attr name="ed_search_button" format="reference" />
     <attr name="ed_timer_button" format="reference" />
     <attr name="ed_power_green_button" format="reference" />
     <attr name="ed_power_green_red_button" format="reference" />
@@ -80,6 +81,7 @@
     <attr name="ed_select_loco_glyph_idngo" format="reference" />
 
     <attr name="ed_select_loco_glyph_release" format="reference" />
+    <attr name="ed_select_loco_glyph_dispatch" format="reference" />
     <attr name="ed_select_loco_glyph_consist_order" format="reference" />
     <attr name="ed_select_loco_glyph_consist_lights" format="reference" />
     <attr name="ed_select_loco_glyph_ipls" format="reference" />

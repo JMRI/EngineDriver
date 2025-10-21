@@ -1929,10 +1929,11 @@ public class threaded_application extends Application {
                 case "Black":
                 case "Outline":
                 case "Ultra":
-                case "neon":
-                    return R.style.app_theme_black_preferences;
+                case "Neon":
                 case "Colorful":
-//                    return R.style.app_theme_colorful_preferences;
+                    return R.style.app_theme_black_preferences;
+//                case "Colorful":
+//                    return R.style.app_theme_colorful;
                 default:
                     return R.style.app_theme_preferences;
             }

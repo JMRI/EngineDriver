@@ -460,13 +460,22 @@ public class comm_thread extends Thread {
     }
 
     //release all locos for throttle using '*', or a single loco using address
-//    protected void sendReleaseLoco(String addr, int whichThrottle, long interval) {
     protected void sendReleaseLoco(String addr, int whichThrottle) {
         String msgTxt;
         if (!mainapp.isDCCEX) { // not DCC-EX
-            msgTxt = String.format("M%s-%s<;>r", mainapp.throttleIntToString(whichThrottle), (!addr.isEmpty() ? addr : "*"));
-//            mainapp.sendMsgDelay(mainapp.comm_msg_handler, interval, message_type.WIFI_SEND, msgTxt);
-            mainapp.sendMsgDelay(mainapp.comm_msg_handler, 0, message_type.WIFI_SEND, msgTxt);
+            String cmd = prefs.getBoolean("prefUseDispatchCommand", false) ? "d" : "r";  // by default, use 'r'elease
+            msgTxt = String.format("M%s-%s<;>%s", mainapp.throttleIntToString(whichThrottle), (!addr.isEmpty() ? addr : "*"), cmd);
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIFI_SEND, msgTxt);
+
+        }  // else  // DCC-EX has no equivalent
+    }
+
+    //dispatch all locos for throttle using '*', or a single loco using address
+    protected void sendDispatchLoco(String addr, int whichThrottle) {
+        String msgTxt;
+        if (!mainapp.isDCCEX) { // not DCC-EX
+            msgTxt = String.format("M%s-%s<;>%s", mainapp.throttleIntToString(whichThrottle), (!addr.isEmpty() ? addr : "*"), "d");
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.WIFI_SEND, msgTxt);
 
         }  // else  // DCC-EX has no equivalent
     }

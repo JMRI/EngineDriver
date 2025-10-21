@@ -113,6 +113,7 @@
     <string name="powerWillNotWork">JMRI má vypnuto ovládání napájení přes WiThrottle.\nIkona napájení bude odstraněna.\nPokud bude v nastavení JMRI zapnuto ovládání napájení, tak se znovu zobrazí.</string>
 <!--    <string name="current_locos">Aktuálně vybrané lokomotivy</string>-->
     <string name="release">Propustit</string>
+    <string name="dispatch">Uvolnění</string>
 <!--    <string name="releaseThrottleNumber">Propustit ovladač %1$s</string>-->
     <string name="releaseThrottleLocos">Propustit\n%1$s</string>
     <string name="roster_available">Evidence serveru – k dispozici</string>
@@ -436,8 +437,8 @@
     <string name="prefSliderLeftMarginSummary">Počet pixelů k odsazení okraje posuvníku rychlosti ovladače.</string>
 
     <string name="prefStopButtonEStopOnLongPressSummary">ESTOP všechny lokomotivy na aktuálním plynu dlouhým stisknutím tlačítka Stop</string>
-    <string name="PrefConnectToFirstServerTitle">Automatické připojení se k prvnímu WiThrottle serveru?</string>
-    <string name="PrefConnectToFirstServerSummary">Připojovat se automaticky k prvnímu nalezenému WiThrottle serveru?</string>
+    <string name="PrefConnectToFirstServerTitle">Automatické připojení se k prvnímu serveru?</string>
+    <string name="PrefConnectToFirstServerSummary">Připojovat se automaticky k prvnímu nalezenému serveru?</string>
     <string name="prefDisplayClockTitle">Zobrazit modelové hodiny</string>
     <string name="prefDisplayClockSummary">Nastavit formát pro zobrazení modelových hodin v ovladači a obrazevce Webu.</string>
 
@@ -1326,4 +1327,9 @@
     <string name="prefThrottlesLocosTitle">Znovu načíst naposledy použité lokomotivy?</string>
     <string name="prefThrottlesLocosSummary">Při připojení automaticky načte lokomotivy, které jste získali v předchozí relaci.</string>
     <string name="prefThrottlesLocosToast">Předchozí lokomotivy se načtou, pokud jsou k dispozici</string>
+
+    <string name="prefUseDispatchCommandTitle">Odeslání místo uvolnění</string>
+    <string name="prefUseDispatchCommandSummary">Při uvolnění lokomotivy použijte příkaz WiThrottle \'d\'ispatch místo příkazu \'r\'elease</string>
+    <string name="prefShowDispatchButtonTitle">Tlačítko Zobrazit odeslání</string>
+    <string name="prefShowDispatchButtonSummary">Zobrazit tlačítko na obrazovce Výběr lokomotivy pro použití příkazu WiThrottle \'d\'ispatch místo příkazu \'r\'elease při uvolnění lokomotivy</string>
 </resources>

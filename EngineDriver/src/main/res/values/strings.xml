@@ -138,6 +138,7 @@
     <string name="powerWillNotWork">Server has the WiThrottle power control setting to off.\nWill now remove Power Icon.\nWill display again when Server setting is on.</string>
     <!--    <string name="current_locos">Currently Selected Locos</string>-->
     <string name="release">Release</string>
+    <string name="dispatch">Dispatch</string>
     <!--    <string name="releaseThrottleNumber">Release Throttle %1$s</string>-->
     <string name="releaseThrottleLocos">Release\n%1$s</string>
     <string name="roster_available">Server Roster - Available</string>
@@ -268,7 +269,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
     <string name="prefIncreaseWebViewSizeSummary">Increase Throttle Web View size to 60\% for small screens</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.  Set Swipe up or down options to temporarily disable and reach the menu.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.\nOptionally, you can set Swipe up or down options to temporarily disable and reach the menu.</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Hide Toolbar in Immersive Mode?</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Set to also hide the Toolbar in immersive mode</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle screen?</string>
@@ -468,6 +469,11 @@
     <string name="prefStopOnBackgroundTitle">EStop on Background?</string>
     <string name="prefStopOnBackgroundSummary">EStop all locos on all throttles when Engine Driver is pushed to background</string>
 
+    <string name="prefUseDispatchCommandTitle">Dispatch instead of Release</string>
+    <string name="prefUseDispatchCommandSummary">Use the WiThrottle \'d\'ispatch command instead of the \'r\'elease command when releasing a loco</string>
+    <string name="prefShowDispatchButtonTitle">Show Dispatch button</string>
+    <string name="prefShowDispatchButtonSummary">Show a button on the Select Loco Screen to use the WiThrottle \'d\'ispatch command instead of the \'r\'elease command when releasing a loco</string>
+
     <string name="prefStopOnReleaseTitle">Stop on Release?</string>
     <string name="prefStopOnReleaseSummary">Stop loco(s) when releasing from throttle</string>
     <string name="prefSwipeThroughRoutesTitle">Swipe through Routes?</string>
@@ -587,8 +593,8 @@
     <string name="prefStopButtonLongPressDelayDefaultValue" translatable="false">1500</string>  <!-- DO NOT TRANSLATE -->
 
 
-    <string name="PrefConnectToFirstServerTitle">Auto-Connect to WiThrottle Server?</string>
-    <string name="PrefConnectToFirstServerSummary">Connect automatically to \'first\' WiThrottle Server discovered</string>
+    <string name="PrefConnectToFirstServerTitle">Auto-Connect to Server?</string>
+    <string name="PrefConnectToFirstServerSummary">Connect automatically to \'first\' Server discovered</string>
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
     <string name="prefDisplayClockSummary">Set format for Fast Clock display in action bar</string>
     <string name="prefDisplayClockDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
@@ -1613,8 +1619,8 @@
     <string name="autoServerConnectTitle">Auto Server Connect</string>
     <string name="autoServerConnectLabel">Server name</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Get Current Server</string>
-    <string name="prefAutoServerConnectSummary">Automatically connect to a named server if discovered</string>
-    <string name="prefAutoServerConnectTitle">Auto connect to named server</string>
+    <string name="prefAutoServerConnectSummary">Connect automatically to a \'named\' server if discovered</string>
+    <string name="prefAutoServerConnectTitle">Auto-connect to named server</string>
 
     <string name="advancedConsistToolTitle">Advanced Consist Tool (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">Consist Address</string>
@@ -1664,7 +1670,8 @@
     <string name="cv29SpeedTableNo">Speed Table: Not used (uses CV 2,5 &amp; 6)</string>
     <string name="cv29SpeedTableYes">Speed Table: In use</string>
     <string name="cv29SpeedToggleDirection">Write a value of %d to CV29 to toggle the direction.</string>
-
+    <string name="cv29SpeedRailcomNo">Railcom: Disabled</string>
+    <string name="cv29SpeedRailcomYes">Railcom: Enabled</string>
 
     <string name="witHeadingCvProgrammerPoM">WiThrottle - Programming on Main (Operation mode)</string>
 
