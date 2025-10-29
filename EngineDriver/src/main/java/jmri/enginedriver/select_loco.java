@@ -171,15 +171,10 @@ public class select_loco extends AppCompatActivity {
     private String prefRosterFilter = "";
     EditText filterRosterText;
 
-    RelativeLayout dccAddressLayout;
     TextView dccAddressHelpText;
-    TextView rlRosterHeading;
-    RelativeLayout rlRosterHeaderGroup;
+    RelativeLayout rosterToolbarGroupLayout;
     TextView rlRosterEmpty;
-    LinearLayout rlRecentHeader;
-    LinearLayout rlRecentConsistsHeader;
-    LinearLayout llRecentConsists;
-    RelativeLayout rlIDnGo;
+
     RadioButton rbAddress;
     RadioButton rbRoster;
     RadioButton rbRecent;
@@ -206,8 +201,10 @@ public class select_loco extends AppCompatActivity {
     LinearLayout selectLocoMethodButtonsLayout;
     RadioGroup selectLocoMethodRadioButtonsGroup;
 
-    LinearLayout dispatchButtonLayout;
-    Button dispatchButton;
+    LinearLayout[] selectMethodLayouts = new LinearLayout[5];
+
+//    LinearLayout dispatchButtonLayout;
+//    Button dispatchButton;
 
     private int maxAddr = 9999;
 
@@ -351,12 +348,12 @@ public class select_loco extends AppCompatActivity {
             rosterListView.invalidateViews();
 
             View v = findViewById(R.id.roster_list_heading);
-            if (prefSelectLocoMethod.equals(select_loco_method_type.ROSTER)) v.setVisibility(View.VISIBLE);  // only show it if 'roster' is the currently selected method
+            if (prefSelectLocoMethod.equals(select_loco_method_type.ROSTER)) v.setVisibility(VISIBLE);  // only show it if 'roster' is the currently selected method
 
             v = findViewById(R.id.filter_roster_text);
-            v.setVisibility(View.VISIBLE);
+            v.setVisibility(VISIBLE);
 
-            rosterListView.setVisibility(View.VISIBLE);
+            rosterListView.setVisibility(VISIBLE);
 
             v = findViewById(R.id.roster_list_empty);
             v.setVisibility(GONE);
@@ -380,7 +377,7 @@ public class select_loco extends AppCompatActivity {
             v = findViewById(R.id.roster_list);
             v.setVisibility(GONE);
             v = findViewById(R.id.roster_list_empty);
-            v.setVisibility(View.VISIBLE);
+            v.setVisibility(VISIBLE);
         } // if roster_entries not null
 
         rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
@@ -421,8 +418,11 @@ public class select_loco extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     void checkValidMethod(String whichMethod) {
-        Log.d(threaded_application.applicationName, activityName + ": checkValidMethod()");
+        Log.d(threaded_application.applicationName, activityName + ": checkValidMethod(): " + whichMethod);
         prefSelectLocoMethod = whichMethod;
+
+        int val = Integer.parseInt(whichMethod);
+        if ( (val<0) || (val>5) ) prefSelectLocoMethod = select_loco_method_type.ADDRESS;
 
         if (prefSelectLocoMethod.equals(select_loco_method_type.FIRST)) {
             if ((mainapp.rosterJmriWeb != null) && (!mainapp.rosterJmriWeb.isEmpty())) {
@@ -446,7 +446,7 @@ public class select_loco extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": setLabels()");
 
         refreshRosterList();
-        showMethod(prefSelectLocoMethod);
+//        showMethod(prefSelectLocoMethod);
 
         boolean prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName",
                 getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
@@ -464,18 +464,18 @@ public class select_loco extends AppCompatActivity {
 
         ImageButton dispatchButton1 = findViewById(R.id.dispatch_button1);
         dispatchButton1.setOnClickListener(new DispatchButtonListener(whichThrottle));
-        dispatchButton1.setVisibility(prefShowDispatchButton ? View.VISIBLE : View.GONE);
+        dispatchButton1.setVisibility(prefShowDispatchButton ? VISIBLE : GONE);
         LinearLayout dispatchButtonLayout1 = findViewById(R.id.dispatch_button_layout1);
-        dispatchButtonLayout1.setVisibility(prefShowDispatchButton ? View.VISIBLE : View.GONE);
+        dispatchButtonLayout1.setVisibility(prefShowDispatchButton ? VISIBLE : GONE);
 
         Button releaseButton0 = findViewById(R.id.release_button0);
-        releaseButton0.setVisibility(View.GONE);
+        releaseButton0.setVisibility(GONE);
         ImageButton releaseButton1 = findViewById(R.id.release_button1);
-        releaseButton1.setVisibility(View.GONE);
+        releaseButton1.setVisibility(GONE);
 
         LinearLayout [] consistOptionsLayout = new LinearLayout[2];
-        consistOptionsLayout[0] = findViewById(R.id.currentl_locos_options_layout0);
-        consistOptionsLayout[1] = findViewById(R.id.currentl_locos_options_layout1);
+        consistOptionsLayout[0] = findViewById(R.id.current_locos_options_layout0);
+        consistOptionsLayout[1] = findViewById(R.id.current_locos_options_layout1);
 
         LinearLayout [] llEditConsist = new LinearLayout[2];
         llEditConsist[0] = findViewById(R.id.edit_consist_layout0);
@@ -488,22 +488,22 @@ public class select_loco extends AppCompatActivity {
 
         for (int i = 0; i < 2; i++) {
             currentLocosLayout[i].setVisibility(GONE);
-            consistOptionsLayout[i].setVisibility(View.GONE);
+            consistOptionsLayout[i].setVisibility(GONE);
             llEditConsist[i].setVisibility(GONE);
         }
 
         int showIndex = prefSelectLocoByRadioButtons ? 0 : 1;
 
-        if (showIndex == 0 ) releaseButton0.setVisibility(View.VISIBLE);
-        else releaseButton1.setVisibility(View.VISIBLE);
+        if (showIndex == 0 ) releaseButton0.setVisibility(VISIBLE);
+        else releaseButton1.setVisibility(VISIBLE);
 
-        consistOptionsLayout[showIndex].setVisibility(View.VISIBLE);
+        consistOptionsLayout[showIndex].setVisibility(VISIBLE);
 
         if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
             currentLocosLayout[showIndex].setVisibility(VISIBLE);
 
             if (mainapp.consists[whichThrottle].size() > 1) {
-                llEditConsist[showIndex].setVisibility(View.VISIBLE);
+                llEditConsist[showIndex].setVisibility(VISIBLE);
             }
             String vLabel = mainapp.consists[whichThrottle].toString();
             if (prefShowAddressInsteadOfName) { // show the DCC Address instead of the loco name if the preference is set
@@ -570,7 +570,7 @@ public class select_loco extends AppCompatActivity {
     void adjustCurrentLocosListTextViewWidth() {
         TextView textView = findViewById(R.id.current_locos_text);
         LinearLayout consistButtonlayout = findViewById(R.id.consist_buttons_layout1);
-        LinearLayout consistOptionsLayout = findViewById(R.id.currentl_locos_options_layout1);
+        LinearLayout consistOptionsLayout = findViewById(R.id.current_locos_options_layout1);
         int bWidth = consistButtonlayout.getWidth() - consistOptionsLayout.getWidth();
         if (bWidth>0) {
             textView.getLayoutParams().width = bWidth;
@@ -884,7 +884,7 @@ public class select_loco extends AppCompatActivity {
                             }
 
 //                            detailsRosterImageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
-                            detailsRosterImageView.setVisibility(View.VISIBLE);
+                            detailsRosterImageView.setVisibility(VISIBLE);
                             detailsRosterImageView.invalidate();
                             newRosterImageSelected = true;
                             hasLocalRosterImage = true;
@@ -1031,7 +1031,7 @@ public class select_loco extends AppCompatActivity {
                 };
                 Collections.sort(recentLocosList, comparator);
 
-                rbRecent.setVisibility(View.VISIBLE);
+                rbRecent.setVisibility(VISIBLE);
             }
         }
         recentListAdapter.notifyDataSetChanged();
@@ -1105,7 +1105,7 @@ public class select_loco extends AppCompatActivity {
                 };
                 Collections.sort(recentConsistsList, comparator);
 
-                myRadioButton.setVisibility(View.VISIBLE);
+                myRadioButton.setVisibility(VISIBLE);
             }
         }
 
@@ -1896,6 +1896,9 @@ public class select_loco extends AppCompatActivity {
         button.setOnClickListener(new DeviceSoundsButtonListener(this));
         imageButton = findViewById(R.id.device_sounds_button1);
         imageButton.setOnClickListener(new DeviceSoundsButtonListener(this));
+        boolean prefLocoSelectHideIplsButton = prefs.getBoolean("prefLocoSelectHideIplsButton", false);
+        LinearLayout deviceSoundsButtonLayout1 = findViewById(R.id.device_sounds_button_layout1);
+        deviceSoundsButtonLayout1.setVisibility(prefLocoSelectHideIplsButton ? GONE : VISIBLE);
 
         rbAddress = findViewById(R.id.select_loco_method_address_button);
         rbRoster = findViewById(R.id.select_loco_method_roster_button);
@@ -1946,17 +1949,18 @@ public class select_loco extends AppCompatActivity {
 
 //*********
 
-        dccAddressLayout = findViewById(R.id.dcc_address_layout);
+        selectMethodLayouts[0] = findViewById(R.id.dcc_address_layout_group);
         dccAddressHelpText = findViewById(R.id.dcc_address_help_text);
 
-        rlRosterHeading = findViewById(R.id.roster_list_heading);
-        rlRosterHeaderGroup = findViewById(R.id.roster_list_header_group);
-//        rlRosterEmpty = findViewById(R.id.roster_list_empty_group);
+        selectMethodLayouts[1] = findViewById(R.id.roster_list_layout_group);
+        rosterToolbarGroupLayout = findViewById(R.id.roster_list_toolbar_group_layout);
         rlRosterEmpty = findViewById(R.id.roster_list_empty);
-        rlRecentHeader = findViewById(R.id.recent_locos_list_header_group);
-        rlRecentConsistsHeader = findViewById(R.id.consists_list_header_group);
-        llRecentConsists = findViewById(R.id.consists_list_wrapper);
-        rlIDnGo = findViewById(R.id.idngo_group);
+
+        selectMethodLayouts[2] = findViewById(R.id.recent_locos_layout_group);
+
+        selectMethodLayouts[3] = findViewById(R.id.consists_list_layout_group);
+
+        selectMethodLayouts[4] = findViewById(R.id.idngo_layout_group);
 
         // setup the download button
         rosterDownloadButton = findViewById(R.id.roster_download);
@@ -1998,15 +2002,14 @@ public class select_loco extends AppCompatActivity {
 
         prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", getResources().getBoolean(R.bool.prefSelectLocoByRadioButtonsDefaultValue));
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", select_loco_method_type.FIRST);
-        showMethod(prefSelectLocoMethod);
 
         if (mainapp.isDCCEX) maxAddr = 10239;  // DCC-EX supports the full range
 
-        setLabels();
         overrideThrottleName = "";
 
+        setLabels();
         Handler handler = new Handler();
-        handler.postDelayed(showMethodTask, 500);  // show or hide the soft keyboard after a short delay
+        handler.postDelayed(showMethodTask, 500);  // show or hide the correct panel after a short delay   Needed due to timing issues
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -2031,45 +2034,41 @@ public class select_loco extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
-        Log.d(threaded_application.applicationName, activityName + ": showMethod()");
+        Log.d(threaded_application.applicationName, activityName + ": showMethod(): "  + whichMethod);
         checkValidMethod(whichMethod);
 
         selectLocoMethodRadioButtonsGroup.setVisibility(prefSelectLocoByRadioButtons ? VISIBLE : GONE);
         selectLocoMethodButtonsLayout.setVisibility(prefSelectLocoByRadioButtons ? GONE : VISIBLE);
 //        selectLocoMethodSpinner.setVisibility(prefSelectLocoByRadioButtons ? GONE : VISIBLE);
 
-
         if (mainapp.supportsIDnGo()) {
-            rbIDnGo.setVisibility(View.VISIBLE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(View.VISIBLE);
+            rbIDnGo.setVisibility(VISIBLE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(VISIBLE);
         } else {
             rbIDnGo.setVisibility(GONE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(View.GONE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(GONE);
         }
 
         if (mainapp.supportsRoster()) {
-            rbRoster.setVisibility(View.VISIBLE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(View.VISIBLE);
+            rbRoster.setVisibility(VISIBLE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(VISIBLE);
         } else {
             rbRoster.setVisibility(GONE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(View.GONE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(GONE);
         }
 
-        selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_LOCOS)-1].setVisibility(!importExportPreferences.recentLocoAddressList.isEmpty() ? View.VISIBLE : View.GONE);
-        selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_CONSISTS)-1].setVisibility(!recentConsistsList.isEmpty() ? View.VISIBLE : View.GONE);
+        selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_LOCOS)-1].setVisibility(!importExportPreferences.recentLocoAddressList.isEmpty() ? VISIBLE : GONE);
+        selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_CONSISTS)-1].setVisibility(!recentConsistsList.isEmpty() ? VISIBLE : GONE);
 
         // hide everything by default then show only what is actually needed
-        dccAddressLayout.setVisibility(View.GONE);
-        dccAddressHelpText.setVisibility(View.GONE);
-        rlRosterHeading.setVisibility(GONE);
-        rlRosterHeaderGroup.setVisibility(GONE);
+        for (int i=0; i<=4; i++) {
+            selectMethodLayouts[i].setVisibility(GONE);
+        }
+        dccAddressHelpText.setVisibility(GONE);
+        rosterToolbarGroupLayout.setVisibility(GONE);
         rosterListView.setVisibility(GONE);
         rlRosterEmpty.setVisibility(GONE);
-        rlRecentHeader.setVisibility(GONE);
         recentListView.setVisibility(GONE);
-        rlRecentConsistsHeader.setVisibility(GONE);
-        llRecentConsists.setVisibility(GONE);
-        rlIDnGo.setVisibility(GONE);
 
         rbAddress.setChecked(false);
         rbRoster.setChecked(false);
@@ -2081,12 +2080,13 @@ public class select_loco extends AppCompatActivity {
             selectMethodButton[i].setSelected(false);
         }
 
+        // now show what is needed
         switch (prefSelectLocoMethod) {
-            case select_loco_method_type.ROSTER: {
-                rlRosterHeading.setVisibility(View.VISIBLE);
-                rlRosterHeaderGroup.setVisibility(!mainapp.rosterFullList.isEmpty() ? VISIBLE : View.GONE);
-                rosterListView.setVisibility(View.VISIBLE);
-                rlRosterEmpty.setVisibility(!mainapp.rosterFullList.isEmpty() ? View.GONE : View.VISIBLE);
+            case select_loco_method_type.ROSTER:
+                selectMethodLayouts[1].setVisibility(VISIBLE);
+                rosterToolbarGroupLayout.setVisibility(!mainapp.rosterFullList.isEmpty() ? VISIBLE : GONE);
+                rosterListView.setVisibility(VISIBLE);
+                rlRosterEmpty.setVisibility(!mainapp.rosterFullList.isEmpty() ? GONE : VISIBLE);
                 rbRoster.setChecked(true);
                 selectMethodButton[1].setSelected(true);
                 rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
@@ -2095,43 +2095,42 @@ public class select_loco extends AppCompatActivity {
                     mainapp.safeToastInstructional(R.string.toastRosterHelp, Toast.LENGTH_LONG);
                     mainapp.shownToastRoster = true;
                 }
-                mainapp.hideSoftKeyboard(rbAddress, activityName);
+                mainapp.hideSoftKeyboard(selectMethodButton[1], activityName);
                 break;
-            }
-            case select_loco_method_type.RECENT_LOCOS: {
-                rlRecentHeader.setVisibility(View.VISIBLE);
-                recentListView.setVisibility(View.VISIBLE);
+
+            case select_loco_method_type.RECENT_LOCOS:
+                selectMethodLayouts[2].setVisibility(VISIBLE);
+                recentListView.setVisibility(VISIBLE);
                 rbRecent.setChecked(true);
                 selectMethodButton[2].setSelected(true);
                 mainapp.shownToastRecentLocos = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentLocos);
-                mainapp.hideSoftKeyboard(rbAddress, activityName);
+                mainapp.hideSoftKeyboard(selectMethodButton[2], activityName);
                 break;
-            }
-            case select_loco_method_type.RECENT_CONSISTS: {
-                rlRecentConsistsHeader.setVisibility(View.VISIBLE);
-                llRecentConsists.setVisibility(View.VISIBLE);
+
+            case select_loco_method_type.RECENT_CONSISTS:
+                selectMethodLayouts[3].setVisibility(VISIBLE);
                 rbRecentConsists.setChecked(true);
                 selectMethodButton[3].setSelected(true);
                 mainapp.shownToastRecentConsists = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentConsistsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentConsists);
-                mainapp.hideSoftKeyboard(rbAddress, activityName);
+                mainapp.hideSoftKeyboard(selectMethodButton[3], activityName);
                 break;
-            }
-            case select_loco_method_type.IDNGO: {
-                rlIDnGo.setVisibility(View.VISIBLE);
+
+            case select_loco_method_type.IDNGO:
+                selectMethodLayouts[4].setVisibility(VISIBLE);
                 rbIDnGo.setChecked(true);
                 selectMethodButton[4].setSelected(true);
-                mainapp.hideSoftKeyboard(rbAddress, activityName);
+                mainapp.hideSoftKeyboard(selectMethodButton[4], activityName);
                 break;
-            }
+
             case select_loco_method_type.ADDRESS:
-            default: {
-                dccAddressLayout.setVisibility(View.VISIBLE);
-                dccAddressHelpText.setVisibility(View.VISIBLE);
+            default:
+                selectMethodLayouts[0].setVisibility(VISIBLE);
+                dccAddressHelpText.setVisibility(VISIBLE);
                 rbAddress.setChecked(true);
                 selectMethodButton[0].setSelected(true);
-                mainapp.hideSoftKeyboard(dccAddressLayout, activityName);
+                mainapp.hideSoftKeyboard(selectMethodLayouts[0], activityName);
                 break;
-            }
+
         }
 
         if (selectLocoMethodSpinner != null) { // may not be found yet

@@ -517,7 +517,10 @@
     <string name="LocoSelectMethodRoster">Server Roster</string>
     <string name="LocoSelectMethodRecent">Recent Locos</string>
     <string name="LocoSelectMethodRecentConsist">Recent Consists</string>
-    <string name="LocoSelectMethodHelp" tools:ignore="Typos">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by clicking one of the radio buttons above.</string>
+    <string name="LocoSelectMethodHelp" tools:ignore="Typos">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by clicking one of the buttons above.</string>
+
+    <string name="prefLocoSelectHideIplsButtonTitle">Hide the Loco Sounds button</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Hide the Loco Phone Loco Sounds button in the Select Loco Screen</string>
 
     <string name="prefMaximumRecentLocosTitle">Maximum Recent Locos</string>
     <string name="prefMaximumRecentLocosDefaultValue" translatable="false">20</string>  <!-- DO NOT TRANSLATE -->
