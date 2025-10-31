@@ -1,0 +1,542 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string-array name="address_size_defaultsEntries">
+        <item>短的</item>
+        <item>长的</item>
+        <item>汽车</item>
+    </string-array>
+    <string-array name="address_size">
+        <item>短的</item>
+        <item>长的</item>
+    </string-array>
+    <string-array name="DisplaySpeedUnitsEntries">
+        <item>百分比</item>
+        <item>自动速度步</item>
+        <item>8个步骤</item>
+        <item>10个步骤</item>
+        <item>14个步骤</item>
+        <item>28步</item>
+        <item>128步</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">
+        <item>百分比</item>
+        <item>8个步骤</item>
+        <item>28步</item>
+        <item>128步</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleOtherSlidersEntries">
+        <item>百分比</item>
+        <item>2 步</item>
+        <item>3个步骤</item>
+        <item>4个步骤</item>
+        <item>5个步骤</item>
+        <item>6个步骤</item>
+        <item>7个步骤</item>
+        <item>8个步骤</item>
+        <item>9个步骤</item>
+    </string-array>
+    <string-array name="WebViewLocationEntries">
+        <item>没有任何</item>
+        <item>顶部</item>
+        <item>底部</item>
+    </string-array>
+    <string-array name="OrientationEntries">
+        <item>肖像</item>
+        <item>景观</item>
+        <item>自动旋转</item>
+        <item>自动网络</item>
+    </string-array>
+    <string-array name="NumOfThrottlesEntries">
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+        <item>四</item>
+        <item>五</item>
+        <item>六</item>
+    </string-array>
+    <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->
+        <item tools:ignore="TypographyDashes">水平（1-3）</item>
+        <item>垂直 - (2)</item>
+        <item>大按钮 - 左侧 (1)</item>
+        <item>大按钮 - 右侧 (1)</item>
+        <item>垂直 - 左 (1)</item>
+        <item>垂直 - 右 (1)</item>
+        <item>垂直切换（2）</item>
+        <item>垂直切换 - 左侧 (1)</item>
+        <item>垂直切换 - 右 (1)</item>
+        <item tools:ignore="TypographyDashes">水平切换（1-3）</item>
+        <item tools:ignore="TypographyDashes">简单（1-6）（推荐使用平板电脑）</item>
+        <item tools:ignore="TypographyDashes">平板电脑切换至左侧（1-6）</item>
+        <item tools:ignore="TypographyDashes">平板电脑垂直左侧（1-6）</item>
+        <item>半现实主义左派（1）</item>
+    </string-array>
+    <string-array name="DisplayClockEntries">
+        <item>没有任何</item>
+        <item>12 小时制</item>
+        <item>24小时制</item>
+    </string-array>
+
+
+
+
+
+    <string-array name="prefGamePadKeyEntries">
+        <item>全部停止</item>
+        <item>停止</item>
+        <item>向前</item>
+        <item>撤销</item>
+        <item>前进/后退切换</item>
+        <item>提高速度</item>
+        <item>降低速度</item>
+        <item>限速</item>
+        <item>暂停</item>
+        <item>下一节油门</item>
+        <item>功能 00/灯光</item>
+        <item>功能 01/铃声</item>
+        <item>功能 02/喇叭</item>
+        <item>功能 03</item>
+        <item>功能 04</item>
+        <item>功能 05</item>
+        <item>功能 06</item>
+        <item>功能 07</item>
+        <item>功能 08</item>
+        <item>功能 09</item>
+        <item>功能 10</item>
+        <item>功能 11</item>
+        <item>功能 12</item>
+        <item>功能 13</item>
+        <item>功能 14</item>
+        <item>功能 15</item>
+        <item>功能 16</item>
+        <item>功能 17</item>
+        <item>功能 18</item>
+        <item>功能 19</item>
+        <item>功能 20</item>
+        <item>功能 21</item>
+        <item>功能 22</item>
+        <item>功能 23</item>
+        <item>功能 24</item>
+        <item>功能 25</item>
+        <item>功能 26</item>
+        <item>功能 27</item>
+        <item>功能 28</item>
+        <item>功能 29</item>
+        <item>功能 30</item>
+        <item>功能 31</item>
+        <item>静音（IPLS）</item>
+        <item>贝尔（IPLS）</item>
+        <item>号角（IPLS）</item>
+        <item>霍恩·肖特（IPLS）</item>
+        <item>当前通话速度（IPLS）</item>
+        <item>中性的</item>
+        <item>加大刹车力度</item>
+        <item>降低刹车</item>
+        <item>增加负载</item>
+        <item>降低负荷</item>
+    </string-array>
+
+
+
+
+
+    <string-array name="prefThemeEntries">
+        <item>原装（花纹板）</item>
+        <item>标准</item>
+        <item>高对比度轮廓</item>
+        <item>黑暗的</item>
+        <item>丰富多彩的</item>
+        <item>霓虹蓝</item>
+    </string-array>
+    <string-array name="prefSelectedLocoIndicatorEntries">
+        <item>无（仅使用“v”、“1”）</item>
+        <item>音量和游戏手柄 1</item>
+        <item>仅限游戏手柄 1</item>
+    </string-array>
+    <string-array name="prefAccelerometerShakeEntries">
+        <item>没有任何</item>
+        <item>隐藏网页视图（需要启用“限制网页视图”首选项）</item>
+        <item>锁定和调暗屏幕</item>
+        <item>屏幕昏暗</item>
+        <item>Next Throttle - 音量按钮</item>
+        <item>全部停止</item>
+        <item>紧急停止</item>
+    </string-array>
+    <string-array name="prefTtsWhenEntries">
+        <item>没有任何</item>
+        <item>仅限重要事件</item>
+    </string-array>
+    <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>隐藏网页视图（需要启用“限制网页视图”首选项）</item>
+        <item>锁定和调暗屏幕</item>
+        <item>屏幕昏暗</item>
+        <item>沉浸模式临时启用/禁用</item>
+        <item>切换油门屏幕布局</item>
+        <item>增加/降低机车速度</item>
+        <item>Next Throttle（音量）</item>
+    </string-array>
+    <string-array name="prefImportExportEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>出口</item>
+        <item>进口</item>
+        <item>重置</item>
+    </string-array>
+    <string-array name="prefLocaleEntries">  <!-- display version -->
+        <item>使用手机的全局设置</item>
+        <item>英语（美国）- 引擎驱动程序的默认值</item>
+        <item>英语（澳大利亚）</item>
+        <item>英语（加拿大）</item>
+        <item>英语（新西兰）</item>
+        <item>英语（英国）</item>
+        <item>意大利语</item>
+        <item>葡萄牙语</item>
+        <item>德语</item>
+        <item>西班牙语</item>
+        <item>加泰罗尼亚语</item>
+        <item>法语</item>
+        <item>法语（加拿大）</item>
+        <item>捷克语</item>
+        <item>日本人</item>
+        <item>中国人</item>
+    </string-array>
+    <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
+        <item>简单文本匹配（原文）</item>
+        <item>复杂文本匹配 - 主匹配始终激活，追踪匹配遵循以下规则</item>
+        <item>特殊精确 - 如果与功能标签完全匹配，则激活“引导”和“所有路径”功能。</item>
+        <item>特殊部分 - 如果导数和尾数部分匹配功能标签，则激活导数和尾数</item>
+        <item>特殊部分包含 - 仅当函数标签包含默认标签时激活</item>
+    </string-array>
+    <string-array name="prefConsistFollowEntries">  <!-- display version -->
+        <item>领头机车 - 部分匹配</item>
+        <item>Lead+Trail Locos - 部分匹配</item>
+        <item>所有机车 - 部分匹配</item>
+        <item>领航机车 - 完全匹配</item>
+        <item>Lead+Trail Locos - 完全匹配</item>
+        <item>所有机车 - 完全匹配</item>
+    </string-array>
+    <string-array name="prefConsistFollowDefaultActionEntries">  <!-- display version -->
+        <item>什么都不做</item>
+        <item>领头机车 - 功能编号相同</item>
+        <item>领航机车+尾机车 - 功能相同</item>
+        <item>所有机车 - 功能编号相同</item>
+    </string-array>
+    <string-array name="prefKidsTimerEntries">  <!-- display version -->
+        <item>已禁用</item>
+        <item>1分钟</item>
+        <item>2分钟</item>
+        <item>3分钟</item>
+        <item>4分钟</item>
+        <item>5分钟</item>
+        <item>10分钟</item>
+        <item>运行完成</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="prefGamePadFlydigiWee2Labels">
+        <item>0</item>
+        <item>按钮选择操作</item>
+        <item>按钮方向键上操作</item>
+        <item>按钮方向键向下操作</item>
+        <item>按钮 DPAD 左操作</item>
+        <item>右方向键</item>
+        <item>按钮开始操作</item>
+        <item>按钮 X 操作</item>
+        <item>按钮 Y 操作</item>
+        <item>按钮 A 操作</item>
+        <item>按钮 B 操作</item>
+        <item>左肩</item>
+        <item>右肩</item>
+        <item>左扳机</item>
+        <item>右扳机</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="prefGamePadMocuteLabels">
+        <item>0</item>
+        <item>按钮选择（如果存在）操作</item>
+        <item>方向键上操作</item>
+        <item>方向键下压动作</item>
+        <item>DPAD 左键操作</item>
+        <item>方向键右键</item>
+        <item>按钮开始操作</item>
+        <item>按钮 X [iOS] 操作</item>
+        <item>按钮 Y [三角] 操作</item>
+        <item>按钮 A [十字] 操作</item>
+        <item>按钮 B [@] 操作</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="prefGamePadMagicseeR1Labels">
+        <item>0</item>
+        <item>按钮 OK（正面上方）</item>
+        <item>按钮方向键上操作</item>
+        <item>按钮方向键向下操作</item>
+        <item>按钮 DPAD 左操作</item>
+        <item>右方向键</item>
+        <item>返回按钮（前下方）</item>
+        <item>按钮 C 操作</item>
+        <item>按钮 D 操作</item>
+        <item>按钮 A 操作</item>
+        <item>按钮 B 操作</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="prefGamePadNoneLabels">
+        <item>0</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>按钮不可用</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="prefEsuMc2KeyEntries"> <!-- display version -->
+        <item>（无功能）</item>
+        <item>全部停止</item>
+        <item>停止</item>
+        <item>向前</item>
+        <item>撤销</item>
+        <item>前进/后退切换</item>
+        <item>提高速度</item>
+        <item>降低速度</item>
+        <item>下一节油门</item>
+        <item>功能 00/灯光</item>
+        <item>功能 01/铃声</item>
+        <item>功能 02/喇叭</item>
+        <item>功能 03</item>
+        <item>功能 04</item>
+        <item>功能 05</item>
+        <item>功能 06</item>
+        <item>功能 07</item>
+        <item>功能 08</item>
+        <item>功能 09</item>
+        <item>功能 10</item>
+        <item>功能 11</item>
+        <item>功能 12</item>
+        <item>功能 13</item>
+        <item>功能 14</item>
+        <item>功能 15</item>
+        <item>功能 16</item>
+        <item>功能 17</item>
+        <item>功能 18</item>
+        <item>功能 19</item>
+        <item>功能 20</item>
+        <item>功能 21</item>
+        <item>功能 22</item>
+        <item>功能 23</item>
+        <item>功能 24</item>
+        <item>功能 25</item>
+        <item>功能 26</item>
+        <item>功能 27</item>
+        <item>功能 28</item>
+        <item>功能 29</item>
+        <item>功能 30</item>
+        <item>功能 31</item>
+    </string-array>
+    <string-array name="prefAutoImportExportEntries"> <!-- display version -->
+        <item>没有任何</item>
+        <item>连接/断开连接时自动导入/导出</item>
+        <item>仅连接时自动导入</item>
+    </string-array>
+    <string-array name="prefTtsThrottleResponseEntries"> <!-- display version -->
+        <item>没有任何</item>
+        <item>风门</item>
+        <item>油门 + 机车</item>
+        <item>油门 + 速度</item>
+        <item>油门 + 机车 + 速度</item>
+    </string-array>
+    <string-array name="prefYesNoEntries"> <!-- display version -->
+        <item>是的</item>
+        <item>不</item>
+    </string-array>
+    <string-array name="prefYesNoAutoEntries"> <!-- display version -->
+        <item>是的</item>
+        <item>不</item>
+        <item>汽车</item>
+    </string-array>
+    <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
+        <item>合身度 - 收缩/膨胀</item>
+        <item>填充 - 裁剪一对边缘</item>
+        <item>中心 - 无缩放</item>
+        <item>合身 - 仅缩水</item>
+        <item>填充 - 必要时进行扭曲</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <item>领头机车</item>
+        <item>Lead+Trail Locos</item>
+        <item>所有机车</item>
+        <item>Trail Loco</item>
+    </string-array>
+    <string-array name="prefFunctionConsistLatchingEntries">  <!-- display version -->
+        <item>锁存</item>
+        <item>未锁紧</item>
+    </string-array>
+    <string-array name="prefHapticFeedbackEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>滑块 - 每一步</item>
+        <item>滑块 - 跳过第 28、100、128 步</item>
+    </string-array>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string-array name="dccExActionTypeEntries">  <!-- display version -->
+        <item>编程轨道（服务模式）</item>
+        <item>主程序（操作模式）</item>
+        <item>赛道/区域经理</item>
+    </string-array>
+    <string-array name="dccExTrackTypeEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>DCC 主控系统</item>
+        <item>DCC 主控系统</item>
+        <item>DCC 主控系统</item>
+        <item>直流反极性</item>
+        <item>自动 - 自动反转 DCC 主控</item>
+        <item>外部（不可选）</item>
+        <item>增强（不可选）</item>
+    </string-array>
+    <string-array name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>3 个解码器制动级别</item>
+    </string-array>
+    <string-array name="prefEsuMc2SliderTypeEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>3 个解码器制动级别</item>
+        <item>屏幕亮度</item>
+        <item>使用半真实油门设置</item>
+    </string-array>
+    <string-array name="deviceSoundsEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>通用蒸汽（快速）</item>
+        <item>通用蒸汽（慢速）</item>
+        <item>蒸汽（64型）</item>
+        <item>蒸汽（94型）</item>
+        <item>柴油机（EMD 645 涡轮增压）</item>
+        <item>柴油机（GE 7FDL）</item>
+        <item>柴油机（EMD NW2）</item>
+    </string-array>
+    <string-array name="WebOrientationEntries">  <!-- display version -->
+        <item>肖像</item>
+        <item>景观</item>
+        <item>自动旋转</item>
+    </string-array>
+    <string-array name="prefGamePadDoublePressStopEntries">  <!-- display version -->
+        <item>（无功能）</item>
+        <item>全部停止</item>
+        <item>前进/后退切换</item>
+    </string-array>
+    <string-array name="prefTtsThrottleSpeedEntries">  <!-- display version -->
+        <item>没有任何</item>
+        <item>零和最大</item>
+        <item>零和（最大速度）</item>
+    </string-array>
+    <string-array name="prefDccexConnectionOptionsEntries">
+        <item>DCC-EX</item>
+        <item>WiThrottle</item>
+        <item>汽车</item>
+    </string-array>
+    <string-array name="prefAppIconActionEntries">
+        <item>没有任何</item>
+        <item>紧急停止</item>
+        <item>油门页面</item>
+    </string-array>
+    <string-array name="prefSortOrderEntries">  <!-- display version -->
+        <item>姓名</item>
+        <item>ID</item>
+        <item>位置</item>
+    </string-array>
+    <string-array name="selectLocoMethodEntries">  <!-- display version -->
+        <item>DCC地址</item>
+        <item>服务器名册</item>
+        <item>近期机车</item>
+        <item>近期组成</item>
+        <item>请求 Loco ID</item>
+    </string-array>
+    <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
+        <item>汽车</item>
+        <item>小的</item>
+        <item>大的</item>
+    </string-array>
+
+</resources>

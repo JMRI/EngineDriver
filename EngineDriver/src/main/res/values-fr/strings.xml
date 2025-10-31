@@ -1255,4 +1255,13 @@
     <string name="prefUseDispatchCommandSummary">Utilisez la commande WiThrottle \'d\'ispatch au lieu de la commande \'r\'elease lors de la libération d\'une locomotive</string>
     <string name="prefShowDispatchButtonTitle">Afficher le bouton d\'envoi</string>
     <string name="prefShowDispatchButtonSummary">Afficher un bouton sur l\'écran Sélectionner une locomotive pour utiliser la commande WiThrottle \'d\'ispatch au lieu de la commande \'r\'elease lors de la libération d\'une locomotive</string>
+
+    <string name="advancedConsistToolTitle">Outil de composition avancé (CV19)</string>
+    <string name="advancedConsistToolConsistAddressLabel">Adresse de composition</string>
+    <string name="advancedConsistToolLocoAddressLabel">Adresse Loco</string>
+    <string name="advancedConsistToolLocoFacingLabel">Faire face à l\'avant ?</string>
+    <string name="advancedConsistToolAddButtonLabel">Ajouter</string>
+    <string name="advancedConsistToolRemoveButtonLabel">Retirer</string>
+    <string name="advancedConsistToolButtonLabel">Constituants avancés</string>
+
 </resources>

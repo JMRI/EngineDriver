@@ -219,6 +219,7 @@
         <item>Français (Canada)</item>
         <item>Tchèque</item>
         <item>Japonais</item>
+        <item>Chinois</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
