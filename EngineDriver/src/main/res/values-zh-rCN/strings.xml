@@ -1,0 +1,1348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      Copyright (C) M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, TypographyDashes, TypographyEllipsis">
+    <string name="exit">退出</string>
+    <string name="functionDefaultSettings">功能默认设置</string>
+    <string name="functionConsistSettings">编组功能设置</string>
+    <string name="dccExFunctionSettings">DCC-EX功能设置</string>
+    <string name="functionLatchingSettings">功能锁定设置</string>
+    <string name="fb_column_label">标签</string>
+    <string name="fb_column_function">功能#</string>
+    <string name="introMenu">介绍/设置向导</string>
+
+    <string name="functionConsistColumnLabel">标签</string>
+    <string name="functionConsistColumnLocos">机车</string>
+    <string name="prefFunctionConsistLocosDefaultValue">带领</string>
+    <string name="functionConsistHelpText">用于：\na) "特殊"编组功能跟随选项。
+b) 非花名册机车。
+
+对于"a"，选择每个功能的文本如何在编组中每个机车的功能标签中搜索。</string>
+    <string name="functionConsistHeader">功能操作</string>
+
+    <string name="app_description">Engine Driver - 安卓手机控制器。此应用可连接到JMRI、DCC-EX、MRC或DigiTrax WiThrottle服务器，或DCC-EX原生服务器，进而控制您的机车。支持1至6台机车的速度、方向和多达32个DCC功能。</string>
+    <string name="app_name_intro">介绍</string>
+    <string name="app_name_connect">连接服务器</string>
+    <string name="app_name_throttle">控制器</string>
+    <string name="app_name_throttle_long">Engine Driver - 控制器</string>
+    <string name="app_name_throttle_short">控制器</string>
+    <string name="app_name_power_control">电源控制</string>
+    <string name="app_name_withrottle_cv_programmer">CV编程（主轨）</string>
+    <string name="app_name_reconnect_status">重连状态</string>
+    <string name="app_name_reconnect_status_long">Engine Driver - 重连状态</string>
+    <string name="app_name_routes">路线</string>
+    <string name="app_name_routes_long">Engine Driver - 路线</string>
+    <string name="app_name_routes_short">路线</string>
+    <string name="app_name_turnouts">Engine Driver - 道岔</string>
+    <string name="app_name_turnouts_short">道岔</string>
+    <string name="app_name_about">❔关于</string>
+    <string name="app_name_functions">默认功能设置</string>
+    <string name="app_name_consist_functions">编组功能设置</string>
+    <string name="app_name_preferences">偏好设置</string>
+    <string name="app_name_select_loco">选择/释放机车</string>
+    <string name="app_name_ConsistEdit">编组编辑</string>
+    <string name="app_name_ConsistLightsEdit">编组灯光</string>
+    <string name="app_name_gamepad_test">游戏手柄/USB测试</string>
+    <string name="app_name_log_viewer">日志查看器</string>
+    <string name="app_name_device_sounds_settings">手机机车声音</string>
+    <string name="gamepad_test_menu">≡ 游戏手柄/USB</string>
+    <string name="gamepad_test_reset">游戏手柄/USB完全重置</string>
+    <string name="gamepad1_test">游戏手柄/USB 1测试</string>
+    <string name="gamepad2_test">游戏手柄/USB 2测试</string>
+    <string name="gamepad3_test">游戏手柄/USB 3测试</string>
+
+    <string name="notificationInBackgroundTitle">后台引擎驱动程序</string>
+    <string name="notificationInBackgroundText">Android 系统可能会随时终止程序，恕不另行通知。点击重新打开</string>
+    <string name="notificationInBackgroundTextLowMemory">内存不足。Engine Driver 进程可能很快会被终止。点击重新打开</string>
+    <string name="notificationInBackgroundTextKilled">内存耗尽。引擎驱动程序已被终止</string>
+    <string name="notificationAppWasKilledInBackground">引擎驱动程序被安卓系统强制重启</string>
+
+    <string name="host_ip">主机名或地址</string>
+    <string name="port">端口</string>
+    <string name="connect_button">连接</string>
+    <string name="recent_connections">最近服务器</string>
+    <string name="select_loco_heading">选择机车，方法 - 控制器 %1$s</string>
+    <string name="select_loco_current_locos_heading">当前选择机车 - 控制器 %1$s</string>
+    <string name="select_loco">输入要选择的机车地址</string>
+    <string name="select_loco_address">地址</string>
+    <string name="acquire_button">选择</string>
+    <string name="roster_list">从花名册/编组项选择</string>
+    <string name="rosterDetailsDialogTitle">花名册详情</string>
+    <string name="recent_engines">从最近机车选择</string>
+    <string name="recent_consists">从最近编组选择</string>
+<!--    <string name="direction">Fwd</string>-->
+<!--    <string name="speed">Speed:</string>-->
+    <string name="discovered_services">发现的服务器 - WiFi: %1$s</string>
+<!--    <string name="save_settings">保存设置</string>-->
+    <string name="stop">停止</string>
+    <string name="forward">前进</string>
+    <string name="reverse">后退</string>
+    <string name="neutral">空挡</string>
+    <string name="brake">制动</string>
+    <string name="air_reservoir">空气储存器</string>
+    <string name="airReservoirShort">储气 %d%%</string>
+    <string name="airLineShort">空气管路 %d%%</string>
+    <string name="load">负载</string>
+    <string name="none">无</string>
+    <string name="fb_helptext">按显示顺序输入标签和功能编号。标签留空可隐藏按钮。在花名册功能不可用时使用。</string>
+    <string name="copy_function_labels">从花名册复制标签</string>
+    <string name="fb_header">编辑功能</string>
+
+    <string name="fbResetFunctionLabels">全部重置</string>
+    <string name="prefNumberOfDefaultFunctionLabelsTitle">默认功能数量</string>
+    <string name="prefNumberOfDefaultFunctionLabelsSummary">当服务器花名册不可用时，限制显示的功能标签数量</string>
+
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">花名册默认功能数量</string>
+    <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">限制服务器花名册条目中无功能标签时显示的功能标签数量</string>
+
+    <string name="consist_help">点击机车可更改其相对于编组前端的方向。向右滑动机车可将其从编组中移除。完成后按返回箭头。</string>
+    <string name="about">关于</string>
+    <string name="web">网页</string>
+
+    <string name="about_page_url">file:///android_asset/about_page-zh.html</string>
+
+    <string name="mrc_settings">MRC 设置</string>
+    <string name="dccesp_settings">DCC ESP 设置</string>
+    <string name="loco">机车：</string>
+    <string name="loco_direction_left_extra">\u00B7前进\u00B7</string>
+    <string name="loco_direction_right_extra">\u00B7后退\u00B7</string>
+    <string name="locoPressToSelect">选择</string>
+    <string name="powerWillNotWorkTitle">无法工作！</string>
+    <string name="powerWillNotWork">服务器的WiThrottle电源控制设置已关闭。\n现在将移除电源图标。\n当服务器设置开启时将重新显示。</string>
+    <string name="release">释放</string>
+    <string name="dispatch">发布</string>
+    <string name="releaseThrottleLocos">释放\n%1$s</string>
+    <string name="roster_available">服务器花名册 - 可用</string>
+    <string name="turnouts">道岔</string>
+    <string name="turnouts_available">道岔 - 可用</string>
+    <string name="turnouts_direct_entry_label">输入道岔编号或名称</string>
+    <string name="turnouts_location_label">按位置筛选</string>
+    <string name="turnouts_list_label">道岔（点击状态切换）</string>
+    <string name="turnouts_turnout">道岔</string>
+    <string name="location_all">所有位置</string>
+    <string name="routes">路线</string>
+    <string name="routes_available">路线 - 可用</string>
+    <string name="routes_direct_entry_label">输入路线系统名称</string>
+    <string name="routes_location_label">按位置筛选</string>
+    <string name="routes_list_label">路线（点击状态激活）</string>
+    <string name="consist_lead_label">主导机车</string>
+    <string name="consist_trail_label">从动机车</string>
+    <string name="consist_list_label">编组顶部</string>
+    <string name="throw_button">切换</string>
+    <string name="close_button">关闭</string>
+    <string name="toggle_button">切换</string>
+    <string name="power_control_label">控制布局电源设置</string>
+    <string name="press_to_toggle">按下按钮切换布局电源状态</string>
+    <string name="power_control_not_allowed">电源控制不允许。请在服务器的偏好设置/设置中更改。</string>
+    <string name="reconnect_label">重连尝试状态</string>
+    <string name="reconnect_help">正在尝试自动重连。请等待重连或退出。</string>
+    <string name="reconnect_success">已重连。正在恢复正常操作。</string>
+    <string name="fs_edit_notice">警告：默认功能设置的更改将在退出时丢失 - 未找到SD卡。</string>
+    <string name="ca_recent_conn_notice">最近连接不可用 - 未找到SD卡。</string>
+    <string name="sl_recent_engine_notice">最近机车不可用 - 未找到SD卡。</string>
+    <string name="power">电源</string>
+    <string name="throttle">控制器</string>
+<!--    <string name="on">开启</string>-->
+<!--    <string name="off">关闭</string>-->
+    <string name="set">设置</string>
+    <string name="disabled">已禁用</string>
+    <string name="volume_indicator" translatable="false">v</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="exit_text">退出Engine Driver吗？</string>
+    <string name="exit_title">退出</string>
+    <string name="steal_text">抢占地址 %1$s？</string>
+    <string name="steal_title">抢占</string>
+
+    <string name="newConnectionTitle">新连接</string>
+    <string name="newConnectionText">关闭与此服务器的连接，然后再重新连接？</string>
+    <string name="lightsTextOff">关闭</string>
+    <string name="lightsTextFollow">跟随功能按钮</string>
+    <string name="lightsTextUnknown">未知</string>
+
+<!--    <string name="logviewerReset">重置</string> -->
+    <string name="logviewerClose">关闭</string>
+    <string name="logviewerSave">开始记录到文件</string>
+
+    <string name="rosterEntryImageSelectButtonText">新图片</string>
+    <string name="rosterEntryImageRemoveButtonText">移除</string>
+    <string name="rosterEntryImageHelpText">仅本地存储图片。如果服务器有机车图片，将覆盖此选择。</string>
+    <string name="rosterEntryImageServerImageHelpText">服务器有机车图片。无法更改本地图片，因为会被服务器图片自动覆盖。</string>
+    <string name="rosterEntryImageSaveButtonText">保存</string>
+
+
+    <string name="prefSummary">Engine Driver偏好设置</string>
+    <string name="preferences">偏好设置</string>
+    <string name="prefSwipeUpDownTitle">上下滑动偏好设置</string>
+    <string name="prefSwipeUpDownSummary">控制器屏幕上下滑动选项</string>
+    <string name="prefThrottleNameTitle">控制器名称</string>
+    <string name="prefThrottleNameSummary">设置此设备名称（显示在JMRI WiThrottle服务器上）</string>
+    <string name="prefThrottleOrientationSummary">屏幕方向（网页除外）</string>
+    <string name="prefThrottlePageTitle">控制器屏幕外观偏好设置</string>
+    <string name="prefThrottleAdditionalControlTitle">额外控制器控制源偏好设置</string>
+    <string name="prefThrottleTitle">控制器控制偏好设置</string>
+    <string name="prefThrottleStatusTitle">控制器屏幕操作栏偏好设置</string>
+
+    <string name="prefSliderTitle">速度滑块和按钮偏好设置</string>
+    <string name="prefSliderSummary">速度滑块和速度按钮选项</string>
+
+    <string name="prefDirectionTitle">方向按钮偏好设置</string>
+    <string name="prefDirectionSummary">方向按钮选项</string>
+
+    <string name="prefIncreaseSliderHeightTitle">增加滑块/速度高度？</string>
+    <string name="prefIncreaseSliderHeightSummary">为控制器使用更高的滑块或速度按钮</string>
+
+    <string name="prefHideSliderTitle">隐藏速度滑块？</string>
+    <string name="prefHideSliderSummary">不显示速度滑块，改用速度按钮</string>
+
+    <string name="prefHideSliderAndSpeedButtonsTitle">隐藏滑块和速度按钮？</string>
+    <string name="prefHideSliderAndSpeedButtonsSummary">不显示速度滑块和速度按钮。
+        \n注意：覆盖\'隐藏滑块\'、\'滑块高度\'和\'显示速度按钮\'选项。</string>
+
+    <string name="prefDirChangeWhileMovingTitle">移动时改变方向？</string>
+    <string name="prefDirChangeWhileMovingSummary">允许移动时改变方向</string>
+    <string name="prefStopOnDirectionChangeTitle">改变方向时停止？</string>
+    <string name="prefStopOnDirectionChangeSummary">移动时改变方向则停止机车</string>
+    <string name="prefSelLocoWhileMovingTitle">允许移动时选择机车？</string>
+    <string name="prefSelLocoWhileMovingSummary">移动时启用机车选择按钮</string>
+    <string name="prefShowAddressInsteadOfNameTitle">显示机车地址而非名称？</string>
+    <string name="prefShowAddressInsteadOfNameSummary">在控制器屏幕上显示机车DCC地址而非花名册名称</string>
+    <string name="prefIncreaseWebViewSizeTitle">增大控制器网页视图？</string>
+    <string name="prefIncreaseWebViewSizeSummary">在小屏幕上将控制器网页视图大小增加到60%</string>
+    <string name="prefThrottleViewImmersiveModeTitle">为控制器视图使用沉浸式模式？</string>
+    <string name="prefThrottleViewImmersiveModeSummary">全屏显示控制器视图。设置上下滑动选项可暂时禁用并访问菜单。</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarTitle">在沉浸式模式下隐藏工具栏？</string>
+    <string name="prefThrottleViewImmersiveModeHideToolbarSummary">设置为在沉浸式模式下也隐藏工具栏</string>
+    <string name="prefSwipeUpOptionTitle">控制器屏幕上滑操作？</string>
+    <string name="prefSwipeUpOptionSummary">在控制器屏幕上滑时应执行的操作。</string>
+    <string name="prefSwipeDownOptionTitle">控制器视图下滑操作？</string>
+    <string name="prefSwipeDownOptionSummary">在控制器屏幕下滑时应执行的操作。</string>
+
+    <!--     Volume preferences  -->
+    <string name="prefVolumeTitle">音量偏好</string>
+    <string name="prefVolumeSummary">使用音量按钮控制速度</string>
+
+    <string name="prefVolumeSpeedButtonsSpeedStepTitle">速度按钮调整量</string>
+    <string name="prefVolumeSpeedButtonsSpeedStepSummary">音量按钮调整控制器速度的幅度</string>
+
+    <!--     Gamepad preferences  -->
+    <string name="prefGamePadTitle">游戏手柄\/USB偏好设置</string>
+    <string name="prefGamePadSummary">选择游戏手柄\/USB类型及相关选项</string>
+    <string name="prefGamePadTypeTitle">游戏手柄\/USB类型</string>
+    <string name="prefGamePadTypeSummary">选择最适合您游戏手柄的选项</string>
+
+    <string name="prefGamePadFeedbackVolumeTitle">游戏手柄按钮点击音量 \%</string>
+    <string name="prefGamePadFeedbackVolumeSummary">设置游戏手柄按钮点击的音量百分比</string>
+
+    <string name="prefGamePadSpeedButtonsRepeatTitle">速度按钮重复延迟</string>
+    <string name="prefGamePadSpeedButtonsRepeatSummary">游戏手柄速度按钮重复触发的间隔时间。数值越小速度越快。</string>
+
+    <string name="prefGamePadSpeedButtonsSpeedStepTitle">速度按钮调整量</string>
+    <string name="prefGamePadSpeedButtonsSpeedStepSummary">每次按下游戏手柄按钮调整控制器速度的幅度</string>
+
+    <!--    Gamepad button preferences   -->
+    <string name="prefGamePadButton1Title">游戏手柄按钮操作</string> <!-- X     -->
+    <string name="prefGamePadButton2Title">游戏手柄按钮操作</string> <!-- A     -->
+    <string name="prefGamePadButton3Title">游戏手柄按钮操作</string> <!-- Y    -->
+    <string name="prefGamePadButton4Title">游戏手柄按钮操作</string> <!-- B     -->
+    <string name="prefGamePadButtonStartTitle">游戏手柄按钮操作</string> <!-- Start(Lower)     -->
+    <string name="prefGamePadButtonReturnTitle">游戏手柄按钮操作</string> <!-- Return(Upper)     -->
+    <string name="prefGamePadButtonUpTitle">游戏手柄方向键上操作</string>
+    <string name="prefGamePadButtonRightTitle">游戏手柄方向键右操作</string>
+    <string name="prefGamePadButtonDownTitle">游戏手柄方向键下操作</string>
+    <string name="prefGamePadButtonLeftTitle">游戏手柄方向键左操作</string>
+    <string name="prefGamePadButtonSummary">选择按下按钮时执行的操作</string>
+
+    <string name="prefGamePadDoublePressStopTitle">双击停止动作</string>
+    <string name="prefGamePadDoublePressStopSummary">选择按下任何配置为\'停止\'的按钮时执行的操作</string>
+
+    <string name="prefGamePadIgnoreJoystickTitle">忽略摇杆操作</string>
+    <string name="prefGamePadIgnoreJoystickSummary">如果方向键同时产生按键码和摇杆事件时选择此项</string>
+
+    <!--    Gamepad button preferences   -->
+
+    <!-- ESU MCII preferences -->
+    <string name="prefEsuMc2Title">ESU MobileControl II 选项</string>
+    <string name="prefEsuMc2Summary">选择 ESU MobileControl II 选项</string>
+    <string name="prefEsuMc2ButtonsCategoryTitle">设备侧按钮选项</string>
+    <string name="prefEsuMc2ButtonTLTitle">左上角按钮操作</string>
+    <string name="prefEsuMc2ButtonTLSummary">选择按下按钮时执行的操作</string>
+    <string name="prefEsuMc2ButtonBLTitle">左下角按钮操作</string>
+    <string name="prefEsuMc2ButtonBLSummary">选择按下按钮时执行的操作</string>
+    <string name="prefEsuMc2ButtonTRTitle">右上角按钮操作</string>
+    <string name="prefEsuMc2ButtonTRSummary">选择按下按钮时执行的操作</string>
+    <string name="prefEsuMc2ButtonBRTitle">右下角按钮操作</string>
+    <string name="prefEsuMc2ButtonBRSummary">选择按下按钮时执行的操作</string>
+    <string name="prefEsuMc2ButtonsRepeatTitle">按钮重复延迟</string>
+    <string name="prefEsuMc2ButtonsRepeatSummary">设备侧按钮重复触发的间隔时间。\n数值越小速度越快。</string>
+    <string name="prefEsuMc2StopButtonCategoryTitle">设备停止按钮选项</string>
+    <string name="prefEsuMc2StopButtonDelayTitle">停止按钮长按延迟</string>
+    <string name="prefEsuMc2StopButtonDelaySummary">停止按钮\'长按\'的持续时间。\n\'长按\'停止所有活动控制器；\'短按\'暂停当前控制器。\n数值越小速度越快。</string>
+    <string name="prefEsuMc2StopButtonShortPressTitle">启用短按</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">\'短按\'暂停当前控制的机车/编组。\n恢复操作时将回到原始速度。</string>
+    <string name="prefEsuMc2ZeroTrimCategoryTitle">控制旋钮选项</string>
+    <string name="prefEsuMc2SliderCategoryTitle">滑块选项</string>
+    <string name="prefEsuMc2ZeroTrimTitle">控制旋钮零位微调</string>
+    <string name="prefEsuMc2ZeroTrimSummary">设置控制旋钮零位微调。\n数值越小越接近逆时针终点位置。\n允许范围 0–255。</string>
+    <string name="prefEsuMc2EndStopDirectionChangeTitle">终点位置方向改变</string>
+    <string name="prefEsuMc2EndStopDirectionChangeSummary">允许控制旋钮在逆时针终点位置时改变机车方向</string>
+    <string name="prefEsuMc2KnobButtonTitle">显示禁用旋钮按钮</string>
+    <string name="prefEsuMc2KnobButtonSummary">允许通过控制器屏幕上的操作按钮禁用控制旋钮</string>
+    <!-- ESU MCII preferences -->
+
+    <!-- ESU MCII Messages -->
+    <string name="toastEsuMc2NoLocoChange">机车切换不允许：Mobile Control II 当前处于停止模式</string>
+    <string name="toastEsuMc2NoThrottleChange">控制器切换不允许：Mobile Control II 当前处于停止模式</string>
+    <string name="toastEsuMc2NoButtonPresses">按钮操作不允许：Mobile Control II 当前处于停止模式</string>
+    <string name="EsuMc2KnobAction">启用/禁用旋钮</string>
+    <!-- ESU MCII Messages -->
+
+    <string name="prefDefaultFunctionsTitle">默认功能偏好设置</string>
+    <string name="prefDefaultFunctionsSummary">默认功能标签的显示时机和方式</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsTitle">使用默认功能标签？</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary">显示默认功能标签而非花名册条目中的标签</string>
+    <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">显示默认功能标签而非花名册条目中的标签。必须启用此项才能使用\'特殊\'跟随规则样式。</string>
+
+    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">覆盖WiThrottle功能锁定</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">对非花名册机车使用Engine Driver的默认锁定，而非WiThrottle提供的默认值</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">对没有功能的花名册条目使用默认值</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsSummary">对无功能标签的花名册条目使用Engine Driver默认功能</string>
+
+    <string name="prefDecreaseLocoNumberHeightTitle">减小机车编号高度？</string>
+    <string name="prefDecreaseLocoNumberHeightSummary">为机车编号、速度和方向按钮使用较小的按钮</string>
+    <string name="prefNumOfThrottles">控制器数量</string>
+    <string name="prefNumOfThrottlesSummary">控制器屏幕上显示的控制器数量。\n（受所选控制器屏幕布局限制。）</string>
+
+    <string name="prefDoubleBackButtonToExitTitle">双击返回按钮退出？</string>
+    <string name="prefDoubleBackButtonToExitSummary">在\"控制器\"或\"连接\"屏幕上3秒内按两次Android\"返回\"按钮将退出Engine Driver</string>
+
+    <string name="prefThrottleScreenTypeTitle">控制器屏幕布局</string>
+    <string name="prefThrottleScreenTypeSummary">选择控制器屏幕布局。\n（名称后括号中的数字是该布局支持的控制器数量。）</string>
+
+    <string name="prefMaximumThrottleTitle">最大控制器百分比</string>
+    <string name="prefMaximumThrottleSummary">所有控制器滑块允许的最大百分比值</string>
+    <string name="prefMaximumThrottleChangeTitle">最大控制器变化量</string>
+    <string name="prefMaximumThrottleChangeSummary">允许的最大控制器变化百分比</string>
+    <string name="prefWebViewTitle">控制器网页视图偏好设置</string>
+    <string name="prefWebViewSummary">控制器网页视图外观选项（将显示在控制器屏幕底部的网页）</string>
+    <string name="prefInitialThrotWebPageTitle">初始控制器网页</string>
+    <string name="prefInitialThrotWebPageSummary">初始控制器网页（例如\'/panel/\'）</string>
+    <string name="prefWebViewLocationTitle">控制器网页视图？</string>
+    <string name="prefWebViewLocationSummary">在控制器屏幕上包含网页视图</string>
+    <string name="prefSelectLocoTitle">选择机车偏好设置</string>
+    <string name="prefDeviceSoundsCategoryTitle">手机内机车声音</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesTitle">附加偏好设置</string>
+    <string name="prefDeviceSoundsAdditionalPreferencesSummary">手机内机车声音的附加偏好设置</string>
+    <string name="prefDeviceSounds0Summary">在手机中为控制器1播放基本机车声音</string>
+    <string name="prefDeviceSounds0Title">控制器1机车声音</string>
+    <string name="prefDeviceSounds1Summary">在手机中为控制器2播放基本机车声音</string>
+    <string name="prefDeviceSounds1Title">控制器2机车声音</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">手机中机车引擎声音的音量（1-100）</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">In Phone Loco Sounds Volume</string>
+    <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">手机中铃声的音量（1-100）</string>
+    <string name="prefDeviceSoundsBellVolumeTitle">手机内铃声音量</string>
+    <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">手机中喇叭/汽笛声音的音量（1-100）</string>
+    <string name="prefDeviceSoundsHornVolumeTitle">手机内喇叭/汽笛声音音量</string>
+    <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">每步变化的延迟（动量），以毫秒为单位（0-2000）</string>
+    <string name="prefDeviceSoundsMomentumTitle">手机内动量</string>
+    <string name="prefDeviceSoundsMomentumDefaultValue" translatable="false">750</string>
+    <string name="prefDeviceSoundsMomentumOverrideSummary">改变步骤时，机车步骤声音将播放至结束。上述动量值仅作为最短时间。</string>
+    <string name="prefDeviceSoundsMomentumOverrideTitle">不截断机车步骤声音</string>
+    <string name="deviceSoundsMuteButton">静音</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">铃声按钮为瞬时（非锁定）？</string>
+    <string name="prefDeviceSoundsBellIsMomentaryTitle">铃声按钮锁定/瞬时</string>
+    <string name="toastDeviceSoundsSimpleLayoutWarning">建议增大功能按钮区域大小，否则将无法访问铃声/喇叭/静音声音功能</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornSummary">F1和F2也激活IPLS铃声和喇叭</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1和F2激活铃声和喇叭？</string>
+    <string name="prefDeviceSoundsHideMuteButtonSummary">在控制器上隐藏IPLS静音按钮</string>
+    <string name="prefDeviceSoundsHideMuteButtonTitle">隐藏静音按钮</string>
+
+    <string name="prefDeviceSoundsButtonSummary">显示一个操作栏按钮以更改手机内机车声音选项</string>
+
+    <string name="prefDeviceSoundsButtonTitle">手机声音按钮</string>
+    <string name="prefSelectiveLeadSoundTitle">选择性领头单元声音？</string>
+    <string name="prefSelectiveLeadSoundSummary">仅将喇叭/铃声功能发送到EngineDriver编组中的领头单元。（仅包含\'bell\'、\'horn\'或\'whistle\'作为标签一部分的功能。）</string>
+    <string name="prefSelectiveLeadSoundF1Title">始终将F1视为声音？</string>
+    <string name="prefSelectiveLeadSoundF1Summary">用于\"选择性领头单元声音\"选项</string>
+    <string name="prefSelectiveLeadSoundF2Title">始终将F2视为声音？</string>
+    <string name="prefSelectiveLeadSoundF2Summary">用于\"选择性领头单元声音\"选项</string>
+    <string name="prefStopOnPhonecallTitle">来电时停止？</string>
+    <string name="prefStopOnPhonecallSummary">接听或拨打电话时停止机车</string>
+    <string name="prefShowDispatchButtonSummary">在“选择机车”屏幕上显示一个按钮，用于在释放机车时使用 WiThrottle 的 \'d\'ispatch 命令而不是 \'r\'elease 命令。</string>
+    <string name="prefStopOnReleaseTitle">释放时停止？</string>
+    <string name="prefStopOnReleaseSummary">从控制器释放时停止机车</string>
+    <string name="prefSwipeThroughRoutesTitle">滑动浏览路线？</string>
+    <string name="prefSwipeThroughRoutesSummary">在屏幕间滑动时包含路线屏幕</string>
+    <string name="prefSwipeThroughWebTitle">滑动浏览网页？</string>
+    <string name="prefSwipeThroughWebSummary">在屏幕间滑动时包含网页屏幕</string>
+    <string name="prefSwipeThroughTurnoutsTitle">滑动浏览道岔？</string>
+    <string name="prefSwipeThroughTurnoutsSummary">在屏幕间滑动时包含道岔屏幕</string>
+    <string name="prefDropOnAcquireTitle">获取前释放机车？</string>
+    <string name="prefDropOnAcquireSummary">获取新机车前释放当前机车</string>
+    <string name="prefHideIfNoUserNameTitle">Hide if no user name?</string>
+    <string name="prefHideIfNoUserNameSummary">如果用户名为空，则从列表中省略道岔/路线</string>
+
+    <string name="prefRosterRecentLocosTitle">花名册显示在最近机车中？</string>
+    <string name="prefRosterRecentLocosSummary">在最近列表中包含花名册选择？</string>
+    <string name="prefRosterRecentLocoNamesTitle">最近机车中的花名册名称？</string>
+    <string name="prefRosterRecentLocoNamesSummary">如果找到匹配地址，在最近列表中包含来自花名册的机车名称</string>
+
+    <string name="prefThrottlesLocosToast">之前的机车如有空位也会加载。</string>
+    <string name="prefRosterFilterTitle">筛选花名册</string>
+    <string name="prefRosterFilterSummary">仅显示包含…的花名册条目</string>
+    <string name="FilterRosterListHint">包含…</string>
+    <string name="rosterEmpty">无法在服务器花名册中找到任何条目。\n\n请改用\"DCC地址\"或\"最近\"选项。</string>
+    <string name="prefRosterOwnersFilterShowOptionTitle">按花名册所有者筛选</string>
+    <string name="prefRosterOwnersFilterShowOptionSummary">显示按所有者筛选花名册的选项</string>
+    <string name="prefRosterOwnersFilterDefaultOwner">全部</string>
+
+    <string name="prefSelectLocoByRadioButtonsTitle">机车选择方式外观</string>
+    <string name="prefSelectLocoByRadioButtonsSummary">显示方法文本列表而非图像按钮</string>
+
+    <string name="LocoSelectMethodAddress">DCC Address</string>
+    <string name="LocoSelectMethodRoster">服务器花名册</string>
+    <string name="LocoSelectMethodRecent">最近机车</string>
+    <string name="LocoSelectMethodRecentConsist">最近编组</string>
+    <string name="LocoSelectMethodHelp" tools:ignore="Typos">在上方输入机车的DCC地址并点击\"获取\"。\n\n或者，通过点击上方的单选按钮从服务器\"花名册\"中选择机车或从\"最近\"机车中选择。</string>
+
+    <string name="prefLocoSelectHideIplsButtonTitle">隐藏 Loco Sounds 按钮</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">在“选择 Loco”屏幕中隐藏“Loco Phone Loco Sounds”按钮</string>
+    <string name="prefMaximumRecentLocosTitle">最大最近机车数</string>
+    <string name="prefMaximumRecentLocosSummary">列表中显示的最大最近机车数</string>
+    <string name="prefDefaultAddressLengthTitle">默认地址长度</string>
+    <string name="prefDefaultAddressLengthSummary">默认机车地址长度（自动将根据位数设置）</string>
+    <string name="prefWebTitle">网页屏幕偏好设置</string>
+    <string name="prefDisplaySpeedUnitsTitle">速度单位</string>
+    <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage, or by a specific number of steps</string>
+    <string name="prefWebOrientationTitle">网页屏幕方向</string>
+    <string name="prefWebOrientationSummary">选择网页屏幕方向</string>
+    <string name="prefInitialWebPageTitle">初始网页屏幕页面</string>
+    <string name="prefInitialWebPageSummary">为网页屏幕输入初始网页（例如\'/panel\'）</string>
+    <string name="prefConnectTitle">连接偏好设置</string>
+    <string name="prefMaximumRecentConnectionsTitle">最大最近连接数</string>
+    <string name="prefMaximumRecentConnectionsSummary">列表中显示的最大最近连接数</string>
+    <string name="prefConnectTimeoutMsTitle">初始连接超时</string>
+    <string name="prefConnectTimeoutMsSummary">设置初始连接超时时间（毫秒）</string>
+    <string name="prefSocketTimeoutMsTitle">套接字超时</string>
+    <string name="prefSocketTimeoutMsSummary">设置套接字读取超时时间（毫秒）</string>
+    <string name="prefHeartbeatResponseFactorTitle">心跳响应因子</string>
+    <string name="prefHeartbeatResponseFactorSummary">发送心跳的心跳周期百分比（50%-90%）。将在下次连接时生效。</string>
+
+    <string name="prefTurnoutsTitle">道岔和路线偏好设置</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsTitle">始终显示扳动/关闭？</string>
+    <string name="prefTurnoutsShowThrowCloseButtonsSummary">始终显示道岔的扳动和关闭按钮，从不显示切换按钮。</string>
+    <string name="prefHideSystemRouteNamesTitle">隐藏系统路线名称？</string>
+    <string name="prefHideSystemRouteNamesSummary">隐藏路线的系统名称，用于节省路线列表空间</string>
+    <string name="prefDelimiterTitle">位置分隔符</string>
+    <string name="prefDelimiterSummary">设置标记道岔和路线名称中位置部分结束的字符</string>
+
+    <string name="prefScreenBrightnessDimTitle">屏幕亮度调暗百分比值</string>
+    <string name="prefScreenBrightnessDimSummary">调暗屏幕时使用的亮度设置（0%-99%）。设置后将禁用自动或自适应亮度。</string>
+
+    <string name="deviceSoundsMenu">机车声音</string>
+
+    <string name="logViewer">查看日志</string>
+    <string name="clearLocoList">清除列表</string>
+    <string name="ClearConnList">清除最近列表</string>
+    <string name="prefEmerStopTitle">紧急停止按钮？</string>
+    <string name="prefEmerStopSummary">在操作栏中显示机车紧急停止按钮</string>
+    <string name="EStop">急停</string>
+    <string name="EmergencyStop">紧急停止</string>
+    <string name="AirButton">空气制动</string>
+    <string name="PowerButtonBar">电源按钮</string>
+    <string name="prefPowerButtonBarTitle">布局电源按钮？</string>
+    <string name="prefPowerButtonBarSummary">在操作栏中显示布局电源按钮</string>
+    <string name="prefSliderLeftMarginTitle">控制器速度滑块边距</string>
+    <string name="prefSliderLeftMarginSummary">控制器速度滑块边距的偏移像素数</string>
+    <string name="prefVerticalStopButtonMarginTitle">停止按钮垂直边距</string>
+    <string name="prefVerticalStopButtonMarginSummary">停止按钮与速度按钮和屏幕底部之间的边距偏移像素数</string>
+    <string name="PrefConnectToFirstServerTitle">自动连接到WiThrottle服务器？</string>
+    <string name="PrefConnectToFirstServerSummary">自动连接到发现的第一个WiThrottle服务器</string>
+    <string name="prefDisplayClockTitle">快速时钟显示</string>
+    <string name="prefDisplayClockSummary">设置操作栏中快速时钟的显示格式</string>
+    <string name="prefDisplaySpeedArrowsTitle">显示速度按钮？</string>
+    <string name="prefDisplaySpeedArrowsSummary">在速度滑块旁显示用于更改机车速度的按钮</string>
+
+    <string name="prefSelectedLocoIndicatorTitle">附加选中机车指示器</string>
+    <string name="prefSelectedLocoIndicatorSummary">根据选择方法对机车选择按钮进行附加高亮显示</string>
+
+    <string name="prefAppIconActionTitle">应用图标操作</string>
+    <string name="prefAppIconActionSummary">点击操作栏上的应用图标或应用名称时的操作</string>
+
+    <string name="prefDisableVolumeKeysTitle">禁用音量键？</string>
+    <string name="prefDisableVolumeKeysSummary">禁用手机/平板上原本用于控制速度的硬件音量键</string>
+
+    <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">音量键跟随触控</string>
+    <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">音量键速度控制将跟随最后触摸的控制器</string>
+
+    <string name="prefSpeedButtonsRepeatTitle">速度按钮重复延迟</string>
+    <string name="prefSpeedButtonsRepeatSummary">速度按钮重复触发的间隔时间。\n数值越小速度越快。不包括游戏手柄按钮（参见单独的游戏手柄设置）。</string>
+
+    <string name="prefSpeedButtonsSpeedStepTitle">速度按钮变化量</string>
+    <string name="prefSpeedButtonsSpeedStepSummary">速度按钮每次调整的速度值</string>
+
+    <string name="prefSpeedButtonsSpeedStepDecrementTitle">减速时使用速度步进？</string>
+    <string name="prefSpeedButtonsSpeedStepDecrementSummary">长按滑块上较低速度时强制使用速度步进。如果未勾选，速度将立即跳至触摸位置对应的速度。</string>
+
+    <string name="server_address">服务器地址</string>
+    <string name="server">服务器</string>
+
+    <string name="throttle_name">节流阀名称：%1$s</string>
+    <string name="prefShowAdvancedPreferencesTitle">显示高级偏好设置？</string>
+    <string name="prefShowAdvancedPreferencesSummary">显示或隐藏不太常用的偏好设置</string>
+
+    <string name="prefConsistLightsLongClickTitle">长按控制编组灯光</string>
+    <string name="prefConsistLightsLongClickSummary">长按机车选择按钮可更改编组中单个机车的灯光</string>
+    <string name="consistLights_help">点击机车可切换该机车灯光的状态。</string>
+
+    <string name="prefThrottleImportExportTitle">导入/导出/重置及日志偏好设置</string>
+    <string name="prefThrottleImportExportSummary">导入/导出/重置及日志偏好设置</string>
+
+    <string name="prefImportExportTitle">导入、导出或重置</string>
+    <string name="prefImportExportSummary">导入或导出偏好设置</string>
+
+    <string name="prefImportExportLocoListTitle">包括最近的机车清单</string>
+    <string name="prefImportExportLocoListSummary">在\'导入\'和\'导出\'中包含最近机车列表中的机车</string>
+
+    <string name="prefAutoImportExportTitle">自动主机特定导入/导出</string>
+    <string name="prefAutoImportExportSummary">每次连接到主机时，自动\'导入\'该主机的偏好设置，并可选择在断开连接时\'导出\'它们。\n（要持续重置为已知状态，首次设置后或手动保存（如下）后，设置为\'仅在连接时自动导入\'。）</string>
+
+    <string name="prefHostImportExportTitle">手动特定主机导入/导出</string>
+    <string name="prefHostImportExportSummary">将特定主机的偏好设置\'导入\'或\'导出\'到\'\\Android\\data\\jmri.enginedriver\\files\\\'文件夹。该主机必须在您的最近连接列表中。\n选择选项后将立即执行。\n（仅在当前未连接时可用。）</string>
+
+    <string name="prefImportExportOverwite">文件\'%1$s\'已存在。是否覆盖？</string>
+    <string name="prefImportExportErrorReadingList">读取最近连接列表时出错：</string>
+    <string name="prefImportExportErrorReadingFrom">从\'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\'导入失败！您可能尚未保存此主机的偏好设置。</string>
+    <string name="prefImportExportErrorNotConnected">未连接到主机</string>
+
+    <string name="prefImportServerAutoTitle">自动从所有服务器导入？</string>
+    <string name="prefImportServerAutoSummary">连接时自动从服务器导入偏好设置。\n（如果服务器上存在\'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\'文件，且该文件比上次检查时更新。）</string>
+
+    <string name="importServerAutoDialog">在此服务器上发现新的偏好设置文件：(%1$s)。\n是否要导入？\n\n警告！\n\'完全\' - 所有偏好设置将被覆盖。\n\n\'部分\' - 除主题和某些控制器布局偏好设置外，所有偏好设置将被覆盖。</string>
+    <string name="importServerAutoDialogPositiveButton">完全</string>
+    <string name="importServerAutoDialogNeutralButton">部分</string>
+
+    <string name="prefSwapForwardReverseButtonsTitle">交换方向按钮？</string>
+    <string name="prefSwapForwardReverseButtonsSummary">为所有控制器永久交换两个方向按钮</string>
+
+    <string name="prefSwapForwardReverseButtonsLongPressTitle">长按交换方向按钮？</string>
+    <string name="prefSwapForwardReverseButtonsLongPressSummary">长按任意方向按钮可临时交换两个方向按钮</string>
+
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsTitle">与屏幕按钮交换方向按钮？</string>
+    <string name="prefGamepadSwapForwardReverseWithScreenButtonsSummary">如果屏幕方向按钮已交换，则临时交换两个游戏手柄方向按钮</string>
+
+    <string name="prefGamepadTestEnforceTestingTitle">强制游戏手柄测试？</string>
+    <string name="prefGamepadTestEnforceTestingSummary">每次连接游戏手柄时都进行测试</string>
+
+    <string name="prefGamepadTestEnforceTestingSimpleTitle">使用简单测试？</string>
+    <string name="prefGamepadTestEnforceTestingSimpleSummary">仅测试能否降低速度</string>
+
+    <string name="prefLeftDirectionButtonsTitle">左方向按钮标签</string>
+    <string name="prefLeftDirectionButtonsSummary">所有左方向按钮的标签。输入Forward或留空以使用正常行为。</string>
+    <string name="prefLeftDirectionButtonsDefaultValue">前进</string>
+
+    <string name="prefRightDirectionButtonsTitle">右方向按钮标签</string>
+    <string name="prefRightDirectionButtonsSummary">所有右方向按钮的标签。输入Reverse或留空以使用正常行为。</string>
+    <string name="prefRightDirectionButtonsDefaultValue">后退</string>
+
+    <string name="prefLeftDirectionButtonsShortTitle">左方向按钮短标签</string>
+    <string name="prefLeftDirectionButtonsShortSummary">所有左方向按钮的短标签。输入Fwd或留空以使用正常行为。</string>
+    <string name="prefLeftDirectionButtonsShortDefaultValue">前进</string>
+
+    <string name="prefCenterDirectionButtonsShortDefaultValue">空挡</string>
+
+    <string name="prefRightDirectionButtonsShortTitle">右方向按钮短标签</string>
+    <string name="prefRightDirectionButtonsShortSummary">所有右方向短按钮的标签。输入Rev或留空以使用正常行为。</string>
+
+    <string name="prefTickMarksOnSlidersTitle">速度滑块显示刻度线？</string>
+    <string name="prefTickMarksOnSlidersSummary">在速度滑块背景上显示刻度线</string>
+
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">隐藏未选中控制器的功能按钮？</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">如果启用，在水平布局中，除选中的音量控制器（以v标识）外，所有控制器的功能按钮都将隐藏。          点击控制器的速度值以选中它。          设置\'音量键跟随触摸\'偏好可通过任意触摸（速度控制除外）选中控制器。</string>
+
+    <string name="prefThemeTitle">主题/样式</string>
+    <string name="prefThemeSummary">选择应用的视觉外观</string>
+
+    <string name="prefHideDemoServerTitle">隐藏演示服务器</string>
+    <string name="prefHideDemoServerSummary">在连接列表中隐藏演示服务器jmri.mstevetodd.com</string>
+
+    <string name="prefAccelerometerTitle">加速度计（震动）偏好设置</string>
+    <string name="prefAccelerometerSummary">控制器屏幕上的设备运动选项</string>
+    <string name="prefAccelerometerShakeTitle">震动操作</string>
+    <string name="prefAccelerometerShakeSummary">设备震动时的选项</string>
+
+    <string name="prefAccelerometerShakeThresholdTitle">震动阈值</string>
+    <string name="prefAccelerometerShakeThresholdSummary">震动触发的阈值。（1.5–3.5）值越低，轻微震动即可触发。\n更改后需重启Engine Driver才能生效。</string>
+
+    <string name="prefLocaleTitle">本地化</string>
+    <string name="prefLocaleSummary">应用使用的语言</string>
+
+    <string name="prefLimitSpeedButtonPreferencesTitle">\'限制速度\' &amp; \'暂停\'按钮偏好设置</string>
+    <string name="prefLimitSpeedButtonTitle">显示\'限制速度\'按钮？</string>
+
+    <string name="prefLimitSpeedButtonSummary">显示一个按钮，用于暂时限制单个油门的最大速度。</string>
+    <string name="prefPauseSpeedButtonTitle">显示\'暂停\'按钮？</string>
+    <string name="prefPauseSpeedButtonSummary">显示一个用于减速和停止机车，再次按下恢复原速的按钮</string>
+
+    <string name="prefPauseSpeedRateTitle">\'暂停\'按钮速率</string>
+    <string name="prefPauseSpeedRateSummary">暂停操作中速度步进变化之间的毫秒数</string>
+
+    <string name="prefPauseSpeedStepTitle">\'暂停\'按钮步长</string>
+    <string name="prefPauseSpeedStepSummary">暂停操作的步长变化量</string>
+
+    <string name="prefPauseAlternateButtonTitle">备用\'暂停\'按钮</string>
+    <string name="prefPauseAlternateButtonSummary">在\'停止\'按钮附近显示备用\'暂停\'按钮（仅垂直布局）</string>
+
+    <string name="prefLimitSpeedPercentTitle">\'限制速度\'按钮百分比</string>
+    <string name="prefLimitSpeedPercentSummary">设置速度将临时限制的控制器百分比</string>
+
+    <string name="prefSwitchingThrottleSliderDeadZoneTitle">切换控制器死区</string>
+    <string name="prefSwitchingThrottleSliderDeadZoneSummary">设置切换控制器屏幕滑块的死区大小</string>
+
+    <string name="limitSpeedButtonLabel">限制速度</string>
+    <string name="pauseSpeedButtonLabel">暂停</string>
+
+    <string name="functionButton00DefaultValue">灯光</string>
+    <string name="functionButton01DefaultValue">铃声</string>
+    <string name="functionButton02DefaultValue">喇叭</string>
+    <string name="soundsButtonHornShortDefaultValue">短喇叭</string>
+
+    <!--    Gamepad test page -->
+    <string name="gamepadTestButtonLabelDpadUp">上</string>
+    <string name="gamepadTestButtonLabelDpadDown">下</string>
+    <string name="gamepadTestButtonLabelDpadLeft">左</string>
+    <string name="gamepadTestButtonLabelDpadRight">右</string>
+    <string name="gamepadTestButtonLabelButtonX">C | X [iOS]</string>
+    <string name="gamepadTestButtonLabelButtonY">D | Y [三角键]</string>
+    <string name="gamepadTestButtonLabelButtonA">A [十字键]</string>
+    <string name="gamepadTestButtonLabelButtonB">B [@]</string>
+    <string name="gamepadTestButtonLabelButtonStart">开始 | 确认</string>
+    <string name="gamepadTestButtonLabelButtonEnter">选择 | 确认</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">左肩键</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">右肩键</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">Left Trigger</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">Right Trigger</string>
+    <string name="gamepadTestButtonLabelButtonLeftThumb">Left Thumb</string>
+    <string name="gamepadTestButtonLabelButtonRightThumb">Right Thumb</string>
+
+    <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
+    <string name="gamepadTestAllKeyCodesLabel">All codes:</string>
+    <string name="gamepadTestModeLabel">Type:</string>
+    <string name="gamepadTestKeycodeLabel">Key code:</string>
+    <string name="gamepadTestFunctionLabel">Function:</string>
+    <string name="gamepadTestCompleteLabel">Test status:</string>
+<!--    <string name="gamepadTestDeviceName">BT:</string>-->
+    <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this screen.</string>
+    <string name="gamepadTestKeyboardHelp">选择下方\'Skip\'以使用键盘
+\n-----------------
+\n键盘命令
+\n-----------------
+\n上方向键或\'\+\'或\'=\' = 增加速度
+\n下方向键或\'\-\' = 降低速度
+\n►► = 速度加倍增加
+\n◄◄ = Decrease Speed * 2
+\n\'X\' or End = Stop
+\nLeft or \'\[\' = Reverse (Fwd if swapped)
+\nRight or \'\]\' = Forward (Ahead) (Rev if swapped)
+\n\'D\' = Direction - Toggle Forward/Reverse
+\n\'N\' = Next Throttle
+\n\'Z\' or Home = All stop
+\nSemi-Realistic Throttle Only:
+\n - \'\\\' = Neutral
+\n - PgUp or \' = Decrease Brake
+\n - PgDn or \';\' = Increase Brake
+\n - \'.\' = Decrease Load
+\n - \',\' = Increase Load
+\n
+\nF00 - F32 = Function
+\nMust be \'F\' followed by two digits
+\n\'0\'-\'9\' = Functions 0-9
+\nWithout a preceding \'F\', \'S\' or \'L\'
+\n
+\nS000 - S100 = Speed
+\nMust be \'S\' followed by three digits
+\n\'V\' = Speak Speed
+\nIn Phone Loco Sounds (IPLS)
+\n\'B\' = Bell
+\n\'H\' = Horn / Whistle
+\nShift + \'H\' = Short Horn
+\n\'M\' or Volume Mute = Mute IPLS
+\n
+\nT0 - T5 = Specify a throttle for next command
+\nMust be \'T\' followed by one digit
+\nThe following command will sent to the specified throttle regardless of the currently selected gamepad throttle.
+\n
+\nAll other keyCodes are ignored
+\n
+\nFailure to follow the \'F\', \'S\' or \'L\' with the correct number of digits will ignore the command</string>
+
+    <!--    Gamepad test page -->
+
+    <!--    Toast messages for Comms -->
+    <string name="prefGamepadOnlyOneGamepadTitle">只有一个游戏手柄？</string>
+    <string name="prefGamepadOnlyOneGamepadSummary">启用此功能后，引擎驱动程序将不会检查是否存在多个游戏手柄。</string>
+    <string name="toastWaitingForConnection">等待来自 %1$s:%2$s 的 WiThrottle \'VN\' 消息超时。正在断开连接。</string>
+    <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">等待来自%1$s:%2$s的DCC-EX \'iDCCEX...\'消息超时。正在断开连接</string>
+
+    <!--    Toast messages for the ThreadedApplication -->
+    <string name="toastThreadedAppNoLocalIp">未找到本地IP地址。\n请检查您的WiFi连接。</string>
+    <string name="toastThreadedAppErrorCreatingWiThrottle">创建withrottle zeroconf监听器时出错：IOException：\n%1$s</string>
+    <string name="toastThreadedAppWiThrottleNotSupported">不支持WiThrottle服务器版本%1$s。</string>
+    <string name="toastThreadedAppCantDetermineIp">无法确定%1$s的IP地址</string>
+    <string name="toastThreadedAppCantConnect">无法从%3$s连接到%1$s:%2$s - %4$s\n请检查WiThrottle服务器和网络设置。</string>
+    <string name="toastThreadedAppErrorInputStream">创建输入流时出错，IOException：%1$s</string>
+    <string name="toastThreadedAppErrorStartingSocket">启动socket_WiT线程时出错：%1$s</string>
+    <string name="toastThreadedAppErrorCreatingOutputStream">创建输出流时出错，IOException：%1$s</string>
+    <string name="toastThreadedAppErrorSleepingThread">线程休眠错误，InterruptedException：%1$s</string>
+    <string name="toastThreadedAppNotWIFI">正在使用%1$s网络，而非WIFI。\n请检查您的WiFi设置和偏好设置。\n</string>
+
+    <string name="statusThreadedAppNotconnectedToWifi">未连接到WiFi</string>
+    <string name="statusThreadedAppServerDiscoveryNotPossible">没有WiFi连接，无法进行服务器发现！</string>
+    <string name="statusThreadedAppNoLocationService">无法访问SSID</string>
+    <string name="statusThreadedAppServerDiscoveryNoLocationService">使用位置信息 Android系统设置已禁用。</string>
+    <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">未授予\'ACCESS_FINE_LOCATION\'权限。</string>
+    <string name="statusThreadedAppServerDiscoverySsidUnavailable">网络名称不可访问。服务器发现功能可能受限。</string>
+
+    <string name="statusThreadedAppNotConnected">未连接到网络。请检查WiFi设置。\n\n正在重试</string>
+    <string name="statusThreadedAppNoResponse">服务器%1$s:%2$s %3$dms内无响应。请检查WiThrottle服务器是否正在运行。\n\n正在重试</string>
+    <string name="statusThreadedAppUnableToConnect">无法从%3$s连接到服务器%1$s:%2$s。正在重试</string>
+    <string name="toastDoubleBackButtonToExit">再次按\'返回\'键退出Engine Driver</string>
+
+    <!--    Toast messages for the Throttle page-->
+    <string name="toastUnableToSetBrightness">无法设置自动亮度/自适应亮度。</string>
+    <string name="toastAccelerometerNotFound">未找到加速度计或已禁用</string>
+    <string name="toastLocoChangeNotAllowed">不允许更改机车：偏好设置中已禁用\'移动时改变方向\'</string>
+    <string name="toastDirectionButtonsSwapped">方向按钮已临时交换。要永久交换，请在偏好设置中更改</string>
+    <string name="toastImmersiveModeDisabled">沉浸式模式已临时禁用。要永久禁用，请在偏好设置中更改</string>
+    <string name="toastThrottleScreenUnlocked">节流阀屏幕已解锁</string>
+    <string name="toastShakeWebViewHidden">节流阀网页视图已临时隐藏。再次摇晃以显示。要永久隐藏，请在偏好设置中更改</string>
+    <string name="toastShakeWebViewUnavailable">节流阀网页视图必须先在偏好设置中启用</string>
+    <string name="toastShakeScreenLocked">节流阀屏幕已锁定 - 再次摇晃以解锁</string>
+    <string name="toastShakeScreenLockedActionNotAllowed">节流阀屏幕锁定时不允许执行操作</string>
+    <string name="toastShakeScreenDimmed">节流阀屏幕已调暗 - 再次摇晃以恢复</string>
+    <string name="toastSwipeUpDownScreenLocked">节流阀屏幕已锁定 - 再次滑动以解锁</string>
+    <string name="toastSwipeUpDownScreenDimmed">节流阀屏幕已调暗 - 再次滑动以恢复</string>
+    <string name="toastSwipeUpViewHidden">节流阀网页视图已临时隐藏。要永久隐藏，请在偏好设置中更改</string>
+    <string name="toastThrottleAlertEstop">警报：机车%1$s已设置为紧急停止</string>
+    <string name="toastInitialisingSounds">正在初始化手机内机车声音。</string>
+
+    <!--    Toast messages for the Preferences page-->
+    <string name="toastKidsTimerNoLoco">启动计时器前先获得机车。</string>
+    <string name="toastKidsTimerDemoMode">演示模式。计时器未启动</string>
+    <string name="toastPreferencesOutsideLimits">输入的值超出范围（%1$s-%2$s）。已重置为%3$s。</string>
+    <string name="toastPreferencesNotNumeric">输入的值不是数字（%1$s-%2$s）。已重置为%3$s。</string>
+    <string name="toastPreferencesResetSucceeded">偏好设置已重置为默认值！</string>
+    <string name="toastPreferencesImportServerManualFailed">从服务器导入偏好设置失败！请检查文件是否正确。（%1$s）</string>
+    <string name="toastPreferencesImportServerManualSucceeded">从服务器导入偏好设置成功。（%1$s）</string>
+<!--    <string name="toastPreferencesImportSucceeded">Preferences Import from file succeeded.</string>-->
+    <string name="toastPreferencesThemeChangeSucceeded">主题更改成功。</string>
+    <string name="toastPreferencesThrottleChangeSucceeded">节流阀布局更改成功。</string>
+    <string name="toastPreferencesLocaleChangeSucceeded">区域（语言）更改成功。</string>
+    <string name="toastPreferencesBackgroundChangeSucceeded">背景更改成功。</string>
+    <string name="toastPreferencesSwipeThroughWebDisabled">已禁用网页滑动浏览。</string>
+
+    <!--    Toast messages for the Turnout Activity -->
+    <string name="toastTurnoutInvalidNumber">道岔编号无效。</string>
+
+    <!--    Toast messages for the Connection Activity -->
+    <string name="toastConnectEnterAddress">请输入或选择地址和端口</string>
+    <string name="toastConnectInvalidPort">无效的端口号，请重试。</string>
+    <string name="toastConnectConnected">已连接到服务器：%1$s 端口：%2$s</string>
+    <string name="toastConnectUnableToSavePref">无法保存主机特定偏好设置。无法获取主机名。</string>
+    <string name="toastConnectUnableToLoadPref">无法加载主机特定偏好设置。无法获取主机名。</string>
+    <string name="toastConnectErrorReadingRecentConnections">读取最近连接列表时出错：</string>
+    <string name="toastConnectErrorSavingRecentConnection">保存最近连接时出错：</string>
+    <string name="toastConnectRemoveDemoHostError">演示服务器只能通过修改偏好设置来移除。</string>
+    <string name="toastPreferencesImportServerAutoSucceeded">从服务器自动导入首选项成功。(%1$s)</string>
+    <string name="toastPreferencesChangedForceWiFi">\'允许移动数据\'偏好设置已更改。</string>
+
+    <!--    Toast messages for the Routes Activity -->
+
+    <!--    Toast messages for the Import/Export -->
+
+    <!--    Toast messages for the Select Loco Activity -->
+    <string name="toastImportExportServerImportFailed">未从“\\\\Android\\\\data\\\\jmri.enginedriver\\\\files\\\\%1$s\\”导入首选项。您可能尚未保存此主机的首选项。</string>
+    <string name="toastImportExportCannotImport">无法导入首选项。未连接到主机。</string>
+    <string name="toastImportExportCouldNotParseAddress">无法解析地址\\n%1$s</string>
+    <string name="toastNumThrottles">所选节流阀屏幕布局不支持那么多节流阀。正在更改为%1$s。</string>
+    <string name="toastRecentsHelp">点击选择最近条目，\n或更改输入方式。\n长按可重命名。\n向右滑动可删除条目。</string>
+    <string name="toastRecentConsistsHelp">点击选择编组条目，\n或更改输入方式。\n长按可重命名（对于已输入的地址）或显示名册详情。\n向右滑动可删除条目。</string>
+    <string name="toastRosterHelp">点击选择名册条目，\n或更改输入方式。\n长按查看详情。</string>
+    <string name="toastConnectionsListHelp">点击选择服务器，\n或输入服务器地址和端口。\n向右滑动可删除条目。</string>
+    <string name="toastLocoAlreadySelected">机车\'%1$s\'已选择</string>
+    <string name="toastAddressExceedsMax">地址\'%1$s\'超过最大支持值（\'%2$s\'）</string>
+
+    <string name="toastSortedByName">按名称排序</string>
+    <string name="toastSortedById">按地址/ID排序</string>
+    <string name="toastSortedByLastUsed">按最后使用时间排序</string>
+    <string name="toastSortedByPosition">按位置排序</string>
+
+    <!--    Toast messages for the Consist Edit Activity -->
+    <string name="toastConsistEditHelp">点击可更改方向。向右滑动可删除条目。</string>
+
+    <string name="toastRecentCleared">机车已从列表中移除</string>
+    <string name="toastRecentConsistCleared">编组已从列表中移除</string>
+
+    <!--    Toast messages for the Log Viewer Activity -->
+    <string name="toastSaveLogFile">已开始在文件%1$s中记录日志。日志记录将持续到您退出Engine Driver应用。</string>
+    <string name="infoSaveLogFile">正在记录到：%s</string>
+
+    <!--    Toast messages for the Turnouts Activity -->
+
+    <!--    Toast messages for the DCC-EX -->
+    <string name="toastDccexInvalidRosterId">无效的名册ID \'%1$s\'。整个名册、道岔和路线列表可能无法加载。</string>
+
+    <string name="RecentsNameEditTitle">最近机车名称</string>
+    <string name="RecentsNameEditText">输入机车名称</string>
+
+    <string name="RecentConsistsNameEditTitle">最近编组名称</string>
+    <string name="RecentConsistsNameEditText">输入编组名称</string>
+
+    <string name="prefTtsTitle">语音响应偏好设置</string>
+    <string name="prefTtsSummary">播报关键事件的选项</string>
+
+    <string name="prefTtsWhenTitle">语音响应时机</string>
+    <string name="prefTtsWhenSummary">使用文本转语音(TTS)播报关键事件和操作的时机</string>
+
+    <string name="prefTtsThrottleResponseTitle">游戏手柄节流阀变更时</string>
+    <string name="prefTtsThrottleResponseSummary">当在游戏手柄上选择不同节流阀时</string>
+
+    <string name="prefTtsThrottleSpeedTitle">游戏手柄速度时</string>
+    <string name="prefTtsThrottleSpeedSummary">使用游戏手柄时速度达到特定值时</string>
+
+    <string name="prefTtsGamepadTestTitle">游戏手柄测试开始时</string>
+    <string name="prefTtsGamepadTestSummary">当游戏手柄测试界面启动时</string>
+
+    <string name="prefTtsGamepadTestKeysTitle">游戏手柄测试按键按下时</string>
+    <string name="prefTtsGamepadTestKeysSummary">当在游戏手柄测试界面按下每个按钮时</string>
+
+    <string name="prefTtsGamepadTestCompleteTitle">游戏手柄测试完成时</string>
+    <string name="prefTtsGamepadTestCompleteSummary">当游戏手柄测试界面结束时</string>
+
+    <string name="TtsVolumeThrottle">节流阀</string>
+    <string name="TtsGamepadThrottle">节流阀</string>
+    <string name="TtsLoco">机车</string>
+    <string name="TtsSpeed">速度</string>
+    <string name="TtsTargetSpeed">目标速度</string>
+    <string name="TtsGamepadTest">游戏手柄测试</string>
+    <string name="TtsGamepadTestComplete">测试完成</string>
+    <string name="TtsGamepadTestSkipped">测试已跳过</string>
+    <string name="TtsGamepadTestFail">测试已取消</string>
+    <string name="TtsGamepadTestReset">游戏手柄已重置</string>
+    <string name="TtsGamepadTestSpeedZero">零</string>
+    <string name="TtsGamepadTestSpeedMax">最大</string>
+<!--
+    <string name="TTS_Screen_Dimmed">Dimmed, swipe up to restore</string>
+    <string name="TTS_Screen_Locked">已锁定，向上滑动以恢复</string>
+    <string name="TTS_Screen_Unlocked">已解锁</string>
+    <string name="TTS_Immersive_Mode_Disabled">沉浸模式已临时禁用</string>
+    <string name="TTS_Forward">前进</string>
+    <string name="TTS_Reverse">后退</string>
+    <string name="TTS_Speed_Zero">零</string>
+    <string name="TTS_Speed_Max">最大</string>
+    <string name="TTS_Speed_Stop">停止</string>
+    <string name="TTS_EStop">紧急停止</string>
+    <string name="TTS_Dir_Change_While_Moving_Disabled">方向未改变</string>
+    <string name="TTS_Function">功能 </string>
+-->
+    <string name="toastTtsFailed">抱歉！文本转语音失败&#8230;</string>
+
+    <string name="functionButtonLookForWhistle">鸣笛</string>
+    <string name="functionButtonLookForHorn">喇叭</string>
+    <string name="functionButtonLookForBell">BELL</string>
+    <string name="functionButtonLookForHead">前灯</string>
+    <string name="functionButtonLookForLight">灯光</string>
+    <string name="functionButtonLookForRear">尾灯</string>
+
+    <string name="throttleSwitchAction">切换节流阀屏幕布局</string>
+
+    <string name="flashlightAction">手电筒</string>
+    <string name="flashlightStateOn">手电筒已开启</string>
+    <string name="flashlightStateOff">手电筒已关闭</string>
+    <string name="prefFlashlightSummary">在操作栏显示手电筒按钮</string>
+    <string name="prefFlashlightTitle">手电筒按钮？</string>
+    <string name="toastFlashlightOnFailed">抱歉！开启手电筒时出现问题&#8230;</string>
+    <string name="toastFlashlightOffFailed">抱歉！关闭手电筒时出现问题&#8230;</string>
+
+    <string name="webViewButtonBar">节流阀网页视图按钮</string>
+    <string name="prefWebViewButtonSummary">在操作栏中显示“显示/隐藏 Web 视图”按钮？\\n（需要启用“限制 Web 视图”首选项）</string>
+    <string name="prefWebViewButtonTitle">节流阀网页视图按钮？</string>
+
+    <!-- Consist Follow Function Preferences etc. -->
+    <string name="ConsistEditLabelLead">主控</string>
+    <string name="ConsistEditLabelTrail">从控</string>
+
+    <string name="prefConsistFollowRuleStyleTitle">编组和默认功能 - 遵循规则样式</string>
+    <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">在以下情况按下功能按钮时应遵循哪种规则样式</string>
+
+    <string name="prefConsistFollowTitle">编组功能跟随偏好设置</string>
+    <string name="prefConsistFollowSummary">编组中功能行为的选项。</string>
+
+    <string name="prefConsistFollowString1DefaultValue">灯光</string>
+    <string name="prefConsistFollowString2DefaultValue">鸣笛,喇叭,铃铛</string>
+
+    <string name="prefConsistFollowDefaultActionTitle">所有匹配失败时的操作</string>
+    <string name="prefConsistFollowDefaultActionSummary">如果未满足以下任何规则，编组中的哪些机车应响应功能按钮。（仅适用于复杂匹配规则）</string>
+
+    <string name="prefConsistFollowString1Title">前灯特定字符串1</string>
+    <string name="prefConsistFollowString1Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
+    <string name="prefConsistFollowAction1Title">前灯特定操作1</string>
+    <string name="prefConsistFollowAction1Summary">编组中的哪些机车应响应已找到的前灯功能。</string>
+
+    <string name="prefConsistFollowString2Title">字符串2</string>
+    <string name="prefConsistFollowString2Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
+    <string name="prefConsistFollowAction2Title">字符串2的操作</string>
+    <string name="prefConsistFollowAction2Summary">编组中的哪些机车应响应已找到的功能。</string>
+
+    <string name="prefConsistFollowString3Title">字符串3</string>
+    <string name="prefConsistFollowString3Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
+    <string name="prefConsistFollowAction3Title">字符串3的操作</string>
+    <string name="prefConsistFollowAction3Summary">编组中的哪些机车应响应已找到的功能。</string>
+
+    <string name="prefConsistFollowString4Title">String 4</string>
+
+    <string name="prefConsistFollowAction4Summary">编组中哪些机车应该对找到的功能做出反应？</string>
+    <string name="prefConsistFollowString5Title">字符串5</string>
+    <string name="prefConsistFollowString5Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
+    <string name="prefConsistFollowAction5Title">字符串5的操作</string>
+    <string name="prefConsistFollowAction5Summary">编组中的哪些机车应响应已找到的功能。</string>
+
+    <string name="prefKidsSectionTitle">儿童（计时器）偏好设置</string>
+    <string name="prefKidsSectionSummary">幼儿选项。\n时间控制运行。</string>
+    <string name="prefKidsHelpTitle">计时器注意事项：</string>
+    <string name="prefKidsHelpSummary">- 先选择机车。\n- 计时器将在第一次提速时启动。\n- 超时后必须返回此偏好设置以重置时间（或清除）。\n\n建议：\n- 禁用音量键。\n- 禁用\'滑动浏览道岔\'。\n- 禁用\'滑动浏览路线\'。\n- 禁用紧急停止。</string>
+    <string name="prefKidsTimerTitle">限时运行</string>
+    <string name="prefKidsTimerSummary">限制机车运行时间。例如：每个儿童（操作员）将获得相等的时间。</string>
+
+    <string name="prefKidsTimerRestartPasswordTitle">重启密码</string>
+    <string name="prefKidsTimerRestartPasswordSummary">使用当前设置重启计时器的密码</string>
+
+    <string name="prefKidsTimerResetPasswordTitle">重置/禁用密码</string>
+    <string name="prefKidsTimerResetPasswordSummary">用于重置/禁用计时器设置的密码</string>
+
+    <string name="prefKidsTimerEnableReverseTitle">允许后退？</string>
+    <string name="prefKidsTimerEnableReverseSummary">启用后退按钮</string>
+
+    <string name="prefKidsTimerKioskModeTitle">自助服务模式？</string>
+    <string name="prefKidsTimerKioskModeSummary">计时器启动时启用屏幕锁定（自助服务终端模式）</string>
+    <string name="prefKidsTimerButtonTitle">显示计时器按钮？</string>
+    <string name="prefKidsTimerButtonSummary">显示操作栏中的计时器按钮以激活计时器</string>
+
+    <string name="prefKidsTimerButtonDefaultTitle">按钮默认时间</string>
+    <string name="prefKidsTimerButtonDefaultSummary">使用操作栏按钮激活计时器时的默认时间</string>
+
+    <string name="prefAllowMobileDataTitle">移动数据连接？</string>
+
+    <string name="prefAllowMobileDataSummary">允许您的设备通过移动数据连接到 JMRI。</string>
+    <string name="prefActionBarShowServerDescriptionTitle">显示服务器描述</string>
+    <string name="prefActionBarShowServerDescriptionSummary">在操作栏显示当前服务器的描述</string>
+
+    <string name="app_name_throttle_kids_running">剩余%1$s秒</string>
+    <string name="app_name_throttle_kids_enabled">计时器就绪</string>
+    <string name="app_name_throttle_kids_ended">计时器结束</string>
+
+    <string name="kidsTimer">计时器</string>
+    <string name="timerDialogTitle">计时器密码</string>
+    <string name="timerDialogMessage">密码：</string>
+    <string name="timerDialogHint">重启或重置密码</string>
+
+    <string name="permissionsREAD_IMAGES">Engine Driver需要存储权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>
+    <string name="permissionsReadPhoneState">Engine Driver需要电话权限以在通话时停止您的机车。\n\n即使没有此权限，Engine Driver仍可运行。如果不需要，请禁用\'通话时停止？\`偏好设置。</string>
+    <string name="permissionsWriteSettings">Engine Driver需要允许修改系统设置权限来更改屏幕亮度。</string>
+    <string name="permissionsWriteSettingsAdditional">- 点击下方按钮。\n- 授予权限。\n- 点击\'返回\'回到此处。</string>
+    <string name="permissionsWriteSettingsAdditional2">即使没有此权限，Engine Driver仍可运行。如果不需要Engine Driver调整亮度，请忽略此提示。</string>
+    <string name="permissionsACCESS_FINE_LOCATION">Engine Driver需要精确位置权限来获取当前WiFi SSID。\n\n即使没有此权限，Engine Driver仍可运行，但服务器发现功能可能受限。</string>
+    <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver需要粗略位置权限来获取当前WiFi SSID。</string>
+    <string name="permissionsACCESS_WIFI_STATE">Engine Driver需要WiFi状态权限来获取当前WiFi SSID。</string>
+    <string name="permissionsINTERNET">Engine Driver需要互联网权限来获取当前WiFi SSID。</string>
+    <string name="permissionsVIBRATE">Engine Driver需要振动权限来提供额外反馈。</string>
+    <string name="permissionsConnectToServer">Engine Driver需要存储权限来保存最近连接，以及电话权限以在通话时暂停操作。</string>
+
+<!-- needed for API 33 -->
+    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver需要读取媒体图片权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver需要读取用户选择的媒体视觉内容权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>
+    <string name="permissionsPOST_NOTIFICATIONS">Engine Driver需要通知权限以在应用进入后台时向您发出警告。</string>
+<!-- needed for API 33 -->
+
+    <string name="permissionsAppSettingsButton">应用设置</string>
+    <string name="permissionsDeclineButton">拒绝</string>
+    <string name="permissionsSystemSettingsButton">系统设置</string>
+    <string name="permissionsRetryButton">重试</string>
+    <string name="permissionsRequestTitle">权限</string>
+    <string name="permissionsRetryTitle">权限已拒绝</string>
+
+
+    <!-- Introduction / Setup Wizard -->
+
+    <string name="introWelcomeTitle">欢迎使用\nEngine Driver</string>
+    <string name="introWelcomeSummary">此应用可连接到JMRI、MRC、DigiTrax、WifiTrax、IoTT Stick或DCC-EX WiThrottle服务器，或DCC-EX原生服务器，以控制您的DCC机车和设备。
+        它还可以读写CV值，并在DCC-EX EX-CommandStation上控制DC机车。
+        \n以下页面将指导您完成初始设置。</string>
+
+    <string name="introThrottleNameSummary">为该设备设置名称</string>
+    <string name="introThrottleNameSummary1">您选择的名称将显示在WiThrottle服务器窗口中。
+        这有助于解决多设备问题，且必须是唯一的。</string>
+
+    <string name="introThemeSummary">选择整个应用的颜色和外观</string>
+    <string name="introThrottleTypeSummary">选择主节流阀屏幕的布局</string>
+    <string name="introThrottleTypeSummary2">根据所选布局，屏幕上单个节流阀的数量将受到限制
+        （1到6个）</string>
+
+    <string name="introFinishTitle">准备就绪</string>
+    <string name="introFinishSummary">Engine Driver现已准备好连接。</string>
+    <string name="introFinishSummary2">有关详细说明，请从菜单中查看关于页面</string>
+    <string name="introFinishSummary3">您可以从偏好设置菜单对应用的外观和行为进行其他更改。</string>
+
+    <string name="introButtonsTitle">速度滑块和按钮</string>
+    <string name="introButtonsSummary">选择控制列车速度的方式</string>
+    <string name="introButtonsSlider">仅滑块\n（“大按钮”布局不支持）</string>
+    <string name="introButtonsSliderAndButtons">滑块+按钮\n（“大按钮”布局不支持）</string>
+    <string name="introButtonsNoSlider">仅速度按钮</string>
+
+    <string name="introButtonsNoSliderOrButtons">仅速度按钮</string>
+    <string name="introDccexTitle">EX-CommandStation选项</string>
+    <string name="introDccexSummary">如果您直接使用DCC-EX EX-CommandStation（不通过JMRI），Engine Driver可以提供额外功能，包括CV编程。\n\n如果您在下方选择“是”，当服务器名称包含“DCC-EX”或“DCCEX”或使用端口“2560”时，Engine Driver将默认使用DCC-EX原生命令而非WiThrottle。</string>
+    <string name="introDccexQuestionYes">是，我将使用EX-CommandStation</string>
+    <string name="introDccexQuestionNo">否，我不使用EX-CommandStation</string>
+
+    <string name="introEsuMc2QuestionNo">不，我会自己选择设置。</string>
+    <string name="introbackButtonPress">请重新启动Engine Driver应用以完成介绍</string>
+    <string name="edit_consist_menu">≡ 编辑编组</string>
+    <string name="edit_consist_throttle_1">Edit Consist Throttle 1</string>
+    <string name="edit_consist_throttle_2">Edit Consist Throttle 2</string>
+    <string name="edit_consist_throttle_3">Edit Consist Throttle 3</string>
+    <string name="edit_consist_throttle_4">Edit Consist Throttle 4</string>
+    <string name="edit_consist_throttle_5">编辑编组节流阀 5</string>
+    <string name="edit_consist_throttle_6">编辑编组节流阀 6</string>
+    <string name="edit_consist_lights_throttle_1">编辑编组灯光节流阀 1</string>
+    <string name="edit_consist_lights_throttle_2">编辑编组灯光节流阀 2</string>
+    <string name="edit_consist_lights_throttle_3">编辑编组灯光节流阀 3</string>
+    <string name="edit_consist_lights_throttle_4">编辑编组灯光节流阀 4</string>
+    <string name="edit_consist_lights_throttle_5">编辑编组灯光节流阀 5</string>
+    <string name="edit_consist_lights_throttle_6">编辑编组灯光节流阀 6</string>
+
+    <string name="editConsistButtonLabel">编辑顺序和朝向</string>
+    <string name="editConsistLightsButtonLabel">编辑灯光</string>
+
+    <string name="editConsistLocoFacingLabel">朝向</string>
+    <string name="consistLocoFacingFront">前方</string>
+    <string name="consistLocoFacingRear">后方</string>
+
+    <string name="turnoutsSelectionTypeHeading">道岔选择方式</string>
+    <string name="turnoutsSelectionTypeAddress">地址/最近使用</string>
+    <string name="turnoutsSelectionTypeRoster">%1$s 已定义</string>
+    <string name="turnoutsRecentHeading">最近使用的道岔</string>
+
+    <string name="dialogConfirmClearTitle">清除列表</string>
+    <string name="dialogRecentLocoConfirmClearQuestion">确认要移除所有最近使用的机车吗</string>
+    <string name="dialogRecentConsistsConfirmClearQuestions">确认要移除所有最近使用的编组吗</string>
+    <string name="dialogRecentTurnoutsConfirmClearQuestions">确认要移除所有最近使用的道岔吗</string>
+    <string name="dialogRecentConnectionsConfirmClearQuestions">确认要移除所有最近使用的连接吗</string>
+
+    <string name="dialogDownloadRosterConfirmQuestion">确认要将所有花名册条目下载到最近使用的机车列表吗</string>
+
+    <string name="prefHideInstructionalToastsTitle">隐藏指导性提示</string>
+    <string name="prefHideInstructionalToastsSummary">隐藏指导性的“toast”弹出帮助/提示</string>
+
+    <string name="dialogConfirmResetPreferencesTitle">重置偏好设置</string>
+    <string name="dialogResetPreferencesQuestion">确认要重置所有偏好设置吗？\n所有当前偏好设置都将丢失。</string>
+
+    <string name="dialogConfirmImportPreferencesTitle">导入偏好设置</string>
+    <string name="dialogImportPreferencesQuestion">确认要导入偏好设置吗？\n所有当前偏好设置都将丢失。</string>
+
+    <string name="prefBackgroundImagePreferencesTitle">背景图片偏好设置</string>
+    <string name="prefBackgroundImageTitle">背景图片</string>
+    <string name="prefBackgroundImageSummary">在节流阀屏幕上显示背景图片</string>
+
+    <string name="prefBackgroundImageFileNameTitle">背景图片文件名</string>
+    <string name="prefBackgroundImageFileNameSummary">输入背景图片文件的名称。</string>
+    <string name="prefBackgroundImageFileNameNoImageSelected">未选择图片</string>
+
+    <string name="prefBackgroundImagePositionTitle">背景图片位置</string>
+    <string name="prefBackgroundImagePositionSummary">选择背景图片在屏幕上的显示位置。</string>
+
+    <string name="prefThrottleSwitchButtonPreferencesTitle">布局切换按钮偏好设置</string>
+    <string name="prefThrottleSwitchButtonTitle">显示布局切换按钮？</string>
+    <string name="prefThrottleSwitchButtonSummary">在节流阀屏幕操作栏中显示节流阀布局切换按钮，以允许快速更改节流阀布局</string>
+    <string name="prefThrottleSwitchButtonCycleAllTitle">循环所有布局？</string>
+    <string name="prefThrottleSwitchButtonCycleAllSummary">布局切换按钮将循环所有布局，而不仅仅是下面两个</string>
+
+    <string name="prefThrottleSwitchOption1Title">第一个屏幕布局</string>
+    <string name="prefThrottleSwitchOption1Summary">布局切换按钮将在此节流阀布局和下一个偏好设置的布局之间切换</string>
+
+    <string name="prefThrottleSwitchOption2Title">第二个屏幕布局</string>
+    <string name="prefThrottleSwitchOption2Summary">布局切换按钮将在上一个偏好设置的节流阀布局和此布局之间切换</string>
+
+    <string name="prefSemiRealisticThrottleTitle">半真实的油门偏好</string>
+    <string name="prefSemiRealisticThrottleSummary">半写实节流阀屏幕专用偏好设置</string>
+
+    <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">加速速度步进重复延迟</string>
+    <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">加速速度步进重复之间的时间间隔（毫秒）。数值越小速度越快。</string>
+
+    <string name="prefSemiRealisticThrottleDecelerationRepeatTitle">减速速度步进重复延迟</string>
+    <string name="prefSemiRealisticThrottleDecelerationRepeatSummary">减速速度步进重复之间的时间间隔（毫秒）。数值越小速度越快。</string>
+
+    <string name="prefSemiRealisticThrottleSpeedStepTitle">速度步进量</string>
+    <string name="prefSemiRealisticThrottleSpeedStepSummary">每次向目标速度跳跃的实际速度量。数值越大速度越快。</string>
+
+    <string name="prefSemiRealisticThrottleNotchesTitle">节流阀档位</string>
+
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsTitle">制动步骤数量</string>
+    <string name="prefSemiRealisticThrottleNumberOfBrakeStepsSummary">调整制动滑块的步骤数量</string>
+
+    <string name="prefSemiRealisticThrottleAirRefreshRateTitle">空气制动刷新速率</string>
+    <string name="prefSemiRealisticThrottleAirRefreshRateSummary">调整空气制动刷新/重新填充的速率（毫秒）。数值越小速度越快。</string>
+
+    <string name="prefSemiRealisticThrottleDisableAirTitle">禁用空气储存器</string>
+    <string name="prefSemiRealisticThrottleDisableAirSummary">如果勾选，空气储存器的填充状态将不影响可用制动</string>
+
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsTitle">负载步骤数量</string>
+    <string name="prefSemiRealisticThrottleNumberOfLoadStepsSummary">调整负载滑块的步骤数量</string>
+
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">解码器制动类型</string>
+    <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">激活解码器上的制动功能</string>
+
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">解码器低功能编号</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary">在低制动值时激活哪些解码器功能。（-1表示忽略）\n最多五个功能。多个功能用空格分隔（\" \"）</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle">解码器中功能编号</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary">在中制动值时激活哪些解码器功能。（-1表示忽略）\n最多五个功能。多个功能用空格分隔（\" \"）</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle">解码器高功能编号</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary">在高制动值时激活哪些解码器功能。（-1表示忽略）\n最多五个功能。多个功能用空格分隔（\" \"）</string>
+
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle">解码器低制动值（百分比）</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary">激活低功能的制动百分比</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle">解码器中制动值（百分比）</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">激活中功能的制动百分比</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">解码器高制动值（百分比）</string>
+    <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">激活高功能的制动百分比</string>
+
+    <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">最大负载百分比</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">调整负载滑块的最大百分比。（100-20000%）100% = 单独机车</string>
+
+    <string name="prefSemiRealisticMaximumBrakePcntTitle">最大制动百分比</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary">调整制动滑块的最大百分比。（5-100%）100% = 立即停车</string>
+
+    <string name="prefSemiRealisticThrottleStopButtonActionTitle">停止按钮操作</string>
+    <string name="prefSemiRealisticThrottleStopButtonActionSummary">选择停止按钮的功能</string>
+
+    <string name="prefCategoryDevicePageTitle">设备偏好设置</string>
+
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountTitle">功能按钮区域大小</string>
+    <string name="prefSimpleThrottleLayoutShowFunctionButtonCountSummary" tools:ignore="TypographyDashes">在简单节流阀布局上显示的功能按钮数量（0-4）</string>
+
+    <string name="prefShowTimeOnLogEntryTitle">在日志上显示时间戳？</string>
+
+    <string name="prefShowTimeOnLogEntrySummary">在日志屏幕上显示每条记录的日期和时间。</string>
+    <string name="prefSortOrderRosterTitle">名册排序顺序</string>
+    <string name="prefSortOrderRosterSummary">每次启动Engine Driver时名册条目的默认显示顺序</string>
+
+    <string name="prefSortOrderTurnoutsTitle">道岔排序顺序</string>
+    <string name="prefSortOrderTurnoutsSummary">每次启动Engine Driver时道岔条目的默认显示顺序</string>
+
+    <string name="prefSortOrderRoutesTitle">路线排序顺序</string>
+    <string name="prefSortOrderRoutesSummary">每次启动Engine Driver时路线条目的默认显示顺序</string>
+
+    <string name="prefShowWitPomTitle">显示WiThrottle PoM页面</string>
+    <string name="prefShowWitPomSummary">选择是否显示WiThrottle CV编程主页面（操作模式）菜单和页面</string>
+
+    <string name="prefFeedbackOnDisconnectTitle">断开连接反馈</string>
+    <string name="prefFeedbackOnDisconnectSummary">意外断开连接时播放声音并振动</string>
+
+    <string name="prefFeedbackWhenGoingToBackgroundTitle">后台提醒</string>
+    <string name="prefFeedbackWhenGoingToBackgroundSummary">应用进入后台时发出声音提醒</string>
+
+    <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation偏好设置</string>
+    <string name="prefDccexPreferencesSummary">使用EX-CommandStation的选项</string>
+
+    <string name="useProtocolDCCEX">要使用什么协议？</string>
+    <string name="useProtocolDCCEXplusAutoHint">使用的协议？\n<small><small>（"自动"模式会查找"DCCEX"、"DCC-EX"或端口2560）</small></small></string>
+
+    <string name="DccexConnectionOptionTitle">显示协议选项</string>
+    <string name="prefActionBarShowDccExButtonSummary">在操作栏显示访问DCC-EX屏幕的按钮。\n（仅适用于原生DCC-EX连接。）</string>
+    <string name="prefActionBarShowDccExButtonTitle">DCC-EX按钮？</string>
+
+    <string name="prefHapticFeedbackTitle">触觉反馈（振动）</string>
+    <string name="prefHapticFeedbackSummary">速度变化时的触觉反馈（振动）</string>
+
+    <string name="prefFullScreenSwipeAreaTitle">禁用全屏滑动？</string>
+    <string name="prefFullScreenSwipeAreaSummary">若勾选，仅可通过工具栏滑动切换屏幕</string>
+
+    <string name="prefLeftRightSwipeChangesSpeedTitle">左右滑动改变速度？</string>
+    <string name="prefLeftRightSwipeChangesSpeedSummary">若勾选，在屏幕主要区域滑动将增加/减少速度。屏幕间切换仅启用标题滑动</string>
+
+    <string name="prefSwipeSpeedChangeStepTitle">滑动速度步长（上、下或左/右）？</string>
+
+    <string name="prefLeftRightSwipePreferencesTitle">左右滑动偏好设置</string>
+    <string name="prefLeftRightSwipePreferencesSummary">屏幕切换滑动选项</string>
+
+    <string name="prefHapticFeedbackDurationTitle">触觉反馈持续时间</string>
+    <string name="prefHapticFeedbackDurationSummary">每次振动的持续时间（毫秒）</string>
+    <string name="prefHapticFeedbackButtonsTitle">按钮按下触觉反馈</string>
+    <string name="prefHapticFeedbackButtonsSummary">按钮按下时的触觉反馈（振动）</string>
+    <string name="LocoSelectMethodIDNGo">请求机车ID</string>
+    <string name="idngo_label">请求 Loco ID</string>
+    <string name="idngo_button">请求机车ID</string>
+
+    <string name="DCCEXrouteSet">设置</string>
+    <string name="DCCEXrouteHandoff">切换</string>
+
+    <string name="DCCEXturnoutClosed">闭合</string>
+    <string name="DCCEXturnoutThrown">转辙</string>
+    <string name="DCCEXturnoutUnknown">未知</string>
+    <string name="DCCEXturnoutInconsistent">不一致</string>
+
+    <string name="DCCEXactionTypeLabel">操作</string>
+    <string name="DccexWriteAddressLabel">DCC Address</string>
+    <string name="DccexWriteCvValueLabel">值</string>
+    <string name="DccexWriteAddressButtonLabel">写入</string>
+    <string name="DccexReadAddressButtonLabel">读取</string>
+    <string name="DccexSendCommandButtonLabel">发送</string>
+    <string name="DccexPreviousCommandButtonLabel">上一个</string>
+    <string name="DccexNextCommandButtonLabel">下一个</string>
+    <string name="DccexSendCommandLabel">DCC-EX命令
+<small><small>（不包含\'&lt;\'和\'&gt;\'）</small></small></string>
+    <string name="DccexClearCommands">清除</string>
+
+    <string name="advancedConsistToolRemoveButtonLabel">消除</string>
+    <string name="advancedConsistToolButtonLabel">高级组成</string>
+    <string name="witActionTypeLabel">操作</string>
+    <string name="witWriteAddressLabel">DCC地址</string>
+    <string name="witPomWarning">注意：- 某些DCC系统可能不支持此功能。- 禁止更改机车地址 - CV 1、17、18以及CV 29的第5位。请谨慎使用。</string>
+    <string name="witPomMaxValueWarning">值\'%1$s\'超过最大支持值（\'%2$s\'）</string>
+
+    <string name="DccexCommonCvsLabel">NMRA CV参数</string>
+    <string name="DccexCommonCommandsLabel" >常用命令</string>
+
+    <string name="DCCEXsetTrackButtonLabel">设置</string>
+    <string name="DCCEXJoinTrackButtonLabel">合并</string>
+
+    <string name="DccexSucceeded">操作成功</string>
+    <string name="DccexFailed">操作失败</string>
+
+    <string name="DCCEXbuttonTrackManager">轨道管理器</string>
+    <string name="DCCEXbuttonDefaultFunctions">默认功能</string>
+    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - 编程轨道（服务模式）</string>
+    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - 主轨道编程（操作模式）</string>
+    <string name="DCCEXheadingTrackManager">DCC-EX - 轨道/区域管理器</string>
+
+    <string name="DCCEXrequestLocoIdFailed">请求机车ID失败</string>
+
+    <string name="cv29SpeedSteps14">速度步长：14</string>
+    <string name="cv29SpeedSteps28">速度步长：28/128</string>
+    <string name="cv29AnalogueConversionOn">模拟转换：开启</string>
+    <string name="cv29AnalogueConversionOff">模拟转换：关闭</string>
+    <string name="cv29DirectionForward">正常方向：前进</string>
+    <string name="cv29DirectionReverse">正常方向：后退</string>
+    <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">地址大小：2位（0-127）</string>
+    <string name="cv29AddressSize4bit" tools:ignore="TypographyDashes">地址大小：4位（1-10239）</string>
+    <string name="cv29SpeedTableNo">速度表：未使用（使用CV 2、5和6）</string>
+    <string name="cv29SpeedTableYes">速度表：使用中</string>
+    <string name="cv29SpeedToggleDirection">向CV29写入值%d以切换方向。</string>
+
+    <string name="witHeadingCvProgrammerPoM">WiThrottle - 主轨道编程（操作模式）</string>
+
+    <string name="order">排序</string>
+
+    <string name="rosterDecoderInfoDccAddress">DCC地址：</string>
+    <string name="rosterDecoderInfoRoadName">铁路名称：</string>
+    <string name="rosterDecoderInfoRoadNumber">铁路编号：</string>
+    <string name="rosterDecoderInfoOwner">所有者：</string>
+    <string name="rosterDecoderInfoModel">型号：</string>
+    <string name="rosterDecoderInfoManufacturer">制造商：</string>
+    <string name="rosterDecoderInfoComment">备注：</string>
+    <string name="rosterDecoderInfoDecoderFamily">解码器系列：</string>
+    <string name="rosterDecoderInfoDecoderModel">解码器型号：</string>
+    <string name="rosterDecoderInfoDecoderComment">解码器备注：</string>
+    <string name="rosterDecoderInfoRosterEntry">名册条目：</string>
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">确认</string>
+    <string name="autoServerConnectTitle">自动服务器连接</string>
+    <string name="autoServerConnectLabel">服务器名称</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">获取当前服务器</string>
+    <string name="prefAutoServerConnectSummary">如果发现指定名称的服务器，则自动连接到该服务器。</string>
+    <string name="prefAutoServerConnectTitle">自动连接到指定服务器</string>
+    <string name="dccexInCv19Consist">机车属于 CV19 列车编组：%s</string>
+    <string name="dccexNotInCv19Consist">机车不在 CV19 列车编组中。</string>
+    <string name="DccexCvBitCalculatorButtonLabel">比特</string>
+    <string name="cvBitCalculatorTitle">CV值（十进制）</string>
+    <string name="cvBitCalculatorCvValueLabel">CV值（十进制）</string>
+    <string name="cvBitCalculatorCvBitsLabel">比特：</string>
+    <string name="idngo_help_text">按下按钮向服务器发送请求，以识别和获取已在编程轨道上的机车，并将值返回到此油门。</string>
+    <string name="logviewerStopSave">停止</string>
+    <string name="prefDccexTitle">使用 DCC-EX 原生命令</string>
+    <string name="prefDccexSummary">所有连接均请使用 DCC-EX 原生命令，而非 wiThrottle。注意：此设置需重启引擎驱动程序并连接服务器后方可生效。</string>
+    <string name="prefAlwaysUseFunctionsFromServerTitle">始终使用服务器端的功能标签</string>
+    <string name="prefAlwaysUseFunctionsFromServerSummary">禁用时，对按地址（而非名册）选择的机车使用 EngineDriver 默认标签，忽略服务器默认标签。</string>
+    <string name="prefDccexSequenceItemRequestsTitle">排序项目请求</string>
+    <string name="prefDccexSequenceItemRequestsSummary">请等待检索完一种类型的所有项目（名册、道岔、路线和轨道）后，再请求检索下一种类型的所有项目。</string>
+    <string name="prefDccexConnectionOptionTitle">显示协议选项</string>
+    <string name="prefDccexConnectionOptionSummary">在连接屏幕中显示切换 wiThrottle 和 DCC-EX 协议的选项。</string>
+    <string name="prefDirectionButtonLongPressDelayTitle">方向键长按延迟</string>
+    <string name="prefDirectionButtonLongPressDelaySummary">方向键长按多少毫秒才算长按？</string>
+    <string name="functionConsistColumnLatching">锁存</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">没有任何</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">锁扣</string>
+    <string name="prefGamepadTestNowTitle">立即测试游戏手柄设置！</string>
+    <string name="prefGamepadTestNowSummary">允许您确认所选设置是否正常工作。\n\n选择后，测试页面将立即打开。</string>
+    <string name="prefKidsTimerDemoModePasswordTitle">演示模式密码</string>
+    <string name="prefKidsTimerDemoModePasswordSummary">用于在不禁用计时器的情况下覆盖计时器（演示模式）的密码</string>
+    <string name="prefThrottlesLocosTitle">重新加载上次使用的机车？</string>
+    <string name="prefThrottlesLocosSummary">连接后，自动加载您在上一次会话中获得的机车。</string>
+    <string name="prefStopOnBackgroundTitle">后台停止？</string>
+    <string name="prefStopOnBackgroundSummary">当 EngineDriver 被置于后台时，所有机车在所有油门上立即停止。</string>
+    <string name="prefUseDispatchCommandTitle">派发而非发布</string>
+    <string name="prefUseDispatchCommandSummary">释放机车时，请使用 WiThrottle 的 \'d\'ispatch 命令，而不是 \'r\'elease 命令。</string>
+    <string name="prefShowDispatchButtonTitle">显示调度按钮</string>
+    <string name="toastConnectRemoved">服务器已从列表中移除。</string>
+    <string name="usingProtocolDCCEX">使用 DCC-EX 协议。取消选中“使用原生 DCC-EX 命令”首选项，即可使用 wiThrottle 协议。</string>
+    <string name="prefSwipeSpeedChangeStepSummary">速度步长用于设置向上、向下或向左/向右滑动的步长，以改变滑动速度。</string>
+    <string name="prefThrottleOrientationTitle">屏幕方向</string>
+    <string name="FilterRosterListDownloadLabel">下载</string>
+    <string name="prefToolbarButtonSizeTitle">工具栏按钮</string>
+    <string name="prefToolbarButtonSizeSummary">设置工具栏按钮大小。（需要重启电脑）</string>
+    <string name="routes_route">路由系统名称</string>
+    <string name="toastImportExportImportSucceeded">从 \\\'\\\\Android\\\\data\\\\jmri.enginedriver\\\\files\\\\%1$s\\\' 导入首选项成功。</string>
+    <string name="toastImportExportExportFailed">将首选项导出到“\\\\Android\\\\data\\\\jmri.enginedriver\\\\files\\\\%1$s\\”失败！</string>
+    <string name="toastImportExportExportSucceeded">首选项导出到 \\\'\\\\Android\\\\data\\\\jmri.enginedriver\\\\files\\\\%1$s\\\' 成功。</string>
+    <string name="toastImportExportImportFailed">从“\\\\Android\\\\data\\\\jmri.enginedriver\\\\files\\\\%1$s\\”导入首选项失败！</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">长按停止键</string>
+    <string name="prefStopButtonEStopOnLongPressSummary">长按停止按钮，即可使当前油门控制下的所有机车立即停止。</string>
+    <string name="prefStopButtonLongPressDelayTitle">停止按钮长按延迟</string>
+    <string name="prefStopButtonLongPressDelaySummary">长按停止按钮启动紧急停止功能需要多少毫秒？</string>
+    <string name="prefSemiRealisticThrottleNotchesSummary">以百分比或特定步数/档位调整油门</string>
+    <string name="advancedConsistToolTitle">高级集合工具（CV19）</string>
+    <string name="advancedConsistToolConsistAddressLabel">组成地址</string>
+    <string name="advancedConsistToolLocoAddressLabel">本地地址</string>
+    <string name="advancedConsistToolLocoFacingLabel">面向前方？</string>
+    <string name="advancedConsistToolAddButtonLabel">添加</string>
+    <string name="prefConsistFollowString4Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
+    <string name="prefConsistFollowAction4Title">字符串 4 的操作</string>
+    <string name="introEsuMc2Summary">ESU Mobile Control 2/Pro 的屏幕空间有限，而且其实体按键使得 Engine Driver 的一些屏幕控制功能显得多余。如果您在下方选择“是”，我们将调整部分设置，以充分利用 ESU MC2/Pro 的屏幕空间。</string>
+    <string name="introEsuMc2QuestionYes">是的，请使用推荐设置</string>
+    <string name="prefEsuMc2SliderTypeTitle">滑块类型</string>
+    <string name="prefEsuMc2SliderTypeSummary">定义滑块的功能</string>
+    <string name="gamepadTestReset">重置</string>
+    <string name="gamepadTestCancel">取消</string>
+    <string name="gamepadTestCancelNonForced">关闭</string>
+    <string name="gamepadTestIncomplete">测试未完成</string>
+    <string name="gamepadTestComplete">测试完成</string>
+    <string name="gamepadTestCompleteToast">游戏手柄测试已成功完成</string>
+    <string name="gamepadTestHelpNonForced">\"如果无法激活所有按钮，请更改游戏手柄模式（请参阅设备随附的说明）或尝试其他游戏手柄类型（如上所示）。  首次从油门屏幕使用游戏手柄时，可能需要重新测试。\"</string>
+    <string name="gamepadTestInvalidKeycode">此模式的密钥码无效</string>
+    <string name="gamepadTestSkip">跳过</string>
+
+</resources>
+

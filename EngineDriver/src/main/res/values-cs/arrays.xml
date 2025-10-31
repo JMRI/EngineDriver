@@ -367,7 +367,7 @@
         <item>Nic</item>
         <item>Exportovat</item>
         <item>Importovat</item>
-        <item>Resetovat</item>
+        <item>Obnovit</item>
     </string-array>
 
     <string-array name="prefAutoImportExportEntries">  <!-- display version -->
@@ -445,6 +445,7 @@
         <item>Francouzsky (Kanada)</item>
         <item>Česky</item>
         <item>Japonský</item>
+        <item>Čínština</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->

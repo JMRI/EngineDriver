@@ -190,7 +190,7 @@
         <item>Niente</item>
         <item>Esportare</item>
         <item>Importare</item>
-        <item>Reiniziare</item>
+        <item>Reset</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Niente</item>
@@ -264,6 +264,7 @@
         <item>Francese (Canada)</item>
         <item>Ceco</item>
         <item>Giapponese</item>
+        <item>Cinese</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->

@@ -12,6 +12,7 @@
  * New preference to add a 'd'ispatch button to the select loco screen
  * Moved the 'immersive mode' preference to the top level
  * Search feature added to Preferences. (Unable to customise the icon. Will leave that till later.)
+ * Initial Chinese translations by jsky8785
 **Version 2.41.208
  * Additional French translations by Alain Carasso
  * Additional Google translations

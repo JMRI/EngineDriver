@@ -227,7 +227,7 @@
         <item>Cap</item>
         <item>Exportar</item>
         <item>Importar</item>
-        <item>Reiniciar</item>
+        <item>Restablir</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Utilitzar els paràmetres globals del telèfon</item>
@@ -245,6 +245,7 @@
         <item>Francès (Canadà)</item>
         <item>Txec</item>
         <item>Japonès</item>
+        <item>Xinès</item>
     </string-array>
 
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->

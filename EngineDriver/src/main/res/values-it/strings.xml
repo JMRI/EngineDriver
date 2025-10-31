@@ -1185,4 +1185,13 @@
     <string name="prefUseDispatchCommandSummary">Utilizzare il comando WiThrottle \'d\'ispatch invece del comando \'r\'elease quando si rilascia una locomotiva</string>
     <string name="prefShowDispatchButtonTitle">Mostra pulsante Spedizione</string>
     <string name="prefShowDispatchButtonSummary">Mostra un pulsante nella schermata Seleziona locomotiva per utilizzare il comando WiThrottle \'d\'ispatch invece del comando \'r\'elease quando si rilascia una locomotiva</string>
+
+    <string name="advancedConsistToolTitle">Strumento di consistenza avanzato (CV19)</string>
+    <string name="advancedConsistToolConsistAddressLabel">Indirizzo consistente</string>
+    <string name="advancedConsistToolLocoAddressLabel">Indirizzo Loco</string>
+    <string name="advancedConsistToolLocoFacingLabel">Guardare avanti?</string>
+    <string name="advancedConsistToolAddButtonLabel">Aggiungere</string>
+    <string name="advancedConsistToolRemoveButtonLabel">Rimuovere</string>
+    <string name="advancedConsistToolButtonLabel">Avanzato consiste</string>
+
 </resources>

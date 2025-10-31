@@ -1247,4 +1247,13 @@
     <string name="prefUseDispatchCommandSummary">Utilitzeu l\'ordre \'d\'ispatch de WiThrottle en comptes de l\'ordre \'r\'alliberar quan allibereu una locomotora</string>
     <string name="prefShowDispatchButtonTitle">Mostra el botó d\'enviament</string>
     <string name="prefShowDispatchButtonSummary">Mostra un botó a la pantalla Selecciona locomotora per utilitzar l\'ordre \'d\'ispatch de WiThrottle en lloc de l\'ordre \'r\'release en alliberar una locomotora.</string>
+
+    <string name="advancedConsistToolTitle">Eina de coherència avançada (CV19)</string>
+    <string name="advancedConsistToolConsistAddressLabel">Adreça consistent</string>
+    <string name="advancedConsistToolLocoAddressLabel">Adreça de la locomotora</string>
+    <string name="advancedConsistToolLocoFacingLabel">Mirar cap endavant?</string>
+    <string name="advancedConsistToolAddButtonLabel">Afegeix</string>
+    <string name="advancedConsistToolRemoveButtonLabel">Elimina</string>
+    <string name="advancedConsistToolButtonLabel">Consisteix avançat</string>
+
 </resources>

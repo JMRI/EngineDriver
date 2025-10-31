@@ -1332,4 +1332,13 @@
     <string name="prefUseDispatchCommandSummary">Při uvolnění lokomotivy použijte příkaz WiThrottle \'d\'ispatch místo příkazu \'r\'elease</string>
     <string name="prefShowDispatchButtonTitle">Tlačítko Zobrazit odeslání</string>
     <string name="prefShowDispatchButtonSummary">Zobrazit tlačítko na obrazovce Výběr lokomotivy pro použití příkazu WiThrottle \'d\'ispatch místo příkazu \'r\'elease při uvolnění lokomotivy</string>
+
+    <string name="advancedConsistToolTitle">Pokročilý nástroj pro sestavení (CV19)</string>
+    <string name="advancedConsistToolConsistAddressLabel">Adresa se skládá</string>
+    <string name="advancedConsistToolLocoAddressLabel">Adresa lokomotivy</string>
+    <string name="advancedConsistToolLocoFacingLabel">Tváří vpřed?</string>
+    <string name="advancedConsistToolAddButtonLabel">Přidat</string>
+    <string name="advancedConsistToolRemoveButtonLabel">Odstranit</string>
+    <string name="advancedConsistToolButtonLabel">Pokročilé složení</string>
+
 </resources>

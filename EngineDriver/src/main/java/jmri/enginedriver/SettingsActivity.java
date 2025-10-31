@@ -1335,10 +1335,17 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private void showHideDispatchPreferences(PreferenceScreen prefScreen) {
         boolean enableCmd = prefs.getBoolean("prefUseDispatchCommand", false);
         boolean enableButton = prefs.getBoolean("prefShowDispatchButton", false);
-        if (enableCmd & enableButton) {enableCmd = false; enableButton = false;} // in case both are enabled accidentally
-        if (mainapp.isDCCEX) {enableCmd = true; enableButton = true;}
-        enableDisablePreference(prefScreen, "prefShowDispatchButton", !enableCmd);
-        enableDisablePreference(prefScreen, "prefUseDispatchCommand", !enableButton);
+        boolean prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", false);
+        if (!enableCmd && !enableButton) {enableCmd = true; enableButton = true;} // in case both are enabled accidentally
+        if (mainapp.isDCCEX) {
+            enableCmd = false; enableButton = false;
+        } else {
+            if (prefSelectLocoByRadioButtons) {
+                enableCmd = true; enableButton = false;
+            }
+        }
+        enableDisablePreference(prefScreen, "prefShowDispatchButton", enableButton);
+        enableDisablePreference(prefScreen, "prefUseDispatchCommand", enableCmd);
     }
 
     private void showHidePrefThrottleSwitchButtonCycleAllPreferences(PreferenceScreen prefScreen) {
@@ -1751,8 +1758,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
                         break;
 
+                    case "prefSelectLocoByRadioButtons":
                     case "prefUseDispatchCommand":
-                        sharedPreferences.edit().putBoolean("prefShowDispatchButton", false).commit();
+                        if (prefs.getBoolean("prefSelectLocoByRadioButtons", false)) {
+                            sharedPreferences.edit().putBoolean("prefShowDispatchButton", false).commit();
+                            parentActivity.reload();
+                        }
                         parentActivity.showHideDispatchPreferences(getPreferenceScreen());
                         break;
 

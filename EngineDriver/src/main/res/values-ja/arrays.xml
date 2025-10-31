@@ -187,7 +187,7 @@
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>なし</item>
         <item>輸出</item>
-        <item>輸入</item>
+        <item>リセット</item>
 
         <item>リセット</item>
     </string-array>
@@ -207,6 +207,7 @@
         <item>フランス語 (カナダ)</item>
         <item>チェコ語</item>
         <item>日本語</item>
+        <item>中国語</item>
     </string-array>
     <string-array name="prefConsistFollowRuleStyleEntries">  <!-- display version -->
         <item>単純なテキストマッチング（オリジナル）</item>

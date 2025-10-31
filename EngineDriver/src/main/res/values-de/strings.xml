@@ -1232,4 +1232,13 @@
     <string name="prefUseDispatchCommandSummary">Verwenden Sie den WiThrottle-Befehl „d“ anstelle des Befehls „r“ beim Freigeben einer Lok</string>
     <string name="prefShowDispatchButtonTitle">Schaltfläche „Versand anzeigen“</string>
     <string name="prefShowDispatchButtonSummary">Zeigen Sie auf dem Bildschirm „Lok auswählen“ eine Schaltfläche an, um beim Freigeben einer Lok den WiThrottle-Befehl „d“ statt „r“ zu verwenden.</string>
+
+    <string name="advancedConsistToolTitle">Erweitertes Consist-Tool (CV19)</string>
+    <string name="advancedConsistToolConsistAddressLabel">Adresse</string>
+    <string name="advancedConsistToolLocoAddressLabel">Loco Adresse</string>
+    <string name="advancedConsistToolLocoFacingLabel">Blickrichtung nach vorn?</string>
+    <string name="advancedConsistToolAddButtonLabel">Hinzufügen</string>
+    <string name="advancedConsistToolRemoveButtonLabel">Entfernen</string>
+    <string name="advancedConsistToolButtonLabel">Fortgeschrittene Besteht aus</string>
+
 </resources>

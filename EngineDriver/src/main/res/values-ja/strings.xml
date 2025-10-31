@@ -1254,4 +1254,13 @@
     <string name="prefUseDispatchCommandSummary">機関車を解放するときは、\'r\'eleaseコマンドの代わりにWiThrottle \'d\'ispatchコマンドを使用してください。</string>
     <string name="prefShowDispatchButtonTitle">ディスパッチボタンを表示</string>
     <string name="prefShowDispatchButtonSummary">機関車を解放するときに、\'r\'elease コマンドの代わりに WiThrottle \'d\'ispatch コマンドを使用するためのボタンを機関車選択画面に表示します。</string>
+
+    <string name="advancedConsistToolTitle">高度な構成ツール (CV19)</string>
+    <string name="advancedConsistToolConsistAddressLabel">構成アドレス</string>
+    <string name="advancedConsistToolLocoAddressLabel">ロコアドレス</string>
+    <string name="advancedConsistToolLocoFacingLabel">前を向いて？</string>
+    <string name="advancedConsistToolAddButtonLabel">追加</string>
+    <string name="advancedConsistToolRemoveButtonLabel">取り除く</string>
+    <string name="advancedConsistToolButtonLabel">高度な構成</string>
+
 </resources>

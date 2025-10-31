@@ -2108,6 +2108,7 @@
         <item>fr_CA</item>
         <item>cs</item>
         <item>ja</item>
+        <item>zh</item>
     </string-array>
     <string-array name="prefLocaleEntries">  <!-- display version -->
         <item>Use Phone\'s global setting</item>
@@ -2125,6 +2126,7 @@
         <item>Canadian French</item>
         <item>Czech</item>
         <item>Japanese</item>
+        <item>Chinese</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
