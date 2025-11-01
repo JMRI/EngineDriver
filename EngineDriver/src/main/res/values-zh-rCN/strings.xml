@@ -427,7 +427,7 @@ b) 非花名册机车。
     <string name="prefDefaultAddressLengthSummary">默认机车地址长度（自动将根据位数设置）</string>
     <string name="prefWebTitle">网页屏幕偏好设置</string>
     <string name="prefDisplaySpeedUnitsTitle">速度单位</string>
-    <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage, or by a specific number of steps</string>
+    <string name="prefDisplaySpeedUnitsSummary">速度以百分比还是以速度级数显示？</string>
     <string name="prefWebOrientationTitle">网页屏幕方向</string>
     <string name="prefWebOrientationSummary">选择网页屏幕方向</string>
     <string name="prefInitialWebPageTitle">初始网页屏幕页面</string>
@@ -645,7 +645,6 @@ b) 非花名册机车。
     <string name="gamepadTestKeycodeLabel">Key code:</string>
     <string name="gamepadTestFunctionLabel">Function:</string>
     <string name="gamepadTestCompleteLabel">Test status:</string>
-<!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this screen.</string>
     <string name="gamepadTestKeyboardHelp">选择下方\'Skip\'以使用键盘
 \n-----------------
