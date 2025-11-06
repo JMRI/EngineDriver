@@ -25,7 +25,7 @@
 
     <string name="functionConsistColumnLabel">标签</string>
     <string name="functionConsistColumnLocos">机车</string>
-    <string name="prefFunctionConsistLocosDefaultValue">带领</string>
+    <string name="prefFunctionConsistLocosDefaultValue">前端</string>
     <string name="functionConsistHelpText">用于：\na) "特殊"编组功能跟随选项。
 b) 非花名册机车。
 
@@ -63,11 +63,11 @@ b) 非花名册机车。
     <string name="gamepad2_test">游戏手柄/USB 2测试</string>
     <string name="gamepad3_test">游戏手柄/USB 3测试</string>
 
-    <string name="notificationInBackgroundTitle">后台引擎驱动程序</string>
+    <string name="notificationInBackgroundTitle">EngineDriver 后台通知</string>
     <string name="notificationInBackgroundText">Android 系统可能会随时终止程序，恕不另行通知。点击重新打开</string>
     <string name="notificationInBackgroundTextLowMemory">内存不足。Engine Driver 进程可能很快会被终止。点击重新打开</string>
-    <string name="notificationInBackgroundTextKilled">内存耗尽。引擎驱动程序已被终止</string>
-    <string name="notificationAppWasKilledInBackground">引擎驱动程序被安卓系统强制重启</string>
+    <string name="notificationInBackgroundTextKilled">内存耗尽。EngineDriver程序已被终止</string>
+    <string name="notificationAppWasKilledInBackground">EngineDriver 将被Android强制重启</string>
 
     <string name="host_ip">主机名或地址</string>
     <string name="port">端口</string>
@@ -178,6 +178,7 @@ b) 非花名册机车。
     <string name="logviewerClose">关闭</string>
     <string name="logviewerSave">开始记录到文件</string>
 
+    <string name="sharedFileOverwriteChoiceNegativeButtonText">否，保存为新名称</string>
     <string name="rosterEntryImageSelectButtonText">新图片</string>
     <string name="rosterEntryImageRemoveButtonText">移除</string>
     <string name="rosterEntryImageHelpText">仅本地存储图片。如果服务器有机车图片，将覆盖此选择。</string>
@@ -351,15 +352,14 @@ b) 非花名册机车。
     <string name="prefDeviceSounds0Title">控制器1机车声音</string>
     <string name="prefDeviceSounds1Summary">在手机中为控制器2播放基本机车声音</string>
     <string name="prefDeviceSounds1Title">控制器2机车声音</string>
-    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">手机中机车引擎声音的音量（1-100）</string>
-    <string name="prefDeviceSoundsLocoVolumeTitle">In Phone Loco Sounds Volume</string>
+    <string name="prefDeviceSoundsLocoVolumeSummary" tools:ignore="TypographyDashes">手机中引擎声音的音量（1-100）</string>
+    <string name="prefDeviceSoundsLocoVolumeTitle">手机中机车的音量（1-100）</string>
     <string name="prefDeviceSoundsBellVolumeSummary" tools:ignore="TypographyDashes">手机中铃声的音量（1-100）</string>
     <string name="prefDeviceSoundsBellVolumeTitle">手机内铃声音量</string>
     <string name="prefDeviceSoundsHornVolumeSummary" tools:ignore="TypographyDashes">手机中喇叭/汽笛声音的音量（1-100）</string>
     <string name="prefDeviceSoundsHornVolumeTitle">手机内喇叭/汽笛声音音量</string>
     <string name="prefDeviceSoundsMomentumSummary" tools:ignore="TypographyDashes">每步变化的延迟（动量），以毫秒为单位（0-2000）</string>
     <string name="prefDeviceSoundsMomentumTitle">手机内动量</string>
-    <string name="prefDeviceSoundsMomentumDefaultValue" translatable="false">750</string>
     <string name="prefDeviceSoundsMomentumOverrideSummary">改变步骤时，机车步骤声音将播放至结束。上述动量值仅作为最短时间。</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">不截断机车步骤声音</string>
     <string name="deviceSoundsMuteButton">静音</string>
@@ -373,7 +373,7 @@ b) 非花名册机车。
 
     <string name="prefDeviceSoundsButtonSummary">显示一个操作栏按钮以更改手机内机车声音选项</string>
 
-    <string name="prefDeviceSoundsButtonTitle">手机声音按钮</string>
+    <string name="prefDeviceSoundsButtonTitle">手机音量按钮</string>
     <string name="prefSelectiveLeadSoundTitle">选择性领头单元声音？</string>
     <string name="prefSelectiveLeadSoundSummary">仅将喇叭/铃声功能发送到EngineDriver编组中的领头单元。（仅包含\'bell\'、\'horn\'或\'whistle\'作为标签一部分的功能。）</string>
     <string name="prefSelectiveLeadSoundF1Title">始终将F1视为声音？</string>
@@ -419,15 +419,15 @@ b) 非花名册机车。
     <string name="LocoSelectMethodRecentConsist">最近编组</string>
     <string name="LocoSelectMethodHelp" tools:ignore="Typos">在上方输入机车的DCC地址并点击\"获取\"。\n\n或者，通过点击上方的单选按钮从服务器\"花名册\"中选择机车或从\"最近\"机车中选择。</string>
 
-    <string name="prefLocoSelectHideIplsButtonTitle">隐藏 Loco Sounds 按钮</string>
-    <string name="prefLocoSelectHideIplsButtonSummary">在“选择 Loco”屏幕中隐藏“Loco Phone Loco Sounds”按钮</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">隐藏“机车音量”按钮</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">在“选择机车”屏幕中隐藏“机车音量”按钮</string>
     <string name="prefMaximumRecentLocosTitle">最大最近机车数</string>
     <string name="prefMaximumRecentLocosSummary">列表中显示的最大最近机车数</string>
     <string name="prefDefaultAddressLengthTitle">默认地址长度</string>
     <string name="prefDefaultAddressLengthSummary">默认机车地址长度（自动将根据位数设置）</string>
     <string name="prefWebTitle">网页屏幕偏好设置</string>
     <string name="prefDisplaySpeedUnitsTitle">速度单位</string>
-    <string name="prefDisplaySpeedUnitsSummary">Display speed as percentage, or by a specific number of steps</string>
+    <string name="prefDisplaySpeedUnitsSummary">速度以百分比还是以速度级数显示？</string>
     <string name="prefWebOrientationTitle">网页屏幕方向</string>
     <string name="prefWebOrientationSummary">选择网页屏幕方向</string>
     <string name="prefInitialWebPageTitle">初始网页屏幕页面</string>
@@ -524,6 +524,7 @@ b) 非花名册机车。
     <string name="prefHostImportExportTitle">手动特定主机导入/导出</string>
     <string name="prefHostImportExportSummary">将特定主机的偏好设置\'导入\'或\'导出\'到\'\\Android\\data\\jmri.enginedriver\\files\\\'文件夹。该主机必须在您的最近连接列表中。\n选择选项后将立即执行。\n（仅在当前未连接时可用。）</string>
 
+    <string name="prefShareFileNowSummary">允许立刻共享配置文件、保存的偏好设置或日志文件</string>
     <string name="prefImportExportOverwite">文件\'%1$s\'已存在。是否覆盖？</string>
     <string name="prefImportExportErrorReadingList">读取最近连接列表时出错：</string>
     <string name="prefImportExportErrorReadingFrom">从\'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\'导入失败！您可能尚未保存此主机的偏好设置。</string>
@@ -568,6 +569,7 @@ b) 非花名册机车。
     <string name="prefRightDirectionButtonsShortTitle">右方向按钮短标签</string>
     <string name="prefRightDirectionButtonsShortSummary">所有右方向短按钮的标签。输入Rev或留空以使用正常行为。</string>
 
+    <string name="prefRightDirectionButtonsShortDefaultValue">后退</string>
     <string name="prefTickMarksOnSlidersTitle">速度滑块显示刻度线？</string>
     <string name="prefTickMarksOnSlidersSummary">在速度滑块背景上显示刻度线</string>
 
@@ -641,11 +643,10 @@ b) 非花名册机车。
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
     <string name="gamepadTestAllKeyCodesLabel">All codes:</string>
-    <string name="gamepadTestModeLabel">Type:</string>
+    <string name="gamepadTestModeLabel">类型:\\s\\s</string>
     <string name="gamepadTestKeycodeLabel">Key code:</string>
     <string name="gamepadTestFunctionLabel">Function:</string>
     <string name="gamepadTestCompleteLabel">Test status:</string>
-<!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this screen.</string>
     <string name="gamepadTestKeyboardHelp">选择下方\'Skip\'以使用键盘
 \n-----------------
@@ -903,28 +904,28 @@ b) 非花名册机车。
     <string name="prefConsistFollowAction1Title">前灯特定操作1</string>
     <string name="prefConsistFollowAction1Summary">编组中的哪些机车应响应已找到的前灯功能。</string>
 
-    <string name="prefConsistFollowString2Title">字符串2</string>
+    <string name="prefConsistFollowString2Title">字符串 2</string>
     <string name="prefConsistFollowString2Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
     <string name="prefConsistFollowAction2Title">字符串2的操作</string>
     <string name="prefConsistFollowAction2Summary">编组中的哪些机车应响应已找到的功能。</string>
 
-    <string name="prefConsistFollowString3Title">字符串3</string>
+    <string name="prefConsistFollowString3Title">字符串 3</string>
     <string name="prefConsistFollowString3Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
     <string name="prefConsistFollowAction3Title">字符串3的操作</string>
     <string name="prefConsistFollowAction3Summary">编组中的哪些机车应响应已找到的功能。</string>
 
-    <string name="prefConsistFollowString4Title">String 4</string>
+    <string name="prefConsistFollowString4Title">字符串 4</string>
 
     <string name="prefConsistFollowAction4Summary">编组中哪些机车应该对找到的功能做出反应？</string>
-    <string name="prefConsistFollowString5Title">字符串5</string>
+    <string name="prefConsistFollowString5Title">字符串 5</string>
     <string name="prefConsistFollowString5Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
     <string name="prefConsistFollowAction5Title">字符串5的操作</string>
     <string name="prefConsistFollowAction5Summary">编组中的哪些机车应响应已找到的功能。</string>
 
     <string name="prefKidsSectionTitle">儿童（计时器）偏好设置</string>
-    <string name="prefKidsSectionSummary">幼儿选项。\n时间控制运行。</string>
+    <string name="prefKidsSectionSummary">儿童选项。\\n时间控制运行。</string>
     <string name="prefKidsHelpTitle">计时器注意事项：</string>
-    <string name="prefKidsHelpSummary">- 先选择机车。\n- 计时器将在第一次提速时启动。\n- 超时后必须返回此偏好设置以重置时间（或清除）。\n\n建议：\n- 禁用音量键。\n- 禁用\'滑动浏览道岔\'。\n- 禁用\'滑动浏览路线\'。\n- 禁用紧急停止。</string>
+    <string name="prefKidsHelpSummary">- 首次运行选择机车。\\n- 计时器将在第一次提速时启动。\\n- 超时后必须返回此偏好设置以重置时间（或清除）。\\n\\n建议：\\n- 禁用音量键。\\n- 禁用\\\'滑动浏览道岔\\\'。\\n- 禁用\\\'滑动浏览路线\\\'。\\n- 禁用紧急停止。</string>
     <string name="prefKidsTimerTitle">限时运行</string>
     <string name="prefKidsTimerSummary">限制机车运行时间。例如：每个儿童（操作员）将获得相等的时间。</string>
 
@@ -974,7 +975,7 @@ b) 非花名册机车。
 
 <!-- needed for API 33 -->
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver需要读取媒体图片权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver需要读取用户选择的媒体视觉内容权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>
+    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver需要读取用户选择的媒体视觉内容权限来加载背景图片。  即使没有此权限，Engine Driver仍可运行。</string>
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver需要通知权限以在应用进入后台时向您发出警告。</string>
 <!-- needed for API 33 -->
 
@@ -1213,11 +1214,10 @@ b) 非花名册机车。
     <string name="DccexSendCommandButtonLabel">发送</string>
     <string name="DccexPreviousCommandButtonLabel">上一个</string>
     <string name="DccexNextCommandButtonLabel">下一个</string>
-    <string name="DccexSendCommandLabel">DCC-EX命令
-<small><small>（不包含\'&lt;\'和\'&gt;\'）</small></small></string>
+    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\\n(excluir \\\'&lt;\\\' y \\\'&gt;\\\')</small></string>
     <string name="DccexClearCommands">清除</string>
 
-    <string name="advancedConsistToolRemoveButtonLabel">消除</string>
+    <string name="advancedConsistToolRemoveButtonLabel">移除</string>
     <string name="advancedConsistToolButtonLabel">高级组成</string>
     <string name="witActionTypeLabel">操作</string>
     <string name="witWriteAddressLabel">DCC地址</string>
@@ -1228,7 +1228,7 @@ b) 非花名册机车。
     <string name="DccexCommonCommandsLabel" >常用命令</string>
 
     <string name="DCCEXsetTrackButtonLabel">设置</string>
-    <string name="DCCEXJoinTrackButtonLabel">合并</string>
+    <string name="DCCEXJoinTrackButtonLabel">加入</string>
 
     <string name="DccexSucceeded">操作成功</string>
     <string name="DccexFailed">操作失败</string>
@@ -1293,8 +1293,9 @@ b) 非花名册机车。
     <string name="prefDirectionButtonLongPressDelayTitle">方向键长按延迟</string>
     <string name="prefDirectionButtonLongPressDelaySummary">方向键长按多少毫秒才算长按？</string>
     <string name="functionConsistColumnLatching">锁存</string>
-    <string name="prefFunctionConsistLatchingDefaultValue">没有任何</string>
-    <string name="prefFunctionConsistLatchingLightBellDefaultValue">锁扣</string>
+    <string name="prefFunctionConsistLatchingDefaultValue">无</string>
+    <string name="prefFunctionConsistLatchingLightBellDefaultValue">锁定</string>
+    <string name="gamepadTestKeyCodesRightCode">RT</string>
     <string name="prefGamepadTestNowTitle">立即测试游戏手柄设置！</string>
     <string name="prefGamepadTestNowSummary">允许您确认所选设置是否正常工作。\n\n选择后，测试页面将立即打开。</string>
     <string name="prefKidsTimerDemoModePasswordTitle">演示模式密码</string>
@@ -1312,7 +1313,7 @@ b) 非花名册机车。
     <string name="prefThrottleOrientationTitle">屏幕方向</string>
     <string name="FilterRosterListDownloadLabel">下载</string>
     <string name="prefToolbarButtonSizeTitle">工具栏按钮</string>
-    <string name="prefToolbarButtonSizeSummary">设置工具栏按钮大小。（需要重启电脑）</string>
+    <string name="prefToolbarButtonSizeSummary">设置工具栏按钮大小。（需要重启应用）</string>
     <string name="routes_route">路由系统名称</string>
     <string name="toastImportExportImportSucceeded">从 \\\'\\\\Android\\\\data\\\\jmri.enginedriver\\\\files\\\\%1$s\\\' 导入首选项成功。</string>
     <string name="toastImportExportExportFailed">将首选项导出到“\\\\Android\\\\data\\\\jmri.enginedriver\\\\files\\\\%1$s\\”失败！</string>
@@ -1326,7 +1327,7 @@ b) 非花名册机车。
     <string name="advancedConsistToolTitle">高级集合工具（CV19）</string>
     <string name="advancedConsistToolConsistAddressLabel">组成地址</string>
     <string name="advancedConsistToolLocoAddressLabel">本地地址</string>
-    <string name="advancedConsistToolLocoFacingLabel">面向前方？</string>
+    <string name="advancedConsistToolLocoFacingLabel">车头朝向</string>
     <string name="advancedConsistToolAddButtonLabel">添加</string>
     <string name="prefConsistFollowString4Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
     <string name="prefConsistFollowAction4Title">字符串 4 的操作</string>
@@ -1343,6 +1344,24 @@ b) 非花名册机车。
     <string name="gamepadTestHelpNonForced">\"如果无法激活所有按钮，请更改游戏手柄模式（请参阅设备随附的说明）或尝试其他游戏手柄类型（如上所示）。  首次从油门屏幕使用游戏手柄时，可能需要重新测试。\"</string>
     <string name="gamepadTestInvalidKeycode">此模式的密钥码无效</string>
     <string name="gamepadTestSkip">跳过</string>
+    <string name="gamepadTestKeyCodesUpCode">上</string>
+    <string name="gamepadTestKeyCodesDownCode">DN</string>
+    <string name="gamepadTestKeyCodesLeftCode">LF</string>
+    <string name="logviewerShare">共享</string>
+    <string name="toastNoAppToShare">没有找到共享该文件的应用</string>
+    <string name="prefShareFileNowTitle">立刻共享设置文件</string>
+    <string name="sharedFileProcessing">文件共享中...</string>
+    <string name="sharedFileProcessingCount">%d个文件已共享</string>
+    <string name="sharedFileReceivedCount">%d个文件已接收</string>
+    <string name="sharedFileSavingCount">%d个文件保存中</string>
+    <string name="sharedFileSavedCount">%d个文件已保存</string>
+    <string name="sharedFileFailedToSaveCount">%d个文件保存失败</string>
+    <string name="sharedFileFinished">%d个文件保存完成</string>
+    <string name="sharedFileNoUriReceived">错误：未收到文件URI</string>
+    <string name="sharedFileNoShareActionDetected">未检测到共享操作</string>
+    <string name="sharedFileOverwriteChoiceTitle">文件冲突</string>
+    <string name="sharedFileOverwriteChoiceText">某些文件可能已存在。您想覆盖现有文件吗？\\n\\n选择“否”将以新名称（例如，filename_1.ext）保存冲突的文件。</string>
+    <string name="sharedFileOverwriteChoicePositiveButtonText">是，覆盖</string>
 
 </resources>
 
