@@ -53,9 +53,9 @@
     <string name="app_name_turnouts">Engine Driver - Turnouts</string>
     <string name="app_name_turnouts_short">Turnouts</string>
     <string name="app_name_about">❔About</string>
-    <string name="app_name_web" translatable="false">Web</string>
-    <string name="app_name_web_long" translatable="false">Engine Driver - Web</string>
-    <string name="app_name_web_short" translatable="false">Web</string>
+    <string name="app_name_web">Web</string>
+    <string name="app_name_web_long">Engine Driver - Web</string>
+    <string name="app_name_web_short">Web</string>
     <string name="app_name_functions">Default Function Settings</string>
     <string name="app_name_consist_functions">Consist Function Settings</string>
     <string name="app_name_preferences">Preferences</string>
@@ -1649,8 +1649,8 @@
     <string name="dccexInCv19Consist">Loco is in a CV19 Consist: %s</string>
     <string name="dccexNotInCv19Consist">Loco is NOT in a CV19 Consist</string>
 
-    <string name="DCCEXbuttonCvProgrammerProgTrack" translatable="false">CVs PROG</string>
-    <string name="DCCEXbuttonCvProgrammerPoM" translatable="false">CVs PoM</string>
+    <string name="DCCEXbuttonCvProgrammerProgTrack">CVs PROG</string>
+    <string name="DCCEXbuttonCvProgrammerPoM">CVs PoM</string>
     <string name="DCCEXbuttonTrackManager">Track Mgr</string>
     <string name="DCCEXbuttonDefaultFunctions">Default Fns</string>
     <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>

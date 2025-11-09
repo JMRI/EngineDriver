@@ -43,7 +43,7 @@
     <string name="app_name_throttle_short">スロットル</string>
     <string name="app_name_turnouts_short">分岐器</string>
     <string name="app_name_turnouts">分岐器 -エンジンドライバー</string>
-<!--    <string name="app_name_web">ウェブ</string>-->
+    <string name="app_name_web">ウェブ</string>
     <string name="brake">ブレーキ</string>
     <string name="ca_recent_conn_notice">最近の接続は利用できません - SD カードが見つかりません。</string>
     <string name="cancel">キャンセル</string>
