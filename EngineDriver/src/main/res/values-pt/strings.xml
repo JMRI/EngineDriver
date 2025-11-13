@@ -801,6 +801,7 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirme que deseja remover todas as Agulhas recentes</string>
 
     <string name="dialogDownloadRosterConfirmQuestion">Confirme que deseja baixar todas as entradas da lista para a lista de locomotivas recentes</string>
+    <string name="ToastsOptionsTitle">Alertas e dicas de instruções</string>
     <string name="prefHideInstructionalToastsTitle">Ocultar dicas instrucionais</string>
     <string name="prefHideInstructionalToastsSummary">Ocultar ajuda/dicas pop-up instrucionais de \'brinde\'</string>
     <string name="dialogConfirmResetPreferencesTitle">Reiniciar preferências</string>
@@ -1161,6 +1162,7 @@
     <string name="introEsuMc2QuestionYes">Sim, use as configurações recomendadas</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipo de controle deslizante</string>
     <string name="prefEsuMc2SliderTypeSummary">Defina o que o Slider fará</string>
+    <string name="prefBeepOnAlertToastsTitle">Alertas sonoros</string>
     <string name="prefToolbarButtonSizeTitle">Botão da barra de ferramentas</string>
     <string name="prefToolbarButtonSizeSummary">Defina o tamanho dos botões da barra de ferramentas. (Reinicialização necessária)</string>
     <string name="prefKidsTimerKioskModeTitle">Modo quiosque?</string>
@@ -1198,4 +1200,6 @@
     <string name="advancedConsistToolAddButtonLabel">Adicionar</string>
     <string name="advancedConsistToolRemoveButtonLabel">Remover</string>
     <string name="advancedConsistToolButtonLabel">Consiste em Avançado</string>
+    <string name="ToastsOptionsSummary">Opções para alertas e notificações pop-up com dicas e instruções.</string>
+    <string name="prefBeepOnAlertToastsSummary">Reproduzir som de bipe em mensagens pop-up de alerta</string>
 </resources>

@@ -1381,8 +1381,14 @@
 
     <string name="dialogDownloadRosterConfirmQuestion">Confirm that you want to download all Roster Entries to the Recent Locomotives list</string>
 
+    <string name="ToastsOptionsSummary">Options for alerts and instructional \'toast\' popup help/hints</string>
+    <string name="ToastsOptionsTitle">Alerts and Instructional Hints</string>
+
     <string name="prefHideInstructionalToastsTitle">Hide Instructional Hints</string>
     <string name="prefHideInstructionalToastsSummary">Hide instructional \'toast\' popup help/hints</string>
+
+    <string name="prefBeepOnAlertToastsSummary">Play beep sound on Alert \'toast\' popup messages</string>
+    <string name="prefBeepOnAlertToastsTitle">Beep on Alerts</string>
 
     <string name="prefToolbarButtonSizeTitle">Toolbar Button Size</string>
     <string name="prefToolbarButtonSizeSummary">Set the size of the toolbar buttons. (Re-start required)</string>

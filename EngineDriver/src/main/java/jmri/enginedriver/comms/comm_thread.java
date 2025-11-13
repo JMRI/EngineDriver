@@ -1214,7 +1214,9 @@ public class comm_thread extends Thread {
                     } else if (responseStr.charAt(1) == 't') { //server description string "HtMy Server Details go here"
                         mainapp.setServerDescription(responseStr.substring(2)); //store the description
                     } else if (responseStr.charAt(1) == 'M') { //alert message sent from server to throttle
-                        mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
+                        if (prefs.getBoolean("prefBeepOnAlertToasts", mainapp.getResources().getBoolean(R.bool.prefBeepOnAlertToastsDefaultValue))) {
+                            mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
+                        }
                         mainapp.vibrate(new long[]{1000, 500, 1000, 500});
                         threaded_application.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                         //see if it is a turnout fail
@@ -1789,8 +1791,8 @@ public class comm_thread extends Thread {
                         sendJoinDCCEX();
                         mainapp.alert_activities(message_type.REQUEST_REFRESH_THROTTLE, "");
 
-                    } else {
-                        mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[2]);  //send response to running activities
+//                    } else {
+//                        mainapp.alert_activities(message_type.RECEIVED_DECODER_ADDRESS, args[2]);  //send response to running activities
                     }
 
                 } else { // the second argument should be "LOCOID" or "CONSIST", which are a special type of loco id request only used on the CV writing page

@@ -1045,6 +1045,7 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <string name="dialogDownloadRosterConfirmQuestion">确认要将所有花名册条目下载到最近使用的机车列表吗</string>
 
+    <string name="ToastsOptionsTitle">提示和指导</string>
     <string name="prefHideInstructionalToastsTitle">隐藏指导性提示</string>
     <string name="prefHideInstructionalToastsSummary">隐藏指导性的“toast”弹出帮助/提示</string>
 
@@ -1303,6 +1304,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefSwipeSpeedChangeStepSummary">速度步长用于设置向上、向下或向左/向右滑动的步长，以改变滑动速度。</string>
     <string name="prefThrottleOrientationTitle">屏幕方向</string>
     <string name="FilterRosterListDownloadLabel">下载</string>
+    <string name="prefBeepOnAlertToastsTitle">警报响起</string>
     <string name="prefToolbarButtonSizeTitle">工具栏按钮</string>
     <string name="prefToolbarButtonSizeSummary">设置工具栏按钮大小。（需要重启应用）</string>
     <string name="routes_route">路由系统名称</string>
@@ -1360,6 +1362,8 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="sharedFileOverwriteChoiceTitle">文件冲突</string>
     <string name="sharedFileOverwriteChoiceText">某些文件可能已存在。您想覆盖现有文件吗？\\n\\n选择“否”将以新名称（例如，filename_1.ext）保存冲突的文件。</string>
     <string name="sharedFileOverwriteChoicePositiveButtonText">是，覆盖</string>
+    <string name="ToastsOptionsSummary">提示和指导性“toast”弹出窗口帮助/提示选项</string>
+    <string name="prefBeepOnAlertToastsSummary">在弹出式“提示”消息上播放哔哔声</string>
 
 </resources>
 

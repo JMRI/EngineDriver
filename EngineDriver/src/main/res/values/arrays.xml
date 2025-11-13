@@ -2344,7 +2344,8 @@
         <!-- Device Preferences -->
         <item>prefLocale</item>
         <item>prefDoubleBackButtonToExit</item>
-        <item>prefHideInstructionalToasts</item>
+        <item>ToastsOptionsPreferences</item>
+<!--        <item>prefHideInstructionalToasts</item>-->
         <item>prefLeftRightSwipeChangesSpeed</item>
 
         <!-- Throttle Screen Appearance Preferences -->

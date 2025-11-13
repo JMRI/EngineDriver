@@ -126,12 +126,29 @@
             android:title="@string/prefDoubleBackButtonToExitTitle"
             android:layout="@layout/checkbox_no_icon" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefHideInstructionalToastsDefaultValue"
-            android:key="prefHideInstructionalToasts"
-            android:summary="@string/prefHideInstructionalToastsSummary"
-            android:title="@string/prefHideInstructionalToastsTitle"
-            android:layout="@layout/checkbox_no_icon" />
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="ToastsOptionsPreferences"
+            android:layout="@layout/checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/ToastsOptionsSummary"
+            android:title="@string/ToastsOptionsTitle">
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefHideInstructionalToastsDefaultValue"
+                android:key="prefHideInstructionalToasts"
+                android:summary="@string/prefHideInstructionalToastsSummary"
+                android:title="@string/prefHideInstructionalToastsTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefBeepOnAlertToastsDefaultValue"
+                android:key="prefBeepOnAlertToasts"
+                android:summary="@string/prefBeepOnAlertToastsSummary"
+                android:title="@string/prefBeepOnAlertToastsTitle"
+                android:layout="@layout/checkbox_no_icon" />
+
+            </PreferenceScreen>
 
     </PreferenceCategory>
 

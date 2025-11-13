@@ -108,6 +108,7 @@
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>
+        <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
@@ -251,6 +252,7 @@
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
+        <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
@@ -391,6 +393,7 @@
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
+        <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
@@ -536,6 +539,7 @@
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/ultra_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/ultra_toolbar_button_in_device_sounds</item>
+        <item name="ed_cv19_consist_button">@drawable/ultra_toolbar_button_cv19_consist</item>
         <item name="ed_dcc_ex_button">@drawable/ultra_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
@@ -689,6 +693,7 @@
         <item name="ed_clock_icon">@drawable/black_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>
+        <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/colorful_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/colorful_background_highlight_secondary</item>
@@ -835,6 +840,7 @@
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/neon_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/neon_toolbar_button_in_device_sounds</item>
+        <item name="ed_cv19_consist_button">@drawable/neon_toolbar_button_cv19_consist</item>
         <item name="ed_dcc_ex_button">@drawable/neon_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/neon_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/neon_background_highlight_secondary</item>

@@ -972,6 +972,7 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Potvrďte, že chcete odstranit všechny nedávné výhybky</string>
 
     <string name="dialogDownloadRosterConfirmQuestion">Potvrďte, že chcete stáhnout všechny záznamy rozpisu do seznamu Nedávné lokomotivy</string>
+    <string name="ToastsOptionsTitle">Upozornění a instruktážní tipy</string>
     <string name="prefHideInstructionalToastsTitle">Skrýt instruktážní rady</string>
     <string name="prefHideInstructionalToastsSummary">Skryjte vyskakovací nápovědu/rady instruktážního „toastu“.</string>
     <string name="dialogConfirmResetPreferencesTitle">Resetovat předvolby</string>
@@ -1303,6 +1304,7 @@
     <string name="introEsuMc2QuestionYes">Ano, použít doporučená nastavení</string>
     <string name="prefEsuMc2SliderTypeTitle">Typ posuvníku</string>
     <string name="prefEsuMc2SliderTypeSummary">Definujte, co bude posuvník dělat</string>
+    <string name="prefBeepOnAlertToastsTitle">Pípnutí při upozorněních</string>
     <string name="prefToolbarButtonSizeTitle">"Tlačítko na panelu nástrojů "</string>
     <string name="prefToolbarButtonSizeSummary">Nastavte velikost tlačítek panelu nástrojů. (Je vyžadován restart)</string>
     <string name="prefKidsTimerKioskModeTitle">Režim kiosku?</string>
@@ -1340,5 +1342,7 @@
     <string name="advancedConsistToolAddButtonLabel">Přidat</string>
     <string name="advancedConsistToolRemoveButtonLabel">Odstranit</string>
     <string name="advancedConsistToolButtonLabel">Pokročilé složení</string>
+    <string name="ToastsOptionsSummary">Možnosti upozornění a vyskakovacích nápověd/nápověd v instruktážních oknech</string>
+    <string name="prefBeepOnAlertToastsSummary">Přehrát pípnutí u vyskakovacích zpráv s upozorněním</string>
 
 </resources>
