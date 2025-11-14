@@ -884,6 +884,7 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmer la suppression des dernières aiguilles utilisées</string>
 
     <string name="dialogDownloadRosterConfirmQuestion">Confirmer que le téléchargement des entrées du catalogue vers la liste des locomotives récemment utilisées</string>
+    <string name="ToastsOptionsTitle">Alertes et conseils pédagogiques</string>
     <string name="prefHideInstructionalToastsTitle">Masquer les conseils instructifs</string>
     <string name="prefHideInstructionalToastsSummary">Masquer l\'aide et les conseils instructifs contextuels </string>
     <string name="dialogConfirmResetPreferencesTitle">Réinitialiser les préférences</string>
@@ -1226,6 +1227,7 @@
     <string name="introEsuMc2QuestionYes">Oui, utilisation des réglages recommandés</string>
     <string name="prefEsuMc2SliderTypeTitle">Type de curseur</string>
     <string name="prefEsuMc2SliderTypeSummary">Definir action du ciurseur</string>
+    <string name="prefBeepOnAlertToastsTitle">Bip pour les alertes</string>
     <string name="prefToolbarButtonSizeTitle">Bouton sur barre d outils</string>
     <string name="prefToolbarButtonSizeSummary">Definir taille des boutons sur barre d outils (redemarrage necessaire)</string>
     <string name="prefKidsTimerKioskModeTitle">Mode Kiosque ?</string>
@@ -1263,5 +1265,7 @@
     <string name="advancedConsistToolAddButtonLabel">Ajouter</string>
     <string name="advancedConsistToolRemoveButtonLabel">Retirer</string>
     <string name="advancedConsistToolButtonLabel">Constituants avancés</string>
+    <string name="ToastsOptionsSummary">Options pour les alertes et les messages d\'aide/conseils contextuels de type « toast »</string>
+    <string name="prefBeepOnAlertToastsSummary">Émettre un bip sonore lors de l\'affichage des messages d\'alerte contextuels.</string>
 
 </resources>

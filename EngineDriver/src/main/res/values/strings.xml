@@ -53,9 +53,9 @@
     <string name="app_name_turnouts">Engine Driver - Turnouts</string>
     <string name="app_name_turnouts_short">Turnouts</string>
     <string name="app_name_about">❔About</string>
-    <string name="app_name_web" translatable="false">Web</string>
-    <string name="app_name_web_long" translatable="false">Engine Driver - Web</string>
-    <string name="app_name_web_short" translatable="false">Web</string>
+    <string name="app_name_web">Web</string>
+    <string name="app_name_web_long">Engine Driver - Web</string>
+    <string name="app_name_web_short">Web</string>
     <string name="app_name_functions">Default Function Settings</string>
     <string name="app_name_consist_functions">Consist Function Settings</string>
     <string name="app_name_preferences">Preferences</string>
@@ -1381,8 +1381,14 @@
 
     <string name="dialogDownloadRosterConfirmQuestion">Confirm that you want to download all Roster Entries to the Recent Locomotives list</string>
 
+    <string name="ToastsOptionsSummary">Options for alerts and instructional \'toast\' popup help/hints</string>
+    <string name="ToastsOptionsTitle">Alerts and Instructional Hints</string>
+
     <string name="prefHideInstructionalToastsTitle">Hide Instructional Hints</string>
     <string name="prefHideInstructionalToastsSummary">Hide instructional \'toast\' popup help/hints</string>
+
+    <string name="prefBeepOnAlertToastsSummary">Play beep sound on Alert \'toast\' popup messages</string>
+    <string name="prefBeepOnAlertToastsTitle">Beep on Alerts</string>
 
     <string name="prefToolbarButtonSizeTitle">Toolbar Button Size</string>
     <string name="prefToolbarButtonSizeSummary">Set the size of the toolbar buttons. (Re-start required)</string>
@@ -1649,8 +1655,8 @@
     <string name="dccexInCv19Consist">Loco is in a CV19 Consist: %s</string>
     <string name="dccexNotInCv19Consist">Loco is NOT in a CV19 Consist</string>
 
-    <string name="DCCEXbuttonCvProgrammerProgTrack" translatable="false">CVs PROG</string>
-    <string name="DCCEXbuttonCvProgrammerPoM" translatable="false">CVs PoM</string>
+    <string name="DCCEXbuttonCvProgrammerProgTrack">CVs PROG</string>
+    <string name="DCCEXbuttonCvProgrammerPoM">CVs PoM</string>
     <string name="DCCEXbuttonTrackManager">Track Mgr</string>
     <string name="DCCEXbuttonDefaultFunctions">Default Fns</string>
     <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>

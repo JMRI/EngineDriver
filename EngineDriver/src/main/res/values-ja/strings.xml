@@ -43,7 +43,7 @@
     <string name="app_name_throttle_short">スロットル</string>
     <string name="app_name_turnouts_short">分岐器</string>
     <string name="app_name_turnouts">分岐器 -エンジンドライバー</string>
-<!--    <string name="app_name_web">ウェブ</string>-->
+    <string name="app_name_web">ウェブ</string>
     <string name="brake">ブレーキ</string>
     <string name="ca_recent_conn_notice">最近の接続は利用できません - SD カードが見つかりません。</string>
     <string name="cancel">キャンセル</string>
@@ -124,6 +124,7 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">最近の分岐器をすべて削除することを確認します</string>
     <string name="dialogResetPreferencesQuestion">すべての設定をリセットすることを確認します。\n 現在の設定はすべて失われます。</string>
     <string name="dialogDownloadRosterConfirmQuestion">すべての列車情報エントリを最近の機関車リストにダウンロードすることを確認します</string>
+    <string name="ToastsOptionsTitle">警告と指導のヒント</string>
     <string name="prefHideInstructionalToastsTitle">説明のヒントを非表示にする</string>
     <string name="prefHideInstructionalToastsSummary">説明用の「トースト」ポップアップのヘルプ/ヒントを非表示にする</string>
 
@@ -1225,6 +1226,7 @@
     <string name="introEsuMc2QuestionYes">はい、推奨設定を使用します</string>
     <string name="prefEsuMc2SliderTypeTitle">スライダータイプ</string>
     <string name="prefEsuMc2SliderTypeSummary">スライダーの動作を定義する</string>
+    <string name="prefBeepOnAlertToastsTitle">警告時にビープ音を鳴らす</string>
     <string name="prefToolbarButtonSizeTitle">ツールバーボタン</string>
     <string name="prefToolbarButtonSizeSummary">ツールバーボタンのサイズを設定します。(再起動が必要です)</string>
     <string name="prefKidsTimerKioskModeTitle">キオスクモード?</string>
@@ -1262,5 +1264,7 @@
     <string name="advancedConsistToolAddButtonLabel">追加</string>
     <string name="advancedConsistToolRemoveButtonLabel">取り除く</string>
     <string name="advancedConsistToolButtonLabel">高度な構成</string>
+    <string name="ToastsOptionsSummary">アラートと説明の「トースト」ポップアップヘルプ/ヒントのオプション</string>
+    <string name="prefBeepOnAlertToastsSummary">警告ポップアップメッセージでビープ音を再生する</string>
 
 </resources>

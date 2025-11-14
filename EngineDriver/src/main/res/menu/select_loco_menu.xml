@@ -38,9 +38,9 @@
         tools:ignore="AlwaysShowAction" />
 
     <item android:id="@+id/advancedConsistButton"
-        app:actionLayout="@layout/toolbar_button_power_red"
+        app:actionLayout="@layout/toolbar_button_cv19_consist"
         android:title="@string/advancedConsistToolButtonLabel"
         android:visible="true"
-        app:showAsAction="never"
+        app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 </menu>

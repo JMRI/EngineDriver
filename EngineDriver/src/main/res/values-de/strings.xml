@@ -868,6 +868,7 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Bestätigen Sie, dass Sie alle Aktuellen Weichen entfernen wollen.</string>
 
     <string name="dialogDownloadRosterConfirmQuestion">Bestätigen Sie, dass Sie alle Dienstplaneinträge in die Liste „Letzte Lokomotiven“ herunterladen möchten.</string>
+    <string name="ToastsOptionsTitle">Warnungen und Hinweise</string>
     <string name="prefHideInstructionalToastsTitle">Anleitungshinweise ausblenden</string>
     <string name="prefHideInstructionalToastsSummary">Anleitungs-Popup-Hilfe/Hinweise zum „Toast“ ausblenden</string>
     <string name="dialogConfirmResetPreferencesTitle">Einstellungen zurücksetzen</string>
@@ -1206,6 +1207,7 @@
     <string name="introEsuMc2QuestionYes">Ja, empfohlene Einstellungen verwenden</string>
     <string name="prefEsuMc2SliderTypeTitle">Schiebereglertyp</string>
     <string name="prefEsuMc2SliderTypeSummary">Definieren Sie, was der Slider tun soll</string>
+    <string name="prefBeepOnAlertToastsTitle">Piepton bei Benachrichtigungen</string>
     <string name="prefToolbarButtonSizeTitle">Symbolleistenschaltfläche</string>
     <string name="prefToolbarButtonSizeSummary">Legen Sie die Größe der Symbolleistenschaltflächen fest. (Neustart erforderlich)</string>
     <string name="prefKidsTimerKioskModeTitle">Kiosk-Modus?</string>
@@ -1240,5 +1242,7 @@
     <string name="advancedConsistToolAddButtonLabel">Hinzufügen</string>
     <string name="advancedConsistToolRemoveButtonLabel">Entfernen</string>
     <string name="advancedConsistToolButtonLabel">Fortgeschrittene Besteht aus</string>
+    <string name="ToastsOptionsSummary">Optionen für Warnmeldungen und erklärende Popup-Benachrichtigungen/Hinweise (sogenannte „Toast“)</string>
+    <string name="prefBeepOnAlertToastsSummary">Piepton bei Warnmeldungen abspielen</string>
 
 </resources>

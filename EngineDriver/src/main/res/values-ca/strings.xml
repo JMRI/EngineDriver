@@ -875,6 +875,7 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmeu que voleu eliminar totes les agulles recents</string>
 
     <string name="dialogDownloadRosterConfirmQuestion">Confirmeu que voleu descarregar totes les entrades de la llista a la llista de locomotores recents</string>
+    <string name="ToastsOptionsTitle">Alertes i consells instructius</string>
     <string name="prefHideInstructionalToastsTitle">Amaga les pistes instructives</string>
     <string name="prefHideInstructionalToastsSummary">Amaga l\'ajuda i els consells emergents \"brindis\" d\'instruccions</string>
     <string name="dialogConfirmResetPreferencesTitle">Restablir les preferències</string>
@@ -1218,6 +1219,7 @@
     <string name="introEsuMc2QuestionYes">Sí, utilitza la configuració recomanada</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipus de control lliscant</string>
     <string name="prefEsuMc2SliderTypeSummary">Definiu què farà el control lliscant</string>
+    <string name="prefBeepOnAlertToastsTitle">Bip en alertes</string>
     <string name="prefToolbarButtonSizeTitle">"Botó de la barra d\\'eines "</string>
     <string name="prefToolbarButtonSizeSummary">Estableix la mida dels botons de la barra d\\\'eines. (Cal reiniciar)</string>
     <string name="prefKidsTimerKioskModeTitle">Mode quiosc?</string>
@@ -1255,5 +1257,7 @@
     <string name="advancedConsistToolAddButtonLabel">Afegeix</string>
     <string name="advancedConsistToolRemoveButtonLabel">Elimina</string>
     <string name="advancedConsistToolButtonLabel">Consisteix avançat</string>
+    <string name="ToastsOptionsSummary">Opcions per a alertes i ajuda/consells emergents instructius de tipus \"brindis\"</string>
+    <string name="prefBeepOnAlertToastsSummary">Reprodueix un so de bip als missatges emergents d\'alerta \"brindis\"</string>
 
 </resources>

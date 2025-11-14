@@ -47,7 +47,7 @@ b) 非花名册机车。
     <string name="app_name_routes_short">路线</string>
     <string name="app_name_turnouts">Engine Driver - 道岔</string>
     <string name="app_name_turnouts_short">道岔</string>
-    <string name="app_name_about">❔关于</string>
+    <string name="app_name_about">关于</string>
     <string name="app_name_functions">默认功能设置</string>
     <string name="app_name_consist_functions">编组功能设置</string>
     <string name="app_name_preferences">偏好设置</string>
@@ -55,6 +55,9 @@ b) 非花名册机车。
     <string name="app_name_ConsistEdit">编组编辑</string>
     <string name="app_name_ConsistLightsEdit">编组灯光</string>
     <string name="app_name_gamepad_test">游戏手柄/USB测试</string>
+    <string name="app_name_web">网页</string>
+    <string name="app_name_web_long">Engine Driver - 网页</string>
+    <string name="app_name_web_short">网页</string>
     <string name="app_name_log_viewer">日志查看器</string>
     <string name="app_name_device_sounds_settings">手机机车声音</string>
     <string name="gamepad_test_menu">≡ 游戏手柄/USB</string>
@@ -143,7 +146,7 @@ b) 非花名册机车。
     <string name="throw_button">切换</string>
     <string name="close_button">关闭</string>
     <string name="toggle_button">切换</string>
-    <string name="power_control_label">控制布局电源设置</string>
+    <string name="power_control_label">电源控制布局设置</string>
     <string name="press_to_toggle">按下按钮切换布局电源状态</string>
     <string name="power_control_not_allowed">电源控制不允许。请在服务器的偏好设置/设置中更改。</string>
     <string name="reconnect_label">重连尝试状态</string>
@@ -363,11 +366,11 @@ b) 非花名册机车。
     <string name="prefDeviceSoundsMomentumOverrideSummary">改变步骤时，机车步骤声音将播放至结束。上述动量值仅作为最短时间。</string>
     <string name="prefDeviceSoundsMomentumOverrideTitle">不截断机车步骤声音</string>
     <string name="deviceSoundsMuteButton">静音</string>
-    <string name="prefDeviceSoundsBellIsMomentarySummary">铃声按钮为瞬时（非锁定）？</string>
+    <string name="prefDeviceSoundsBellIsMomentarySummary">铃声按钮为瞬时（非锁定）</string>
     <string name="prefDeviceSoundsBellIsMomentaryTitle">铃声按钮锁定/瞬时</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">建议增大功能按钮区域大小，否则将无法访问铃声/喇叭/静音声音功能</string>
     <string name="prefDeviceSoundsF1F2ActivateBellHornSummary">F1和F2也激活IPLS铃声和喇叭</string>
-    <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1和F2激活铃声和喇叭？</string>
+    <string name="prefDeviceSoundsF1F2ActivateBellHornTitle">F1和F2激活铃声和喇叭</string>
     <string name="prefDeviceSoundsHideMuteButtonSummary">在控制器上隐藏IPLS静音按钮</string>
     <string name="prefDeviceSoundsHideMuteButtonTitle">隐藏静音按钮</string>
 
@@ -393,7 +396,7 @@ b) 非花名册机车。
     <string name="prefSwipeThroughTurnoutsSummary">在屏幕间滑动时包含道岔屏幕</string>
     <string name="prefDropOnAcquireTitle">获取前释放机车？</string>
     <string name="prefDropOnAcquireSummary">获取新机车前释放当前机车</string>
-    <string name="prefHideIfNoUserNameTitle">Hide if no user name?</string>
+    <string name="prefHideIfNoUserNameTitle">没有用户名时隐藏？</string>
     <string name="prefHideIfNoUserNameSummary">如果用户名为空，则从列表中省略道岔/路线</string>
 
     <string name="prefRosterRecentLocosTitle">花名册显示在最近机车中？</string>
@@ -410,10 +413,10 @@ b) 非花名册机车。
     <string name="prefRosterOwnersFilterShowOptionSummary">显示按所有者筛选花名册的选项</string>
     <string name="prefRosterOwnersFilterDefaultOwner">全部</string>
 
-    <string name="prefSelectLocoByRadioButtonsTitle">机车选择方式外观</string>
+    <string name="prefSelectLocoByRadioButtonsTitle">机车外观选择方式</string>
     <string name="prefSelectLocoByRadioButtonsSummary">显示方法文本列表而非图像按钮</string>
 
-    <string name="LocoSelectMethodAddress">DCC Address</string>
+    <string name="LocoSelectMethodAddress">DCC 地址</string>
     <string name="LocoSelectMethodRoster">服务器花名册</string>
     <string name="LocoSelectMethodRecent">最近机车</string>
     <string name="LocoSelectMethodRecentConsist">最近编组</string>
@@ -534,7 +537,7 @@ b) 非花名册机车。
     <string name="prefImportServerAutoSummary">连接时自动从服务器导入偏好设置。\n（如果服务器上存在\'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\'文件，且该文件比上次检查时更新。）</string>
 
     <string name="importServerAutoDialog">在此服务器上发现新的偏好设置文件：(%1$s)。\n是否要导入？\n\n警告！\n\'完全\' - 所有偏好设置将被覆盖。\n\n\'部分\' - 除主题和某些控制器布局偏好设置外，所有偏好设置将被覆盖。</string>
-    <string name="importServerAutoDialogPositiveButton">完全</string>
+    <string name="importServerAutoDialogPositiveButton">全部</string>
     <string name="importServerAutoDialogNeutralButton">部分</string>
 
     <string name="prefSwapForwardReverseButtonsTitle">交换方向按钮？</string>
@@ -591,7 +594,7 @@ b) 非花名册机车。
     <string name="prefAccelerometerShakeThresholdSummary">震动触发的阈值。（1.5–3.5）值越低，轻微震动即可触发。\n更改后需重启Engine Driver才能生效。</string>
 
     <string name="prefLocaleTitle">本地化</string>
-    <string name="prefLocaleSummary">应用使用的语言</string>
+    <string name="prefLocaleSummary">应用使用的语言。\n警告！引擎驱动程序将立即重启。方向按钮标签将被重置。</string>
 
     <string name="prefLimitSpeedButtonPreferencesTitle">\'限制速度\' &amp; \'暂停\'按钮偏好设置</string>
     <string name="prefLimitSpeedButtonTitle">显示\'限制速度\'按钮？</string>
@@ -634,62 +637,48 @@ b) 非花名册机车。
     <string name="gamepadTestButtonLabelButtonB">B [@]</string>
     <string name="gamepadTestButtonLabelButtonStart">开始 | 确认</string>
     <string name="gamepadTestButtonLabelButtonEnter">选择 | 确认</string>
-    <string name="gamepadTestButtonLabelButtonLeftShoulder">左肩键</string>
-    <string name="gamepadTestButtonLabelButtonRightShoulder">右肩键</string>
-    <string name="gamepadTestButtonLabelButtonLeftTrigger">Left Trigger</string>
-    <string name="gamepadTestButtonLabelButtonRightTrigger">Right Trigger</string>
-    <string name="gamepadTestButtonLabelButtonLeftThumb">Left Thumb</string>
-    <string name="gamepadTestButtonLabelButtonRightThumb">Right Thumb</string>
+    <string name="gamepadTestButtonLabelButtonLeftShoulder">L1键</string>
+    <string name="gamepadTestButtonLabelButtonRightShoulder">R1键</string>
+    <string name="gamepadTestButtonLabelButtonLeftTrigger">L3键</string>
+    <string name="gamepadTestButtonLabelButtonRightTrigger">R3键</string>
+    <string name="gamepadTestButtonLabelButtonLeftThumb">L2键</string>
+    <string name="gamepadTestButtonLabelButtonRightThumb">R2键</string>
 
     <string name="gamepadTestOptionalLabel">Optional (may not be on the device)</string>
     <string name="gamepadTestAllKeyCodesLabel">All codes:</string>
-    <string name="gamepadTestModeLabel">类型:\\s\\s</string>
-    <string name="gamepadTestKeycodeLabel">Key code:</string>
-    <string name="gamepadTestFunctionLabel">Function:</string>
-    <string name="gamepadTestCompleteLabel">Test status:</string>
+    <string name="gamepadTestModeLabel">类型:\s\s</string>
+    <string name="gamepadTestKeycodeLabel">密钥：\s</string>
+    <string name="gamepadTestFunctionLabel">功能: \s</string>
+    <string name="gamepadTestCompleteLabel">测试状态:\s\s</string>
     <string name="gamepadTestHelp">Scroll down to see the full instructions…\n\nPress ALL Dpad AND four primary buttons or the gamepad WILL NOT WORK.\n\nIf you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your gamepad) or try a different gamepad Type (above).\n\n\'BACK\' or \'CANCEL\' will exit the test but the gamepad WILL NOT WORK.\n\'SKIP\', or pressing the \'Decrease Speed\' gamepad button three times, will force the test to pass, even if the gamepad does not work properly.\n\'RESET\' will make ED think no gamepads have been used yet.\nIf \'simple\' test is selected, a single \'Decrease Speed\' button press will skip the test.\n\nUse the \'Gamepad Test n\' menu options to get back to this screen.</string>
-    <string name="gamepadTestKeyboardHelp">选择下方\'Skip\'以使用键盘
-\n-----------------
-\n键盘命令
-\n-----------------
-\n上方向键或\'\+\'或\'=\' = 增加速度
-\n下方向键或\'\-\' = 降低速度
-\n►► = 速度加倍增加
-\n◄◄ = Decrease Speed * 2
-\n\'X\' or End = Stop
-\nLeft or \'\[\' = Reverse (Fwd if swapped)
-\nRight or \'\]\' = Forward (Ahead) (Rev if swapped)
-\n\'D\' = Direction - Toggle Forward/Reverse
-\n\'N\' = Next Throttle
-\n\'Z\' or Home = All stop
-\nSemi-Realistic Throttle Only:
-\n - \'\\\' = Neutral
-\n - PgUp or \' = Decrease Brake
-\n - PgDn or \';\' = Increase Brake
-\n - \'.\' = Decrease Load
-\n - \',\' = Increase Load
-\n
-\nF00 - F32 = Function
-\nMust be \'F\' followed by two digits
-\n\'0\'-\'9\' = Functions 0-9
-\nWithout a preceding \'F\', \'S\' or \'L\'
-\n
-\nS000 - S100 = Speed
-\nMust be \'S\' followed by three digits
-\n\'V\' = Speak Speed
-\nIn Phone Loco Sounds (IPLS)
-\n\'B\' = Bell
-\n\'H\' = Horn / Whistle
-\nShift + \'H\' = Short Horn
-\n\'M\' or Volume Mute = Mute IPLS
-\n
-\nT0 - T5 = Specify a throttle for next command
-\nMust be \'T\' followed by one digit
-\nThe following command will sent to the specified throttle regardless of the currently selected gamepad throttle.
-\n
-\nAll other keyCodes are ignored
-\n
-\nFailure to follow the \'F\', \'S\' or \'L\' with the correct number of digits will ignore the command</string>
+    <string name="gamepadTestKeyboardHelp">“点击下方的‘跳过’以使用键盘
+-----------------
+键盘指令
+-----------------
+向上键或“+”或\'=\'=提高速度
+向下或\'-\'=减速
+\'X\'=停止
+左键或\'\\\'键 = 反转（若在偏好设置中已交换按钮，则为正向）
+右或\'\[\'=前进（向前）（如果在偏好设置中交换了按钮，则为后退）
+\'D\' = 方向 - 切换前进/后退
+\'N\' = 下一个油门
+\'Z\'=全部停止
+F00 - F28 = 功能
+必须是\'F\'后跟两位数字
+\'0\'-\'9\' = 功能0-9
+前面没有\'F\'、\'S\'或\'L\'
+S000 - S100 = 速度
+必须是\'S\'后跟三位数字
+在电话本地声音（IPLS）中
+\'B\' = 铃声
+\'H\' = 喇叭
+Shift + \'H\' = 短鸣喇叭
+\'M\'或音量静音=静音IPLS
+T0 - T5 = 为下一个命令指定一个限制
+必须是\'T\'后跟一位数字
+无论当前选择的是哪个游戏手柄油门，以下指令都将发送至指定的油门。
+所有其他键码均被忽略
+如果\'F\'、\'S\'或\'L\'后的数字位数不正确，则指令将被忽略</string>
 
     <!--    Gamepad test page -->
 
@@ -822,7 +811,7 @@ b) 非花名册机车。
     <string name="prefTtsThrottleResponseTitle">游戏手柄节流阀变更时</string>
     <string name="prefTtsThrottleResponseSummary">当在游戏手柄上选择不同节流阀时</string>
 
-    <string name="prefTtsThrottleSpeedTitle">游戏手柄速度时</string>
+    <string name="prefTtsThrottleSpeedTitle">达到游戏手柄速度时</string>
     <string name="prefTtsThrottleSpeedSummary">使用游戏手柄时速度达到特定值时</string>
 
     <string name="prefTtsGamepadTestTitle">游戏手柄测试开始时</string>
@@ -879,13 +868,13 @@ b) 非花名册机车。
     <string name="toastFlashlightOnFailed">抱歉！开启手电筒时出现问题&#8230;</string>
     <string name="toastFlashlightOffFailed">抱歉！关闭手电筒时出现问题&#8230;</string>
 
-    <string name="webViewButtonBar">节流阀网页视图按钮</string>
+    <string name="webViewButtonBar">网页视图按钮</string>
     <string name="prefWebViewButtonSummary">在操作栏中显示“显示/隐藏 Web 视图”按钮？\\n（需要启用“限制 Web 视图”首选项）</string>
     <string name="prefWebViewButtonTitle">节流阀网页视图按钮？</string>
 
     <!-- Consist Follow Function Preferences etc. -->
-    <string name="ConsistEditLabelLead">主控</string>
-    <string name="ConsistEditLabelTrail">从控</string>
+    <string name="ConsistEditLabelLead">主车</string>
+    <string name="ConsistEditLabelTrail">从车</string>
 
     <string name="prefConsistFollowRuleStyleTitle">编组和默认功能 - 遵循规则样式</string>
     <string name="prefConsistFollowRuleStyleSummary" tools:ignore="TypographyEllipsis">在以下情况按下功能按钮时应遵循哪种规则样式</string>
@@ -900,7 +889,7 @@ b) 非花名册机车。
     <string name="prefConsistFollowDefaultActionSummary">如果未满足以下任何规则，编组中的哪些机车应响应功能按钮。（仅适用于复杂匹配规则）</string>
 
     <string name="prefConsistFollowString1Title">前灯特定字符串1</string>
-    <string name="prefConsistFollowString1Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
+    <string name="prefConsistFollowString1Summary">以逗号分隔的字符串，用于在列车编组中机车的功能标签中查找，以识别\'前照灯\'功能（通常为 F0）。</string>
     <string name="prefConsistFollowAction1Title">前灯特定操作1</string>
     <string name="prefConsistFollowAction1Summary">编组中的哪些机车应响应已找到的前灯功能。</string>
 
@@ -1010,23 +999,23 @@ b) 非花名册机车。
 
     <string name="introButtonsTitle">速度滑块和按钮</string>
     <string name="introButtonsSummary">选择控制列车速度的方式</string>
-    <string name="introButtonsSlider">仅滑块\n（“大按钮”布局不支持）</string>
-    <string name="introButtonsSliderAndButtons">滑块+按钮\n（“大按钮”布局不支持）</string>
-    <string name="introButtonsNoSlider">仅速度按钮</string>
+    <string name="introButtonsSlider">仅滑块（不支持“大按钮”）</string>
+    <string name="introButtonsSliderAndButtons">滑块 + 按钮（不支持“大按钮”）。</string>
+    <string name="introButtonsNoSlider">仅限速度按钮</string>
 
-    <string name="introButtonsNoSliderOrButtons">仅速度按钮</string>
+    <string name="introButtonsNoSliderOrButtons">ESU MC 2/Pro 不建议使用滑块或按钮。</string>
     <string name="introDccexTitle">EX-CommandStation选项</string>
     <string name="introDccexSummary">如果您直接使用DCC-EX EX-CommandStation（不通过JMRI），Engine Driver可以提供额外功能，包括CV编程。\n\n如果您在下方选择“是”，当服务器名称包含“DCC-EX”或“DCCEX”或使用端口“2560”时，Engine Driver将默认使用DCC-EX原生命令而非WiThrottle。</string>
     <string name="introDccexQuestionYes">是，我将使用EX-CommandStation</string>
     <string name="introDccexQuestionNo">否，我不使用EX-CommandStation</string>
 
     <string name="introEsuMc2QuestionNo">不，我会自己选择设置。</string>
-    <string name="introbackButtonPress">请重新启动Engine Driver应用以完成介绍</string>
+    <string name="introbackButtonPress">请重新启动引擎驱动程序应用程序以完成设置向导。</string>
     <string name="edit_consist_menu">≡ 编辑编组</string>
-    <string name="edit_consist_throttle_1">Edit Consist Throttle 1</string>
-    <string name="edit_consist_throttle_2">Edit Consist Throttle 2</string>
-    <string name="edit_consist_throttle_3">Edit Consist Throttle 3</string>
-    <string name="edit_consist_throttle_4">Edit Consist Throttle 4</string>
+    <string name="edit_consist_throttle_1">编辑编组节流阀 1</string>
+    <string name="edit_consist_throttle_2">编辑编组节流阀 2</string>
+    <string name="edit_consist_throttle_3">编辑编组节流阀 3</string>
+    <string name="edit_consist_throttle_4">编辑编组节流阀 4</string>
     <string name="edit_consist_throttle_5">编辑编组节流阀 5</string>
     <string name="edit_consist_throttle_6">编辑编组节流阀 6</string>
     <string name="edit_consist_lights_throttle_1">编辑编组灯光节流阀 1</string>
@@ -1040,8 +1029,8 @@ b) 非花名册机车。
     <string name="editConsistLightsButtonLabel">编辑灯光</string>
 
     <string name="editConsistLocoFacingLabel">朝向</string>
-    <string name="consistLocoFacingFront">前方</string>
-    <string name="consistLocoFacingRear">后方</string>
+    <string name="consistLocoFacingFront">车头朝向前方</string>
+    <string name="consistLocoFacingRear">车头朝向后方</string>
 
     <string name="turnoutsSelectionTypeHeading">道岔选择方式</string>
     <string name="turnoutsSelectionTypeAddress">地址/最近使用</string>
@@ -1056,6 +1045,7 @@ b) 非花名册机车。
 
     <string name="dialogDownloadRosterConfirmQuestion">确认要将所有花名册条目下载到最近使用的机车列表吗</string>
 
+    <string name="ToastsOptionsTitle">提示和指导</string>
     <string name="prefHideInstructionalToastsTitle">隐藏指导性提示</string>
     <string name="prefHideInstructionalToastsSummary">隐藏指导性的“toast”弹出帮助/提示</string>
 
@@ -1233,6 +1223,8 @@ b) 非花名册机车。
     <string name="DccexSucceeded">操作成功</string>
     <string name="DccexFailed">操作失败</string>
 
+    <string name="DCCEXbuttonCvProgrammerProgTrack">CV编程轨</string>
+    <string name="DCCEXbuttonCvProgrammerPoM">在主轨执行CV编程</string>
     <string name="DCCEXbuttonTrackManager">轨道管理器</string>
     <string name="DCCEXbuttonDefaultFunctions">默认功能</string>
     <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - 编程轨道（服务模式）</string>
@@ -1295,7 +1287,7 @@ b) 非花名册机车。
     <string name="functionConsistColumnLatching">锁存</string>
     <string name="prefFunctionConsistLatchingDefaultValue">无</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">锁定</string>
-    <string name="gamepadTestKeyCodesRightCode">RT</string>
+    <string name="gamepadTestKeyCodesRightCode">Rt</string>
     <string name="prefGamepadTestNowTitle">立即测试游戏手柄设置！</string>
     <string name="prefGamepadTestNowSummary">允许您确认所选设置是否正常工作。\n\n选择后，测试页面将立即打开。</string>
     <string name="prefKidsTimerDemoModePasswordTitle">演示模式密码</string>
@@ -1312,6 +1304,7 @@ b) 非花名册机车。
     <string name="prefSwipeSpeedChangeStepSummary">速度步长用于设置向上、向下或向左/向右滑动的步长，以改变滑动速度。</string>
     <string name="prefThrottleOrientationTitle">屏幕方向</string>
     <string name="FilterRosterListDownloadLabel">下载</string>
+    <string name="prefBeepOnAlertToastsTitle">警报响起</string>
     <string name="prefToolbarButtonSizeTitle">工具栏按钮</string>
     <string name="prefToolbarButtonSizeSummary">设置工具栏按钮大小。（需要重启应用）</string>
     <string name="routes_route">路由系统名称</string>
@@ -1341,12 +1334,19 @@ b) 非花名册机车。
     <string name="gamepadTestIncomplete">测试未完成</string>
     <string name="gamepadTestComplete">测试完成</string>
     <string name="gamepadTestCompleteToast">游戏手柄测试已成功完成</string>
-    <string name="gamepadTestHelpNonForced">\"如果无法激活所有按钮，请更改游戏手柄模式（请参阅设备随附的说明）或尝试其他游戏手柄类型（如上所示）。  首次从油门屏幕使用游戏手柄时，可能需要重新测试。\"</string>
+    <string name="gamepadTestHelpNonForced">向下滚动查看完整说明……
+        \n\n同时按下所有方向键和四个主要按钮，否则游戏手柄将无法工作。
+        \n\n如果您无法激活所有按钮，请更改游戏手柄模式（请参阅游戏手柄随附的说明）或尝试不同的游戏手柄类型（如上所述）。
+        \n\n“返回”或“取消”将退出测试，但游戏手柄将无法工作。
+        \n“跳过”或按下“降低速度”游戏手柄按钮三次，即使游戏手柄工作不正常，也将强制通过测试。
+        \n“重置”将使ED认为尚未使用过任何游戏手柄。
+        \n如果选择“简单”测试，则只需按下一次“降低速度”按钮即可跳过测试。
+        \n\n使用“游戏手柄测试n”菜单选项可返回此屏幕。</string>
     <string name="gamepadTestInvalidKeycode">此模式的密钥码无效</string>
     <string name="gamepadTestSkip">跳过</string>
     <string name="gamepadTestKeyCodesUpCode">上</string>
-    <string name="gamepadTestKeyCodesDownCode">DN</string>
-    <string name="gamepadTestKeyCodesLeftCode">LF</string>
+    <string name="gamepadTestKeyCodesDownCode">Dn</string>
+    <string name="gamepadTestKeyCodesLeftCode">Lf</string>
     <string name="logviewerShare">共享</string>
     <string name="toastNoAppToShare">没有找到共享该文件的应用</string>
     <string name="prefShareFileNowTitle">立刻共享设置文件</string>
@@ -1362,6 +1362,8 @@ b) 非花名册机车。
     <string name="sharedFileOverwriteChoiceTitle">文件冲突</string>
     <string name="sharedFileOverwriteChoiceText">某些文件可能已存在。您想覆盖现有文件吗？\\n\\n选择“否”将以新名称（例如，filename_1.ext）保存冲突的文件。</string>
     <string name="sharedFileOverwriteChoicePositiveButtonText">是，覆盖</string>
+    <string name="ToastsOptionsSummary">提示和指导性“toast”弹出窗口帮助/提示选项</string>
+    <string name="prefBeepOnAlertToastsSummary">在弹出式“提示”消息上播放哔哔声</string>
 
 </resources>
 

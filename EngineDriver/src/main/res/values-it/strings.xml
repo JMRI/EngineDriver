@@ -800,6 +800,7 @@
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confermare che si desidera rimuovere tutti i deviatoi recenti</string>
 
     <string name="dialogDownloadRosterConfirmQuestion">Conferma di voler scaricare tutte le voci del roster nell\'elenco delle locomotive recenti</string>
+    <string name="ToastsOptionsTitle">Avvisi e suggerimenti didattici</string>
     <string name="prefHideInstructionalToastsTitle">Nascondi suggerimenti didattici</string>
     <string name="prefHideInstructionalToastsSummary">Nascondi aiuto/suggerimenti popup didattici \"toast\".</string>
     <string name="dialogConfirmResetPreferencesTitle">Resetta le preferenze</string>
@@ -1156,6 +1157,7 @@
     <string name="introEsuMc2QuestionYes">Sì, usa le impostazioni consigliate</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipo di cursore</string>
     <string name="prefEsuMc2SliderTypeSummary">Definisci cosa farà lo Slider</string>
+    <string name="prefBeepOnAlertToastsTitle">Segnale acustico per gli avvisi</string>
     <string name="prefToolbarButtonSizeTitle">Pulsante della barra degli strumenti</string>
     <string name="prefToolbarButtonSizeSummary">Imposta la dimensione dei pulsanti della barra degli strumenti. (Riavvio richiesto)</string>
     <string name="prefKidsTimerKioskModeTitle">Modalità chiosco?</string>
@@ -1193,5 +1195,7 @@
     <string name="advancedConsistToolAddButtonLabel">Aggiungere</string>
     <string name="advancedConsistToolRemoveButtonLabel">Rimuovere</string>
     <string name="advancedConsistToolButtonLabel">Avanzato consiste</string>
+    <string name="ToastsOptionsSummary">Opzioni per avvisi e pop-up di aiuto/suggerimenti istruttivi \\\'toast\\\'</string>
+    <string name="prefBeepOnAlertToastsSummary">Riproduci un segnale acustico nei messaggi popup di avviso \"toast\"</string>
 
 </resources>
