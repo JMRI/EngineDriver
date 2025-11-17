@@ -162,7 +162,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="2dp"
-                android:paddingTop="2dp" >
+                android:paddingTop="2dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/turnouts_location_label"
@@ -255,17 +256,33 @@
                         android:text="@string/turnoutsRecentHeading"
                         tools:ignore="RtlHardcoded" />
 
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
                     <Button
                         android:id="@+id/clear_turnouts_list_button"
                         style="?attr/ed_small_button_style"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_toLeftOf="@id/turnouts_recent_sort"
                         android:layout_alignParentTop="true"
                         android:text="@string/clearLocoList"
                         android:drawableLeft="?attr/ed_clear_list_glyph"
                         android:padding="0dp"
+                        tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
+
+                    <Button
+                        android:id="@+id/turnouts_recent_sort"
+                        style="?attr/ed_small_button_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="22sp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:padding="0dp"
+                        android:text="@string/order"
+                        android:drawableLeft="?attr/ed_sort_glyph"
                         tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
                 </RelativeLayout>
