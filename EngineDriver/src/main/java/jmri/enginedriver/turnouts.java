@@ -164,7 +164,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     public void refreshTurnoutsView() {
         //specify logic for sort comparison (by username/id)
-        Comparator<HashMap<String, String>> turnout_comparator = new Comparator<HashMap<String, String>>() {
+        Comparator<HashMap<String, String>> turnoutComparator = new Comparator<HashMap<String, String>>() {
             @Override
             public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
 //                return arg0.get("to_user_name").compareTo(arg1.get("to_user_name"));    //*** was compareToIgnoreCase()
@@ -239,7 +239,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         updateTurnoutEntry();
 
         //sort by username
-        Collections.sort(turnoutsFullList, turnout_comparator);
+        Collections.sort(turnoutsFullList, turnoutComparator);
         Collections.sort(locationList);
         locationList.add(0, getString(R.string.location_all));   // this entry goes at the top of the list
         locationListAdapter.notifyDataSetChanged();
@@ -396,6 +396,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.WIT_CON_RECONNECT:
                     refreshTurnoutsView();
                     refreshTurnoutViewStates();
+                    loadRecentTurnoutsList();
                     refreshRecentTurnoutViewStates();
                     break;
                 case message_type.TIME_CHANGED:
@@ -495,6 +496,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     mainapp.turnoutsOrder=sort_type.NAME;
             }
             refreshTurnoutsView();
+            loadRecentTurnoutsList();
             mainapp.toastSortType(mainapp.turnoutsOrder);
             mainapp.buttonVibration();
         }
@@ -552,6 +554,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //    public boolean onTouchEvent(MotionEvent event) {
 //        return myGesture.onTouchEvent(event);
 //    }
+
+    // -------------------------------------------------------------------
+    // -------------------------------------------------------------------
 
     /**
      * Called when the activity is first created.
@@ -804,10 +809,19 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mVelocityTracker = VelocityTracker.obtain();
         }
 
+        // -------------------------------------------------------------------
+
         // setup the sort button
         b = findViewById(R.id.turnouts_sort);
         SortButtonListener sortButtonListener = new SortButtonListener();
         b.setOnClickListener(sortButtonListener);
+
+        // setup the recent sort button
+        b = findViewById(R.id.turnouts_recent_sort);
+        sortButtonListener = new SortButtonListener();
+        b.setOnClickListener(sortButtonListener);
+
+        // -------------------------------------------------------------------
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
@@ -1104,6 +1118,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         //since we always do the same action no need to distinguish between requests
         refreshTurnoutsView();
         refreshTurnoutViewStates();
+
+        loadRecentTurnoutsList();
         refreshRecentTurnoutViewStates();
     }
 
@@ -1119,61 +1135,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
     }
-
-
-    private void loadRecentTurnoutsList() {
-
-        importExportPreferences.recentTurnoutAddressList = new ArrayList<>();
-        importExportPreferences.recentTurnoutNameList = new ArrayList<>();
-        importExportPreferences.recentTurnoutSourceList = new ArrayList<>();
-        importExportPreferences.recentTurnoutServerList = new ArrayList<>();
-        ArrayList<HashMap<String, String>> tempRecentTurnoutsList = new ArrayList<>();
-
-        //if no SD Card present then there is no recent consists list
-        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            importExportPreferences.loadRecentTurnoutsListFromFile();
-            for (int i = 0; i < importExportPreferences.recentTurnoutAddressList.size(); i++) {
-                // only load the turnout if it came from the current server
-                if (importExportPreferences.recentTurnoutServerList.get(i).equals(mainapp.connectedHostip)) {
-                    HashMap<String, String> hm = new HashMap<>();
-                    String turnoutAddressString = importExportPreferences.recentTurnoutAddressList.get(i);
-                    String turnoutAddressSource = importExportPreferences.recentTurnoutSourceList.get(i).toString();
-                    String turnoutAddressServer = importExportPreferences.recentTurnoutServerList.get(i);
-
-                    hm.put("turnout_name", importExportPreferences.recentTurnoutNameList.get(i)); // the larger name text
-                    hm.put("turnout", turnoutAddressString);   // the small address field at the top of the row
-                    hm.put("turnout_source", turnoutAddressSource);
-                    hm.put("turnout_server", turnoutAddressServer);
-                    tempRecentTurnoutsList.add(hm);
-                }
-            }
-
-            //suppress manual entries that have been updated, e.g. hide "92" if "LT92" found
-            // first build list of entries to be removed, then skip them when copying
-            ArrayList<String> toSuppress = new ArrayList<>();
-            Pattern p = Pattern.compile(".T(\\d*)");
-            for (HashMap<String, String> rthm : tempRecentTurnoutsList) {
-                String sn = rthm.get("turnout");
-                Matcher m = p.matcher(sn);
-                if (m.matches()) { //name includes prefix
-                    toSuppress.add(m.group(1)); // add digits to remove list
-                }
-            }
-
-            //replace recent list from temp list, suppressing where requested
-            recentTurnoutsList.clear();
-            for (HashMap<String, String> rthm : tempRecentTurnoutsList) {
-                String sn = rthm.get("turnout");
-                if (!toSuppress.contains(sn)) {
-                    recentTurnoutsList.add(rthm);
-                } else {
-                    Log.d(threaded_application.applicationName, activityName + ": loadRecentTurnoutsList(): skipping sn="+sn);
-                }
-            }
-            recentTurnoutsListAdapter.notifyDataSetChanged();
-        }
-    }
-
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
@@ -1217,6 +1178,98 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         prefs.edit().putString("prefSelectTurnoutsMethod", whichMethod).commit();
     }
 
+    // -------------------------------------------------------------------
+    // -------------------------------------------------------------------
+    // Recent Turnouts
+    // -------------------------------------------------------------------
+    // -------------------------------------------------------------------
+
+    private void loadRecentTurnoutsList() {
+        //specify logic for sort comparison (by name/id/position)
+        Comparator<HashMap<String, String>> turnoutComparator = new Comparator<HashMap<String, String>>() {
+            @Override
+            public int compare(HashMap<String, String> arg0, HashMap<String, String> arg1) {
+                int rslt;
+                String a;
+                String b;
+                switch (mainapp.turnoutsOrder) {
+                    case sort_type.NAME: {
+                        a = threaded_application.formatNumberInName(arg0.get("turnout_name"));
+                        b = threaded_application.formatNumberInName(arg1.get("turnout_name"));
+                        break;
+                    }
+                    case sort_type.ID: {
+                        a = threaded_application.formatNumberInName(arg0.get("turnout"));
+                        b = threaded_application.formatNumberInName(arg1.get("turnout"));
+                        break;
+                    }
+                    case sort_type.POSITION:
+                    default: {
+                        a = threaded_application.formatNumberInName(arg0.get("turnout_pos"));
+                        b = threaded_application.formatNumberInName(arg1.get("turnout_pos"));
+                        break;
+                    }
+                }
+                rslt = a.compareTo(b);
+                return rslt;
+            }
+        };
+
+        importExportPreferences.recentTurnoutAddressList = new ArrayList<>();
+        importExportPreferences.recentTurnoutNameList = new ArrayList<>();
+        importExportPreferences.recentTurnoutSourceList = new ArrayList<>();
+        importExportPreferences.recentTurnoutServerList = new ArrayList<>();
+        ArrayList<HashMap<String, String>> tempRecentTurnoutsList = new ArrayList<>();
+
+        //if no SD Card present then there is no recent consists list
+        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+            int pos = 0;
+            importExportPreferences.loadRecentTurnoutsListFromFile();
+            for (int i = 0; i < importExportPreferences.recentTurnoutAddressList.size(); i++) {
+                // only load the turnout if it came from the current server
+                if (importExportPreferences.recentTurnoutServerList.get(i).equals(mainapp.connectedHostip)) {
+                    HashMap<String, String> hm = new HashMap<>();
+                    String turnoutAddressString = importExportPreferences.recentTurnoutAddressList.get(i);
+                    String turnoutAddressSource = importExportPreferences.recentTurnoutSourceList.get(i).toString();
+                    String turnoutAddressServer = importExportPreferences.recentTurnoutServerList.get(i);
+
+                    hm.put("turnout_name", importExportPreferences.recentTurnoutNameList.get(i)); // the larger name text
+                    hm.put("turnout", turnoutAddressString);   // the small address field at the top of the row
+                    hm.put("turnout_source", turnoutAddressSource);
+                    hm.put("turnout_server", turnoutAddressServer);
+                    hm.put("turnout_pos", Integer.toString(pos));
+                    tempRecentTurnoutsList.add(hm);
+                }
+                pos++;
+            }
+
+            //suppress manual entries that have been updated, e.g. hide "92" if "LT92" found
+            // first build list of entries to be removed, then skip them when copying
+            ArrayList<String> toSuppress = new ArrayList<>();
+            Pattern p = Pattern.compile(".T(\\d*)");
+            for (HashMap<String, String> rthm : tempRecentTurnoutsList) {
+                String sn = rthm.get("turnout");
+                Matcher m = p.matcher(sn);
+                if (m.matches()) { //name includes prefix
+                    toSuppress.add(m.group(1)); // add digits to remove list
+                }
+            }
+
+            Collections.sort(tempRecentTurnoutsList, turnoutComparator);
+
+            //replace recent list from temp list, suppressing where requested
+            recentTurnoutsList.clear();
+            for (HashMap<String, String> rthm : tempRecentTurnoutsList) {
+                String sn = rthm.get("turnout");
+                if (!toSuppress.contains(sn)) {
+                    recentTurnoutsList.add(rthm);
+                } else {
+                    Log.d(threaded_application.applicationName, activityName + ": loadRecentTurnoutsList(): skipping sn="+sn);
+                }
+            }
+            recentTurnoutsListAdapter.notifyDataSetChanged();
+        }
+    }
 
     public class RecentTurnoutsSimpleAdapter extends SimpleAdapter {
         private final Context cont;
