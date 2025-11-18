@@ -1,5 +1,5 @@
 **Version 2.41.212
- * Added Preference to not beep on Withrottle Alerts and Messages
+ * Added Preference to not beep on WiThrottle Alerts and Messages
  * Added Sort button for Recent Turnouts/Points
 **Version 2.41.210
  * Last (production) version of Engine Driver to support Android 4.x
@@ -70,7 +70,7 @@
  * Tidy up of the AppIntro permissions
  * Change the location permission warnings to a toast message
  * Add option to the ED icon on the Action Bar, to return to the Throttle screen.  This will be enabled by default on new installs
- * Prevent LOG_ENTRY_RECEIVED messages from being sent to all activites. Only needs to be sent to the logViewer.
+ * Prevent LOG_ENTRY_RECEIVED messages from being sent to all activities. Only needs to be sent to the logViewer.
  * New 'G' command for keyboard gamepad type to force a function even if it is momentary
  * Linting
  * Rearrange the Select Loco page for better fit of non-English text. (primarily German)
