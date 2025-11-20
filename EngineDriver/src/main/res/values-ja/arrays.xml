@@ -433,8 +433,8 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>なし</item>
         <item>DCCメイン</item>
-        <item>DCCメイン</item>
-        <item>DCCメイン</item>
+        <item>DCCプログラム</item>
+        <item>DC</item>
         <item>DC逆極性</item>
         <item>AUTO - オートリバース DCC メイン</item>
         <item>EXT（選択不可）</item>
