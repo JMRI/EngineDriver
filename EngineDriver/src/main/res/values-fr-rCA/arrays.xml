@@ -448,8 +448,8 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>AUCUN</item>
         <item>DCC VOIE PRINCIPALE</item>
-        <item>DCC VOIE PRINCIPALE</item>
-        <item>DCC VOIE PRINCIPALE</item>
+        <item>PROGRAMME DCC</item>
+        <item>DC</item>
         <item>DC - Inversion de la polarité</item>
         <item>AUTO - DCC VOIE PRINCIPALE avec inversion automatique de la polarité</item>
         <item>EXT (non disponible)</item>

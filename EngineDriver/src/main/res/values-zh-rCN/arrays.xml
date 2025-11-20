@@ -469,8 +469,8 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>无</item>
         <item>DCC 主控系统</item>
-        <item>DCC 主控系统</item>
-        <item>DCC 主控系统</item>
+        <item>DCC 程序</item>
+        <item>华盛顿特区</item>
         <item>直流反极性</item>
         <item>自动 - 自动反转 DCC 主控</item>
         <item>外部（不可选）</item>
