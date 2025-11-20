@@ -55,16 +55,11 @@ public class throttle_big_buttons extends throttle {
         set_function_labels_and_listeners_for_view(whichThrottle);
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
-        mainapp = (threaded_application) this.getApplication();
+    protected void setScreenDetails() {
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
         mainapp.currentScreenSupportsWebView = false;
 
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Big Right":
                 mainapp.throttleLayoutViewId = R.layout.throttle_big_buttons_right;
@@ -74,10 +69,32 @@ public class throttle_big_buttons extends throttle {
                 mainapp.throttleLayoutViewId = R.layout.throttle_big_buttons_left;
                 break;
         }
+    } // end setScreen()
+
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
+
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
+
+        mainapp = (threaded_application) this.getApplication();
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        setScreenDetails();
 
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) { return;}
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        if (mainapp.appIsFinishing) return;
+
+        setScreenDetails();
+
+        super.onStart();
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //noinspection SwitchStatementWithTooFewBranches
@@ -106,7 +123,8 @@ public class throttle_big_buttons extends throttle {
         setAllFunctionLabelsAndListeners();
 
         sliderType = slider_type.VERTICAL;   // they are not visible
-    } // end of onCreate()
+
+    } // end onStart()
 
     @Override
     public void onPause() {

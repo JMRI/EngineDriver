@@ -343,6 +343,7 @@ public class threaded_application extends Application {
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
     public boolean currentScreenSupportsWebView = true;
+    public boolean throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
 
     @NonNull
     public String connectedHostName = "";
@@ -2264,7 +2265,8 @@ public class threaded_application extends Application {
         MenuItem mi = menu.findItem(R.id.throttle_switch_button);
         if (mi == null) return;
 
-        if (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false)) {
+        if ( (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false))
+            && (mainapp.throttleSwitchAllowed) ) {
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {

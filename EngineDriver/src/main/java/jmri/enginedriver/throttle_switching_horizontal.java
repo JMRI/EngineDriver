@@ -86,27 +86,35 @@ public class throttle_switching_horizontal extends throttle {
         prefHideFunctionButtonsOfNonSelectedThrottle = prefs.getBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", false);
     }
 
+    protected void setScreenDetails() {
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = true;
+
+        mainapp.throttleLayoutViewId = R.layout.throttle_switching_horizontal;
+    } // end setScreen()
+
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
-
-        mainapp.currentScreenSupportsWebView = true;
-
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        //noinspection SwitchStatementWithTooFewBranches
-        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
-            case "Switching Horizontal":
-                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-                mainapp.throttleLayoutViewId = R.layout.throttle_switching_horizontal;
-                break;
-        }
+
+        setScreenDetails();
 
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) { return;}
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        if (mainapp.appIsFinishing) return;
+
+        setScreenDetails();
+
+        super.onStart();
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
@@ -206,7 +214,8 @@ public class throttle_switching_horizontal extends throttle {
 
         }
         sliderType = slider_type.SWITCHING;
-    } // end of onCreate()
+
+    } // end onStart()
 
     @Override
     public void onPause() {

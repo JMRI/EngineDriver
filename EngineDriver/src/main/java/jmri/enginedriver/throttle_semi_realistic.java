@@ -187,7 +187,12 @@ public class throttle_semi_realistic extends throttle {
 
     }
 
+    protected void setScreenDetails() {
+        mainapp.currentScreenSupportsWebView = false;
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
+        mainapp.throttleLayoutViewId = R.layout.throttle_semi_realistic_left;
+    } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
@@ -195,16 +200,22 @@ public class throttle_semi_realistic extends throttle {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
-
-        mainapp.currentScreenSupportsWebView = false;
-
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-        mainapp.throttleLayoutViewId = R.layout.throttle_semi_realistic_left;
+
+        setScreenDetails();
 
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) { return; }
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        if (mainapp.appIsFinishing) return;
+
+        setScreenDetails();
+
+        super.onStart();
 
         bTargetFwds = new Button[mainapp.maxThrottlesCurrentScreen];
         bTargetRevs = new Button[mainapp.maxThrottlesCurrentScreen];
@@ -363,8 +374,9 @@ public class throttle_semi_realistic extends throttle {
             showAirButtonState(i);
         }
 
-            sliderType = slider_type.VERTICAL;
-    } // end of onCreate()
+        sliderType = slider_type.VERTICAL;
+
+    } // end onStart()
 
     @Override
     public void onPause() {

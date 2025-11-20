@@ -933,6 +933,14 @@
                     android:summary="@string/prefThrottleSwitchOption1Summary"
                     android:title="@string/prefThrottleSwitchOption1Title"
                     android:layout="@layout/checkbox_no_icon" />
+                <ListPreference
+                    android:defaultValue="@string/NumThrottleDefaultValue"
+                    android:entries="@array/NumOfThrottlesEntries"
+                    android:entryValues="@array/NumOfThrottlesEntryValues"
+                    android:key="prefThrottleSwitchOption1NumThrottles"
+                    android:summary="@string/prefNumOfThrottlesSummary"
+                    android:title="@string/prefNumOfThrottles"
+                    android:layout="@layout/checkbox_no_icon" />
 
                 <ListPreference
                     android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
@@ -942,15 +950,24 @@
                     android:summary="@string/prefThrottleSwitchOption2Summary"
                     android:title="@string/prefThrottleSwitchOption2Title"
                     android:layout="@layout/checkbox_no_icon" />
-<!--
                 <ListPreference
-                    android:defaultValue="@string/prefThrottleSwitchWebViewDefaultValue"
-                    android:entries="@array/prefThrottleSwitchWebViewEntries"
-                    android:entryValues="@array/prefThrottleSwitchWebViewEntryValues"
-                    android:key="prefThrottleSwitchWebView"
-                    android:summary="@string/prefThrottleSwitchWebViewSummary"
-                    android:title="@string/prefThrottleSwitchWebViewTitle" />
--->
+                    android:defaultValue="@string/NumThrottleDefaultValue"
+                    android:entries="@array/NumOfThrottlesEntries"
+                    android:entryValues="@array/NumOfThrottlesEntryValues"
+                    android:key="prefThrottleSwitchOption2NumThrottles"
+                    android:summary="@string/prefNumOfThrottlesSummary"
+                    android:title="@string/prefNumOfThrottles"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <!--
+                                <ListPreference
+                                    android:defaultValue="@string/prefThrottleSwitchWebViewDefaultValue"
+                                    android:entries="@array/prefThrottleSwitchWebViewEntries"
+                                    android:entryValues="@array/prefThrottleSwitchWebViewEntryValues"
+                                    android:key="prefThrottleSwitchWebView"
+                                    android:summary="@string/prefThrottleSwitchWebViewSummary"
+                                    android:title="@string/prefThrottleSwitchWebViewTitle" />
+                -->
             </PreferenceCategory>
 
         </PreferenceScreen>

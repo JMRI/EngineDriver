@@ -203,6 +203,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
+    protected Bundle onCreateSavedInstanceState = null;
 
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.DEFAULT;
 
@@ -6154,6 +6155,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         mainapp.applyTheme(this);
 
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
+
+        onCreateSavedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
@@ -6189,12 +6193,30 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
+
         // put pointer to this activity's handler in main app's shared variable
-//        mainapp.throttle_msg_handler = new throttle_handler();
+        if (mainapp.throttle_msg_handler == null)
+            mainapp.throttle_msg_handler = new ThrottleMessageHandler(Looper.getMainLooper());
+
+        // if it was killed in background, clear the save preferences
+        if ( (prefs.getBoolean("prefForcedRestart", false))
+                && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
+            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+            prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+        }
 
         sliderType = slider_type.HORIZONTAL;
 
         setContentView(mainapp.throttleLayoutViewId);
+
+        super.onStart();
 
         getCommonPrefs(true); // get all the common preferences
         mainapp.getDefaultSortOrderRoster();
@@ -6622,9 +6644,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         webView.getSettings().setUseWideViewPort(true); // Enable greater
         // zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        if (savedInstanceState != null) {
-            if (savedInstanceState.getSerializable("scale") != null) {
-                scale = (float) savedInstanceState.getSerializable(("scale"));
+        if (onCreateSavedInstanceState != null) {
+            if (onCreateSavedInstanceState.getSerializable("scale") != null) {
+                scale = (float) onCreateSavedInstanceState.getSerializable(("scale"));
             }
         }
         webView.setInitialScale((int) (100 * scale));
@@ -6698,7 +6720,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         };
 
         webView.setWebViewClient(EDWebClient);
-        if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
+        if (currentUrl == null || onCreateSavedInstanceState == null || webView.restoreState(onCreateSavedInstanceState) == null) {
             load_webview(); // reload if no saved state or no page had loaded when state was saved
         } else {
             webView.setInitialScale((int) (100 * scale));   // apply scale to restored webView
@@ -6785,7 +6807,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }, 2000);
         }
 
-    } // end of onCreate()
+    } // end onStart()
 
     @SuppressLint("ApplySharedPref")
     @Override
@@ -6794,6 +6816,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
+
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() & onResume() completes
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mainapp.throttleSwitchAllowed = true;
+                mainapp.displayThrottleSwitchMenuButton(TMenu);
+            }
+        }, 6000);
 
         threaded_application.currentActivity = activity_id_type.THROTTLE;
         if (mainapp.isForcingFinish()) { // expedite
@@ -6908,6 +6940,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     } // end onResume
 
     private void initialiseArrays() {
+        Log.d(threaded_application.applicationName, activityName + ": initialiseArrays(): called");
+
         bSels = new Button[mainapp.maxThrottlesCurrentScreen];
         tvbSelsLabels = new TextView[mainapp.maxThrottlesCurrentScreen];
         bRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
@@ -7072,22 +7106,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // direction indication immediately in OnCreate following a rotate
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
-        }
-    }
-
-    @Override
-    public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
-        super.onStart();
-        // put pointer to this activity's handler in main app's shared variable
-        if (mainapp.throttle_msg_handler == null)
-            mainapp.throttle_msg_handler = new ThrottleMessageHandler(Looper.getMainLooper());
-
-        // if it was killed in background, clear the save preferences
-        if ( (prefs.getBoolean("prefForcedRestart", false))
-                && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
-            prefs.edit().putBoolean("prefForcedRestart", false).commit();
-            prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
         }
     }
 
@@ -8663,11 +8681,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressLint("ApplySharedPref")
     protected void switchThrottleScreenType() {
+        Log.d(threaded_application.applicationName, activityName + ": switchThrottleScreenType() ");
+
+        if(!mainapp.throttleSwitchAllowed) return;
+        Log.d(threaded_application.applicationName, activityName + ": switchThrottleScreenType() Allowed");
+
         boolean prefThrottleSwitchButtonCycleAll = prefs.getBoolean("prefThrottleSwitchButtonCycleAll", getApplicationContext().getResources().getBoolean(R.bool.prefThrottleSwitchButtonCycleAllDefaultValue));
         String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
 
-        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(prefThrottleScreenType);
+//        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(prefThrottleScreenType);
+        String numThrottles;
 
         if (!webViewLocation.equals(keepWebViewLocation)) {
             showHideWebView("");
@@ -8676,14 +8700,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (!prefThrottleSwitchButtonCycleAll) {
             if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
                 prefThrottleScreenType = prefThrottleSwitchOption2;
+                numThrottles = prefs.getString("prefThrottleSwitchOption2NumThrottles", getResources().getString(R.string.NumThrottleDefaultValue));
+                mainapp.numThrottles = mainapp.Numeralise(numThrottles);
             } else {
                 prefThrottleScreenType = prefThrottleSwitchOption1;
+                numThrottles = prefs.getString("prefThrottleSwitchOption1NumThrottles", getResources().getString(R.string.NumThrottleDefaultValue));
+                mainapp.numThrottles = mainapp.Numeralise(numThrottles);
             }
         } else {
             prefThrottleScreenType = mainapp.getNextThrottleLayout();
+            numThrottles = prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue));
+            mainapp.numThrottles = mainapp.Numeralise(numThrottles);
         }
 
         prefs.edit().putString("prefThrottleScreenType", prefThrottleScreenType).commit();
+        prefs.edit().putString("NumThrottle", numThrottles).commit();
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();
 

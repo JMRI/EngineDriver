@@ -59,17 +59,35 @@ public class throttle_simple extends throttle {
         super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
     }
 
+    protected void setScreenDetails() {
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = false;
+
+        mainapp.throttleLayoutViewId = R.layout.throttle_simple;
+    } // end setScreen()
+
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
-        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-        mainapp.currentScreenSupportsWebView = false;
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        mainapp.throttleLayoutViewId = R.layout.throttle_simple;
+        setScreenDetails();
+
         super.onCreate(savedInstanceState);
+
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        if (mainapp.appIsFinishing) return;
+
+        setScreenDetails();
+
+        super.onStart();
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         Separators = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
@@ -145,7 +163,8 @@ public class throttle_simple extends throttle {
         setAllFunctionLabelsAndListeners();
 
         sliderType = slider_type.VERTICAL;
-    } // end of onCreate()
+
+    } // end onStart()
 
     @Override
     public void onPause() {

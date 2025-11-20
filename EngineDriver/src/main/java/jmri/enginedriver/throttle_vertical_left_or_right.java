@@ -65,12 +65,9 @@ public class throttle_vertical_left_or_right extends throttle {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
-        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-        mainapp.currentScreenSupportsWebView = true;
-
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        switch (prefThrottleScreenType) {
+
+        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Vertical":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
                 mainapp.throttleLayoutViewId = R.layout.throttle_vertical;
@@ -92,7 +89,39 @@ public class throttle_vertical_left_or_right extends throttle {
 
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) { return;}
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+
+        if (mainapp.appIsFinishing) return;
+
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = true;
+
+        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        switch (prefThrottleScreenType) {
+            case "Vertical":
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+                mainapp.throttleLayoutViewId = R.layout.throttle_vertical;
+                break;
+            case "Vertical Right":
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
+                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_right;
+                break;
+            case "Tablet Vertical Left":
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT;
+                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_tablet_left;
+                break;
+            case "Vertical Left":
+            default:
+                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
+                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_left;
+                break;
+        }
+
+        super.onStart();
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
@@ -190,7 +219,7 @@ public class throttle_vertical_left_or_right extends throttle {
         }
 
         sliderType = slider_type.VERTICAL;
-    } // end of onCreate()
+    } // end onStart()
 
     @Override
     public void onPause() {

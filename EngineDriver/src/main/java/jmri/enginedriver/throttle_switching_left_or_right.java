@@ -47,6 +47,7 @@ import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
 public class throttle_switching_left_or_right extends throttle {
+    static final String activityName = "throttle_switching_left_or_right";
 
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SWITCHING;
     protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;
@@ -86,17 +87,9 @@ public class throttle_switching_left_or_right extends throttle {
 
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
-
-        mainapp = (threaded_application) this.getApplication();
-
+    protected void setScreenDetails() {
         mainapp.currentScreenSupportsWebView = true;
 
-        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String x = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Switching":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
@@ -116,10 +109,30 @@ public class throttle_switching_left_or_right extends throttle {
                 mainapp.throttleLayoutViewId = R.layout.throttle_switching_left;
                 break;
         }
+    } // end setScreen()
+
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
+
+        mainapp = (threaded_application) this.getApplication();
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        setScreenDetails();
 
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) { return;}
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        if (mainapp.appIsFinishing) return;
+
+        setScreenDetails();
+
+        super.onStart();
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             switch (throttleIndex) {
@@ -297,7 +310,8 @@ public class throttle_switching_left_or_right extends throttle {
         }
 
         sliderType = slider_type.SWITCHING;
-    } // end of onCreate()
+
+    } // end onStart()
 
     @Override
     public void onPause() {
@@ -320,6 +334,7 @@ public class throttle_switching_left_or_right extends throttle {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
             }
         }
+
     } // end of onResume()
 
     @Override

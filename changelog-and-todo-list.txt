@@ -953,7 +953,7 @@
  *   TODO: Add toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
- *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.
+ *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.  Particularly important for Switch Throttle layouts preference (see below)
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
@@ -997,6 +997,7 @@
  *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
  *   TODO: option to show roster images above each throttle
+ *   TODO: add back in the preferences and code to set the number of throttles for each layout in for Switch Throttle Layouts.  Depends on moving the setup code from onCreate to onStart
  * In Phone Loco Sounds (throttle):
  *   TODO: custom sound profiles to be able to specify/override the momentum delay
  *   TODO: work out when to play the engine shut down sounds

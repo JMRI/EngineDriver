@@ -114,6 +114,12 @@ public class throttle_original extends throttle {
 
     }
 
+    protected void setScreenDetails() {
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = true;
+
+        mainapp.throttleLayoutViewId = R.layout.throttle;
+    } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
@@ -121,15 +127,22 @@ public class throttle_original extends throttle {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
-        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-        mainapp.currentScreenSupportsWebView = true;
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        mainapp.throttleLayoutViewId = R.layout.throttle;
+        setScreenDetails();
+
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) {
-            return;
-        }
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        if (mainapp.appIsFinishing) return;
+
+        setScreenDetails();
+
+        super.onStart();
 
         sbSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
 
@@ -164,8 +177,15 @@ public class throttle_original extends throttle {
         setAllFunctionLabelsAndListeners();
 
         sliderType = slider_type.VERTICAL;
-    } // end of onCreate()
 
+    } // end onStart()
+
+    @Override
+    public void onResume() {
+        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
+        super.onResume();
+        threaded_application.activityResumed(activityName);
+    } // end of onResume()
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
