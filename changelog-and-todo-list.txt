@@ -1,4 +1,5 @@
 **Version 2.41.214
+ * bug fix for everything that checks for DCC-EX version numbers. calculation was wrong.
 **Version 2.41.212
  * Added Preference to not beep on WiThrottle Alerts and Messages
  * Added Sort button for Recent Turnouts/Points
