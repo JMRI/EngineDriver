@@ -1380,7 +1380,7 @@ public class comm_thread extends Thread {
                                 Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.DccexVersion + ", ignoring");
                             }
                             if (vn2.length>=2) {
-                                try { vn = vn +String.format("%02d",Integer.parseInt(vn2[1]));
+                                try { vn = vn +String.format("%03d",Integer.parseInt(vn2[1]));
                                 } catch (Exception ignored) {
                                     // try to pull a partial number
                                     String pn = "0";
