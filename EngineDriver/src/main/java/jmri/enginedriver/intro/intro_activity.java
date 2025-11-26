@@ -23,6 +23,7 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -31,11 +32,12 @@ import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.github.paolorotolo.appintro.AppIntro2;
-import com.github.paolorotolo.appintro.AppIntroFragment;
-import com.github.paolorotolo.appintro.model.SliderPage;
+import com.github.appintro.AppIntro2;
+import com.github.appintro.AppIntroFragment;
+import com.github.appintro.model.SliderPage;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
+
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.activity_id_type;
@@ -73,7 +75,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
         sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
         sliderPage0.setImageDrawable(R.drawable.intro_welcome);
-        sliderPage0.setBgColor(getResources().getColor(R.color.intro_background));
+        sliderPage0.setBackgroundColor(getResources().getColor(R.color.intro_background));
         addSlide(AppIntroFragment.newInstance(sliderPage0));
 
 //        int slideNumber = 1;  // how many preceding slides
@@ -85,10 +87,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsPOST_NOTIFICATIONS));
 //                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBgColor(ContextCompat.getColor(context, R.color.intro_background));
+//                sliderPage.setBackgroundColor(ContextCompat.getColor(context, R.color.intro_background));
 //                addSlide(AppIntroFragment.newInstance(sliderPage));
 //                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, slideNumber);
+//                askForPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, slideNumber, false);
 //            }
 //        }=
 ////<!-- needed for API 33 -->
@@ -101,10 +103,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_IMAGES));
 //                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+//                sliderPage.setBackgroundColor(getResources().getColor(R.color.intro_background));
 //                addSlide(AppIntroFragment.newInstance(sliderPage));
 //                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, slideNumber);
+//                askForPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, slideNumber, false);
 //            }
 ////<!-- needed for API 33 -->
 //        } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -113,10 +115,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES));
 //                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+//                sliderPage.setBackgroundColor(getResources().getColor(R.color.intro_background));
 //                addSlide(AppIntroFragment.newInstance(sliderPage));
 //                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, slideNumber);
+//                askForPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, slideNumber, false);
 //            }
 //        } else { // needed for API 34
 //            if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES))
@@ -126,10 +128,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED));
 //                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBgColor(ContextCompat.getColor(context, R.color.intro_background));
+//                sliderPage.setBackgroundColor(ContextCompat.getColor(context, R.color.intro_background));
 //                addSlide(AppIntroFragment.newInstance(sliderPage));
 //                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}, slideNumber);
+//                askForPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}, slideNumber, false);
 //            }
 //        }
 ////<!-- needed for API 34 -->
@@ -139,7 +141,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //            sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //            sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsReadPhoneState));
 //            sliderPage.setImageDrawable(R.drawable.icon_vector);
-//            sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+//            sliderPage.setBackgroundColor(getResources().getColor(R.color.intro_background));
 //            addSlide(AppIntroFragment.newInstance(sliderPage));
 //            slideNumber = slideNumber + 1;
 //            askForPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, slideNumber);
@@ -153,10 +155,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 //                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsACCESS_FINE_LOCATION));
 //                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+//                sliderPage.setBackgroundColor(getResources().getColor(R.color.intro_background));
 //                addSlide(AppIntroFragment.newInstance(sliderPage));
 //                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, slideNumber);
+//                askForPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, slideNumber, false);
 //            }
 //////<!-- needed for API 33 -->
 ////        } else {
@@ -165,10 +167,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 ////                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 ////                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES));
 ////                sliderPage.setImageDrawable(R.drawable.icon_vector);
-////                sliderPage.setBgColor(getResources().getColor(R.color.intro_background));
+////                sliderPage.setBackgroundColor(getResources().getColor(R.color.intro_background));
 ////                addSlide(AppIntroFragment.newInstance(sliderPage));
 ////                slideNumber = slideNumber + 1;
-////                askForPermissions(new String[]{Manifest.permission.NEARBY_WIFI_DEVICES}, slideNumber);
+////                askForPermissions(new String[]{Manifest.permission.NEARBY_WIFI_DEVICES}, slideNumber, false);
 ////            }
 ////        }
 //////<!-- needed for API 33 -->
@@ -178,10 +180,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 ////            sliderPage5.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
 ////            sliderPage5.setDescription(getApplicationContext().getResources().getString(R.string.permissionsVIBRATE));
 ////            sliderPage5.setImageDrawable(R.drawable.icon_vector);
-////            sliderPage5.setBgColor(getResources().getColor(R.color.intro_background));
+////            sliderPage5.setBackgroundColor(getResources().getColor(R.color.intro_background));
 ////            addSlide(AppIntroFragment.newInstance(sliderPage5));
 ////            slideNumber = slideNumber + 1;
-////            askForPermissions(new String[]{Manifest.permission.VIBRATE}, slideNumber);
+////            askForPermissions(new String[]{Manifest.permission.VIBRATE}, slideNumber, false);
 ////        }
 //
 //
@@ -298,8 +300,8 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         setBarColor(getResources().getColor(R.color.intro_buttonbar_background));
 
         // Hide Skip/Done button.
-        showSkipButton(false);
-        setProgressButtonEnabled(true);
+//        showSkipButton(false);
+//        setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
         setVibrate(false);
@@ -325,6 +327,11 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(this, requestCode, permissions, grantResults)) {
             Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        if ( (grantResults.length == 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED) ) {
+            Log.d(threaded_application.applicationName, activityName + ": Permission Granted");
+        } else {
+            Log.d(threaded_application.applicationName, activityName + ": Permission Denied");
         }
     }
 
@@ -397,4 +404,3 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         super.onDestroy();
     }
 }
-

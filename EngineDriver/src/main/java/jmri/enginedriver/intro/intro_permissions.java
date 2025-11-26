@@ -22,6 +22,7 @@ package jmri.enginedriver.intro;
 
 import android.os.Build;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -30,8 +31,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.util.Objects;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -49,21 +48,53 @@ public class intro_permissions extends Fragment {
     String permissionLabel;
     TextView introPermissionLabel;
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
-
-        introPermissionLabel = getView().findViewById(R.id.intro_permission_label);
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ": onActivityCreated()");
+//        super.onActivityCreated(savedInstanceState);
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");        super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            permissionId = Integer.parseInt(Objects.requireNonNull(getArguments().getString("id")));
+            String id = getArguments().getString("id");
+            if (id!=null) {
+            permissionId = Integer.parseInt(id);
             permissionLabel = getArguments().getString("label");
+            }
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        introPermissionLabel = view.findViewById(R.id.intro_permission_label);
+        if (introPermissionLabel != null) {
+            introPermissionLabel.setText(permissionLabel);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // User is viewing the fragment,
+        // or fragment is inside the screen
+        if (introPermissionLabel != null) {
+            introPermissionLabel.setText(permissionLabel);
+        }
+        if (!askedThisSession) {
+            PermissionsHelper phi = PermissionsHelper.getInstance();
+            phi.setIsDialogOpen(false);
+            if (!phi.isPermissionGranted(this.getActivity(), permissionId)) {
+                shouldShowRequestPermissionRationale(PermissionsHelper.getManifestPermissionId(permissionId));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    phi.requestNecessaryPermissions(this.getActivity(), permissionId);
+                }
+            }
+        }
+        askedThisSession = true;
     }
 
     @Override
@@ -73,7 +104,9 @@ public class intro_permissions extends Fragment {
             // User is viewing the fragment,
             // or fragment is inside the screen
             if (!askedThisSession) {
-                introPermissionLabel.setText(permissionLabel);
+                if (introPermissionLabel != null) {
+                    introPermissionLabel.setText(permissionLabel);
+                }
                 PermissionsHelper phi = PermissionsHelper.getInstance();
                 phi.setIsDialogOpen(false);
                 if (!phi.isPermissionGranted(this.getActivity(), permissionId)) {
@@ -91,7 +124,6 @@ public class intro_permissions extends Fragment {
             askedThisSession = false;
         }
     }
-
 
     @Nullable
     @Override

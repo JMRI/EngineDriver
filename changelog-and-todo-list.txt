@@ -1,5 +1,6 @@
 **Version 2.41.214
  * bug fix for everything that checks for DCC-EX version numbers. calculation was wrong.
+ * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
 **Version 2.41.212
  * Added Preference to not beep on WiThrottle Alerts and Messages
  * Added Sort button for Recent Turnouts/Points
@@ -949,13 +950,11 @@
 /*
  * general/global
  *   TODO: High Priority! Cater for edge-to-edge enforcement in SDK 36 / Android 16 (Primarily the throttle screen is still impacted due to immersive mode)
- *   TODO: Move fully to AndroidX, which means dropping support for Android 4.x
- *   TODO: Once on AndroidX, reinstate the document sharing functions.  (Code is still there, just commented out)
  *   TODO: change config files to use db instead of .txt files
  *   TODO: Add toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
- *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.  Particularly important for Switch Throttle layouts preference (see below)
+ *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
@@ -999,7 +998,6 @@
  *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
  *   TODO: option to show roster images above each throttle
- *   TODO: add back in the preferences and code to set the number of throttles for each layout in for Switch Throttle Layouts.  Depends on moving the setup code from onCreate to onStart
  * In Phone Loco Sounds (throttle):
  *   TODO: custom sound profiles to be able to specify/override the momentum delay
  *   TODO: work out when to play the engine shut down sounds
@@ -1036,5 +1034,4 @@
  * These changes are likely to wait until ED3
  *   allow user to configure side-by-side panels for pads, etc.
  *   allow user to specify multiple web URLs
- *   change Connect to allow to be called from any Activity when needed
  * */
