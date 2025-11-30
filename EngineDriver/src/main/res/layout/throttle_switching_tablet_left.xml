@@ -218,7 +218,7 @@
                             android:weightSum="10">
 
                             <LinearLayout
-                                android:id="@+id/throttle_0_SetSpeed"
+                                android:id="@+id/throttle_0_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"
@@ -541,7 +541,7 @@
                             android:weightSum="10">
 
                             <LinearLayout
-                                android:id="@+id/throttle_1_SetSpeed"
+                                android:id="@+id/throttle_1_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"
@@ -863,7 +863,7 @@
                             android:weightSum="10">
 
                             <LinearLayout
-                                android:id="@+id/throttle_2_SetSpeed"
+                                android:id="@+id/throttle_2_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"
@@ -1184,7 +1184,7 @@
                             android:weightSum="10">
 
                             <LinearLayout
-                                android:id="@+id/throttle_3_SetSpeed"
+                                android:id="@+id/throttle_3_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"
@@ -1505,7 +1505,7 @@
                             android:weightSum="10">
 
                             <LinearLayout
-                                android:id="@+id/throttle_4_SetSpeed"
+                                android:id="@+id/throttle_4_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"
@@ -1826,7 +1826,7 @@
                             android:weightSum="10">
 
                             <LinearLayout
-                                android:id="@+id/throttle_5_SetSpeed"
+                                android:id="@+id/throttle_5_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"

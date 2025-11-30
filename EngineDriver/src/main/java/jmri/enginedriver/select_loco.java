@@ -441,7 +441,8 @@ public class select_loco extends AppCompatActivity {
         prefs.edit().putString("prefSelectLocoMethod", prefSelectLocoMethod).commit();
     } // end checkValidMethod()
 
-    // lookup and set values of various text labels
+    // lookup and set values of various informational text labels and size the
+    // screen elements
     protected void setLabels() {
         Log.d(threaded_application.applicationName, activityName + ": setLabels()");
 

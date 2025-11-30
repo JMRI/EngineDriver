@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "jmri.enginedriver"
         minSdkVersion 21
-        targetSdk 35
+        targetSdk 36
     }
 
     buildTypes {
@@ -28,7 +28,7 @@ android {
         abortOnError false
     }
     namespace 'jmri.enginedriver'
-    compileSdk 35
+    compileSdk 36
 }
 
 dependencies {

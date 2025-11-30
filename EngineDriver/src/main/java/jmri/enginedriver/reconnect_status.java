@@ -31,6 +31,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
@@ -185,6 +187,9 @@ public class reconnect_status extends AppCompatActivity {
             mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
         }
 
+        // if this is called, assume that we will need to recreate the Throttle Screen
+        mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
+
         Button exitButton = findViewById(R.id.reconnect_exit_button);
         ExitButtonListener exitButtonListener = new ExitButtonListener(this);
         exitButton.setOnClickListener(exitButtonListener);
@@ -206,7 +211,15 @@ public class reconnect_status extends AppCompatActivity {
                     "");
         }
 
-    } //end onCreate
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                mainapp.checkExit(reconnect_status.this);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
+    } //end onCreate()
 
     @Override
     public void onPause() {

@@ -73,6 +73,7 @@ public class intro_esu_mc2 extends Fragment {
                 prefs.edit().putBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", esuMc2Yes).commit();
                 prefs.edit().putBoolean("prefVolumeKeysFollowLastTouchedThrottleDefaultValue", esuMc2Yes).commit();
                 prefs.edit().putBoolean("prefDoubleBackButtonToExit", esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefThrottleViewImmersiveMode", esuMc2Yes).commit();
          }
         });
 

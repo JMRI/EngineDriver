@@ -1,6 +1,10 @@
 **Version 2.41.214
  * bug fix for everything that checks for DCC-EX version numbers. calculation was wrong.
  * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
+ * Move to targetSdk 36
+ * Immersive mode fixes for targetSdk 36 - enforced edge-to-edge mode
+ * significant changes to the way the UI elements are referenced (now in resource in arrays)
+ * linting
 **Version 2.41.212
  * Added Preference to not beep on WiThrottle Alerts and Messages
  * Added Sort button for Recent Turnouts/Points
@@ -762,7 +766,7 @@
  * Connect now uses worker thread (asynctask) to save connection list
  * Throttle & Web pages: pause webView timers and stop CookieManager() in onPause, start them in onResume
  * default preference values now use the associated DefaultValue strings
- * moved calculation of speed slider top/bottom out of gesture Start() and into set_labels() so that the Top/Bottom calcs are only updated when the layout is updated.
+ * moved calculation of speed slider top/bottom out of gesture Start() and into setLabels() so that the Top/Bottom calcs are only updated when the layout is updated.
  * swipe now works over disabled sliders
  * moved roster loading, now updates as roster arrives
  * multiple changes to improve performance and shutdown properly

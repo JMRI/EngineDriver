@@ -2482,4 +2482,346 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+    <!--  UI Resources  -->
+
+<!-- A -->
+
+    <array  name="air_indicator_resource_ids">
+        <item>@id/air_indicator_0</item>
+    </array>
+    <array  name="air_line_indicator_resource_ids">
+        <item>@id/air_line_indicator_0</item>
+    </array>
+
+<!-- B -->
+
+    <array  name="brake_resource_ids">
+        <item>@id/brake_0</item>
+    </array>
+    <array  name="button_air_resource_ids">
+        <item>@id/button_air_0</item>
+    </array>
+    <array  name="button_e_stop_resource_ids">
+        <item>@id/button_e_stop_0</item>
+    </array>
+    <array name="button_fwd_resource_ids">
+        <item>@id/button_fwd_0</item>
+        <item>@id/button_fwd_1</item>
+        <item>@id/button_fwd_2</item>
+        <item>@id/button_fwd_3</item>
+        <item>@id/button_fwd_4</item>
+        <item>@id/button_fwd_5</item>
+    </array>
+    <array name="button_pause_resource_ids">
+        <item>@id/button_pause_0</item>
+        <item>@id/button_pause_1</item>
+        <item>@id/button_pause_2</item>
+        <item>@id/button_pause_3</item>
+        <item>@id/button_pause_4</item>
+        <item>@id/button_pause_5</item>
+    </array>
+    <array name="button_rev_resource_ids">
+        <item>@id/button_rev_0</item>
+        <item>@id/button_rev_1</item>
+        <item>@id/button_rev_2</item>
+        <item>@id/button_rev_3</item>
+        <item>@id/button_rev_4</item>
+        <item>@id/button_rev_5</item>
+    </array>
+    <array name="button_select_loco_resource_ids">
+        <item>@id/button_select_loco_0</item>
+        <item>@id/button_select_loco_1</item>
+        <item>@id/button_select_loco_2</item>
+        <item>@id/button_select_loco_3</item>
+        <item>@id/button_select_loco_4</item>
+        <item>@id/button_select_loco_5</item>
+    </array>
+    <array name="button_stop_resource_ids">
+        <item>@id/button_stop_0</item>
+        <item>@id/button_stop_1</item>
+        <item>@id/button_stop_2</item>
+        <item>@id/button_stop_3</item>
+        <item>@id/button_stop_4</item>
+        <item>@id/button_stop_5</item>
+    </array>
+    <array  name="button_target_fwd_resource_ids">
+        <item>@id/button_target_fwd_0</item>
+    </array>
+    <array  name="button_target_neutral_resource_ids">
+        <item>@id/button_target_neutral_0</item>
+    </array>
+    <array  name="button_target_rev_resource_ids">
+        <item>@id/button_target_rev_0</item>
+    </array>
+    <array  name="button_target_stop_resource_ids">
+        <item>@id/button_target_stop_0</item>
+    </array>
+
+<!--D -->
+
+    <array name="device_sounds_bell_resource_ids">
+        <item>@id/device_sounds_bell_0</item>
+        <item>@id/device_sounds_bell_1</item>
+    </array>
+    <array name="device_sounds_horn_resource_ids">
+        <item>@id/device_sounds_horn_0</item>
+        <item>@id/device_sounds_horn_1</item>
+    </array>
+    <array name="device_sounds_horn_short_resource_ids">
+        <item>@id/device_sounds_horn_short_0</item>
+        <item>@id/device_sounds_horn_short_1</item>
+    </array>
+    <array name="device_sounds_mute_resource_ids">
+        <item>@id/device_sounds_mute_0</item>
+        <item>@id/device_sounds_mute_1</item>
+    </array>
+    <array name="dir_buttons_table_resource_ids">
+        <item>@id/dir_buttons_table_0</item>
+        <item>@id/dir_buttons_table_1</item>
+        <item>@id/dir_buttons_table_2</item>
+        <item>@id/dir_buttons_table_3</item>
+        <item>@id/dir_buttons_table_4</item>
+        <item>@id/dir_buttons_table_5</item>
+    </array>
+    <array name="direction_indicator_forward_resource_ids">
+        <item>@id/direction_indicator_forward_0</item>
+        <item>@id/direction_indicator_forward_1</item>
+        <item>@id/direction_indicator_forward_2</item>
+        <item>@id/direction_indicator_forward_3</item>
+        <item>@id/direction_indicator_forward_4</item>
+        <item>@id/direction_indicator_forward_5</item>
+    </array>
+    <array  name="direction_indicator_reverse_resource_ids">
+        <item>@id/direction_indicator_reverse_0</item>
+        <item>@id/direction_indicator_reverse_1</item>
+        <item>@id/direction_indicator_reverse_2</item>
+        <item>@id/direction_indicator_reverse_3</item>
+        <item>@id/direction_indicator_reverse_4</item>
+        <item>@id/direction_indicator_reverse_5</item>
+    </array>
+
+<!-- F -->
+
+    <array  name="function_buttons_scroller_resource_ids">
+        <item>@id/function_buttons_scroller_0</item>
+        <item>@id/function_buttons_scroller_1</item>
+        <item>@id/function_buttons_scroller_2</item>
+        <item>@id/function_buttons_scroller_3</item>
+        <item>@id/function_buttons_scroller_4</item>
+        <item>@id/function_buttons_scroller_5</item>
+    </array>
+    <array name="function_buttons_table_resource_ids">
+        <item>@id/function_buttons_table_0</item>
+        <item>@id/function_buttons_table_1</item>
+        <item>@id/function_buttons_table_2</item>
+        <item>@id/function_buttons_table_3</item>
+        <item>@id/function_buttons_table_4</item>
+        <item>@id/function_buttons_table_5</item>
+    </array>
+
+<!-- G -->
+
+    <array name="gamepad_indicator_resource_ids">
+        <item>@id/gamepad_indicator_0</item>
+        <item>@id/gamepad_indicator_1</item>
+        <item>@id/gamepad_indicator_2</item>
+        <item>@id/gamepad_indicator_3</item>
+        <item>@id/gamepad_indicator_4</item>
+        <item>@id/gamepad_indicator_5</item>
+    </array>
+
+<!-- L -->
+
+    <array name="left_speed_button_resource_ids">
+        <item>@id/left_speed_button_0</item>
+        <item>@id/left_speed_button_1</item>
+        <item>@id/left_speed_button_2</item>
+        <item>@id/left_speed_button_3</item>
+        <item>@id/left_speed_button_4</item>
+        <item>@id/left_speed_button_5</item>
+    </array>
+    <array  name="left_target_speed_button_resource_ids">
+        <item>@id/left_target_speed_button_0</item>
+    </array>
+    <array name="limit_speed_resource_ids">
+        <item>@id/limit_speed_0</item>
+        <item>@id/limit_speed_1</item>
+        <item>@id/limit_speed_2</item>
+        <item>@id/limit_speed_3</item>
+        <item>@id/limit_speed_4</item>
+        <item>@id/limit_speed_5</item>
+    </array>
+    <array  name="load_resource_ids">
+        <item>@id/load_0</item>
+    </array>
+    <array name="loco_buttons_group_resource_ids">
+        <item>@id/loco_buttons_group_0</item>
+        <item>@id/loco_buttons_group_1</item>
+        <item>@id/loco_buttons_group_2</item>
+        <item>@id/loco_buttons_group_3</item>
+        <item>@id/loco_buttons_group_4</item>
+        <item>@id/loco_buttons_group_5</item>
+    </array>
+    <array name="loco_label_resource_ids">
+        <item>@id/loco_label_0</item>
+        <item>@id/loco_label_1</item>
+        <item>@id/loco_label_2</item>
+        <item>@id/loco_label_3</item>
+        <item>@id/loco_label_4</item>
+        <item>@id/loco_label_5</item>
+    </array>
+     <array name="loco_left_direction_indication_resource_ids">
+        <item>@id/loco_left_direction_indication_0</item>
+        <item>@id/loco_left_direction_indication_1</item>
+        <item>@id/loco_left_direction_indication_2</item>
+        <item>@id/loco_left_direction_indication_3</item>
+        <item>@id/loco_left_direction_indication_4</item>
+        <item>@id/loco_left_direction_indication_5</item>
+    </array>
+    <array  name="loco_lower_resource_ids">
+        <item>@id/loco_lower_0</item>
+        <item>@id/loco_lower_1</item>
+        <item>@id/loco_lower_2</item>
+        <item>@id/loco_lower_3</item>
+        <item>@id/loco_lower_4</item>
+        <item>@id/loco_lower_5</item>
+    </array>
+    <array name="loco_right_direction_indication_resource_ids">
+        <item>@id/loco_right_direction_indication_0</item>
+        <item>@id/loco_right_direction_indication_1</item>
+        <item>@id/loco_right_direction_indication_2</item>
+        <item>@id/loco_right_direction_indication_3</item>
+        <item>@id/loco_right_direction_indication_4</item>
+        <item>@id/loco_right_direction_indication_5</item>
+    </array>
+    <array  name="loco_upper_resource_ids">
+        <item>@id/loco_upper_0</item>
+        <item>@id/loco_upper_1</item>
+        <item>@id/loco_upper_2</item>
+        <item>@id/loco_upper_3</item>
+        <item>@id/loco_upper_4</item>
+        <item>@id/loco_upper_5</item>
+    </array>
+
+<!-- P -->
+
+    <array name="pause_speed_resource_ids">
+        <item>@id/pause_speed_0</item>
+        <item>@id/pause_speed_1</item>
+        <item>@id/pause_speed_2</item>
+        <item>@id/pause_speed_3</item>
+        <item>@id/pause_speed_4</item>
+        <item>@id/pause_speed_5</item>
+    </array>
+
+<!-- R -->
+
+    <array name="right_speed_button_resource_ids">
+        <item>@id/right_speed_button_0</item>
+        <item>@id/right_speed_button_1</item>
+        <item>@id/right_speed_button_2</item>
+        <item>@id/right_speed_button_3</item>
+        <item>@id/right_speed_button_4</item>
+        <item>@id/right_speed_button_5</item>
+    </array>
+    <array  name="right_target_speed_button_resource_ids">
+        <item>@id/right_target_speed_button_0</item>
+    </array>
+
+<!-- S -->
+
+    <array  name="semi_realistic_speed_resource_ids">
+        <item>@id/semi_realistic_speed_0</item>
+    </array>
+
+<!-- T -->
+
+    <array name="separator_resource_ids">
+        <item>@id/separator0</item>
+        <item>@id/separator1</item>
+        <item>@id/separator2</item>
+        <item>@id/separator3</item>
+        <item>@id/separator4</item>
+        <item>@id/separator5</item>
+    </array>
+    <array name="speed_cell_resource_ids">
+        <item>@id/speed_cell_0</item>
+        <item>@id/speed_cell_1</item>
+        <item>@id/speed_cell_2</item>
+        <item>@id/speed_cell_3</item>
+        <item>@id/speed_cell_4</item>
+        <item>@id/speed_cell_5</item>
+    </array>
+    <array name="speed_label_resource_ids">
+        <item>@id/speed_label_0</item>
+        <item>@id/speed_label_1</item>
+        <item>@id/speed_label_2</item>
+        <item>@id/speed_label_3</item>
+        <item>@id/speed_label_4</item>
+        <item>@id/speed_label_5</item>
+    </array>
+    <array name="speed_resource_ids">
+        <item>@id/speed_0</item>
+        <item>@id/speed_1</item>
+        <item>@id/speed_2</item>
+        <item>@id/speed_3</item>
+        <item>@id/speed_4</item>
+        <item>@id/speed_5</item>
+    </array>
+    <array name="speed_value_label_resource_ids">
+        <item>@id/speed_value_label_0</item>
+        <item>@id/speed_value_label_1</item>
+        <item>@id/speed_value_label_2</item>
+        <item>@id/speed_value_label_3</item>
+        <item>@id/speed_value_label_4</item>
+        <item>@id/speed_value_label_5</item>
+    </array>
+    <array name="speed_switching_resource_ids">
+        <item>@id/speed_switching_0</item>
+        <item>@id/speed_switching_1</item>
+        <item>@id/speed_switching_2</item>
+        <item>@id/speed_switching_3</item>
+        <item>@id/speed_switching_4</item>
+        <item>@id/speed_switching_5</item>
+    </array>
+
+<!-- T -->
+
+    <array  name="target_acceleration_value_label_resource_ids">
+        <item>@id/target_acceleration_value_label_0</item>
+    </array>
+    <array  name="target_speed_value_label_resource_ids">
+        <item>@id/target_speed_value_label_0</item>
+    </array>
+    <array name="throttle_resource_ids">
+        <item>@id/throttle_0</item>
+        <item>@id/throttle_1</item>
+        <item>@id/throttle_2</item>
+        <item>@id/throttle_3</item>
+        <item>@id/throttle_4</item>
+        <item>@id/throttle_5</item>
+    </array>
+    <array name="throttle_set_speed_resource_ids">
+        <item>@id/throttle_0_set_speed</item>
+        <item>@id/throttle_1_set_speed</item>
+        <item>@id/throttle_2_set_speed</item>
+        <item>@id/throttle_3_set_speed</item>
+        <item>@id/throttle_4_set_speed</item>
+        <item>@id/throttle_5_set_speed</item>
+    </array>
+
+<!-- W -->
+
+    <array name="volume_indicator_resource_ids">
+        <item>@id/volume_indicator_0</item>
+        <item>@id/volume_indicator_1</item>
+        <item>@id/volume_indicator_2</item>
+        <item>@id/volume_indicator_3</item>
+        <item>@id/volume_indicator_4</item>
+        <item>@id/volume_indicator_5</item>
+    </array>
+
+
+
+
 </resources>

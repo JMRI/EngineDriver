@@ -220,7 +220,7 @@
                             android:weightSum="10">
 
                             <LinearLayout
-                                android:id="@+id/throttle_0_SetSpeed"
+                                android:id="@+id/throttle_0_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"
@@ -626,7 +626,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/throttle_1_SetSpeed"
+                                android:id="@+id/throttle_1_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="5.5"

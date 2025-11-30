@@ -14,12 +14,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-Original version of the simple throttle is by radsolutions.
  */
 
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
@@ -52,9 +52,6 @@ public class throttle_switching_horizontal extends throttle {
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SWITCHING_HORIZONTAL;
 
     private LinearLayout[] lThrottles;
-//    private LinearLayout[] lUppers;
-//    private LinearLayout[] lLowers;
-//    private ScrollView[] svFnBtns;
 
     private final int[] throttleMidPointZero = {0,0,0};
     private final int[] throttleSwitchingMax = {0,0,0};
@@ -89,6 +86,7 @@ public class throttle_switching_horizontal extends throttle {
     protected void setScreenDetails() {
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
         mainapp.currentScreenSupportsWebView = true;
+        sliderType = slider_type.SWITCHING;
 
         mainapp.throttleLayoutViewId = R.layout.throttle_switching_horizontal;
     } // end setScreen()
@@ -101,8 +99,11 @@ public class throttle_switching_horizontal extends throttle {
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        setScreenDetails();
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
 
+        if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
+            setScreenDetails();
+        }
         super.onCreate(savedInstanceState);
 
     } // end of onCreate()
@@ -113,107 +114,7 @@ public class throttle_switching_horizontal extends throttle {
         if (mainapp.appIsFinishing) return;
 
         setScreenDetails();
-
         super.onStart();
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
-                    tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_0);
-                    tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_0);
-                    break;
-                case 1:
-                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_1);
-                    tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_1);
-                    tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_1);
-                    break;
-                case 2:
-                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_2);
-                    tvDirectionIndicatorForwards[throttleIndex] = findViewById(R.id.direction_indicator_forward_2);
-                    tvDirectionIndicatorReverses[throttleIndex] = findViewById(R.id.direction_indicator_reverse_2);
-                    break;            }
-
-        }
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            throttleMidPointZero[throttleIndex] =(maxThrottle + prefSwitchingThrottleSliderDeadZone);
-            throttleSwitchingMax[throttleIndex] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
-            throttleMidPointDeadZoneUpper[throttleIndex] = throttleMidPointZero[throttleIndex] + prefSwitchingThrottleSliderDeadZone;
-            throttleMidPointDeadZoneLower[throttleIndex] = throttleMidPointZero[throttleIndex] - prefSwitchingThrottleSliderDeadZone;
-//        throttleReScale = ((throttleMidPointZero * 2)) / (double) throttleMidPointDeadZoneLower;
-        }
-
-        lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-//        svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
-        sbSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
-        hsbSwitchingSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
-//        lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-//        lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    lThrottles[throttleIndex] = findViewById(R.id.throttle_0);
-//                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_0);
-//                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_0);
-                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_SetSpeed);
-                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
-                    hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_0);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
-//                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
-                    hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
-                    hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
-//                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_0);
-                    break;
-                case 1:
-                    lThrottles[throttleIndex] = findViewById(R.id.throttle_1);
-//                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_1);
-//                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_1);
-                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_1_SetSpeed);
-                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
-                    hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_1);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
-//                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
-                    hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
-                    hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
-//                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_1);
-                    break;
-                case 2:
-                    lThrottles[throttleIndex] = findViewById(R.id.throttle_2);
-//                    lUppers[throttleIndex] = findViewById(R.id.loco_upper_2);
-//                    lLowers[throttleIndex] = findViewById(R.id.loco_lower_2);
-                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_2_SetSpeed);
-                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
-                    hsbSwitchingSpeeds[throttleIndex] = findViewById(R.id.speed_switching_2);
-                    hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
-//                    hsbSwitchingSpeeds[throttleIndex].setMax(MAX_SPEED_VAL_WIT);
-                    hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
-                    hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
-//                    svFnBtns[throttleIndex] = findViewById(R.id.function_buttons_scroller_2);
-                    break;
-            }
-        }
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            sbs[throttleIndex].setMax(maxThrottle);
-            hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
-        }
-
-        // set label and dcc functions (based on settings) or hide if no label
-        setAllFunctionLabelsAndListeners();
-
-        throttleSwitchingListener thsl;
-
-        for (int i=0; i < mainapp.maxThrottlesCurrentScreen; i++) {
-            // set up listeners for all throttles
-            thsl = new throttleSwitchingListener(i);
-            hsbSwitchingSpeeds[i].setOnSeekBarChangeListener(thsl);
-            hsbSwitchingSpeeds[i].setOnTouchListener(thsl);
-
-        }
-        sliderType = slider_type.SWITCHING;
 
     } // end onStart()
 
@@ -240,6 +141,75 @@ public class throttle_switching_horizontal extends throttle {
         }
     } // end of onResume()
 
+    @SuppressLint("ClickableViewAccessibility")
+    void initialiseUiElements() {
+        super.initialiseUiElements();
+
+        TypedArray function_buttons_table_resource_ids = getResources().obtainTypedArray(R.array.function_buttons_table_resource_ids);
+        TypedArray direction_indicator_forward_resource_ids = getResources().obtainTypedArray(R.array.direction_indicator_forward_resource_ids);
+        TypedArray direction_indicator_reverse_resource_ids = getResources().obtainTypedArray(R.array.direction_indicator_reverse_resource_ids);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            functionButtonViewGroups[throttleIndex] = findViewById(function_buttons_table_resource_ids.getResourceId(throttleIndex,0));
+            tvDirectionIndicatorForwards[throttleIndex] = findViewById(direction_indicator_forward_resource_ids.getResourceId(throttleIndex,0));
+            tvDirectionIndicatorReverses[throttleIndex] = findViewById(direction_indicator_reverse_resource_ids.getResourceId(throttleIndex,0));
+        }
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            throttleMidPointZero[throttleIndex] =(maxThrottle + prefSwitchingThrottleSliderDeadZone);
+            throttleSwitchingMax[throttleIndex] = (maxThrottle + prefSwitchingThrottleSliderDeadZone) * 2;
+            throttleMidPointDeadZoneUpper[throttleIndex] = throttleMidPointZero[throttleIndex] + prefSwitchingThrottleSliderDeadZone;
+            throttleMidPointDeadZoneLower[throttleIndex] = throttleMidPointZero[throttleIndex] - prefSwitchingThrottleSliderDeadZone;
+//        throttleReScale = ((throttleMidPointZero * 2)) / (double) throttleMidPointDeadZoneLower;
+        }
+
+        lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
+        sbSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
+        hsbSwitchingSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
+
+        TypedArray throttle_resource_ids = getResources().obtainTypedArray(R.array.throttle_resource_ids);
+        TypedArray throttle_set_speed_resource_ids = getResources().obtainTypedArray(R.array.throttle_set_speed_resource_ids);
+        TypedArray speed_resource_ids = getResources().obtainTypedArray(R.array.speed_resource_ids);
+        TypedArray speed_switching_resource_ids = getResources().obtainTypedArray(R.array.speed_switching_resource_ids);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            lThrottles[throttleIndex] = findViewById(throttle_resource_ids.getResourceId(throttleIndex,0));
+            llSetSpeeds[throttleIndex] = findViewById(throttle_set_speed_resource_ids.getResourceId(throttleIndex,0));
+            sbSpeeds[throttleIndex] = findViewById(speed_resource_ids.getResourceId(throttleIndex,0));
+            hsbSwitchingSpeeds[throttleIndex] = findViewById(speed_switching_resource_ids.getResourceId(throttleIndex,0));
+            hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
+            hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
+            hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
+        }
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            sbs[throttleIndex].setMax(maxThrottle);
+            hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
+        }
+
+        // set label and dcc functions (based on settings) or hide if no label
+        setAllFunctionLabelsAndListeners();
+
+        throttleSwitchingListener thsl;
+
+        for (int i=0; i < mainapp.maxThrottlesCurrentScreen; i++) {
+            // set up listeners for all throttles
+            thsl = new throttleSwitchingListener(i);
+            hsbSwitchingSpeeds[i].setOnSeekBarChangeListener(thsl);
+            hsbSwitchingSpeeds[i].setOnTouchListener(thsl);
+        }
+
+        function_buttons_table_resource_ids.recycle();
+        direction_indicator_forward_resource_ids.recycle();
+        direction_indicator_reverse_resource_ids.recycle();
+        throttle_resource_ids.recycle();
+        throttle_set_speed_resource_ids.recycle();
+        speed_resource_ids.recycle();
+        speed_switching_resource_ids.recycle();
+
+    } // endInitialiseUiElements()
+
     @Override
     protected void getDirectionButtonPrefs() {
         super.getDirectionButtonPrefs();
@@ -250,13 +220,11 @@ public class throttle_switching_horizontal extends throttle {
         super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
     }
 
-    //    // lookup and set values of various informational text labels and size the
-//    // screen elements
-//    @SuppressWarnings("deprecation")
-//    @Override
-    protected void set_labels() {
-//        Log.d(threaded_application.applicationName, activityName + ": set_labels() starting");
-        super.set_labels();
+    // lookup and set values of various informational text labels and size the
+    // screen elements
+    protected void setLabels() {
+//        Log.d(threaded_application.applicationName, activityName + ": setLabels() starting");
+        super.setLabels();
 
         if (mainapp.appIsFinishing) { return;}
 
@@ -296,7 +264,7 @@ public class throttle_switching_horizontal extends throttle {
         String bLabelPlainText;
 
         if(mainapp.consists==null) {
-            Log.d(threaded_application.applicationName, activityName + ": set_labels() consists is null");
+            Log.d(threaded_application.applicationName, activityName + ": setLabels() consists is null");
             return;
         }
 
@@ -307,7 +275,7 @@ public class throttle_switching_horizontal extends throttle {
 
             Consist con = mainapp.consists[throttleIndex];
             if(con==null) {
-                Log.d(threaded_application.applicationName, activityName + ": set_labels(): consists[" + throttleIndex + "] is null");
+                Log.d(threaded_application.applicationName, activityName + ": setLabels(): consists[" + throttleIndex + "] is null");
             }
             else {
                 if (con.isActive()) {
@@ -320,9 +288,6 @@ public class throttle_switching_horizontal extends throttle {
                             bLabelPlainText = con.toString();
                         }
 
-//                        bLabel = mainapp.consists[throttleIndex].toString();
-//                        bLabelPlainText = mainapp.consists[throttleIndex].toString();
-//                        bLabel = mainapp.consists[throttleIndex].toHtml();
                     } else {
                         if (overrideThrottleNames[throttleIndex].isEmpty()) {
                             bLabel = con.formatConsistAddr();
@@ -363,11 +328,9 @@ public class throttle_switching_horizontal extends throttle {
             b.setPressed(false);
         }
 
-        if (webView!=null) {
-            setImmersiveModeOn(webView, false);
-        }
+        setImmersiveMode(webView);
 
-        int screenHeight = getAvailableSceenHeight();
+        int screenHeight = getAvailableScreenHeight();
 
         // SPDHT set height of Loco Id and Direction Button areas
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -419,90 +382,12 @@ public class throttle_switching_horizontal extends throttle {
 
 
         if ( (screenHeight > throttleMargin) && (mainapp.consists!=null)) { // don't do this if height is invalid
-            //Log.d(threaded_application.applicationName, activityName + ": set_labels(): starting screen height adjustments, screenHeight=" + screenHeight);
+            //Log.d(threaded_application.applicationName, activityName + ": setLabels(): starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
-
 
             adjustThrottleHeights();
 
-//            screenHeight -= throttleMargin;
-//
-//            if (mainapp.numThrottles == 1) {        // just one throttle
-//                heights[0] = screenHeight;
-//                heights[1] = 0;
-//                heights[2] = 0;
-//            } else {                                // 2 or more throttles - split screen among active throttles
-//                boolean con0Active = false;
-//                boolean con1Active = false;
-//                boolean con2Active = false;
-//                if (mainapp.consists[0] == null)
-//                    Log.d(threaded_application.applicationName, activityName + ": set_labels() consists[0] is null");
-//                else
-//                    con0Active = mainapp.consists[0].isActive();
-//                if( mainapp.consists[1] == null)
-//                    Log.d(threaded_application.applicationName, activityName + ": set_labels() consists[1] is null");
-//                else
-//                    con1Active = mainapp.consists[1].isActive();
-//                if (mainapp.consists[2] == null) {
-//                    Log.d(threaded_application.applicationName, activityName + ": set_labels() consists[2] is null");
-//                }
-//                else
-//                    con2Active = mainapp.consists[2].isActive();
-//
-//                if (mainapp.numThrottles == 2) {
-//                    if (!con1Active) {
-//                        heights[0] = (int) (screenHeight * 0.9);
-//                        heights[1] = (int) (screenHeight * 0.10);
-//                        heights[2] = 0;
-//                    } else if (!con0Active) {
-//                        heights[0] = (int) (screenHeight * 0.10);
-//                        heights[1] = (int) (screenHeight * 0.9);
-//                        heights[2] = 0;
-//                    } else {
-//                        heights[0] = (int) (screenHeight * 0.5);
-//                        heights[1] = (int) (screenHeight * 0.5);
-//                        heights[2] = 0;
-//                    }
-//                } else if (throttle_count == 0 || throttle_count == 3) {    // none active or all active
-//                    heights[0] = (int) (screenHeight * 0.33);
-//                    heights[1] = (int) (screenHeight * 0.33);
-//                    heights[2] = (int) (screenHeight * 0.33);
-//                } else if (!con0Active && !con1Active) {            // just throttle 2 active
-//                    heights[0] = (int) (screenHeight * 0.10);
-//                    heights[1] = (int) (screenHeight * 0.10);
-//                    heights[2] = (int) (screenHeight * 0.80);
-//                } else if (!con0Active && !con2Active) {            // just throttle 1 active
-//                    heights[0] = (int) (screenHeight * 0.10);
-//                    heights[1] = (int) (screenHeight * 0.80);
-//                    heights[2] = (int) (screenHeight * 0.10);
-//                } else if (!con1Active && !con2Active) {            // just throttle 0 active
-//                    heights[0] = (int) (screenHeight * 0.80);
-//                    heights[1] = (int) (screenHeight * 0.10);
-//                    heights[2] = (int) (screenHeight * 0.10);
-//                } else if (!con0Active) {                           // throttles 1 and 2 active
-//                    heights[0] = (int) (screenHeight * 0.10);
-//                    heights[1] = (int) (screenHeight * 0.45);
-//                    heights[2] = (int) (screenHeight * 0.45);
-//                } else if (!con1Active) {                           // throttles 0 and 2 active
-//                    heights[0] = (int) (screenHeight * 0.45);
-//                    heights[1] = (int) (screenHeight * 0.10);
-//                    heights[2] = (int) (screenHeight * 0.45);
-//                } else {                                            // throttles 0 and 1 active
-//                    heights[0] = (int) (screenHeight * 0.45);
-//                    heights[1] = (int) (screenHeight * 0.45);
-//                    heights[2] = (int) (screenHeight * 0.10);
-//                }
-//            }
-//
-//            ImageView myImage = findViewById(R.id.backgroundImgView);
-//            myImage.getLayoutParams().height = screenHeight;
-
-//            LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-
-                // update throttle slider top/bottom
-//                tops[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-//                bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
 
                 int[] location = new int[2];
                 throttleOverlay.getLocationOnScreen(location);
@@ -519,11 +404,11 @@ public class throttle_switching_horizontal extends throttle {
                 sliderBottomRightX[throttleIndex] = x + hsbSwitchingSpeeds[throttleIndex].getWidth() - ovx;
                 sliderBottomRightY[throttleIndex] = y + hsbSwitchingSpeeds[throttleIndex].getHeight() -ovy;
 
-//            Log.d(threaded_application.applicationName, activityName + ": set_labels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//            Log.d(threaded_application.applicationName, activityName + ": setLabels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
             }
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": set_labels(): screen height adjustments skipped, screenHeight=" + screenHeight);
+            Log.d(threaded_application.applicationName, activityName + ": setLabels(): screen height adjustments skipped, screenHeight=" + screenHeight);
         }
 
         // update the direction indicators
@@ -541,7 +426,7 @@ public class throttle_switching_horizontal extends throttle {
         }
 
 
-        // Log.d(threaded_application.applicationName, activityName + ": set_labels(): end");
+        // Log.d(threaded_application.applicationName, activityName + ": setLabels(): end");
 
     } // end set_labels
 
@@ -839,8 +724,6 @@ public class throttle_switching_horizontal extends throttle {
 
 //        Log.d(threaded_application.applicationName, activityName + ": speedChange():  speed: " + speed + " change: " + change);
 
-//        speedUpdateAndNotify(whichThrottle, speed);
-
         doLocoSound(whichThrottle);
 
         return speed;
@@ -1023,17 +906,13 @@ public class throttle_switching_horizontal extends throttle {
     void adjustThrottleHeights() {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};
-//        boolean[] directionButtonsVisible = {false, false, false, false, false, false};
-//        boolean[] functionButtonsVisible = {false, false, false, false, false, false};
 
-        int height = getAvailableSceenHeight();
+        int height = getAvailableScreenHeight();
 
         if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
 
             if (mainapp.numThrottles == 1) {        // just one throttle
                 throttleHeights[0] = height;
-//                directionButtonsVisible[0] = true;
-//                functionButtonsVisible[0] = true;
             } else {
                 boolean[] throttlesInUse = {false, false, false, false, false, false};
                 int throttlesInUseCount = 0;
@@ -1109,11 +988,12 @@ public class throttle_switching_horizontal extends throttle {
         }
     }
 
-    int getAvailableSceenHeight() {   // excluding the webview if displayed
+    int getAvailableScreenHeight() {   // excluding the webview if displayed
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 //        final float density = displayMetrics.density;
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        screenHeight = screenHeight - systemStatusRowHeight - systemNavigationRowHeight; // cater for immersive mode
         int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar)) {
             titleBar = mainapp.getToolbarHeight(toolbar, statusLine, screenNameLine);

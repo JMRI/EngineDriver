@@ -310,7 +310,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/throttle_0_SetSpeed"
+                                android:id="@+id/throttle_0_set_speed"
                                 android:layout_width="0dp"
                                 android:layout_height="fill_parent"
                                 android:layout_weight="4"

@@ -344,6 +344,7 @@ public class threaded_application extends Application {
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
     public boolean currentScreenSupportsWebView = true;
     public boolean throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
+    public boolean throttleSwitchWasRequestedOrReinitialiseRequired = false;
 
     @NonNull
     public String connectedHostName = "";
@@ -843,6 +844,8 @@ public class threaded_application extends Application {
                     if (runningActivity != null) {
                         removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
                         addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
+                        // if this is called, assume that we will need to recreate the Throttle Screen
+                        mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
                     }
                 }
             } else if ( (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE)
@@ -2262,6 +2265,8 @@ public class threaded_application extends Application {
     }*/
 
     public void displayThrottleSwitchMenuButton(Menu menu) {
+        if (menu == null) return;
+
         MenuItem mi = menu.findItem(R.id.throttle_switch_button);
         if (mi == null) return;
 
