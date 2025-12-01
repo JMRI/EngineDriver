@@ -6691,9 +6691,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (resourceId > 0) {
             systemStatusRowHeightKeep = resources.getDimensionPixelSize(resourceId);
         }
-        resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            systemNavigationRowHeightKeep = resources.getDimensionPixelSize(resourceId);
+        if (IS_ESU_MCII) {
+            systemNavigationRowHeightKeep = 0;
+        } else {
+            resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                systemNavigationRowHeightKeep = resources.getDimensionPixelSize(resourceId);
+            }
         }
         immersiveModeIsOn = false;
         immersiveModeTempIsOn = false;
