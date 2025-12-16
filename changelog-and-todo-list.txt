@@ -767,7 +767,7 @@
  * Connect now uses worker thread (asynctask) to save connection list
  * Throttle & Web pages: pause webView timers and stop CookieManager() in onPause, start them in onResume
  * default preference values now use the associated DefaultValue strings
- * moved calculation of speed slider top/bottom out of gesture Start() and into setLabels() so that the Top/Bottom calcs are only updated when the layout is updated.
+ * moved calculation of speed slider top/bottom out of gesture Start() and into set_labels() so that the Top/Bottom calcs are only updated when the layout is updated.
  * swipe now works over disabled sliders
  * moved roster loading, now updates as roster arrives
  * multiple changes to improve performance and shutdown properly
@@ -955,6 +955,8 @@
 /*
  * general/global
  *   TODO: High Priority! Cater for edge-to-edge enforcement in SDK 36 / Android 16 (Primarily the throttle screen is still impacted due to immersive mode)
+ *   TODO: Move fully to AndroidX, which means dropping support for Android 4.x
+ *   TODO: Once on AndroidX, reinstate the document sharing functions.  (Code is still there, just commented out)
  *   TODO: change config files to use db instead of .txt files
  *   TODO: Add toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -1039,4 +1041,5 @@
  * These changes are likely to wait until ED3
  *   allow user to configure side-by-side panels for pads, etc.
  *   allow user to specify multiple web URLs
+ *   change Connect to allow to be called from any Activity when needed
  * */
