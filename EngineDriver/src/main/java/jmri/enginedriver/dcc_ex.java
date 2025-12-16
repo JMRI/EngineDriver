@@ -127,6 +127,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     Button nextCommandButton;
     Button writeTracksButton;
     Button joinTracksButton;
+    boolean hasProgTrack = false;  // used to check if the Join button should be shown
     //    Button hideSendsButton;
     Button clearCommandsButton;
 
@@ -644,6 +645,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
                 dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
             }
+            joinTracksButton.setEnabled(hasProgTrack);
         }
         sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
         previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
@@ -689,7 +691,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     }
 
     public void refreshDccexTracksView() {
-
+        hasProgTrack = false;
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
             dccexTrackTypeSpinner[i].setSelection(mainapp.dccexTrackType[i]);
             dccexTrackTypeIdEditText[i].setText(mainapp.dccexTrackId[i]);
@@ -700,6 +702,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexTrackPowerButton[i].setVisibility(GONE);
             }
             dccexTrackTypeSpinner[i].setEnabled(TRACK_TYPES_SELECTABLE[mainapp.dccexTrackType[i]]);
+
+            if (mainapp.dccexTrackType[i]==2) hasProgTrack = true;
         }
         showHideButtons();
 

@@ -2960,7 +2960,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
         mainapp.prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
-        Log.d(threaded_application.applicationName, activityName + ": setGamepadKeys() : prefGamePadType" + mainapp.prefGamePadType);
+        Log.d(threaded_application.applicationName, activityName + ": setGamepadKeys() : prefGamePadType: " + mainapp.prefGamePadType);
 
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));
@@ -3902,10 +3902,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 float yAxis2;
 
                 if (event != null) {
-                    xAxis = event.getAxisValue(MotionEvent.AXIS_X);
-                    yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
-                    xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
-                    yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+                    xAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_X) * 10.0f) / 10.0f;
+                    yAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_Y) * 10.0f) / 10.0f;
+                    xAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_Z) * 10.0f) / 10.0f;
+                    yAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_RZ) * 10.0f) / 10.0f;
 
                     if ((xAxis != 0) || (yAxis != 0)) {
                         action = ACTION_DOWN;

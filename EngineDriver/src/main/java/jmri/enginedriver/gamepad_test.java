@@ -429,10 +429,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             int action;
 
             float xAxis;
-            xAxis = event.getAxisValue(MotionEvent.AXIS_X);
-            float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
-            float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
-            float yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+            xAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_X) * 10.0f) / 10.0f;
+            float yAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_Y) * 10.0f) / 10.0f;
+            float xAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_Z) * 10.0f) / 10.0f;
+            float yAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_RZ) *10.0f) / 10.0f;
 
             if ((xAxis!=0) || (yAxis!=0)) {
                 action = ACTION_DOWN;

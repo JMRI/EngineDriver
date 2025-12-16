@@ -1006,6 +1006,7 @@
                     android:layout_marginTop="8sp"
                     android:background="#00000000"
                     android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
                     android:weightSum="1">
 
                     <Button
