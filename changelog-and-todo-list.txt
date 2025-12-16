@@ -1,11 +1,12 @@
-**Version 2.41.216
+**Version 2.42.216
  * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
  * Move to targetSdk 36
  * Immersive mode fixes for targetSdk 36 - enforced edge-to-edge mode
- * significant changes to the way the UI elements are referenced (now in resource in arrays)
- * linting
+ * Significant changes to the way the UI elements are referenced (now in resource in arrays)
+ * Bug fix for gamepage calibration when using joystick like settings
+ * Linting
 **Version 2.41.214
- * bug fix for everything that checks for DCC-EX version numbers. calculation was wrong.
+ * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212
  * Added Preference to not beep on WiThrottle Alerts and Messages
  * Added Sort button for Recent Turnouts/Points
