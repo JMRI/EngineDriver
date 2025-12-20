@@ -640,6 +640,7 @@
         <item tools:ignore="Typos">MagicseeR1C</item>
         <item>FlydigiWee2</item>
         <item>UtopiaC</item>
+        <item>VRBoxB</item>
         <item>AuvisioB</item>
         <item>AuvisioB-rotate</item>
         <item>Generic</item>
@@ -659,6 +660,7 @@
         <item tools:ignore="Typos">MagicseeR1 Android-Mode C</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
+        <item tools:ignore="TypographyDashes">VR Box-Mode B</item>
         <item >Auvisio Android-B</item>
         <item >Auvisio Android-B - ↺ DPAD</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (4x4 Keypad +Encoder)</item>
@@ -666,6 +668,94 @@
         <item >Keyboard</item>
         <item >USB Volume Dial</item>
     </string-array>
+
+    <!--  which array to use for the keys - down -->
+    <array name="prefGamePadTypeKeysIds" translatable="false">
+        <item>@array/prefGamePadNoneLabels</item>
+        <item>@array/prefGamePadiCadePlusDpad</item>          <!-- iCade-rotate -->
+        <item>@array/prefGamePadiCadePlusDpad_UpCodes</item>  <!-- iCade+DPAD-rotate -->
+        <item>@array/prefGamePadMTK</item>                    <!-- MTK-rotate -->
+        <item>@array/prefGamePadGame</item>                   <!-- Game-rotate -->
+        <item>@array/prefGamePadGameAlternate</item>          <!-- Game-alternate-rotate -->
+        <item>@array/prefGamePadMagicseeR1B</item>            <!-- MagicseeR1B -->
+        <item>@array/prefGamePadMagicseeR1A</item>            <!-- MagicseeR1A -->
+        <item>@array/prefGamePadMagicseeR1C</item>            <!-- MagicseeR1C -->
+        <item>@array/prefGamePadFlydigiWee2</item>            <!-- FlydigiWee2 -->
+        <item>@array/prefGamePadUtopiaC</item>                <!-- UtopiaC -->
+        <item>@array/prefGamePadVRBoxB</item>                 <!-- VRBoxB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadGeneric</item>                <!-- Generic -->
+        <item>@array/prefGamePadGeneric3x4</item>             <!-- Generic3x4 -->
+        <item>@array/prefGamePadNoneLabels</item>             <!-- Keyboard -->
+        <item>@array/prefGamePadVolume</item>                 <!-- Volume -->
+    </array>
+
+    <!--  which array to use for the keys - up -->
+    <array name="prefGamePadTypeKeysUpIds" translatable="false">
+        <item>@array/prefGamePadNoneLabels</item>
+        <item>@array/prefGamePadiCadePlusDpad</item>          <!-- iCade-rotate -->
+        <item>@array/prefGamePadiCadePlusDpad_UpCodes</item>  <!-- iCade+DPAD-rotate -->
+        <item>@array/prefGamePadMTK</item>                    <!-- MTK-rotate -->
+        <item>@array/prefGamePadGame</item>                   <!-- Game-rotate -->
+        <item>@array/prefGamePadGameAlternate</item>          <!-- Game-alternate-rotate -->
+        <item>@array/prefGamePadMagicseeR1B</item>            <!-- MagicseeR1B -->
+        <item>@array/prefGamePadMagicseeR1A</item>            <!-- MagicseeR1A -->
+        <item>@array/prefGamePadMagicseeR1C</item>            <!-- MagicseeR1C -->
+        <item>@array/prefGamePadFlydigiWee2</item>            <!-- FlydigiWee2 -->
+        <item>@array/prefGamePadUtopiaC</item>                <!-- UtopiaC -->
+        <item>@array/prefGamePadVRBoxB</item>                 <!-- VRBoxB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadGeneric</item>                <!-- Generic -->
+        <item>@array/prefGamePadGeneric3x4</item>             <!-- Generic3x4 -->
+        <item>@array/prefGamePadNoneLabels</item>             <!-- Keyboard -->
+        <item>@array/prefGamePadVolume</item>                 <!-- Volume -->
+    </array>
+
+    <!--  which array to use for the key/button labels in the Settings Activity -->
+    <array name="gamepadSettingsButtonLabelsIds" translatable="false">
+        <item>@array/prefGamePadMocuteLabels</item>
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- iCade-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- iCade+DPAD-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>         <!-- MTK-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- Game-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- Game-alternate-rotate -->
+        <item>@array/prefGamePadMagicseeR1Labels</item>     <!-- MagicseeR1B -->
+        <item>@array/prefGamePadMagicseeR1Labels</item>     <!-- MagicseeR1A -->
+        <item>@array/prefGamePadMagicseeR1Labels</item>     <!-- MagicseeR1C -->
+        <item>@array/prefGamePadFlydigiWee2Labels</item>     <!-- FlydigiWee2 -->
+        <item>@array/prefGamePadUtopiaCLabels</item>     <!-- UtopiaC -->
+        <item>@array/prefGamePadVRBoxBLabels</item>     <!-- VRBoxB -->
+        <item>@array/prefGamePadAuvisioBLabels</item>     <!-- AuvisioB -->
+        <item>@array/prefGamePadAuvisioBLabels</item>     <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadGenericLabels</item>     <!-- Generic -->
+        <item>@array/prefGamePadGeneric3x4Labels</item>  <!-- Generic3x4 -->
+        <item>@array/prefGamePadGenericLabels</item>     <!-- Keyboard -->
+        <item>@array/prefGamePadVolumeLabels</item>      <!-- Volume -->
+    </array>
+
+    <!--  which array to use for the key/button labels in the gamepad_test activity -->
+    <array name="gamepadTestButtonLabelsIds" translatable="false">
+        <item>@array/gamepadTestButtonLabelsDefault</item>
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- iCade-rotate -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- iCade+DPAD-rotate -->
+        <item>@array/gamepadTestButtonLabelsMTK</item>         <!-- MTK-rotate -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- Game-rotate -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- Game-alternate-rotate -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- MagicseeR1B -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- MagicseeR1A -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- MagicseeR1C -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- FlydigiWee2 -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- UtopiaC -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- VRBoxC -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- AuvisioB -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- AuvisioB-rotate -->
+        <item>@array/gamepadTestButtonLabelsGeneric</item>     <!-- Generic -->
+        <item>@array/gamepadTestButtonLabelsGeneric3x4</item>  <!-- Generic3x4 -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- Keyboard -->
+        <item>@array/gamepadTestButtonLabelsVolume</item>      <!-- Volume -->
+    </array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -988,59 +1078,117 @@
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxC" translatable="false">
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
-        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown
-        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight
-        <item>@integer/KeyCode_Button_X</item> //none
-        <item>@integer/KeyCode_Button_Y</item> //gamepadA, gamepadEnter
-        <item>@integer/KeyCode_Button_B</item> //gamepadB, gamepadEscape
-        <item>@integer/KeyCode_Volume_Down</item> //gamepadD
-        <item>@integer/KeyCode_Enter</item> //gamepadC
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
-        <item>0</item> //not used
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxiC" translatable="false">
-        <item>0</item> //not used
-        <item>@integer/KeyCode_O</item> //gamepadEscape
-        <item>@integer/KeyCode_W</item> //gamepadDpadUp
-        <item>@integer/KeyCode_X</item> //gamepadDpadDown
-        <item>@integer/KeyCode_A</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_D</item> //gamepadDpadRight
-        <item>@integer/KeyCode_L</item> //gamepadEnter
-        <item>@integer/KeyCode_U</item> //gamepadA
-        <item>@integer/KeyCode_H</item> //gamepadB
-        <item>@integer/KeyCode_J</item> //gamepadD
-        <item>@integer/KeyCode_Y</item> //gamepadC
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxiC_UpCodes" translatable="false">
-        <item>0</item> //not used
-        <item>@integer/KeyCode_G</item>
-        <item>@integer/KeyCode_E</item>
-        <item>@integer/KeyCode_Z</item>
-        <item>@integer/KeyCode_Q</item>
-        <item>@integer/KeyCode_C</item>
-        <item>@integer/KeyCode_V</item>
-        <item>@integer/KeyCode_F</item>
-        <item>@integer/KeyCode_R</item>
-        <item>@integer/KeyCode_N</item>
-        <item>@integer/KeyCode_T</item>
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
 -->
+    <integer-array name="prefGamePadVRBoxB" translatable="false">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Dpad_Left</item>
+        <item>@integer/KeyCode_Dpad_Right</item>
+        <item>@integer/KeyCode_Dpad_Down</item>
+        <item>@integer/KeyCode_Dpad_Up</item>
+        <item>@integer/KeyCode_Button_Start</item> // select/enter
+        <item>@integer/KeyCode_Button_X</item>    //gamepadC
+        <item>@integer/KeyCode_Button_B</item>    //gamepadD
+        <item>@integer/KeyCode_Button_Y</item>    //gamepadA
+        <item>@integer/KeyCode_Button_A</item>    //gamepadB
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_R1</item> //lower front button
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_L1</item> //upper front button
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+    </integer-array>
+
+    <string-array name="prefGamePadVRBoxBLabels">
+        <item> </item> //not used
+        <item>Button not usable</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
+        <item>Start Button action</item>
+        <item>Button A action</item>
+        <item>Button D action</item>
+        <item>Button B action</item>
+        <item>Button C action</item>
+        <item>Button not available</item> //not used
+        <item>Trigger Front Lower</item>
+        <item>Button not available</item> //not used
+        <item>Trigger Front Upper</item>
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+    </string-array>
+
+
+    <!--
+        <integer-array name="prefGamePadVRBoxiC" translatable="false">
+            <item>0</item> //not used
+            <item>@integer/KeyCode_O</item> //gamepadEscape
+            <item>@integer/KeyCode_W</item> //gamepadDpadUp
+            <item>@integer/KeyCode_X</item> //gamepadDpadDown
+            <item>@integer/KeyCode_A</item> //gamepadDpadLeft
+            <item>@integer/KeyCode_D</item> //gamepadDpadRight
+            <item>@integer/KeyCode_L</item> //gamepadEnter
+            <item>@integer/KeyCode_U</item> //gamepadA
+            <item>@integer/KeyCode_H</item> //gamepadB
+            <item>@integer/KeyCode_J</item> //gamepadD
+            <item>@integer/KeyCode_Y</item> //gamepadC
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+        </integer-array>
+        <integer-array name="prefGamePadVRBoxiC_UpCodes" translatable="false">
+            <item>0</item> //not used
+            <item>@integer/KeyCode_G</item>
+            <item>@integer/KeyCode_E</item>
+            <item>@integer/KeyCode_Z</item>
+            <item>@integer/KeyCode_Q</item>
+            <item>@integer/KeyCode_C</item>
+            <item>@integer/KeyCode_V</item>
+            <item>@integer/KeyCode_F</item>
+            <item>@integer/KeyCode_R</item>
+            <item>@integer/KeyCode_N</item>
+            <item>@integer/KeyCode_T</item>
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+        </integer-array>
+    -->
+
     <integer-array name="prefGamePadMagicseeR1B" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_Button_R1</item> // Return button - upper front button
@@ -1157,6 +1305,13 @@
         <item>Trigger Front Lower</item>
         <item>Button not available</item> //not used
         <item>Trigger Front Upper</item>
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <integer-array name="prefGamePadAuvisioB" translatable="false">
@@ -1200,6 +1355,13 @@
         <item>Trigger Front Lower</item>
         <item>Button not available</item> //not used
         <item>Trigger Front Upper</item>
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <integer-array name="prefGamePadFlydigiWee2" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -1243,8 +1405,8 @@
         <item>Right Shoulder</item>
         <item>Left Trigger</item>
         <item>Right Trigger</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
         <item>0</item> //not used - alternate Stop
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
@@ -1441,12 +1603,12 @@
         <item>Button 4 action</item>
         <item>Button 1 action</item>
         <item>Button 2 action</item>
-        <item>0</item>
+        <item>Button not available</item>
         <item>Button 8 action</item>
-        <item>0</item>
+        <item>Button not available</item>
         <item>Button 0 action</item>
-        <item>0</item>
-        <item>0</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
         <item>0</item> //alternate Stop
         <item>0</item> //alternate Increase Speed
         <item>0</item> //alternate Decrease Speed

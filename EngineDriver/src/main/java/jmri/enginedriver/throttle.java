@@ -122,7 +122,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -143,6 +142,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -990,7 +990,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     setLabels();
                                 } else if (com2 == '-') { // if loco removed
                                     removeLoco(whichThrottle);
-                                    swapToNextAvilableThrottleForGamePad(whichThrottle, true); // see if we can/need to move the gamepad to another throttle
+                                    swapToNextAvailableThrottleForGamePad(whichThrottle, true); // see if we can/need to move the gamepad to another throttle
                                     mainapp.gamePadIdsAssignedToThrottles[whichThrottle] = 0;
                                     mainapp.gamePadThrottleAssignment[whichThrottle] = -1;
 
@@ -2993,73 +2993,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int[] bGamePadKeys;
         int[] bGamePadKeysUp;
 
-        switch (mainapp.prefGamePadType) {
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad);
-                bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad_UpCodes);
-                break;
-            case "MTK":
-            case "MTK-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMTK);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Game":
-            case "Game-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGame);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Game-alternate-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGameAlternate);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "MagicseeR1B":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "MagicseeR1A":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1A);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "MagicseeR1C":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1C);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "FlydigiWee2":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "UtopiaC":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "AuvisioB":
-            case "AuvisioB-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadAuvisioB);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Generic":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Generic3x4":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric3x4);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Keyboard":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Volume":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadVolume);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
+        String[] gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
+        int prefGamePadTypeIndex = Arrays.asList(gamePadModeEntriesArray).indexOf(mainapp.prefGamePadType);
+        if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
 
-            default: // "iCade" or iCade-rotate
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
-                bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
-                break;
-        }
+        TypedArray prefGamePadTypeKeysIds = getResources().obtainTypedArray(R.array.prefGamePadTypeKeysIds);
+        TypedArray prefGamePadTypeKeysUpIds = getResources().obtainTypedArray(R.array.prefGamePadTypeKeysUpIds);
+
+        bGamePadKeys = this.getResources().getIntArray(prefGamePadTypeKeysIds.getResourceId(prefGamePadTypeIndex,0));
+        bGamePadKeysUp = this.getResources().getIntArray(prefGamePadTypeKeysUpIds.getResourceId(prefGamePadTypeIndex,0));
+
+        prefGamePadTypeKeysIds.recycle();
+        prefGamePadTypeKeysUpIds.recycle();
+
         // now grab the keycodes and put them into the arrays that will actually be used.
         for (int i = 0; i < GAMEPAD_KEYS_LENGTH; i++) {
             gamePadKeys[i] = bGamePadKeys[i];
@@ -3081,7 +3027,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     /** @noinspection UnusedReturnValue*/ //
-    private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
+    private int swapToNextAvailableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
         int index;
         index = fromThrottle - 1;
@@ -3294,7 +3240,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.NEXT_THROTTLE)) {  // Next Throttle
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (mainapp.usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                    swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
+                    swapToNextAvailableThrottleForGamePad(whichGamePadIsEventFrom, false);
                 } else {
                     setNextActiveThrottle(true);
                 }
@@ -3506,7 +3452,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (keyCode == KEYCODE_N) {  // Next Throttle
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (mainapp.usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                    swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
+                    swapToNextAvailableThrottleForGamePad(whichGamePadIsEventFrom, false);
                 } else {
                     setNextActiveThrottle(true);
                 }

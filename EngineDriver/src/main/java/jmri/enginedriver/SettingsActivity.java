@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.ToneGenerator;
 import android.net.Uri;
@@ -1252,45 +1253,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         String[] gamePadPrefLabels;
         String[] gamePadPrefButtonReferences = this.getResources().getStringArray(R.array.prefGamePadPrefButtonReferences);
 
-        switch (prefGamePadType) {
-            case "MagicseeR1B":
-            case "MagicseeR1A":
-            case "MagicseeR1C":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMagicseeR1Labels);
-                break;
-            case "FlydigiWee2":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadFlydigiWee2Labels);
-                break;
-            case "UtopiaC":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadUtopiaCLabels);
-                break;
-            case "AuvisioB":
-            case "AuvisioB-rotate":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadAuvisioBLabels);
-                break;
-            case "Generic":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadGenericLabels);
-                break;
-            case "Generic3x4":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadGeneric3x4Labels);
-                break;
-            case "Volume":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadVolumeLabels);
-                break;
-            case "None":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
-                break;
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate":
-            case "MTK":
-            case "MTK-rotate":
-            case "Game":
-            case "Game-rotate":
-            case "Game-alternate-rotate":
-            default:
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
-                break;
-        }
+        String[] gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
+        int prefGamePadTypeIndex = Arrays.asList(gamePadModeEntriesArray).indexOf(prefGamePadType);
+        if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
+
+        TypedArray gamepadSettingsButtonLabelsIds = getResources().obtainTypedArray(R.array.gamepadSettingsButtonLabelsIds);
+        gamePadPrefLabels = this.getResources().getStringArray(gamepadSettingsButtonLabelsIds.getResourceId(prefGamePadTypeIndex,0));
+        gamepadSettingsButtonLabelsIds.recycle();
+
         for (int i = 1; i < gamePadPrefLabels.length; i++) {  // skip the first one
             boolean thisEnabled = true;
             Preference thisPref = prefScreen.findPreference(gamePadPrefButtonReferences[i]);

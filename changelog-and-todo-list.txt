@@ -3,8 +3,9 @@
  * Move to targetSdk 36
  * Immersive mode fixes for targetSdk 36 - enforced edge-to-edge mode
  * Significant changes to the way the UI elements are referenced (now in resource in arrays)
- * Bug fix for gamepage calibration when using joystick like settings
+ * Bug fix for gamepad calibration when using joystick like settings
  * Linting
+ * Added back in the VRBoxB gamepad type and fixed it
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212
