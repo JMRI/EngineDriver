@@ -38,6 +38,7 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
@@ -71,6 +72,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.beep_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -145,16 +147,48 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     /** @noinspection SameParameterValue*/
     void GamepadFeedbackSound(boolean invalidAction) {
-        if (invalidAction)
-            tg.startTone(ToneGenerator.TONE_PROP_NACK);
-        else
-            tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+        // the tone generator is not compatible with the ipls
+        if ((!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none"))) {
+            if (invalidAction) {
+                gamepadBeep(beep_type.NAK);
+            } else {
+                gamepadBeep(beep_type.ACK);
+            }
+        } else {
+
+            if (tg != null) {
+                if (invalidAction)
+                    tg.startTone(ToneGenerator.TONE_PROP_NACK);
+                else
+                    tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+            }
+        }
+    }
+
+    void gamepadBeep(int whichBeep) {
+        if (mainapp.prefGamePadFeedbackVolume == 0) return;
+
+        if (mainapp._mediaPlayer != null) {
+            mainapp._mediaPlayer.reset();     // reset stops and release on any state of the player
+        }
+
+        mainapp._mediaPlayer = MediaPlayer.create(this, mainapp.gamepadBeepIds[whichBeep]);
+
+        if (mainapp._mediaPlayer!=null) {
+            float volumeFloat = ((float) mainapp.prefGamePadFeedbackVolume) / 100.0f;
+
+            mainapp._mediaPlayer.setVolume(volumeFloat, volumeFloat);
+            mainapp._mediaPlayer.start();
+        }
     }
 
     void GamepadFeedbackSoundStop() {
+        // the tone generator is not compatible with the ipls
+        if ((!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")))
+            return;
+
         tg.stopTone();
     }
-
 
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {

@@ -555,7 +555,7 @@ public class throttle_switching_horizontal extends throttle {
                         jumpDir = dir; // save ultimate target direction
                         limitedJump[whichThrottle] = true;
                         throttle.setProgress(lastSliderPosition);  // put the slider back to the original position
-                        doLocoSound(whichThrottle);
+                        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
 
                         if (newSliderPosition < lastSliderPosition) { // going down
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
@@ -586,7 +586,7 @@ public class throttle_switching_horizontal extends throttle {
 //                    Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() -- touch while processing limited jump");
                     newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
                     throttle.setProgress(lastSliderPosition);
-                    doLocoSound(whichThrottle);
+                    if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
 
 //                    Log.d(threaded_application.applicationName, activityName + ": onProgressChange(): fromUser: " + fromUser + " hsbSwitchingSpeeds[wt].touchFromUser: " +hsbSwitchingSpeeds[whichThrottle].touchFromUser + " isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
                 }
@@ -634,7 +634,7 @@ public class throttle_switching_horizontal extends throttle {
                             limitedJump[whichThrottle] = false;
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                             throttle.setProgress(getNewSliderPositionFromSpeed(jumpSpeed, whichThrottle, false));
-                            doLocoSound(whichThrottle);
+                            if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
                             speedUpdate(whichThrottle, getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                         }
                     }
@@ -720,11 +720,11 @@ public class throttle_switching_horizontal extends throttle {
         switchingThrottleSlider.setProgress(newSliderPosition);
         speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
         setDisplayedSpeed(whichThrottle, speed);
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
 
 //        Log.d(threaded_application.applicationName, activityName + ": speedChange():  speed: " + speed + " change: " + change);
 
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
 
         return speed;
 
@@ -745,7 +745,7 @@ public class throttle_switching_horizontal extends throttle {
 
         getSwitchingThrottleSlider(whichThrottle).setProgress(sliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
 
 //        Log.d(threaded_application.applicationName, activityName + ": speedChange(): speedUpdate -  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
     }
@@ -764,7 +764,7 @@ public class throttle_switching_horizontal extends throttle {
             sliderPosition = getNewSliderPositionFromSpeed(speedWiT, whichThrottle, false);
             hsbSwitchingSpeeds[whichThrottle].setProgress(sliderPosition);
         }
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
     }
 
 

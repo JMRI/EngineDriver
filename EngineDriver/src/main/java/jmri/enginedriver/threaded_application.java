@@ -497,6 +497,8 @@ public class threaded_application extends Application {
 //    public static final int GAMEPAD_BAD = 2;
 
     public boolean prefGamePadIgnoreJoystick = false;
+    public int prefGamePadFeedbackVolume = 100;
+    public int[] gamepadBeepIds;
 
     public int[] dccexLastKnownSpeed = {0,0,0,0,0,0};
     public int[] dccexLastKnownDirection = {1,1,1,1,1,1};

@@ -2983,6 +2983,15 @@
         <item>@id/volume_indicator_5</item>
     </array>
 
+    <array name="beep_ids">
+        <item>@raw/beep_1</item>
+        <item>@raw/beep_1a</item>
+        <item>@raw/beep_2</item>
+        <item>@raw/beep_2a</item>
+        <item>@raw/beep_ack</item>
+        <item>@raw/beep_nak</item>
+    </array>
+
 
 
 
