@@ -197,6 +197,7 @@
         <item>Snížit brzdu</item>
         <item>Zvýšit zatížení</item>
         <item>Snížit zatížení</item>
+        <item>Nic</item>
     </string-array>
 
     <string-array name="prefGamePadFlydigiWee2Labels">

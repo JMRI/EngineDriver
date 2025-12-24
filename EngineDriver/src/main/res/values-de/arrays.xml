@@ -181,6 +181,7 @@
         <item>Bremse verringern</item>
         <item>Last erhöhen</item>
         <item>Last verringern</item>
+        <item>Keine</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Keine</item>

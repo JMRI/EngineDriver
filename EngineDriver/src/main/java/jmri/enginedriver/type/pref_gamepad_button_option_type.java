@@ -38,4 +38,5 @@ public interface pref_gamepad_button_option_type {
     String DECREASE_BRAKE = "Decrease Brake";
     String INCREASE_LOAD = "Increase Load";
     String DECREASE_LOAD = "Decrease Load";
+    String NONE = "None";
 }

@@ -175,12 +175,13 @@
         <item>Timbre (IPLS)</item>
         <item>Banya (IPLS)</item>
         <item>Banya Curta (IPLS)</item>
-        <item >Parla la velocitat actual</item>
+        <item>Parla la velocitat actual</item>
         <item>Neutre</item>
         <item>Augmentar el fre</item>
         <item>Disminueix el fre</item>
         <item>Augmenta la càrrega</item>
         <item>Disminueix la càrrega</item>
+        <item>Cap</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Cap</item>

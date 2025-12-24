@@ -783,112 +783,114 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefGamePadKeyEntries">  <!-- display version -->
-        <item >All Stop</item>
-        <item >Stop</item>
-        <item >Forward</item>
-        <item >Reverse</item>
-        <item >Forward/Reverse Toggle</item>
-        <item >Increase Speed</item>
-        <item >Decrease Speed</item>
-        <item >Limit Speed</item>
-        <item >Pause</item>
-        <item >Next Throttle</item>
-        <item >Function 00/Light</item>
-        <item >Function 01/Bell</item>
-        <item >Function 02/Horn</item>
-        <item >Function 03</item>
-        <item >Function 04</item>
-        <item >Function 05</item>
-        <item >Function 06</item>
-        <item >Function 07</item>
-        <item >Function 08</item>
-        <item >Function 09</item>
-        <item >Function 10</item>
-        <item >Function 11</item>
-        <item >Function 12</item>
-        <item >Function 13</item>
-        <item >Function 14</item>
-        <item >Function 15</item>
-        <item >Function 16</item>
-        <item >Function 17</item>
-        <item >Function 18</item>
-        <item >Function 19</item>
-        <item >Function 20</item>
-        <item >Function 21</item>
-        <item >Function 22</item>
-        <item >Function 23</item>
-        <item >Function 24</item>
-        <item >Function 25</item>
-        <item >Function 26</item>
-        <item >Function 27</item>
-        <item >Function 28</item>
-        <item >Function 29</item>
-        <item >Function 30</item>
-        <item >Function 31</item>
-        <item >Mute (IPLS)</item>
-        <item >Bell (IPLS)</item>
-        <item >Horn (IPLS)</item>
-        <item >Horn Short (IPLS)</item>
-        <item >Speak Current Speed</item>
-        <item >Neutral</item>
-        <item >Increase Brake</item>
-        <item >Decrease Brake</item>
-        <item >Increase Load</item>
-        <item >Decrease Load</item>
+        <item>All Stop</item>
+        <item>Stop</item>
+        <item>Forward</item>
+        <item>Reverse</item>
+        <item>Forward/Reverse Toggle</item>
+        <item>Increase Speed</item>
+        <item>Decrease Speed</item>
+        <item>Limit Speed</item>
+        <item>Pause</item>
+        <item>Next Throttle</item>
+        <item>Function 00/Light</item>
+        <item>Function 01/Bell</item>
+        <item>Function 02/Horn</item>
+        <item>Function 03</item>
+        <item>Function 04</item>
+        <item>Function 05</item>
+        <item>Function 06</item>
+        <item>Function 07</item>
+        <item>Function 08</item>
+        <item>Function 09</item>
+        <item>Function 10</item>
+        <item>Function 11</item>
+        <item>Function 12</item>
+        <item>Function 13</item>
+        <item>Function 14</item>
+        <item>Function 15</item>
+        <item>Function 16</item>
+        <item>Function 17</item>
+        <item>Function 18</item>
+        <item>Function 19</item>
+        <item>Function 20</item>
+        <item>Function 21</item>
+        <item>Function 22</item>
+        <item>Function 23</item>
+        <item>Function 24</item>
+        <item>Function 25</item>
+        <item>Function 26</item>
+        <item>Function 27</item>
+        <item>Function 28</item>
+        <item>Function 29</item>
+        <item>Function 30</item>
+        <item>Function 31</item>
+        <item>Mute (IPLS)</item>
+        <item>Bell (IPLS)</item>
+        <item>Horn (IPLS)</item>
+        <item>Horn Short (IPLS)</item>
+        <item>Speak Current Speed</item>
+        <item>Neutral</item>
+        <item>Increase Brake</item>
+        <item>Decrease Brake</item>
+        <item>Increase Load</item>
+        <item>Decrease Load</item>
+        <item>None</item>
     </string-array>
     <string-array name="prefGamePadKeyEntryValues" translatable="false">
-        <item >All Stop</item>
-        <item >Stop</item>
-        <item >Forward</item>
-        <item >Reverse</item>
-        <item >Forward/Reverse Toggle</item>
-        <item >Increase Speed</item>
-        <item >Decrease Speed</item>
-        <item >Limit Speed</item>
-        <item >Pause</item>
-        <item >Next Throttle</item>
-        <item >Function 00/Light</item>
-        <item >Function 01/Bell</item>
-        <item >Function 02/Horn</item>
-        <item >Function 03</item>
-        <item >Function 04</item>
-        <item >Function 05</item>
-        <item >Function 06</item>
-        <item >Function 07</item>
-        <item >Function 08</item>
-        <item >Function 09</item>
-        <item >Function 10</item>
-        <item >Function 11</item>
-        <item >Function 12</item>
-        <item >Function 13</item>
-        <item >Function 14</item>
-        <item >Function 15</item>
-        <item >Function 16</item>
-        <item >Function 17</item>
-        <item >Function 18</item>
-        <item >Function 19</item>
-        <item >Function 20</item>
-        <item >Function 21</item>
-        <item >Function 22</item>
-        <item >Function 23</item>
-        <item >Function 24</item>
-        <item >Function 25</item>
-        <item >Function 26</item>
-        <item >Function 27</item>
-        <item >Function 28</item>
-        <item >Function 29</item>
-        <item >Function 30</item>
-        <item >Function 31</item>
-        <item >Mute (IPLS)</item>
-        <item >Bell (IPLS)</item>
-        <item >Horn (IPLS)</item>
-        <item >Horn Short (IPLS)</item>
-        <item >Speak Current Speed</item>
-        <item >Neutral</item>
-        <item >Increase Brake</item>
-        <item >Decrease Brake</item>
-        <item >Increase Load</item>
-        <item >Decrease Load</item>
+        <item>All Stop</item>
+        <item>Stop</item>
+        <item>Forward</item>
+        <item>Reverse</item>
+        <item>Forward/Reverse Toggle</item>
+        <item>Increase Speed</item>
+        <item>Decrease Speed</item>
+        <item>Limit Speed</item>
+        <item>Pause</item>
+        <item>Next Throttle</item>
+        <item>Function 00/Light</item>
+        <item>Function 01/Bell</item>
+        <item>Function 02/Horn</item>
+        <item>Function 03</item>
+        <item>Function 04</item>
+        <item>Function 05</item>
+        <item>Function 06</item>
+        <item>Function 07</item>
+        <item>Function 08</item>
+        <item>Function 09</item>
+        <item>Function 10</item>
+        <item>Function 11</item>
+        <item>Function 12</item>
+        <item>Function 13</item>
+        <item>Function 14</item>
+        <item>Function 15</item>
+        <item>Function 16</item>
+        <item>Function 17</item>
+        <item>Function 18</item>
+        <item>Function 19</item>
+        <item>Function 20</item>
+        <item>Function 21</item>
+        <item>Function 22</item>
+        <item>Function 23</item>
+        <item>Function 24</item>
+        <item>Function 25</item>
+        <item>Function 26</item>
+        <item>Function 27</item>
+        <item>Function 28</item>
+        <item>Function 29</item>
+        <item>Function 30</item>
+        <item>Function 31</item>
+        <item>Mute (IPLS)</item>
+        <item>Bell (IPLS)</item>
+        <item>Horn (IPLS)</item>
+        <item>Horn Short (IPLS)</item>
+        <item>Speak Current Speed</item>
+        <item>Neutral</item>
+        <item>Increase Brake</item>
+        <item>Decrease Brake</item>
+        <item>Increase Load</item>
+        <item>Decrease Load</item>
+        <item>None</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

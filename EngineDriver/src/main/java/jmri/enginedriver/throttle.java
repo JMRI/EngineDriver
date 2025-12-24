@@ -3401,6 +3401,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 decrementLoadSliderPosition(whichThrottle);
             }
+//        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.NONE)) {
+//             do nothing
         }
 
         whichLastGamepadButtonPressed = buttonNo;

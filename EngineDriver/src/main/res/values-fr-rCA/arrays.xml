@@ -112,6 +112,7 @@
         <item>Diminuer le frein</item>
         <item>Augmenter la charge</item>
         <item>Diminuer la charge</item>
+        <item>Aucun</item>
     </string-array>
 
 
@@ -147,8 +148,7 @@
     </string-array>
     <string-array name="prefSwipeUpOptionsEntries">  <!-- display version -->
         <item>Aucun</item>
-        " <item>Masque l\'affichage web.
-\n(Nécessite la préférence \'Affichage du navigateur web\')</item>"
+        <item>Masque l\'affichage web.\n(Nécessite la préférence \'Affichage du navigateur web\')</item>
         <item>Verrouille et réduit la luminosité de l\'écran</item>
         <item>Assombrir l\'écran</item>
         <item>Activation-désactivation provisoire du mode immersif</item>
