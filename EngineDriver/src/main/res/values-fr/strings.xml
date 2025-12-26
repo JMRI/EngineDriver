@@ -524,7 +524,7 @@
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Pas d autorisation d acces a la localisation</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Le nom du reseau est inacessible, la decouverte du serveur est limitee</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
-    <string name="statusThreadedAppNoResponse">Pas de reponse du serveur %1$s:%2$s depuis %3$s seconds. Verifier qu il fonctionne. Nouvelle tentative</string>
+    <string name="statusThreadedAppNoResponse">Pas de reponse du serveur %1$s:%2$dms depuis %3$dms seconds. Verifier qu il fonctionne. Nouvelle tentative</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
     <string name="toastDoubleBackButtonToExit">Appuyer a nouveau sur \'Retour\' pour quitter Engine Driver</string>
     <string name="toastUnableToSetBrightness">Impossible de régler la luminosité automatique ou adaptative.</string>
