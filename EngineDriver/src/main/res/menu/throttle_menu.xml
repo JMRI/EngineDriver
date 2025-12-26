@@ -23,6 +23,19 @@
         android:visible="false"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
+
+    <item android:id="@+id/turnouts_button"
+        app:actionLayout="@layout/toolbar_button_turnouts"
+        android:title="@string/turnouts"
+        app:showAsAction="always"
+        android:visible="false" />
+
+    <item android:id="@+id/routes_button"
+        app:actionLayout="@layout/toolbar_button_routes"
+        android:title="@string/routes"
+        app:showAsAction="always"
+        android:visible="false" />
+
     <item android:id="@+id/web_view_button"
         app:actionLayout="@layout/toolbar_button_web_view"
         android:title="@string/webViewButtonBar"

@@ -612,11 +612,13 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         if (activityMenu != null) {
             mainapp.displayEStop(activityMenu);
             mainapp.displayDccExButton(activityMenu);
+            mainapp.displayThrottleButton(activityMenu);
+            mainapp.displayTurnoutsButton(activityMenu);
 
             mainapp.displayPowerStateMenuButton(activityMenu);
             mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
 
-            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
+//            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
             mainapp.displayFlashlightMenuButton(activityMenu);
             mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
         }
@@ -703,10 +705,12 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         mainapp.actionBarIconCountRoutes = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.displayThrottleMenuButton(menu, "swipe_through_routes_preference");
+//        mainapp.displayThrottleMenuButton(menu, "swipe_through_routes_preference");
         mainapp.setPowerMenuOption(menu);
         mainapp.setDCCEXMenuOption(menu);
         mainapp.displayDccExButton(menu);
+        mainapp.displayThrottleButton(menu);
+        mainapp.displayTurnoutsButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
         if (findViewById(R.id.powerLayoutButton) == null) {
             final Handler handler = new Handler(Looper.getMainLooper());
@@ -755,7 +759,8 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             startACoreActivity(this, in, false, 0);
             if (item.getItemId() == R.id.throttle_button_mnu ) { mainapp.buttonVibration(); }
             return true;
-        } else if (item.getItemId() == R.id.turnouts_mnu) {
+        } else if ( (item.getItemId() == R.id.turnouts_mnu)
+                || (item.getItemId() == R.id.turnouts_button) ) {
             in = new Intent().setClass(this, turnouts.class);
             startACoreActivity(this, in, false, 0);
             return true;

@@ -9,6 +9,7 @@
  * Move the IPLS code to a separate class. Not a complete move as the variables are still largely in threaded_application.
  * Bug fix for gamepads with the IPLS.  The tone generator for the beeps is not compatible with the IPLS.
  * Add 'None' option for the gamepad buttons
+ * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212

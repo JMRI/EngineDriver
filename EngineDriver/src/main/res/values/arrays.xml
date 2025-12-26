@@ -2538,6 +2538,9 @@
         <item>prefActionBarShowServerDescription</item>
         <item>prefAppIconAction</item>
         <item>prefActionBarShowDccExButton</item>
+        <item>prefActionBarShowThrottleButton</item>
+        <item>prefActionBarShowTurnoutsButton</item>
+        <item>prefActionBarShowRoutesButton</item>
 
         <!-- Throttle Control Preferences -->
         <item>maximum_throttle_preference</item>

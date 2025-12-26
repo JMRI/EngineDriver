@@ -62,4 +62,10 @@
         app:showAsAction="always"
         android:visible="false" />
 
+    <item android:id="@+id/turnouts_button"
+        app:actionLayout="@layout/toolbar_button_turnouts"
+        android:title="@string/turnouts"
+        app:showAsAction="always"
+        android:visible="false" />
+
 </menu>

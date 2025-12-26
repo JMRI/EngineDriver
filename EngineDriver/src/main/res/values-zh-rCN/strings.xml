@@ -873,6 +873,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefWebViewButtonTitle">节流阀网页视图按钮？</string>
 
     <!-- Consist Follow Function Preferences etc. -->
+    <string name="prefActionBarShowRoutesButtonTitle">路线按钮？</string>
     <string name="ConsistEditLabelLead">主车</string>
     <string name="ConsistEditLabelTrail">从车</string>
 
@@ -1364,6 +1365,11 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="sharedFileOverwriteChoicePositiveButtonText">是，覆盖</string>
     <string name="ToastsOptionsSummary">提示和指导性“toast”弹出窗口帮助/提示选项</string>
     <string name="prefBeepOnAlertToastsSummary">在弹出式“提示”消息上播放哔哔声</string>
+    <string name="prefActionBarShowThrottleButtonSummary">在操作栏中显示切换到油门屏幕的按钮</string>
+    <string name="prefActionBarShowThrottleButtonTitle">油门按钮？</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">道岔按钮？</string>
+    <string name="prefActionBarShowRoutesButtonSummary">在操作栏中显示按钮，切换到路线屏幕</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">在操作栏中显示按钮，切换到道岔屏幕</string>
 
 </resources>
 

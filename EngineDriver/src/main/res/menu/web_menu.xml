@@ -46,6 +46,18 @@
         android:visible="false"
         tools:ignore="AlwaysShowAction" />
 
+    <item android:id="@+id/turnouts_button"
+        app:actionLayout="@layout/toolbar_button_turnouts"
+        android:title="@string/turnouts"
+        app:showAsAction="always"
+        android:visible="false" />
+
+    <item android:id="@+id/routes_button"
+        app:actionLayout="@layout/toolbar_button_routes"
+        android:title="@string/routes"
+        app:showAsAction="always"
+        android:visible="false" />
+
     <item android:id="@+id/EmerStop"
         app:actionLayout="@layout/toolbar_button_estop"
         android:title="@string/EStop"

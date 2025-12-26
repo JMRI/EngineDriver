@@ -346,7 +346,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (activityMenu != null) {
             mainapp.displayEStop(activityMenu);
             mainapp.displayPowerStateMenuButton(activityMenu);
-            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_turnouts_preference");
+//            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_turnouts_preference");
         }
 
         return txtLen;
@@ -888,9 +888,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (activityMenu != null) {
             mainapp.displayEStop(activityMenu);
             mainapp.displayDccExButton(activityMenu);
+            mainapp.displayThrottleButton(activityMenu);
+            mainapp.displayRoutesButton(activityMenu);
             mainapp.displayPowerStateMenuButton(activityMenu);
             mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
-            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
+//            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
             mainapp.displayFlashlightMenuButton(activityMenu);
             mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
         }
@@ -957,7 +959,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.actionBarIconCountTurnouts = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.displayThrottleMenuButton(menu, "swipe_through_turnouts_preference");
+//        mainapp.displayThrottleMenuButton(menu, "swipe_through_turnouts_preference");
 
         mainapp.setPowerMenuOption(menu);
         if (findViewById(R.id.powerLayoutButton) == null) {
@@ -974,6 +976,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         mainapp.setDCCEXMenuOption(menu);
         mainapp.displayDccExButton(menu);
+        mainapp.displayThrottleButton(menu);
+        mainapp.displayRoutesButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
         mainapp.setWebMenuOption(menu);
         mainapp.setRoutesMenuOption(menu);
@@ -1003,11 +1007,13 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         Intent in;
-        if ( (item.getItemId() == R.id.throttle_button_mnu) || (item.getItemId() == R.id.throttle_mnu) ) {
+        if ( (item.getItemId() == R.id.throttle_button_mnu)
+                || (item.getItemId() == R.id.throttle_mnu) ) {
             in = mainapp.getThrottleIntent();
             startACoreActivity(this, in, false, 0);
             return true;
-        } else if (item.getItemId() == R.id.routes_mnu) {
+        } else if ( (item.getItemId() == R.id.routes_mnu)
+                || (item.getItemId() == R.id.routes_button) ) {
             in = new Intent().setClass(this, routes.class);
             startACoreActivity(this, in, false, 0);
             return true;

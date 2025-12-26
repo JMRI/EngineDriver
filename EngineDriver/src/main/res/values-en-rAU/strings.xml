@@ -56,7 +56,10 @@
     <string name="prefSortOrderTurnoutsSummary">Order that the Points entries will appear, by default, each time you start Engine Driver</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Always show both the Throw and Close buttons for Points, never the Toggle button.</string>
 
-<!--    Consist == MU  -->
+    <string name="prefActionBarShowTurnoutsButtonSummary">Show button in action bar to switch to the Points Screen</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Points button?</string>
+
+    <!--    Consist == MU  -->
 
     <string name="app_name_consist_functions">Consist (MU) Function Settings</string>
     <string name="app_name_ConsistEdit">Consist (MU) Edit</string>

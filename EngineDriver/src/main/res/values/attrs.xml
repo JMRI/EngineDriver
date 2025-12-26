@@ -36,6 +36,8 @@
 
     <attr name="ed_throttle_switch_button" format="reference" />
     <attr name="ed_throttle_button" format="reference" />
+    <attr name="ed_turnouts_button" format="reference" />
+    <attr name="ed_routes_button" format="reference" />
     <attr name="ed_flashlight_on_button" format="reference" />
     <attr name="ed_flashlight_off_button" format="reference" />
     <attr name="ed_esu_mc2_knob_on_button" format="reference" />

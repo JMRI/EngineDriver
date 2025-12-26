@@ -505,6 +505,9 @@ public class threaded_application extends Application {
     public long[] dccexLastSpeedCommandSentTime = {0,0,0,0,0,0};
 
     public boolean prefActionBarShowDccExButton = false;
+    public boolean prefActionBarShowThrottleButton = false;
+    public boolean prefActionBarShowTurnoutsButton = false;
+    public boolean prefActionBarShowRoutesButton = false;
 
     public String witCv = "";
     public String witCvValue = "";
@@ -1416,9 +1419,9 @@ public class threaded_application extends Application {
         displayPowerStateMenuButton(pMenu);
     }
 
-    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
-        menu.findItem(R.id.throttle_button_mnu).setVisible(!prefs.getBoolean(swipePreferenceToCheck, false));
-    }
+//    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
+//        menu.findItem(R.id.throttle_button_mnu).setVisible(!prefs.getBoolean(swipePreferenceToCheck, false));
+//    }
 
     /**
      * for menu passed in, set the text or hide the menu option based on connected system
@@ -2243,6 +2246,48 @@ public class threaded_application extends Application {
         if (mi != null) {
             boolean rslt = prefActionBarShowDccExButton;
             if ( (rslt) && (isDCCEX) ) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void displayThrottleButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.throttle_button_mnu);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowThrottleButton;
+            if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void displayTurnoutsButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.turnouts_button);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowTurnoutsButton && isTurnoutControlAllowed();
+            if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void displayRoutesButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.routes_button);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowRoutesButton && isRouteControlAllowed();
+            if (rslt) {
                 actionBarIconCountThrottle++;
                 mi.setVisible(true);
             } else {

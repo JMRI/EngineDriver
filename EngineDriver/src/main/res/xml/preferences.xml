@@ -1005,6 +1005,30 @@
             android:title="@string/prefActionBarShowDccExButtonTitle"
             android:layout="@layout/checkbox_icon_right" />
 
+        <CheckBoxPreference
+            android:icon="?attr/ed_throttle_button"
+            android:defaultValue="@bool/prefActionBarShowThrottleButtonDefaultValue"
+            android:key="prefActionBarShowThrottleButton"
+            android:summary="@string/prefActionBarShowThrottleButtonSummary"
+            android:title="@string/prefActionBarShowThrottleButtonTitle"
+            android:layout="@layout/checkbox_icon_right" />
+
+        <CheckBoxPreference
+            android:icon="?attr/ed_turnouts_button"
+            android:defaultValue="@bool/prefActionBarShowTurnoutsButtonDefaultValue"
+            android:key="prefActionBarShowTurnoutsButton"
+            android:summary="@string/prefActionBarShowTurnoutsButtonSummary"
+            android:title="@string/prefActionBarShowTurnoutsButtonTitle"
+            android:layout="@layout/checkbox_icon_right" />
+
+        <CheckBoxPreference
+            android:icon="?attr/ed_routes_button"
+            android:defaultValue="@bool/prefActionBarShowRoutesButtonDefaultValue"
+            android:key="prefActionBarShowRoutesButton"
+            android:summary="@string/prefActionBarShowRoutesButtonSummary"
+            android:title="@string/prefActionBarShowRoutesButtonTitle"
+            android:layout="@layout/checkbox_icon_right" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

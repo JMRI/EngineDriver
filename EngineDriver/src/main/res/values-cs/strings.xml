@@ -819,6 +819,7 @@
 <!--    <string name="logViewerTitle">Prohlížeč protokolu aktivity | %1$s</string>-->
 
     <!-- Consist Follow Function Preferences etc. -->
+    <string name="prefActionBarShowRoutesButtonTitle">Tlačítko Trasy?</string>
     <string name="ConsistEditLabelLead">PŘÍPŘEŽ</string>
     <string name="ConsistEditLabelTrail">POSTRK</string>
 
@@ -1344,5 +1345,10 @@
     <string name="advancedConsistToolButtonLabel">Pokročilé složení</string>
     <string name="ToastsOptionsSummary">Možnosti upozornění a vyskakovacích nápověd/nápověd v instruktážních oknech</string>
     <string name="prefBeepOnAlertToastsSummary">Přehrát pípnutí u vyskakovacích zpráv s upozorněním</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Tlačítko pro výhybky?</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na obrazovku Trasy</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na obrazovku plynu</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Tlačítko plynu?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na obrazovku výhybek</string>
 
 </resources>

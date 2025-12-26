@@ -1799,6 +1799,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
         mainapp.prefActionBarShowDccExButton = prefs.getBoolean("prefActionBarShowDccExButton",
                 getResources().getBoolean(R.bool.prefActionBarShowDccExButtonDefaultValue));
+        mainapp.prefActionBarShowThrottleButton = prefs.getBoolean("prefActionBarShowThrottleButton",
+                getResources().getBoolean(R.bool.prefActionBarShowThrottleButtonDefaultValue));
+        mainapp.prefActionBarShowTurnoutsButton = prefs.getBoolean("prefActionBarShowTurnoutsButton",
+                getResources().getBoolean(R.bool.prefActionBarShowTurnoutsButtonDefaultValue));
+        mainapp.prefActionBarShowRoutesButton = prefs.getBoolean("prefActionBarShowRoutesButton",
+                getResources().getBoolean(R.bool.prefActionBarShowRoutesButtonDefaultValue));
     }
 
     protected void getDirectionButtonPrefs() {
@@ -6834,6 +6840,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             displayEsuMc2KnobMenuButton(TMenu);
             mainapp.displayDeviceSoundsThrottleButton(TMenu);
             mainapp.displayDccExButton(TMenu);
+            mainapp.displayTurnoutsButton(TMenu);
+            mainapp.displayRoutesButton(TMenu);
 //            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
     }
@@ -7008,6 +7016,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         mainapp.displayDeviceSoundsThrottleButton(menu);
         mainapp.displayDccExButton(menu);
+        mainapp.displayTurnoutsButton(menu);
+        mainapp.displayRoutesButton(menu);
 
         adjustToolbarSize(menu);
 
@@ -7022,12 +7032,14 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // Handle all of the possible menu actions.
         Intent in;
-        if (item.getItemId() == R.id.turnouts_mnu) {
+        if ( (item.getItemId() == R.id.turnouts_mnu)
+        || (item.getItemId() == R.id.turnouts_button) ) {
             in = new Intent().setClass(this, turnouts.class);
             startACoreActivity(this, in, false, 0);
             return true;
 
-        } else if (item.getItemId() == R.id.routes_mnu) {
+        } else if ( (item.getItemId() == R.id.routes_mnu)
+        || (item.getItemId() == R.id.routes_button) ) {
             in = new Intent().setClass(this, routes.class);
             startACoreActivity(this, in, false, 0);
             return true;

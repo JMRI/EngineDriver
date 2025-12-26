@@ -682,6 +682,7 @@
 <!--    <string name="logViewerTitle">Actividad en visualizador de Logs | Nombre del Controlador: %1$s</string>-->
 
     <!-- Consist Follow Function Preferences etc. -->
+    <string name="prefActionBarShowRoutesButtonTitle">¿Botón de rutas?</string>
     <string name="ConsistEditLabelLead">DELANTERA</string>
     <string name="ConsistEditLabelTrail">TRASERA</string>
 
@@ -1246,5 +1247,10 @@
     <string name="advancedConsistToolButtonLabel">Consiste avanzado</string>
     <string name="ToastsOptionsSummary">Opciones para alertas y ayuda/sugerencias emergentes instructivas (\"toast\")</string>
     <string name="prefBeepOnAlertToastsSummary">Reproducir sonido de pitido en los mensajes emergentes de alerta (modos de notificación).</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Mostrar el botón en la barra de acción para cambiar a la pantalla del acelerador</string>
+    <string name="prefActionBarShowThrottleButtonTitle">¿Botón del acelerador?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Mostrar el botón en la barra de acción para cambiar a la pantalla de desvíos</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">¿Botón de desvíos?</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Mostrar botón en la barra de acción para cambiar a la pantalla de Rutas</string>
 
 </resources>
