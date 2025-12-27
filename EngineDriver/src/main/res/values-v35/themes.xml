@@ -72,6 +72,8 @@
             @drawable/original_toolbar_button_throttle_switch_button
         </item>
         <item name="ed_throttle_button">@drawable/original_toolbar_button_throttle</item>
+        <item name="ed_turnouts_button">@drawable/original_toolbar_button_turnouts</item>
+        <item name="ed_routes_button"  >@drawable/original_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -247,6 +249,8 @@
             @drawable/outline_toolbar_button_throttle_switch_button
         </item>
         <item name="ed_throttle_button">@drawable/outline_toolbar_button_throttle</item>
+        <item name="ed_turnouts_button">@drawable/outline_toolbar_button_turnouts</item>
+        <item name="ed_routes_button"  >@drawable/outline_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -422,6 +426,8 @@
             @drawable/outline_toolbar_button_throttle_switch_button
         </item>
         <item name="ed_throttle_button">@drawable/outline_toolbar_button_throttle</item>
+        <item name="ed_turnouts_button">@drawable/outline_toolbar_button_turnouts</item>
+        <item name="ed_routes_button"  >@drawable/outline_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -594,6 +600,8 @@
             @drawable/ultra_toolbar_button_throttle_switch_button
         </item>
         <item name="ed_throttle_button">@drawable/ultra_toolbar_button_throttle</item>
+        <item name="ed_turnouts_button">@drawable/ultra_toolbar_button_turnouts</item>
+        <item name="ed_routes_button"  >@drawable/ultra_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -772,6 +780,8 @@
             @drawable/original_toolbar_button_throttle_switch_button
         </item>
         <item name="ed_throttle_button">@drawable/original_toolbar_button_throttle</item>
+        <item name="ed_turnouts_button">@drawable/original_toolbar_button_turnouts</item>
+        <item name="ed_routes_button"  >@drawable/original_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
@@ -949,6 +959,8 @@
             @drawable/neon_toolbar_button_throttle_switch_button
         </item>
         <item name="ed_throttle_button">@drawable/neon_toolbar_button_throttle</item>
+        <item name="ed_turnouts_button">@drawable/neon_toolbar_button_turnouts</item>
+        <item name="ed_routes_button"  >@drawable/neon_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 

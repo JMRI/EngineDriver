@@ -630,7 +630,8 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         mainapp.displayEStop(menu);
 
         mainapp.displayPowerStateMenuButton(menu);
-        mainapp.displayThrottleMenuButton(menu, "swipe_through_web_preference");
+        mainapp.displayThrottleButton(menu);
+//        mainapp.displayThrottleMenuButton(menu, "swipe_through_web_preference");
         mainapp.setPowerMenuOption(menu);
         if (findViewById(R.id.powerLayoutButton) == null) {
             final Handler handler = new Handler(Looper.getMainLooper());
@@ -680,12 +681,14 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 return true;
 
             case R.id.turnouts_mnu:
+            case R.id.turnouts_button:
 //                navigateAway(true, turnouts.class);
                 in = new Intent().setClass(this, turnouts.class);
                 startACoreActivity(this, in, false, 0);
                 return true;
 
             case R.id.routes_mnu:
+            case R.id.routes_button:
 //                navigateAway(true, routes.class);
                 in = new Intent().setClass(this, routes.class);
                 startACoreActivity(this, in, false, 0);

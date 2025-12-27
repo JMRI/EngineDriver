@@ -183,6 +183,7 @@
         <item>Diminuir Freio</item>
         <item>Aumentar carga</item>
         <item>Diminuir carga</item>
+        <item>Nada</item>
     </string-array>
     <string-array name="prefImportExportEntries">  <!-- display version -->
         <item>Nada</item>

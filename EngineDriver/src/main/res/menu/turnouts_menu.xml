@@ -65,4 +65,10 @@
         android:visible="false"
         tools:ignore="AlwaysShowAction" />
 
+    <item android:id="@+id/routes_button"
+        app:actionLayout="@layout/toolbar_button_routes"
+        android:title="@string/routes"
+        app:showAsAction="always"
+        android:visible="false" />
+
 </menu>

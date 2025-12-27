@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
@@ -114,6 +115,12 @@ public class throttle_original extends throttle {
 
     }
 
+    protected void setScreenDetails() {
+        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
+        mainapp.currentScreenSupportsWebView = true;
+
+        mainapp.throttleLayoutViewId = R.layout.throttle;
+    } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
@@ -121,69 +128,80 @@ public class throttle_original extends throttle {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
-        mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-        mainapp.currentScreenSupportsWebView = true;
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        mainapp.throttleLayoutViewId = R.layout.throttle;
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
+
+        sliderType = slider_type.HORIZONTAL;
+
+        setScreenDetails();
         super.onCreate(savedInstanceState);
 
-        if (mainapp.appIsFinishing) {
-            return;
+    } // end of onCreate()
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        if (mainapp.appIsFinishing) return;
+
+        if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
+            setScreenDetails();
         }
+        super.onStart();
+
+    } // end onStart()
+
+    @Override
+    public void onResume() {
+        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
+        super.onResume();
+        threaded_application.activityResumed(activityName);
+
+    } // end of onResume()
+
+    void initialiseUiElements() {
+        super.initialiseUiElements();
 
         sbSpeeds = new HorizontalSeekBar[mainapp.maxThrottlesCurrentScreen];
 
+        TypedArray function_buttons_table_resource_ids = getResources().obtainTypedArray(R.array.function_buttons_table_resource_ids);
+        TypedArray speed_resource_ids = getResources().obtainTypedArray(R.array.speed_resource_ids);
+        TypedArray throttle_set_speed_resource_ids = getResources().obtainTypedArray(R.array.throttle_set_speed_resource_ids);
+
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
-                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_0);
-                    bPauses[throttleIndex] = null;
 
-                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_0_setspeed);
-                    break;
-                case 1:
-                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_1);
-                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_1);
-                    bPauses[throttleIndex] = null;
+            functionButtonViewGroups[throttleIndex] = findViewById(function_buttons_table_resource_ids.getResourceId(throttleIndex,0));
+            sbSpeeds[throttleIndex] = findViewById(speed_resource_ids.getResourceId(throttleIndex,0));
+            bPauses[throttleIndex] = null;
+            llSetSpeeds[throttleIndex] = findViewById(throttle_set_speed_resource_ids.getResourceId(throttleIndex,0));
 
-                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_1_setspeed);
-                    break;
-                case 2:
-                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_2);
-                    sbSpeeds[throttleIndex] = findViewById(R.id.speed_2);
-                    bPauses[throttleIndex] = null;
-
-                    llSetSpeeds[throttleIndex] = findViewById(R.id.throttle_2_setspeed);
-                    break;
-            }
             sbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
         }
 
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        sliderType = slider_type.VERTICAL;
-    } // end of onCreate()
+        function_buttons_table_resource_ids.recycle();
+        speed_resource_ids.recycle();
+        throttle_set_speed_resource_ids.recycle();
 
+    } // end initialiseUiElements()
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
-            set_labels();       // need to redraw button Press states since ActionBar and Notification access clears them
+            setLabels();       // need to redraw button Press states since ActionBar and Notification access clears them
         }
     }
 
 
-    //    // lookup and set values of various informational text labels and size the
-//    // screen elements
-//    @SuppressWarnings("deprecation")
-//    @Override
-    protected void set_labels() {
+    // lookup and set values of various informational text labels and size the
+    // screen elements
+    protected void setLabels() {
 //        Log.d(threaded_application.applicationName, activityName + ": set_labels() starting");
-        super.set_labels();
+        super.setLabels();
 
         if (mainapp.appIsFinishing) {
             return;
@@ -248,9 +266,6 @@ public class throttle_original extends throttle {
                             bLabelPlainText = con.toString();
                         }
 
-//                        bLabel = mainapp.consists[throttleIndex].toString();
-//                        bLabelPlainText = mainapp.consists[throttleIndex].toString();
-//                        bLabel = mainapp.consists[throttleIndex].toHtml();
                     } else {
                         if (overrideThrottleNames[throttleIndex].isEmpty()) {
                             bLabel = con.formatConsistAddr();
@@ -291,11 +306,8 @@ public class throttle_original extends throttle {
             b.setPressed(false);
         }
 
-        if (webView != null) {
-            setImmersiveModeOn(webView, false);
-        }
-
-        int screenHeight = (int) getAvailableSceenHeight();
+        setImmersiveMode(webView);
+        int screenHeight = getAvailableScreenHeight();
 
         // set height of Loco Id and Direction Button areas
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -353,10 +365,6 @@ public class throttle_original extends throttle {
 
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
 
-                // update throttle slider top/bottom
-//                tops[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getTop() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-//                bottoms[throttleIndex] = llThrottleLayouts[throttleIndex].getTop() + sbs[throttleIndex].getBottom() + bSels[throttleIndex].getHeight() + bFwds[throttleIndex].getHeight();
-
                 int[] location = new int[2];
                 throttleOverlay.getLocationOnScreen(location);
                 int ovx = location[0];
@@ -372,7 +380,7 @@ public class throttle_original extends throttle {
                 sliderBottomRightX[throttleIndex] = x + sbSpeeds[throttleIndex].getWidth() - ovx;
                 sliderBottomRightY[throttleIndex] = y + sbSpeeds[throttleIndex].getHeight() - ovy;
 
-//            Log.d(threaded_application.applicationName, activityName + ": set_labels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//            Log.d(threaded_application.applicationName, activityName + ": setLabels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
             }
         } else {
@@ -387,7 +395,7 @@ public class throttle_original extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-        // Log.d(threaded_application.applicationName, activityName + ": set_labels() end");
+        // Log.d(threaded_application.applicationName, activityName + ": setLabels() end");
 
     }
 
@@ -402,17 +410,13 @@ public class throttle_original extends throttle {
     void adjustThrottleHeights() {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};
-//        boolean[] directionButtonsVisible = {false, false, false, false, false, false};
-//        boolean[] functionButtonsVisible = {false, false, false, false, false, false};
 
-        double height = getAvailableSceenHeight();
+        double height = getAvailableScreenHeight();
 
         if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
 
             if (mainapp.numThrottles == 1) {        // just one throttle
                 throttleHeights[0] = (int) height;
-//                directionButtonsVisible[0] = true;
-//                functionButtonsVisible[0] = true;
             } else {
                 boolean[] throttlesInUse = {false, false, false, false, false, false};
                 int throttlesInUseCount = 0;
@@ -489,11 +493,12 @@ public class throttle_original extends throttle {
         }
     }
 
-    int getAvailableSceenHeight() {   // excluding the webview if displayed
+    int getAvailableScreenHeight() {   // excluding the webview if displayed
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         final float density = displayMetrics.density;
 
         int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        screenHeight = screenHeight - systemStatusRowHeight - systemNavigationRowHeight; // cater for immersive mode
         int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar)) {
             titleBar = mainapp.getToolbarHeight(toolbar, statusLine, screenNameLine);

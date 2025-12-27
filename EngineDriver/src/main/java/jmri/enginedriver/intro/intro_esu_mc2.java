@@ -63,7 +63,7 @@ public class intro_esu_mc2 extends Fragment {
                 if (checkedId == R.id.intro_esu_mc2_no) {
                     esuMc2Yes = false;
                     prefs.edit().putString("prefThrottleScreenType", "Default").commit();
-                    prefs.edit().putString("NumThrottles", "2").commit();
+                    prefs.edit().putString("NumThrottle", "2").commit();
                 } else if (checkedId == R.id.intro_esu_mc2_yes) {
                     esuMc2Yes = true;
                 }
@@ -73,6 +73,7 @@ public class intro_esu_mc2 extends Fragment {
                 prefs.edit().putBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", esuMc2Yes).commit();
                 prefs.edit().putBoolean("prefVolumeKeysFollowLastTouchedThrottleDefaultValue", esuMc2Yes).commit();
                 prefs.edit().putBoolean("prefDoubleBackButtonToExit", esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefThrottleViewImmersiveMode", esuMc2Yes).commit();
          }
         });
 

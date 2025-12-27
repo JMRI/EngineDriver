@@ -1,6 +1,17 @@
 **Version 2.42.216
+ * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
+ * Move to targetSdk 36
+ * Immersive mode fixes for targetSdk 36 - enforced edge-to-edge mode
+ * Significant changes to the way the UI elements are referenced (now in resource in arrays)
+ * Bug fix for gamepad calibration when using joystick like settings
+ * Linting
+ * Added back in the VRBoxB gamepad type and fixed it
+ * Move the IPLS code to a separate class. Not a complete move as the variables are still largely in threaded_application.
+ * Bug fix for gamepads with the IPLS.  The tone generator for the beeps is not compatible with the IPLS.
+ * Add 'None' option for the gamepad buttons
+ * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
 **Version 2.41.214
- * bug fix for everything that checks for DCC-EX version numbers. calculation was wrong.
+ * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212
  * Added Preference to not beep on WiThrottle Alerts and Messages
  * Added Sort button for Recent Turnouts/Points
@@ -949,9 +960,6 @@
  */
 /*
  * general/global
- *   TODO: High Priority! Cater for edge-to-edge enforcement in SDK 36 / Android 16 (Primarily the throttle screen is still impacted due to immersive mode)
- *   TODO: Move fully to AndroidX, which means dropping support for Android 4.x
- *   TODO: Once on AndroidX, reinstate the document sharing functions.  (Code is still there, just commented out)
  *   TODO: change config files to use db instead of .txt files
  *   TODO: Add toast messages on release of loco (even on Exit) and update of preferences
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
@@ -994,20 +1002,23 @@
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
- *   TODO: make Stop "sticky" and ignore slider unless direction is selected
+ *   TODO: option to make Stop "sticky" and ignore slider unless direction is selected
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released"
  *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
  *   TODO: option to show roster images above each throttle
+ * Gamepads (throttle):
+ *   TODO: move code to a separate class
  * In Phone Loco Sounds (throttle):
+ *   TODO: move code to a separate class. This is now partly done, but the variables are still in ta
  *   TODO: custom sound profiles to be able to specify/override the momentum delay
  *   TODO: work out when to play the engine shut down sounds
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
  * select_loco:
  *   TODO: allow user to specify which loco to get labels from
- *   TODO: manually create roster entries (function labels) and store on device
+ *   TODO: manually create roster entries (function labels) and store on device - In Phone Roster
  *   TODO: handle roster entry names with forward slash
  *   TODO: check length of text to avoid overlapping images, slide images to right
  *   TODO: disconnect connections made by roster stuff

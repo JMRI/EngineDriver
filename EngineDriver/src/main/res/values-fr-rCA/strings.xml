@@ -53,6 +53,7 @@
 
     <string name="consist_list_label">Unité multiple de tête</string>
 
+    <string name="prefActionBarShowRoutesButtonTitle">Bouton Itinéraires ?</string>
     <string name="ConsistEditLabelLead">TÊTE</string>
 
     <string name="consistLights_help">Cliquer sur une locomotive pour alterner les phares entre \'Off\' et \'Selon la touche de fonction\'.\n\nUn clic prolongé sur une locomotive force l\'état des phares à \'Off\' sans envoyer la commande vers la locomotive (ie: si Engine Driver est confus par exemple).\n\nAppuyer sur la flèche de retour une fois terminé.</string>
@@ -1134,4 +1135,9 @@
     <string name="prefLeftRightSwipeChangesSpeedSummary">Lorsque activé, un balayage horizontal dans la portion principale de l\'écran fera varier la vitesse.  Un balayage horizontal sur la barre de titre effectuera un bascul parmi les écrans.</string>
     <string name="prefSwipeSpeedChangeStepTitle">Incrément applicable aux balayages horizontaux ou verticaux</string>
     <string name="prefSwipeSpeedChangeStepSummary">L\'incrément de vitesse pour les balayages horizontaux et verticaux sera appliqué aux changements de vitesse</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Bouton de dégagement ?</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des itinéraires</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Bouton d\'accélérateur ?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des aiguillages</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Afficher le bouton dans la barre d\'action pour passer à l\'écran des gaz</string>
 </resources>

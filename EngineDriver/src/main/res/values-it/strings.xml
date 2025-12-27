@@ -635,6 +635,7 @@
     <string name="functionButtonLookForLight">LUCE</string>
     <string name="functionButtonLookForRear">POSTERIORE</string>
 
+    <string name="prefActionBarShowRoutesButtonTitle">Pulsante Percorsi?</string>
     <string name="ConsistEditLabelLead">CONDURRE</string>
     <string name="ConsistEditLabelTrail">TRAIL</string>
     <string name="prefConsistFollowRuleStyleTitle">Funzioni consistenti - Segui lo stile delle regole</string>
@@ -1197,5 +1198,10 @@
     <string name="advancedConsistToolButtonLabel">Avanzato consiste</string>
     <string name="ToastsOptionsSummary">Opzioni per avvisi e pop-up di aiuto/suggerimenti istruttivi \\\'toast\\\'</string>
     <string name="prefBeepOnAlertToastsSummary">Riproduci un segnale acustico nei messaggi popup di avviso \"toast\"</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Pulsante Scambi?</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Percorsi</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Pulsante dell\'acceleratore?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Scambi</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata dell\'acceleratore</string>
 
 </resources>

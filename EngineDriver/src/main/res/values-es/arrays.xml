@@ -181,6 +181,7 @@
         <item>Disminuir freno</item>
         <item>aumentar la carga</item>
         <item>Disminuir la carga</item>
+        <item>Ninguno</item>
     </string-array>
     <string-array name="prefAutoImportExportEntries">
         <item>Ninguno</item>

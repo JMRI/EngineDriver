@@ -146,6 +146,7 @@
         <item>ブレーキを緩める</item>
         <item>負荷を増やす</item>
         <item>負荷を軽減する</item>
+        <item>なし</item>
     </string-array>
 
     <string-array name="prefThemeEntries">

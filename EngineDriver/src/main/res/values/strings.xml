@@ -1137,6 +1137,13 @@
     <string name="prefWebViewButtonSummary">Show button in action bar to show/hide Throttle Web View.\n(requires \'Throttle Web View\' preference to be enabled)</string>
     <string name="prefWebViewButtonTitle">Throttle Web View button?</string>
 
+    <string name="prefActionBarShowThrottleButtonSummary">Show button in action bar to switch to the Throttle Screen</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Throttle button?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Show button in action bar to switch to the Turnouts Screen</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Turnouts button?</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Show button in action bar to switch to the Routes Screen</string>
+    <string name="prefActionBarShowRoutesButtonTitle">Routes button?</string>
+
     <!--    <string name="logViewerTitle">LogViewerActivity | %1$s</string>-->
 
     <!-- Consist Follow Function Preferences etc. -->

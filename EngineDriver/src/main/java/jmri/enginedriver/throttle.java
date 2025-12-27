@@ -84,6 +84,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
@@ -99,6 +101,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -118,7 +122,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -139,6 +142,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -155,6 +159,7 @@ import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
+import jmri.enginedriver.type.beep_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.light_follow_type;
@@ -174,6 +179,7 @@ import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.util.Tts;
 import jmri.enginedriver.util.VerticalSeekBar;
+import jmri.enginedriver.util.InPhoneLocoSounds;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
@@ -203,6 +209,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     protected threaded_application mainapp; // hold pointer to mainapp
     protected SharedPreferences prefs;
+    protected Bundle onCreateSavedInstanceState = null;
 
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.DEFAULT;
 
@@ -229,6 +236,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //    protected boolean keyboardShift = false;
 
     protected SeekBar[] sbs; // seekbars
+
+    protected LinearLayout throttleScreenWrapper;
 
     protected ViewGroup[] functionButtonViewGroups; // function button tables
 
@@ -360,6 +369,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private boolean prefSelectiveLeadSoundF1 = false;
     private boolean prefSelectiveLeadSoundF2 = false;
 
+    protected InPhoneLocoSounds ipls;
     protected InPhoneLocoSoundsLoader iplsLoader;
 
     // function number-to-button maps
@@ -429,10 +439,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private static final int maxSpeedMessageRate = 200;      // msec
     protected SpeedPacingDelay[] speedMessagePacingTimers;
 
-    protected boolean selectLocoRendered = false; // this will be true once set_labels() runs following rendering of the loco select textViews
+    protected boolean selectLocoRendered = false; // this will be true once setLabels() runs following rendering of the loco select textViews
 
     // used in the gesture for entering and exiting immersive mode
-    private boolean immersiveModeIsOn;
+    private boolean immersiveModeIsOn = false;
+    private boolean immersiveModeTempIsOn = false;
 
     //used in the gesture for temporarily showing the Web View
     protected boolean webViewIsOn = false;
@@ -602,6 +613,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected Toolbar toolbar;
     protected LinearLayout statusLine;
     private int toolbarHeight;
+    protected int systemStatusRowHeight = 0;
+    protected int systemNavigationRowHeight = 0;
+    protected int systemStatusRowHeightKeep = 0;
+    protected int systemNavigationRowHeightKeep = 0;
 
     private enum EsuMc2Led {
         RED(MobileControl2.LED_RED),
@@ -975,10 +990,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                     enableDisableButtonsForView(functionButtonViewGroups[whichThrottle], true);
                                     soundsShowHideDeviceSoundsButton(whichThrottle);
                                     showHideSpeedLimitAndPauseButtons(whichThrottle);
-                                    set_labels();
+                                    setLabels();
                                 } else if (com2 == '-') { // if loco removed
                                     removeLoco(whichThrottle);
-                                    swapToNextAvilableThrottleForGamePad(whichThrottle, true); // see if we can/need to move the gamepad to another throttle
+                                    swapToNextAvailableThrottleForGamePad(whichThrottle, true); // see if we can/need to move the gamepad to another throttle
                                     mainapp.gamePadIdsAssignedToThrottles[whichThrottle] = 0;
                                     mainapp.gamePadThrottleAssignment[whichThrottle] = -1;
 
@@ -1091,25 +1106,25 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case '4':
                         case '5':
                             enableDisableButtons(com0); // pass whichthrottle
-                            set_labels();
+                            setLabels();
                             break;
                         case 'P': // panel info
                             if (com1 == 'W') { // PW - web server port info
                                 initWeb();
-                                set_labels();
+                                setLabels();
                             } else if (com1 == 'P') { // PP - power state change
-                                set_labels();
+                                setLabels();
                             }
                             break;
                     } // end of switch
 
                     if (!selectLocoRendered) // call set_labels if the select loco textViews had not rendered the last time it was called
-                        set_labels();
+                        setLabels();
                 }
                 break;
                 case message_type.REQUEST_REFRESH_THROTTLE:
 //                    refreshMenu();
-                    set_labels();
+                    setLabels();
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): REQUEST_REFRESH_THROTTLE");
                     break;
                 case message_type.REFRESH_FUNCTIONS:
@@ -1121,7 +1136,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     break;
                 case message_type.ROSTER_UPDATE:
-                    set_labels();               // refresh function labels when any roster response is received
+                    setLabels();               // refresh function labels when any roster response is received
                     break;
                 case message_type.WIT_CON_RETRY:
                     witRetry(response_str);
@@ -1134,9 +1149,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 case message_type.FORCE_THROTTLE_RELOAD:
                     try {
                         int whichThrottle = Integer.parseInt(response_str);
-//                        llThrottleLayouts[whichThrottle].invalidate();
-//                        llThrottleLayouts[whichThrottle].requestLayout();
-//                        set_labels();
                         removeLoco(whichThrottle);
                         setAllFunctionLabelsAndListeners();
                         setAllFunctionStates(whichThrottle);
@@ -1194,7 +1206,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     break;
                 case message_type.SOUNDS_FORCE_LOCO_SOUNDS_TO_START:
                     for (int throttleIndex = 0; throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; throttleIndex++) {
-                        doLocoSound(throttleIndex);
+                        if(ipls!=null) ipls.doLocoSound(throttleIndex, getSpeedFromCurrentSliderPosition(throttleIndex, false), dirs[throttleIndex], soundsIsMuted[throttleIndex]);
                     }
                     break;
                 case message_type.GAMEPAD_ACTION:
@@ -1350,23 +1362,28 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return BrightnessModeValue;
     }
 
+    protected void setImmersiveMode(View webView) {
+        if (prefThrottleViewImmersiveMode) {
+            if (immersiveModeTempIsOn) {
+                setImmersiveModeOn(webView, false);
+            } else {
+                setImmersiveModeOn(webView, true);
+            }
+        } else {
+            if (immersiveModeTempIsOn) {
+                setImmersiveModeOn(webView, true);
+            } else {
+                setImmersiveModeOff(webView, false);
+            }
+        }
+    }
+
     protected void setImmersiveModeOn(View webView, boolean forceOn) {
-        immersiveModeIsOn = false;
 
         if ((prefThrottleViewImmersiveMode) || (forceOn)) {   // if the preference is set use Immersive mode
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                immersiveModeIsOn = true;
-                if (webView!=null)
-                    webView.setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    );
-                View windowView = getWindow().getDecorView();
-                windowView.setSystemUiVisibility(
+
+            if (webView!=null)
+                webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -1374,31 +1391,53 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 );
-            }
+            View windowView = getWindow().getDecorView();
+            windowView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
+
             if (prefThrottleViewImmersiveModeHideToolbar) {
                 screenNameLine.setVisibility(View.GONE);
                 toolbar.setVisibility(View.GONE);
                 statusLine.setVisibility(View.GONE);
             }
+
+            immersiveModeIsOn = true;
+
+//            throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
+            throttleScreenWrapper.setPadding(0,0,0,0);
+            systemStatusRowHeight = 0;
+            systemNavigationRowHeight = 0;
+
             webView.invalidate();
         }
     }
 
     protected void setImmersiveModeOff(View webView, boolean forceOff) {
-        immersiveModeIsOn = false;
 
-        if ((prefThrottleViewImmersiveMode) || (forceOff)) {   // if the preference is set use Immersive mode
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                if (webView!=null)
-                    webView.setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_VISIBLE);
-                View windowView = getWindow().getDecorView();
-                windowView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_VISIBLE);
-            }
+        if ((!prefThrottleViewImmersiveMode) || (forceOff)) {   // if the preference is set use Immersive mode
+
+            if (webView!=null)
+                webView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            View windowView = getWindow().getDecorView();
+            windowView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
             screenNameLine.setVisibility(VISIBLE);
             toolbar.setVisibility(VISIBLE);
             statusLine.setVisibility(VISIBLE);
+
+//            throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
+            throttleScreenWrapper.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
+            systemStatusRowHeight = systemStatusRowHeightKeep;
+            systemNavigationRowHeight = systemNavigationRowHeightKeep;
+
+            immersiveModeIsOn = false;
+
             webView.invalidate();
         }
     }
@@ -1428,22 +1467,20 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    // set or restore the screen brightness and lock or unlock the sceen when used for the Swipe Up or Shake
+    // set or restore the screen brightness and lock or unlock the screen when used for the Swipe Up or Shake
     private void setRestoreScreenLockDim(String toastMsg) {
         if (isScreenLocked) {
             isScreenLocked = false;
             threaded_application.safeToast(R.string.toastThrottleScreenUnlocked, Toast.LENGTH_SHORT);
             setScreenBrightness(screenBrightnessOriginal);
             setScreenBrightnessMode(screenBrightnessModeOriginal);
-            if (!prefThrottleViewImmersiveMode)
-                setImmersiveModeOff(webView, true);
+            setImmersiveMode(webView);
         } else {
             isScreenLocked = true;
             threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
-            if (!prefThrottleViewImmersiveMode)
-                setImmersiveModeOn(webView, true);
+            setImmersiveMode(webView);
         }
     }
 
@@ -1613,6 +1650,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
 
         prefGamepadTestEnforceTesting = prefs.getBoolean("prefGamepadTestEnforceTesting", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingDefaultValue));
+        mainapp.prefGamePadFeedbackVolume = threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume",
+                getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue));
 
         prefDisableVolumeKeys = prefs.getBoolean("prefDisableVolumeKeys", getResources().getBoolean(R.bool.prefDisableVolumeKeysDefaultValue));
 
@@ -1650,10 +1689,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefSelectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
         prefSelectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
         prefSelectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
-
-//        prefBackgroundImage = prefs.getBoolean("prefBackgroundImage", getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue));
-//        prefBackgroundImageFileName = prefs.getString("prefBackgroundImageFileName", getResources().getString(R.string.prefBackgroundImageFileNameDefaultValue));
-//        prefBackgroundImagePosition = prefs.getString("prefBackgroundImagePosition", getResources().getString(R.string.prefBackgroundImagePositionDefaultValue));
 
         prefHideSlider = prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
 
@@ -1720,6 +1755,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             mainapp.stopAllSounds();
         }
 
+        mainapp.getDefaultSortOrderRoster();
+
         // ESU MC 2/Pro
         if (IS_ESU_MCII) {
             updateEsuMc2ZeroTrim();
@@ -1762,6 +1799,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
         mainapp.prefActionBarShowDccExButton = prefs.getBoolean("prefActionBarShowDccExButton",
                 getResources().getBoolean(R.bool.prefActionBarShowDccExButtonDefaultValue));
+        mainapp.prefActionBarShowThrottleButton = prefs.getBoolean("prefActionBarShowThrottleButton",
+                getResources().getBoolean(R.bool.prefActionBarShowThrottleButtonDefaultValue));
+        mainapp.prefActionBarShowTurnoutsButton = prefs.getBoolean("prefActionBarShowTurnoutsButton",
+                getResources().getBoolean(R.bool.prefActionBarShowTurnoutsButtonDefaultValue));
+        mainapp.prefActionBarShowRoutesButton = prefs.getBoolean("prefActionBarShowRoutesButton",
+                getResources().getBoolean(R.bool.prefActionBarShowRoutesButtonDefaultValue));
     }
 
     protected void getDirectionButtonPrefs() {
@@ -1856,7 +1899,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             webViewIsOn = !webViewIsOn;
 
-            set_labels();
+            setLabels();
             pauseResumeWebView();
         }
     }
@@ -1882,8 +1925,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected void removeLoco(int whichThrottle) {
         disable_buttons(whichThrottle);         // direction and slider
         set_function_labels_and_listeners_for_view(whichThrottle);
-        set_labels();
-        doLocoSound(whichThrottle);
+        setLabels();
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
     }
 
     void queryAllSpeedsAndDirectionsWiT() {
@@ -1919,7 +1962,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
             }
         }
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
     }
 
     SeekBar getThrottleSlider(int whichThrottle) {
@@ -2006,7 +2049,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 //        Log.d(threaded_application.applicationName, activityName + ": speedChange():  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
 
         throttle_slider.setProgress(speed);
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
         return speed;
     }
 
@@ -2053,7 +2096,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 speedUpdateAndNotify(whichThrottle, speed);
                 break;
         }
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
     }
 
     public void decrementSpeed(int whichThrottle, int from) {
@@ -2132,7 +2175,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         , "");
                 break;
         }
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
     }
 
     public void incrementSpeed(int whichThrottle, int from) {
@@ -2206,7 +2249,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         kidsTimerActions(kids_timer_action_type.STARTED, 0);
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
 
     } // end incrementSpeed
 
@@ -2252,13 +2295,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Log.d(threaded_application.applicationName, activityName + ": speedUpdateAndNotify(): ESU_MCII: Move knob request for speed update");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
     }
 
     // change speed slider by scaled value and notify server
     public void speedChangeAndNotify(int whichThrottle, int change) {
-//        SeekBar throttle_slider = getThrottleSlider(whichThrottle);
-//        int lastSpeed = throttle_slider.getProgress();
 
         int speed = speedChange(whichThrottle, change);
         sendSpeedMsg(whichThrottle, speed);
@@ -2267,7 +2308,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             Log.d(threaded_application.applicationName, activityName + ": speedChangeAndNotify(): ESU_MCII: Move knob request for speed change");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
-        doLocoSound(whichThrottle);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
     }
 
     // set the displayed numeric speed value
@@ -2513,7 +2554,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             showDirectionRequest(whichThrottle, direction);        // update requested direction indication
             setEngineDirection(whichThrottle, direction, false);   // update direction for each engine on this throttle
-            doLocoSound(whichThrottle);
+            if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
         }
         return (getDirection(whichThrottle) == direction);
     }
@@ -2724,7 +2765,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         showHideSpeedLimitAndPauseButtons(whichThrottle);
         if (!newEnabledState) {
             sbs[whichThrottle].setProgress(0); // set slider to 0 if disabled
-            doLocoSound(whichThrottle);
+            if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
         }
         sbs[whichThrottle].setEnabled(newEnabledState);
 
@@ -2930,7 +2971,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
         mainapp.prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
-        Log.d(threaded_application.applicationName, activityName + ": setGamepadKeys() : prefGamePadType" + mainapp.prefGamePadType);
+        Log.d(threaded_application.applicationName, activityName + ": setGamepadKeys() : prefGamePadType: " + mainapp.prefGamePadType);
 
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));
@@ -2963,73 +3004,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int[] bGamePadKeys;
         int[] bGamePadKeysUp;
 
-        switch (mainapp.prefGamePadType) {
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad);
-                bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad_UpCodes);
-                break;
-            case "MTK":
-            case "MTK-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMTK);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Game":
-            case "Game-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGame);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Game-alternate-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGameAlternate);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "MagicseeR1B":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "MagicseeR1A":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1A);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "MagicseeR1C":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1C);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "FlydigiWee2":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "UtopiaC":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "AuvisioB":
-            case "AuvisioB-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadAuvisioB);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Generic":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Generic3x4":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric3x4);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Keyboard":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Volume":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadVolume);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
+        String[] gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
+        int prefGamePadTypeIndex = Arrays.asList(gamePadModeEntriesArray).indexOf(mainapp.prefGamePadType);
+        if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
 
-            default: // "iCade" or iCade-rotate
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
-                bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
-                break;
-        }
+        TypedArray prefGamePadTypeKeysIds = getResources().obtainTypedArray(R.array.prefGamePadTypeKeysIds);
+        TypedArray prefGamePadTypeKeysUpIds = getResources().obtainTypedArray(R.array.prefGamePadTypeKeysUpIds);
+
+        bGamePadKeys = this.getResources().getIntArray(prefGamePadTypeKeysIds.getResourceId(prefGamePadTypeIndex,0));
+        bGamePadKeysUp = this.getResources().getIntArray(prefGamePadTypeKeysUpIds.getResourceId(prefGamePadTypeIndex,0));
+
+        prefGamePadTypeKeysIds.recycle();
+        prefGamePadTypeKeysUpIds.recycle();
+
         // now grab the keycodes and put them into the arrays that will actually be used.
         for (int i = 0; i < GAMEPAD_KEYS_LENGTH; i++) {
             gamePadKeys[i] = bGamePadKeys[i];
@@ -3051,7 +3038,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     /** @noinspection UnusedReturnValue*/ //
-    private int swapToNextAvilableThrottleForGamePad(int fromThrottle, boolean quiet) {
+    private int swapToNextAvailableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
         int index;
         index = fromThrottle - 1;
@@ -3264,7 +3251,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.NEXT_THROTTLE)) {  // Next Throttle
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (mainapp.usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                    swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
+                    swapToNextAvailableThrottleForGamePad(whichGamePadIsEventFrom, false);
                 } else {
                     setNextActiveThrottle(true);
                 }
@@ -3275,20 +3262,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                         getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                         gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
-//                if (!isSemiRealisticTrottle) {
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    } else {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    }
-//                } else {
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    } else {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    }
-//                    showTargetDirectionIndication(whichThrottle);
-//                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.REVERSE)) {  // Reverse
@@ -3297,20 +3270,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                         getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                         gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
-//                if (!isSemiRealisticTrottle) {
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                } else { // semi-realistic throttle variant
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                    showTargetDirectionIndication(whichThrottle);
-//                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.FORWARD_REVERSE_TOGGLE)) {  // Toggle Forward/Reverse
@@ -3318,20 +3277,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                         getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                         gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
-//                if (!isSemiRealisticTrottle) {
-//                    if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                } else { // semi-realistic throttle variant
-//                    if (getTargetDirection(whichThrottle) == direction_type.FORWARD) {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                    showTargetDirectionIndication(whichThrottle);
-//                }
                 GamepadFeedbackSound(dirChangeFailed);
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.INCREASE_SPEED)) {  // Increase Speed
@@ -3360,7 +3305,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action == ACTION_UP)) {
                 soundsIsMuted[whichThrottle] = !soundsIsMuted[whichThrottle];
                 setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
-                soundsMuteUnmuteCurrentSounds(whichThrottle);
+                if(ipls!=null) ipls.muteUnmuteCurrentSounds(whichThrottle, soundsIsMuted[whichThrottle]);
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.SOUNDS_BELL)) {  // IPLS Sounds - Bell
             if (isActive && (action == ACTION_UP)) {
@@ -3404,23 +3349,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!isSemiRealisticTrottle) {
                     if (!isLimitSpeeds[whichThrottle]) {
-                        gamepadBeep(1);
+                        gamepadBeep(beep_type.LIMIT_SPEED_START);
                     } else {
-                        gamepadBeep(10);
+                        gamepadBeep(beep_type.LIMIT_SPEED_END);
                     }
                     limitSpeed(whichThrottle);
-                } else { // not avaliable on sem-realistic throttle
+                } else { // not available on semi-realistic throttle
                     GamepadFeedbackSound(true);
                 }
             }
         } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.PAUSE)) {
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!isSemiRealisticTrottle) {
-                    gamepadBeep(6);
+                    gamepadBeep(beep_type.LIMIT_SPEED_START);
                     if (isPauseSpeeds[whichThrottle] == pause_speed_type.INACTIVE) {
-                        gamepadBeep(2);
+                        gamepadBeep(beep_type.PAUSE_SPEED_START);
                     } else {
-                        gamepadBeep(20);
+                        gamepadBeep(beep_type.PAUSE_SPEED_END);
                     }
                     pauseSpeed(whichThrottle);
                 } else { // not avaliable on sem-realistic throttle
@@ -3462,6 +3407,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 decrementLoadSliderPosition(whichThrottle);
             }
+//        } else if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.NONE)) {
+//             do nothing
         }
 
         whichLastGamepadButtonPressed = buttonNo;
@@ -3518,7 +3465,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (keyCode == KEYCODE_N) {  // Next Throttle
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (mainapp.usingMultiplePads && whichGamePadIsEventFrom >= 0) {
-                    swapToNextAvilableThrottleForGamePad(whichGamePadIsEventFrom, false);
+                    swapToNextAvailableThrottleForGamePad(whichGamePadIsEventFrom, false);
                 } else {
                     setNextActiveThrottle(true);
                 }
@@ -3529,20 +3476,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                         getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                         gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
-//                if (!isSemiRealisticTrottle) {
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    } else {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    }
-//                } else {
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    } else {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    }
-//                    showTargetDirectionIndication(whichThrottle);
-//                }
                 GamepadFeedbackSound(dirChangeFailed);
                 resetKeyboardString();
             }
@@ -3551,20 +3484,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                         getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                         gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
-//                if (!isSemiRealisticTrottle) {
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                } else {
-//                    if (!gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle)) {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                    showTargetDirectionIndication(whichThrottle);
-//                }
                 GamepadFeedbackSound(dirChangeFailed);
                 resetKeyboardString();
             }
@@ -3573,20 +3492,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 boolean  dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                         getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                         false);
-//                if (!isSemiRealisticTrottle) {
-//                    if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                } else {
-//                    if (getTargetDirection(whichThrottle) == direction_type.FORWARD) {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                    } else {
-//                        dirChangeFailed = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                    }
-//                    showTargetDirectionIndication(whichThrottle);
-//                }
                 GamepadFeedbackSound(dirChangeFailed);
                 resetKeyboardString();
             }
@@ -3661,7 +3566,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action == ACTION_UP) && (repeatCnt == 0)) {
                 soundsIsMuted[whichThrottle] = !soundsIsMuted[whichThrottle];
                 setSoundButtonState(bMutes[whichThrottle], soundsIsMuted[whichThrottle]);
-                soundsMuteUnmuteCurrentSounds(whichThrottle);
+                if(ipls!=null) ipls.muteUnmuteCurrentSounds(whichThrottle, soundsIsMuted[whichThrottle]);
                 resetKeyboardString();
             }
         } else if (keyCode == KEYCODE_B) {  // IPLS Sounds - Bell
@@ -3710,9 +3615,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!isSemiRealisticTrottle) {
                     if (!isLimitSpeeds[whichThrottle]) {
-                        gamepadBeep(1);
+                        gamepadBeep(beep_type.LIMIT_SPEED_START);
                     } else {
-                        gamepadBeep(10);
+                        gamepadBeep(beep_type.LIMIT_SPEED_END);
                     }
                     limitSpeed(whichThrottle);
                 } else {
@@ -3723,11 +3628,11 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         } else if (keyCode == KEYCODE_P) { // pause speed toggle
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 if (!isSemiRealisticTrottle) {
-                    gamepadBeep(6);
+                    gamepadBeep(beep_type.LIMIT_SPEED_START);
                     if (isPauseSpeeds[whichThrottle] == pause_speed_type.INACTIVE) {
-                        gamepadBeep(2);
+                        gamepadBeep(beep_type.PAUSE_SPEED_START);
                     } else {
-                        gamepadBeep(20);
+                        gamepadBeep(beep_type.PAUSE_SPEED_END);
                     }
                     pauseSpeed(whichThrottle);
                 } else { // not avaliable on sem-realistic throttle
@@ -3956,10 +3861,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 float yAxis2;
 
                 if (event != null) {
-                    xAxis = event.getAxisValue(MotionEvent.AXIS_X);
-                    yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
-                    xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
-                    yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+                    xAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_X) * 10.0f) / 10.0f;
+                    yAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_Y) * 10.0f) / 10.0f;
+                    xAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_Z) * 10.0f) / 10.0f;
+                    yAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_RZ) * 10.0f) / 10.0f;
 
                     if ((xAxis != 0) || (yAxis != 0)) {
                         action = ACTION_DOWN;
@@ -4258,43 +4163,46 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     void GamepadFeedbackSound(boolean invalidAction) {
-        if (mainapp.appIsFinishing) {
-            return;
-        }
+        if (mainapp.appIsFinishing) return;
+        // the tone generator is not compatible with the ipls
+        if ((!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none"))) {
+            if (invalidAction) {
+                gamepadBeep(beep_type.NAK);
+            } else {
+                gamepadBeep(beep_type.ACK);
+            }
+        } else {
 
-        if (tg != null) {
-            if (invalidAction)
-                tg.startTone(ToneGenerator.TONE_PROP_NACK);
-            else
-                tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+            if (tg != null) {
+                if (invalidAction)
+                    tg.startTone(ToneGenerator.TONE_PROP_NACK);
+                else
+                    tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+            }
         }
     }
 
     void gamepadBeep(int whichBeep) {
-        {
-            if (mainapp._mediaPlayer != null) {
-                mainapp._mediaPlayer.reset();     // reset stops and release on any state of the player
-            }
-            switch (whichBeep) {
-                case 10:
-                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_1a);
-                    break;
-                case 2:
-                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_2);
-                    break;
-                case 20:
-                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_2a);
-                    break;
-                case 1:
-                default:
-                    mainapp._mediaPlayer = MediaPlayer.create(this, R.raw.beep_1);
-                    break;
-            }
+        if (mainapp.prefGamePadFeedbackVolume == 0) return;
+
+        if (mainapp._mediaPlayer != null) {
+            mainapp._mediaPlayer.reset();     // reset stops and release on any state of the player
+        }
+
+        mainapp._mediaPlayer = MediaPlayer.create(this, mainapp.gamepadBeepIds[whichBeep]);
+
+        if (mainapp._mediaPlayer!=null) {
+            float volumeFloat = ((float) mainapp.prefGamePadFeedbackVolume) / 100.0f;
+
+            mainapp._mediaPlayer.setVolume(volumeFloat, volumeFloat);
             mainapp._mediaPlayer.start();
         }
     }
 
     void GamepadFeedbackSoundStop() {
+        if ((!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")))
+            return;
+
         if (tg != null) {
             tg.stopTone();
         }
@@ -4411,34 +4319,28 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         @Override
         public void onButtonDown() {
-            Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Knob button down for throttle " + whichVolume);
+            Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob button down for throttle " + whichVolume);
             if (!isScreenLocked) {
                 if (!isEsuMc2KnobEnabled) {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
                 } else if (prefEsuMc2EndStopDirectionChange) {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Attempting to switch direction");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Attempting to switch direction");
                     changeActualOrTargetDirectionIfAllowed(whichVolume,
                             getDirection(whichVolume) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                             false);
-//                    if (!isSemiRealisticTrottle) {
-//                        changeDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
-//                    } else{
-//                        changeTargetDirectionIfAllowed(whichVolume, (getDirection(whichVolume) == 1 ? 0 : 1));
-//                        showTargetDirectionIndication(whichVolume);
-//                    }
                     speedUpdateAndNotify(whichVolume, 0, false);
                 } else {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Direction change option disabled - do nothing");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Direction change option disabled - do nothing");
                     speedUpdateAndNotify(whichVolume, 0, false);
                 }
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonDown(): ESU_MCII: Screen locked - do nothing");
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Screen locked - do nothing");
             }
         }
 
         @Override
         public void onButtonUp() {
-            Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onButtonUp(): ESU_MCII: Knob button up for throttle " + whichVolume);
+            Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonUp(): ESU_MCII: Knob button up for throttle " + whichVolume);
         }
 
         @Override
@@ -4446,31 +4348,31 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             int speed;
             if (!isScreenLocked) {
                 if (!isEsuMc2KnobEnabled) {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged(): ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Nothing updated");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged(): ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Nothing updated");
                 } else if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Knob position changed for throttle " + whichVolume);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Knob position changed for throttle " + whichVolume);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
                     if (!isSemiRealisticTrottle) {
                         speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
                     } else {
                         // set the target speed based on the new Knob position
                         int vSpeed = (int) ( (float) speed / 126 * (float) getNewSemiRealisticThrottleSliderNotches());
                         semiRealisticThrottleSliderPositionUpdate(whichVolume,vSpeed);
-                        stopSemiRealsticThrottleSpeedButtonRepeater(whichVolume);
-                        mSemiRealisticAutoIncrementOrDecrement[whichVolume] = auto_increment_or_decrement_type.OFF;;
+                        stopSemiRealisticThrottleSpeedButtonRepeater(whichVolume);
+                        mSemiRealisticAutoIncrementOrDecrement[whichVolume] = auto_increment_or_decrement_type.OFF;
                         setTargetSpeed(whichVolume, vSpeed);
 //                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: SRT  speed: " + speed);
 //                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: SRT vSpeed: " + vSpeed);
                     }
                 } else {
                     // Ignore knob movements for stopped or inactive throttles
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Nothing updated");
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
+                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Nothing updated");
                 }
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPositionChanged():ESU_MCII: Screen locked - do nothing");
+                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Screen locked - do nothing");
             }
         }
 
@@ -4478,7 +4380,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         @Override
         public void onPhysicalSliderPositionChanged(int position) {
             float pcntPos = Math.round((((float) position) / 255 * 100));
-            Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
+            Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
             if (mainapp.esuMc2BrakePostion != pcntPos) {
                 mainapp.esuMc2BrakePostion = pcntPos;
                 if (mainapp.prefEsuMc2SliderType.equals("dim")) {
@@ -4769,20 +4671,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                                 getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                                 gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
-//                        if (!isSemiRealisticTrottle) {
-//                            if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
-//                                changeDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                            } else {
-//                                changeDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                            }
-//                        } else {
-//                            if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
-//                                changeTargetDirectionIfAllowed(whichThrottle, direction_type.REVERSE);
-//                            } else {
-//                                changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
-//                            }
-//                            showTargetDirectionIndication(whichThrottle);
-//                        }
                     }
                     break;
                 case SPEED_INCREASE:
@@ -5442,106 +5330,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return result;
     }
 
-
-    public class DoLocoSoundDelayed implements Runnable {
-        int whichThrottle;
-
-        public DoLocoSoundDelayed(int WhichThrottle) {
-            whichThrottle = WhichThrottle;
-        }
-
-        @Override
-        public void run() {
-//            Log.d(threaded_application.applicationName, activityName + ": doLocoSoundDelayed(): run: (locoSound) wt" + whichThrottle);
-            doLocoSound(whichThrottle);
-        }
-    } // end DoLocoSoundDelayed
-
-    void doLocoSound(int whichThrottle) {
-        if (!mainapp.soundsSoundsAreBeingReloaded) {
-            if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
-                if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
-                    int mSound = -1;
-                    if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
-                        mSound = getLocoSoundStep(whichThrottle);
-
-                        Log.d(threaded_application.applicationName, activityName + ": doLocoSound               : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
-                        if ((mSound >= 0)) {
-                            if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == sounds_type.NOTHING_CURRENTLY_PLAYING) { // nothing currently playing
-//                                Log.d(threaded_application.applicationName, activityName + ": doLocoSound 2              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
-                                //see if there is a startup sound for this profile
-                                if (mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX] > 0) {
-//                                    Log.d(threaded_application.applicationName, activityName + ": doLocoSound 3              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
-                                    soundStart(sounds_type.LOCO, whichThrottle, sounds_type.STARTUP_INDEX, sounds_type.REPEAT_NONE);
-                                    soundScheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX]);
-                                    soundQueueNextLocoSound(whichThrottle, mSound);
-                                } else {
-//                                    Log.d(threaded_application.applicationName, activityName + ": doLocoSound 4              : (locoSound) wt: " + whichThrottle + " snd: " + mSound);
-                                    soundStart(sounds_type.LOCO, whichThrottle, mSound, sounds_type.REPEAT_INFINITE);
-                                    mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
-                                }
-
-                            } else {
-                                soundQueueNextLocoSound(whichThrottle, mSound);
-                            }
-                        }
-                    } else {
-                        soundsStopAllSoundsForLoco(whichThrottle);
-                    }
-                }
-                mainapp.soundsLocoLastDirection[whichThrottle] = dirs[whichThrottle];
-            }
-        }
-    } // end doLocoSound()
-
-    void soundQueueNextLocoSound(int whichThrottle, int mSound) {
-        boolean wasDirectionChange = mainapp.soundsLocoLastDirection[whichThrottle] != dirs[whichThrottle];
-
-        if ((mainapp.soundsLocoCurrentlyPlaying[whichThrottle] == mSound) && (mainapp.soundsLocoQueue[whichThrottle].queueCount() == 0) && (!wasDirectionChange)) {
-            return; // sound is already playing and nothing is queued
-        }
-//        Log.d(threaded_application.applicationName, activityName + ": soundQueueNextLocoSound  : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
-
-        int queueCount = mainapp.soundsLocoQueue[whichThrottle].queueCount();
-
-        if (mainapp.soundsLocoQueue[whichThrottle].enqueueWithIntermediateSteps(mSound, wasDirectionChange)) {
-            if (queueCount == 0) {
-                soundScheduleNextLocoSound(whichThrottle, mSound, -1);
-            }
-        }
-    } // end soundQueueNextLocoSound()
-
-    void soundScheduleNextLocoSound(int whichThrottle, int mSound, int forcedExpectedEndTime) {
-//        Log.dthreaded_application.applicationName, activityName + ": soundScheduleNextLocoSound : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
-
-        int expectedEndTime;
-        if (forcedExpectedEndTime > 0) {
-            expectedEndTime = forcedExpectedEndTime;
-        } else { // != -1
-            expectedEndTime = soundStop(sounds_type.LOCO, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], false);
-        }
-        int nextSound = mainapp.soundsLocoQueue[whichThrottle].frontOfQueue();
-
-        if (nextSound >= 0) {
-            mainapp.throttle_msg_handler.postDelayed(
-                    new SoundScheduleNextSoundToPlay(sounds_type.LOCO, whichThrottle, nextSound),
-                    expectedEndTime - 100);
-//            Log.d(threaded_application.applicationName, activityName + ": soundScheduleNextLocoSound : (locoSound) wt:" + whichThrottle + " snd: " + nextSound + " Start in: " + expectedEndTime + "msec");
-        }
-    } //end soundScheduleNextLocoSound()
-
-    int getLocoSoundStep(int whichThrottle) {
-        int rslt;
-        int steps = mainapp.soundsLocoSteps[whichThrottle];
-
-        float speed = (float) (getSpeedFromCurrentSliderPosition(whichThrottle, false));
-        speed = (float) ((speed / 126 * steps) + 0.99);
-        rslt = (int) speed;
-
-//        Log.d(threaded_application.applicationName, activityName + ": getLocoSoundStep         : (locoSound) wt: " + whichThrottle + " step:" + rslt);
-        return rslt;
-    } // end getLocoSoundStep()
-
     void doDeviceButtonSound(int whichThrottle, int soundType) {
         Log.d(threaded_application.applicationName, activityName + ": doDeviceButtonSound (locoSounds): wt: " + whichThrottle + " soundType: " + soundType);
         int soundTypeArrayIndex = soundType - 1;
@@ -5552,275 +5340,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
                 if (!mainapp.soundsDeviceButtonStates[whichThrottle][soundTypeArrayIndex]) {
-                    startBellHornSound(soundType, whichThrottle);
+                    if(ipls!=null) ipls.startBellHornSound(soundType, whichThrottle, soundsIsMuted[whichThrottle]);
                 } else {
-                    stopBellHornSound(soundType, whichThrottle);
+                    if(ipls!=null) ipls.stopBellHornSound(soundType, whichThrottle, soundsIsMuted[whichThrottle]);
                 }
             }
         }
     } // end doDeviceButtonSound()
-
-
-    // this is not used for Loco sounds
-    int soundIsPlaying(int soundType, int whichThrottle) {
-        int isPlaying;
-        int soundTypeArrayIndex = soundType - 1;
-
-        switch (soundType) {
-            case sounds_type.BELL: // bell
-            case sounds_type.HORN: // horn
-            case sounds_type.HORN_SHORT: // horn short
-                isPlaying = mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle];
-                break;
-            default:
-                isPlaying = -1;
-                break;
-        }
-        return isPlaying;
-    } // end soundIsPlaying()
-
-    void startBellHornSound(int soundType, int whichThrottle) {
-//        Log.d(threaded_application.applicationName, activityName + ": startBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle);
-        int soundTypeArrayIndex = soundType - 1;
-
-        if (soundIsPlaying(soundType, whichThrottle) < 0) { // check if the loop sound is not currently playing
-            if (soundType != sounds_type.HORN_SHORT) {
-                soundStart(soundType, whichThrottle, sounds_type.BELL_HORN_START, 0);
-                // queue up the loop sound to be played when the start sound is finished
-                mainapp.throttle_msg_handler.postDelayed(
-                        new SoundScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_START),
-                        mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][sounds_type.BELL_HORN_START]);
-            } else {
-                soundStart(soundType, whichThrottle, 0, 0);   // mSound always 0 for the short horn (not really used)
-            }
-        }
-    } // end startBellHornSound()
-
-    void stopBellHornSound(int soundType, int whichThrottle) {
-//        Log.d(threaded_application.applicationName, activityName + ": stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
-        int soundTypeArrayIndex = soundType - 1;
-
-        if (soundType != sounds_type.HORN_SHORT) {
-            if (soundIsPlaying(soundType, whichThrottle) == 0) {
-                // if the start sound is currently playing need to do something special
-                // as the loop is probably scheduled to run but has not started yet
-                mainapp.throttle_msg_handler.postDelayed(
-                        new SoundScheduleSoundToStop(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP),
-                        mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][sounds_type.BELL_HORN_START] + 100);
-
-            } else if (soundIsPlaying(soundType, whichThrottle) == 1) { // check if the loop sound is currently playing
-                int expectedEndTime = soundStop(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP, false);
-                // queue up the end sound
-                mainapp.throttle_msg_handler.postDelayed(
-                        new SoundScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP),
-                        expectedEndTime);
-            }
-        } else { // for the short horn, stop immediately
-            soundStop(soundType, whichThrottle, 0, true);
-        }
-    } // end stopBellHornSound(
-
-    void soundStart(int soundType, int whichThrottle, int mSound, int loop) {
-//        Log.d(threaded_application.applicationName, activityName + ": soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
-        int soundTypeArrayIndex = soundType - 1;
-
-        switch (soundType) {
-            default:
-            case sounds_type.LOCO: // loco
-//                Log.d(threaded_application.applicationName, activityName + ": soundStart               : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
-                if (mSound >= 0) {
-                    if (mainapp.soundsLocoCurrentlyPlaying[whichThrottle] != mSound) {
-                        if (mSound < sounds_type.STARTUP_INDEX) {
-                            mainapp.soundsLocoStreamId[whichThrottle][mSound]
-                                    = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
-                                    soundsVolume(sounds_type.LOCO, whichThrottle), soundsVolume(sounds_type.LOCO, whichThrottle),
-                                    0, sounds_type.REPEAT_INFINITE, 1);
-                        } else if (mSound == sounds_type.STARTUP_INDEX) {
-                            mainapp.soundsLocoStreamId[whichThrottle][mSound]
-                                    = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
-                                    soundsVolume(sounds_type.LOCO, whichThrottle), soundsVolume(sounds_type.LOCO, whichThrottle),
-                                    0, sounds_type.REPEAT_NONE, 1);
-//                            Log.d(threaded_application.applicationName, activityName + ": soundStart SU            : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop + " Sid: " + mainapp.soundsLocoStreamId[whichThrottle][mSound]);
-
-//                        } else if (mSound == sounds_type.SHUTDOWN_INDEX) {
-                        }
-                        mainapp.soundsLocoCurrentlyPlaying[whichThrottle] = mSound;
-                        mainapp.soundsLocoStartTime[whichThrottle][mSound] = System.currentTimeMillis();
-                    }
-                }
-                break;
-
-            case sounds_type.BELL: // bell
-            case sounds_type.HORN: // horn
-            case sounds_type.HORN_SHORT: // horn short
-                if (mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] != mSound) { // nothing playing
-                    mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]
-                            = mainapp.soundPool.play(mainapp.soundsExtras[soundTypeArrayIndex][whichThrottle][mSound],
-                            soundsVolume(soundType, whichThrottle), soundsVolume(soundType, whichThrottle),
-                            0, loop, 1);
-                    mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] = (mSound < 2) ? mSound : -1; // if it is the end sound, treat it like is not playing
-                    mainapp.soundsExtrasStartTime[soundTypeArrayIndex][whichThrottle][mSound] = System.currentTimeMillis();
-                }
-                break;
-        }
-    }  // end startSound()
-
-    int soundStop(int soundType, int whichThrottle, int mSound, boolean forceStop) {
-//        Log.d(threaded_application.applicationName, activityName + ": soundStop: soundType" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
-        int timesPlayed = 0;
-        double expectedEndTime = 0;
-        int soundTypeArrayIndex = soundType - 1;
-
-        switch (soundType) {
-            case sounds_type.BELL: // bell
-            case sounds_type.HORN: // horn
-                if (mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] >= 0) {
-                    if (mSound == sounds_type.BELL_HORN_LOOP) { // assume it is looping
-                        mainapp.soundPool.pause(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]);
-                        mainapp.soundPool.setLoop(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound], sounds_type.REPEAT_NONE);  // don't really stop it, just let it finish
-                        mainapp.soundPool.resume(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]);
-                        timesPlayed = (int) ((System.currentTimeMillis() - mainapp.soundsExtrasStartTime[soundTypeArrayIndex][whichThrottle][mSound])
-                                / mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][mSound]);
-                        expectedEndTime = (timesPlayed) * mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][mSound];
-                        expectedEndTime = mainapp.soundsExtrasStartTime[soundTypeArrayIndex][whichThrottle][mSound] + expectedEndTime - System.currentTimeMillis();
-                    } else {
-                        mainapp.soundPool.stop(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]);
-                    }
-                    mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] = -1;
-                    mainapp.soundsExtrasStartTime[soundTypeArrayIndex][whichThrottle][mSound] = 0;
-                }
-                break;
-
-            case sounds_type.HORN_SHORT: // horn short
-                if (mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] >= 0) {
-                    mainapp.soundPool.stop(mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][0]);
-                    mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] = -1;
-                    mainapp.soundsExtrasStartTime[soundTypeArrayIndex][whichThrottle][0] = 0;
-                }
-                break;
-
-            case sounds_type.LOCO: // loco
-            default:
-//                Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " mSound: " + snd + " forceStop:" + forceStop);
-                if (mSound >= 0) {
-                    if (mSound < sounds_type.STARTUP_INDEX) {
-                        if (!forceStop) {
-                            double duration = mainapp.soundsLocoDuration[whichThrottle][mSound];
-
-                            // number of complete completed loops
-                            timesPlayed = (int) ((System.currentTimeMillis() - mainapp.soundsLocoStartTime[whichThrottle][mSound])
-                                    / mainapp.soundsLocoDuration[whichThrottle][mSound]);
-                            expectedEndTime = (timesPlayed + 1) * mainapp.soundsLocoDuration[whichThrottle][mSound];
-
-                            int repeats = 1;
-                            if (expectedEndTime < mainapp.prefDeviceSoundsMomentum) {
-                                repeats = 2;
-                            }
-                            if ((duration * (repeats + 1)) < mainapp.prefDeviceSoundsMomentum) { // if the sound is less than the preference period 1 second will need to repeat it
-                                repeats = (int) (mainapp.prefDeviceSoundsMomentum / duration) + 1;
-                            }
-//                            double x = expectedEndTime + repeats * duration;
-//                        Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " expected to end in: " +(x/1000)+"sec" );
-
-                            mainapp.soundPool.pause(mainapp.soundsLocoStreamId[whichThrottle][mSound]); // unfortunately you seem to have to pause it to change the number of repeats
-                            mainapp.soundPool.setLoop(mainapp.soundsLocoStreamId[whichThrottle][mSound], repeats);  // don't really stop it, just let it finish
-                            mainapp.soundPool.resume(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
-
-                            if (mainapp.prefDeviceSoundsMomentumOverride) {
-                                expectedEndTime = (timesPlayed + repeats) * mainapp.soundsLocoDuration[whichThrottle][mSound];
-                                expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + expectedEndTime - System.currentTimeMillis();
-                            } else {
-                                expectedEndTime = mainapp.prefDeviceSoundsMomentum;  // schedule the next sound for the preference amount regardless
-                            }
-
-//                        Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
-                        } else {
-                            mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
-//                        Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
-                        }
-                    } else if (mSound == sounds_type.STARTUP_INDEX) {
-                        // this will only ever play once
-                        if (!forceStop) {
-                            expectedEndTime = mainapp.soundsLocoStartTime[whichThrottle][mSound] + mainapp.soundsLocoDuration[whichThrottle][mSound] - System.currentTimeMillis();
-//                            Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " will end in: " +(expectedEndTime/1000)+"sec" );
-                        } else {
-                            mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][mSound]);
-//                            Log.d(threaded_application.applicationName, activityName + ": soundStop                : (locoSound) wt: " + whichThrottle + " snd: " + mSound + " timesPlayed:" + timesPlayed + " FORCED STOP");
-                        }
-
-                    }
-                }
-                break;
-
-        }
-        return (int) expectedEndTime;
-    } // end stopSound()
-
-    // used for the loco sounds only
-    public class SoundScheduleNextSoundToPlay implements Runnable {
-        int whichThrottle;
-        int soundType;
-        int mSound;
-
-        public SoundScheduleNextSoundToPlay(int SoundType, int WhichThrottle, int MSound) {
-            whichThrottle = WhichThrottle;
-            soundType = SoundType;
-            mSound = MSound;
-        }
-
-        @Override
-        public void run() {
-//            Log.d(threaded_application.applicationName, activityName + ": SoundScheduleNextSoundToPlay.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
-            switch (soundType) {
-                default:
-                    break;
-                case sounds_type.LOCO: // loco
-                    // pull the next sound off the queue
-//                    Log.d(threaded_application.applicationName, activityName + ": SoundScheduleNextSoundToPlay.run: (locoSound) wt: " + whichThrottle + " snd: " + mSound);
-                    soundStop(soundType, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], true);
-                    soundStart(soundType, whichThrottle, mSound, sounds_type.REPEAT_INFINITE);
-                    mainapp.soundsLocoQueue[whichThrottle].dequeue();
-                    if (mainapp.soundsLocoQueue[whichThrottle].queueCount() > 0) {  // if there are more on the queue, start the process to stop the one you just started
-                        soundScheduleNextLocoSound(whichThrottle, mainapp.soundsLocoQueue[whichThrottle].frontOfQueue(), -1);
-                    }
-                    break;
-                case sounds_type.BELL: // bell
-                case sounds_type.HORN: // horn
-                    int loop = (mSound == sounds_type.BELL_HORN_START) ? sounds_type.REPEAT_INFINITE : sounds_type.REPEAT_NONE; // of 0 now, then we will be playig the lop sound next.
-                    soundStart(soundType, whichThrottle, mSound + 1, loop);
-                    break;
-//                case sounds_type.HORN_SHORT:
-//                    break;
-            }
-        }
-    } // end class SoundScheduleNextSoundToPlay
-
-    public class SoundScheduleSoundToStop implements Runnable {
-        int whichThrottle;
-        int soundType;
-        int mSound;
-
-        public SoundScheduleSoundToStop(int SoundType, int WhichThrottle, int MSound) {
-            whichThrottle = WhichThrottle;
-            soundType = SoundType;
-            mSound = MSound;
-        }
-
-        @Override
-        public void run() {
-//            Log.d(threaded_application.applicationName, activityName + ": SoundScheduleSoundToStop.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
-            switch (soundType) {
-                default:
-                    break;
-                case sounds_type.HORN: // horn
-                case sounds_type.BELL: // bell
-                    soundStop(soundType, whichThrottle, mSound, false);
-                    break;
-//                case sounds_type.HORN_SHORT:
-//                    break;
-            }
-        }
-    } // end class SoundScheduleSoundToStop
 
     protected class FunctionButtonTouchListener implements View.OnTouchListener {
         int function;
@@ -5910,7 +5436,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             if (getConsist(whichThrottle).isActive() && !(IS_ESU_MCII && isEsuMc2Stopped)) { // only assign if Active and, if an ESU MCII not in Stop mode
                                 whichVolume = whichThrottle;
                                 mainapp.whichThrottleLastTouch = whichThrottle;
-                                set_labels();
+                                setLabels();
                             }
                             if (IS_ESU_MCII && isEsuMc2Stopped) {
                                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT);
@@ -6003,12 +5529,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     }
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
-                    doLocoSound(whichThrottle);
+                    if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
 
                 } else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches
                     throttle.setProgress(lastSpeed);
-                    doLocoSound(whichThrottle);
+                    if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
                 }
                 // Now update ESU MCII Knob position
                 if (IS_ESU_MCII && !isSemiRealisticTrottle) {
@@ -6024,7 +5550,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                         limitedJump[whichThrottle] = false;
                         throttle.setProgress(jumpSpeed);
-                        doLocoSound(whichThrottle);
+                        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
                     }
                 }
                 setDisplayedSpeed(whichThrottle, speed);
@@ -6154,6 +5680,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         mainapp.applyTheme(this);
 
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart completes
+        mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = false;
+
+        sliderType = slider_type.HORIZONTAL; // default. Will likely be overridden by the child activities
+
+        onCreateSavedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null) {
@@ -6169,14 +5701,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;
             this.finish();
             return;
         }
 
-        // was ED killed while it was in background
+        // was ED killed while it was in background?
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             if (prefForcedRestartReason == restart_reason_type.APP_PUSHED_TO_BACKGROUND) {
@@ -6189,28 +5720,229 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        // put pointer to this activity's handler in main app's shared variable
-//        mainapp.throttle_msg_handler = new throttle_handler();
+        // get the screen brightness on create
+        screenBrightnessOriginal = getScreenBrightness();
+        screenBrightnessModeOriginal = getScreenBrightnessMode();
 
-        sliderType = slider_type.HORIZONTAL;
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                mainapp.checkExit(throttle.this);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
-        setContentView(mainapp.throttleLayoutViewId);
+        // only do this in onCreate
+        if (prefs.getBoolean("prefThrottlesLocos",getResources().getBoolean(R.bool.prefThrottlesLocosDefaultValue))) {
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mainapp.safeToastInstructional(R.string.prefThrottlesLocosToast, Toast.LENGTH_LONG);
+                    int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
+                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, numThrottles);
+                    setLabels();
+                }
+            }, 2000);
+        }
+
+        setContentView(mainapp.throttleLayoutViewId); // default.  Will likely be overridden by the child activities
 
         getCommonPrefs(true); // get all the common preferences
-        mainapp.getDefaultSortOrderRoster();
         setThrottleNumLimits();
 
         getDirectionButtonPrefs();
+
+        //load the gamepad beep sounds
+        TypedArray gamepadBeepIds = getResources().obtainTypedArray(R.array.beep_ids);
+        mainapp.gamepadBeepIds = new int[gamepadBeepIds.length()];
+        for (int i=0; i<gamepadBeepIds.length(); i++) {
+            mainapp.gamepadBeepIds[i] = gamepadBeepIds.getResourceId(i,0);
+        }
+        gamepadBeepIds.recycle();
 
         webViewIsOn = !webViewLocation.equals(web_view_location_type.NONE);
         keepWebViewLocation = webViewLocation;
 
         isScreenLocked = false;
 
-        // get the screen brightness on create
-        screenBrightnessOriginal = getScreenBrightness();
-        screenBrightnessModeOriginal = getScreenBrightnessMode();
+        initialiseUiElements();
 
+    } // end of onCreate()
+
+    @SuppressLint("ApplySharedPref")
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
+
+        // put pointer to this activity's handler in main app's shared variable
+        if (mainapp.throttle_msg_handler == null)
+            mainapp.throttle_msg_handler = new ThrottleMessageHandler(Looper.getMainLooper());
+
+        // if it was killed in background, clear the save preferences
+        if ( (prefs.getBoolean("prefForcedRestart", false))
+                && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
+            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+            prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+        }
+
+        if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
+            setContentView(mainapp.throttleLayoutViewId); // default.  Will likely be overridden by the child activities
+        }
+
+        super.onStart();
+
+        if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
+            mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = false;
+
+            getCommonPrefs(true); // get all the common preferences
+            setThrottleNumLimits();
+
+            getDirectionButtonPrefs();
+
+            webViewIsOn = !webViewLocation.equals(web_view_location_type.NONE);
+            keepWebViewLocation = webViewLocation;
+
+            isScreenLocked = false;
+
+            initialiseUiElements();
+        }
+
+    } // end onStart()
+
+    @SuppressLint("ApplySharedPref")
+    @Override
+    public void onResume() {
+        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
+        super.onResume();
+        threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
+
+        mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() & onResume() completes
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mainapp.throttleSwitchAllowed = true;
+                mainapp.displayThrottleSwitchMenuButton(TMenu);
+            }
+        }, 6000);
+
+        threaded_application.currentActivity = activity_id_type.THROTTLE;
+        if (mainapp.isForcingFinish()) { // expedite
+            mainapp.appIsFinishing = true;
+            this.finish();
+            overridePendingTransition(0, 0);
+            return;
+        }
+        mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+
+        mainapp.exitDoubleBackButtonInitiated = 0;
+
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
+
+        // format the screen area
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            enableDisableButtons(throttleIndex);
+            soundsShowHideDeviceSoundsButton(throttleIndex);
+            showHideSpeedLimitAndPauseButtons(throttleIndex);
+        }
+
+        gestureFailed = false;
+        gestureInProgress = false;
+
+        getCommonPrefs(false);
+        getDirectionButtonPrefs();
+
+        setThrottleNumLimits();
+
+        clearVolumeAndGamepadAdditionalIndicators();
+
+        getDirectionButtonPrefs();
+        setDirectionButtonLabels(); // set all the direction button labels
+
+        setGamepadKeys();
+
+        applySpeedRelatedOptions();  // update all throttles
+
+        if (mainapp.soundsReloadSounds) loadSounds();
+
+        setLabels(); // handle labels and update view
+        pauseResumeWebView();
+
+        if (mainapp.EStopActivated) {
+            speedUpdateAndNotify(0);  // update all three throttles
+            applySpeedRelatedOptions();  // update all three throttles
+
+            mainapp.EStopActivated = false;
+        }
+
+        if (IS_ESU_MCII && isEsuMc2Stopped) {
+            if (isEsuMc2AllStopped) {
+                // disable buttons for all throttles
+                for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+                    setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, false);
+                }
+            } else {
+                // disable buttons for current throttle
+                setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
+            }
+        }
+
+        // update the direction indicators
+        showDirectionIndications();
+
+        showHideConsistMenus();
+
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+
+        if (!prefAccelerometerShake.equals(acceleratorometer_action_type.NONE)) {
+            if (!accelerometerCurrent) { // preference has only just been changed to turn it on
+                setupSensor();
+            } else {
+                sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
+            }
+        }
+
+        if (((prefKidsTime > 0) && (kidsTimerRunning != kids_timer_action_type.RUNNING))) {
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
+        } else {
+            if (kidsTimerRunning == kids_timer_action_type.ENDED) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
+            }
+
+            if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)) {
+                kidsTimerActions(kids_timer_action_type.DISABLED, 1);
+            }
+        }
+
+        tts.loadPrefs();
+
+        setActivityTitle();
+
+        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
+            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+
+            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
+            Log.d(threaded_application.applicationName, activityName + ": onResume(): connection: Forced Restart Reason: " + prefForcedRestartReason);
+            if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
+                Intent in = new Intent().setClass(this, SettingsActivity.class);
+                startActivityForResult(in, 0);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            }
+        }
+    } // end onResume()
+
+    @SuppressLint("ClickableViewAccessibility")
+    void initialiseUiElements() {
+        Log.d(threaded_application.applicationName, activityName + ": initialiseUiElements(): start");
+
+        throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
         // myGesture = new GestureDetector(this);
         throttleOverlay = findViewById(R.id.throttle_overlay);
         throttleOverlay.addOnGestureListener(this);
@@ -6227,94 +5959,58 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         vThrotScr = findViewById(R.id.throttle_screen);
         vThrotScrWrap = findViewById(R.id.throttle_screen_wrapper);
 
-        for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
+        TypedArray right_speed_button_resource_ids = getResources().obtainTypedArray(R.array.right_speed_button_resource_ids);
+        TypedArray left_speed_button_resource_ids = getResources().obtainTypedArray(R.array.left_speed_button_resource_ids);
+        TypedArray button_select_loco_resource_ids = getResources().obtainTypedArray(R.array.button_select_loco_resource_ids);
+        TypedArray loco_label_resource_ids = getResources().obtainTypedArray(R.array.loco_label_resource_ids);
+
+        TypedArray loco_left_direction_indication_resource_ids = getResources().obtainTypedArray(R.array.loco_left_direction_indication_resource_ids);
+        TypedArray loco_right_direction_indication_resource_ids = getResources().obtainTypedArray(R.array.loco_right_direction_indication_resource_ids);
+
+        TypedArray button_fwd_resource_ids = getResources().obtainTypedArray(R.array.button_fwd_resource_ids);
+        TypedArray button_stop_resource_ids = getResources().obtainTypedArray(R.array.button_stop_resource_ids);
+        TypedArray button_rev_resource_ids = getResources().obtainTypedArray(R.array.button_rev_resource_ids);
+        TypedArray speed_cell_resource_ids = getResources().obtainTypedArray(R.array.speed_cell_resource_ids);
+
+        TypedArray speed_resource_ids = getResources().obtainTypedArray(R.array.speed_resource_ids);
+
+        TypedArray throttle_resource_ids = getResources().obtainTypedArray(R.array.throttle_resource_ids);
+        TypedArray loco_buttons_group_resource_ids = getResources().obtainTypedArray(R.array.loco_buttons_group_resource_ids);
+        TypedArray dir_buttons_table_resource_ids = getResources().obtainTypedArray(R.array.dir_buttons_table_resource_ids);
+        TypedArray volume_indicator_resource_ids = getResources().obtainTypedArray(R.array.volume_indicator_resource_ids);
+        TypedArray gamepad_indicator_resource_ids = getResources().obtainTypedArray(R.array.gamepad_indicator_resource_ids);
+        TypedArray speed_label_resource_ids = getResources().obtainTypedArray(R.array.speed_label_resource_ids);
+        TypedArray speed_value_label_resource_ids = getResources().obtainTypedArray(R.array.speed_value_label_resource_ids);
+        TypedArray function_buttons_table_resource_ids = getResources().obtainTypedArray(R.array.function_buttons_table_resource_ids);
+
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             // set listener for select loco buttons
-            Button bSel = findViewById(R.id.button_select_loco_0);
-            TextView tvbSelsLabel = findViewById(R.id.loco_label_0);
-            TextView tvLeft = findViewById(R.id.loco_left_direction_indication_0);
-            TextView tvRight = findViewById(R.id.loco_right_direction_indication_0);
-            switch (i) {
-                case 1:
-                    bSel = findViewById(R.id.button_select_loco_1);
-                    tvbSelsLabel = findViewById(R.id.loco_label_1);
-                    tvLeft = findViewById(R.id.loco_left_direction_indication_1);
-                    tvRight = findViewById(R.id.loco_right_direction_indication_1);
-                    break;
-                case 2:
-                    bSel = findViewById(R.id.button_select_loco_2);
-                    tvbSelsLabel = findViewById(R.id.loco_label_2);
-                    tvLeft = findViewById(R.id.loco_left_direction_indication_2);
-                    tvRight = findViewById(R.id.loco_right_direction_indication_2);
-                    break;
-                case 3:
-                    bSel = findViewById(R.id.button_select_loco_3);
-                    tvbSelsLabel = findViewById(R.id.loco_label_3);
-                    tvLeft = findViewById(R.id.loco_left_direction_indication_3);
-                    tvRight = findViewById(R.id.loco_right_direction_indication_3);
-                    break;
-                case 4:
-                    bSel = findViewById(R.id.button_select_loco_4);
-                    tvbSelsLabel = findViewById(R.id.loco_label_4);
-                    tvLeft = findViewById(R.id.loco_left_direction_indication_4);
-                    tvRight = findViewById(R.id.loco_right_direction_indication_4);
-                    break;
-                case 5:
-                    bSel = findViewById(R.id.button_select_loco_5);
-                    tvbSelsLabel = findViewById(R.id.loco_label_5);
-                    tvLeft = findViewById(R.id.loco_left_direction_indication_5);
-                    tvRight = findViewById(R.id.loco_right_direction_indication_5);
-                    break;
-            }
-            bSels[i] = bSel;
-            tvbSelsLabels[i] = tvbSelsLabel;
-            bSels[i].setClickable(true);
-            selectFunctionButtonTouchListener = new SelectFunctionButtonTouchListener(i);
-            bSels[i].setOnClickListener(selectFunctionButtonTouchListener);
-//            bSels[i].setOnTouchListener(sfbt);
-            bSels[i].setOnLongClickListener(selectFunctionButtonTouchListener);  // Consist Light Edit
-            tvLeftDirInds[i] = tvLeft;
-            tvRightDirInds[i] = tvRight;
+            bSels[throttleIndex] = findViewById(button_select_loco_resource_ids.getResourceId(throttleIndex,0));
+            tvbSelsLabels[throttleIndex] = findViewById(loco_label_resource_ids.getResourceId(throttleIndex,0));
+            bSels[throttleIndex].setClickable(true);
+            selectFunctionButtonTouchListener = new SelectFunctionButtonTouchListener(throttleIndex);
+            bSels[throttleIndex].setOnClickListener(selectFunctionButtonTouchListener);
+//            bSels[throttleIndex].setOnTouchListener(sfbt);
+            bSels[throttleIndex].setOnLongClickListener(selectFunctionButtonTouchListener);  // Consist Light Edit
+
+            tvLeftDirInds[throttleIndex] = findViewById(loco_left_direction_indication_resource_ids.getResourceId(throttleIndex,0));
+            tvRightDirInds[throttleIndex] = findViewById(loco_right_direction_indication_resource_ids.getResourceId(throttleIndex,0));
 
             // Arrow Keys
             try {
+                bRSpds[throttleIndex] = findViewById(right_speed_button_resource_ids.getResourceId(throttleIndex,0));
+                bRSpds[throttleIndex].setClickable(true);
+                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.RIGHT);
+                bRSpds[throttleIndex].setOnLongClickListener(arrowSpeedButtonTouchListener);
+                bRSpds[throttleIndex].setOnTouchListener(arrowSpeedButtonTouchListener);
+                bRSpds[throttleIndex].setOnClickListener(arrowSpeedButtonTouchListener);
 
-                Button bRight = findViewById(R.id.right_speed_button_0);
-                Button bLeft = findViewById(R.id.left_speed_button_0);
-                switch (i) {
-                    case 1:
-                        bRight = findViewById(R.id.right_speed_button_1);
-                        bLeft = findViewById(R.id.left_speed_button_1);
-                        break;
-                    case 2:
-                        bRight = findViewById(R.id.right_speed_button_2);
-                        bLeft = findViewById(R.id.left_speed_button_2);
-                        break;
-                    case 3:
-                        bRight = findViewById(R.id.right_speed_button_3);
-                        bLeft = findViewById(R.id.left_speed_button_3);
-                        break;
-                    case 4:
-                        bRight = findViewById(R.id.right_speed_button_4);
-                        bLeft = findViewById(R.id.left_speed_button_4);
-                        break;
-                    case 5:
-                        bRight = findViewById(R.id.right_speed_button_5);
-                        bLeft = findViewById(R.id.left_speed_button_5);
-                        break;
-                }
-                bRSpds[i] = bRight;
-                bRSpds[i].setClickable(true);
-                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, speed_button_type.RIGHT);
-                bRSpds[i].setOnLongClickListener(arrowSpeedButtonTouchListener);
-                bRSpds[i].setOnTouchListener(arrowSpeedButtonTouchListener);
-                bRSpds[i].setOnClickListener(arrowSpeedButtonTouchListener);
-
-                bLSpds[i] = bLeft;
-                bLSpds[i].setClickable(true);
-                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(i, speed_button_type.LEFT);
-                bLSpds[i].setOnLongClickListener(arrowSpeedButtonTouchListener);
-                bLSpds[i].setOnTouchListener(arrowSpeedButtonTouchListener);
-                bLSpds[i].setOnClickListener(arrowSpeedButtonTouchListener);
+                bLSpds[throttleIndex] = findViewById(left_speed_button_resource_ids.getResourceId(throttleIndex,0));
+                bLSpds[throttleIndex].setClickable(true);
+                arrowSpeedButtonTouchListener = new ArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.LEFT);
+                bLSpds[throttleIndex].setOnLongClickListener(arrowSpeedButtonTouchListener);
+                bLSpds[throttleIndex].setOnTouchListener(arrowSpeedButtonTouchListener);
+                bLSpds[throttleIndex].setOnClickListener(arrowSpeedButtonTouchListener);
 
             } catch (Exception ex) {
                 Log.d(threaded_application.applicationName, activityName + ": onCreate(): Exception: " + ex.getMessage());
@@ -6322,157 +6018,44 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             // set listeners for 3 direction buttons for each throttle
             //----------------------------------------
-            Button bFwd = findViewById(R.id.button_fwd_0);
-            Button bStop = findViewById(R.id.button_stop_0);
-            Button bPause = null;
-            Button bRev = findViewById(R.id.button_rev_0);
-            View v = findViewById(R.id.speed_cell_0);
-            switch (i) {
-                case 1:
-                    bFwd = findViewById(R.id.button_fwd_1);
-                    bStop = findViewById(R.id.button_stop_1);
-                    bRev = findViewById(R.id.button_rev_1);
-                    v = findViewById(R.id.speed_cell_1);
-                    break;
-                case 2:
-                    bFwd = findViewById(R.id.button_fwd_2);
-                    bStop = findViewById(R.id.button_stop_2);
-                    bRev = findViewById(R.id.button_rev_2);
-                    v = findViewById(R.id.speed_cell_2);
-                    break;
-                case 3:
-                    bFwd = findViewById(R.id.button_fwd_3);
-                    bStop = findViewById(R.id.button_stop_3);
-                    bRev = findViewById(R.id.button_rev_3);
-                    v = findViewById(R.id.speed_cell_3);
-                    break;
-                case 4:
-                    bFwd = findViewById(R.id.button_fwd_4);
-                    bStop = findViewById(R.id.button_stop_4);
-                    bRev = findViewById(R.id.button_rev_4);
-                    v = findViewById(R.id.speed_cell_4);
-                    break;
-                case 5:
-                    bFwd = findViewById(R.id.button_fwd_5);
-                    bStop = findViewById(R.id.button_stop_5);
-                    bRev = findViewById(R.id.button_rev_5);
-                    v = findViewById(R.id.speed_cell_5);
-                    break;
-            }
 
-            bFwds[i] = bFwd;
-            directionButtonTouchListener = new DirectionButtonTouchListener(direction_button.LEFT, i);
-            bFwds[i].setOnTouchListener(directionButtonTouchListener);
+            bFwds[throttleIndex] = findViewById(button_fwd_resource_ids.getResourceId(throttleIndex,0));
+            directionButtonTouchListener = new DirectionButtonTouchListener(direction_button.LEFT, throttleIndex);
+            bFwds[throttleIndex].setOnTouchListener(directionButtonTouchListener);
 
-            bStops[i] = bStop;
-//            functionButtonTouchListener = new FunctionButtonTouchListener(function_button.STOP, i);
-//            bStops[i].setOnTouchListener(functionButtonTouchListener);
-//            StopButtonClickListener stopButtonClickListener = new StopButtonClickListener(i);
-//            bStops[i].setOnClickListener(stopButtonClickListener);
-//            bStops[i].setOnLongClickListener(stopButtonClickListener);
-            StopButtonTouchListener stopButtonTouchListener = new StopButtonTouchListener(i);
-            bStops[i].setOnTouchListener(stopButtonTouchListener);
+            bStops[throttleIndex] = findViewById(button_stop_resource_ids.getResourceId(throttleIndex,0));
+            StopButtonTouchListener stopButtonTouchListener = new StopButtonTouchListener(throttleIndex);
+            bStops[throttleIndex].setOnTouchListener(stopButtonTouchListener);
 
-            bRevs[i] = bRev;
-            directionButtonTouchListener = new DirectionButtonTouchListener(direction_button.RIGHT, i);
-            bRevs[i].setOnTouchListener(directionButtonTouchListener);
+            bRevs[throttleIndex] = findViewById(button_rev_resource_ids.getResourceId(throttleIndex,0));
+            directionButtonTouchListener = new DirectionButtonTouchListener(direction_button.RIGHT, throttleIndex);
+            bRevs[throttleIndex].setOnTouchListener(directionButtonTouchListener);
 
-            functionButtonTouchListener = new FunctionButtonTouchListener(function_button.SPEED_LABEL, i);
+            functionButtonTouchListener = new FunctionButtonTouchListener(function_button.SPEED_LABEL, throttleIndex);
+            View v = findViewById(speed_cell_resource_ids.getResourceId(throttleIndex,0));
             v.setOnTouchListener(functionButtonTouchListener);
 
             // set up listeners for all throttles
-            SeekBar s = findViewById(R.id.speed_0);
-            switch (i) {
-                case 1:
-                    s = findViewById(R.id.speed_1);
-                    break;
-                case 2:
-                    s = findViewById(R.id.speed_2);
-                    break;
-                case 3:
-                    s = findViewById(R.id.speed_3);
-                    break;
-                case 4:
-                    s = findViewById(R.id.speed_4);
-                    break;
-                case 5:
-                    s = findViewById(R.id.speed_5);
-                    break;
-            }
             ThrottleSeekBarListener thl;
-            sbs[i] = s;
-            thl = new ThrottleSeekBarListener(i);
-            sbs[i].setOnSeekBarChangeListener(thl);
-            sbs[i].setOnTouchListener(thl);
+            sbs[throttleIndex] = findViewById(speed_resource_ids.getResourceId(throttleIndex,0));
+            thl = new ThrottleSeekBarListener(throttleIndex);
+            sbs[throttleIndex].setOnSeekBarChangeListener(thl);
+            sbs[throttleIndex].setOnTouchListener(thl);
 
             max_throttle_change = 1;
 
-            switch (i) {
-                case 0:
-                    llThrottleLayouts[i] = findViewById(R.id.throttle_0);
-                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_0);
-                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_0);
-                    tvVols[i] = findViewById(R.id.volume_indicator_0); // volume indicators
-                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_0); // gamepad indicators
-                    tvSpdLabs[i] = findViewById(R.id.speed_label_0); // set_default_function_labels();
-                    tvSpdVals[i] = findViewById(R.id.speed_value_label_0);
-                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_0);
-                    break;
-                case 1:
-                    llThrottleLayouts[i] = findViewById(R.id.throttle_1);
-                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_1);
-                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_1);
-                    tvVols[i] = findViewById(R.id.volume_indicator_1); // volume indicators
-                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_1); // gamepad indicators
-                    tvSpdLabs[i] = findViewById(R.id.speed_label_1); // set_default_function_labels();
-                    tvSpdVals[i] = findViewById(R.id.speed_value_label_1);
-                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_1);
-                    break;
-                case 2:
-                    llThrottleLayouts[i] = findViewById(R.id.throttle_2);
-                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_2);
-                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_2);
-                    tvVols[i] = findViewById(R.id.volume_indicator_2); // volume indicators
-                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_2); // gamepad indicators
-                    tvSpdLabs[i] = findViewById(R.id.speed_label_2); // set_default_function_labels();
-                    tvSpdVals[i] = findViewById(R.id.speed_value_label_2);
-                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_2);
-                    break;
-                case 3:
-                    llThrottleLayouts[i] = findViewById(R.id.throttle_3);
-                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_3);
-                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_3);
-                    tvVols[i] = findViewById(R.id.volume_indicator_3); // volume indicators
-                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_3); // gamepad indicators
-                    tvSpdLabs[i] = findViewById(R.id.speed_label_3); // set_default_function_labels();
-                    tvSpdVals[i] = findViewById(R.id.speed_value_label_3);
-                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_3);
-                    break;
-                case 4:
-                    llThrottleLayouts[i] = findViewById(R.id.throttle_4);
-                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_4);
-                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_4);
-                    tvVols[i] = findViewById(R.id.volume_indicator_4); // volume indicators
-                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_4); // gamepad indicators
-                    tvSpdLabs[i] = findViewById(R.id.speed_label_4); // set_default_function_labels();
-                    tvSpdVals[i] = findViewById(R.id.speed_value_label_4);
-                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_4);
-                    break;
-                case 5:
-                    llThrottleLayouts[i] = findViewById(R.id.throttle_5);
-                    llLocoIdAndSpeedViewGroups[i] = findViewById(R.id.loco_buttons_group_5);
-                    llLocoDirectionButtonViewGroups[i] = findViewById(R.id.dir_buttons_table_5);
-                    tvVols[i] = findViewById(R.id.volume_indicator_5); // volume indicators
-                    tvGamePads[i] = findViewById(R.id.gamepad_indicator_5); // gamepad indicators
-                    tvSpdLabs[i] = findViewById(R.id.speed_label_5); // set_default_function_labels();
-                    tvSpdVals[i] = findViewById(R.id.speed_value_label_5);
-                    functionButtonViewGroups[i] = findViewById(R.id.function_buttons_table_5);
-                    break;
-            }
+            llThrottleLayouts[throttleIndex] = findViewById(throttle_resource_ids.getResourceId(throttleIndex,0));
+            llLocoIdAndSpeedViewGroups[throttleIndex] = findViewById(loco_buttons_group_resource_ids.getResourceId(throttleIndex,0));
+            llLocoDirectionButtonViewGroups[throttleIndex] = findViewById(dir_buttons_table_resource_ids.getResourceId(throttleIndex,0));
+            tvVols[throttleIndex] = findViewById(volume_indicator_resource_ids.getResourceId(throttleIndex,0)); // volume indicators
+            tvGamePads[throttleIndex] = findViewById(gamepad_indicator_resource_ids.getResourceId(throttleIndex,0)); // gamepad indicators
+            tvSpdLabs[throttleIndex] = findViewById(speed_label_resource_ids.getResourceId(throttleIndex,0)); // set_default_function_labels();
+            tvSpdVals[throttleIndex] = findViewById(speed_value_label_resource_ids.getResourceId(throttleIndex,0));
+            functionButtonViewGroups[throttleIndex] = findViewById(function_buttons_table_resource_ids.getResourceId(throttleIndex,0));
 
             // set throttle change delay timers
-            changeTimers[i] = new PacingDelay(changeDelay);
-            speedMessagePacingTimers[i] = new SpeedPacingDelay(maxSpeedMessageRate, i);
+            changeTimers[throttleIndex] = new PacingDelay(changeDelay);
+            speedMessagePacingTimers[throttleIndex] = new SpeedPacingDelay(maxSpeedMessageRate, throttleIndex);
         }
 
         clearVolumeAndGamepadAdditionalIndicators();
@@ -6486,29 +6069,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if ((!prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SWITCHING)) || (prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL))) {
             // set listeners for the limit speed buttons for each throttle
             LimitSpeedButtonTouchListener limitSpeedButtonTouchListener;
-            Button bLimitSpeed = findViewById(R.id.limit_speed_0);
+            Button bLimitSpeed;
+
+            TypedArray limit_speed_resource_ids = getResources().obtainTypedArray(R.array.limit_speed_resource_ids);
 
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                switch (throttleIndex) {
-                    case 0:
-                        bLimitSpeed = findViewById(R.id.limit_speed_0);
-                        break;
-                    case 1:
-                        bLimitSpeed = findViewById(R.id.limit_speed_1);
-                        break;
-                    case 2:
-                        bLimitSpeed = findViewById(R.id.limit_speed_2);
-                        break;
-                    case 3:
-                        bLimitSpeed = findViewById(R.id.limit_speed_3);
-                        break;
-                    case 4:
-                        bLimitSpeed = findViewById(R.id.limit_speed_4);
-                        break;
-                    case 5:
-                        bLimitSpeed = findViewById(R.id.limit_speed_5);
-                        break;
-                }
+                bLimitSpeed = findViewById(limit_speed_resource_ids.getResourceId(throttleIndex,0));
                 if (bLimitSpeed != null) {
                     bLimitSpeeds[throttleIndex] = bLimitSpeed;
                     limitSpeedSliderScalingFactors[throttleIndex] = 1;
@@ -6524,29 +6090,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         // set listeners for the pause buttons for each throttle
         PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener;
-        Button bPauseSpeed = findViewById(R.id.pause_speed_0);
+        Button bPauseSpeed;
+
+        TypedArray pause_speed_resource_ids = getResources().obtainTypedArray(R.array.pause_speed_resource_ids);
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    bPauseSpeed = findViewById(R.id.pause_speed_0);
-                    break;
-                case 1:
-                    bPauseSpeed = findViewById(R.id.pause_speed_1);
-                    break;
-                case 2:
-                    bPauseSpeed = findViewById(R.id.pause_speed_2);
-                    break;
-                case 3:
-                    bPauseSpeed = findViewById(R.id.pause_speed_3);
-                    break;
-                case 4:
-                    bPauseSpeed = findViewById(R.id.pause_speed_4);
-                    break;
-                case 5:
-                    bPauseSpeed = findViewById(R.id.pause_speed_5);
-                    break;
-            }
+            bPauseSpeed = findViewById(pause_speed_resource_ids.getResourceId(throttleIndex,0));
             if (bPauseSpeed != null) {
                 bPauseSpeeds[throttleIndex] = bPauseSpeed;
                 pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
@@ -6560,27 +6109,23 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         //device sounds buttons
         SoundDeviceMuteButtonTouchListener muteTl;
-        Button bMute = findViewById(R.id.device_sounds_mute_0);
+        Button bMute;
         SoundDeviceExtrasButtonTouchListener soundsExtrasTl;
-        Button bBell = findViewById(R.id.device_sounds_bell_0);
-        Button bHorn = findViewById(R.id.device_sounds_horn_0);
-        Button bHornShort = findViewById(R.id.device_sounds_horn_short_0);
+        Button bBell;
+        Button bHorn;
+        Button bHornShort;
+
+        TypedArray device_sounds_mute_resource_ids = getResources().obtainTypedArray(R.array.device_sounds_mute_resource_ids);
+        TypedArray device_sounds_bell_resource_ids = getResources().obtainTypedArray(R.array.device_sounds_bell_resource_ids);
+        TypedArray device_sounds_horn_resource_ids = getResources().obtainTypedArray(R.array.device_sounds_horn_resource_ids);
+        TypedArray device_sounds_horn_short_resource_ids = getResources().obtainTypedArray(R.array.device_sounds_horn_short_resource_ids);
 
         for (int throttleIndex = 0; ((throttleIndex < mainapp.maxThrottles) && (throttleIndex < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)); throttleIndex++) {
-            switch (throttleIndex) {
-                case 0:
-                    bMute = findViewById(R.id.device_sounds_mute_0);
-                    bBell = findViewById(R.id.device_sounds_bell_0);
-                    bHorn = findViewById(R.id.device_sounds_horn_0);
-                    bHornShort = findViewById(R.id.device_sounds_horn_short_0);
-                    break;
-                case 1:
-                    bMute = findViewById(R.id.device_sounds_mute_1);
-                    bBell = findViewById(R.id.device_sounds_bell_1);
-                    bHorn = findViewById(R.id.device_sounds_horn_1);
-                    bHornShort = findViewById(R.id.device_sounds_horn_short_1);
-                    break;
-            }
+            bMute = findViewById(device_sounds_mute_resource_ids.getResourceId(throttleIndex,0));
+            bBell = findViewById(device_sounds_bell_resource_ids.getResourceId(throttleIndex,0));
+            bHorn = findViewById(device_sounds_horn_resource_ids.getResourceId(throttleIndex,0));
+            bHornShort = findViewById(device_sounds_horn_short_resource_ids.getResourceId(throttleIndex,0));
+
             if (bMute != null) { // some layouts only have one throttle or no mute buttons so this may be null
                 bMutes[throttleIndex] = bMute;
                 muteTl = new SoundDeviceMuteButtonTouchListener(throttleIndex);
@@ -6622,19 +6167,17 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         webView.getSettings().setUseWideViewPort(true); // Enable greater
         // zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
-        if (savedInstanceState != null) {
-            if (savedInstanceState.getSerializable("scale") != null) {
-                scale = (float) savedInstanceState.getSerializable(("scale"));
+        if (onCreateSavedInstanceState != null) {
+            if (onCreateSavedInstanceState.getSerializable("scale") != null) {
+                scale = (float) onCreateSavedInstanceState.getSerializable(("scale"));
             }
         }
         webView.setInitialScale((int) (100 * scale));
         webView.clearCache(true);   // force fresh javascript download on first connection
 
         // enable remote debugging of all webviews
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
-                WebView.setWebContentsDebuggingEnabled(true);
-            }
+        if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
+            WebView.setWebContentsDebuggingEnabled(true);
         }
 
         // open all links inside the current view (don't start external web
@@ -6698,7 +6241,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         };
 
         webView.setWebViewClient(EDWebClient);
-        if (currentUrl == null || savedInstanceState == null || webView.restoreState(savedInstanceState) == null) {
+        if (currentUrl == null || onCreateSavedInstanceState == null || webView.restoreState(onCreateSavedInstanceState) == null) {
             load_webview(); // reload if no saved state or no page had loaded when state was saved
         } else {
             webView.setInitialScale((int) (100 * scale));   // apply scale to restored webView
@@ -6723,27 +6266,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // set GamePad Support
         setGamepadKeys();
 
-        // initialise ESU MCII
-        if (IS_ESU_MCII) {
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialise fragments...");
-            int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
-            esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
-            esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
-            esuStopButtonFragment = StopButtonFragment.newInstance();
-            esuStopButtonFragment.setOnStopButtonListener(esuOnStopButtonListener);
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: ...fragments initialised");
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(esuThrottleFragment, "mc2:throttle")
-                    .add(esuStopButtonFragment, "mc2:stopKey")
-                    .commit();
-            esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF, true);
-            esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
-
-            // Now apply knob zero trim
-            updateEsuMc2ZeroTrim();
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialisation complete");
-        }
+        initialiseEsuMc2();
 
         setupSensor(); // setup the support for shake actions.
 
@@ -6772,142 +6295,55 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             toolbar.showOverflowMenu();
         }
 
-        if (prefs.getBoolean("prefThrottlesLocos",getResources().getBoolean(R.bool.prefThrottlesLocosDefaultValue))) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.safeToastInstructional(R.string.prefThrottlesLocosToast, Toast.LENGTH_LONG);
-                    int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
-                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, numThrottles);
-                    set_labels();
-                }
-            }, 2000);
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            systemStatusRowHeightKeep = resources.getDimensionPixelSize(resourceId);
         }
-
-    } // end of onCreate()
-
-    @SuppressLint("ApplySharedPref")
-    @Override
-    public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
-        super.onResume();
-        threaded_application.activityResumed(activityName);
-        mainapp.removeNotification(this.getIntent());
-
-        threaded_application.currentActivity = activity_id_type.THROTTLE;
-        if (mainapp.isForcingFinish()) { // expedite
-            mainapp.appIsFinishing = true;
-            this.finish();
-            overridePendingTransition(0, 0);
-            return;
-        }
-        mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-
-        mainapp.exitDoubleBackButtonInitiated = 0;
-
-        screenNameLine = findViewById(R.id.screen_name_line);
-        toolbar = findViewById(R.id.toolbar);
-        statusLine = findViewById(R.id.status_line);
-
-        // format the screen area
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            enableDisableButtons(throttleIndex);
-            soundsShowHideDeviceSoundsButton(throttleIndex);
-            showHideSpeedLimitAndPauseButtons(throttleIndex);
-        }
-
-        gestureFailed = false;
-        gestureInProgress = false;
-
-        getCommonPrefs(false);
-        getDirectionButtonPrefs();
-
-        setThrottleNumLimits();
-
-
-        clearVolumeAndGamepadAdditionalIndicators();
-
-        getDirectionButtonPrefs();
-        setDirectionButtonLabels(); // set all the direction button labels
-
-        setGamepadKeys();
-
-        applySpeedRelatedOptions();  // update all throttles
-
-        if (mainapp.soundsReloadSounds) loadSounds();
-
-        set_labels(); // handle labels and update view
-        pauseResumeWebView();
-
-        if (mainapp.EStopActivated) {
-            speedUpdateAndNotify(0);  // update all three throttles
-            applySpeedRelatedOptions();  // update all three throttles
-
-            mainapp.EStopActivated = false;
-        }
-
-        if (IS_ESU_MCII && isEsuMc2Stopped) {
-            if (isEsuMc2AllStopped) {
-                // disable buttons for all throttles
-                for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                    setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, false);
-                }
-            } else {
-                // disable buttons for current throttle
-                setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
-            }
-        }
-
-        // update the direction indicators
-        showDirectionIndications();
-
-        showHideConsistMenus();
-
-        CookieManager cookieManager = CookieManager.getInstance();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
-        }
-        cookieManager.setAcceptCookie(true);
-
-        if (!prefAccelerometerShake.equals(acceleratorometer_action_type.NONE)) {
-            if (!accelerometerCurrent) { // preference has only just been changed to turn it on
-                setupSensor();
-            } else {
-                sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
-            }
-        }
-
-        if (((prefKidsTime > 0) && (kidsTimerRunning != kids_timer_action_type.RUNNING))) {
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_ENABLE, "", 0, 0);
+        if (IS_ESU_MCII) {
+            systemNavigationRowHeightKeep = 0;
         } else {
-            if (kidsTimerRunning == kids_timer_action_type.ENDED) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
-            }
-
-            if (prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)) {
-                kidsTimerActions(kids_timer_action_type.DISABLED, 1);
+            resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                systemNavigationRowHeightKeep = resources.getDimensionPixelSize(resourceId);
             }
         }
+        immersiveModeIsOn = false;
+        immersiveModeTempIsOn = false;
 
-        tts.loadPrefs();
 
-        setActivityTitle();
+        right_speed_button_resource_ids.recycle();
+        left_speed_button_resource_ids .recycle();
+        button_select_loco_resource_ids.recycle();
+        loco_label_resource_ids.recycle();
+        loco_left_direction_indication_resource_ids.recycle();
+        loco_right_direction_indication_resource_ids.recycle();
+        button_fwd_resource_ids.recycle();
+        button_stop_resource_ids.recycle();
+        button_rev_resource_ids.recycle();
+        speed_cell_resource_ids.recycle();
+        speed_resource_ids.recycle();
+        throttle_resource_ids.recycle();
+        loco_buttons_group_resource_ids.recycle();
+        dir_buttons_table_resource_ids.recycle();
+        volume_indicator_resource_ids.recycle();
+        gamepad_indicator_resource_ids.recycle();
+        speed_label_resource_ids.recycle();
+        speed_value_label_resource_ids.recycle();
+        function_buttons_table_resource_ids.recycle();
 
-        if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
-            prefs.edit().putBoolean("prefForcedRestart", false).commit();
+        pause_speed_resource_ids.recycle();
 
-            int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
-            Log.d(threaded_application.applicationName, activityName + ": onResume(): connection: Forced Restart Reason: " + prefForcedRestartReason);
-            if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-                Intent in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-            }
-        }
-    } // end onResume
+        device_sounds_mute_resource_ids.recycle();
+        device_sounds_bell_resource_ids.recycle();
+        device_sounds_horn_resource_ids.recycle();
+        device_sounds_horn_short_resource_ids.recycle();
+
+    } // end initialiseUiElements()
 
     private void initialiseArrays() {
+        Log.d(threaded_application.applicationName, activityName + ": initialiseArrays(): called");
+
         bSels = new Button[mainapp.maxThrottlesCurrentScreen];
         tvbSelsLabels = new TextView[mainapp.maxThrottlesCurrentScreen];
         bRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
@@ -6957,6 +6393,30 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         changeTimers = new PacingDelay[mainapp.maxThrottlesCurrentScreen];
         speedMessagePacingTimers = new SpeedPacingDelay[mainapp.maxThrottlesCurrentScreen];
 
+    }
+
+    // initialise ESU MCII/PRO
+    private void initialiseEsuMc2() {
+        if (IS_ESU_MCII) {
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialise fragments...");
+            int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
+            esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
+            esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
+            esuStopButtonFragment = StopButtonFragment.newInstance();
+            esuStopButtonFragment.setOnStopButtonListener(esuOnStopButtonListener);
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: ...fragments initialised");
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(esuThrottleFragment, "mc2:throttle")
+                    .add(esuStopButtonFragment, "mc2:stopKey")
+                    .commit();
+            esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.OFF, true);
+            esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.STEADY_FLASH, true);
+
+            // Now apply knob zero trim
+            updateEsuMc2ZeroTrim();
+            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialisation complete");
+        }
     }
 
     private void showHideConsistMenus() {
@@ -7034,9 +6494,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (webViewIsOn) {
             pauseWebView();
         }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.getInstance().stopSync();
-        }
 
         if ((isScreenLocked) || (screenDimmed)) {
             isScreenLocked = false;
@@ -7055,8 +6512,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         super.onWindowFocusChanged(hasFocus);
 
         if (hasFocus) {
-            setImmersiveModeOn(webView, false);
-            set_labels();       // need to redraw button Press states since ActionBar and Notification access clears them
+//            setImmersiveMode(webView);
+            setLabels();       // need to redraw button Press states since ActionBar and Notification access clears them
         }
     }
 
@@ -7072,22 +6529,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // direction indication immediately in OnCreate following a rotate
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
-        }
-    }
-
-    @Override
-    public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
-        super.onStart();
-        // put pointer to this activity's handler in main app's shared variable
-        if (mainapp.throttle_msg_handler == null)
-            mainapp.throttle_msg_handler = new ThrottleMessageHandler(Looper.getMainLooper());
-
-        // if it was killed in background, clear the save preferences
-        if ( (prefs.getBoolean("prefForcedRestart", false))
-                && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
-            prefs.edit().putBoolean("prefForcedRestart", false).commit();
-            prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
         }
     }
 
@@ -7330,8 +6771,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     // lookup and set values of various informational text labels and size the
     // screen elements
 
-    protected void set_labels() {
-//         Log.d(threaded_application.applicationName, activityName + ": set_labels()");
+    protected void setLabels() {
+        Log.d(threaded_application.applicationName, activityName + ": setLabels()");
 
         if (mainapp.appIsFinishing) {
             return;
@@ -7372,7 +6813,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         refreshMenu();
 
         vThrotScrWrap.invalidate();
-        // Log.d(threaded_application.applicationName, activityName + ": set_labels(): end");
+        // Log.d(threaded_application.applicationName, activityName + ": setLabels(): end");
     }
 
     private void refreshMenu() {
@@ -7399,6 +6840,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             displayEsuMc2KnobMenuButton(TMenu);
             mainapp.displayDeviceSoundsThrottleButton(TMenu);
             mainapp.displayDccExButton(TMenu);
+            mainapp.displayTurnoutsButton(TMenu);
+            mainapp.displayRoutesButton(TMenu);
 //            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
     }
@@ -7412,8 +6855,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
 
         if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {
-//            mVolumeKeysAutoIncrement = false;
-//            mVolumeKeysAutoDecrement = false;
             doVolumeButtonAction(event.getAction(), key, 0);
             return (true); // stop processing this key
         } else if ((key == KEYCODE_VOLUME_MUTE) || (key == KEYCODE_HEADSETHOOK)) {
@@ -7437,9 +6878,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     webView.setInitialScale((int) (100 * scale)); // restore scale
                     return (true);
                 } else {
-                    if (webView != null) {
-                        setImmersiveModeOn(webView, false);
-                    }
+                    setImmersiveMode(webView);
                     if (mainapp.throttle_msg_handler != null) {
                         mainapp.checkExit(this);
                     } else { // something has gone wrong and the activity did not shut down properly so force it
@@ -7451,24 +6890,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT);
             }
         } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
-//            if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
-//                for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
-//                    if ( throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
-//                          && (mainapp.consists[throttleIndex].isActive()) ) {
-//                        if (key == KEYCODE_VOLUME_UP) {
-//                            if (repeatCnt == 0) {
-//                                mVolumeKeysAutoIncrement = true;
-//                                volumeKeysRepeatUpdateHandler.post(new VolumeKeysRptUpdater(throttleIndex));
-//                            }
-//                        } else {
-//                            if (repeatCnt == 0) {
-//                                mVolumeKeysAutoDecrement = true;
-//                                volumeKeysRepeatUpdateHandler.post(new VolumeKeysRptUpdater(throttleIndex));
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             doVolumeButtonAction(event.getAction(), key, repeatCnt);
             mainapp.exitDoubleBackButtonInitiated = 0;
             return (true); // stop processing this key
@@ -7595,6 +7016,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
         mainapp.displayDeviceSoundsThrottleButton(menu);
         mainapp.displayDccExButton(menu);
+        mainapp.displayTurnoutsButton(menu);
+        mainapp.displayRoutesButton(menu);
 
         adjustToolbarSize(menu);
 
@@ -7605,18 +7028,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (webView != null) {
-            setImmersiveModeOn(webView, false);
-        }
+        setImmersiveMode(webView);
 
         // Handle all of the possible menu actions.
         Intent in;
-        if (item.getItemId() == R.id.turnouts_mnu) {
+        if ( (item.getItemId() == R.id.turnouts_mnu)
+        || (item.getItemId() == R.id.turnouts_button) ) {
             in = new Intent().setClass(this, turnouts.class);
             startACoreActivity(this, in, false, 0);
             return true;
 
-        } else if (item.getItemId() == R.id.routes_mnu) {
+        } else if ( (item.getItemId() == R.id.routes_mnu)
+        || (item.getItemId() == R.id.routes_button) ) {
             in = new Intent().setClass(this, routes.class);
             startACoreActivity(this, in, false, 0);
             return true;
@@ -7882,7 +7305,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 }
                 for (int i = 0; i < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES; i++) {
                     if (mainapp.consists != null && mainapp.consists[i] != null && !mainapp.consists[i].isActive()) {
-                        soundsStopAllSoundsForLoco(i);
+                        if(ipls!=null) ipls.stopAllSoundsForLoco(i);
                     }
 //                    showHideMuteButton(i);
                     soundsShowHideDeviceSoundsButton(i);
@@ -7976,7 +7399,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        set_labels();
+        setLabels();
         soundsShowHideAllMuteButtons();
     }
 
@@ -8190,17 +7613,24 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         case swipe_up_down_option_type.DIM:
                             setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpDownScreenDimmed));
                             break;
+
                         case swipe_up_down_option_type.IMMERSIVE:
                             if (immersiveModeIsOn) {
-                                setImmersiveModeOff(webView, false);
+                                immersiveModeTempIsOn = false;
+                                setImmersiveModeOff(webView, true);
                                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT);
                             } else {
-                                setImmersiveModeOn(webView, false);
+                                immersiveModeTempIsOn = true;
+                                setImmersiveModeOn(webView, true);
                             }
+                            setLabels();
+                            throttleScreenWrapper.invalidate();
                             break;
+
                         case swipe_up_down_option_type.SWITCH_LAYOUTS:
                             switchThrottleScreenType();
                             break;
+                            
                         case swipe_up_down_option_type.CHANGE_SPEED:
                             if (deltaY > 0.0) {  // swipe down
                                 decrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 1, mainapp.prefSwipeSpeedChangeStep);
@@ -8208,6 +7638,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 incrementSpeed(whichVolume, speed_commands_from_type.BUTTONS, 1, mainapp.prefSwipeSpeedChangeStep);
                             }
                             break;
+
                         case swipe_up_down_option_type.NEXT_VOLUME:
                             setNextActiveThrottle(true);
                             adjustThrottleHeights();
@@ -8663,11 +8094,19 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressLint("ApplySharedPref")
     protected void switchThrottleScreenType() {
+        Log.d(threaded_application.applicationName, activityName + ": switchThrottleScreenType() ");
+
+        if(!mainapp.throttleSwitchAllowed) return;
+        Log.d(threaded_application.applicationName, activityName + ": switchThrottleScreenType() Allowed");
+
+        mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
+
         boolean prefThrottleSwitchButtonCycleAll = prefs.getBoolean("prefThrottleSwitchButtonCycleAll", getApplicationContext().getResources().getBoolean(R.bool.prefThrottleSwitchButtonCycleAllDefaultValue));
         String prefThrottleSwitchOption1 = prefs.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption1DefaultValue));
         String prefThrottleSwitchOption2 = prefs.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleSwitchOption2DefaultValue));
 
-        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(prefThrottleScreenType);
+//        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(prefThrottleScreenType);
+        String numThrottles;
 
         if (!webViewLocation.equals(keepWebViewLocation)) {
             showHideWebView("");
@@ -8676,14 +8115,21 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         if (!prefThrottleSwitchButtonCycleAll) {
             if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
                 prefThrottleScreenType = prefThrottleSwitchOption2;
+                numThrottles = prefs.getString("prefThrottleSwitchOption2NumThrottles", getResources().getString(R.string.NumThrottleDefaultValue));
+                mainapp.numThrottles = mainapp.Numeralise(numThrottles);
             } else {
                 prefThrottleScreenType = prefThrottleSwitchOption1;
+                numThrottles = prefs.getString("prefThrottleSwitchOption1NumThrottles", getResources().getString(R.string.NumThrottleDefaultValue));
+                mainapp.numThrottles = mainapp.Numeralise(numThrottles);
             }
         } else {
             prefThrottleScreenType = mainapp.getNextThrottleLayout();
+            numThrottles = prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue));
+            mainapp.numThrottles = mainapp.Numeralise(numThrottles);
         }
 
         prefs.edit().putString("prefThrottleScreenType", prefThrottleScreenType).commit();
+        prefs.edit().putString("NumThrottle", numThrottles).commit();
         prefs.edit().putString("WebViewLocation", webViewLocation).commit();
         fixNumThrottles();
 
@@ -8796,22 +8242,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         return speed;
     } // end getSpeedFromCurrentSliderPosition()
 
-    void soundsStopAllSoundsForLoco(int whichThrottle) {
-//        Log.d(threaded_application.applicationName, activityName + ": soundsStopAllSoundsForLoco(): (locoSound) wt: " + whichThrottle);
-        if (mainapp.soundPool != null) {
-            for (int i = 0; i < 17; i++) {
-                mainapp.soundPool.stop(mainapp.soundsLocoStreamId[whichThrottle][i]);
-            }
-            mainapp.soundsLocoQueue[whichThrottle].emptyQueue();
-            for (int soundType = 0; soundType < 3; soundType++) {
-                for (int i = 0; i < 3; i++) {
-                    mainapp.soundPool.stop(mainapp.soundsExtrasStreamId[soundType][whichThrottle][i]);
-                }
-            }
-            mainapp.soundsLocoCurrentlyPlaying[whichThrottle] = -1;
-        }
-    } // end soundsStopAllSoundsForLoco
-
     protected void setSoundButtonState(Button btn, boolean state) {
         if (state) {
             btn.setSelected(true);
@@ -8845,7 +8275,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 mainapp.buttonVibration();
             }
-            soundsMuteUnmuteCurrentSounds(whichThrottle);
+            if(ipls!=null) ipls.muteUnmuteCurrentSounds(whichThrottle, soundsIsMuted[whichThrottle]);
             return true;
         }
     }
@@ -8967,48 +8397,6 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    float soundsVolume(int soundType, int whichThrottle) {
-        float volume = 0;
-        if ((whichThrottle < mainapp.maxThrottlesCurrentScreen) && (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)) {
-            if (!soundsIsMuted[whichThrottle]) {
-                switch (soundType) {
-                    case sounds_type.BELL: // bell
-                        volume = mainapp.prefDeviceSoundsBellVolume;
-                        break;
-                    case sounds_type.HORN: // horn
-                    case sounds_type.HORN_SHORT: // horn
-                        volume = mainapp.prefDeviceSoundsHornVolume;
-                        break;
-                    case sounds_type.LOCO: // loco
-                    default:
-                        volume = mainapp.prefDeviceSoundsLocoVolume;
-                        break;
-                }
-            }
-        }
-        return volume;
-    }
-
-    void soundsMuteUnmuteCurrentSounds(int whichThrottle) {
-        if (mainapp.soundPool != null) {
-            if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) {
-                int mSound = mainapp.soundsLocoCurrentlyPlaying[whichThrottle];
-                if (mSound >= 0) {
-                    mainapp.soundPool.setVolume(mainapp.soundsLocoStreamId[whichThrottle][mSound],
-                            soundsVolume(sounds_type.LOCO, whichThrottle),
-                            soundsVolume(sounds_type.LOCO, whichThrottle));
-                }
-                for (int soundType = 0; soundType < 2; soundType++) {  // don't worry about the short horn
-                    if (mainapp.soundsExtrasCurrentlyPlaying[soundType][whichThrottle] == sounds_type.BELL_HORN_LOOP) {
-                        mainapp.soundPool.setVolume(mainapp.soundsExtrasStreamId[soundType][whichThrottle][sounds_type.BELL_HORN_LOOP],
-                                soundsVolume(soundType + 1, whichThrottle),
-                                soundsVolume(soundType + 1, whichThrottle));
-                    }
-                }
-            }
-        }
-    }
-
     void showHideSpeedLimitAndPauseButtons(int whichThrottle) {
         // show or hide the limit speed buttons
         if ((bLimitSpeeds != null) && (bLimitSpeeds[whichThrottle] != null)) {
@@ -9036,6 +8424,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     protected void loadSounds() {
+        Log.d(threaded_application.applicationName, activityName + ": loadSounds(): (ipls)" );
+        if (ipls == null) ipls = new InPhoneLocoSounds(mainapp, prefs);
         if (iplsLoader == null) iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
         mainapp.soundsReloadSounds = true;
         iplsLoader.loadSounds();
@@ -9074,7 +8464,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     protected void showTargetDirectionIndication(int whichThrottle) {}
     protected int getSpeedFromSemiRealisticThrottleCurrentSliderPosition(int whichThrottle) { return 0; }
     void semiRealisticThrottleSliderPositionUpdate(int whichThrottle, int newSpeed) {}
-    void stopSemiRealsticThrottleSpeedButtonRepeater(int whichThrottle) {}
+    void stopSemiRealisticThrottleSpeedButtonRepeater(int whichThrottle) {}
     void incrementBrakeSliderPosition(int whichThrottle) {}
     void decrementBrakeSliderPosition(int whichThrottle) {}
     void incrementLoadSliderPosition(int whichThrottle) {}

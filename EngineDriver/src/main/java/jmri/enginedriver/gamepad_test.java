@@ -35,8 +35,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,12 +68,11 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.beep_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -108,12 +109,12 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private final String[] prefGamePadButtons = {"Next Throttle","Stop", "Function 00/Light", "Function 01/Bell", "Function 02/Horn",
             "Increase Speed", "Reverse", "Decrease Speed", "Forward", "All Stop","Select", "Left Shoulder","Right Shoulder","Left Trigger","Right Trigger","Left Thumb","Right Thumb","","","","","",""};
 
-    //                               0         1    2           3          4          5          6          7          8          9          10        11 12 13 14 15 16 17 18 19 20
+    //                               0         1    2           3          4          5          6          7          8          9          10              11 12 13 14 15 16 17 18 19 20
     //                              none     NextThr  Speed+    Speed-     Fwd        Rev        All Stop   F2         F1         F0         Stop
-    private final int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private final int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F,0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private final int[] gamePadKeys =     {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    private final int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private static final int[] BUTTON_ACTION_NUMBERS ={
-            -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
+                                           -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
     private static final int GAMEPAD_KEYS_LENGTH = 21;
 
     private ToneGenerator tg;
@@ -146,16 +147,48 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     /** @noinspection SameParameterValue*/
     void GamepadFeedbackSound(boolean invalidAction) {
-        if (invalidAction)
-            tg.startTone(ToneGenerator.TONE_PROP_NACK);
-        else
-            tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+        // the tone generator is not compatible with the ipls
+        if ((!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none"))) {
+            if (invalidAction) {
+                gamepadBeep(beep_type.NAK);
+            } else {
+                gamepadBeep(beep_type.ACK);
+            }
+        } else {
+
+            if (tg != null) {
+                if (invalidAction)
+                    tg.startTone(ToneGenerator.TONE_PROP_NACK);
+                else
+                    tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+            }
+        }
+    }
+
+    void gamepadBeep(int whichBeep) {
+        if (mainapp.prefGamePadFeedbackVolume == 0) return;
+
+        if (mainapp._mediaPlayer != null) {
+            mainapp._mediaPlayer.reset();     // reset stops and release on any state of the player
+        }
+
+        mainapp._mediaPlayer = MediaPlayer.create(this, mainapp.gamepadBeepIds[whichBeep]);
+
+        if (mainapp._mediaPlayer!=null) {
+            float volumeFloat = ((float) mainapp.prefGamePadFeedbackVolume) / 100.0f;
+
+            mainapp._mediaPlayer.setVolume(volumeFloat, volumeFloat);
+            mainapp._mediaPlayer.start();
+        }
     }
 
     void GamepadFeedbackSoundStop() {
+        // the tone generator is not compatible with the ipls
+        if ((!mainapp.prefDeviceSounds[0].equals("none")) || (!mainapp.prefDeviceSounds[1].equals("none")))
+            return;
+
         tg.stopTone();
     }
-
 
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     private void setGamepadKeys() {
@@ -163,11 +196,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
 
         gamePadModeEntryValuesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
-        final List<String> gamePadEntryValuesList = new ArrayList<>(Arrays.asList(gamePadModeEntryValuesArray));
+//        final List<String> gamePadEntryValuesList = new ArrayList<>(Arrays.asList(gamePadModeEntryValuesArray));
 
         // display version
         gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntries);
-        final List<String> gamePadModeEntriesList = new ArrayList<>(Arrays.asList(gamePadModeEntriesArray));
+//        final List<String> gamePadModeEntriesList = new ArrayList<>(Arrays.asList(gamePadModeEntriesArray));
 
         prefGamePadTypeIndex = Arrays.asList(gamePadModeEntryValuesArray).indexOf(prefGamePadType);
         if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
@@ -197,94 +230,34 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         prefGamePadButtons[15] = prefs.getString("prefGamePadButtonRightThumb", getApplicationContext().getResources().getString(R.string.prefGamePadButtonRightThumbDefaultValue));
 
 
-        // make sure the Softkeyboard is hidden
+        // make sure the Soft Keyboard is hidden
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
 
         int[] bGamePadKeys;
         int[] bGamePadKeysUp;
 
-        gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsDefault);
-        switch (prefGamePadType) {
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad);
-                bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCadePlusDpad_UpCodes);
-                break;
-            case "MTK":
-            case "MTK-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMTK);
-                bGamePadKeysUp = bGamePadKeys;
-                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMTK);
-                break;
-            case "Game":
-            case "Game-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGame);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Game-alternate-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGameAlternate);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "MagicseeR1B":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1B);
-                bGamePadKeysUp = bGamePadKeys;
-                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMagicR1);
-                break;
-            case "MagicseeR1A":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1A);
-                bGamePadKeysUp = bGamePadKeys;
-                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMagicR1);
-                break;
-            case "MagicseeR1C":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadMagicseeR1C);
-                bGamePadKeysUp = bGamePadKeys;
-                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsMagicR1);
-                break;
-            case "FlydigiWee2":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadFlydigiWee2);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "UtopiaC":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadUtopiaC);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "AuvisioB":
-            case "AuvisioB-rotate":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadAuvisioB);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Generic":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric);
-                bGamePadKeysUp = bGamePadKeys;
-                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsGeneric);
-                break;
-            case "Generic3x4":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadGeneric3x4);
-                bGamePadKeysUp = bGamePadKeys;
-                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsGeneric3x4);
-                break;
-            case "Keyboard":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadNoneLabels);
-                bGamePadKeysUp = bGamePadKeys;
-                break;
-            case "Volume":
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadVolume);
-                bGamePadKeysUp = bGamePadKeys;
-                gamePadButtonLabelsArray = this.getResources().getStringArray(R.array.gamepadTestButtonLabelsVolume);
-                break;
-            default: // "iCade" or iCade-rotate
-                bGamePadKeys = this.getResources().getIntArray(R.array.prefGamePadiCade);
-                bGamePadKeysUp = this.getResources().getIntArray(R.array.prefGamePadiCade_UpCodes);
-                break;
-        }
+        gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
+        prefGamePadTypeIndex = Arrays.asList(gamePadModeEntriesArray).indexOf(prefGamePadType);
+        if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
 
-        for (int i=1;i<=16;i++) {
+        TypedArray prefGamePadTypeKeysIds = getResources().obtainTypedArray(R.array.prefGamePadTypeKeysIds);
+        TypedArray prefGamePadTypeKeysUpIds = getResources().obtainTypedArray(R.array.prefGamePadTypeKeysUpIds);
+        TypedArray gamepadTestButtonLabelsIds = getResources().obtainTypedArray(R.array.gamepadTestButtonLabelsIds);
+
+        bGamePadKeys = this.getResources().getIntArray(prefGamePadTypeKeysIds.getResourceId(prefGamePadTypeIndex,0));
+        bGamePadKeysUp = this.getResources().getIntArray(prefGamePadTypeKeysUpIds.getResourceId(prefGamePadTypeIndex,0));
+        gamePadButtonLabelsArray = this.getResources().getStringArray(gamepadTestButtonLabelsIds.getResourceId(prefGamePadTypeIndex,0));
+
+        prefGamePadTypeKeysIds.recycle();
+        prefGamePadTypeKeysUpIds.recycle();
+        gamepadTestButtonLabelsIds.recycle();
+
+        for (int i=1; i<=16; i++) {
             bButtons[i].setText(gamePadButtonLabelsArray[i]);  // set the button labels
             bButtons[i].setSelected(false);
             setButtonOff(bButtons[i]);
         }
-
 
         // now grab the keycodes and put them into the arrays that will actually be used.
         for (int i = 0; i<GAMEPAD_KEYS_LENGTH; i++ ) {
@@ -429,10 +402,10 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             int action;
 
             float xAxis;
-            xAxis = event.getAxisValue(MotionEvent.AXIS_X);
-            float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
-            float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
-            float yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+            xAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_X) * 10.0f) / 10.0f;
+            float yAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_Y) * 10.0f) / 10.0f;
+            float xAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_Z) * 10.0f) / 10.0f;
+            float yAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_RZ) *10.0f) / 10.0f;
 
             if ((xAxis!=0) || (yAxis!=0)) {
                 action = ACTION_DOWN;

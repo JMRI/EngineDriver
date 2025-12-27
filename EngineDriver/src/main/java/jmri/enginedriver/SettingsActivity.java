@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.ToneGenerator;
 import android.net.Uri;
@@ -141,6 +142,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private boolean forceReLaunchAppOnPreferencesClose = false;
 
     private boolean isInSubScreen = false;
+
+    private String prefThrottleSwitchOption1 = "Default";
+    private String prefThrottleSwitchOption2 = "Default";
 
     private String prefThrottleScreenType = "Default";
     private String prefThrottleScreenTypeOriginal = "Default";
@@ -1092,13 +1096,31 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
-    @SuppressLint("ApplySharedPref")
-    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
-        Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles()");
-        int numThrottles = mainapp.Numeralise(sharedPreferences.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
-        prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+    String getThrottleScreenType(SharedPreferences sharedPreferences, String throttleTypePrefName) {
+        switch (throttleTypePrefName) {
+            case "prefThrottleSwitchOption1":
+                prefThrottleSwitchOption1 = sharedPreferences.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                return prefThrottleSwitchOption1;
+            case "prefThrottleSwitchOption2":
+                prefThrottleSwitchOption2 = sharedPreferences.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                return prefThrottleSwitchOption2;
+            case "prefThrottleScreenType":
+            default:
+                prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                return prefThrottleScreenType;
+        }
+    }
 
-        int index = getThrottleScreenTypeArrayIndex(sharedPreferences);
+    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
+        limitNumThrottles(prefScreen, sharedPreferences, "prefThrottleScreenType", "NumThrottle");
+    }
+    @SuppressLint("ApplySharedPref")
+    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String throttleTypePrefName, String numThrottlePrefName) {
+        Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles()");
+        int numThrottles = mainapp.Numeralise(sharedPreferences.getString(numThrottlePrefName, getResources().getString(R.string.NumThrottleDefaultValue)));
+        getThrottleScreenType(sharedPreferences, throttleTypePrefName);
+
+        int index = getThrottleScreenTypeArrayIndex(sharedPreferences, throttleTypePrefName);
         String[] textNumbers = this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues);
         int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
         int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
@@ -1109,19 +1131,21 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
             Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
 
-            sharedPreferences.edit().putString("NumThrottle", textNumbers[max[index]-1]).commit();
+            sharedPreferences.edit().putString(numThrottlePrefName, textNumbers[max[index]-1]).commit();
             if (numThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
                 threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
                                         textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
             }
-            ListPreference p = (ListPreference) prefScreen.findPreference("NumThrottle");
-            if (p != null) {
+            ListPreference listPref = (ListPreference) prefScreen.findPreference(numThrottlePrefName);
+            if (listPref != null) {
                 ignoreThisThrottleNumChange = true;
                 Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
-                p.setValue(textNumbers[max[index]-1]);
-                p.setValueIndex(max[index]-1);
+                listPref.setValue(textNumbers[max[index]-1]);
+                listPref.setValueIndex(max[index]-1);
             }
         }
+        // get it again.  forces refresh of the internal variables.
+        getThrottleScreenType(sharedPreferences, throttleTypePrefName);
     }
 
 
@@ -1137,6 +1161,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //            String numThrottle = prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue));  // currentValue
         int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
 
+        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         int index = getThrottleScreenTypeArrayIndex(prefs);
         int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
         int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
@@ -1205,13 +1230,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences) {
+        return getThrottleScreenTypeArrayIndex(sharedPreferences,"prefThrottleScreenType");
+    }
+    int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences, String throttleTypePrefName) {
         Log.d(threaded_application.applicationName, activityName + ": getThrottleScreenTypeArrayIndex()");
-        prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        String throttleScreenType = getThrottleScreenType(sharedPreferences, throttleTypePrefName);
 
         int index = -1;
         String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i].equals(prefThrottleScreenType)) {
+            if (arr[i].equals(throttleScreenType)) {
                 index = i;
                 break;
             }
@@ -1225,45 +1253,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         String[] gamePadPrefLabels;
         String[] gamePadPrefButtonReferences = this.getResources().getStringArray(R.array.prefGamePadPrefButtonReferences);
 
-        switch (prefGamePadType) {
-            case "MagicseeR1B":
-            case "MagicseeR1A":
-            case "MagicseeR1C":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMagicseeR1Labels);
-                break;
-            case "FlydigiWee2":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadFlydigiWee2Labels);
-                break;
-            case "UtopiaC":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadUtopiaCLabels);
-                break;
-            case "AuvisioB":
-            case "AuvisioB-rotate":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadAuvisioBLabels);
-                break;
-            case "Generic":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadGenericLabels);
-                break;
-            case "Generic3x4":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadGeneric3x4Labels);
-                break;
-            case "Volume":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadVolumeLabels);
-                break;
-            case "None":
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadNoneLabels);
-                break;
-            case "iCade+DPAD":
-            case "iCade+DPAD-rotate":
-            case "MTK":
-            case "MTK-rotate":
-            case "Game":
-            case "Game-rotate":
-            case "Game-alternate-rotate":
-            default:
-                gamePadPrefLabels = this.getResources().getStringArray(R.array.prefGamePadMocuteLabels);
-                break;
-        }
+        String[] gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
+        int prefGamePadTypeIndex = Arrays.asList(gamePadModeEntriesArray).indexOf(prefGamePadType);
+        if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
+
+        TypedArray gamepadSettingsButtonLabelsIds = getResources().obtainTypedArray(R.array.gamepadSettingsButtonLabelsIds);
+        gamePadPrefLabels = this.getResources().getStringArray(gamepadSettingsButtonLabelsIds.getResourceId(prefGamePadTypeIndex,0));
+        gamepadSettingsButtonLabelsIds.recycle();
+
         for (int i = 1; i < gamePadPrefLabels.length; i++) {  // skip the first one
             boolean thisEnabled = true;
             Preference thisPref = prefScreen.findPreference(gamePadPrefButtonReferences[i]);
@@ -1352,6 +1349,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         boolean enable = !prefThrottleSwitchButtonCycleAll;
         enableDisablePreference(prefScreen, "prefThrottleSwitchOption1", enable);
         enableDisablePreference(prefScreen, "prefThrottleSwitchOption2", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1NumThrottles", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2NumThrottles", enable);
     }
 
     private void showHideWebSwipePreferences(PreferenceScreen prefScreen) {
@@ -1410,9 +1409,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {
         Log.d(threaded_application.applicationName, activityName + ": showHideThrottleSwitchPreferences()");
+        boolean enable = prefThrottleSwitchButtonDisplay;
+        enableDisablePreference(prefScreen, "prefThrottleSwitchButtonCycleAll", enable);
+        enable = prefThrottleSwitchButtonDisplay & !prefThrottleSwitchButtonCycleAll;
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1NumThrottles", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2NumThrottles", enable);
+
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType",
                 getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        boolean enable = prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
+
+        enable = prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
         enableDisablePreference(prefScreen, "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
 
         enable = !prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC);
@@ -2437,12 +2445,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
                         break;
 
-                    case "prefThrottleSwitchButtonDisplay":
-                        parentActivity.prefThrottleSwitchButtonDisplay
-                                = sharedPreferences.getBoolean("prefThrottleSwitchButtonDisplay", false);
-                        parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
-                        break;
-
                     case "prefAccelerometerShakeThreshold":
                         parentActivity.limitFloatPrefValue(getPreferenceScreen(), sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
                         parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.SHAKE_THRESHOLD;
@@ -2552,10 +2554,25 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         sharedPreferences.edit().putBoolean("prefFullScreenSwipeArea", true).commit();
                         showHideLeftRightSwipePreferences();
                         break;
+
+                    case "prefThrottleSwitchButtonDisplay":
+                        parentActivity.prefThrottleSwitchButtonDisplay
+                                = sharedPreferences.getBoolean("prefThrottleSwitchButtonDisplay", false);
+                        parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+                        break;
                     case "prefThrottleSwitchButtonCycleAll":
                         parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
                         parentActivity.showHidePrefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
                         break;
+                    case "prefThrottleSwitchOption1":
+                    case "prefThrottleSwitchOption1NumThrottles":
+                        parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences, "prefThrottleSwitchOption1", "prefThrottleSwitchOption1NumThrottles");
+                        break;
+                    case "prefThrottleSwitchOption2":
+                    case "prefThrottleSwitchOption2NumThrottles":
+                        parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences, "prefThrottleSwitchOption2", "prefThrottleSwitchOption2NumThrottles");
+                        break;
+
                 }
             }
         }

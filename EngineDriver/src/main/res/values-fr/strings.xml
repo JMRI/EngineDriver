@@ -524,7 +524,7 @@
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Pas d autorisation d acces a la localisation</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Le nom du reseau est inacessible, la decouverte du serveur est limitee</string>
     <string name="statusThreadedAppNotConnected">Pas de connexion réseau. Verifier le paramétrage WiFi.\n\nRetrying</string>
-    <string name="statusThreadedAppNoResponse">Pas de reponse du serveur %1$s:%2$s depuis %3$s seconds. Verifier qu il fonctionne. Nouvelle tentative</string>
+    <string name="statusThreadedAppNoResponse">Pas de reponse du serveur %1$s:%2$dms depuis %3$dms seconds. Verifier qu il fonctionne. Nouvelle tentative</string>
     <string name="statusThreadedAppUnableToConnect">Pas de connexion au serveur à %1$s:%2$s depuis %3$s.\n\nRetrying</string>
     <string name="toastDoubleBackButtonToExit">Appuyer a nouveau sur \'Retour\' pour quitter Engine Driver</string>
     <string name="toastUnableToSetBrightness">Impossible de régler la luminosité automatique ou adaptative.</string>
@@ -742,6 +742,7 @@
     <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
     <string name="prefImportExportErrorNotConnected">Non connecté à un hôte</string>
 
+    <string name="prefActionBarShowRoutesButtonTitle">Bouton Itinéraires ?</string>
     <string name="ConsistEditLabelLead">TETE</string>
     <string name="ConsistEditLabelTrail">QUEUE</string>
     <string name="prefConsistFollowRuleStyleTitle">Fonctions d unités multiples (UM) - respecter la règle</string>
@@ -1267,5 +1268,10 @@
     <string name="advancedConsistToolButtonLabel">Constituants avancés</string>
     <string name="ToastsOptionsSummary">Options pour les alertes et les messages d\'aide/conseils contextuels de type « toast »</string>
     <string name="prefBeepOnAlertToastsSummary">Émettre un bip sonore lors de l\'affichage des messages d\'alerte contextuels.</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Bouton d\'accélérateur ?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des aiguillages</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Bouton de dégagement ?</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Afficher le bouton dans la barre d\'action pour passer à l\'écran des gaz</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des itinéraires</string>
 
 </resources>

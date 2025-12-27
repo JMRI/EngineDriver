@@ -343,6 +343,8 @@ public class threaded_application extends Application {
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
     public boolean currentScreenSupportsWebView = true;
+    public boolean throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
+    public boolean throttleSwitchWasRequestedOrReinitialiseRequired = false;
 
     @NonNull
     public String connectedHostName = "";
@@ -495,12 +497,17 @@ public class threaded_application extends Application {
 //    public static final int GAMEPAD_BAD = 2;
 
     public boolean prefGamePadIgnoreJoystick = false;
+    public int prefGamePadFeedbackVolume = 100;
+    public int[] gamepadBeepIds;
 
     public int[] dccexLastKnownSpeed = {0,0,0,0,0,0};
     public int[] dccexLastKnownDirection = {1,1,1,1,1,1};
     public long[] dccexLastSpeedCommandSentTime = {0,0,0,0,0,0};
 
     public boolean prefActionBarShowDccExButton = false;
+    public boolean prefActionBarShowThrottleButton = false;
+    public boolean prefActionBarShowTurnoutsButton = false;
+    public boolean prefActionBarShowRoutesButton = false;
 
     public String witCv = "";
     public String witCvValue = "";
@@ -842,6 +849,8 @@ public class threaded_application extends Application {
                     if (runningActivity != null) {
                         removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
                         addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
+                        // if this is called, assume that we will need to recreate the Throttle Screen
+                        mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
                     }
                 }
             } else if ( (level >= ComponentCallbacks2.TRIM_MEMORY_MODERATE)
@@ -1410,9 +1419,9 @@ public class threaded_application extends Application {
         displayPowerStateMenuButton(pMenu);
     }
 
-    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
-        menu.findItem(R.id.throttle_button_mnu).setVisible(!prefs.getBoolean(swipePreferenceToCheck, false));
-    }
+//    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
+//        menu.findItem(R.id.throttle_button_mnu).setVisible(!prefs.getBoolean(swipePreferenceToCheck, false));
+//    }
 
     /**
      * for menu passed in, set the text or hide the menu option based on connected system
@@ -2245,6 +2254,48 @@ public class threaded_application extends Application {
         }
     }
 
+    public void displayThrottleButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.throttle_button_mnu);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowThrottleButton;
+            if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void displayTurnoutsButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.turnouts_button);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowTurnoutsButton && isTurnoutControlAllowed();
+            if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void displayRoutesButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.routes_button);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowRoutesButton && isRouteControlAllowed();
+            if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
 /*    public void displayMenuSeparator(Menu menu, Activity activity, int actionBarIconCount) {
         MenuItem mi = menu.findItem(R.id.separator);
         if (mi == null) return;
@@ -2261,10 +2312,13 @@ public class threaded_application extends Application {
     }*/
 
     public void displayThrottleSwitchMenuButton(Menu menu) {
+        if (menu == null) return;
+
         MenuItem mi = menu.findItem(R.id.throttle_switch_button);
         if (mi == null) return;
 
-        if (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false)) {
+        if ( (prefs.getBoolean("prefThrottleSwitchButtonDisplay", false))
+            && (mainapp.throttleSwitchAllowed) ) {
             actionBarIconCountThrottle++;
             mi.setVisible(true);
         } else {
@@ -3223,10 +3277,10 @@ public class threaded_application extends Application {
             int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), 0); // dummy eventKeyCode
 
             float xAxis;
-            xAxis = event.getAxisValue(MotionEvent.AXIS_X);
-            float yAxis = event.getAxisValue(MotionEvent.AXIS_Y);
-            float xAxis2 = event.getAxisValue(MotionEvent.AXIS_Z);
-            float yAxis2 = event.getAxisValue(MotionEvent.AXIS_RZ);
+            xAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_X) * 10.0f) / 10.0f;
+            float yAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_Y) * 10.0f) / 10.0f;
+            float xAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_Z) * 10.0f) / 10.0f;
+            float yAxis2 = Math.round(event.getAxisValue(MotionEvent.AXIS_RZ) * 10.0f) / 10.0f;
 
             if ((xAxis != 0) || (yAxis != 0)) {
                 action = ACTION_DOWN;

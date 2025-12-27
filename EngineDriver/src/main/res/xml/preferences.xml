@@ -933,6 +933,14 @@
                     android:summary="@string/prefThrottleSwitchOption1Summary"
                     android:title="@string/prefThrottleSwitchOption1Title"
                     android:layout="@layout/checkbox_no_icon" />
+                <ListPreference
+                    android:defaultValue="@string/NumThrottleDefaultValue"
+                    android:entries="@array/NumOfThrottlesEntries"
+                    android:entryValues="@array/NumOfThrottlesEntryValues"
+                    android:key="prefThrottleSwitchOption1NumThrottles"
+                    android:summary="@string/prefNumOfThrottlesSummary"
+                    android:title="@string/prefNumOfThrottles"
+                    android:layout="@layout/checkbox_no_icon" />
 
                 <ListPreference
                     android:defaultValue="@string/prefThrottleSwitchOption2DefaultValue"
@@ -942,15 +950,24 @@
                     android:summary="@string/prefThrottleSwitchOption2Summary"
                     android:title="@string/prefThrottleSwitchOption2Title"
                     android:layout="@layout/checkbox_no_icon" />
-<!--
                 <ListPreference
-                    android:defaultValue="@string/prefThrottleSwitchWebViewDefaultValue"
-                    android:entries="@array/prefThrottleSwitchWebViewEntries"
-                    android:entryValues="@array/prefThrottleSwitchWebViewEntryValues"
-                    android:key="prefThrottleSwitchWebView"
-                    android:summary="@string/prefThrottleSwitchWebViewSummary"
-                    android:title="@string/prefThrottleSwitchWebViewTitle" />
--->
+                    android:defaultValue="@string/NumThrottleDefaultValue"
+                    android:entries="@array/NumOfThrottlesEntries"
+                    android:entryValues="@array/NumOfThrottlesEntryValues"
+                    android:key="prefThrottleSwitchOption2NumThrottles"
+                    android:summary="@string/prefNumOfThrottlesSummary"
+                    android:title="@string/prefNumOfThrottles"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <!--
+                                <ListPreference
+                                    android:defaultValue="@string/prefThrottleSwitchWebViewDefaultValue"
+                                    android:entries="@array/prefThrottleSwitchWebViewEntries"
+                                    android:entryValues="@array/prefThrottleSwitchWebViewEntryValues"
+                                    android:key="prefThrottleSwitchWebView"
+                                    android:summary="@string/prefThrottleSwitchWebViewSummary"
+                                    android:title="@string/prefThrottleSwitchWebViewTitle" />
+                -->
             </PreferenceCategory>
 
         </PreferenceScreen>
@@ -986,6 +1003,30 @@
             android:key="prefActionBarShowDccExButton"
             android:summary="@string/prefActionBarShowDccExButtonSummary"
             android:title="@string/prefActionBarShowDccExButtonTitle"
+            android:layout="@layout/checkbox_icon_right" />
+
+        <CheckBoxPreference
+            android:icon="?attr/ed_throttle_button"
+            android:defaultValue="@bool/prefActionBarShowThrottleButtonDefaultValue"
+            android:key="prefActionBarShowThrottleButton"
+            android:summary="@string/prefActionBarShowThrottleButtonSummary"
+            android:title="@string/prefActionBarShowThrottleButtonTitle"
+            android:layout="@layout/checkbox_icon_right" />
+
+        <CheckBoxPreference
+            android:icon="?attr/ed_turnouts_button"
+            android:defaultValue="@bool/prefActionBarShowTurnoutsButtonDefaultValue"
+            android:key="prefActionBarShowTurnoutsButton"
+            android:summary="@string/prefActionBarShowTurnoutsButtonSummary"
+            android:title="@string/prefActionBarShowTurnoutsButtonTitle"
+            android:layout="@layout/checkbox_icon_right" />
+
+        <CheckBoxPreference
+            android:icon="?attr/ed_routes_button"
+            android:defaultValue="@bool/prefActionBarShowRoutesButtonDefaultValue"
+            android:key="prefActionBarShowRoutesButton"
+            android:summary="@string/prefActionBarShowRoutesButtonSummary"
+            android:title="@string/prefActionBarShowRoutesButtonTitle"
             android:layout="@layout/checkbox_icon_right" />
 
     </PreferenceCategory>

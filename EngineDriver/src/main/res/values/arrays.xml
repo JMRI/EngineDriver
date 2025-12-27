@@ -640,6 +640,7 @@
         <item tools:ignore="Typos">MagicseeR1C</item>
         <item>FlydigiWee2</item>
         <item>UtopiaC</item>
+        <item>VRBoxB</item>
         <item>AuvisioB</item>
         <item>AuvisioB-rotate</item>
         <item>Generic</item>
@@ -659,6 +660,7 @@
         <item tools:ignore="Typos">MagicseeR1 Android-Mode C</item>
         <item >Flydigi Wee 2</item>
         <item >Utopia 360 Android-C</item>
+        <item tools:ignore="TypographyDashes">VR Box-Mode B</item>
         <item >Auvisio Android-B</item>
         <item >Auvisio Android-B - ↺ DPAD</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (4x4 Keypad +Encoder)</item>
@@ -666,6 +668,94 @@
         <item >Keyboard</item>
         <item >USB Volume Dial</item>
     </string-array>
+
+    <!--  which array to use for the keys - down -->
+    <array name="prefGamePadTypeKeysIds" translatable="false">
+        <item>@array/prefGamePadNoneLabels</item>
+        <item>@array/prefGamePadiCadePlusDpad</item>          <!-- iCade-rotate -->
+        <item>@array/prefGamePadiCadePlusDpad_UpCodes</item>  <!-- iCade+DPAD-rotate -->
+        <item>@array/prefGamePadMTK</item>                    <!-- MTK-rotate -->
+        <item>@array/prefGamePadGame</item>                   <!-- Game-rotate -->
+        <item>@array/prefGamePadGameAlternate</item>          <!-- Game-alternate-rotate -->
+        <item>@array/prefGamePadMagicseeR1B</item>            <!-- MagicseeR1B -->
+        <item>@array/prefGamePadMagicseeR1A</item>            <!-- MagicseeR1A -->
+        <item>@array/prefGamePadMagicseeR1C</item>            <!-- MagicseeR1C -->
+        <item>@array/prefGamePadFlydigiWee2</item>            <!-- FlydigiWee2 -->
+        <item>@array/prefGamePadUtopiaC</item>                <!-- UtopiaC -->
+        <item>@array/prefGamePadVRBoxB</item>                 <!-- VRBoxB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadGeneric</item>                <!-- Generic -->
+        <item>@array/prefGamePadGeneric3x4</item>             <!-- Generic3x4 -->
+        <item>@array/prefGamePadNoneLabels</item>             <!-- Keyboard -->
+        <item>@array/prefGamePadVolume</item>                 <!-- Volume -->
+    </array>
+
+    <!--  which array to use for the keys - up -->
+    <array name="prefGamePadTypeKeysUpIds" translatable="false">
+        <item>@array/prefGamePadNoneLabels</item>
+        <item>@array/prefGamePadiCadePlusDpad</item>          <!-- iCade-rotate -->
+        <item>@array/prefGamePadiCadePlusDpad_UpCodes</item>  <!-- iCade+DPAD-rotate -->
+        <item>@array/prefGamePadMTK</item>                    <!-- MTK-rotate -->
+        <item>@array/prefGamePadGame</item>                   <!-- Game-rotate -->
+        <item>@array/prefGamePadGameAlternate</item>          <!-- Game-alternate-rotate -->
+        <item>@array/prefGamePadMagicseeR1B</item>            <!-- MagicseeR1B -->
+        <item>@array/prefGamePadMagicseeR1A</item>            <!-- MagicseeR1A -->
+        <item>@array/prefGamePadMagicseeR1C</item>            <!-- MagicseeR1C -->
+        <item>@array/prefGamePadFlydigiWee2</item>            <!-- FlydigiWee2 -->
+        <item>@array/prefGamePadUtopiaC</item>                <!-- UtopiaC -->
+        <item>@array/prefGamePadVRBoxB</item>                 <!-- VRBoxB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB -->
+        <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadGeneric</item>                <!-- Generic -->
+        <item>@array/prefGamePadGeneric3x4</item>             <!-- Generic3x4 -->
+        <item>@array/prefGamePadNoneLabels</item>             <!-- Keyboard -->
+        <item>@array/prefGamePadVolume</item>                 <!-- Volume -->
+    </array>
+
+    <!--  which array to use for the key/button labels in the Settings Activity -->
+    <array name="gamepadSettingsButtonLabelsIds" translatable="false">
+        <item>@array/prefGamePadMocuteLabels</item>
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- iCade-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- iCade+DPAD-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>         <!-- MTK-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- Game-rotate -->
+        <item>@array/prefGamePadMocuteLabels</item>     <!-- Game-alternate-rotate -->
+        <item>@array/prefGamePadMagicseeR1Labels</item>     <!-- MagicseeR1B -->
+        <item>@array/prefGamePadMagicseeR1Labels</item>     <!-- MagicseeR1A -->
+        <item>@array/prefGamePadMagicseeR1Labels</item>     <!-- MagicseeR1C -->
+        <item>@array/prefGamePadFlydigiWee2Labels</item>     <!-- FlydigiWee2 -->
+        <item>@array/prefGamePadUtopiaCLabels</item>     <!-- UtopiaC -->
+        <item>@array/prefGamePadVRBoxBLabels</item>     <!-- VRBoxB -->
+        <item>@array/prefGamePadAuvisioBLabels</item>     <!-- AuvisioB -->
+        <item>@array/prefGamePadAuvisioBLabels</item>     <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadGenericLabels</item>     <!-- Generic -->
+        <item>@array/prefGamePadGeneric3x4Labels</item>  <!-- Generic3x4 -->
+        <item>@array/prefGamePadGenericLabels</item>     <!-- Keyboard -->
+        <item>@array/prefGamePadVolumeLabels</item>      <!-- Volume -->
+    </array>
+
+    <!--  which array to use for the key/button labels in the gamepad_test activity -->
+    <array name="gamepadTestButtonLabelsIds" translatable="false">
+        <item>@array/gamepadTestButtonLabelsDefault</item>
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- iCade-rotate -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- iCade+DPAD-rotate -->
+        <item>@array/gamepadTestButtonLabelsMTK</item>         <!-- MTK-rotate -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- Game-rotate -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- Game-alternate-rotate -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- MagicseeR1B -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- MagicseeR1A -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- MagicseeR1C -->
+        <item>@array/gamepadTestButtonLabelsMagicR1</item>     <!-- FlydigiWee2 -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- UtopiaC -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- VRBoxC -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- AuvisioB -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- AuvisioB-rotate -->
+        <item>@array/gamepadTestButtonLabelsGeneric</item>     <!-- Generic -->
+        <item>@array/gamepadTestButtonLabelsGeneric3x4</item>  <!-- Generic3x4 -->
+        <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- Keyboard -->
+        <item>@array/gamepadTestButtonLabelsVolume</item>      <!-- Volume -->
+    </array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -693,112 +783,114 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <string-array name="prefGamePadKeyEntries">  <!-- display version -->
-        <item >All Stop</item>
-        <item >Stop</item>
-        <item >Forward</item>
-        <item >Reverse</item>
-        <item >Forward/Reverse Toggle</item>
-        <item >Increase Speed</item>
-        <item >Decrease Speed</item>
-        <item >Limit Speed</item>
-        <item >Pause</item>
-        <item >Next Throttle</item>
-        <item >Function 00/Light</item>
-        <item >Function 01/Bell</item>
-        <item >Function 02/Horn</item>
-        <item >Function 03</item>
-        <item >Function 04</item>
-        <item >Function 05</item>
-        <item >Function 06</item>
-        <item >Function 07</item>
-        <item >Function 08</item>
-        <item >Function 09</item>
-        <item >Function 10</item>
-        <item >Function 11</item>
-        <item >Function 12</item>
-        <item >Function 13</item>
-        <item >Function 14</item>
-        <item >Function 15</item>
-        <item >Function 16</item>
-        <item >Function 17</item>
-        <item >Function 18</item>
-        <item >Function 19</item>
-        <item >Function 20</item>
-        <item >Function 21</item>
-        <item >Function 22</item>
-        <item >Function 23</item>
-        <item >Function 24</item>
-        <item >Function 25</item>
-        <item >Function 26</item>
-        <item >Function 27</item>
-        <item >Function 28</item>
-        <item >Function 29</item>
-        <item >Function 30</item>
-        <item >Function 31</item>
-        <item >Mute (IPLS)</item>
-        <item >Bell (IPLS)</item>
-        <item >Horn (IPLS)</item>
-        <item >Horn Short (IPLS)</item>
-        <item >Speak Current Speed</item>
-        <item >Neutral</item>
-        <item >Increase Brake</item>
-        <item >Decrease Brake</item>
-        <item >Increase Load</item>
-        <item >Decrease Load</item>
+        <item>All Stop</item>
+        <item>Stop</item>
+        <item>Forward</item>
+        <item>Reverse</item>
+        <item>Forward/Reverse Toggle</item>
+        <item>Increase Speed</item>
+        <item>Decrease Speed</item>
+        <item>Limit Speed</item>
+        <item>Pause</item>
+        <item>Next Throttle</item>
+        <item>Function 00/Light</item>
+        <item>Function 01/Bell</item>
+        <item>Function 02/Horn</item>
+        <item>Function 03</item>
+        <item>Function 04</item>
+        <item>Function 05</item>
+        <item>Function 06</item>
+        <item>Function 07</item>
+        <item>Function 08</item>
+        <item>Function 09</item>
+        <item>Function 10</item>
+        <item>Function 11</item>
+        <item>Function 12</item>
+        <item>Function 13</item>
+        <item>Function 14</item>
+        <item>Function 15</item>
+        <item>Function 16</item>
+        <item>Function 17</item>
+        <item>Function 18</item>
+        <item>Function 19</item>
+        <item>Function 20</item>
+        <item>Function 21</item>
+        <item>Function 22</item>
+        <item>Function 23</item>
+        <item>Function 24</item>
+        <item>Function 25</item>
+        <item>Function 26</item>
+        <item>Function 27</item>
+        <item>Function 28</item>
+        <item>Function 29</item>
+        <item>Function 30</item>
+        <item>Function 31</item>
+        <item>Mute (IPLS)</item>
+        <item>Bell (IPLS)</item>
+        <item>Horn (IPLS)</item>
+        <item>Horn Short (IPLS)</item>
+        <item>Speak Current Speed</item>
+        <item>Neutral</item>
+        <item>Increase Brake</item>
+        <item>Decrease Brake</item>
+        <item>Increase Load</item>
+        <item>Decrease Load</item>
+        <item>None</item>
     </string-array>
     <string-array name="prefGamePadKeyEntryValues" translatable="false">
-        <item >All Stop</item>
-        <item >Stop</item>
-        <item >Forward</item>
-        <item >Reverse</item>
-        <item >Forward/Reverse Toggle</item>
-        <item >Increase Speed</item>
-        <item >Decrease Speed</item>
-        <item >Limit Speed</item>
-        <item >Pause</item>
-        <item >Next Throttle</item>
-        <item >Function 00/Light</item>
-        <item >Function 01/Bell</item>
-        <item >Function 02/Horn</item>
-        <item >Function 03</item>
-        <item >Function 04</item>
-        <item >Function 05</item>
-        <item >Function 06</item>
-        <item >Function 07</item>
-        <item >Function 08</item>
-        <item >Function 09</item>
-        <item >Function 10</item>
-        <item >Function 11</item>
-        <item >Function 12</item>
-        <item >Function 13</item>
-        <item >Function 14</item>
-        <item >Function 15</item>
-        <item >Function 16</item>
-        <item >Function 17</item>
-        <item >Function 18</item>
-        <item >Function 19</item>
-        <item >Function 20</item>
-        <item >Function 21</item>
-        <item >Function 22</item>
-        <item >Function 23</item>
-        <item >Function 24</item>
-        <item >Function 25</item>
-        <item >Function 26</item>
-        <item >Function 27</item>
-        <item >Function 28</item>
-        <item >Function 29</item>
-        <item >Function 30</item>
-        <item >Function 31</item>
-        <item >Mute (IPLS)</item>
-        <item >Bell (IPLS)</item>
-        <item >Horn (IPLS)</item>
-        <item >Horn Short (IPLS)</item>
-        <item >Speak Current Speed</item>
-        <item >Neutral</item>
-        <item >Increase Brake</item>
-        <item >Decrease Brake</item>
-        <item >Increase Load</item>
-        <item >Decrease Load</item>
+        <item>All Stop</item>
+        <item>Stop</item>
+        <item>Forward</item>
+        <item>Reverse</item>
+        <item>Forward/Reverse Toggle</item>
+        <item>Increase Speed</item>
+        <item>Decrease Speed</item>
+        <item>Limit Speed</item>
+        <item>Pause</item>
+        <item>Next Throttle</item>
+        <item>Function 00/Light</item>
+        <item>Function 01/Bell</item>
+        <item>Function 02/Horn</item>
+        <item>Function 03</item>
+        <item>Function 04</item>
+        <item>Function 05</item>
+        <item>Function 06</item>
+        <item>Function 07</item>
+        <item>Function 08</item>
+        <item>Function 09</item>
+        <item>Function 10</item>
+        <item>Function 11</item>
+        <item>Function 12</item>
+        <item>Function 13</item>
+        <item>Function 14</item>
+        <item>Function 15</item>
+        <item>Function 16</item>
+        <item>Function 17</item>
+        <item>Function 18</item>
+        <item>Function 19</item>
+        <item>Function 20</item>
+        <item>Function 21</item>
+        <item>Function 22</item>
+        <item>Function 23</item>
+        <item>Function 24</item>
+        <item>Function 25</item>
+        <item>Function 26</item>
+        <item>Function 27</item>
+        <item>Function 28</item>
+        <item>Function 29</item>
+        <item>Function 30</item>
+        <item>Function 31</item>
+        <item>Mute (IPLS)</item>
+        <item>Bell (IPLS)</item>
+        <item>Horn (IPLS)</item>
+        <item>Horn Short (IPLS)</item>
+        <item>Speak Current Speed</item>
+        <item>Neutral</item>
+        <item>Increase Brake</item>
+        <item>Decrease Brake</item>
+        <item>Increase Load</item>
+        <item>Decrease Load</item>
+        <item>None</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -988,59 +1080,117 @@
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxC" translatable="false">
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
-        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown
-        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight
-        <item>@integer/KeyCode_Button_X</item> //none
-        <item>@integer/KeyCode_Button_Y</item> //gamepadA, gamepadEnter
-        <item>@integer/KeyCode_Button_B</item> //gamepadB, gamepadEscape
-        <item>@integer/KeyCode_Volume_Down</item> //gamepadD
-        <item>@integer/KeyCode_Enter</item> //gamepadC
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
-        <item>0</item> //not used
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxiC" translatable="false">
-        <item>0</item> //not used
-        <item>@integer/KeyCode_O</item> //gamepadEscape
-        <item>@integer/KeyCode_W</item> //gamepadDpadUp
-        <item>@integer/KeyCode_X</item> //gamepadDpadDown
-        <item>@integer/KeyCode_A</item> //gamepadDpadLeft
-        <item>@integer/KeyCode_D</item> //gamepadDpadRight
-        <item>@integer/KeyCode_L</item> //gamepadEnter
-        <item>@integer/KeyCode_U</item> //gamepadA
-        <item>@integer/KeyCode_H</item> //gamepadB
-        <item>@integer/KeyCode_J</item> //gamepadD
-        <item>@integer/KeyCode_Y</item> //gamepadC
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-    </integer-array>
-    <integer-array name="prefGamePadVRBoxiC_UpCodes" translatable="false">
-        <item>0</item> //not used
-        <item>@integer/KeyCode_G</item>
-        <item>@integer/KeyCode_E</item>
-        <item>@integer/KeyCode_Z</item>
-        <item>@integer/KeyCode_Q</item>
-        <item>@integer/KeyCode_C</item>
-        <item>@integer/KeyCode_V</item>
-        <item>@integer/KeyCode_F</item>
-        <item>@integer/KeyCode_R</item>
-        <item>@integer/KeyCode_N</item>
-        <item>@integer/KeyCode_T</item>
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
         <item>0</item> //not used
     </integer-array>
 -->
+    <integer-array name="prefGamePadVRBoxB" translatable="false">
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Dpad_Left</item>
+        <item>@integer/KeyCode_Dpad_Right</item>
+        <item>@integer/KeyCode_Dpad_Down</item>
+        <item>@integer/KeyCode_Dpad_Up</item>
+        <item>@integer/KeyCode_Button_Start</item> // select/enter
+        <item>@integer/KeyCode_Button_X</item>    //gamepadC
+        <item>@integer/KeyCode_Button_B</item>    //gamepadD
+        <item>@integer/KeyCode_Button_Y</item>    //gamepadA
+        <item>@integer/KeyCode_Button_A</item>    //gamepadB
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_R1</item> //lower front button
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_L1</item> //upper front button
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+        <item>0</item> //not used
+    </integer-array>
+
+    <string-array name="prefGamePadVRBoxBLabels">
+        <item> </item> //not used
+        <item>Button not usable</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
+        <item>Start Button action</item>
+        <item>Button A action</item>
+        <item>Button D action</item>
+        <item>Button B action</item>
+        <item>Button C action</item>
+        <item>Button not available</item> //not used
+        <item>Trigger Front Lower</item>
+        <item>Button not available</item> //not used
+        <item>Trigger Front Upper</item>
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+    </string-array>
+
+
+    <!--
+        <integer-array name="prefGamePadVRBoxiC" translatable="false">
+            <item>0</item> //not used
+            <item>@integer/KeyCode_O</item> //gamepadEscape
+            <item>@integer/KeyCode_W</item> //gamepadDpadUp
+            <item>@integer/KeyCode_X</item> //gamepadDpadDown
+            <item>@integer/KeyCode_A</item> //gamepadDpadLeft
+            <item>@integer/KeyCode_D</item> //gamepadDpadRight
+            <item>@integer/KeyCode_L</item> //gamepadEnter
+            <item>@integer/KeyCode_U</item> //gamepadA
+            <item>@integer/KeyCode_H</item> //gamepadB
+            <item>@integer/KeyCode_J</item> //gamepadD
+            <item>@integer/KeyCode_Y</item> //gamepadC
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+        </integer-array>
+        <integer-array name="prefGamePadVRBoxiC_UpCodes" translatable="false">
+            <item>0</item> //not used
+            <item>@integer/KeyCode_G</item>
+            <item>@integer/KeyCode_E</item>
+            <item>@integer/KeyCode_Z</item>
+            <item>@integer/KeyCode_Q</item>
+            <item>@integer/KeyCode_C</item>
+            <item>@integer/KeyCode_V</item>
+            <item>@integer/KeyCode_F</item>
+            <item>@integer/KeyCode_R</item>
+            <item>@integer/KeyCode_N</item>
+            <item>@integer/KeyCode_T</item>
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+            <item>0</item> //not used
+        </integer-array>
+    -->
+
     <integer-array name="prefGamePadMagicseeR1B" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>@integer/KeyCode_Button_R1</item> // Return button - upper front button
@@ -1157,6 +1307,13 @@
         <item>Trigger Front Lower</item>
         <item>Button not available</item> //not used
         <item>Trigger Front Upper</item>
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <integer-array name="prefGamePadAuvisioB" translatable="false">
@@ -1200,6 +1357,13 @@
         <item>Trigger Front Lower</item>
         <item>Button not available</item> //not used
         <item>Trigger Front Upper</item>
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </string-array>
 
     <integer-array name="prefGamePadFlydigiWee2" translatable="false">  <!-- DO NOT TRANSLATE -->
@@ -1243,8 +1407,8 @@
         <item>Right Shoulder</item>
         <item>Left Trigger</item>
         <item>Right Trigger</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
+        <item>Button not available</item> //not used
+        <item>Button not available</item> //not used
         <item>0</item> //not used - alternate Stop
         <item>0</item> //not used - alternate Increase Speed
         <item>0</item> //not used - alternate Decrease Speed
@@ -1441,12 +1605,12 @@
         <item>Button 4 action</item>
         <item>Button 1 action</item>
         <item>Button 2 action</item>
-        <item>0</item>
+        <item>Button not available</item>
         <item>Button 8 action</item>
-        <item>0</item>
+        <item>Button not available</item>
         <item>Button 0 action</item>
-        <item>0</item>
-        <item>0</item>
+        <item>Button not available</item>
+        <item>Button not available</item>
         <item>0</item> //alternate Stop
         <item>0</item> //alternate Increase Speed
         <item>0</item> //alternate Decrease Speed
@@ -2374,6 +2538,9 @@
         <item>prefActionBarShowServerDescription</item>
         <item>prefAppIconAction</item>
         <item>prefActionBarShowDccExButton</item>
+        <item>prefActionBarShowThrottleButton</item>
+        <item>prefActionBarShowTurnoutsButton</item>
+        <item>prefActionBarShowRoutesButton</item>
 
         <!-- Throttle Control Preferences -->
         <item>maximum_throttle_preference</item>
@@ -2481,5 +2648,356 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!--  UI Resources  -->
+
+<!-- A -->
+
+    <array  name="air_indicator_resource_ids">
+        <item>@id/air_indicator_0</item>
+    </array>
+    <array  name="air_line_indicator_resource_ids">
+        <item>@id/air_line_indicator_0</item>
+    </array>
+
+<!-- B -->
+
+    <array  name="brake_resource_ids">
+        <item>@id/brake_0</item>
+    </array>
+    <array  name="button_air_resource_ids">
+        <item>@id/button_air_0</item>
+    </array>
+    <array  name="button_e_stop_resource_ids">
+        <item>@id/button_e_stop_0</item>
+    </array>
+    <array name="button_fwd_resource_ids">
+        <item>@id/button_fwd_0</item>
+        <item>@id/button_fwd_1</item>
+        <item>@id/button_fwd_2</item>
+        <item>@id/button_fwd_3</item>
+        <item>@id/button_fwd_4</item>
+        <item>@id/button_fwd_5</item>
+    </array>
+    <array name="button_pause_resource_ids">
+        <item>@id/button_pause_0</item>
+        <item>@id/button_pause_1</item>
+        <item>@id/button_pause_2</item>
+        <item>@id/button_pause_3</item>
+        <item>@id/button_pause_4</item>
+        <item>@id/button_pause_5</item>
+    </array>
+    <array name="button_rev_resource_ids">
+        <item>@id/button_rev_0</item>
+        <item>@id/button_rev_1</item>
+        <item>@id/button_rev_2</item>
+        <item>@id/button_rev_3</item>
+        <item>@id/button_rev_4</item>
+        <item>@id/button_rev_5</item>
+    </array>
+    <array name="button_select_loco_resource_ids">
+        <item>@id/button_select_loco_0</item>
+        <item>@id/button_select_loco_1</item>
+        <item>@id/button_select_loco_2</item>
+        <item>@id/button_select_loco_3</item>
+        <item>@id/button_select_loco_4</item>
+        <item>@id/button_select_loco_5</item>
+    </array>
+    <array name="button_stop_resource_ids">
+        <item>@id/button_stop_0</item>
+        <item>@id/button_stop_1</item>
+        <item>@id/button_stop_2</item>
+        <item>@id/button_stop_3</item>
+        <item>@id/button_stop_4</item>
+        <item>@id/button_stop_5</item>
+    </array>
+    <array  name="button_target_fwd_resource_ids">
+        <item>@id/button_target_fwd_0</item>
+    </array>
+    <array  name="button_target_neutral_resource_ids">
+        <item>@id/button_target_neutral_0</item>
+    </array>
+    <array  name="button_target_rev_resource_ids">
+        <item>@id/button_target_rev_0</item>
+    </array>
+    <array  name="button_target_stop_resource_ids">
+        <item>@id/button_target_stop_0</item>
+    </array>
+
+<!--D -->
+
+    <array name="device_sounds_bell_resource_ids">
+        <item>@id/device_sounds_bell_0</item>
+        <item>@id/device_sounds_bell_1</item>
+    </array>
+    <array name="device_sounds_horn_resource_ids">
+        <item>@id/device_sounds_horn_0</item>
+        <item>@id/device_sounds_horn_1</item>
+    </array>
+    <array name="device_sounds_horn_short_resource_ids">
+        <item>@id/device_sounds_horn_short_0</item>
+        <item>@id/device_sounds_horn_short_1</item>
+    </array>
+    <array name="device_sounds_mute_resource_ids">
+        <item>@id/device_sounds_mute_0</item>
+        <item>@id/device_sounds_mute_1</item>
+    </array>
+    <array name="dir_buttons_table_resource_ids">
+        <item>@id/dir_buttons_table_0</item>
+        <item>@id/dir_buttons_table_1</item>
+        <item>@id/dir_buttons_table_2</item>
+        <item>@id/dir_buttons_table_3</item>
+        <item>@id/dir_buttons_table_4</item>
+        <item>@id/dir_buttons_table_5</item>
+    </array>
+    <array name="direction_indicator_forward_resource_ids">
+        <item>@id/direction_indicator_forward_0</item>
+        <item>@id/direction_indicator_forward_1</item>
+        <item>@id/direction_indicator_forward_2</item>
+        <item>@id/direction_indicator_forward_3</item>
+        <item>@id/direction_indicator_forward_4</item>
+        <item>@id/direction_indicator_forward_5</item>
+    </array>
+    <array  name="direction_indicator_reverse_resource_ids">
+        <item>@id/direction_indicator_reverse_0</item>
+        <item>@id/direction_indicator_reverse_1</item>
+        <item>@id/direction_indicator_reverse_2</item>
+        <item>@id/direction_indicator_reverse_3</item>
+        <item>@id/direction_indicator_reverse_4</item>
+        <item>@id/direction_indicator_reverse_5</item>
+    </array>
+
+<!-- F -->
+
+    <array  name="function_buttons_scroller_resource_ids">
+        <item>@id/function_buttons_scroller_0</item>
+        <item>@id/function_buttons_scroller_1</item>
+        <item>@id/function_buttons_scroller_2</item>
+        <item>@id/function_buttons_scroller_3</item>
+        <item>@id/function_buttons_scroller_4</item>
+        <item>@id/function_buttons_scroller_5</item>
+    </array>
+    <array name="function_buttons_table_resource_ids">
+        <item>@id/function_buttons_table_0</item>
+        <item>@id/function_buttons_table_1</item>
+        <item>@id/function_buttons_table_2</item>
+        <item>@id/function_buttons_table_3</item>
+        <item>@id/function_buttons_table_4</item>
+        <item>@id/function_buttons_table_5</item>
+    </array>
+
+<!-- G -->
+
+    <array name="gamepad_indicator_resource_ids">
+        <item>@id/gamepad_indicator_0</item>
+        <item>@id/gamepad_indicator_1</item>
+        <item>@id/gamepad_indicator_2</item>
+        <item>@id/gamepad_indicator_3</item>
+        <item>@id/gamepad_indicator_4</item>
+        <item>@id/gamepad_indicator_5</item>
+    </array>
+
+<!-- L -->
+
+    <array name="left_speed_button_resource_ids">
+        <item>@id/left_speed_button_0</item>
+        <item>@id/left_speed_button_1</item>
+        <item>@id/left_speed_button_2</item>
+        <item>@id/left_speed_button_3</item>
+        <item>@id/left_speed_button_4</item>
+        <item>@id/left_speed_button_5</item>
+    </array>
+    <array  name="left_target_speed_button_resource_ids">
+        <item>@id/left_target_speed_button_0</item>
+    </array>
+    <array name="limit_speed_resource_ids">
+        <item>@id/limit_speed_0</item>
+        <item>@id/limit_speed_1</item>
+        <item>@id/limit_speed_2</item>
+        <item>@id/limit_speed_3</item>
+        <item>@id/limit_speed_4</item>
+        <item>@id/limit_speed_5</item>
+    </array>
+    <array  name="load_resource_ids">
+        <item>@id/load_0</item>
+    </array>
+    <array name="loco_buttons_group_resource_ids">
+        <item>@id/loco_buttons_group_0</item>
+        <item>@id/loco_buttons_group_1</item>
+        <item>@id/loco_buttons_group_2</item>
+        <item>@id/loco_buttons_group_3</item>
+        <item>@id/loco_buttons_group_4</item>
+        <item>@id/loco_buttons_group_5</item>
+    </array>
+    <array name="loco_label_resource_ids">
+        <item>@id/loco_label_0</item>
+        <item>@id/loco_label_1</item>
+        <item>@id/loco_label_2</item>
+        <item>@id/loco_label_3</item>
+        <item>@id/loco_label_4</item>
+        <item>@id/loco_label_5</item>
+    </array>
+     <array name="loco_left_direction_indication_resource_ids">
+        <item>@id/loco_left_direction_indication_0</item>
+        <item>@id/loco_left_direction_indication_1</item>
+        <item>@id/loco_left_direction_indication_2</item>
+        <item>@id/loco_left_direction_indication_3</item>
+        <item>@id/loco_left_direction_indication_4</item>
+        <item>@id/loco_left_direction_indication_5</item>
+    </array>
+    <array  name="loco_lower_resource_ids">
+        <item>@id/loco_lower_0</item>
+        <item>@id/loco_lower_1</item>
+        <item>@id/loco_lower_2</item>
+        <item>@id/loco_lower_3</item>
+        <item>@id/loco_lower_4</item>
+        <item>@id/loco_lower_5</item>
+    </array>
+    <array name="loco_right_direction_indication_resource_ids">
+        <item>@id/loco_right_direction_indication_0</item>
+        <item>@id/loco_right_direction_indication_1</item>
+        <item>@id/loco_right_direction_indication_2</item>
+        <item>@id/loco_right_direction_indication_3</item>
+        <item>@id/loco_right_direction_indication_4</item>
+        <item>@id/loco_right_direction_indication_5</item>
+    </array>
+    <array  name="loco_upper_resource_ids">
+        <item>@id/loco_upper_0</item>
+        <item>@id/loco_upper_1</item>
+        <item>@id/loco_upper_2</item>
+        <item>@id/loco_upper_3</item>
+        <item>@id/loco_upper_4</item>
+        <item>@id/loco_upper_5</item>
+    </array>
+
+<!-- P -->
+
+    <array name="pause_speed_resource_ids">
+        <item>@id/pause_speed_0</item>
+        <item>@id/pause_speed_1</item>
+        <item>@id/pause_speed_2</item>
+        <item>@id/pause_speed_3</item>
+        <item>@id/pause_speed_4</item>
+        <item>@id/pause_speed_5</item>
+    </array>
+
+<!-- R -->
+
+    <array name="right_speed_button_resource_ids">
+        <item>@id/right_speed_button_0</item>
+        <item>@id/right_speed_button_1</item>
+        <item>@id/right_speed_button_2</item>
+        <item>@id/right_speed_button_3</item>
+        <item>@id/right_speed_button_4</item>
+        <item>@id/right_speed_button_5</item>
+    </array>
+    <array  name="right_target_speed_button_resource_ids">
+        <item>@id/right_target_speed_button_0</item>
+    </array>
+
+<!-- S -->
+
+    <array  name="semi_realistic_speed_resource_ids">
+        <item>@id/semi_realistic_speed_0</item>
+    </array>
+
+<!-- T -->
+
+    <array name="separator_resource_ids">
+        <item>@id/separator0</item>
+        <item>@id/separator1</item>
+        <item>@id/separator2</item>
+        <item>@id/separator3</item>
+        <item>@id/separator4</item>
+        <item>@id/separator5</item>
+    </array>
+    <array name="speed_cell_resource_ids">
+        <item>@id/speed_cell_0</item>
+        <item>@id/speed_cell_1</item>
+        <item>@id/speed_cell_2</item>
+        <item>@id/speed_cell_3</item>
+        <item>@id/speed_cell_4</item>
+        <item>@id/speed_cell_5</item>
+    </array>
+    <array name="speed_label_resource_ids">
+        <item>@id/speed_label_0</item>
+        <item>@id/speed_label_1</item>
+        <item>@id/speed_label_2</item>
+        <item>@id/speed_label_3</item>
+        <item>@id/speed_label_4</item>
+        <item>@id/speed_label_5</item>
+    </array>
+    <array name="speed_resource_ids">
+        <item>@id/speed_0</item>
+        <item>@id/speed_1</item>
+        <item>@id/speed_2</item>
+        <item>@id/speed_3</item>
+        <item>@id/speed_4</item>
+        <item>@id/speed_5</item>
+    </array>
+    <array name="speed_value_label_resource_ids">
+        <item>@id/speed_value_label_0</item>
+        <item>@id/speed_value_label_1</item>
+        <item>@id/speed_value_label_2</item>
+        <item>@id/speed_value_label_3</item>
+        <item>@id/speed_value_label_4</item>
+        <item>@id/speed_value_label_5</item>
+    </array>
+    <array name="speed_switching_resource_ids">
+        <item>@id/speed_switching_0</item>
+        <item>@id/speed_switching_1</item>
+        <item>@id/speed_switching_2</item>
+        <item>@id/speed_switching_3</item>
+        <item>@id/speed_switching_4</item>
+        <item>@id/speed_switching_5</item>
+    </array>
+
+<!-- T -->
+
+    <array  name="target_acceleration_value_label_resource_ids">
+        <item>@id/target_acceleration_value_label_0</item>
+    </array>
+    <array  name="target_speed_value_label_resource_ids">
+        <item>@id/target_speed_value_label_0</item>
+    </array>
+    <array name="throttle_resource_ids">
+        <item>@id/throttle_0</item>
+        <item>@id/throttle_1</item>
+        <item>@id/throttle_2</item>
+        <item>@id/throttle_3</item>
+        <item>@id/throttle_4</item>
+        <item>@id/throttle_5</item>
+    </array>
+    <array name="throttle_set_speed_resource_ids">
+        <item>@id/throttle_0_set_speed</item>
+        <item>@id/throttle_1_set_speed</item>
+        <item>@id/throttle_2_set_speed</item>
+        <item>@id/throttle_3_set_speed</item>
+        <item>@id/throttle_4_set_speed</item>
+        <item>@id/throttle_5_set_speed</item>
+    </array>
+
+<!-- W -->
+
+    <array name="volume_indicator_resource_ids">
+        <item>@id/volume_indicator_0</item>
+        <item>@id/volume_indicator_1</item>
+        <item>@id/volume_indicator_2</item>
+        <item>@id/volume_indicator_3</item>
+        <item>@id/volume_indicator_4</item>
+        <item>@id/volume_indicator_5</item>
+    </array>
+
+    <array name="beep_ids">
+        <item>@raw/beep_1</item>
+        <item>@raw/beep_1a</item>
+        <item>@raw/beep_2</item>
+        <item>@raw/beep_2a</item>
+        <item>@raw/beep_ack</item>
+        <item>@raw/beep_nak</item>
+    </array>
+
+
+
 
 </resources>

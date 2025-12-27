@@ -284,7 +284,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/throttle_0_SetSpeed"
+                            android:id="@+id/throttle_0_set_speed"
                             android:layout_width="fill_parent"
                             android:layout_height="50dp"
                             android:orientation="horizontal"
@@ -576,7 +576,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/throttle_1_SetSpeed"
+                            android:id="@+id/throttle_1_set_speed"
                             android:layout_width="fill_parent"
                             android:layout_height="50dp"
                             android:orientation="horizontal">
@@ -867,7 +867,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/throttle_2_SetSpeed"
+                            android:id="@+id/throttle_2_set_speed"
                             android:layout_width="fill_parent"
                             android:layout_height="50dp"
                             android:orientation="horizontal">

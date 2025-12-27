@@ -682,6 +682,7 @@
 
 <!--    <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>-->
 
+    <string name="prefActionBarShowRoutesButtonTitle">Schaltfläche „Routen“?</string>
     <string name="ConsistEditLabelLead">FÜHREN</string>
     <string name="ConsistEditLabelTrail">WEG</string>
     <string name="prefConsistFollowRuleStyleTitle">Consist-Funktionen - Folgen Sie dem Regelstil</string>
@@ -1244,5 +1245,10 @@
     <string name="advancedConsistToolButtonLabel">Fortgeschrittene Besteht aus</string>
     <string name="ToastsOptionsSummary">Optionen für Warnmeldungen und erklärende Popup-Benachrichtigungen/Hinweise (sogenannte „Toast“)</string>
     <string name="prefBeepOnAlertToastsSummary">Piepton bei Warnmeldungen abspielen</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zum Gaspedalbildschirm zu wechseln</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Gasknopf?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zum Weichen-Bildschirm zu wechseln</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Wehrknopf?</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zum Routenbildschirm zu wechseln</string>
 
 </resources>

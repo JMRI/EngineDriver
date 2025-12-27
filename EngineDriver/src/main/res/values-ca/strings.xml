@@ -688,6 +688,7 @@
 <!--    <string name="logViewerTitle">Activitat en visualitzador de Logs | Nom del Controlador: %1$s</string>-->
 
     <!-- Consist Follow Function Preferences etc. -->
+    <string name="prefActionBarShowRoutesButtonTitle">Botó de rutes?</string>
     <string name="ConsistEditLabelLead">DAVANTERA</string>
     <string name="ConsistEditLabelTrail">DEL DARRERA</string>
 
@@ -1259,5 +1260,10 @@
     <string name="advancedConsistToolButtonLabel">Consisteix avançat</string>
     <string name="ToastsOptionsSummary">Opcions per a alertes i ajuda/consells emergents instructius de tipus \"brindis\"</string>
     <string name="prefBeepOnAlertToastsSummary">Reprodueix un so de bip als missatges emergents d\'alerta \"brindis\"</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla de control de l\'accelerador</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Botó d\'acceleració?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla de desviaments</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Botó de desviaments?</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla de rutes</string>
 
 </resources>
