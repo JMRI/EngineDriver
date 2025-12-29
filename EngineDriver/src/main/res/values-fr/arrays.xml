@@ -191,7 +191,7 @@
         <item>Cache la vue Web\n(Nécessite \'Throttle Web View\' dans les préférences.</item>
         <item>Bloquer et diminuer la luminosité de l écran</item>
         <item>Assombrir l écran</item>
-        <item>Activation-désactivation provisoire du mode immersif</item>
+<!--        <item>Activation-désactivation provisoire du mode immersif</item>-->
         <item>Changement affichage régulateur</item>
         <item>Augmneter reduire vitesse de la locomotive</item>
         <item>Prochaine manette (volume)</item>

@@ -219,7 +219,7 @@
         <item>Amaga la vista web\n(requereix preferències \'Vista Web de Controlador\')</item>
         <item>Bloqueja i atenua la pantalla</item>
         <item>Atenuar la Pantalla</item>
-        <item>Activació-desactivació temporal del mode inmersiu</item>
+<!--        <item>Activació-desactivació temporal del mode inmersiu</item>-->
         <item>Canviar el diseny de la pantalla del controlador</item>
         <item>Augmenta/Disminueix la velocitat de la locomotora</item>
         <item>Següent accelerador (volum)</item>

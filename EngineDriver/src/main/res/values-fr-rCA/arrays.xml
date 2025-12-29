@@ -151,7 +151,7 @@
         <item>Masque l\'affichage web.\n(Nécessite la préférence \'Affichage du navigateur web\')</item>
         <item>Verrouille et réduit la luminosité de l\'écran</item>
         <item>Assombrir l\'écran</item>
-        <item>Activation-désactivation provisoire du mode immersif</item>
+<!--        <item>Activation-désactivation provisoire du mode immersif</item>-->
         <item>Changement d\'affichage du régulateur</item>
         <item>Augmenter/diminuer la vitesse des locomotives</item>
         <item>Prochaine régulateur (volume)</item>

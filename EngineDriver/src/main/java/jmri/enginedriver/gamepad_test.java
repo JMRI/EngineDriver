@@ -397,7 +397,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         //Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent(): " + event.getAction());
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
         if ((!prefGamePadType.equals("None")) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
             int action;
 
@@ -475,7 +474,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                 return (true); // stop processing this key
             }
         }
-//        }
 
         return super.dispatchGenericMotionEvent(event);
     }

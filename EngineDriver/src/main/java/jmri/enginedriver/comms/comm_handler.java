@@ -149,7 +149,7 @@ public class comm_handler extends Handler {
             mainapp.host_ip = new_host_ip;
             mainapp.port = new_port;
             // skip url checking on Play Protect
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            if (Build.VERSION.SDK_INT >= 27) {
                WebView.setSafeBrowsingWhitelist(Collections.singletonList(mainapp.host_ip), null);
             }
 

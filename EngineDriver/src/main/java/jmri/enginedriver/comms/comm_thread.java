@@ -2782,9 +2782,9 @@ public class comm_thread extends Thread {
 
                     if (!mainapp.prefAllowMobileData) {
                         // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                                && (!mainapp.haveForcedWiFiConnection)) {
-
+//                        if ((Build.VERSION.SDK_INT >= 21)
+//                                && (!mainapp.haveForcedWiFiConnection)) {
+                        if (!mainapp.haveForcedWiFiConnection) {
                             Log.d(threaded_application.applicationName, activityName + ": HaveNetworkConnection(): NetworkRequest.Builder");
                             NetworkRequest.Builder request = new NetworkRequest.Builder();
                             request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
@@ -2792,7 +2792,7 @@ public class comm_thread extends Thread {
                             connectivityManager.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
                                 @Override
                                 public void onAvailable(Network network) {
-                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                                    if (Build.VERSION.SDK_INT < 23) {
                                         ConnectivityManager.setProcessDefaultNetwork(network);
                                     } else {
                                         connectivityManager.bindProcessToNetwork(network);  //API23+
@@ -2821,7 +2821,7 @@ public class comm_thread extends Thread {
 
         private Boolean isNetworkAvailable() {
             ConnectivityManager connectivityManager = (ConnectivityManager) mainapp.getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= 23) {
                 Network nw = connectivityManager.getActiveNetwork();
                 if (nw == null) return false;
                 NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);

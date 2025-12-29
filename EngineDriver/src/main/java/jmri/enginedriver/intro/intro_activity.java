@@ -81,7 +81,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //        int slideNumber = 1;  // how many preceding slides
 //
 ////<!-- needed for API 33 -->
-//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//        if (android.os.Build.VERSION.SDK_INT >= 33) {
 //            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.POST_NOTIFICATIONS)) {
 //                SliderPage sliderPage = new SliderPage();
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
@@ -96,7 +96,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 ////<!-- needed for API 33 -->
 //
 ////<!-- needed for API 33 -->
-//        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+//        if (android.os.Build.VERSION.SDK_INT < 33) {
 ////<!-- needed for API 33 -->
 //            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_IMAGES)) {
 //                SliderPage sliderPage = new SliderPage();
@@ -109,7 +109,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //                askForPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, slideNumber, false);
 //            }
 ////<!-- needed for API 33 -->
-//        } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+//        } else if (android.os.Build.VERSION.SDK_INT < 34) {
 //            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES)) {
 //                SliderPage sliderPage = new SliderPage();
 //                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
@@ -148,7 +148,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //        }
 //
 //////<!-- needed for API 33 -->
-////        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+////        if (android.os.Build.VERSION.SDK_INT < 33) {
 //////<!-- needed for API 33 -->
 //            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
 //                SliderPage sliderPage = new SliderPage();
@@ -197,7 +197,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         Bundle args;
         Fragment fragment;
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
             if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.POST_NOTIFICATIONS)) {
                 args = new Bundle();
                 args.putString("id", Integer.toString(PermissionsHelper.POST_NOTIFICATIONS));
@@ -208,7 +208,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
             }
         }
 
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+        if (android.os.Build.VERSION.SDK_INT < 33) {
             if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_IMAGES)) {
                 args = new Bundle();
                 args.putString("id", Integer.toString(PermissionsHelper.READ_IMAGES));
@@ -217,7 +217,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
                 fragment.setArguments(args);
                 addSlide(fragment);
             }
-        } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        } else if (android.os.Build.VERSION.SDK_INT < 34) {
             if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES)) {
                 args = new Bundle();
                 args.putString("id", Integer.toString(PermissionsHelper.READ_MEDIA_IMAGES));
@@ -314,7 +314,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
         Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(this, requestCode)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(this, requestCode);
             }
         } else {

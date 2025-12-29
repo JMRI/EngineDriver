@@ -113,7 +113,7 @@ public class PermissionsHelper {
             } else if (grantResult != PackageManager.PERMISSION_GRANTED) {
                 isRecognised = true;
                 Log.d(threaded_application.applicationName, activityName + ": Permission denied - showRetryDialog");
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (android.os.Build.VERSION.SDK_INT < 34) {
                     showRetryDialog(activity, requestCode);
                 } else {
                     showAppSettingsDialog(activity, requestCode, true);
@@ -182,7 +182,7 @@ public class PermissionsHelper {
      * @param requestCode the permissions request code
      */
     @SuppressLint("ObsoleteSdkInt")
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @RequiresApi(api = 23)
     public void requestNecessaryPermissions(final Activity activity, @RequestCodes final int requestCode) {
         // Request the necessary permissions based on request code
         // All possible request codes should be considered
@@ -228,14 +228,14 @@ public class PermissionsHelper {
                     break;
 
                 case READ_MEDIA_IMAGES: // needed for API 33
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (Build.VERSION.SDK_INT >= 33) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.READ_MEDIA_IMAGES},
                                 requestCode);
                     }
                     break;
                 case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    if (Build.VERSION.SDK_INT >= 34) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
                                 requestCode);
@@ -248,7 +248,7 @@ public class PermissionsHelper {
 //                    Log.d(threaded_application.applicationName, activityName + ": Requesting NEARBY_WIFI_DEVICES permissions");
 //                    break;
                 case POST_NOTIFICATIONS:
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (Build.VERSION.SDK_INT >= 33) {
                         activity.requestPermissions(new String[]{
                                         Manifest.permission.POST_NOTIFICATIONS},
                                 requestCode);
@@ -309,7 +309,7 @@ public class PermissionsHelper {
                         if (requestCode != WRITE_SETTINGS) {
                             intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         } else {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (Build.VERSION.SDK_INT >= 23) {
                                 intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                             }
                         }
@@ -334,7 +334,7 @@ public class PermissionsHelper {
      */
     private void showRetryDialog(final Context context, @RequestCodes final int requestCode) {
         isDialogOpen = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= 23) {
             new AlertDialog.Builder(context)
                     .setTitle(context.getResources().getString(R.string.permissionsRetryTitle))
                     .setMessage(getMessage(context, requestCode))
@@ -374,10 +374,10 @@ public class PermissionsHelper {
 //    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @SuppressLint("ObsoleteSdkInt")
     public boolean isPermissionGranted(final Context context, @RequestCodes final int requestCode) {
-        //sdk 15 doesn't support some of the codes below, always return success
-        if (Build.VERSION.SDK_INT < 16) {
-            return true;
-        }
+//        //sdk 15 doesn't support some of the codes below, always return success
+//        if (Build.VERSION.SDK_INT < 16) {
+//            return true;
+//        }
         // Determine which permissions to check based on request code
         // All possible request codes should be considered
         switch (requestCode) {
@@ -401,18 +401,18 @@ public class PermissionsHelper {
 
 //<!-- needed for API 33 -->
             case READ_MEDIA_IMAGES:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (Build.VERSION.SDK_INT >= 33) {
                     return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
                 }
 //<!-- needed for API 34 -->
             case READ_MEDIA_VISUAL_USER_SELECTED:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (Build.VERSION.SDK_INT >= 34) {
                     return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED;
                 }
 //            case NEARBY_WIFI_DEVICES :
 //                return ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES ) == PackageManager.PERMISSION_GRANTED;
             case POST_NOTIFICATIONS:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (Build.VERSION.SDK_INT >= 33) {
                     return ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS ) == PackageManager.PERMISSION_GRANTED;
                 }
 //<!-- needed for API 33 -->
@@ -452,17 +452,17 @@ public class PermissionsHelper {
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
 
             case READ_MEDIA_IMAGES:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (Build.VERSION.SDK_INT >= 33) {
                     return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
                 }
             case READ_MEDIA_VISUAL_USER_SELECTED:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (Build.VERSION.SDK_INT >= 34) {
                     return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
                 }
 //            case NEARBY_WIFI_DEVICES:
 //                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.NEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (Build.VERSION.SDK_INT >= 33) {
                     return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.POST_NOTIFICATIONS);
                 }
 
@@ -495,15 +495,15 @@ public class PermissionsHelper {
             case WRITE_SETTINGS:
                 return Manifest.permission.WRITE_SETTINGS;
             case READ_MEDIA_IMAGES:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (Build.VERSION.SDK_INT >= 33) {
                     return Manifest.permission.READ_MEDIA_IMAGES;
                 } else { return "";}
             case READ_MEDIA_VISUAL_USER_SELECTED:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (Build.VERSION.SDK_INT >= 34) {
                     return Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
                 } else { return "";}
             case POST_NOTIFICATIONS:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (Build.VERSION.SDK_INT >= 33) {
                     return Manifest.permission.POST_NOTIFICATIONS;
                 } else { return "";}
             case ACCESS_COARSE_LOCATION:

@@ -83,7 +83,7 @@ public class HorizontalSeekBar extends SeekBar {
     @Override
     protected final void onDraw(final Canvas c) {
 
-        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (android.os.Build.VERSION.SDK_INT <= 21) {
             Drawable progressDrawable = getResources().getDrawable(R.drawable.transparent_progress_bar);
 
             this.setProgressDrawable(progressDrawable);

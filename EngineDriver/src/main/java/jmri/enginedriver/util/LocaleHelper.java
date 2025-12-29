@@ -60,10 +60,10 @@ public class LocaleHelper {
     public static Context setLocale(Context context, String language) {
 
         if (!language.equalsIgnoreCase(languageCountry)) {   // if it as the same as the language at launch do nothing
-            if (Build.VERSION.SDK_INT >= 17) {
+//            if (Build.VERSION.SDK_INT >= 17) {
                 return updateResources(context, language);
-            }
-            return updateResourcesLegacy(context, language);
+//            }
+//            return updateResourcesLegacy(context, language);
         } else {
             return context;
         }
@@ -109,9 +109,9 @@ public class LocaleHelper {
 
         Configuration configuration = resources.getConfiguration();
         configuration.locale = locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//        if (Build.VERSION.SDK_INT >= 17) {
             configuration.setLayoutDirection(locale);
-        }
+//        }
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
 
         return context;

@@ -219,7 +219,7 @@
         <item>Esconde la vista web\n(requiere preferencias \'Vista web del controlador\')</item>
         <item>Bloquea y atenua la pantalla</item>
         <item>Atenuar la pantalla</item>
-        <item>Activación-desactivación temporal del modo inmersivo</item>
+<!--        <item>Activación-desactivación temporal del modo inmersivo</item>-->
         <item>Cambiar el diseño de la pantalla del controlador</item>
         <item>Aumentar/disminuir la velocidad locomotora</item>
         <item>Siguiente acelerador (volumen)</item>

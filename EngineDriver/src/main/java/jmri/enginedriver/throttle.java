@@ -87,6 +87,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.gesture.GestureOverlayView;
+import androidx.core.graphics.Insets;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -106,6 +107,11 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
@@ -615,8 +621,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private int toolbarHeight;
     protected int systemStatusRowHeight = 0;
     protected int systemNavigationRowHeight = 0;
-    protected int systemStatusRowHeightKeep = 0;
-    protected int systemNavigationRowHeightKeep = 0;
+    protected int systemStatusRowHeightKeep = -1;
+    protected int systemNavigationRowHeightKeep = -1;
 
     private enum EsuMc2Led {
         RED(MobileControl2.LED_RED),
@@ -1293,12 +1299,12 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         // Make sure brightness value between 0 to 255
         if (brightnessValue >= 0 && brightnessValue <= 255) {
 
-            if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
+//            if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
 
                 setScreenBrightnessMode(SCREEN_BRIGHTNESS_MODE_MANUAL);
 
                 if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (Build.VERSION.SDK_INT >= 23) {
                         PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
                     }
                 }
@@ -1312,7 +1318,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                 WindowManager.LayoutParams lp = getWindow().getAttributes();
                 lp.screenBrightness = ((float) brightnessValue) / 255;
                 getWindow().setAttributes(lp);
-            }
+//            }
         }
     }
 
@@ -1331,10 +1337,10 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         Context mContext;
         mContext = getApplicationContext();
 
-        if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
+//        if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
             if (brightnessModeValue >= 0 && brightnessModeValue <= 1) {
                 if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (Build.VERSION.SDK_INT >= 23) {
                         PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
                     }
                 }
@@ -1344,7 +1350,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                     threaded_application.safeToast(R.string.toastUnableToSetBrightness, Toast.LENGTH_SHORT);
                 }
             }
-        }
+//        }
     }
 
     protected int getScreenBrightnessMode() {
@@ -1352,13 +1358,13 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         mContext = getApplicationContext();
         int BrightnessModeValue = 0;
 
-        if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
+//        if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
             BrightnessModeValue = Settings.System.getInt(
                     mContext.getContentResolver(),
                     Settings.System.SCREEN_BRIGHTNESS_MODE,
                     0
             );
-        }
+//        }
         return BrightnessModeValue;
     }
 
@@ -1382,7 +1388,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         if ((prefThrottleViewImmersiveMode) || (forceOn)) {   // if the preference is set use Immersive mode
 
-            if (webView!=null)
+            if (webView!=null) {
                 webView.setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -1391,6 +1397,9 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 );
+                webView.postInvalidate();
+            }
+
             View windowView = getWindow().getDecorView();
             windowView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -1414,22 +1423,26 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             systemStatusRowHeight = 0;
             systemNavigationRowHeight = 0;
 
-            webView.invalidate();
+            windowView.postInvalidate();
         }
     }
 
     protected void setImmersiveModeOff(View webView, boolean forceOff) {
 
-        if ((!prefThrottleViewImmersiveMode) || (forceOff)) {   // if the preference is set use Immersive mode
+        if ((!prefThrottleViewImmersiveMode) || (forceOff)) {   // if the preference is set to not use Immersive mode
 
-            if (webView!=null)
+            if (webView!=null) {
                 webView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                webView.postInvalidate();
+            }
             View windowView = getWindow().getDecorView();
             windowView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
             screenNameLine.setVisibility(VISIBLE);
             toolbar.setVisibility(VISIBLE);
             statusLine.setVisibility(VISIBLE);
+
+            getStatusBarAndNavigationBarHeights();
 
 //            throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
             throttleScreenWrapper.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
@@ -1438,7 +1451,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
             immersiveModeIsOn = false;
 
-            webView.invalidate();
+            windowView.postInvalidate();
         }
     }
 
@@ -2839,7 +2852,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
 
         if (!prefSelectedLocoIndicator.equals(selected_loco_indicator_type.NONE)) {
 
-            if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
+//            if (mainapp.androidVersion >= mainapp.minActivatedButtonsVersion) {
 
                 if ((isVolume) && (((prefSelectedLocoIndicator.equals(selected_loco_indicator_type.BOTH)) || (prefSelectedLocoIndicator.equals(selected_loco_indicator_type.VOLUME))))) { // note: 'Volume' option is no longer available
                     if (!prefDisableVolumeKeys) { // don't set the indicators if the volume keys are disabled the preferences
@@ -2847,7 +2860,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             bSels[throttleIndex].setActivated(whichThrottle == throttleIndex);
                         }
                     }
-                }
+//                }
                 if ((!isVolume) && (((prefSelectedLocoIndicator.equals(selected_loco_indicator_type.BOTH)) || (prefSelectedLocoIndicator.equals(selected_loco_indicator_type.GAMEPAD))))) {
                     for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                         bSels[throttleIndex].setHovered(whichThrottle == throttleIndex);
@@ -6295,19 +6308,8 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             toolbar.showOverflowMenu();
         }
 
-        Resources resources = context.getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            systemStatusRowHeightKeep = resources.getDimensionPixelSize(resourceId);
-        }
-        if (IS_ESU_MCII) {
-            systemNavigationRowHeightKeep = 0;
-        } else {
-            resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-            if (resourceId > 0) {
-                systemNavigationRowHeightKeep = resources.getDimensionPixelSize(resourceId);
-            }
-        }
+        getStatusBarAndNavigationBarHeights();
+
         immersiveModeIsOn = false;
         immersiveModeTempIsOn = false;
 
@@ -6641,6 +6643,24 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
             }
             webView.loadUrl(url);
         }
+    }
+
+    void getStatusBarAndNavigationBarHeights() {
+//        if ( (systemStatusRowHeightKeep==-1) || (systemNavigationRowHeightKeep==-1) ) {
+            WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
+            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.throttle_screen_wrapper), (v, windowInsets) -> {
+                int insetTypes = WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout();
+                Insets insets = windowInsets.getInsets(insetTypes);
+                systemStatusRowHeightKeep = insets.top;
+
+                Insets navBarInsets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars());
+                systemNavigationRowHeightKeep = navBarInsets.bottom;
+
+                // Return CONSUMED to stop the inset from bubbling to other views
+                return WindowInsetsCompat.CONSUMED;
+            });
+//        }
     }
 
     void setAllFunctionLabelsAndListeners() {
@@ -7614,18 +7634,18 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                             setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastSwipeUpDownScreenDimmed));
                             break;
 
-                        case swipe_up_down_option_type.IMMERSIVE:
-                            if (immersiveModeIsOn) {
-                                immersiveModeTempIsOn = false;
-                                setImmersiveModeOff(webView, true);
-                                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT);
-                            } else {
-                                immersiveModeTempIsOn = true;
-                                setImmersiveModeOn(webView, true);
-                            }
-                            setLabels();
-                            throttleScreenWrapper.invalidate();
-                            break;
+//                        case swipe_up_down_option_type.IMMERSIVE:
+//                            if (immersiveModeIsOn) {
+//                                immersiveModeTempIsOn = false;
+//                                setImmersiveModeOff(webView, true);
+//                                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT);
+//                            } else {
+//                                immersiveModeTempIsOn = true;
+//                                setImmersiveModeOn(webView, true);
+//                            }
+//                            setLabels();
+//                            throttleScreenWrapper.invalidate();
+//                            break;
 
                         case swipe_up_down_option_type.SWITCH_LAYOUTS:
                             switchThrottleScreenType();
@@ -7823,7 +7843,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     private void startAppScreenPinning() {
         if (!prefKidsTimerKioskMode) return;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= 23) {
             // Check if the activity is already in lock task mode.
             ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             if (activityManager != null && activityManager.getLockTaskModeState() == ActivityManager.LOCK_TASK_MODE_NONE) {
@@ -7846,7 +7866,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void stopAppScreenPinning() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= 23) {
             ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             if (activityManager != null && activityManager.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE) {
                 try {
@@ -7868,7 +7888,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
     public void navigateToHandler(@RequestCodes int requestCode) {
         Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);
             }
         } else {
