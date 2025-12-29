@@ -150,8 +150,9 @@ public abstract class Flashlight {
      * This uses the {@link android.hardware.camera2.CameraManager#setTorchMode(String, boolean)}
      * method now available in API 23 to greatly simplify things.
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @TargetApi(Build.VERSION_CODES.M)
+//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(23)
     private static class MarshmallowFlashlight extends Flashlight {
 
         private static CameraManager cameraManager;

@@ -712,7 +712,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     public void navigateToHandler(@RequestCodes int requestCode) {
         Log.d(threaded_application.applicationName, activityName + ": navigateToHandler():" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(function_settings.this, requestCode)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(function_settings.this, requestCode);
             }
         } else {

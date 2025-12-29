@@ -50,7 +50,7 @@ public class intro_write_settings extends Fragment {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= 23) {
                     intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                 }
                 Uri uri = Uri.fromParts("package", Objects.requireNonNull(getActivity()).getApplicationContext().getPackageName(), null);

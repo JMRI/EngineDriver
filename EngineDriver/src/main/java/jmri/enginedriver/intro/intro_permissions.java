@@ -89,7 +89,7 @@ public class intro_permissions extends Fragment {
             phi.setIsDialogOpen(false);
             if (!phi.isPermissionGranted(this.getActivity(), permissionId)) {
                 shouldShowRequestPermissionRationale(PermissionsHelper.getManifestPermissionId(permissionId));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= 23) {
                     phi.requestNecessaryPermissions(this.getActivity(), permissionId);
                 }
             }
@@ -111,7 +111,7 @@ public class intro_permissions extends Fragment {
                 phi.setIsDialogOpen(false);
                 if (!phi.isPermissionGranted(this.getActivity(), permissionId)) {
                     ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), PermissionsHelper.getManifestPermissionId(permissionId));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (Build.VERSION.SDK_INT >= 23) {
                         phi.requestNecessaryPermissions(this.getActivity(), permissionId);
                     }
                 }

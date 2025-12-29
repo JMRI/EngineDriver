@@ -171,7 +171,7 @@
         <item>隐藏网页视图（需要启用“限制网页视图”首选项）</item>
         <item>锁定和调暗屏幕</item>
         <item>夜间模式</item>
-        <item>沉浸模式临时启用/禁用</item>
+<!--        <item>沉浸模式临时启用/禁用</item>-->
         <item>切换节流阀布局</item>
         <item>增加/降低机车速度</item>
         <item>选择节流阀（音量键）</item>

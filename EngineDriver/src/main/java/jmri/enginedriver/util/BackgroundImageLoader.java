@@ -31,11 +31,11 @@ public class BackgroundImageLoader {
     public void loadBackgroundImage() {
         if (prefBackgroundImage) {
             boolean result = false;
-            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            if (android.os.Build.VERSION.SDK_INT < 33) {
                 if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_IMAGES)) {
                     result = true;
                 }
-            } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            } else if (android.os.Build.VERSION.SDK_INT < 34) {
                 if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_IMAGES)) {
                     result = true;
                 }

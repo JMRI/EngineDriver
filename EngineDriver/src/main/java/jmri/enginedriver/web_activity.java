@@ -349,11 +349,11 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
 
         // enable remote debugging of all webviews
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//        if (Build.VERSION.SDK_INT >= 19) {
             if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
                 WebView.setWebContentsDebuggingEnabled(true);
             }
-        }
+//        }
 
         // open all links inside the current view (don't start external web browser)
         WebViewClient EDWebClient = new WebViewClient() {
@@ -482,9 +482,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
         resumeWebView();
         CookieManager cookieManager = CookieManager.getInstance();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
-        }
+//        if (Build.VERSION.SDK_INT < 21) {
+//            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
+//        }
         cookieManager.setAcceptCookie(true);
 
         // enable swipe/fling detection if enabled in Prefs
@@ -510,9 +510,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         threaded_application.activityPaused(activityName);
 
         pauseWebView();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.getInstance().stopSync();
-        }
+//        if (Build.VERSION.SDK_INT < 21) {
+//            CookieSyncManager.getInstance().stopSync();
+//        }
         if (webView != null) {
             webView.saveState(webBundle);           // save locally for use if finishing
         }

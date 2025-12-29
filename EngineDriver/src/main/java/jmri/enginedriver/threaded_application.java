@@ -191,13 +191,13 @@ public class threaded_application extends Application {
 
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
     public Long fastClockSeconds = 0L;
-    public int androidVersion = 0;
+//    public int androidVersion = 0;
     public String appVersion = "";
     //minimum Android version for some features
-    public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-    public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
-    public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
-    public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+//    public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
+//    public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
+//    public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
+//    public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
     //all heartbeat values are in milliseconds
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
@@ -578,7 +578,7 @@ public class threaded_application extends Application {
         if (notificationManager == null) {
             if (notificationIntent == null) return;
             // create it
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= 26) {
                 String CHANNEL_ID = "ed_channel_HIGH";// The id of the channel.
                 String CHANNEL_ID_QUIET = "ed_channel_HIGH_quiet";// The id of the channel without sound.
                 String channelId;
@@ -648,7 +648,7 @@ public class threaded_application extends Application {
         vibrate(new long[]{1000, 500, 1000, 500});
         createNotificationChannelAndManager(notificationIntent);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= 26) {
             notificationBuilder.setContentText(notificationText);
             PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
                     PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
@@ -671,7 +671,7 @@ public class threaded_application extends Application {
 //        notificationLevel = 2;
 //
 //        vibrate(new long[]{1000, 500, 1000, 500});
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//        if (Build.VERSION.SDK_INT >= 26) {
 //            notificationBuilder.setContentText(updateText);
 //            notificationBuilder.setOnlyAlertOnce(false);
 //            notificationManager.notify(ED_NOTIFICATION_ID, notificationBuilder.build());
@@ -703,9 +703,9 @@ public class threaded_application extends Application {
             appVersion = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
-        androidVersion = android.os.Build.VERSION.SDK_INT;
+//        androidVersion = android.os.Build.VERSION.SDK_INT;
 
-        Log.i(applicationName, "Engine Driver:" + appVersion + ", SDK:" + androidVersion);
+        Log.i(applicationName, "Engine Driver:" + appVersion + ", SDK:" + android.os.Build.VERSION.SDK_INT);
 
         context = getApplicationContext();
 
@@ -747,9 +747,9 @@ public class threaded_application extends Application {
         }, "DefaultFunctionLabels").start();
 
         CookieManager cookieManager = CookieManager.getInstance();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
-        }
+//        if (Build.VERSION.SDK_INT < 21) {
+//            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
+//        }
         cookieManager.setAcceptCookie(true);
 
         prefShowTimeOnLogEntry = prefs.getBoolean("prefShowTimeOnLogEntry",
@@ -2443,7 +2443,7 @@ public class threaded_application extends Application {
             try {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 // Vibrate for 500 milliseconds
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (Build.VERSION.SDK_INT >= 26) {
                     v.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
                     //deprecated in API 26
@@ -2463,7 +2463,7 @@ public class threaded_application extends Application {
             try {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 // Vibrate for 500 milliseconds
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (Build.VERSION.SDK_INT >= 26) {
                     v.vibrate(VibrationEffect.createWaveform(pattern, -1));
                 } else {
                     //deprecated in API 26

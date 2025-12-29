@@ -103,7 +103,7 @@ public class InPhoneLocoSoundsLoader {
       }
 
       // setup the soundPool for the in device loco sounds
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//      if (Build.VERSION.SDK_INT >= 21) {
          AudioAttributes audioAttributes = new AudioAttributes
                  .Builder()
                  .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -115,10 +115,10 @@ public class InPhoneLocoSoundsLoader {
                  .setAudioAttributes(audioAttributes)
                  .build();
 
-      } else {
-         mainapp.soundPool = new SoundPool(8,
-                 AudioManager.STREAM_MUSIC,0);
-      }
+//      } else {
+//         mainapp.soundPool = new SoundPool(8,
+//                 AudioManager.STREAM_MUSIC,0);
+//      }
       mainapp.soundPool.setOnLoadCompleteListener (new SoundPool.OnLoadCompleteListener () {
          @Override
          public void onLoadComplete(SoundPool soundPool, int i, int i2) {

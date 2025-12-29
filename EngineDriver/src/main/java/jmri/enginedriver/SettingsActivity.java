@@ -1824,10 +1824,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 if (!mainapp.isPowerControlAllowed()) {
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "show_layout_power_button_preference", false);
                 }
-                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveMode", false);
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveModeHideToolbar", false);
-                }
+//                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveMode", false);
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveModeHideToolbar", false);
+//                }
 
                 if (mainapp.connectedHostName.isEmpty()) { // option is only available when there is no current connection
                     parentActivity.getConnectionsList();
@@ -1842,9 +1842,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
                 }
 
-                if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSelectedLocoIndicator", false);
-                }
+//                if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSelectedLocoIndicator", false);
+//                }
 
                 if ((!mainapp.connectedHostip.isEmpty()) || (mainapp.web_server_port == 0)) {
                     parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
@@ -1880,9 +1880,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (prefs != null) {
                 prefThemeOriginal = prefs.getString("prefTheme",
                         parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
-                if (mainapp.androidVersion < mainapp.minThemeVersion) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTheme", false);
-                }
+//                if (mainapp.androidVersion < mainapp.minThemeVersion) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTheme", false);
+//                }
 
                 parentActivity.result = RESULT_OK;
 

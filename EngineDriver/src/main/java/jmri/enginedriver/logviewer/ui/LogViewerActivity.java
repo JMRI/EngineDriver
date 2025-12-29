@@ -383,7 +383,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
         Log.d(threaded_application.applicationName, activityName + ": navigateToHandler():" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(LogViewerActivity.this, requestCode)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(LogViewerActivity.this, requestCode);
             }
         } else {

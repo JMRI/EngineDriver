@@ -879,7 +879,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //        PermissionsHelper phi = PermissionsHelper.getInstance();
 //        if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
 //            if (prefs.getBoolean("stop_on_phonecall_preference", mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                if (Build.VERSION.SDK_INT >= 23) {
 //                    // how many times have we asked for this before?
 //                    int count = prefs.getInt("prefStopOnPhonecallCount", 0);
 //                    if (count < 5) {  // this is effectively counted twice each startup
@@ -918,22 +918,22 @@ public class connection_activity extends AppCompatActivity implements Permission
             //we must have location permissions to get SSID.
             PermissionsHelper phi = PermissionsHelper.getInstance();
 //            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                if (Build.VERSION.SDK_INT >= 23) {
 //                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
 //                }
 //            }
 //            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                if (Build.VERSION.SDK_INT >= 23) {
 //                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
 //                }
 //            }
             if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= 23) {
                     phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE);
                 }
             }
             if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.INTERNET)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= 23) {
                     phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.INTERNET);
                 }
             }
@@ -967,7 +967,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                     if (!prefAllowMobileData) {
                         // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        if (Build.VERSION.SDK_INT >= 21) {
                             Log.d(threaded_application.applicationName, activityName + ": getWifiInfor(): Builder");
                             NetworkRequest.Builder request = new NetworkRequest.Builder();
                             request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
@@ -976,14 +976,14 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                                 @Override
                                 public void onAvailable(Network network) {
-                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                                    if (Build.VERSION.SDK_INT < 23) {
                                         ConnectivityManager.setProcessDefaultNetwork(network);
                                     } else {
                                         cm.bindProcessToNetwork(network);  //API23+
                                     }
                                 }
                             });
-                        }
+//                        }
                     }
                     break;
                 case ConnectivityManager.TYPE_MOBILE:
@@ -1260,7 +1260,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     public void navigateToHandler(@RequestCodes int requestCode) {
         Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): " + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
             }
         } else {
