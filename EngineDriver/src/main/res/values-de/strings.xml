@@ -1135,6 +1135,8 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver benötigt Benachrichtigungsberechtigungen, um Sie zu warnen, wenn Sie in den Hintergrund drücken.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Einstellungen</string>
     <string name="prefDccexPreferencesSummary">Optionen für die Verwendung eines EX-CommandStation</string>
+    <string name="prefDccexAutomationsAskTitle">Lokomotivadresse für den EXRAIL-Automaten</string>
+    <string name="prefDccexAutomationsAskSummary">Bei DCC-EX-Automatisierungen fragen Sie bitte, welche Lokomotive für die Automatisierung eingesetzt werden soll.</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Verwenden Sie immer Funktionsbezeichnungen vom Server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Verwenden Sie bei deaktiviertem Deaktivieren von MotoredRIVER -Standardbezeichnungen für Lokos, die von der Adresse (nicht von Dienstplänen) ausgewählt wurden, und ignorieren Server -Standardbezeichnungen.</string>
     <string name="cv29AnalogueConversionOff">Analoge Umwandlung: AUS</string>
@@ -1219,6 +1221,7 @@
     <string name="logviewerStopSave">Stoppen</string>
     <string name="logviewerShare">Aktie</string>
 
+    <string name="dccexAutomationTitle">Nach der Automatisierungslokomotive fragen?</string>
     <string name="autoServerConnectTitle">Automatische Serververbindung</string>
     <string name="autoServerConnectLabel">Servername</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Aktuellen Server abrufen</string>

@@ -360,6 +360,7 @@
     <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
         <item>Auto</item>
         <item>Piccolo</item>
+        <item>Medio</item>
         <item>Grande</item>
     </string-array>
 

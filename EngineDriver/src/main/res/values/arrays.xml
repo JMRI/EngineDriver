@@ -39,11 +39,13 @@
     <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
         <item>Auto</item>
         <item>Small</item>
+        <item>Medium</item>
         <item>Large</item>
     </string-array>
     <string-array name="prefToolbarButtonSizeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>auto</item>
         <item>small</item>
+        <item>medium</item>
         <item>large</item>
     </string-array>
 

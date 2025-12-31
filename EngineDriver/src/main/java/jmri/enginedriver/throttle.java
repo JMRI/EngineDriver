@@ -179,6 +179,7 @@ import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.throttle_screen_type;
+import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
@@ -8534,11 +8535,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int toolbarHeight = layoutParams.height;
         int newHeightAndWidth = toolbarHeight;
 
-        if (!threaded_application.useSmallToolbarButtonSize) {
+        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
+            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
             newHeightAndWidth = toolbarHeight*2;
             layoutParams.height = newHeightAndWidth;
             toolbar.setLayoutParams(layoutParams);
         }
+
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             View itemChooser = item.getActionView();

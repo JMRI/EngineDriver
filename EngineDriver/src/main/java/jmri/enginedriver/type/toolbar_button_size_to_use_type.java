@@ -17,9 +17,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface toolbar_button_size_type {
-    String AUTO = "auto";
-    String SMALL = "small";
-    String MEDIUM = "medium";
-    String LARGE = "large";
+public interface toolbar_button_size_to_use_type {
+    int AUTO = 0;
+    int SMALL = 1;
+    int MEDIUM = 2;
+    int LARGE = 3;
 }

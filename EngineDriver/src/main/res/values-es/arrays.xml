@@ -341,6 +341,7 @@
     <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
         <item>Auto</item>
         <item>Pequeño</item>
+        <item>Medio</item>
         <item>Grande</item>
     </string-array>
 

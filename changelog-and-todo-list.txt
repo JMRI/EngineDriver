@@ -15,6 +15,8 @@
  * Bug fix for F11 in the keyboard 'type' of gamepad
  * Added XBox gamepad support
  * Reinstate the log and file sharing capability
+ * Option for medium size toolbar/action bar buttons
+ * More Google translations
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212

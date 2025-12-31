@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.type.message_type;
@@ -775,11 +776,16 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         int toolbarHeight = layoutParams.height;
         int newHeightAndWidth = toolbarHeight;
 
-        if (!threaded_application.useSmallToolbarButtonSize) {
+        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
+            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
             newHeightAndWidth = toolbarHeight*2;
             layoutParams.height = newHeightAndWidth;
             toolbar.setLayoutParams(layoutParams);
         }
+
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             View itemChooser = item.getActionView();

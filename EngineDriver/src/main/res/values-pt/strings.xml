@@ -1083,6 +1083,7 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver precisa de permissões de notificação para avisá -lo quando formar em segundo plano.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Preferências</string>
     <string name="prefDccexPreferencesSummary">Opções para usar um EX-CommandStation</string>
+    <string name="prefDccexAutomationsAskSummary">Para automações DCC-EX, pergunte qual locomotiva enviar na automação.</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Sempre use rótulos de função do servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Quando desativado, use os rótulos padrão do EnginEnRiver para locos selecionados por endereço (não lista), ignorando os rótulos padrão do servidor.</string>
     <string name="cv29AnalogueConversionOff">Conversão Analógica: DESLIGADA</string>
@@ -1177,6 +1178,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Botão de parada Atraso de pressão longa</string>
     <string name="prefStopButtonLongPressDelaySummary">Quantos milissegundos constituem um toque longo nos botões Stop para iniciar o EStop</string>
 
+    <string name="dccexAutomationTitle">Endereço da locomotiva para a Automação EXRAIL</string>
     <string name="autoServerConnectTitle">Conexão automática do servidor</string>
     <string name="autoServerConnectLabel">Nome do servidor</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Obter servidor atual</string>
@@ -1208,4 +1210,5 @@
     <string name="prefActionBarShowThrottleButtonTitle">Botão do acelerador?</string>
     <string name="prefActionBarShowTurnoutsButtonSummary">Mostrar botão na barra de ações para alternar para a tela de desvios.</string>
     <string name="prefActionBarShowThrottleButtonSummary">Exibir botão na barra de ações para alternar para a tela do acelerador.</string>
+    <string name="prefDccexAutomationsAskTitle">Endereço da locomotiva para a Automação EXRAIL</string>
 </resources>
