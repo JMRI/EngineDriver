@@ -35,6 +35,7 @@ import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_G;
 import static android.view.KeyEvent.KEYCODE_F1;
 import static android.view.KeyEvent.KEYCODE_F10;
+import static android.view.KeyEvent.KEYCODE_F11;
 import static android.view.KeyEvent.KEYCODE_H;
 import static android.view.KeyEvent.KEYCODE_L;
 import static android.view.KeyEvent.KEYCODE_LEFT_BRACKET;
@@ -84,7 +85,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.gesture.GestureOverlayView;
 import androidx.core.graphics.Insets;
@@ -107,7 +107,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -3665,7 +3664,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         , getConsistAddressString(whichThrottle));
             }
 
-        } else if (keyCode == KEYCODE_F) {  // Start of a Function command
+        } else if ( (keyCode == KEYCODE_F) || (keyCode == KEYCODE_F11) ) {  // Start of a Function command
             if (action == ACTION_DOWN) {
                 keyboardString = "F";
             }

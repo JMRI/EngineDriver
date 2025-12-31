@@ -2,7 +2,7 @@
  * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
  * Move to targetSdk 36
  * Immersive mode fixes for targetSdk 36 - enforced edge-to-edge mode
- * Significant changes to the way the UI elements are referenced (now in resource in arrays)
+ * Significant changes to the way the UI elements are referenced (now in resources in arrays)
  * Bug fix for gamepad calibration when using joystick like settings
  * Linting
  * Added back in the VRBoxB gamepad type and fixed it
@@ -10,7 +10,11 @@
  * Bug fix for gamepads with the IPLS.  The tone generator for the beeps is not compatible with the IPLS.
  * Add 'None' option for the gamepad buttons
  * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
+ * Changed the API levels to numbers instead of the names, which are difficult follow with the latest API names
  * Removed the swipe up/down option to temperately turn off immersive mode as it is not really necessary anymore and did not work properly anymore anyway
+ * Bug fix for F11 in the keyboard 'type' of gamepad
+ * Added XBox gamepad support
+ * Reinstate the log and file sharing capability
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212
@@ -974,6 +978,7 @@
  * routes
  *   TODO: shrink button text if longer than x
  *   TODO: determine why double-click needed sometimes
+ *   TODO: for DCC-EX automations, ask for the loco to hand-off.  Default to the last 'used' loco.
  * turnouts
  *   TODO: add state-based color (maybe just for colorful theme?)
  *   TODO: support client entry/edit of username for servers without usernames

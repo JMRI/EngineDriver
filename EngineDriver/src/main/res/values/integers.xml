@@ -84,6 +84,11 @@
     <integer name="KeyCode_Button_L2"> 104</integer>
     <integer name="KeyCode_Button_R2"> 105</integer>
 
+    <integer name="KeyCode_Button_ThumbL"> 106</integer>
+    <integer name="KeyCode_Button_ThumbR"> 107</integer>
+
+    <integer name="KeyCode_Button_Mode"> 110</integer>
+
     <integer name="KeyCode_F1"> 131</integer>
     <integer name="KeyCode_F2"> 132</integer>
     <integer name="KeyCode_F3"> 133</integer>

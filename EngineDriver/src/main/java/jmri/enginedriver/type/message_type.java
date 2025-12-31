@@ -111,5 +111,6 @@ public interface message_type {
     int READ_DCCEX_CONSIST_ADDRESS = 88;
     int RECEIVED_CONSIST_ADDRESS = 89;
     int DISPATCH = 90;
+    int START_AUTOMATION = 91;
 
 }

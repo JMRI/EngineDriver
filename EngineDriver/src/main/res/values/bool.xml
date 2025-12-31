@@ -104,6 +104,7 @@
     <bool name="prefFeedbackWhenGoingToBackgroundDefaultValue">true</bool>
     <bool name="prefDccexConnectionOptionDefaultValue">false</bool>
     <bool name="prefDccexSequenceItemRequestsDefaultValue">false</bool>
+    <bool name="prefDccexAutomationsAskDefaultValue">false</bool>
     <bool name="prefFullScreenSwipeAreaDefaultValue">false</bool>
     <bool name="prefLeftRightSwipeChangesSpeedDefaultValue">false</bool>
 

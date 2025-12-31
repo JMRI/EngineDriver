@@ -2379,6 +2379,13 @@
             android:title="@string/prefTurnoutsShowThrowCloseButtonsTitle"
             android:layout="@layout/checkbox_no_icon" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDccexAutomationsAskDefaultValue"
+            android:key="prefDccexAutomationsAsk"
+            android:summary="@string/prefDccexAutomationsAskSummary"
+            android:title="@string/prefDccexAutomationsAskTitle"
+            android:layout="@layout/checkbox_no_icon" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -2567,12 +2574,12 @@
                     android:title="@string/prefShowTimeOnLogEntryTitle"
                     android:layout="@layout/checkbox_no_icon" />
 
-<!--                <CheckBoxPreference-->
-<!--                    android:defaultValue="@bool/prefShareFileNowDefaultValue"-->
-<!--                    android:key="prefShareFileNow"-->
-<!--                    android:summary="@string/prefShareFileNowSummary"-->
-<!--                    android:title="@string/prefShareFileNowTitle"-->
-<!--                    android:layout="@layout/checkbox_no_icon" />-->
+                <CheckBoxPreference
+                    android:defaultValue="@bool/prefShareFileNowDefaultValue"
+                    android:key="prefShareFileNow"
+                    android:summary="@string/prefShareFileNowSummary"
+                    android:title="@string/prefShareFileNowTitle"
+                    android:layout="@layout/checkbox_no_icon" />
 
             </PreferenceCategory>
         </PreferenceScreen>

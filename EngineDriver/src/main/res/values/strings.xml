@@ -1554,6 +1554,9 @@
     <string name="prefDccexTitle">Use native DCC-EX commands</string>
     <string name="prefDccexSummary">Use native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\" or use port 2560\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
 
+    <string name="prefDccexAutomationsAskTitle">Ask for the Automation Loco?</string>
+    <string name="prefDccexAutomationsAskSummary">For DCC-EX Automations, ask for which loco to send on the automation.</string>
+
     <string name="prefAlwaysUseFunctionsFromServerTitle">Always use function labels from server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
 
@@ -1631,6 +1634,8 @@
     <string name="cvBitCalculatorCvValueLabel">CV Value (decimal)</string>
     <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirm</string>
+
+    <string name="dccexAutomationTitle">Loco Address for the EXRAIL Automation</string>
 
     <string name="autoServerConnectTitle">Auto Server Connect</string>
     <string name="autoServerConnectLabel">Server name</string>

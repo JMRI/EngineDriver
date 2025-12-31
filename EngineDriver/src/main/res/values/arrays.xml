@@ -643,6 +643,7 @@
         <item>VRBoxB</item>
         <item>AuvisioB</item>
         <item>AuvisioB-rotate</item>
+        <item>XBox</item>
         <item>Generic</item>
         <item>Generic3x4</item>
         <item>Keyboard</item>
@@ -663,6 +664,7 @@
         <item tools:ignore="TypographyDashes">VR Box-Mode B</item>
         <item >Auvisio Android-B</item>
         <item >Auvisio Android-B - ↺ DPAD</item>
+        <item>XBox</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (4x4 Keypad +Encoder)</item>
         <item tools:ignore="TypographyDashes">ESP32 DIY (3x4 Keypad +Encoder)</item>
         <item >Keyboard</item>
@@ -685,6 +687,7 @@
         <item>@array/prefGamePadVRBoxB</item>                 <!-- VRBoxB -->
         <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB -->
         <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadXBox</item>                   <!-- XBox -->
         <item>@array/prefGamePadGeneric</item>                <!-- Generic -->
         <item>@array/prefGamePadGeneric3x4</item>             <!-- Generic3x4 -->
         <item>@array/prefGamePadNoneLabels</item>             <!-- Keyboard -->
@@ -707,6 +710,7 @@
         <item>@array/prefGamePadVRBoxB</item>                 <!-- VRBoxB -->
         <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB -->
         <item>@array/prefGamePadAuvisioB</item>               <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadXBox</item>                   <!-- XBox -->
         <item>@array/prefGamePadGeneric</item>                <!-- Generic -->
         <item>@array/prefGamePadGeneric3x4</item>             <!-- Generic3x4 -->
         <item>@array/prefGamePadNoneLabels</item>             <!-- Keyboard -->
@@ -729,6 +733,7 @@
         <item>@array/prefGamePadVRBoxBLabels</item>     <!-- VRBoxB -->
         <item>@array/prefGamePadAuvisioBLabels</item>     <!-- AuvisioB -->
         <item>@array/prefGamePadAuvisioBLabels</item>     <!-- AuvisioB-rotate -->
+        <item>@array/prefGamePadXBoxLabels</item>         <!-- XBox -->
         <item>@array/prefGamePadGenericLabels</item>     <!-- Generic -->
         <item>@array/prefGamePadGeneric3x4Labels</item>  <!-- Generic3x4 -->
         <item>@array/prefGamePadGenericLabels</item>     <!-- Keyboard -->
@@ -751,6 +756,7 @@
         <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- VRBoxC -->
         <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- AuvisioB -->
         <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- AuvisioB-rotate -->
+        <item>@array/gamepadTestButtonLabelsXBox</item>        <!-- XBox -->
         <item>@array/gamepadTestButtonLabelsGeneric</item>     <!-- Generic -->
         <item>@array/gamepadTestButtonLabelsGeneric3x4</item>  <!-- Generic3x4 -->
         <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- Keyboard -->
@@ -1266,6 +1272,57 @@
         <item>0</item> //not used - alternate Decrease Speed by specified Amount
     </integer-array>
 
+    <integer-array name="prefGamePadXBox" translatable="false">
+        <item>0</item> //not used
+        <item>@integer/KeyCode_Button_Select</item> // View button
+        <item>@integer/KeyCode_Dpad_Up</item> //gamepadDpadUp
+        <item>@integer/KeyCode_Dpad_Down</item> //gamepadDpadDown
+        <item>@integer/KeyCode_Dpad_Left</item> //gamepadDpadLeft
+        <item>@integer/KeyCode_Dpad_Right</item> //gamepadDpadRight
+        <item>@integer/KeyCode_Button_Start</item> //Menu button
+        <item>@integer/KeyCode_Button_A</item> //gamepadA
+        <item>@integer/KeyCode_Button_Y</item> //gamepadY
+        <item>@integer/KeyCode_Button_B</item> //gamepadB
+        <item>@integer/KeyCode_Button_X</item> //gamepadX
+        <item>@integer/KeyCode_Button_L1</item> //upper front left button (Bumper)
+        <item>@integer/KeyCode_Button_ThumbL</item> //Left analog stick press
+        <item>@integer/KeyCode_Button_R1</item> //upper front right button (Bumper)
+        <item>@integer/KeyCode_Button_ThumbR</item> //Right analog stick press
+        <item>@integer/KeyCode_Button_Mode</item> //XBox button
+        <item>0</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+    </integer-array>
+
+    <string-array name="prefGamePadXBoxLabels">
+        <item> </item> //not used
+        <item>View Button action</item>
+        <item>DPAD Up action</item>
+        <item>DPAD Down action</item>
+        <item>DPAD Left action</item>
+        <item>DPAD Right action</item>
+        <item>Menu Button action</item>
+        <item>Button A action</item>
+        <item>Button D action</item>
+        <item>Button B action</item>
+        <item>Button C action</item>
+        <item>Left Bumper Button action</item>
+        <item>Left Joystick Press action</item>
+        <item>Right Bumper Button action</item>
+        <item>Right Joystick Press action</item>
+        <item>XBox Button action</item>
+        <item>Button not available</item> //not used
+        <item>0</item> //not used - alternate Stop
+        <item>0</item> //not used - alternate Increase Speed
+        <item>0</item> //not used - alternate Decrease Speed
+        <item>0</item> //not used - alternate Increase Speed by specified Amount
+        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+    </string-array>
+
+
     <integer-array name="prefGamePadUtopiaC" translatable="false">
         <item>0</item> //not used
         <item>0</item> //not used
@@ -1701,6 +1758,26 @@
         <item>- Not available</item>
         <item>- Not available</item>
         <item>- Not available</item>
+        <item>- Not available</item>
+        <item>- Not available</item>
+    </string-array>
+
+    <string-array name="gamepadTestButtonLabelsXBox">
+        <item> </item>
+        <item>View</item>
+        <item>▲ Up</item>
+        <item>▼ Down</item>
+        <item>◄ Left</item>
+        <item>Right ►</item>
+        <item>Menu</item>
+        <item>A</item>
+        <item>Y</item>
+        <item>B</item>
+        <item>X</item>
+        <item>L Bumper</item>
+        <item>L Joy Press</item>
+        <item>R Bumper</item>
+        <item>R Joy Press</item>
         <item>- Not available</item>
         <item>- Not available</item>
     </string-array>
@@ -2610,6 +2687,7 @@
         <item>HideIfNoUserNamePreference</item>
         <item>prefTurnoutsShowThrowCloseButtons</item>
         <item>prefCategoryTurnouts</item> <!-- Category -->
+        <item>prefDccexAutomationsAsk</item>
 
         <!-- Children's Timer Preferences -->
         <item>kids_preferences</item>  <!-- PreferenceScreen -->

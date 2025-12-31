@@ -5,7 +5,9 @@ import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.FileProvider;
 
 import android.text.Html;
 import android.util.Log;
@@ -119,15 +122,15 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         saveInfoTV = findViewById(R.id.logviewer_info);
 
-//        shareButton = findViewById(R.id.logviewer_button_share); // Assuming you added the button with this ID
-//        shareButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mainapp.buttonVibration(); // If you want vibration
-//                showLogFileSelectionDialog();
-//            }
-//        });
-//
+        shareButton = findViewById(R.id.logviewer_button_share); // Assuming you added the button with this ID
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainapp.buttonVibration(); // If you want vibration
+                showLogFileSelectionDialog();
+            }
+        });
+
         showHideSaveButton();
 
         logReaderTask = new LogReaderTask();
@@ -623,66 +626,66 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         return logFiles;
     }
 
-//    private void showLogFileSelectionDialog() {
-//        ArrayList<File> logFiles = getLogFilesForDialog();
-//
-//        if (logFiles.isEmpty()) return;
-//
-//        // Extract just the file names for display in the dialog
-//        ArrayList<String> fileNames = new ArrayList<>();
-//        for (File file : logFiles) {
-//            fileNames.add(file.getName());
-//        }
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        LayoutInflater inflater = this.getLayoutInflater();
-//        View dialogView = inflater.inflate(R.layout.file_list_dialog, null);
-//        builder.setView(dialogView);
-//
-//        ListView dialogListView = dialogView.findViewById(R.id.file_dialog_listview);
-//        Button cancelButton = dialogView.findViewById(R.id.file_dialog_button_cancel);
-//
-//        // --- Setup ListView ---
-//        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
-//                R.layout.file_list_item, // This layout MUST define the font
-//                R.id.file_list_item_text,    // The ID of the TextView within logfile_list_item.xml
-//                fileNames);
-//        dialogListView.setAdapter(listAdapter);
-//
-//        final AlertDialog dialog = builder.create(); // Create before setting item click listener for ListView
-//
-//        dialogListView.setOnItemClickListener((parent, view, position, id) -> {
-//            File selectedFile = logFiles.get(position);
-////            threaded_application.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
-//            shareFile(selectedFile,selectedFile.getName());
-//            dialog.dismiss();
-//        });
-//
-//        cancelButton.setOnClickListener(v -> dialog.dismiss());
-//
-//        dialog.show();
-//    }
-//
-//    private void shareFile(File file, String fileName) {
-//        Uri fileUri = FileProvider.getUriForFile(
-//                this,
-//                getApplicationContext().getPackageName() + ".fileprovider",
-//                file
-//        );
-//        shareFile(fileUri, fileName);
-//    }
-//    private void shareFile(Uri fileUri, String fileName) {
-//        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-//        shareIntent.setType("text/plain"); // Set the MIME type of the file
-//        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-//        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // Important for granting temporary read access
-//
-//        // Verify that there are apps available to handle this intent
-//        if (shareIntent.resolveActivity(getPackageManager()) != null) {
-//            startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
-//        } else {
-//            threaded_application.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
-//        }
-//    }
+    private void showLogFileSelectionDialog() {
+        ArrayList<File> logFiles = getLogFilesForDialog();
+
+        if (logFiles.isEmpty()) return;
+
+        // Extract just the file names for display in the dialog
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (File file : logFiles) {
+            fileNames.add(file.getName());
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.file_list_dialog, null);
+        builder.setView(dialogView);
+
+        ListView dialogListView = dialogView.findViewById(R.id.file_dialog_listview);
+        Button cancelButton = dialogView.findViewById(R.id.file_dialog_button_cancel);
+
+        // --- Setup ListView ---
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
+                R.layout.file_list_item, // This layout MUST define the font
+                R.id.file_list_item_text,    // The ID of the TextView within logfile_list_item.xml
+                fileNames);
+        dialogListView.setAdapter(listAdapter);
+
+        final AlertDialog dialog = builder.create(); // Create before setting item click listener for ListView
+
+        dialogListView.setOnItemClickListener((parent, view, position, id) -> {
+            File selectedFile = logFiles.get(position);
+//            threaded_application.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
+            shareFile(selectedFile,selectedFile.getName());
+            dialog.dismiss();
+        });
+
+        cancelButton.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+    }
+
+    private void shareFile(File file, String fileName) {
+        Uri fileUri = FileProvider.getUriForFile(
+                this,
+                getApplicationContext().getPackageName() + ".fileprovider",
+                file
+        );
+        shareFile(fileUri, fileName);
+    }
+    private void shareFile(Uri fileUri, String fileName) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain"); // Set the MIME type of the file
+        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // Important for granting temporary read access
+
+        // Verify that there are apps available to handle this intent
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
+        } else {
+            threaded_application.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
+        }
+    }
 
 }
