@@ -10,13 +10,7 @@
  * Bug fix for gamepads with the IPLS.  The tone generator for the beeps is not compatible with the IPLS.
  * Add 'None' option for the gamepad buttons
  * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
- * Changed the API levels to numbers instead of the names, which are difficult follow with the latest API names
  * Removed the swipe up/down option to temperately turn off immersive mode as it is not really necessary anymore and did not work properly anymore anyway
- * Bug fix for F11 in the keyboard 'type' of gamepad
- * Added XBox gamepad support
- * Reinstate the log and file sharing capability
- * Option for medium size toolbar/action bar buttons
- * More Google translations
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212
