@@ -1233,6 +1233,8 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver potřebuje oprávnění k oznámení, aby vás varovala, když se tlačí na pozadí.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation preference</string>
     <string name="prefDccexPreferencesSummary">Možnosti použití EX-CommandStation</string>
+    <string name="prefDccexAutomationsAskTitle">Adresa lokomotivy pro EXRAIL Automatio</string>
+    <string name="prefDccexAutomationsAskSummary">U automatizací DCC-EX se zeptejte, kterou lokomotivu máte na automatizaci vyslat.</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Vždy používejte funkční štítky ze serveru</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Pokud jsou deaktivovány, použijte výchozí štítky EngineDriver pro lokos vybrané adresou (nikoli seznam) a ignorujte výchozí štítky serveru.</string>
     <string name="DCCEXbuttonDefaultFunctions">Výchozí Fns</string>
@@ -1319,6 +1321,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Tlačítko Stop Dlouhé stisknutí Zpoždění</string>
     <string name="prefStopButtonLongPressDelaySummary">Kolik milisekund představuje dlouhé stisknutí tlačítek Stop pro zahájení EStop</string>
 
+    <string name="dccexAutomationTitle">Adresa lokomotivy pro EXRAIL Automatio</string>
     <string name="autoServerConnectTitle">Automatické připojení k serveru</string>
     <string name="autoServerConnectLabel">Název serveru</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Získejte aktuální server</string>

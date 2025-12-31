@@ -75,10 +75,13 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
+import jmri.enginedriver.util.dccexAutomation;
 
-public class routes extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class routes extends AppCompatActivity
+        implements android.gesture.GestureOverlayView.OnGestureListener, dccexAutomation.OnConfirmListener {
     static final String activityName = "routes";
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -171,7 +174,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
                             currentstatedesc = "   ???";
                         }
 
-                        if (!currentDCCEXstate.equals("-1") ) { // is DCC-EX
+                        if (!currentDCCEXstate.equals("-1")) { // is DCC-EX
                             currentstatedesc = currentDCCEXlabel;
                         }
 
@@ -223,7 +226,7 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
     private void setDCCEXbuttonStates() {
         ListView listView = findViewById(R.id.routes_list);
 
-        for (int i=0; i<listView.getChildCount(); i++) {
+        for (int i = 0; i < listView.getChildCount(); i++) {
             LinearLayout itemLayout = (LinearLayout) listView.getChildAt(i);
             TextView textView = (TextView) itemLayout.getChildAt(2);
             Button button = (Button) itemLayout.getChildAt(1);
@@ -266,7 +269,9 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         routes_list_adapter.notifyDataSetChanged();  //update the list
     }
 
-    /** @noinspection UnusedReturnValue*/
+    /**
+     * @noinspection UnusedReturnValue
+     */
     private int updateRouteEntry() {
 //        Log.d(threaded_application.applicationName, activityName + ": updateRouteEntry()");
 
@@ -380,10 +385,66 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             EditText entryv = findViewById(R.id.route_entry);
             String entrytext = entryv.getText().toString().trim();
             if (entrytext.length() > 0) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entrytext);
+                if (!mainapp.isDCCEX) {
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entrytext);
+                } else {
+                    getLocoForDccExAutomationHandoff(entrytext);
+                }
             }
             mainapp.buttonVibration();
         }
+    }
+
+    private void getLocoForDccExAutomationHandoff(String routeOrAutomationId) {
+        String automationLoco = "";
+        String whichLoco = mainapp.getConsist(mainapp.whichThrottleLastTouch).getLeadAddr();
+        String routeType = "";
+        int routeId = Integer.parseInt(routeOrAutomationId);
+        for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
+            if (mainapp.dccexRouteIDs[i] == routeId) {
+                routeType = mainapp.dccexRouteTypes[i];
+                break;
+            }
+        }
+        if (!routeType.equals("A")) { // route
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, "2" + routeOrAutomationId);
+        } else { // automation
+            try {
+                automationLoco = whichLoco.substring(1);
+
+                boolean prefDccexAutomationsAsk = prefs.getBoolean("prefDccexAutomationsAsk", getResources().getBoolean(R.bool.prefDccexAutomationsAskDefaultValue));
+                if (prefDccexAutomationsAsk) {
+                    showDccexAutomationDialog(routeOrAutomationId, automationLoco);
+                } else {
+                    if (!automationLoco.isEmpty()) {
+                        int automationLocoNo = Integer.parseInt(automationLoco);
+                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, "2" + routeOrAutomationId, automationLocoNo);
+                    }
+                }
+            } catch (Exception ignored) { // probably no loco selected
+            }
+        }
+    }
+
+    private void showDccexAutomationDialog(String routeOrAutomationId, String automationLoco) {
+        int initialAddress = 0;
+        try {
+            initialAddress = Integer.parseInt(automationLoco);
+        } catch (Exception ignored) {
+        }
+
+        dccexAutomation dccexAutomationDialogFragment = dccexAutomation.newInstance(initialAddress, routeOrAutomationId, mainapp.getSelectedTheme(false));
+        dccexAutomationDialogFragment.setOnConfirmListener(this); // Set the listener
+        dccexAutomationDialogFragment.show(getSupportFragmentManager(), "dccexAutomationDialogFragment");
+    }
+
+    // Implementation of the OnConfirmListener interface
+    @Override
+    public void onConfirm(String inputText, String routeOrAutomationId) {
+//        Log.d("DCC_EX_AUTOMATION", "Input Text: " + inputText);
+        int automationLocoNo = Integer.parseInt(inputText);
+        if (automationLocoNo != 0)
+            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, '2' + routeOrAutomationId, automationLocoNo);
     }
 
     public class SortButtonListener implements View.OnClickListener {
@@ -415,8 +476,12 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
             ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
             ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
             TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
-            String systemname = snv.getText().toString();
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, '2' + systemname);  // 2=toggle
+            String systemName = snv.getText().toString();
+            if (!mainapp.isDCCEX) {
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, "2" + systemName); // 2=toggle
+            } else {
+                getLocoForDccExAutomationHandoff(systemName);
+            }
             mainapp.buttonVibration();
         }
     }
@@ -1101,11 +1166,16 @@ public class routes extends AppCompatActivity implements android.gesture.Gesture
         int toolbarHeight = layoutParams.height;
         int newHeightAndWidth = toolbarHeight;
 
-        if (!threaded_application.useSmallToolbarButtonSize) {
+        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
+            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
             newHeightAndWidth = toolbarHeight*2;
             layoutParams.height = newHeightAndWidth;
             toolbar.setLayoutParams(layoutParams);
         }
+
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             View itemChooser = item.getActionView();

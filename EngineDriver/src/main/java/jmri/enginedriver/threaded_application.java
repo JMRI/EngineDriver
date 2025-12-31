@@ -111,6 +111,7 @@ import jmri.enginedriver.type.message_type;
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.type.throttle_screen_type;
+import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -325,7 +326,8 @@ public class threaded_application extends Application {
     public static DisplayMetrics displayMetrics;
     public static double displayDiagonalInches;
     public static String prefToolbarButtonSize = "auto";
-    public static boolean useSmallToolbarButtonSize = true;
+//    public static boolean useSmallToolbarButtonSize = true;
+    public static int toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
     public static final double LARGE_SCREEN_SIZE = 6.7;
 
     int notificationLevel = 0; // no notification

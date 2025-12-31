@@ -504,6 +504,12 @@ public class comm_handler extends Handler {
             commThread.sendRoute(cmd);
             break;
          }
+         case message_type.START_AUTOMATION: {
+            final String cmd = msg.obj.toString();
+            final int automationLoco = msg.arg1;
+            commThread.sendAutomation(cmd, automationLoco);
+            break;
+         }
          //send command to change power setting, new state is passed in arg1
          case message_type.POWER_CONTROL:
             commThread.sendPower(msg.arg1);

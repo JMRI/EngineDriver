@@ -1135,6 +1135,7 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necesita permisos de notificación para advertirle cuando empuje en el fondo.</string>
     <string name="prefDccexPreferencesTitle">Preferencias DCC-EX - EX-CommandStation</string>
     <string name="prefDccexPreferencesSummary">Opciones para usar un EX-CommandStation</string>
+    <string name="prefDccexAutomationsAskSummary">Para automatizaciones DCC-EX, pregunte qué locomotora enviar en la automatización.</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Use siempre etiquetas de funciones desde el servidor</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Cuando esté deshabilitado, use etiquetas predeterminadas de EnginedRiver para locos seleccionados por dirección (no en la lista), ignorando las etiquetas predeterminadas del servidor.</string>
     <string name="cv29AnalogueConversionOff">Conversión analógica: APAGADO</string>
@@ -1221,6 +1222,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Retardo de pulsación larga del botón de parada</string>
     <string name="prefStopButtonLongPressDelaySummary">¿Cuántos milisegundos constituye una pulsación prolongada de los botones de parada para iniciar EStop?</string>
 
+    <string name="dccexAutomationTitle">Dirección de locomotora para la automatización EXRAIL</string>
     <string name="autoServerConnectTitle">Conexión automática al servidor</string>
     <string name="autoServerConnectLabel">Nombre del servidor</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Obtener el servidor actual</string>
@@ -1252,5 +1254,6 @@
     <string name="prefActionBarShowTurnoutsButtonSummary">Mostrar el botón en la barra de acción para cambiar a la pantalla de desvíos</string>
     <string name="prefActionBarShowTurnoutsButtonTitle">¿Botón de desvíos?</string>
     <string name="prefActionBarShowRoutesButtonSummary">Mostrar botón en la barra de acción para cambiar a la pantalla de Rutas</string>
+    <string name="prefDccexAutomationsAskTitle">Dirección de locomotora para la automatización EXRAIL</string>
 
 </resources>

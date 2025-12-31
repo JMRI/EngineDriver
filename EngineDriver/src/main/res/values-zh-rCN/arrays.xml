@@ -537,6 +537,7 @@
     <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
         <item>自动</item>
         <item>小号</item>
+        <item>中等的</item>
         <item>大号</item>
     </string-array>
 

@@ -35,6 +35,7 @@ import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_G;
 import static android.view.KeyEvent.KEYCODE_F1;
 import static android.view.KeyEvent.KEYCODE_F10;
+import static android.view.KeyEvent.KEYCODE_F11;
 import static android.view.KeyEvent.KEYCODE_H;
 import static android.view.KeyEvent.KEYCODE_L;
 import static android.view.KeyEvent.KEYCODE_LEFT_BRACKET;
@@ -84,7 +85,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.gesture.GestureOverlayView;
 import androidx.core.graphics.Insets;
@@ -180,6 +180,7 @@ import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.throttle_screen_type;
+import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.HorizontalSeekBar;
@@ -3665,7 +3666,7 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
                         , getConsistAddressString(whichThrottle));
             }
 
-        } else if (keyCode == KEYCODE_F) {  // Start of a Function command
+        } else if ( (keyCode == KEYCODE_F) || (keyCode == KEYCODE_F11) ) {  // Start of a Function command
             if (action == ACTION_DOWN) {
                 keyboardString = "F";
             }
@@ -8535,11 +8536,16 @@ public class throttle extends AppCompatActivity implements android.gesture.Gestu
         int toolbarHeight = layoutParams.height;
         int newHeightAndWidth = toolbarHeight;
 
-        if (!threaded_application.useSmallToolbarButtonSize) {
+        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
+            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
             newHeightAndWidth = toolbarHeight*2;
             layoutParams.height = newHeightAndWidth;
             toolbar.setLayoutParams(layoutParams);
         }
+
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             View itemChooser = item.getActionView();

@@ -96,6 +96,7 @@ import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 
 //import jmri.enginedriver.util.BackgroundImageLoader;
+import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
@@ -815,14 +816,16 @@ public class connection_activity extends AppCompatActivity implements Permission
         threaded_application.displayDiagonalInches = Math.sqrt(xInches*xInches + yInches*yInches);
         threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
         if (MobileControl2.isMobileControl2()) { // ESU 2/Pro / Pro mis-report their size
-            threaded_application.useSmallToolbarButtonSize = true;
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
         } else if ( (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE)
                 && (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO)) ) {
-            threaded_application.useSmallToolbarButtonSize = false;
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
         } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.LARGE)) {
-            threaded_application.useSmallToolbarButtonSize = false;
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
         } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.SMALL)) {
-            threaded_application.useSmallToolbarButtonSize = true;
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.MEDIUM)) {
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
         }
 
         threaded_application.min_fling_distance = (int) (threaded_application.SWIPE_MIN_DISTANCE * dm.densityDpi / 160.0f);
@@ -1387,11 +1390,16 @@ public class connection_activity extends AppCompatActivity implements Permission
         int toolbarHeight = layoutParams.height;
         int newHeightAndWidth = toolbarHeight;
 
-        if (!threaded_application.useSmallToolbarButtonSize) {
+        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
+            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
             newHeightAndWidth = toolbarHeight*2;
             layoutParams.height = newHeightAndWidth;
             toolbar.setLayoutParams(layoutParams);
         }
+
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             View itemChooser = item.getActionView();

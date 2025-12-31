@@ -540,6 +540,7 @@
     <string-array name="prefToolbarButtonSizeEntries">  <!-- display version -->
         <item>Auto</item>
         <item>Malý</item>
+        <item>Střední</item>
         <item>Velký</item>
     </string-array>
 

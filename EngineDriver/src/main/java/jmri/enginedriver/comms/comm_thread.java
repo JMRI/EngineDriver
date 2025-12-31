@@ -784,7 +784,7 @@ public class comm_thread extends Thread {
         if (!mainapp.isDCCEX) { // not DCC-EX
             wifiSend("PRA" + cmd);
 
-        } else { //DCC-EX    Route: </START id>      Automation: </START id addr>
+        } else { //DCC-EX    Route: </START id>      Automation: </START addr id>
             String systemName = cmd.substring(1);
             String msgTxt = "</START";
             try {
@@ -808,6 +808,15 @@ public class comm_thread extends Thread {
             msgTxt = msgTxt + " " + systemName + ">";
             wifiSend(msgTxt);
 //            Log.d(threaded_application.applicationName, activityName + ": sendRoute(): DCC-EX: " + msgTxt);
+        }
+    }
+
+    protected void sendAutomation(String cmd, int automationLoco) {
+        if (mainapp.isDCCEX) { // DCC-EX only      Automation: </START addr id>
+            String systemName = cmd.substring(1);
+            String msgTxt = String.format("</START %d %s>", automationLoco, systemName);
+            wifiSend(msgTxt);
+            Log.d(threaded_application.applicationName, activityName + ": sendAutomation(): DCC-EX: " + msgTxt);
         }
     }
 

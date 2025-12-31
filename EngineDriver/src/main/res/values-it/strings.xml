@@ -1076,6 +1076,8 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver ha bisogno di autorizzazioni di notifica per avvertirti quando si spinge in background.</string>
     <string name="prefDccexPreferencesTitle">Preferenze DCC-EX - EX-CommandStation</string>
     <string name="prefDccexPreferencesSummary">Opzioni per l\'utilizzo di un EX-CommandStation</string>
+    <string name="prefDccexAutomationsAskTitle">Indirizzo locomotiva per EXRAIL Automatio</string>
+    <string name="prefDccexAutomationsAskSummary">Per le automazioni DCC-EX, chiedere quale locomotiva inviare sull\'automazione.</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Usa sempre le etichette delle funzioni dal server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Se disabilitato, utilizzare ENGINEDRIVER Etichette predefinite per LOCOS selezionati per indirizzo (non elenco), ignorando le etichette predefinite del server.</string>
     <string name="cv29AnalogueConversionOff">Conversione analogica: OFF</string>
@@ -1172,6 +1174,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Ritardo pressione prolungata pulsante Stop</string>
     <string name="prefStopButtonLongPressDelaySummary">Quanti millisecondi costituiscono una pressione prolungata sui pulsanti Stop per avviare EStop</string>
 
+    <string name="dccexAutomationTitle">Indirizzo locomotiva per EXRAIL Automatio</string>
     <string name="autoServerConnectTitle">Connessione automatica al server</string>
     <string name="autoServerConnectLabel">Nome del server</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Ottieni il server attuale</string>

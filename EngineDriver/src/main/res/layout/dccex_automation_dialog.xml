@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp">
+
+    <TextView
+        android:id="@+id/cv_bit_calculator_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dccexAutomationTitle"
+        android:textSize="16sp"
+        android:fontFamily="sans-serif-condensed"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_loco_address"/>
+
+        <EditText
+            android:id="@+id/dccex_automation_dialog_edit_text_input"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:maxLength="5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="24dp"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/dccex_automation_dialog_button_close"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="?attr/ed_cross_glyph"
+            android:drawablePadding="5dp"
+            android:text="@string/close_button"
+            tools:ignore="RtlHardcoded" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/dccex_automation_dialog_button_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dccexCvBitCalculatorConfirmButtonLabel"
+            style="?android:attr/buttonBarButtonStyle"/>
+    </LinearLayout>
+
+</LinearLayout>

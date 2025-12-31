@@ -1262,6 +1262,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="rosterDecoderInfoDecoderComment">解码器备注：</string>
     <string name="rosterDecoderInfoRosterEntry">名册条目：</string>
     <string name="dccexCvBitCalculatorConfirmButtonLabel">确认</string>
+    <string name="dccexAutomationTitle">EXRAIL自动化系统的机车地址</string>
     <string name="autoServerConnectTitle">自动服务器连接</string>
     <string name="autoServerConnectLabel">服务器名称</string>
     <string name="autoServerConnectCurrentServerButtonLabel">获取当前服务器</string>
@@ -1277,6 +1278,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="logviewerStopSave">停止</string>
     <string name="prefDccexTitle">使用 DCC-EX 原生命令</string>
     <string name="prefDccexSummary">所有连接均请使用 DCC-EX 原生命令，而非 wiThrottle。注意：此设置需重启引擎驱动程序并连接服务器后方可生效。</string>
+    <string name="prefDccexAutomationsAskSummary">对于 DCC-EX 自动化系统，请询问应该将哪台机车发送到自动化系统上。</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">始终使用服务器端的功能标签</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">禁用时，对按地址（而非名册）选择的机车使用 EngineDriver 默认标签，忽略服务器默认标签。</string>
     <string name="prefDccexSequenceItemRequestsTitle">排序项目请求</string>
@@ -1370,6 +1372,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefActionBarShowTurnoutsButtonTitle">道岔按钮？</string>
     <string name="prefActionBarShowRoutesButtonSummary">在操作栏中显示按钮，切换到路线屏幕</string>
     <string name="prefActionBarShowTurnoutsButtonSummary">在操作栏中显示按钮，切换到道岔屏幕</string>
+    <string name="prefDccexAutomationsAskTitle">EXRAIL自动化系统的机车地址</string>
 
 </resources>
 

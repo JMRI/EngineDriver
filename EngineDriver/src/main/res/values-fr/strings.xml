@@ -1143,6 +1143,8 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessite la permission d acces aux NOTIFICATIONS pour indiquer son passage en arriere plan</string>
     <string name="prefDccexPreferencesTitle">Preferences DCC-EX - EX-CommandStation</string>
     <string name="prefDccexPreferencesSummary">Option pour utiliser EX-CommandStation</string>
+    <string name="prefDccexAutomationsAskTitle">Adresse de la locomotive pour l\'automatisme EXRAIL</string>
+    <string name="prefDccexAutomationsAskSummary">Pour les systèmes d\'automatisation DCC-EX, veuillez indiquer quelle locomotive envoyer.</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Toujours utiliser des libelles de fonctions depuis le serveur</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Si désactivé, EngineDriver utilisera les libellés de fonction par defaut pour les locos choisies par adresse (pas via le catalogue), ignorante ceux par defaut du serveur.</string>
     <string name="dccExFunctionSettings">Reglages DCC-EX</string>
@@ -1242,6 +1244,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Delai pour appui long sur STOP</string>
     <string name="prefStopButtonLongPressDelaySummary">Duree en millisecondes pour prise en compte arret d urgence par appui long sur STOP</string>
 
+    <string name="dccexAutomationTitle">Adresse de la locomotive pour l\'automatisme EXRAIL</string>
     <string name="autoServerConnectTitle">Connexion automatique au serveur</string>
     <string name="autoServerConnectLabel">Nom du serveur</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Obtenir le serveur actuel</string>

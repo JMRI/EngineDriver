@@ -405,7 +405,7 @@
     <string name="prefAlwaysUseFunctionsFromServerSummary">無効にすると、サーバーのデフォルト ラベルを無視して、アドレス (列車情報ではない) で選択された機関車に EngineDriver のデフォルト ラベルを使用します。</string>
 
 
-
+    <string name="prefDccexAutomationsAskSummary">DCC-EX オートメーションの場合、オートメーションに送信する機関車を尋ねます。</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">常にサーバーからのファンクションラベルを使用する</string>
     <string name="prefAppIconActionSummary">アクション バーのアプリ アイコンまたはアプリ名をクリックするとどうなるか。</string>
     <string name="prefAppIconActionTitle">アプリアイコンのアクション</string>
@@ -1241,6 +1241,7 @@
     <string name="prefStopButtonLongPressDelayTitle">停止ボタン長押し遅延</string>
     <string name="prefStopButtonLongPressDelaySummary">停止ボタンを長押ししてEStopを開始するまでの所要時間は、何ミリ秒ですか？</string>
 
+    <string name="dccexAutomationTitle">EXRAIL Automatioの機関車アドレス</string>
     <string name="autoServerConnectTitle">自動サーバー接続</string>
     <string name="autoServerConnectLabel">サーバー名</string>
     <string name="autoServerConnectCurrentServerButtonLabel">現在のサーバーを取得</string>
@@ -1272,5 +1273,6 @@
     <string name="prefActionBarShowTurnoutsButtonSummary">ターンアウト画面に切り替えるためのボタンをアクションバーに表示します</string>
     <string name="prefActionBarShowTurnoutsButtonTitle">分岐ボタン？</string>
     <string name="prefActionBarShowRoutesButtonSummary">アクションバーにルート画面に切り替えるボタンを表示します</string>
+    <string name="prefDccexAutomationsAskTitle">EXRAIL Automatioの機関車アドレス</string>
 
 </resources>
