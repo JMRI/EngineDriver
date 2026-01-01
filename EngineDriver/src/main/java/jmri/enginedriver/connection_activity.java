@@ -1019,6 +1019,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         CMenu = menu;
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+        menu.findItem(R.id.intro_button).setVisible(!mainapp.prefHideInstructionalToasts);
+        menu.findItem(R.id.settings_button).setVisible(!mainapp.prefHideInstructionalToasts);
 
         adjustToolbarSize(menu);
 
@@ -1035,7 +1037,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (item.getItemId() == R.id.exit_mnu) {
             mainapp.checkAskExit(this);
             return true;
-        } else if (item.getItemId() == R.id.settings_mnu) {
+        } else if ( (item.getItemId() == R.id.settings_mnu) || (item.getItemId() == R.id.settings_button) ) {
             in = new Intent().setClass(this, SettingsActivity.class);
             startActivityForResult(in, 0);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -1058,7 +1060,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
-        } else if (item.getItemId() == R.id.intro_mnu) {
+        } else if ( (item.getItemId() == R.id.intro_mnu) || (item.getItemId() == R.id.intro_button) ) {
             in = new Intent().setClass(this, intro_activity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);

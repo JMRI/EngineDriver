@@ -1826,7 +1826,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (mainapp != null) {
 //                mainapp.applyTheme(parentActivity, true);
 
-                if (!mainapp.isPowerControlAllowed()) {
+                if ( (!mainapp.isPowerControlAllowed()) && (!mainapp.connectedHostName.isEmpty()) ) {
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "show_layout_power_button_preference", false);
                 }
 //                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
@@ -1836,7 +1836,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 if (mainapp.connectedHostName.isEmpty()) { // option is only available when there is no current connection
                     parentActivity.getConnectionsList();
-                    ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
+                    ListPreference preference = findPreference("prefHostImportExport");
                     if (preference!=null) {
                         preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
                         preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
@@ -1872,11 +1872,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     }
                 }
 
-                ListPreference lp = (ListPreference) findPreference("prefDeviceSounds0");
+                ListPreference lp = findPreference("prefDeviceSounds0");
                 lp.setEntries(deviceSoundsEntriesArray);
                 lp.setEntryValues(deviceSoundsEntryValuesArray);
 
-                lp = (ListPreference) findPreference("prefDeviceSounds1");
+                lp = findPreference("prefDeviceSounds1");
                 lp.setEntries(deviceSoundsEntriesArray);
                 lp.setEntryValues(deviceSoundsEntryValuesArray);
             }
@@ -2181,7 +2181,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (parentActivity.mainapp != null) {
                 if (parentActivity.mainapp.connectedHostName.isEmpty()) {
                     parentActivity.getConnectionsList();
-                    ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
+                    ListPreference preference = findPreference("prefHostImportExport");
                     if (preference != null) {
                         preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
                         preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
@@ -2420,9 +2420,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.result = RESULT_GAMEPAD;
                         break;
 
-//                    case "prefShareFileNow":
-//                        parentActivity.shareFileNow();
-//                        break;
+                    case "prefShareFileNow":
+                        parentActivity.shareFileNow();
+                        break;
 
                     case "prefBackgroundImage":
                         parentActivity.prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
