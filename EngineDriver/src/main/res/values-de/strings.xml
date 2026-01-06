@@ -607,8 +607,10 @@
     <string name="TTS_Screen_Locked">Blockiert, wische nach oben zum Wiederherstellen</string>
     <string name="TTS_Screen_Unlocked">Nicht blockiert</string>
     <string name="TTS_Immersive_Mode_Disabled">Immersiver Modus temporär ausgeschaltet</string>
+    -->
     <string name="TTS_Forward">Vorwärts</string>
     <string name="TTS_Reverse">Rückwärts</string>
+    <!--
     <string name="TTS_Speed_Zero">Null</string>
     <string name="TTS_Speed_Max">Maximum</string>
     <string name="TTS_Speed_Stop">Stop</string>

@@ -173,7 +173,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ": onCreate()");
 
-        mainapp = (threaded_application) this.getApplication();
+            mainapp = (threaded_application) this.getApplication();
         mainapp.applyTheme(this,true);
 
         super.onCreate(savedInstanceState);

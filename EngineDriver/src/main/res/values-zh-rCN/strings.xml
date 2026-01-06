@@ -840,8 +840,10 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="TTS_Screen_Locked">已锁定，向上滑动以恢复</string>
     <string name="TTS_Screen_Unlocked">已解锁</string>
     <string name="TTS_Immersive_Mode_Disabled">沉浸模式已临时禁用</string>
+    -->
     <string name="TTS_Forward">前进</string>
     <string name="TTS_Reverse">后退</string>
+    !--
     <string name="TTS_Speed_Zero">零</string>
     <string name="TTS_Speed_Max">最大</string>
     <string name="TTS_Speed_Stop">停止</string>

@@ -596,8 +596,10 @@
     <string name="TTS_Screen_Locked">Bloquejat, llisca cap amunt per restaurar</string>
     <string name="TTS_Screen_Unlocked">Desbloquejat</string>
     <string name="TTS_Immersive_Mode_Disabled">Mode Immersiu deshabilitat temporalment</string>
+    -->
     <string name="TTS_Forward">Endavant</string>
     <string name="TTS_Reverse">Enrere</string>
+    <!--
     <string name="TTS_Speed_Zero">Cero</string>
     <string name="TTS_Speed_Max">Màxim</string>
     <string name="TTS_Speed_Stop">Atura</string>

@@ -1140,6 +1140,10 @@
     <string name="TtsSpeed">スピード</string>
     <string name="TtsTargetSpeed">目標速度</string>
     <string name="TtsVolumeThrottle">スロットル</string>
+
+    <string name="TTS_Forward">フォワード</string>
+    <string name="TTS_Reverse">逆行する</string>
+
     <string name="roster_available">サーバー名簿 - 利用可能</string>
     <string name="turnouts">分岐器</string>
     <string name="turnouts_available">分岐器 - 利用可能</string>

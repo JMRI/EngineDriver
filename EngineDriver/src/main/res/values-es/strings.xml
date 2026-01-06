@@ -594,8 +594,10 @@
     <string name="TTS_Screen_Locked">Bloqueado, desliza hacia arriba para restaurar</string>
     <string name="TTS_Screen_Unlocked">Desbloqueado</string>
     <string name="TTS_Immersive_Mode_Disabled">Modo Inmersivo deshabilitado temporalmente</string>
+    -->
     <string name="TTS_Forward">Adelante</string>
     <string name="TTS_Reverse">Atrás</string>
+    <!--
     <string name="TTS_Speed_Zero">Cero</string>
     <string name="TTS_Speed_Max">Máximo</string>
     <string name="TTS_Speed_Stop">Para</string>

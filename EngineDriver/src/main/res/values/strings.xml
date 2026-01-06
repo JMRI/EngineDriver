@@ -1104,8 +1104,10 @@
         <string name="TTS_Screen_Locked">Locked, swipe up to restore</string>
         <string name="TTS_Screen_Unlocked">Un-locked</string>
         <string name="TTS_Immersive_Mode_Disabled">Immersive mode temporarily disabled</string>
+    -->
         <string name="TTS_Forward">Forward</string>
         <string name="TTS_Reverse">Reverse</string>
+    <!--
         <string name="TTS_Speed_Zero">Zero</string>
         <string name="TTS_Speed_Max">Maximum</string>
         <string name="TTS_Speed_Stop">Stop</string>

@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/*Copyright (C) 2018 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,20 +13,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 
-package jmri.enginedriver.type;
+package jmri.enginedriver.util;
 
-public interface tts_msg_type {
-    int VOLUME_THROTTLE = 1;
-    int GAMEPAD_THROTTLE = 2;
-    int GAMEPAD_GAMEPAD_TEST = 3;
-    int GAMEPAD_GAMEPAD_TEST_COMPLETE = 4;
-    int GAMEPAD_GAMEPAD_TEST_SKIPPED = 5;
-    int GAMEPAD_GAMEPAD_TEST_RESET = 6;
-    int GAMEPAD_GAMEPAD_TEST_FAIL = 7;
-    int GAMEPAD_GAMEPAD_TEST_KEY_AND_PURPOSE = 8;
-    int GAMEPAD_THROTTLE_SPEED = 9;
-    int GAMEPAD_CURRENT_SPEED = 10;
-//    int GAMEPAD_THROTTLE_TARGET_AND_SPEED = 11;
+public interface KeyboardNotifierInterface {
+    void keyboardEventNotificationHandler(int event, int val, int repeatCnt,
+                                          int whichThrottle, boolean isConsistActiveOnThrottle,
+                                          int whichGamePadIsEventFrom);
 }
