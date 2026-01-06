@@ -145,6 +145,7 @@
     <string name="steal_text">Apropriar-se do endereço %1$s?</string>
     <string name="steal_title">Apropriar-se</string>
 
+    <string name="newConnectionText">Feche a conexão com este servidor e tente reconectar?</string>
     <string name="lightsTextOff">Desligado</string>
     <string name="lightsTextFollow">Bt Função Seguinte</string>
     <string name="lightsTextUnknown">Desconhecido</string>
@@ -313,6 +314,7 @@
     <string name="prefRosterRecentLocosSummary">Incluir seleções da Lista in Locomotivas Recentes?</string>
     <string name="prefRosterRecentLocoNamesTitle">Nomes de lista em locais recentes?</string>
     <string name="prefRosterRecentLocoNamesSummary">Incluir nomes Loco da lista na lista Recente se um endereço correspondente for encontrado?</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Oculte o botão Loco Phone Loco Sounds na tela Selecionar Locomotiva.</string>
     <string name="prefMaximumRecentLocosTitle">Máximo Locomotivas Recentes</string>
 
     <string name="prefRosterFilterTitle">Filtro da Lista</string>
@@ -906,6 +908,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de porcentagem de carga</string>-->
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste o efeito do controle deslizante de carga nas mudanças de velocidade. >100% = mais carga</string>-->
     <string name="prefCategoryDevicePageTitle">Preferências do dispositivo</string>
+    <string name="prefExtendedLoggingSummary">Capture registros adicionais e mais detalhados.</string>
     <string name="prefSortOrderRosterTitle">Ordem de classificação da lista</string>
     <string name="prefSortOrderRosterSummary">Ordene que as entradas da lista apareçam, por padrão, cada vez que você iniciar o Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Ordem de classificação de comparecimentos</string>
@@ -1213,4 +1216,7 @@
     <string name="prefActionBarShowTurnoutsButtonSummary">Mostrar botão na barra de ações para alternar para a tela de desvios.</string>
     <string name="prefActionBarShowThrottleButtonSummary">Exibir botão na barra de ações para alternar para a tela do acelerador.</string>
     <string name="prefDccexAutomationsAskTitle">Endereço da locomotiva para a Automação EXRAIL</string>
+    <string name="prefExtendedLoggingTitle">Registro de logs prolongado?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Ocultar o botão Sons da Locomotiva</string>
+    <string name="newConnectionTitle">Nova conexão</string>
 </resources>

@@ -2575,6 +2575,13 @@
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
+                    android:defaultValue="@bool/prefExtendedLoggingDefaultValue"
+                    android:key="prefExtendedLogging"
+                    android:summary="@string/prefExtendedLoggingSummary"
+                    android:title="@string/prefExtendedLoggingTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
                     android:defaultValue="@bool/prefShareFileNowDefaultValue"
                     android:key="prefShareFileNow"
                     android:summary="@string/prefShareFileNowSummary"

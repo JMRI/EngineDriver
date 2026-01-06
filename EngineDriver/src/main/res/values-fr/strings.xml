@@ -306,6 +306,7 @@
     <string name="prefRosterRecentLocosSummary">Inclure le nom du catalogue dans les loco récentes?</string>
     <string name="prefRosterRecentLocoNamesTitle">Afficher le nom du catalogue pour les locos récentes?</string>
     <string name="prefRosterRecentLocoNamesSummary">Inclure les noms de locomotive du catalogue dans les récents si l adresse correspondante est trouvée?</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Masquer le bouton Sons du téléphone de la locomotive dans l\'écran de sélection de la locomotive</string>
     <string name="prefMaximumRecentLocosTitle">Nombre maxi de loco récentes</string>
 
     <string name="prefMaximumRecentLocosSummary">Nombre maxi de loco récentes affiché dans la liste</string>
@@ -636,6 +637,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Nombre de fonctions par défaut dans le catalogue JMRI.</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limitation du nombre de fonctions par défaut pour les locomotives sans libellé de fonction dans JMRI.</string>
 
+    <string name="newConnectionText">Fermez la connexion à ce serveur, puis reconnectez-vous ?</string>
     <string name="lightsTextOff">Off</string>
     <string name="lightsTextFollow">Sigle Fn Btn</string>
     <string name="lightsTextUnknown">Inconnu</string>
@@ -985,6 +987,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Coef multplicateur pour charge du train</string>-->
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajustement du multiplicateur de ratio de charge affectant les changements de vitesse..  &gt;100% = charge additionnelle.</string>-->
     <string name="prefCategoryDevicePageTitle">Préférences du terminal</string>
+    <string name="prefExtendedLoggingSummary">Capturez des journaux supplémentaires et plus détaillés</string>
     <string name="prefSortOrderRosterTitle">Sens de tri de la liste de locos</string>
     <string name="prefSortOrderRosterSummary">Sens de tri préférentiel pour les locos à l ouverture d Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Sens de tri des aiguillages</string>
@@ -1278,5 +1281,8 @@
     <string name="prefActionBarShowTurnoutsButtonTitle">Bouton de dégagement ?</string>
     <string name="prefActionBarShowThrottleButtonSummary">Afficher le bouton dans la barre d\'action pour passer à l\'écran des gaz</string>
     <string name="prefActionBarShowRoutesButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des itinéraires</string>
+    <string name="prefExtendedLoggingTitle">Journalisation étendue ?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Masquer le bouton Sons de la locomotive</string>
+    <string name="newConnectionTitle">Nouvelle connexion</string>
 
 </resources>

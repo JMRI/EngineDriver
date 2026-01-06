@@ -300,6 +300,7 @@
     <string name="prefRosterRecentLocosSummary">Inclou seleccions de flota en la llista de recents?</string>
     <string name="prefRosterRecentLocoNamesTitle">Noms de la llista en llocs recents?</string>
     <string name="prefRosterRecentLocoNamesSummary">Inclou noms de Locomotora a la llista a la llista recent si es troba una adreça coincident?</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Amaga el botó Sons de loco del telèfon loco a la pantalla Selecciona loco</string>
     <string name="prefMaximumRecentLocosTitle">Número màxim de Locomotores recents</string>
 
     <string name="prefMaximumRecentLocosSummary">Màxim de Locomotores recents a mostrar en la llista</string>
@@ -617,6 +618,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Nombre de funcions per defecte per a la flota</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limita les etiquetes de funció que es mostren a les entrades de la flota del JMRI sense etiquetes de funció</string>
 
+    <string name="newConnectionText">Voleu tancar la connexió amb aquest servidor i després tornar-la a connectar?</string>
     <string name="lightsTextOff">Apagat</string>
     <string name="lightsTextFollow">Segueix Fn Btn</string>
     <string name="lightsTextUnknown">Desconegut</string>
@@ -967,6 +969,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de percentatge de càrrega</string>-->
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajusteu l\'efecte del control lliscant de càrrega sobre els canvis de velocitat. &gt;100% = més càrrega</string>-->
     <string name="prefCategoryDevicePageTitle">Preferències del Dispositiu</string>
+    <string name="prefExtendedLoggingSummary">Captura registres addicionals i més detallats</string>
     <string name="prefSortOrderRosterTitle">Ordre d\'ordenació de la llista</string>
     <string name="prefSortOrderRosterSummary">Ordeneu que les entrades de la llista apareguin, de manera predeterminada, cada vegada que inicieu el controlador del motor</string>
     <string name="prefSortOrderTurnoutsTitle">Ordre d\'ordenació de les sortides</string>
@@ -1270,5 +1273,8 @@
     <string name="prefActionBarShowTurnoutsButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla de desviaments</string>
     <string name="prefActionBarShowTurnoutsButtonTitle">Botó de desviaments?</string>
     <string name="prefActionBarShowRoutesButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla de rutes</string>
+    <string name="prefExtendedLoggingTitle">Registre ampliat?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Amaga el botó Sons de locomotora</string>
+    <string name="newConnectionTitle">Nova connexió</string>
 
 </resources>

@@ -146,6 +146,7 @@
     <string name="steal_text">Appropriarsi dell\'indirizzo %1$s?</string>
     <string name="steal_title">Appropriarsi</string>
 
+    <string name="newConnectionText">Chiudere la connessione a questo server e poi riconnettersi?</string>
     <string name="lightsTextOff">Spento</string>
     <string name="lightsTextFollow">Puls. Funz. Succ.</string>
     <string name="lightsTextUnknown">Sconosciuto</string>
@@ -313,6 +314,7 @@
     <string name="prefRosterRecentLocosSummary">Includere selezioni Elenco in Locomotive Recenti?</string>
     <string name="prefRosterRecentLocoNamesTitle">Nomi di elenco in luoghi recenti?</string>
     <string name="prefRosterRecentLocoNamesSummary">Includi nomi di locazioni dal roster nell\'elenco Recenti se viene trovato un indirizzo corrispondente?</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Nascondi il pulsante Loco Phone Loco Sounds nella schermata Seleziona Loco</string>
     <string name="prefMaximumRecentLocosTitle">Massimo Locomotive Recenti</string>
 
     <string name="prefRosterFilterTitle">Filtro dell\'Elenco</string>
@@ -900,6 +902,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Moltiplicatore percentuale di carico</string>-->
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Regola l\'effetto del cursore del carico sulle variazioni di velocità. &gt;100% = carico maggiore</string>-->
     <string name="prefCategoryDevicePageTitle">preferenze dei dispositivi</string>
+    <string name="prefExtendedLoggingSummary">Acquisisci registri aggiuntivi e più dettagliati</string>
     <string name="prefSortOrderRosterTitle">Ordinamento degli elenchi</string>
     <string name="prefSortOrderRosterSummary">Ordina che le voci dell\'elenco vengano visualizzate, per impostazione predefinita, ogni volta che avvii Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Ordinamento degli afflussi</string>
@@ -1208,5 +1211,8 @@
     <string name="prefActionBarShowThrottleButtonTitle">Pulsante dell\'acceleratore?</string>
     <string name="prefActionBarShowTurnoutsButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Scambi</string>
     <string name="prefActionBarShowThrottleButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata dell\'acceleratore</string>
+    <string name="prefExtendedLoggingTitle">Registrazione estesa?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Nascondi il pulsante Loco Sounds</string>
+    <string name="newConnectionTitle">Nuova connessione</string>
 
 </resources>

@@ -210,7 +210,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_preferences),
                     "");
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): Set toolbar");
+            threaded_application.extendedLogging(activityName + ": onCreate(): Set toolbar");
         }
 
     } // end onCreate
@@ -330,7 +330,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void forceReLaunchApp(int forcedRestartReason) {
-        Log.d(threaded_application.applicationName, activityName + ": forceRelaunchApp() ");
+        threaded_application.extendedLogging(activityName + ": forceRelaunchApp() ");
 
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -380,7 +380,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 if (filesList != null) {
                     for (File file : filesList) {
                         logFiles.add(file);
-                        Log.d(threaded_application.applicationName, activityName + ": getFilesForDialog(): Found: " + file.getName());
+                        threaded_application.extendedLogging(activityName + ": getFilesForDialog(): Found: " + file.getName());
                     }
                     Collections.sort(logFiles, (file1, file2) -> file1.getName().compareTo(file2.getName()));
                 }
@@ -2576,6 +2576,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefThrottleSwitchOption2":
                     case "prefThrottleSwitchOption2NumThrottles":
                         parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences, "prefThrottleSwitchOption2", "prefThrottleSwitchOption2NumThrottles");
+                        break;
+                    case "prefExtendedLogging":
+                        threaded_application.prefExtendedLogging = parentActivity.prefs.getBoolean("prefExtendedLogging", false);
                         break;
 
                 }

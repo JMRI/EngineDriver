@@ -200,7 +200,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //    //Request connection to the WiThrottle server.
 //    private void connectImpl() {
         //	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
-        Log.d(threaded_application.applicationName, activityName + ": connect()");
+        threaded_application.extendedLogging(activityName + ": connect()");
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
     }
 
@@ -702,6 +702,9 @@ public class connection_activity extends AppCompatActivity implements Permission
         Log.d(threaded_application.applicationName, activityName + ": onStart()");
         super.onStart();
         mainapp.exitConfirmed = false;
+
+        threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
+                getResources().getBoolean(R.bool.prefExtendedLoggingDefaultValue));
     }
 
     @Override
@@ -807,7 +810,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
     private void calculateDisplayMetrics() {
-        Log.d(threaded_application.applicationName, activityName + ": calculateDisplayMetrics()");
+        threaded_application.extendedLogging(activityName + ": calculateDisplayMetrics()");
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         threaded_application.displayMetrics = dm;
@@ -1263,7 +1266,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): " + requestCode);
+        threaded_application.extendedLogging(activityName + ": navigateToHandler(): " + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);

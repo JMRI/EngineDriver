@@ -162,6 +162,7 @@
     <string name="steal_text">Adresa k ukradení %1$s?</string>
     <string name="steal_title">Ukrást</string>
 
+    <string name="newConnectionText">Ukončit připojení k tomuto serveru a poté jej znovu připojit?</string>
     <string name="lightsTextOff">Vypnuto</string>
     <string name="lightsTextFollow">Následovat tlačítko Fn</string>
     <string name="lightsTextUnknown">Neznámý</string>
@@ -382,6 +383,7 @@
     <string name="LocoSelectMethodRecentConsist">Nedávné Soupravy</string>
     <string name="LocoSelectMethodHelp">Zadejte DCC adresu vaší lokomotivy výše a klikněte \'Získat\'.\nPřípadně vyberte lokomotivu z \'Evidence\' JMRI nebo vyberte z \'Nedávné\' lokomotivy klikem na radio tlačítko výše.</string>
 
+    <string name="prefLocoSelectHideIplsButtonSummary">Skrýt tlačítko Zvuky lokomotivy v telefonu Loco na obrazovce Výběr lokomotivy</string>
     <string name="prefMaximumRecentLocosTitle">Maximální počet Nedávných lokomotiv</string>
 
     <string name="prefMaximumRecentLocosSummary">Maximální počet Nedávných lokomotiv zobrazených v seznamu</string>
@@ -1072,6 +1074,7 @@
 <!--    <string name="prefTurnMobileDataOnOffSummary">Converteix dades mòbils fora a l\'començament de el controlador de el motor i tornar a encendre en el tancament.</string>-->
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
+    <string name="prefExtendedLoggingSummary">Zaznamenávejte další, podrobnější protokoly</string>
     <string name="prefSortOrderRosterTitle">Pořadí řazení seznamu</string>
     <string name="prefSortOrderRosterSummary">Nařiďte, aby se položky rozpisu ve výchozím nastavení objevily při každém spuštění ovladače motoru</string>
     <string name="prefSortOrderTurnoutsTitle">Pořadí řazení výhybek</string>
@@ -1355,5 +1358,8 @@
     <string name="prefActionBarShowThrottleButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na obrazovku plynu</string>
     <string name="prefActionBarShowThrottleButtonTitle">Tlačítko plynu?</string>
     <string name="prefActionBarShowTurnoutsButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na obrazovku výhybek</string>
+    <string name="prefExtendedLoggingTitle">Rozšířené protokolování?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Skrýt tlačítko Zvuky lokomotivy</string>
+    <string name="newConnectionTitle">Nové připojení</string>
 
 </resources>

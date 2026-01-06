@@ -304,6 +304,7 @@
 
 
     <string name="lightsTextFollow">Fnボタンをフォロー</string>
+    <string name="newConnectionText">このサーバーへの接続を閉じて、再接続しますか?</string>
     <string name="lightsTextOff">オフ</string>
     <string name="lightsTextUnknown">不明</string>
     <string name="limitSpeedButtonLabel">制限速度</string>
@@ -717,6 +718,7 @@
     <string name="prefMaximumRecentConnectionsTitle">最近の最大接続数</string>
 
     <string name="prefMaximumRecentLocosSummary">リストに表示する最近の車両の最大数</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">ロコ選択画面でロコフォンロコサウンドボタンを非表示にする</string>
     <string name="prefMaximumRecentLocosTitle">最近の最大車両数</string>
 
     <string name="prefMaximumThrottleChangeSummary">許容されるスロットル変更の最大値 (\%)</string>
@@ -797,6 +799,7 @@
     <string name="prefShowAdvancedPreferencesTitle">詳細設定を表示しますか?</string>
     <string name="prefShowTimeOnLogEntrySummary">ログ画面の各エントリの日時を表示します。</string>
     <string name="prefShowTimeOnLogEntryTitle">ログにタイムスタンプを表示</string>
+    <string name="prefExtendedLoggingSummary">追加の、より詳細なログをキャプチャする</string>
     <string name="prefSortOrderRosterTitle">列車情報の並び順</string>
     <string name="prefSortOrderRosterSummary">エンジンドライバーを起動するたびに、デフォルトで列車情報エントリが表示されるようにする</string>
     <string name="prefSortOrderTurnoutsTitle">分岐器の並び順</string>
@@ -1278,5 +1281,8 @@
     <string name="prefActionBarShowTurnoutsButtonTitle">分岐ボタン？</string>
     <string name="prefActionBarShowRoutesButtonSummary">アクションバーにルート画面に切り替えるボタンを表示します</string>
     <string name="prefDccexAutomationsAskTitle">EXRAIL Automatioの機関車アドレス</string>
+    <string name="prefExtendedLoggingTitle">ログ記録を延長しますか?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">機関車のサウンドボタンを非表示にする</string>
+    <string name="newConnectionTitle">新しい接続</string>
 
 </resources>

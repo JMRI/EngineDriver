@@ -16,7 +16,7 @@
  * Bug fix for F11 in the keyboard 'type' of gamepad
  * Added XBox gamepad support
  * Reinstated the log and file sharing capability
- * Google translations
+ * More Google translations
  * Bug fix for non-immersive mode on earlier versions of Android <15
  * Remove redundant API checks
  * Change API level to numbers instead of the names which I difficult follow with the latest APIs
@@ -25,6 +25,7 @@
  * Moved most of the gamepad and keyboard checking code to separate classes that are only loaded if you attach a gamepad or keyboard
  * Reduced a fair amount of the duplicate code for gamepads and keyboards in throttles.java
  * Some minor fixes for the TTS
+ * Added the concept of 'Extended Logging'. Some Log.d()s will only be logged if a new preference is enabled.
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212

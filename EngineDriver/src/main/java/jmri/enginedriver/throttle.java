@@ -941,7 +941,7 @@ public class throttle extends AppCompatActivity implements
         public void handleMessage(Message msg) {
             String response_str = msg.obj.toString();
 
-//            Log.d(threaded_application.applicationName, activityName + " handleMessage() " + response_str );
+            threaded_application.extendedLogging(activityName + ": handleMessage() " + response_str );
 
             switch (msg.what) {
                 case message_type.RESPONSE: { // handle messages from WiThrottle server
@@ -1019,7 +1019,7 @@ public class throttle extends AppCompatActivity implements
                                             } catch (
                                                     Exception e) {     // isReverseOfLead returns null if addr is not in con
                                                 // - should not happen unless WiT is reporting on engine user just dropped from ED consist?
-                                                Log.d(threaded_application.applicationName, activityName + ": " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
+                                                threaded_application.extendedLogging(activityName + ": " + whichThrottle + " loco " + addr + " direction reported by WiT but engine is not assigned");
                                             }
                                         }
                                     } else if (com3 == 'V') { // set speed
@@ -1196,7 +1196,7 @@ public class throttle extends AppCompatActivity implements
                     }
                     break;
                 case message_type.GAMEPAD_ACTION:
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): GAMEPAD_ACTION " + response_str);
+                    threaded_application.extendedLogging(activityName + ": ThrottleMessageHandler(): GAMEPAD_ACTION " + response_str);
                     if (!response_str.isEmpty()) {
                         String[] splitString = response_str.split(":");
                         externalGamepadAction = Integer.parseInt(splitString[0]);
@@ -1209,8 +1209,8 @@ public class throttle extends AppCompatActivity implements
                         dispatchKeyEvent(null);
                     }
                     break;
-                case message_type.VOLUME_BUTTON_ACTION: // volumem button n another activity
-                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): VOLUME_BUTTON_ACTION " + response_str);
+                case message_type.VOLUME_BUTTON_ACTION: // volume button n another activity
+                    threaded_application.extendedLogging(activityName + ": handleMessage(): VOLUME_BUTTON_ACTION " + response_str);
                     if (!response_str.isEmpty()) {
                         String[] splitString = response_str.split(":");
                         doVolumeButtonAction(Integer.parseInt(splitString[0]), Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]));
@@ -1218,7 +1218,7 @@ public class throttle extends AppCompatActivity implements
                     break;
 
                 case message_type.GAMEPAD_JOYSTICK_ACTION:
-                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): GAMEPAD_JOYSTICK_ACTION " + response_str);
+                    threaded_application.extendedLogging(activityName + ": handleMessage(): GAMEPAD_JOYSTICK_ACTION " + response_str);
                     if (!response_str.isEmpty()) {
                         String[] splitString = response_str.split(":");
                         externalGamepadAction = Integer.parseInt(splitString[0]);
@@ -1940,7 +1940,7 @@ public class throttle extends AppCompatActivity implements
             // Now update ESU MCII Knob position
             if (IS_ESU_MCII) {
                 if (!isSemiRealisticThrottle) {
-                    Log.d(threaded_application.applicationName, activityName + ": speedUpdateWiT(): ESU_MCII: Move knob request for WiT speed report");
+                    threaded_application.extendedLogging(activityName + ": speedUpdateWiT(): ESU_MCII: Move knob request for WiT speed report");
                     setEsuThrottleKnobPosition(whichThrottle, speedWiT);
                 } else {
                     // if it is the first update since acquiring the loco, force the knob abd slider to the retrieved speed
@@ -2026,7 +2026,7 @@ public class throttle extends AppCompatActivity implements
         int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
         int scaleSpeed = lastScaleSpeed + change;
         int speed = (int) Math.round(scaleSpeed / displayUnitScale);
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange():  change: " + change + " lastSpeed: " + lastSpeed+ " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed:" + scaleSpeed);
+        threaded_application.extendedLogging(activityName + ": speedChange():  change: " + change + " lastSpeed: " + lastSpeed+ " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed:" + scaleSpeed);
         if (lastScaleSpeed == scaleSpeed) {
             speed += (int) Math.signum(change);
         }
@@ -2039,7 +2039,7 @@ public class throttle extends AppCompatActivity implements
             speed = limitSpeedMax[whichThrottle];
         }
 
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange():  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
+        threaded_application.extendedLogging(activityName + ": speedChange():  change: " + change + " speed: " + speed+ " scaleSpeed: " + scaleSpeed);
 
         throttle_slider.setProgress(speed);
         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
@@ -2299,7 +2299,7 @@ public class throttle extends AppCompatActivity implements
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
         if (IS_ESU_MCII && moveMc2Knob && !isSemiRealisticThrottle) {
-            Log.d(threaded_application.applicationName, activityName + ": speedUpdateAndNotify(): ESU_MCII: Move knob request for speed update");
+            threaded_application.extendedLogging(activityName + ": speedUpdateAndNotify(): ESU_MCII: Move knob request for speed update");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
@@ -2312,7 +2312,7 @@ public class throttle extends AppCompatActivity implements
         sendSpeedMsg(whichThrottle, speed);
         // Now update ESU MCII Knob position
         if (IS_ESU_MCII && !isSemiRealisticThrottle) {
-            Log.d(threaded_application.applicationName, activityName + ": speedChangeAndNotify(): ESU_MCII: Move knob request for speed change");
+            threaded_application.extendedLogging(activityName + ": speedChangeAndNotify(): ESU_MCII: Move knob request for speed change");
             setEsuThrottleKnobPosition(whichThrottle, speed);
         }
         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
@@ -2876,7 +2876,7 @@ public class throttle extends AppCompatActivity implements
         }
         // Ensure ESU MCII tracks selected throttle
         if (IS_ESU_MCII && !isSemiRealisticThrottle) {
-            Log.d(threaded_application.applicationName, activityName + ": setVolumeIndicator(): ESU_MCII: Throttle changed to: " + whichVolume);
+            threaded_application.extendedLogging(activityName + ": setVolumeIndicator(): ESU_MCII: Throttle changed to: " + whichVolume);
             setEsuThrottleKnobPosition(whichVolume, getSpeed(whichVolume));
             if (!isEsuMc2Stopped) {
                 // Set green LED on if controlling a throttle; flash if nothing selected
@@ -3123,6 +3123,7 @@ public class throttle extends AppCompatActivity implements
 
     // load the gamepad support on first use
     private void loadGamepadAndKeyboardHandlers(boolean force) {
+        mainapp.extendedLogging(activityName + ": loadGamepadAndKeyboardHandlers() " + (force ? "Force" : "") );
         if ( (force) || (gamepadEventHandler == null) || (keyboardEventHandler == null) ) {
             gamePadKeyLoader = new GamePadKeyLoader(this, mainapp, prefs,
                     prefGamePadButtons, gamePadKeys, gamePadKeys_Up, null);
@@ -3140,7 +3141,7 @@ public class throttle extends AppCompatActivity implements
                                                  int whichThrottle,
                                                  boolean isConsistActiveOnThrottle,
                                                  int whichGamePadIsEventFrom) {
-        Log.d(threaded_application.applicationName, activityName + ": gamepadEventNotificationHandler() event: " + event);
+        mainapp.extendedLogging(activityName + ": gamepadEventNotificationHandler() event: " + event);
 
         keyboardEventNotificationHandler(event, val, repeatCnt,
                         whichThrottle,
@@ -3153,7 +3154,7 @@ public class throttle extends AppCompatActivity implements
                                                  int whichThrottle,
                                                  boolean isConsistActiveOnThrottle,
                                                  int whichGamePadIsEventFrom) {
-        Log.d(threaded_application.applicationName, activityName + ": keyboardEventNotificationHandler() event: " + event);
+        mainapp.extendedLogging(activityName + ": keyboardEventNotificationHandler() event: " + event);
         if (!getConsist(whichThrottle).isActive()) {
             GamepadFeedbackSound(true);
             return;
@@ -3270,6 +3271,7 @@ public class throttle extends AppCompatActivity implements
                 doDeviceButtonSound(whichThrottle, sounds_type.BELL);
                 setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_BELL][whichThrottle], rslt);
                 mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.BELL - 1] = rslt;
+                playFeedbackSound = -1;
                 break;
             }
             case gamepad_or_keyboard_event_type.IPLS_HORN_START: {
@@ -3277,15 +3279,15 @@ public class throttle extends AppCompatActivity implements
                     doDeviceButtonSound(whichThrottle, sounds_type.HORN);
                     setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], true);
                     mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1] = true;
-                } else {
-                    playFeedbackSound = -1;
                 }
+                playFeedbackSound = -1;
                 break;
             }
             case gamepad_or_keyboard_event_type.IPLS_HORN_END: {
                 doDeviceButtonSound(whichThrottle, sounds_type.HORN);
                 setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN][whichThrottle], false);
                 mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN - 1] = false;
+                playFeedbackSound = -1;
                 break;
             }
             case gamepad_or_keyboard_event_type.IPLS_HORN_SHORT_START: {
@@ -3293,15 +3295,15 @@ public class throttle extends AppCompatActivity implements
                     doDeviceButtonSound(whichThrottle, sounds_type.HORN_SHORT);
                     setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle], true);
                     mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1] = true;
-                } else {
-                    playFeedbackSound = -1;
                 }
+                playFeedbackSound = -1;
                 break;
             }
             case gamepad_or_keyboard_event_type.IPLS_HORN_SHORT_END: {
                 doDeviceButtonSound(whichThrottle, sounds_type.HORN_SHORT);
                 setSoundButtonState(bSoundsExtras[sounds_type.BUTTON_HORN_SHORT][whichThrottle], false);
                 mainapp.soundsDeviceButtonStates[whichThrottle][sounds_type.HORN_SHORT - 1] = false;
+                playFeedbackSound = -1;
                 break;
             }
             case gamepad_or_keyboard_event_type.LIMIT_SPEED_TOGGLE: {
@@ -3378,7 +3380,7 @@ public class throttle extends AppCompatActivity implements
         doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, false);
     }
     void doGamepadFunction(int fKey, int action, boolean isActive, int whichThrottle, int repeatCnt, boolean forceIsLatching) {
-        Log.d(threaded_application.applicationName, activityName + ": doGamepadFunction() : fkey: " + fKey + " action: " + action + " isActive: " + isActive);
+        threaded_application.extendedLogging(activityName + ": doGamepadFunction() : fkey: " + fKey + " action: " + action + " isActive: " + isActive);
         if (isActive && (repeatCnt == 0)) {
             String lab = mainapp.function_labels[whichThrottle].get(fKey);
             if (lab != null) {
@@ -3421,7 +3423,7 @@ public class throttle extends AppCompatActivity implements
     // listener for the joystick events
     @Override
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
-        Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent() Joystick Event");
+        threaded_application.extendedLogging(activityName + ": dispatchGenericMotionEvent() Joystick Event");
 
         if ( (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick) ) {
 
@@ -3479,7 +3481,7 @@ public class throttle extends AppCompatActivity implements
                     yAxis2 = externalGamepadyAxis2;
                 }
 
-                Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent() Joystick Event x: " + xAxis + "y: " + yAxis + "x2: " + xAxis2 + "y2: " + yAxis2 );
+                threaded_application.extendedLogging(activityName + ": dispatchGenericMotionEvent() Joystick Event x: " + xAxis + "y: " + yAxis + "x2: " + xAxis2 + "y2: " + yAxis2 );
 
                 if ((mainapp.usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
                     if (whichGamePadIsEventFrom >= 0) {
@@ -3499,7 +3501,7 @@ public class throttle extends AppCompatActivity implements
                     mGamepadAutoIncrement = false;
                     mGamepadAutoDecrement = false;
                     GamepadFeedbackSoundStop();
-                    Log.d(threaded_application.applicationName, activityName + ": dispatchGenericMotionEvent(): ACTION_UP"
+                    threaded_application.extendedLogging(activityName + ": dispatchGenericMotionEvent(): ACTION_UP"
                             + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                             + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
                     );
@@ -3584,7 +3586,7 @@ public class throttle extends AppCompatActivity implements
     // used to support the gamepad and physical keyboard events   DPAD and keystroke events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent() gamepad or keyboard event");
+        threaded_application.extendedLogging(activityName + ": dispatchKeyEvent() gamepad or keyboard event");
 
         loadGamepadAndKeyboardHandlers(false);
 
@@ -3647,7 +3649,7 @@ public class throttle extends AppCompatActivity implements
                     boolean isActive = getConsist(whichThrottle).isActive();
 
                     if (keyCode != 0) {
-                        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent(): keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                        threaded_application.extendedLogging(activityName + ": dispatchKeyEvent(): keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
                     }
 
                     if (!mainapp.prefGamePadType.equals("Keyboard")) {
@@ -3655,12 +3657,12 @@ public class throttle extends AppCompatActivity implements
                             mGamepadAutoIncrement = false;
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
-                            Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent (not Keyboard): ACTION_UP"
+                            threaded_application.extendedLogging(activityName + ": dispatchKeyEvent (not Keyboard): ACTION_UP"
                                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
                             );
                         } else {
-                            Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent (not Keyboard): ACTION_DOWN");
+                            threaded_application.extendedLogging(activityName + ": dispatchKeyEvent (not Keyboard): ACTION_DOWN");
                         }
 
                         int rslt = -1;
@@ -3708,7 +3710,7 @@ public class throttle extends AppCompatActivity implements
                             mGamepadAutoDecrement = false;
                             GamepadFeedbackSoundStop();
                         }
-                        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent: ACTION" + ((action == ACTION_UP) ? "UP" : "DOWN")
+                        threaded_application.extendedLogging(activityName + ": dispatchKeyEvent: ACTION" + ((action == ACTION_UP) ? "UP" : "DOWN")
                                 + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                                 + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
                         );
@@ -3736,7 +3738,7 @@ public class throttle extends AppCompatActivity implements
             boolean isActive = getConsist(whichVolume).isActive();
 
             if (keyCode != 0) {
-                Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent(): ESU_MCII: keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
+                threaded_application.extendedLogging(activityName + ": dispatchKeyEvent(): ESU_MCII: keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
                 if (action == ACTION_UP) {
                     esuButtonAutoIncrement = false;
                     esuButtonAutoDecrement = false;
@@ -3764,7 +3766,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     void GamepadIncrementSpeed(int whichThrottle, int stepMultiplier) {
-        Log.d(threaded_application.applicationName, activityName + ": GamepadIncrementSpeed()");
+        threaded_application.extendedLogging(activityName + ": GamepadIncrementSpeed()");
         incrementSpeed(whichThrottle, speed_commands_from_type.GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -3777,7 +3779,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     void GamepadDecrementSpeed(int whichThrottle, int stepMultiplier) {
-        Log.d(threaded_application.applicationName, activityName + ": GamepadDecrementSpeed()");
+        threaded_application.extendedLogging(activityName + ": GamepadDecrementSpeed()");
         decrementSpeed(whichThrottle, speed_commands_from_type.GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -3844,7 +3846,7 @@ public class throttle extends AppCompatActivity implements
             whichThrottle = WhichThrottle;
             stepMultiplier = StepMultiplier;
 
-            Log.d(threaded_application.applicationName, activityName + ": GamepadRptUpdater(): WhichThrottle: " + whichThrottle
+            threaded_application.extendedLogging(activityName + ": GamepadRptUpdater(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -3858,7 +3860,7 @@ public class throttle extends AppCompatActivity implements
 
         @Override
         public void run() {
-            Log.d(threaded_application.applicationName, activityName + ": GamepadRptUpdater(): run(): WhichThrottle: " + whichThrottle
+            threaded_application.extendedLogging(activityName + ": GamepadRptUpdater(): run(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -3881,7 +3883,7 @@ public class throttle extends AppCompatActivity implements
         int whichThrottle;
 
         private VolumeKeysRptUpdater(int WhichThrottle) {
-            Log.d(threaded_application.applicationName, activityName + ": VolumeKeysRptUpdater(): WhichThrottle: " + whichThrottle
+            threaded_application.extendedLogging(activityName + ": VolumeKeysRptUpdater(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -3896,7 +3898,7 @@ public class throttle extends AppCompatActivity implements
 
         @Override
         public void run() {
-            Log.d(threaded_application.applicationName, activityName + ": VolumeKeysRptUpdater(): run(): WhichThrottle: " + whichThrottle
+            threaded_application.extendedLogging(activityName + ": VolumeKeysRptUpdater(): run(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );
@@ -3946,12 +3948,12 @@ public class throttle extends AppCompatActivity implements
 
         @Override
         public void onButtonDown() {
-            Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob button down for throttle " + whichVolume);
+            threaded_application.extendedLogging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob button down for throttle " + whichVolume);
             if (!isScreenLocked) {
                 if (!isEsuMc2KnobEnabled) {
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
                 } else if (prefEsuMc2EndStopDirectionChange) {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Attempting to switch direction");
+                    threaded_application.extendedLogging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Attempting to switch direction");
                     changeActualOrTargetDirectionIfAllowed(whichVolume,
                             getDirection(whichVolume) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                             false);
@@ -3967,7 +3969,7 @@ public class throttle extends AppCompatActivity implements
 
         @Override
         public void onButtonUp() {
-            Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonUp(): ESU_MCII: Knob button up for throttle " + whichVolume);
+            threaded_application.extendedLogging(activityName + ": ThrottleListener(): onButtonUp(): ESU_MCII: Knob button up for throttle " + whichVolume);
         }
 
         @Override
@@ -3979,8 +3981,8 @@ public class throttle extends AppCompatActivity implements
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Nothing updated");
                 } else if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Knob position changed for throttle " + whichVolume);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
+                    threaded_application.extendedLogging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Knob position changed for throttle " + whichVolume);
+                    threaded_application.extendedLogging(activityName + ":  ThrottleListener(): onPositionChanged():ESU_MCII: New knob position: " + knobPos + " ; speedstep: " + speed);
                     if (!isSemiRealisticThrottle) {
                         speedUpdateAndNotify(whichVolume, speed, false); // No need to move knob
                     } else {
