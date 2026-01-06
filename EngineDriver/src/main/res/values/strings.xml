@@ -206,7 +206,7 @@
     <string name="sharedFileProcessing">Processing shared file(s)...</string>
     <string name="sharedFileProcessingCount">Processing %d shared file(s)...</string>
     <string name="sharedFileReceivedCount">Received %d shared file(s)...</string>
-    <string name="sharedFileSavingFile">Saving file(S)...</string>
+    <string name="sharedFileSavingFile">Saving file(s)...</string>
     <!--    <string name="sharedFileSaved">File Saved: %s</string>-->
     <string name="sharedFileSavingCount">Saving %d file(s)</string>
     <string name="sharedFileSavedCount">Save %d file(s)</string>
@@ -1104,8 +1104,10 @@
         <string name="TTS_Screen_Locked">Locked, swipe up to restore</string>
         <string name="TTS_Screen_Unlocked">Un-locked</string>
         <string name="TTS_Immersive_Mode_Disabled">Immersive mode temporarily disabled</string>
+    -->
         <string name="TTS_Forward">Forward</string>
         <string name="TTS_Reverse">Reverse</string>
+    <!--
         <string name="TTS_Speed_Zero">Zero</string>
         <string name="TTS_Speed_Max">Maximum</string>
         <string name="TTS_Speed_Stop">Stop</string>
@@ -1519,6 +1521,8 @@
 
     <string name="prefShowTimeOnLogEntryTitle">Show Timestamps on Log?</string>
     <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen</string>
+    <string name="prefExtendedLoggingTitle">Extended logging?</string>
+    <string name="prefExtendedLoggingSummary">Capture additional, more detailed, logs</string>
 
     <string name="prefSortOrderRosterTitle">Roster sort order</string>
     <string name="prefSortOrderRosterSummary">Order that the roster entries will appear, by default, each time you start Engine Driver</string>

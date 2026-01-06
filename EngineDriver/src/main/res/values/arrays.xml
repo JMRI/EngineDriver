@@ -3077,6 +3077,25 @@
         <item>@raw/beep_nak</item>
     </array>
 
+    <array name="gamepad_test_button_resource_ids">
+        <item /> <!-- not used-->
+        <item>@id/gamepad_test_button_start</item>
+        <item>@id/gamepad_test_dpad_up</item>
+        <item>@id/gamepad_test_dpad_down</item>
+        <item>@id/gamepad_test_dpad_left</item>
+        <item>@id/gamepad_test_dpad_right</item>
+        <item>@id/gamepad_test_button_enter</item>
+        <item>@id/gamepad_test_button_x</item>
+        <item>@id/gamepad_test_button_y</item>
+        <item>@id/gamepad_test_button_a</item>
+        <item>@id/gamepad_test_button_b</item>
+        <item>@id/gamepad_test_button_left_shoulder</item>
+        <item>@id/gamepad_test_button_right_shoulder</item>
+        <item>@id/gamepad_test_button_left_trigger</item>
+        <item>@id/gamepad_test_button_right_trigger</item>
+        <item>@id/gamepad_test_button_left_thumb</item>
+        <item>@id/gamepad_test_button_right_thumb</item>
+    </array>
 
 
 

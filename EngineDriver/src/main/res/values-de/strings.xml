@@ -310,6 +310,7 @@
     <string name="prefRosterRecentLocosSummary">Lokverzeichnisauswahlen in kürzlich verwendeten Loks einbeziehen?</string>
     <string name="prefRosterRecentLocoNamesTitle">Dienstnamen in letzten Locos?</string>
     <string name="prefRosterRecentLocoNamesSummary">Loknamen aus der Liste in die Liste "Letzte" einschließen, wenn eine übereinstimmende Adresse gefunden wird?</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Blenden Sie die Schaltfläche „Loco Phone Loco Sounds“ im Loco-Auswahlbildschirm aus.</string>
     <string name="prefMaximumRecentLocosTitle">Maximum kürzlich verwendeter Loks</string>
 
     <string name="prefMaximumRecentLocosSummary">Maximum kürzlich verwendeter Loks zum Anzeigen in Liste</string>
@@ -607,8 +608,10 @@
     <string name="TTS_Screen_Locked">Blockiert, wische nach oben zum Wiederherstellen</string>
     <string name="TTS_Screen_Unlocked">Nicht blockiert</string>
     <string name="TTS_Immersive_Mode_Disabled">Immersiver Modus temporär ausgeschaltet</string>
+    -->
     <string name="TTS_Forward">Vorwärts</string>
     <string name="TTS_Reverse">Rückwärts</string>
+    <!--
     <string name="TTS_Speed_Zero">Null</string>
     <string name="TTS_Speed_Max">Maximum</string>
     <string name="TTS_Speed_Stop">Stop</string>
@@ -626,6 +629,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Anzahl der Standardfunktionen für das Lokverzeichnis</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Begrenze die angezeigten Funktionsbezeichnungen bei Einträgen ohne Funktionsbezeichnungen im JMRI Lokverzeichnis.</string>
 
+    <string name="newConnectionText">Die Verbindung zu diesem Server schließen und dann wieder herstellen?</string>
     <string name="lightsTextOff">Aus</string>
     <string name="lightsTextFollow">Folge F Knopf</string>
     <string name="lightsTextUnknown">Unbekannt</string>
@@ -965,6 +969,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplikator für den Lastprozentsatz</string>-->
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Passen Sie die Auswirkung des Lastreglers auf die Geschwindigkeitsänderungen an. &gt;100 % = mehr Last</string>-->
     <string name="prefCategoryDevicePageTitle">Geräteeinstellungen</string>
+    <string name="prefExtendedLoggingSummary">Erfassen Sie zusätzliche, detailliertere Protokolle.</string>
     <string name="prefSortOrderRosterTitle">Sortierreihenfolge des Dienstplans</string>
     <string name="prefSortOrderRosterSummary">Ordnen Sie an, dass die Dienstplaneinträge standardmäßig bei jedem Start von Engine Driver angezeigt werden</string>
     <string name="prefSortOrderTurnoutsTitle">Sortierreihenfolge der Weichen</string>
@@ -1253,5 +1258,8 @@
     <string name="prefActionBarShowTurnoutsButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zum Weichen-Bildschirm zu wechseln</string>
     <string name="prefActionBarShowTurnoutsButtonTitle">Wehrknopf?</string>
     <string name="prefActionBarShowRoutesButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zum Routenbildschirm zu wechseln</string>
+    <string name="prefExtendedLoggingTitle">Erweiterte Protokollierung?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Schaltfläche „Lokgeräusche“ ausblenden</string>
+    <string name="newConnectionTitle">Neue Verbindung</string>
 
 </resources>

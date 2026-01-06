@@ -87,7 +87,7 @@ public class Tts {
     public void speakWords(int msgNo, int whichThrottle, boolean force, int argInt1, int argInt2, int argInt3,  int argInt4, boolean isSemiRealisticThrottle, String argString) {
         boolean result = false;
         String speech = "";
-        if (!prefTtsWhen.equals(PREF_TTS_WHEN_NONE)) {
+        if ( (!prefTtsWhen.equals(PREF_TTS_WHEN_NONE)) || (force) ) {
             if (myTts != null) {
                 switch (msgNo) {
                     case tts_msg_type.VOLUME_THROTTLE:
@@ -106,6 +106,7 @@ public class Tts {
                             }
                         }
                         break;
+
                     case tts_msg_type.GAMEPAD_THROTTLE:
                         if (!prefTtsThrottleResponse.equals(pref_tts_type.THROTTLE_RESPONSE_NONE)) {
                             if ((argInt1 != whichThrottle) || (force)) { // whichLastGamepad1
@@ -126,45 +127,63 @@ public class Tts {
                             }
                         }
                         break;
+
                     case tts_msg_type.GAMEPAD_GAMEPAD_TEST:
                         if ((prefTtsGamepadTest)) {
                             result = true;
                             speech = mainapp.getResources().getString(R.string.TtsGamepadTest);
                         }
                         break;
+
                     case tts_msg_type.GAMEPAD_GAMEPAD_TEST_COMPLETE:
                         if ((prefTtsGamepadTestComplete)) {
                             result = true;
                             speech = mainapp.getResources().getString(R.string.TtsGamepadTestComplete);
                         }
                         break;
+
                     case tts_msg_type.GAMEPAD_GAMEPAD_TEST_SKIPPED:
                         if ((prefTtsGamepadTestComplete)) {
                             result = true;
                             speech = mainapp.getResources().getString(R.string.TtsGamepadTestSkipped);
                         }
                         break;
+
                     case tts_msg_type.GAMEPAD_GAMEPAD_TEST_FAIL:
                         if ((prefTtsGamepadTestComplete)) {
                             result = true;
                             speech = mainapp.getResources().getString(R.string.TtsGamepadTestFail);
                         }
                         break;
+
                     case tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET:
                         if ((prefTtsGamepadTestComplete)) {
                             result = true;
                             speech = mainapp.getResources().getString(R.string.TtsGamepadTestReset);
                         }
                         break;
+
                     case tts_msg_type.GAMEPAD_GAMEPAD_TEST_KEY_AND_PURPOSE:
                         if (prefTtsGamepadTestKeys) {
                             result = true;
                             speech = argString;
                         }
                         break;
+
+                    case tts_msg_type.GAMEPAD_CURRENT_SPEED:
+                        result = true;
+                        speech = speech + " " + mainapp.getResources().getString(R.string.TtsSpeed) + " " + argInt2 ; // speed
+                        if (argInt2>0)
+                            speech = speech + ", " + ((argInt3==1) ? mainapp.getResources().getString(R.string.TTS_Forward) : mainapp.getResources().getString(R.string.TTS_Reverse)); // direction
+                        if (isSemiRealisticThrottle) {
+                            speech = speech  + ", " + mainapp.getResources().getString(R.string.TtsTargetSpeed) + " "
+                                    + (argInt4); // targetSpeed
+                        }
+                        break;
+
                     case tts_msg_type.GAMEPAD_THROTTLE_SPEED:
-                        if ( (prefTtsThrottleSpeed.equals("Zero + Max")) || (prefTtsThrottleSpeed.equals("Zero + Max + speed")) ) {
-                                if (argInt2 == 0) {
+                        if ( (prefTtsThrottleSpeed.equals("Zero + Max")) || (prefTtsThrottleSpeed.equals("Zero + Max + speed")) || (force) )  {
+                            if (argInt2 == 0) { // speed zero
                                 result = true;
                                 speech = mainapp.getResources().getString(R.string.TtsGamepadTestSpeedZero);
                             } else if (argInt2 == argInt1) { // spd == maxSpd

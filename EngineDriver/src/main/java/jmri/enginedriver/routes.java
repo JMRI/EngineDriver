@@ -116,7 +116,7 @@ public class routes extends AppCompatActivity
     private VelocityTracker mVelocityTracker;
 
     public void refresh_route_view() {
-//        Log.d(threaded_application.applicationName, activityName + ": refresh_route_view()");
+        threaded_application.extendedLogging(activityName + ": refresh_route_view()");
 
         boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
@@ -251,7 +251,7 @@ public class routes extends AppCompatActivity
     }
 
     private void filterRouteView() {
-//        Log.d(threaded_application.applicationName, activityName + ": filterRouteView()");
+        threaded_application.extendedLogging(activityName + ": filterRouteView()");
 
         final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
@@ -273,7 +273,7 @@ public class routes extends AppCompatActivity
      * @noinspection UnusedReturnValue
      */
     private int updateRouteEntry() {
-//        Log.d(threaded_application.applicationName, activityName + ": updateRouteEntry()");
+        threaded_application.extendedLogging(activityName + ": updateRouteEntry()");
 
         Button routeButton = findViewById(R.id.route_toggle);
         EditText routeEntry = findViewById(R.id.route_entry);
@@ -307,7 +307,7 @@ public class routes extends AppCompatActivity
         }
 
         public void handleMessage(Message msg) {
-//            Log.d(threaded_application.applicationName, activityName + ": routes_handler: handleMessage("+msg.obj.toString()+")");
+            threaded_application.extendedLogging(activityName + ": routes_handler: handleMessage("+msg.obj.toString()+")");
 
             switch (msg.what) {
                 case message_type.WIT_CON_RECONNECT:
@@ -366,7 +366,7 @@ public class routes extends AppCompatActivity
     }
 
     private void witRetry(String s) {
-//        Log.d(applicationName: witRetry");
+        threaded_application.extendedLogging(activityName + ": witRetry()");
 
         Intent in = new Intent().setClass(this, reconnect_status.class);
         in.putExtra("status", s);
@@ -441,7 +441,7 @@ public class routes extends AppCompatActivity
     // Implementation of the OnConfirmListener interface
     @Override
     public void onConfirm(String inputText, String routeOrAutomationId) {
-//        Log.d("DCC_EX_AUTOMATION", "Input Text: " + inputText);
+        threaded_application.extendedLogging(activityName + ": DCC_EX_AUTOMATION onConfirm(): Input Text: " + inputText);
         int automationLocoNo = Integer.parseInt(inputText);
         if (automationLocoNo != 0)
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, '2' + routeOrAutomationId, automationLocoNo);
@@ -492,7 +492,7 @@ public class routes extends AppCompatActivity
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-//        Log.d(applicationName: onCreate");
+        threaded_application.extendedLogging(activityName + ": onCreate()");
 
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -655,7 +655,7 @@ public class routes extends AppCompatActivity
 
     @Override
     public void onResume() {
-//        Log.d(applicationName: onResume");
+        threaded_application.extendedLogging(activityName + ": onResume()");
 
         mainapp.applyTheme(this);
 
@@ -711,7 +711,7 @@ public class routes extends AppCompatActivity
      */
     @Override
     public void onDestroy() {
-//        Log.d(applicationName: onDestroy");
+        threaded_application.extendedLogging(activityName + ": onDestroy()");
 
         super.onDestroy();
 
@@ -726,7 +726,7 @@ public class routes extends AppCompatActivity
 
     @Override
     public void onPause() {
-//        Log.d(applicationName: onPause");
+        threaded_application.extendedLogging(activityName + ": onPause()");
 
         super.onPause();
         threaded_application.activityPaused(activityName);
@@ -762,7 +762,7 @@ public class routes extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        Log.d(applicationName: onCreateOptionsMenu");
+        threaded_application.extendedLogging(activityName + ": onCreateOptionsMenu");
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
@@ -814,7 +814,7 @@ public class routes extends AppCompatActivity
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Log.d(applicationName: onOptionsItemSelected");
+        threaded_application.extendedLogging(activityName + ": onOptionsItemSelected");
 
         // Handle all of the possible menu actions.
         Intent in;
@@ -939,7 +939,7 @@ public class routes extends AppCompatActivity
     //handle return from menu items
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Log.d(applicationName: onActivityResult");
+        threaded_application.extendedLogging(activityName + ": onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
         //since we always do the same action no need to distinguish between requests
         refresh_route_view();
@@ -996,7 +996,7 @@ public class routes extends AppCompatActivity
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
+        threaded_application.extendedLogging(activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
@@ -1015,7 +1015,7 @@ public class routes extends AppCompatActivity
     }
 
     public void gestureMove(MotionEvent event) {
-//        Log.d(applicationName: gestureMove action " + event.getAction());
+        threaded_application.extendedLogging(activityName + ": gestureMove() action " + event.getAction());
         if (mainapp!=null && mainapp.routes_msg_handler!=null && gestureInProgress) {
             // stop the gesture timeout timer
             mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
@@ -1041,7 +1041,7 @@ public class routes extends AppCompatActivity
     }
 
     private void gestureEnd(MotionEvent event) {
-//        Log.d(applicationName: gestureEnd action " + event.getAction() + " inProgress? " + gestureInProgress);
+        threaded_application.extendedLogging(activityName + ": gestureEnd() action " + event.getAction() + " inProgress? " + gestureInProgress);
         if ( (mainapp!=null) && (mainapp.routes_msg_handler != null) && (gestureInProgress) ) {
             mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
 

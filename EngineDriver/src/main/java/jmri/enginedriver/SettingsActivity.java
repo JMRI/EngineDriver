@@ -173,7 +173,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ": onCreate()");
 
-        mainapp = (threaded_application) this.getApplication();
+            mainapp = (threaded_application) this.getApplication();
         mainapp.applyTheme(this,true);
 
         super.onCreate(savedInstanceState);
@@ -210,7 +210,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_preferences),
                     "");
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): Set toolbar");
+            threaded_application.extendedLogging(activityName + ": onCreate(): Set toolbar");
         }
 
     } // end onCreate
@@ -330,7 +330,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     @SuppressLint("ApplySharedPref")
     public void forceReLaunchApp(int forcedRestartReason) {
-        Log.d(threaded_application.applicationName, activityName + ": forceRelaunchApp() ");
+        threaded_application.extendedLogging(activityName + ": forceRelaunchApp() ");
 
         this.finish();
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -380,7 +380,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 if (filesList != null) {
                     for (File file : filesList) {
                         logFiles.add(file);
-                        Log.d(threaded_application.applicationName, activityName + ": getFilesForDialog(): Found: " + file.getName());
+                        threaded_application.extendedLogging(activityName + ": getFilesForDialog(): Found: " + file.getName());
                     }
                     Collections.sort(logFiles, (file1, file2) -> file1.getName().compareTo(file2.getName()));
                 }
@@ -1826,7 +1826,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (mainapp != null) {
 //                mainapp.applyTheme(parentActivity, true);
 
-                if (!mainapp.isPowerControlAllowed()) {
+                if ( (!mainapp.isPowerControlAllowed()) && (!mainapp.connectedHostName.isEmpty()) ) {
                     parentActivity.enableDisablePreference(getPreferenceScreen(), "show_layout_power_button_preference", false);
                 }
 //                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
@@ -1836,7 +1836,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 if (mainapp.connectedHostName.isEmpty()) { // option is only available when there is no current connection
                     parentActivity.getConnectionsList();
-                    ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
+                    ListPreference preference = findPreference("prefHostImportExport");
                     if (preference!=null) {
                         preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
                         preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
@@ -1872,11 +1872,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     }
                 }
 
-                ListPreference lp = (ListPreference) findPreference("prefDeviceSounds0");
+                ListPreference lp = findPreference("prefDeviceSounds0");
                 lp.setEntries(deviceSoundsEntriesArray);
                 lp.setEntryValues(deviceSoundsEntryValuesArray);
 
-                lp = (ListPreference) findPreference("prefDeviceSounds1");
+                lp = findPreference("prefDeviceSounds1");
                 lp.setEntries(deviceSoundsEntriesArray);
                 lp.setEntryValues(deviceSoundsEntryValuesArray);
             }
@@ -2181,7 +2181,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (parentActivity.mainapp != null) {
                 if (parentActivity.mainapp.connectedHostName.isEmpty()) {
                     parentActivity.getConnectionsList();
-                    ListPreference preference = (ListPreference) findPreference("prefHostImportExport");
+                    ListPreference preference = findPreference("prefHostImportExport");
                     if (preference != null) {
                         preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
                         preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
@@ -2420,9 +2420,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.result = RESULT_GAMEPAD;
                         break;
 
-//                    case "prefShareFileNow":
-//                        parentActivity.shareFileNow();
-//                        break;
+                    case "prefShareFileNow":
+                        parentActivity.shareFileNow();
+                        break;
 
                     case "prefBackgroundImage":
                         parentActivity.prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
@@ -2576,6 +2576,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefThrottleSwitchOption2":
                     case "prefThrottleSwitchOption2NumThrottles":
                         parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences, "prefThrottleSwitchOption2", "prefThrottleSwitchOption2NumThrottles");
+                        break;
+                    case "prefExtendedLogging":
+                        threaded_application.prefExtendedLogging = parentActivity.prefs.getBoolean("prefExtendedLogging", false);
                         break;
 
                 }

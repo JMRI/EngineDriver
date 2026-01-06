@@ -128,7 +128,7 @@ public class throttle_semi_realistic extends throttle {
     protected void getCommonPrefs(boolean isCreate) {
         super.getCommonPrefs(isCreate);
 
-        isSemiRealisticTrottle = true;
+        isSemiRealisticThrottle = true;
 
         maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
@@ -1283,7 +1283,7 @@ public class throttle_semi_realistic extends throttle {
 //                        ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
 //                        ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
 //                        , getScaleSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle)
-//                        , isSemiRealisticTrottle
+//                        , isSemiRealisticThrottle
 //                        ,"");
                 break;
         }
@@ -1314,7 +1314,7 @@ public class throttle_semi_realistic extends throttle {
 //                        ,getSpeedFromCurrentSliderPosition(whichThrottle,false)
 //                        ,getSpeedFromCurrentSliderPosition(whichThrottle,true)
 //                        , getScaleSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle)
-//                        , isSemiRealisticTrottle
+//                        , isSemiRealisticThrottle
 //                        ,"");
                 break;
         }

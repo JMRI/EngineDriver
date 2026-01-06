@@ -11,6 +11,21 @@
  * Add 'None' option for the gamepad buttons
  * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
  * Removed the swipe up/down option to temperately turn off immersive mode as it is not really necessary anymore and did not work properly anymore anyway
+ * Added toolbar buttons for preferences and the wizard on the connection screen. Can be turned off with the existing preference to hide instructional hints
+ * Added option for medium size toolbar/action bar buttons
+ * Bug fix for F11 in the keyboard 'type' of gamepad
+ * Added XBox gamepad support
+ * Reinstated the log and file sharing capability
+ * More Google translations
+ * Bug fix for non-immersive mode on earlier versions of Android <15
+ * Remove redundant API checks
+ * Change API level to numbers instead of the names which I difficult follow with the latest APIs
+ * Removed the swipe up/down option to temperately turn off immersive mode as it is not really necessary anymore and did not work properly anymore anyway
+ * Moved the duplicated gamepad loading code to its own class
+ * Moved most of the gamepad and keyboard checking code to separate classes that are only loaded if you attach a gamepad or keyboard
+ * Reduced a fair amount of the duplicate code for gamepads and keyboards in throttles.java
+ * Some minor fixes for the TTS
+ * Added the concept of 'Extended Logging'. Some Log.d()s will only be logged if a new preference is enabled.
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212

@@ -298,6 +298,7 @@
     <string name="prefRosterRecentLocosSummary">¿Incluye selecciones de flota en lista de recientes?</string>
     <string name="prefRosterRecentLocoNamesTitle">Lista de nombres en Locomotoras recientes?</string>
     <string name="prefRosterRecentLocoNamesSummary">¿Incluir los nombres de Loco de la lista en la lista recientes si se encuentra una dirección coincidente?</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Ocultar el botón Sonidos de locomotoras del teléfono Loco en la pantalla Seleccionar locomotora</string>
     <string name="prefMaximumRecentLocosTitle">Número máximo de Locomotoras recientes</string>
 
     <string name="prefMaximumRecentLocosSummary">Máximo de Locomotoras recientes a mostrar en la lista</string>
@@ -594,8 +595,10 @@
     <string name="TTS_Screen_Locked">Bloqueado, desliza hacia arriba para restaurar</string>
     <string name="TTS_Screen_Unlocked">Desbloqueado</string>
     <string name="TTS_Immersive_Mode_Disabled">Modo Inmersivo deshabilitado temporalmente</string>
+    -->
     <string name="TTS_Forward">Adelante</string>
     <string name="TTS_Reverse">Atrás</string>
+    <!--
     <string name="TTS_Speed_Zero">Cero</string>
     <string name="TTS_Speed_Max">Máximo</string>
     <string name="TTS_Speed_Stop">Para</string>
@@ -613,6 +616,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Número de funciones por defecto para la flota</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limita las etiquetas de función que se muestran en las entradas de la flota del JMRI sin etiquetas de función</string>
 
+    <string name="newConnectionText">¿Cerrar la conexión a este servidor y luego volver a conectar?</string>
     <string name="lightsTextOff">Apagado</string>
     <string name="lightsTextFollow">Sigue Fn Btn</string>
     <string name="lightsTextUnknown">Desconocido</string>
@@ -961,6 +965,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Multiplicador de porcentaje de carga</string>-->
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste el efecto del control deslizante de carga en los cambios de velocidad. >100% = más carga</string>-->
     <string name="prefCategoryDevicePageTitle">Preferencias del Dispositivo</string>
+    <string name="prefExtendedLoggingSummary">Capturar registros adicionales y más detallados</string>
     <string name="prefSortOrderRosterTitle">Orden de clasificación de la lista</string>
     <string name="prefSortOrderRosterSummary">Ordene que las entradas de la lista aparezcan, de forma predeterminada, cada vez que inicie Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Orden de clasificación de desvíos</string>
@@ -1255,5 +1260,8 @@
     <string name="prefActionBarShowTurnoutsButtonTitle">¿Botón de desvíos?</string>
     <string name="prefActionBarShowRoutesButtonSummary">Mostrar botón en la barra de acción para cambiar a la pantalla de Rutas</string>
     <string name="prefDccexAutomationsAskTitle">Dirección de locomotora para la automatización EXRAIL</string>
+    <string name="prefExtendedLoggingTitle">¿Registro extendido?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Ocultar el botón Sonidos de locomotoras</string>
+    <string name="newConnectionTitle">Nueva conexión</string>
 
 </resources>

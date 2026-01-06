@@ -14,6 +14,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
+    <item android:id="@+id/intro_button"
+        app:actionLayout="@layout/toolbar_button_wizard"
+        android:title="@string/introMenu"
+        app:showAsAction="always"
+        android:visible="true" />
+
+    <item android:id="@+id/settings_button"
+        app:actionLayout="@layout/toolbar_button_preferences"
+        android:title="@string/preferences"
+        app:showAsAction="always"
+        android:visible="true" />
+
     <item android:id="@+id/flashlight_button"
         app:actionLayout="@layout/toolbar_button_flashlight_off"
         android:title="@string/flashlightAction"
@@ -22,8 +34,8 @@
         tools:ignore="AlwaysShowAction"  />
 
     <item android:id="@+id/intro_mnu" android:title="@string/introMenu" />
-    <item android:id="@+id/connect_menu"
-        android:title="@string/app_name_connect" />
+<!--    <item android:id="@+id/connect_menu"-->
+<!--        android:title="@string/app_name_connect" />-->
     <item android:id="@+id/settings_mnu" android:title="@string/preferences" />
     <!--    <item android:id="@+id/ClearconnList" android:title="@string/ClearConnList" />-->
     <item android:id="@+id/logviewer_menu" android:title="@string/logViewer" />

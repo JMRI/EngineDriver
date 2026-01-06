@@ -200,7 +200,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //    //Request connection to the WiThrottle server.
 //    private void connectImpl() {
         //	  sendMsgErr(0, message_type.CONNECT, connected_hostip, connected_port, "ERROR in ca.connect: comm thread not started.");
-        Log.d(threaded_application.applicationName, activityName + ": connect()");
+        threaded_application.extendedLogging(activityName + ": connect()");
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.CONNECT, connected_hostip, connected_port);
     }
 
@@ -702,6 +702,9 @@ public class connection_activity extends AppCompatActivity implements Permission
         Log.d(threaded_application.applicationName, activityName + ": onStart()");
         super.onStart();
         mainapp.exitConfirmed = false;
+
+        threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
+                getResources().getBoolean(R.bool.prefExtendedLoggingDefaultValue));
     }
 
     @Override
@@ -807,7 +810,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
     private void calculateDisplayMetrics() {
-        Log.d(threaded_application.applicationName, activityName + ": calculateDisplayMetrics()");
+        threaded_application.extendedLogging(activityName + ": calculateDisplayMetrics()");
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         threaded_application.displayMetrics = dm;
@@ -1019,6 +1022,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         CMenu = menu;
         mainapp.displayFlashlightMenuButton(menu);
         mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
+        menu.findItem(R.id.intro_button).setVisible(!mainapp.prefHideInstructionalToasts);
+        menu.findItem(R.id.settings_button).setVisible(!mainapp.prefHideInstructionalToasts);
 
         adjustToolbarSize(menu);
 
@@ -1035,7 +1040,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (item.getItemId() == R.id.exit_mnu) {
             mainapp.checkAskExit(this);
             return true;
-        } else if (item.getItemId() == R.id.settings_mnu) {
+        } else if ( (item.getItemId() == R.id.settings_mnu) || (item.getItemId() == R.id.settings_button) ) {
             in = new Intent().setClass(this, SettingsActivity.class);
             startActivityForResult(in, 0);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -1058,7 +1063,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
-        } else if (item.getItemId() == R.id.intro_mnu) {
+        } else if ( (item.getItemId() == R.id.intro_mnu) || (item.getItemId() == R.id.intro_button) ) {
             in = new Intent().setClass(this, intro_activity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -1261,7 +1266,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): " + requestCode);
+        threaded_application.extendedLogging(activityName + ": navigateToHandler(): " + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);

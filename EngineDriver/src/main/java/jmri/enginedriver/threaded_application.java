@@ -72,7 +72,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -398,6 +397,7 @@ public class threaded_application extends Application {
     public boolean prefOverrideRosterWithNoFunctionLabels = false;
 
     public boolean prefShowTimeOnLogEntry = false;
+    public static boolean prefExtendedLogging = false;
     public String logSaveFilename = "";
     public Process logcatProcess;
 
@@ -529,7 +529,7 @@ public class threaded_application extends Application {
     public boolean [] EsuMc2FirstServerUpdate = {false, false, false, false, false, false };
 
     public static boolean isActivityVisible() {
-        Log.d(applicationName, "t_a: isActivityVisible(): " + ((activityVisible || activityInTransition) ? "True" : "False"));
+        extendedLogging(activityName + ": isActivityVisible(): " + ((activityVisible || activityInTransition) ? "True" : "False"));
         return activityVisible || activityInTransition;
     }
 
@@ -537,7 +537,7 @@ public class threaded_application extends Application {
         activityVisible = true;
         activityInTransition = false;
         lastActivityName = activityName;
-        Log.d(applicationName, "t_a: activityResumed("+activityName+")");
+        extendedLogging(activityName + ": activityResumed("+activityName+")");
     }
 
     public static void activityPaused() {
@@ -546,7 +546,7 @@ public class threaded_application extends Application {
     public static void activityPaused(String activityName) {
         activityVisible = false;
         lastActivityName = activityName;
-        Log.d(applicationName, "t_a: activityPaused("+activityName+")");
+        threaded_application.extendedLogging(activityName + ": activityPaused("+activityName+")");
     }
 
     public static void activityNotInTransition() {
@@ -555,13 +555,13 @@ public class threaded_application extends Application {
     public static void activityNotInTransition(String activityName) {
         activityInTransition = false;
         lastActivityName = activityName;
-        Log.d(applicationName, "t_a: activityNotInTransition("+activityName+")");
+        threaded_application.extendedLogging(activityName + ": activityNotInTransition("+activityName+")");
     }
 
     public static void activityInTransition(String activityName) {
         activityInTransition = true;
         lastActivityName = activityName;
-        Log.d(applicationName, "t_a: activityInTransition("+activityName+")");
+        threaded_application.extendedLogging(activityName + ":  activityInTransition("+activityName+")");
     }
 
     /**
@@ -638,7 +638,7 @@ public class threaded_application extends Application {
 
     private void addNotification(Intent notificationIntent, int level) {
         if ( (isActivityVisible()) || (notificationLevel>0) ) return;
-        Log.d(applicationName, "t_a: addNotification()");
+        threaded_application.extendedLogging(activityName + ": addNotification()");
         notificationLevel = level;
         String notificationText = getResources().getString(R.string.notificationInBackgroundText);
         if (level == 2) {
@@ -686,7 +686,7 @@ public class threaded_application extends Application {
 
     // Remove notification
     public void removeNotification(Intent notificationIntent) {
-        Log.d(applicationName, "Engine Driver:removeNotification()");
+        threaded_application.extendedLogging(activityName + ": removeNotification()");
         if (notificationIntent == null) return;
         notificationLevel = 0;
         createNotificationChannelAndManager(notificationIntent);
@@ -756,6 +756,8 @@ public class threaded_application extends Application {
 
         prefShowTimeOnLogEntry = prefs.getBoolean("prefShowTimeOnLogEntry",
                 getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
+        prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
+                getResources().getBoolean(R.bool.prefExtendedLoggingDefaultValue));
         prefFeedbackOnDisconnect = prefs.getBoolean("prefFeedbackOnDisconnect",
                 getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
 
@@ -1726,7 +1728,7 @@ public class threaded_application extends Application {
             if (consists != null && consists[i] != null && consists[i].isActive()) {
                 sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
                 EStopActivated = true;
-                Log.d(applicationName, activityName + ": sendEStopMsg(): EStop sent to server for throttle " + i);
+                threaded_application.extendedLogging(activityName + ":  sendEStopMsg(): EStop sent to server for throttle " + i);
             }
         }
     }
@@ -3569,4 +3571,8 @@ public class threaded_application extends Application {
         }
     }
 
+    public static void extendedLogging(String logMessage) {
+        if (prefExtendedLogging)
+            Log.d(threaded_application.applicationName, logMessage);
+    }
 }
