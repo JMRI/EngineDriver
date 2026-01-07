@@ -37,6 +37,7 @@
     <string name="app_name_routes">ルート</string>
     <string name="app_name_select_loco">ロコを選択/解放する</string>
     <string name="app_name_throttle">スロットル</string>
+    <string name="app_name_throttle_kids_unlimited">時間無制限</string>
     <string name="app_name_throttle_kids_enabled">スロットル - タイマー準備完了</string>
     <string name="app_name_throttle_kids_ended">スロットルタイマー終了</string>
     <string name="app_name_throttle_kids_running">スロットル - %1$s 秒残り</string>

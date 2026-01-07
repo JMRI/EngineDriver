@@ -682,6 +682,7 @@
     <string name="prefKidsTimerSummary">Restringir o tempo que o loco será executado. por exemplo. Cada criança terá uma quantidade igual de tempo.</string>
 
     <string name="app_name_throttle_kids_running">%1$s seg. remanescente</string>
+    <string name="app_name_throttle_kids_unlimited">Tempo ilimitado</string>
     <string name="app_name_throttle_kids_enabled">Temporizador Pronto</string>
     <string name="app_name_throttle_kids_ended">Temporizador terminado</string>
 

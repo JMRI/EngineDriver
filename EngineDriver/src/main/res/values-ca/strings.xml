@@ -754,6 +754,7 @@
 
 
     <string name="app_name_throttle_kids_running">%1$s seg. restant</string>
+    <string name="app_name_throttle_kids_unlimited">Temps il·limitat</string>
     <string name="app_name_throttle_kids_enabled">Temporitzador preparat</string>
     <string name="app_name_throttle_kids_ended">Temporitzador finalitzat</string>
 

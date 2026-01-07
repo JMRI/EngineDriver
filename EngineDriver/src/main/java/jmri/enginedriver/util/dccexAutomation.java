@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -79,7 +81,23 @@ public class dccexAutomation extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dccex_automation_dialog, null); // Use your layout file name
 
+        buttonConfirm = view.findViewById(R.id.dccex_automation_dialog_button_confirm);
+        buttonClose = view.findViewById(R.id.dccex_automation_dialog_button_close);
+
+
         editText = view.findViewById(R.id.dccex_automation_dialog_edit_text_input);
+        editText.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                enableDisableConfirmButton();
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                enableDisableConfirmButton();
+            }
+        });
 
         // Retrieve the initial value from arguments
         if (getArguments() != null) {
@@ -88,8 +106,7 @@ public class dccexAutomation extends DialogFragment {
             routeOrAutomationId = getArguments().getString("routeOrAutomationId");
         }
 
-        buttonConfirm = view.findViewById(R.id.dccex_automation_dialog_button_confirm);
-        buttonClose = view.findViewById(R.id.dccex_automation_dialog_button_close);
+        enableDisableConfirmButton();
 
         builder.setView(view);
 
@@ -97,12 +114,8 @@ public class dccexAutomation extends DialogFragment {
 
         buttonConfirm.setOnClickListener(v -> {
             String inputText = editText.getText().toString();
-            try {
-                if ((inputText.isEmpty()) || (Integer.parseInt(inputText) == 0) || (Integer.parseInt(inputText) > 10239))
-                    inputText = "";
-            } catch (Exception ignored) {
+            if (!addressIsValid())
                 inputText = "";
-            }
 
             if (listener != null) {
                 listener.onConfirm(inputText, routeOrAutomationId);
@@ -112,7 +125,27 @@ public class dccexAutomation extends DialogFragment {
 
         buttonClose.setOnClickListener(v -> dismiss()); // Close the dialog
 
+
         return dialog;
+    }
+
+    void enableDisableConfirmButton() {
+        if (addressIsValid())
+            buttonConfirm.setEnabled(true);
+        else
+            buttonConfirm.setEnabled(false);
+    }
+
+    private boolean addressIsValid() {
+        boolean result = false;
+        String inputText = editText.getText().toString();
+        try {
+            if ((!inputText.isEmpty()) && (Integer.parseInt(inputText) > 0) && (Integer.parseInt(inputText) < 10239))
+                result = true;
+        } catch (Exception ignored) {
+        }
+
+        return result;
     }
 
     @Override

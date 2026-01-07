@@ -820,9 +820,12 @@ public class connection_activity extends AppCompatActivity implements Permission
         threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
         if (MobileControl2.isMobileControl2()) { // ESU 2/Pro / Pro mis-report their size
             threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
-        } else if ( (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE)
-                && (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO)) ) {
-            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO) ) {
+            if (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE) {
+                threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+            } else if  (threaded_application.displayDiagonalInches >= threaded_application.MEDIUM_SCREEN_SIZE) {
+                threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+            }
         } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.LARGE)) {
             threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
         } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.SMALL)) {
@@ -1391,19 +1394,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
     void adjustToolbarSize(Menu menu) {
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
-        int newHeightAndWidth = toolbarHeight;
-
-        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
-            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
-            newHeightAndWidth = toolbarHeight*2;
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        }
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);

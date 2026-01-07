@@ -239,6 +239,9 @@
         <item>4分</item>
         <item>5分</item>
         <item>10分</item>
+        <item>30分</item>
+        <item>60分</item>
+        <item>無制限</item>
         <item>実行が完了しました</item>
     </string-array>
 

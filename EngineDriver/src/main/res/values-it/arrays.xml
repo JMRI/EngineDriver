@@ -291,7 +291,7 @@
         <item>Tutte le locomotive - stesso numero di funzione</item>
     </string-array>
 
-    <string-array name = "prefKidsTimerEntries"> <!-- visualizza versione -->
+    <string-array name="prefKidsTimerEntries"> <!-- visualizza versione -->
         <item>Disabilitato</item>
         <item>1 minuto</item>
         <item>2 minuti</item>
@@ -299,6 +299,9 @@
         <item>4 minuti</item>
         <item>5 minuti</item>
         <item>10 minuti</item>
+        <item>30 minuti</item>
+        <item>60 minuti</item>
+        <item>Illimitato</item>
         <item>Esegui completato </item>
     </string-array>
 

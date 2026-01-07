@@ -945,6 +945,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefActionBarShowServerDescriptionSummary">在操作栏显示当前服务器的描述</string>
 
     <string name="app_name_throttle_kids_running">剩余%1$s秒</string>
+    <string name="app_name_throttle_kids_unlimited">无限时间</string>
     <string name="app_name_throttle_kids_enabled">计时器就绪</string>
     <string name="app_name_throttle_kids_ended">计时器结束</string>
 

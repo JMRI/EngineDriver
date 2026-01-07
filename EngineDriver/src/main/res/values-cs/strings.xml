@@ -879,6 +879,7 @@
 
 
     <string name="app_name_throttle_kids_running">%1$s zbývá vteřin</string>
+    <string name="app_name_throttle_kids_unlimited">Neomezený čas</string>
     <string name="app_name_throttle_kids_enabled">Časovač připraven</string>
     <string name="app_name_throttle_kids_ended">Časovač skončil</string>
 

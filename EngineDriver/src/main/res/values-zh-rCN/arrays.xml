@@ -229,6 +229,9 @@
         <item>4分钟</item>
         <item>5分钟</item>
         <item>10分钟</item>
+        <item>30分钟</item>
+        <item>60分钟</item>
+        <item>无限</item>
         <item>运行完成</item>
     </string-array>
 

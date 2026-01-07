@@ -802,6 +802,7 @@
     <string name="prefKidsTimerTitle">Temps maximum de fonctionnement</string>
     <string name="prefKidsTimerSummary">Reduire le temps de fonctionnement de la locomotive. Ainsi, chaque enfant aura le même temps de jeu.</string>
     <string name="app_name_throttle_kids_running">%1$s sec. restant</string>
+    <string name="app_name_throttle_kids_unlimited">Temps illimité</string>
     <string name="app_name_throttle_kids_enabled">Timer prêt</string>
     <string name="app_name_throttle_kids_ended">Jeu terminé</string>
     <string name="prefKidsTimerRestartPasswordTitle">Mot de passe pour relancer</string>

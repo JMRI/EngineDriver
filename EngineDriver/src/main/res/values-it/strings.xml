@@ -676,6 +676,7 @@
     <string name="prefKidsTimerSummary">Limita il tempo di esecuzione della locomotiva. per esempio. Ogni bambino riceverà una quantità uguale di tempo.</string>
 
     <string name="app_name_throttle_kids_running">%1$s sec. residuo</string>
+    <string name="app_name_throttle_kids_unlimited">Tempo illimitato</string>
     <string name="app_name_throttle_kids_enabled">Timer pronto</string>
     <string name="app_name_throttle_kids_ended">Timer Ended</string>
 

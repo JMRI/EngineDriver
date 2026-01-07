@@ -723,6 +723,7 @@
     <string name="prefKidsTimerSummary" tools:ignore="Typos">Beschränke die Zeit, die die Lok laufen wird. z.B. Jedes Kind bekommt die gleiche Zeit.</string>
 
     <string name="app_name_throttle_kids_running">%1$s sek. verbleibend</string>
+    <string name="app_name_throttle_kids_unlimited">Unbegrenzte Zeit</string>
     <string name="app_name_throttle_kids_enabled">Timer bereit</string>
     <string name="app_name_throttle_kids_ended">Timer beendet</string>
 
@@ -788,7 +789,7 @@
     <string name="prefTtsThrottleResponseTitle">Auf Gamepad Gaswechsel</string>
     <string name="prefTtsThrottleResponseSummary">Wenn Sie wählen Sie eine andere Drossel auf dem Gamepad.</string>
     <string name="toastFlashlightOffFailed">Es tut uns leid! Es gab ein Problem mit der Taschenlampe Ausschalten&#8230;</string>
-    <string name="cancel">Stornieren</string>
+    <string name="cancel">Abbrechen</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">A \\ ‚Kurz drücken \\‘ pausiert die aktuell gesteuerten Lok / bestehen. \\ Nwird zur ursprünglichen Geschwindigkeit zurück, wenn Betrieb wieder aufnehmen.</string>
     <string name="prefEsuMc2EndStopDirectionChangeTitle">Richtungswechsel bei Endanschlag</string>
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Zulassen Lok Richtung, wenn am Steuerknopf gegen den Uhrzeigersinn Endstopp-Position zu ändern.</string>
@@ -1226,7 +1227,8 @@
     <string name="logviewerStopSave">Stoppen</string>
     <string name="logviewerShare">Aktie</string>
 
-    <string name="dccexAutomationTitle">Nach der Automatisierungslokomotive fragen?</string>
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">Übernehmen</string>
+    <string name="dccexAutomationTitle">Welche Lokomotive soll an die Automatisierung übergeben werden?</string>
     <string name="autoServerConnectTitle">Automatische Serververbindung</string>
     <string name="autoServerConnectLabel">Servername</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Aktuellen Server abrufen</string>

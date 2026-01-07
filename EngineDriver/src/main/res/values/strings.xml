@@ -1257,6 +1257,7 @@
     <string name="prefActionBarShowServerDescriptionSummary">Show the description of the current server on the action bar</string>
 
     <string name="app_name_throttle_kids_running">%1$s sec. remaining</string>
+    <string name="app_name_throttle_kids_unlimited">Unlimited time</string>
     <string name="app_name_throttle_kids_enabled">Timer Ready</string>
     <string name="app_name_throttle_kids_ended">Timer Ended</string>
 

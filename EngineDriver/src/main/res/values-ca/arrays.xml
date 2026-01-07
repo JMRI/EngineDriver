@@ -280,6 +280,9 @@
         <item>4 minuts</item>
         <item>5 minuts</item>
         <item>10 minuts</item>
+        <item>30 minuts</item>
+        <item>60 minuts</item>
+        <item>Il·limitat</item>
         <item>Execució finalitzada</item>
     </string-array>
 

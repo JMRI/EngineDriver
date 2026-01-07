@@ -327,7 +327,8 @@ public class threaded_application extends Application {
     public static String prefToolbarButtonSize = "auto";
 //    public static boolean useSmallToolbarButtonSize = true;
     public static int toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
-    public static final double LARGE_SCREEN_SIZE = 6.7;
+    public static final double MEDIUM_SCREEN_SIZE = 5.5; // inches
+    public static final double LARGE_SCREEN_SIZE = 6.7; // inches
 
     int notificationLevel = 0; // no notification
     NotificationManager notificationManager;
@@ -3574,5 +3575,23 @@ public class threaded_application extends Application {
     public static void extendedLogging(String logMessage) {
         if (prefExtendedLogging)
             Log.d(threaded_application.applicationName, logMessage);
+    }
+
+    // note SettingsActivity does not use this
+    public int adjustToolbarSize(Toolbar toolbar) {
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+        int toolbarHeight = layoutParams.height;
+        int newHeightAndWidth = toolbarHeight;
+
+        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
+            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
+            newHeightAndWidth = toolbarHeight*2;
+            layoutParams.height = newHeightAndWidth;
+            toolbar.setLayoutParams(layoutParams);
+        }
+        return newHeightAndWidth;
     }
 }

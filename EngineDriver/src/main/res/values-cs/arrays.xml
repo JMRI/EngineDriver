@@ -481,6 +481,9 @@
         <item>4 minuty</item>
         <item>5 minut</item>
         <item>10 minut</item>
+        <item>30 minut</item>
+        <item>60 minut</item>
+        <item>Neomezený</item>
         <item>Běh dokončen</item>
     </string-array>
 
