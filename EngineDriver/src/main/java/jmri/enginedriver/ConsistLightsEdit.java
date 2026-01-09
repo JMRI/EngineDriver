@@ -60,7 +60,6 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
@@ -91,7 +90,6 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
-    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;

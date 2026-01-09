@@ -61,7 +61,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.type.message_type;
@@ -94,7 +93,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
-    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
@@ -319,7 +317,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         }
 
         public void handleMessage(Message msg) {
-            //noinspection SwitchStatementWithTooFewBranches
             switch (msg.what) {
                 case message_type.RESPONSE: {    //handle messages from WiThrottle server
                     String s = msg.obj.toString();

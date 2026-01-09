@@ -84,7 +84,7 @@
             android:layout_marginBottom="10dp"
             android:text="@string/connect_button"
             android:enabled="false"
-            android:drawableLeft="?attr/ed_connect_glyph"
+            android:drawableStart="?attr/ed_connect_glyph"
             android:padding="0dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -158,7 +158,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="@string/clearLocoList"
-            android:drawableLeft="?attr/ed_clear_list_glyph"
+            android:drawableStart="?attr/ed_clear_list_glyph"
             tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
     </RelativeLayout>
@@ -245,10 +245,8 @@
         android:id="@+id/host_numeric_or_text"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_marginLeft="2dp"
         android:layout_marginTop="2dp"
         android:layout_marginStart="2dp"
-        android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp"
         android:orientation="horizontal"
         android:visibility="gone" >
@@ -258,7 +256,6 @@
             style="?attr/ed_hover_button_style"
             android:layout_width="55sp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="@string/hostNumericButton"
             android:visibility="gone" />
@@ -268,7 +265,6 @@
             style="?attr/ed_hover_button_style"
             android:layout_width="55sp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="@string/hostTextButton" />
     </RelativeLayout>

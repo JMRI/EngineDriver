@@ -161,7 +161,7 @@ b) 非花名册机车。
 <!--    <string name="off">关闭</string>-->
     <string name="set">设置</string>
     <string name="disabled">已禁用</string>
-    <string name="volume_indicator" translatable="false">v</string>
+
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="ok">确定</string>
@@ -844,13 +844,14 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="TTS_Forward">前进</string>
     <string name="TTS_Reverse">后退</string>
     !--
+    <!--
     <string name="TTS_Speed_Zero">零</string>
     <string name="TTS_Speed_Max">最大</string>
     <string name="TTS_Speed_Stop">停止</string>
     <string name="TTS_EStop">紧急停止</string>
     <string name="TTS_Dir_Change_While_Moving_Disabled">方向未改变</string>
     <string name="TTS_Function">功能 </string>
--->
+    -->
     <string name="toastTtsFailed">抱歉！文本转语音失败&#8230;</string>
 
     <string name="functionButtonLookForWhistle">鸣笛</string>

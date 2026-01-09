@@ -2587,6 +2587,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
+    // this is slightly different to the code in the other activities
     void adjustToolbarSize(Menu menu) {
         ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
         // this will be run multiple times coming in and out of the sub menus, so only grab the height the first time.

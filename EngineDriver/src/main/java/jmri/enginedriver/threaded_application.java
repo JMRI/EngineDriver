@@ -820,6 +820,7 @@ public class threaded_application extends Application {
             Log.d(applicationName, "t_a: ALO/ALH: onLowMemory():");
         }
 
+        @SuppressLint("ApplySharedPref")
         @Override
         public void onTrimMemory(int level) {
             Log.d(applicationName, "t_a: ALO/ALH: onTrimMemory(): " + level);
@@ -3550,7 +3551,7 @@ public class threaded_application extends Application {
         StringBuilder functionLabels = new StringBuilder();
         if ( (functionLabelsMap!=null) && (!functionLabelsMap.isEmpty())) {
             for (int i = 0; i < MAX_FUNCTIONS; i++) {
-                functionLabels.append( (functionLabelsMap.get(i)!=null ? functionLabelsMap.get(i) : "") + "]\\[" );
+                functionLabels.append(functionLabelsMap.get(i) != null ? functionLabelsMap.get(i) : "").append("]\\[");
             }
         }
         return functionLabels.toString();

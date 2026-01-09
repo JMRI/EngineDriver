@@ -17,12 +17,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver.util;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 
 import java.util.Locale;
 
@@ -81,7 +79,7 @@ public class LocaleHelper {
     }
 
     @SuppressLint("AppBundleLocaleChanges")
-    @TargetApi(17)
+    @androidx.annotation.RequiresApi(17)
     private static Context updateResources(Context context, String language) {
 
         String [] languageAndCountry = language.split("_");

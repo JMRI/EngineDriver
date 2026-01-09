@@ -57,7 +57,6 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.LocaleHelper;
@@ -87,7 +86,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
-    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;

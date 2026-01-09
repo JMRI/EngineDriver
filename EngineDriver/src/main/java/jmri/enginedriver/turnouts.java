@@ -84,7 +84,6 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
@@ -562,7 +561,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     /**
      * Called when the activity is first created.
      */
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "ApplySharedPref"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -829,6 +828,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     } // end onCreate
 
+    @SuppressLint("ApplySharedPref")
     @Override
     public void onStart() {
         Log.d(threaded_application.applicationName, activityName + ": onStart(): called");

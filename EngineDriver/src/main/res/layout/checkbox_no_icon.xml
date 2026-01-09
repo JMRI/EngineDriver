@@ -21,7 +21,6 @@
     android:gravity="center_vertical"
     android:paddingEnd="?android:attr/scrollbarSize"
     android:background="?android:attr/selectableItemBackground"
-    android:paddingRight="?android:attr/scrollbarSize"
     tools:ignore="RtlSymmetry"
     android:baselineAligned="false">
 
@@ -33,8 +32,7 @@
         android:layout_marginTop="6dip"
         android:layout_marginBottom="6dip"
         android:layout_weight="1"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="6dip">
+        >
 
         <TextView android:id="@android:id/title"
             android:layout_width="wrap_content"
@@ -53,7 +51,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="?android:attr/textColorSecondary"
             android:maxLines="30"
-            android:layout_alignLeft="@android:id/title" />
+            />
 
     </RelativeLayout>
     <!-- Preference should place its actual preference widget here. -->

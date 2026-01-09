@@ -51,7 +51,7 @@
             android:layout_height="40dp"
             android:layout_width="wrap_content"
             android:text="@string/newConnectionTitle"
-            android:drawableLeft="?attr/ed_connect_glyph"
+            android:drawableStart="?attr/ed_connect_glyph"
             android:drawablePadding="8dp"
             tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry" />
 
@@ -60,9 +60,7 @@
             style="?attr/ed_normal_button_condensed_style"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:text="@string/exit"
-            android:drawableLeft="?attr/ed_cross_glyph"
             android:drawableStart="?attr/ed_cross_glyph"
             tools:ignore="RtlSymmetry" />
 

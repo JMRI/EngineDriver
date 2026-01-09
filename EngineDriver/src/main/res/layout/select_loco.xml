@@ -59,9 +59,7 @@
                     android:layout_height="wrap_content"
                     android:padding="0dp"
                     android:layout_marginTop="0dp"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginStart="0dp"
-                    android:layout_marginRight="6dp"
                     android:layout_marginEnd="6dp"
                     android:orientation="vertical">
 
@@ -94,8 +92,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
                     android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="1dp"
                     android:layout_marginEnd="1dp"
                     android:baselineAligned="false"
                     android:orientation="horizontal"
@@ -107,9 +103,7 @@
                         android:layout_height="wrap_content"
                         android:padding="0dp"
                         android:layout_marginTop="0dp"
-                        android:layout_marginLeft="0dp"
                         android:layout_marginStart="0dp"
-                        android:layout_marginRight="2dp"
                         android:layout_marginEnd="2dp"
                         android:orientation="vertical">
 
@@ -141,9 +135,7 @@
                         android:layout_height="wrap_content"
                         android:padding="0dp"
                         android:layout_marginTop="0dp"
-                        android:layout_marginLeft="0dp"
                         android:layout_marginStart="0dp"
-                        android:layout_marginRight="2dp"
                         android:layout_marginEnd="2dp"
                         android:orientation="vertical">
 
@@ -213,9 +205,7 @@
                     android:layout_height="wrap_content"
                     android:padding="0dp"
                     android:layout_marginTop="0dp"
-                    android:layout_marginLeft="6dp"
                     android:layout_marginStart="6dp"
-                    android:layout_marginRight="0dp"
                     android:layout_marginEnd="0dp"
                     android:orientation="vertical">
 
@@ -280,9 +270,7 @@
                 android:layout_weight=".2"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
-                android:layout_marginLeft="0dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"
                 android:orientation="vertical">
 
@@ -315,9 +303,7 @@
                 android:layout_weight=".2"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
-                android:layout_marginLeft="0dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"
                 android:orientation="vertical">
 
@@ -350,9 +336,7 @@
                 android:layout_weight=".2"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
-                android:layout_marginLeft="0dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"
                 android:orientation="vertical">
 
@@ -385,9 +369,7 @@
                 android:layout_weight=".2"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
-                android:layout_marginLeft="0dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"
                 android:orientation="vertical">
 
@@ -420,9 +402,7 @@
                 android:layout_weight=".2"
                 android:layout_height="wrap_content"
                 android:padding="0dp"
-                android:layout_marginLeft="0dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginRight="2dp"
                 android:layout_marginEnd="2dp"
                 android:orientation="vertical">
 
@@ -551,9 +531,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
-                android:layout_marginLeft="1dp"
                 android:layout_marginTop="2dp"
-                android:layout_marginRight="3dp"
                 android:layout_marginEnd="3dp"
                 android:layout_weight=".5"
                 android:orientation="vertical">
@@ -590,8 +568,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dp"
                         android:layout_marginStart="0dp"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="1dp"
                         android:layout_marginEnd="1dp"
                         android:baselineAligned="false"
                         android:orientation="vertical"
@@ -690,7 +666,6 @@
                 android:layout_width="120sp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
                 android:digits="0123456789"
                 android:hint="@string/select_loco_address"
                 android:imeOptions="actionDone"
@@ -726,7 +701,7 @@
                 android:layout_toRightOf="@id/address_length"
                 android:state_enabled="false"
                 android:text="@string/acquire_button"
-                android:drawableLeft="?attr/ed_acquire_loco_glyph"
+                android:drawableStart="?attr/ed_acquire_loco_glyph"
                 android:padding="6dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </RelativeLayout>
@@ -812,7 +787,7 @@
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/order"
-                android:drawableLeft="?attr/ed_sort_glyph"
+                android:drawableStart="?attr/ed_sort_glyph"
                 android:paddingLeft="4dp"
                 android:paddingStart="4dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
@@ -916,10 +891,10 @@
                 android:ellipsize="end"
                 android:padding="2sp"
                 android:text="@string/FilterRosterListDownloadLabel"
-                android:drawableLeft="?attr/ed_download_glyph"
+                android:drawableStart="?attr/ed_download_glyph"
                 android:paddingLeft="4dp"
                 android:paddingStart="4dp"
-                tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
+                tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TooManyViews,TouchTargetSizeCheck" />
 
         </RelativeLayout>
 
@@ -991,7 +966,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="6dp"
                     android:text="@string/order"
-                    android:drawableLeft="?attr/ed_sort_glyph"
+                    android:drawableStart="?attr/ed_sort_glyph"
                     android:paddingLeft="4dp"
                     android:paddingStart="4dp"
                     tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
@@ -1005,7 +980,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/clearLocoList"
-                    android:drawableLeft="?attr/ed_clear_list_glyph"
+                    android:drawableStart="?attr/ed_clear_list_glyph"
                     android:paddingLeft="4dp"
                     android:paddingStart="4dp"
                     tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
@@ -1063,7 +1038,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="6dp"
                     android:text="@string/order"
-                    android:drawableLeft="?attr/ed_sort_glyph"
+                    android:drawableStart="?attr/ed_sort_glyph"
                     android:paddingLeft="4dp"
                     android:paddingStart="4dp"
                     tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
@@ -1077,7 +1052,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/clearLocoList"
-                    android:drawableLeft="?attr/ed_clear_list_glyph"
+                    android:drawableStart="?attr/ed_clear_list_glyph"
                     android:paddingLeft="4dp"
                     android:paddingStart="4dp"
                     tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />

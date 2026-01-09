@@ -37,10 +37,8 @@
             android:text="testing string"
             tools:ignore="HardcodedText,RtlSymmetry"
             android:paddingEnd="10dp"
-            android:paddingRight="10dp"
             android:paddingTop="2dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
     </RelativeLayout>

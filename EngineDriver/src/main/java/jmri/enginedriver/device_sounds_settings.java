@@ -40,7 +40,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -55,7 +54,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -90,7 +88,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
-    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;

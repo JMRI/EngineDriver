@@ -130,10 +130,7 @@ public class dccexAutomation extends DialogFragment {
     }
 
     void enableDisableConfirmButton() {
-        if (addressIsValid())
-            buttonConfirm.setEnabled(true);
-        else
-            buttonConfirm.setEnabled(false);
+        buttonConfirm.setEnabled(addressIsValid());
     }
 
     private boolean addressIsValid() {

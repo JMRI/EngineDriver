@@ -39,7 +39,6 @@ import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -112,13 +111,10 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
@@ -147,7 +143,6 @@ import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.throttle_screen_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.GamePadKeyLoader;
@@ -225,7 +220,7 @@ public class throttle extends AppCompatActivity implements
 
     protected SeekBar[] sbs; // seekbars
 
-    protected LinearLayout throttleScreenWrapper;
+//    protected LinearLayout throttleScreenWrapper;
 
     protected ViewGroup[] functionButtonViewGroups; // function button tables
 
@@ -1198,11 +1193,7 @@ public class throttle extends AppCompatActivity implements
 
     protected void setImmersiveMode(View webView) {
         if (prefThrottleViewImmersiveMode) {
-            if (immersiveModeTempIsOn) {
-                setImmersiveModeOn(webView, false);
-            } else {
-                setImmersiveModeOn(webView, true);
-            }
+            setImmersiveModeOn(webView, !immersiveModeTempIsOn);
         } else {
             if (immersiveModeTempIsOn) {
                 setImmersiveModeOn(webView, true);
@@ -1247,7 +1238,8 @@ public class throttle extends AppCompatActivity implements
             immersiveModeIsOn = true;
 
 //            throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
-            throttleScreenWrapper.setPadding(0,0,0,0);
+//            throttleScreenWrapper.setPadding(0,0,0,0);
+            vThrotScrWrap.setPadding(0,0,0,0);
             systemStatusRowHeight = 0;
             systemNavigationRowHeight = 0;
 
@@ -1273,7 +1265,8 @@ public class throttle extends AppCompatActivity implements
             getStatusBarAndNavigationBarHeights();
 
 //            throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
-            throttleScreenWrapper.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
+//            throttleScreenWrapper.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
+            vThrotScrWrap.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
             systemStatusRowHeight = systemStatusRowHeightKeep;
             systemNavigationRowHeight = systemNavigationRowHeightKeep;
 
@@ -4895,6 +4888,7 @@ public class throttle extends AppCompatActivity implements
 
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
+                    //noinspection SwitchStatementWithTooFewBranches
                     switch (this.function) {
 //                        case function_button.STOP:
 //                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
@@ -5153,7 +5147,7 @@ public class throttle extends AppCompatActivity implements
                     "");
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility", "ApplySharedPref"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
@@ -5423,7 +5417,7 @@ public class throttle extends AppCompatActivity implements
     void initialiseUiElements() {
         Log.d(threaded_application.applicationName, activityName + ": initialiseUiElements(): start");
 
-        throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
+//        throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
         // myGesture = new GestureDetector(this);
         throttleOverlay = findViewById(R.id.throttle_overlay);
         throttleOverlay.addOnGestureListener(this);
@@ -5567,6 +5561,8 @@ public class throttle extends AppCompatActivity implements
                     }
                 }
             }
+
+            limit_speed_resource_ids.recycle();
         }
 
         // set listeners for the pause buttons for each throttle
@@ -5697,7 +5693,7 @@ public class throttle extends AppCompatActivity implements
             }
 
             // above form of shouldOverrideUrlloading is deprecated so support the new form if available
-            @TargetApi(Build.VERSION_CODES.N)
+            @androidx.annotation.RequiresApi(24)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return handleLoadingErrorRetries();
@@ -7112,7 +7108,8 @@ public class throttle extends AppCompatActivity implements
 //                                setImmersiveModeOn(webView, true);
 //                            }
 //                            setLabels();
-//                            throttleScreenWrapper.invalidate();
+////                            throttleScreenWrapper.invalidate();
+//                            vThrotScrWrap.invalidate();
 //                            break;
 
                         case swipe_up_down_option_type.SWITCH_LAYOUTS:
@@ -7362,8 +7359,7 @@ public class throttle extends AppCompatActivity implements
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
-            //noinspection SwitchStatementWithTooFewBranches
-//            switch (requestCode) {
+            //            switch (requestCode) {
 //                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
 //                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_SERVER_AUTO_PREFERENCES");
 //                    autoImportUrlAskToImportImpl();

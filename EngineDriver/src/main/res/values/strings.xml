@@ -204,14 +204,14 @@
     <string name="shareFile">Share File: %s</string>
     <string name="toastNoAppToShare">No app found to share the file</string>
     <string name="sharedFileProcessing">Processing shared file(s)...</string>
-    <string name="sharedFileProcessingCount">Processing %d shared file(s)...</string>
-    <string name="sharedFileReceivedCount">Received %d shared file(s)...</string>
+    <string name="sharedFileProcessingCount" tools:ignore="PluralsCandidate">Processing %d shared file(s)...</string>
+    <string name="sharedFileReceivedCount" tools:ignore="PluralsCandidate">Received %d shared file(s)...</string>
     <string name="sharedFileSavingFile">Saving file(s)...</string>
     <!--    <string name="sharedFileSaved">File Saved: %s</string>-->
-    <string name="sharedFileSavingCount">Saving %d file(s)</string>
-    <string name="sharedFileSavedCount">Save %d file(s)</string>
-    <string name="sharedFileFailedToSaveCount">Failed to save %d file(s)</string>
-    <string name="sharedFileFinished">Finished processing %d files</string>
+    <string name="sharedFileSavingCount" tools:ignore="PluralsCandidate">Saving %d file(s)</string>
+    <string name="sharedFileSavedCount" tools:ignore="PluralsCandidate">Save %d file(s)</string>
+    <string name="sharedFileFailedToSaveCount" tools:ignore="PluralsCandidate">Failed to save %d file(s)</string>
+    <string name="sharedFileFinished" tools:ignore="PluralsCandidate">Finished processing %d files</string>
     <string name="sharedFileNoUriReceived">Error: No file(s) URI received</string>
     <string name="sharedFileNoShareActionDetected">No share action detected</string>
     <string name="sharedFileOverwriteChoiceTitle">File Conflict</string>

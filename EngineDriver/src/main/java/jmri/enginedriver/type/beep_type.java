@@ -18,12 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver.type;
 
 public interface beep_type {
-//    int LIMIT_SPEED_START = 1;
-//    int LIMIT_SPEED_END = 10;
-//    int PAUSE_SPEED_START = 2;
-//    int PAUSE_SPEED_END = 20;
-//    int ACK = 3;
-//    int NAK = 30;
     int LIMIT_SPEED_START = 0;
     int LIMIT_SPEED_END = 1;
     int PAUSE_SPEED_START = 2;
