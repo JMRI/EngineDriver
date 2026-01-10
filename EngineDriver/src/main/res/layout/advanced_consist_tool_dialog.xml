@@ -34,9 +34,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
             android:autofillHints="1-127"
             android:digits="0123456789"
             android:inputType="number"
@@ -61,9 +59,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
             android:digits="0123456789"
             android:autofillHints="1-9999"
             android:inputType="number"
@@ -102,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="@string/close_button"
             style="?android:attr/buttonBarButtonStyle"
-            android:drawableLeft="?attr/ed_cross_glyph"
+            android:drawableStart="?attr/ed_cross_glyph"
             android:drawablePadding="5dp"
             tools:ignore="RtlHardcoded" />
 

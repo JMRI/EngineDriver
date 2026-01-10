@@ -21,7 +21,6 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -30,7 +29,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.gesture.GestureOverlayView;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -49,7 +47,6 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -63,7 +60,6 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
@@ -392,7 +388,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             }
 
             // above form of shouldOverrideUrlloading is deprecated so support the new form if available
-            @TargetApi(Build.VERSION_CODES.N)
+            @androidx.annotation.RequiresApi(24)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return handleLoadingErrorRetries();
@@ -881,19 +877,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     void adjustToolbarSize(Menu menu) {
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
-        int newHeightAndWidth = toolbarHeight;
-
-        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
-            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
-            newHeightAndWidth = toolbarHeight*2;
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        }
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);

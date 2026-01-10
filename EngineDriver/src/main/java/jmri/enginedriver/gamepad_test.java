@@ -55,7 +55,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -74,7 +73,6 @@ import java.util.Objects;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.beep_type;
 import jmri.enginedriver.type.message_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.GamePadKeyLoader;
 import jmri.enginedriver.util.LocaleHelper;
@@ -144,7 +142,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
-    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
@@ -822,19 +819,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     }
 
     void adjustToolbarSize(Menu menu) {
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
-        int newHeightAndWidth = toolbarHeight;
-
-        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
-            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
-            newHeightAndWidth = toolbarHeight*2;
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        }
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);

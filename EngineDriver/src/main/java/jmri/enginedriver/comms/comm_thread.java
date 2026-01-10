@@ -814,7 +814,7 @@ public class comm_thread extends Thread {
     protected void sendAutomation(String cmd, int automationLoco) {
         if (mainapp.isDCCEX) { // DCC-EX only      Automation: </START addr id>
             String systemName = cmd.substring(1);
-            String msgTxt = String.format("</START %d %s>", automationLoco, systemName);
+            @SuppressLint("DefaultLocale") String msgTxt = String.format("</START %d %s>", automationLoco, systemName);
             wifiSend(msgTxt);
             Log.d(threaded_application.applicationName, activityName + ": sendAutomation(): DCC-EX: " + msgTxt);
         }

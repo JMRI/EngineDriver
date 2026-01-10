@@ -34,47 +34,7 @@
                 android:layout_width="fill_parent"
                 android:textSize="16sp"
                 android:text="@string/pauseSpeedButtonLabel" />
-<!--
-            <Button
-                android:id="@+id/device_sounds_mute_2"
-                style="?attr/ed_fn_button_style"
-                android:layout_width="fill_parent"
-                android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                android:drawablePadding="0dp"
-                android:paddingLeft="3dp"
-                android:paddingStart="3dp"
-                android:text="@string/deviceSoundsMuteButton" />
 
-            <Button
-                android:id="@+id/device_sounds_bell_2"
-                style="?attr/ed_fn_button_style"
-                android:layout_width="fill_parent"
-                android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                android:drawablePadding="0dp"
-                android:paddingLeft="3dp"
-                android:paddingStart="3dp"
-                android:text="@string/functionButton01DefaultValue" />
-
-            <Button
-                android:id="@+id/device_sounds_horn_2"
-                style="?attr/ed_fn_button_style"
-                android:layout_width="fill_parent"
-                android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                android:drawablePadding="0dp"
-                android:paddingLeft="3dp"
-                android:paddingStart="3dp"
-                android:text="@string/functionButton02DefaultValue" />
-
-            <Button
-                android:id="@+id/device_sounds_horn_short_2"
-                style="?attr/ed_fn_button_style"
-                android:layout_width="fill_parent"
-                android:drawableLeft="@drawable/in_device_sounds_button_icon"
-                android:drawablePadding="0dp"
-                android:paddingLeft="3dp"
-                android:paddingStart="3dp"
-                android:text="@string/soundsButtonHornShortDefaultValue" />
--->
             <TableLayout
                 android:id="@+id/function_buttons_table_2"
                 android:layout_width="fill_parent"

@@ -119,6 +119,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private Toolbar toolbar;
     private LinearLayout statusLine;
     private Menu SAMenu;
+    private int initialToolbarHeight = -1;
 
     private String exportedPreferencesFileName = "exported_preferences.ed";
 //    private boolean overwriteFile = false;
@@ -2586,9 +2587,14 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
+    // this is slightly different to the code in the other activities
     void adjustToolbarSize(Menu menu) {
         ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
+        // this will be run multiple times coming in and out of the sub menus, so only grab the height the first time.
+        if (initialToolbarHeight == -1) {
+            initialToolbarHeight = layoutParams.height;
+        }
+        int toolbarHeight = initialToolbarHeight;
         int newHeightAndWidth = toolbarHeight;
 
         if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {

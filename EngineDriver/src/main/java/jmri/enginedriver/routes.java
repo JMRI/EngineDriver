@@ -75,7 +75,6 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.util.dccexAutomation;
@@ -489,7 +488,7 @@ public class routes extends AppCompatActivity
     /**
      * Called when the activity is first created.
      */
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "ApplySharedPref"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         threaded_application.extendedLogging(activityName + ": onCreate()");
@@ -640,6 +639,7 @@ public class routes extends AppCompatActivity
 
     } // end onCreate
 
+    @SuppressLint("ApplySharedPref")
     @Override
     public void onStart() {
         Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
@@ -1162,19 +1162,7 @@ public class routes extends AppCompatActivity
     }
 
     void adjustToolbarSize(Menu menu) {
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
-        int newHeightAndWidth = toolbarHeight;
-
-        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
-            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
-            newHeightAndWidth = toolbarHeight*2;
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        }
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);

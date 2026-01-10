@@ -117,7 +117,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:drawableLeft="?attr/ed_sort_glyph"
+                        android:drawableStart="?attr/ed_sort_glyph"
                         android:padding="0dp"
                         android:text="@string/order"
                         tools:ignore="RtlSymmetry" />

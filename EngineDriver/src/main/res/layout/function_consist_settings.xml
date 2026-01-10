@@ -62,7 +62,7 @@
                 android:layout_above="@id/functionConsistClose"
                 android:layout_centerHorizontal="true"
                 android:text="@string/fbResetFunctionLabels"
-                android:drawableLeft="?attr/ed_reset_glyph"
+                android:drawableStart="?attr/ed_reset_glyph"
                 android:padding="0dp"
                 tools:ignore="RtlSymmetry" />
 
@@ -78,7 +78,7 @@
                 android:layout_marginBottom="4dp"
                 android:padding="0dp"
                 android:text="@string/logviewerClose"
-                android:drawableLeft="?attr/ed_cross_glyph"
+                android:drawableStart="?attr/ed_cross_glyph"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         </RelativeLayout>

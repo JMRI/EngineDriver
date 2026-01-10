@@ -27,8 +27,6 @@
                 style="?attr/ed_normal_button_style"
                 android:layout_width="fill_parent"
                 android:layout_marginEnd="7dp"
-                android:layout_marginLeft="11dp"
-                android:layout_marginRight="7dp"
                 android:layout_marginStart="11dp"
                 android:text="@string/limitSpeedButtonLabel" />
 
@@ -36,15 +34,13 @@
                 android:id="@+id/pause_speed_0"
                 style="?attr/ed_normal_button_style"
                 android:layout_width="fill_parent"
-                android:layout_marginEnd="7dp" android:layout_marginLeft="11dp"
-                android:layout_marginRight="7dp"
+                android:layout_marginEnd="7dp"
                 android:layout_marginStart="11dp" android:text="@string/pauseSpeedButtonLabel" />
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="0dp" android:paddingLeft="3dp"
-                android:paddingRight="0dp"
+                android:paddingEnd="0dp"
                 android:paddingStart="3dp" android:shrinkColumns="*"
                 android:stretchColumns="*">
 
@@ -58,9 +54,8 @@
                         style="?attr/ed_fn_button_style"
                         android:layout_width="0dp"
                         android:layout_weight="5"
-                        android:drawableLeft="@drawable/in_device_sounds_button_icon"
                         android:drawablePadding="0dp"
-                        android:drawableStart="@drawable/in_device_sounds_button_icon" android:paddingLeft="3dp"
+                        android:drawableStart="@drawable/in_device_sounds_button_icon"
                         android:paddingStart="3dp"
                         android:text="@string/deviceSoundsMuteButton"
                         tools:ignore="RtlSymmetry" />
@@ -70,9 +65,8 @@
                         style="?attr/ed_fn_button_style"
                         android:layout_width="0dp"
                         android:layout_weight="5"
-                        android:drawableLeft="@drawable/in_device_sounds_button_icon"
                         android:drawablePadding="0dp"
-                        android:drawableStart="@drawable/in_device_sounds_button_icon" android:paddingLeft="3dp"
+                        android:drawableStart="@drawable/in_device_sounds_button_icon"
                         android:paddingStart="3dp"
                         android:text="@string/functionButton01DefaultValue"
                         tools:ignore="RtlSymmetry" />
@@ -88,9 +82,8 @@
                         style="?attr/ed_fn_button_style"
                         android:layout_width="0dp"
                         android:layout_weight="5"
-                        android:drawableLeft="@drawable/in_device_sounds_button_icon"
                         android:drawablePadding="0dp"
-                        android:drawableStart="@drawable/in_device_sounds_button_icon" android:paddingLeft="3dp"
+                        android:drawableStart="@drawable/in_device_sounds_button_icon"
                         android:paddingStart="3dp"
                         android:text="@string/functionButton02DefaultValue"
                         tools:ignore="RtlSymmetry" />
@@ -100,9 +93,8 @@
                         style="?attr/ed_fn_button_style"
                         android:layout_width="0dp"
                         android:layout_weight="5"
-                        android:drawableLeft="@drawable/in_device_sounds_button_icon"
                         android:drawablePadding="0dp"
-                        android:drawableStart="@drawable/in_device_sounds_button_icon" android:paddingLeft="3dp"
+                        android:drawableStart="@drawable/in_device_sounds_button_icon"
                         android:paddingStart="3dp"
                         android:text="@string/soundsButtonHornShortDefaultValue"
                         tools:ignore="RtlSymmetry" />
@@ -113,8 +105,7 @@
                 android:id="@+id/function_buttons_table_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="0dp" android:paddingLeft="3dp"
-                android:paddingRight="0dp"
+                android:paddingEnd="0dp"
                 android:paddingStart="3dp" android:shrinkColumns="*"
                 android:stretchColumns="*">
 

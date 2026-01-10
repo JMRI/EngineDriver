@@ -2459,6 +2459,9 @@
         <item>4</item>
         <item>5</item>
         <item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>777</item>
         <item>999</item>
     </string-array>
     <string-array name="prefKidsTimerEntries">  <!-- display version -->
@@ -2469,6 +2472,9 @@
         <item>4 minutes</item>
         <item>5 minutes</item>
         <item>10 minutes</item>
+        <item>30 minutes</item>
+        <item>60 minutes</item>
+        <item>Unlimited</item>
         <item>Run completed</item>
     </string-array>
 

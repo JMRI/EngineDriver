@@ -60,7 +60,6 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
@@ -91,7 +90,6 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout screenNameLine;
-    /** @noinspection FieldCanBeLocal*/
     private Toolbar toolbar;
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
@@ -518,19 +516,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     }
 
     void adjustToolbarSize(Menu menu) {
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
-        int newHeightAndWidth = toolbarHeight;
-
-        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
-            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
-            newHeightAndWidth = toolbarHeight*2;
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        }
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);

@@ -21,7 +21,6 @@
     android:gravity="center_vertical"
     android:paddingEnd="?android:attr/scrollbarSize"
     android:background="?android:attr/selectableItemBackground"
-    android:paddingRight="?android:attr/scrollbarSize"
     tools:ignore="RtlSymmetry"
     android:baselineAligned="false">
 
@@ -34,8 +33,7 @@
         android:layout_marginBottom="6dip"
         android:orientation="vertical"
         android:layout_weight="1"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="6dip">
+        >
 
             <TextView
                 android:id="@android:id/title"
@@ -54,8 +52,7 @@
                 android:layout_marginTop="2dip"
                 android:layout_marginBottom="6dip"
                 android:orientation="horizontal"
-                android:layout_marginLeft="15dip"
-                android:layout_marginRight="6dip">
+                >
 
                 <ImageView
                     android:id="@android:id/icon"

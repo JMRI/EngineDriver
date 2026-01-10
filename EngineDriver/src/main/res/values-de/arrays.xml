@@ -281,6 +281,9 @@
         <item>4 Minuten</item>
         <item>5 Minuten</item>
         <item>10 Minuten</item>
+        <item>30 Minuten</item>
+        <item>60 Minuten</item>
+        <item>Unbegrenzt</item>
         <item>Ausführen abgeschlossen</item>
     </string-array>
 

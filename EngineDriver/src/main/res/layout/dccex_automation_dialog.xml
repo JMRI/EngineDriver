@@ -34,12 +34,10 @@
 
         <EditText
             android:id="@+id/dccex_automation_dialog_edit_text_input"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginEnd="30dp"
-            android:layout_marginRight="30dp"
             android:digits="0123456789"
             android:inputType="number"
             android:maxLength="5" />
@@ -58,9 +56,9 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="?attr/ed_cross_glyph"
+            android:drawableStart="?attr/ed_cross_glyph"
             android:drawablePadding="5dp"
-            android:text="@string/close_button"
+            android:text="@string/cancel"
             tools:ignore="RtlHardcoded" />
 
         <Space

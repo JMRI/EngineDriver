@@ -39,7 +39,6 @@ import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
@@ -112,20 +111,21 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleFragment;
 import eu.esu.mobilecontrol2.sdk.ThrottleScale;
 
+import jmri.enginedriver.esu_mcII.EsuMc2LedControl;
 import jmri.enginedriver.type.Consist;
+import jmri.enginedriver.esu_mcII.EsuMc2ButtonAction;
+import jmri.enginedriver.esu_mcII.EsuMc2Led;
+import jmri.enginedriver.esu_mcII.EsuMc2LedState;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.beep_type;
@@ -143,7 +143,6 @@ import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.type.sounds_type;
 import jmri.enginedriver.type.speed_button_type;
 import jmri.enginedriver.type.throttle_screen_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.tts_msg_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.GamePadKeyLoader;
@@ -221,7 +220,7 @@ public class throttle extends AppCompatActivity implements
 
     protected SeekBar[] sbs; // seekbars
 
-    protected LinearLayout throttleScreenWrapper;
+//    protected LinearLayout throttleScreenWrapper;
 
     protected ViewGroup[] functionButtonViewGroups; // function button tables
 
@@ -554,6 +553,7 @@ public class throttle extends AppCompatActivity implements
     private boolean isRestarting = false;
 
     private static final String PREF_KIDS_TIMER_NONE = "0";
+    private static final String PREF_KIDS_TIMER_UNLIMITED = "777";
     private static final String PREF_KIDS_TIMER_ENDED = "999";
     private String prefKidsTimer = PREF_KIDS_TIMER_NONE;
     private String prefKidsTimerButtonDefault = "1";
@@ -603,170 +603,6 @@ public class throttle extends AppCompatActivity implements
     protected int systemNavigationRowHeight = 0;
     protected int systemStatusRowHeightKeep = -1;
     protected int systemNavigationRowHeightKeep = -1;
-
-    private enum EsuMc2Led {
-        RED(MobileControl2.LED_RED),
-        GREEN(MobileControl2.LED_GREEN);
-
-        private final int value;
-
-        EsuMc2Led(int value) {
-            this.value = value;
-        }
-
-        private int getValue() {
-            return value;
-        }
-    }
-
-    private enum EsuMc2LedState {
-        OFF,
-        ON,
-        QUICK_FLASH,
-        STEADY_FLASH,
-        LONG_FLASH,
-        SHORT_FLASH
-    }
-
-    private enum EsuMc2ButtonAction {
-        NO_ACTION("(no function)"),
-        ALL_STOP("All Stop"),
-        STOP("Stop"),
-        DIRECTION_FORWARD("Forward"),
-        DIRECTION_REVERSE("Reverse"),
-        DIRECTION_TOGGLE("Forward/Reverse Toggle"),
-        SPEED_INCREASE("Increase Speed"),
-        SPEED_DECREASE("Decrease Speed"),
-        NEXT_THROTTLE("Next Throttle"),
-        FN00("Function 00/Light", 0),
-        FN01("Function 01/Bell", 1),
-        FN02("Function 02/Horn", 2),
-        FN03("Function 03", 3),
-        FN04("Function 04", 4),
-        FN05("Function 05", 5),
-        FN06("Function 06", 6),
-        FN07("Function 07", 7),
-        FN08("Function 08", 8),
-        FN09("Function 09", 9),
-        FN10("Function 10", 10),
-        FN11("Function 11", 11),
-        FN12("Function 12", 12),
-        FN13("Function 13", 13),
-        FN14("Function 14", 14),
-        FN15("Function 15", 15),
-        FN16("Function 16", 16),
-        FN17("Function 17", 17),
-        FN18("Function 18", 18),
-        FN19("Function 19", 19),
-        FN20("Function 20", 20),
-        FN21("Function 21", 21),
-        FN22("Function 22", 22),
-        FN23("Function 23", 23),
-        FN24("Function 24", 24),
-        FN25("Function 25", 25),
-        FN26("Function 26", 26),
-        FN27("Function 27", 27),
-        FN28("Function 28", 28),
-        FN29("Function 29", 29),
-        FN30("Function 30", 30),
-        FN31("Function 31", 31);
-
-        private final String action;
-        private final int function;
-
-        private static final Map<String, EsuMc2ButtonAction> ENUM_MAP;
-
-        EsuMc2ButtonAction(String action) {
-            this(action, -1);
-        }
-
-        EsuMc2ButtonAction(String action, int function) {
-            this.action = action;
-            this.function = function;
-        }
-
-        private String getAction() {
-            return this.action;
-        }
-
-        private int getFunction() {
-            return this.function;
-        }
-
-        // Build immutable map of String name to enum pairs
-
-        static {
-            Map<String, EsuMc2ButtonAction> map = new ConcurrentHashMap<>();
-            for (EsuMc2ButtonAction action : EsuMc2ButtonAction.values()) {
-                map.put(action.getAction(), action);
-            }
-            ENUM_MAP = Collections.unmodifiableMap(map);
-        }
-
-        private static EsuMc2ButtonAction getAction(String action) {
-            return ENUM_MAP.get(action);
-        }
-    }
-
-    private static class EsuMc2LedControl {
-        EsuMc2LedState stateRed;
-        EsuMc2LedState stateGreen;
-
-        private void setState(EsuMc2Led which, EsuMc2LedState state) {
-            this.setState(which, state, false);
-        }
-
-        private void setState(EsuMc2Led which, EsuMc2LedState state, boolean storeState) {
-            switch (state) {
-                case ON:
-                    MobileControl2.setLedState(which.getValue(), true);
-                    break;
-                case QUICK_FLASH:
-                    MobileControl2.setLedState(which.getValue(), 125, 125);
-                    break;
-                case STEADY_FLASH:
-                    MobileControl2.setLedState(which.getValue(), 250, 250);
-                    break;
-                case LONG_FLASH:
-                    MobileControl2.setLedState(which.getValue(), 375, 125);
-                    break;
-                case SHORT_FLASH:
-                    MobileControl2.setLedState(which.getValue(), 125, 375);
-                    break;
-                case OFF:
-                default:
-                    // Default off
-                    MobileControl2.setLedState(which.getValue(), false);
-            }
-            if (storeState) {
-                switch (which) {
-                    case RED:
-                        stateRed = state;
-                        break;
-                    case GREEN:
-                        stateGreen = state;
-                        break;
-                }
-            }
-        }
-
-        private EsuMc2LedState getState(EsuMc2Led which) {
-            if (which == EsuMc2Led.RED) {
-                return this.stateRed;
-            } else {
-                return this.stateGreen;
-            }
-        }
-
-        private void revertLEDStates() {
-            revertLEDState(EsuMc2Led.RED);
-            revertLEDState(EsuMc2Led.GREEN);
-        }
-
-        private void revertLEDState(EsuMc2Led which) {
-            setState(which, getState(which), false);
-        }
-    }
 
     // For speed slider speed buttons.
     protected class RptUpdater implements Runnable {
@@ -921,10 +757,17 @@ public class throttle extends AppCompatActivity implements
                     bSels[throttleIndex].setEnabled(false);
                     if (!prefKidsTimerEnableReverse) bRevs[throttleIndex].setEnabled(false);
                 }
-                mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
-                        getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)),
-                        getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
-                        "");
+                if (!prefKidsTimer.equals(PREF_KIDS_TIMER_UNLIMITED)) {
+                    mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
+                            getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_running).replace("%1$s", Integer.toString(arg)),
+                            getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
+                            "");
+                } else {
+                    mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
+                            getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_unlimited),
+                            getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
+                            "");
+                }
                 break;
         }
     }
@@ -1350,11 +1193,7 @@ public class throttle extends AppCompatActivity implements
 
     protected void setImmersiveMode(View webView) {
         if (prefThrottleViewImmersiveMode) {
-            if (immersiveModeTempIsOn) {
-                setImmersiveModeOn(webView, false);
-            } else {
-                setImmersiveModeOn(webView, true);
-            }
+            setImmersiveModeOn(webView, !immersiveModeTempIsOn);
         } else {
             if (immersiveModeTempIsOn) {
                 setImmersiveModeOn(webView, true);
@@ -1399,7 +1238,8 @@ public class throttle extends AppCompatActivity implements
             immersiveModeIsOn = true;
 
 //            throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
-            throttleScreenWrapper.setPadding(0,0,0,0);
+//            throttleScreenWrapper.setPadding(0,0,0,0);
+            vThrotScrWrap.setPadding(0,0,0,0);
             systemStatusRowHeight = 0;
             systemNavigationRowHeight = 0;
 
@@ -1425,7 +1265,8 @@ public class throttle extends AppCompatActivity implements
             getStatusBarAndNavigationBarHeights();
 
 //            throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
-            throttleScreenWrapper.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
+//            throttleScreenWrapper.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
+            vThrotScrWrap.setPadding(0,systemStatusRowHeightKeep,0,systemNavigationRowHeightKeep);
             systemStatusRowHeight = systemStatusRowHeightKeep;
             systemNavigationRowHeight = systemNavigationRowHeightKeep;
 
@@ -1552,7 +1393,11 @@ public class throttle extends AppCompatActivity implements
     protected void getKidsTimerPrefs() {
         prefKidsTimer = prefs.getString("prefKidsTimer", getResources().getString(R.string.prefKidsTimerDefaultValue));
         if ((!prefKidsTimer.equals(PREF_KIDS_TIMER_NONE)) && (!prefKidsTimer.equals(PREF_KIDS_TIMER_ENDED))) {
-            prefKidsTime = Integer.parseInt(prefKidsTimer) * 60000;
+            if (!prefKidsTimer.equals(PREF_KIDS_TIMER_UNLIMITED)) {
+                prefKidsTime = Integer.parseInt(prefKidsTimer) * 60000;
+            } else {
+                prefKidsTime = 14400 * 60000;
+            }
         } else {
             prefKidsTime = 0;
         }
@@ -5043,6 +4888,7 @@ public class throttle extends AppCompatActivity implements
 
             switch (action) {
                 case MotionEvent.ACTION_DOWN: {
+                    //noinspection SwitchStatementWithTooFewBranches
                     switch (this.function) {
 //                        case function_button.STOP:
 //                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
@@ -5301,7 +5147,7 @@ public class throttle extends AppCompatActivity implements
                     "");
     }
 
-    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
+    @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility", "ApplySharedPref"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
@@ -5571,7 +5417,7 @@ public class throttle extends AppCompatActivity implements
     void initialiseUiElements() {
         Log.d(threaded_application.applicationName, activityName + ": initialiseUiElements(): start");
 
-        throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
+//        throttleScreenWrapper = findViewById(R.id.throttle_screen_wrapper);
         // myGesture = new GestureDetector(this);
         throttleOverlay = findViewById(R.id.throttle_overlay);
         throttleOverlay.addOnGestureListener(this);
@@ -5715,6 +5561,8 @@ public class throttle extends AppCompatActivity implements
                     }
                 }
             }
+
+            limit_speed_resource_ids.recycle();
         }
 
         // set listeners for the pause buttons for each throttle
@@ -5845,7 +5693,7 @@ public class throttle extends AppCompatActivity implements
             }
 
             // above form of shouldOverrideUrlloading is deprecated so support the new form if available
-            @TargetApi(Build.VERSION_CODES.N)
+            @androidx.annotation.RequiresApi(24)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return handleLoadingErrorRetries();
@@ -7260,7 +7108,8 @@ public class throttle extends AppCompatActivity implements
 //                                setImmersiveModeOn(webView, true);
 //                            }
 //                            setLabels();
-//                            throttleScreenWrapper.invalidate();
+////                            throttleScreenWrapper.invalidate();
+//                            vThrotScrWrap.invalidate();
 //                            break;
 
                         case swipe_up_down_option_type.SWITCH_LAYOUTS:
@@ -7510,8 +7359,7 @@ public class throttle extends AppCompatActivity implements
         } else {
             // Go to the correct handler based on the request code.
             // Only need to consider relevant request codes initiated by this Activity
-            //noinspection SwitchStatementWithTooFewBranches
-            switch (requestCode) {
+            //            switch (requestCode) {
 //                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
 //                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_SERVER_AUTO_PREFERENCES");
 //                    autoImportUrlAskToImportImpl();
@@ -7520,10 +7368,10 @@ public class throttle extends AppCompatActivity implements
 //                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_SERVER_AUTO_PREFERENCES");
 //                    autoImportFromURLImpl();
 //                    break;
-                default:
+//                default:
                     // do nothing
                     Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
-            }
+//            }
         }
     }
 
@@ -8147,19 +7995,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     void adjustToolbarSize(Menu menu) {
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
-        int newHeightAndWidth = toolbarHeight;
-
-        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
-            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
-            newHeightAndWidth = toolbarHeight*2;
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        }
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
