@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
@@ -31,6 +30,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -38,7 +39,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -72,6 +72,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
+    private int result = RESULT_OK;
 
     //set up label, dcc function, toggle setting for each button
     private static boolean settingsCurrent = false;
@@ -196,6 +197,26 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.function_settings_msg_handler = new function_settings_handler(Looper.getMainLooper());
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
+                prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
+
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(function_settings.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -523,21 +544,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             move_settings_to_view();
             mainapp.buttonVibration();
         }
-    }
-
-    //Handle pressing of the back button to save settings
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
-        prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
-
-        if (key == KEYCODE_BACK) {
-            threaded_application.activityInTransition(activityName);
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
     }
 
     void endThisActivity() {

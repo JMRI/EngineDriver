@@ -43,6 +43,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.content.FileProvider;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
@@ -59,7 +60,6 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -108,7 +108,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
     static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
     public static final int RESULT_LOAD_IMG = 1;
-    private int result;                     // set to RESULT_FIRST_USER when something is edited
+    private int result = RESULT_OK;
 
     private String deviceId = "";
 
@@ -199,6 +199,24 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         InPhoneLocoSoundsLoader iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
         iplsLoader.getIplsList();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                isInSubScreen = false;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(SettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -813,18 +831,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         // Start the Intent
         startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-    }
-
-     //Handle pressing of the back button to end this activity
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        if ((key == KeyEvent.KEYCODE_BACK) && (!isInSubScreen) ) {
-            endThisActivity();
-            return true;
-        }
-        isInSubScreen = false;
-        return (super.onKeyDown(key, event));
     }
 
     void endThisActivity() {

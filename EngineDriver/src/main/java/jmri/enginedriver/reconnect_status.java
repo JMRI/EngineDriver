@@ -36,7 +36,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -215,6 +214,7 @@ public class reconnect_status extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 mainapp.checkExit(reconnect_status.this);
+                mainapp.exitDoubleBackButtonInitiated = 0;
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
@@ -256,17 +256,6 @@ public class reconnect_status extends AppCompatActivity {
         } else {
             Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.reconnect_status_msg_handler is null. Unable to removeCallbacksAndMessages");
         }
-    }
-
-    //Handle pressing of the back button to end this activity
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        if (key == KeyEvent.KEYCODE_BACK && this.backOk) {
-            mainapp.checkExit(this, true);
-            return true;
-        }
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        return (super.onKeyDown(key, event));
     }
 
     private void disconnect() {

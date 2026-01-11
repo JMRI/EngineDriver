@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.context;
@@ -43,6 +42,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
@@ -102,7 +103,6 @@ import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.select_loco_method_type;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.address_type;
@@ -157,7 +157,7 @@ public class select_loco extends AppCompatActivity {
 
     private String sWhichThrottle = "0";  // "0" or "1" or "2" + roster name
     int whichThrottle = 0;
-    private int result;
+    private int result = RESULT_OK;
     protected boolean selectLocoRendered = false;         // this will be true once setLabels() runs following rendering of the loco select textViews
 
     protected threaded_application mainapp; // hold pointer to mainapp
@@ -1325,7 +1325,8 @@ public class select_loco extends AppCompatActivity {
             consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
             mainapp.hideSoftKeyboard(v, activityName);
-            startActivityForResult(consistLightsEdit, sub_activity_type.CONSIST_LIGHTS);
+//            startActivityForResult(consistLightsEdit, sub_activity_type.CONSIST_LIGHTS);
+            startActivity(consistLightsEdit);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             mainapp.buttonVibration();
         }
@@ -1440,7 +1441,8 @@ public class select_loco extends AppCompatActivity {
         public void onClick(View v) {
             Log.d(threaded_application.applicationName, activityName + ": DeviceSoundsButtonListener(): onClick()");
             Intent deviceSounds = new Intent().setClass(_selectLocoActivity, device_sounds_settings.class);
-            startActivityForResult(deviceSounds, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
+//            startActivityForResult(deviceSounds, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
+            startActivity(deviceSounds);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             result = RESULT_OK;
             mainapp.hideSoftKeyboard(v, activityName);
@@ -1691,19 +1693,6 @@ public class select_loco extends AppCompatActivity {
         prefs.edit().putString("prefRosterFilter", prefRosterFilter).commit();
         refreshRosterList();
         //        onCreate(null);
-    }
-
-    // Handle pressing of the back button to simply return to caller
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        Log.d(threaded_application.applicationName, activityName + ": onKeyDown()");
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KEYCODE_BACK) {
-            overrideThrottleName = "";
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
     }
 
     /**
@@ -2012,6 +2001,24 @@ public class select_loco extends AppCompatActivity {
         setLabels();
         Handler handler = new Handler();
         handler.postDelayed(showMethodTask, 500);  // show or hide the correct panel after a short delay   Needed due to timing issues
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                overrideThrottleName = "";
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(select_loco.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);

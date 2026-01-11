@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -34,6 +33,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -433,6 +434,27 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         //put pointer to this activity's handler in main app's shared variable
 //        mainapp.web_msg_handler = new web_handler();
 
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    if (webView.canGoBack() && !clearHistory) {
+                        webView.goBack();
+                    } else {
+                        threaded_application.activityInTransition(activityName);
+                        Intent in = mainapp.getThrottleIntent();
+                        startACoreActivity(web_activity.this, in, false, 0);
+                    }
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
         statusLine = findViewById(R.id.status_line);
@@ -602,23 +624,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
     }
 
-    //Handle pressing of the back button to end this activity
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        if (key == KEYCODE_BACK) {
-            if (webView.canGoBack() && !clearHistory) {
-                webView.goBack();
-                return true;
-            }
-//            navigateAway(true, null); // don't really finish the activity here
-            Intent in = mainapp.getThrottleIntent();
-            startACoreActivity(this, in, false, 0);
-            return true;
-        }
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        return (super.onKeyDown(key, event));
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -705,7 +710,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             case R.id.settings_mnu:
                 threaded_application.activityInTransition(activityName);
                 in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
+                startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
                 return true;
 
@@ -769,7 +774,8 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             threaded_application.activityInTransition(activityName);
             savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
             mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
-            startActivityForResult(in, 0);
+//            startActivityForResult(in, 0);
+            startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }

@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.widget.Toast.LENGTH_LONG;
@@ -54,7 +53,6 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -676,6 +674,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             @Override
             public void handleOnBackPressed() {
                 mainapp.checkExit(connection_activity.this);
+                mainapp.exitDoubleBackButtonInitiated = 0;
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
@@ -1045,7 +1044,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             return true;
         } else if ( (item.getItemId() == R.id.settings_mnu) || (item.getItemId() == R.id.settings_button) ) {
             in = new Intent().setClass(this, SettingsActivity.class);
-            startActivityForResult(in, 0);
+            startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.about_mnu) {
@@ -1082,18 +1081,6 @@ public class connection_activity extends AppCompatActivity implements Permission
         set_labels();
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    // Handle pressing of the back button to request exit
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        if (key == KEYCODE_BACK) {
-            mainapp.checkExit(this);
-            return true;
-        }
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        return (super.onKeyDown(key, event));
-    }
-
 
     private void checkIP() {
         String tempIP = host_ip.getText().toString().trim();
