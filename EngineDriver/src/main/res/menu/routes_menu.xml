@@ -17,6 +17,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
 
+    <item android:id="@+id/throttle_button_mnu"
+        app:actionLayout="@layout/toolbar_button_throttle"
+        android:title="@string/throttle"
+        app:showAsAction="always"
+        android:visible="false" />
+
+    <item android:id="@+id/turnouts_button"
+        app:actionLayout="@layout/toolbar_button_turnouts"
+        android:title="@string/turnouts"
+        app:showAsAction="always"
+        android:visible="false" />
+
     <item android:id="@+id/flashlight_button"
         app:actionLayout="@layout/toolbar_button_flashlight_off"
         android:title="@string/flashlightAction"
@@ -43,29 +55,49 @@
         android:visible="false"
         app:showAsAction="always" />
 
-    <item android:id="@+id/throttle_mnu" android:title="@string/throttle" />
-    <item android:id="@+id/turnouts_mnu" android:title="@string/turnouts" />
-    <item android:id="@+id/web_mnu" android:title="@string/web" />
-    <item android:id="@+id/power_control_mnu" android:title="@string/power" />
-    <item android:id="@+id/dcc_ex_mnu" android:title="@string/app_name_dcc_ex" />
-    <item android:id="@+id/withrottle_cv_programmer_mnu" android:title="@string/app_name_withrottle_cv_programmer" />
-    <item android:id="@+id/connect_menu"
-        android:title="@string/app_name_connect" />
-    <item android:id="@+id/settings_mnu" android:title="@string/preferences" />
-    <item android:id="@+id/logviewer_menu" android:title="@string/logViewer" />
-    <item android:id="@+id/exit_mnu" android:title="@string/exit" />
-    <item android:id="@+id/about_mnu" android:title="@string/about" />
+    <item
+        android:icon="?attr/ed_menu_glyph"
+        android:id="@+id/overflowMenu"
+        android:title=""
+        app:showAsAction="always">
 
-    <item android:id="@+id/throttle_button_mnu"
-        app:actionLayout="@layout/toolbar_button_throttle"
-        android:title="@string/throttle"
-        app:showAsAction="always"
-        android:visible="false" />
+        <menu>
 
-    <item android:id="@+id/turnouts_button"
-        app:actionLayout="@layout/toolbar_button_turnouts"
-        android:title="@string/turnouts"
-        app:showAsAction="always"
-        android:visible="false" />
+            <item android:id="@+id/throttle_mnu"
+                android:title="@string/throttle" />
 
+            <item android:id="@+id/turnouts_mnu"
+                android:title="@string/turnouts" />
+
+            <item android:id="@+id/web_mnu"
+                android:title="@string/web" />
+
+            <item android:id="@+id/power_control_mnu"
+                android:title="@string/power" />
+
+            <item android:id="@+id/dcc_ex_mnu"
+                android:title="@string/app_name_dcc_ex" />
+
+            <item android:id="@+id/withrottle_cv_programmer_mnu"
+                android:title="@string/app_name_withrottle_cv_programmer" />
+
+            <item android:id="@+id/settings_mnu"
+                android:icon="?attr/ed_preferences_glyph"
+                android:title="@string/preferences" />
+
+            <item android:id="@+id/connect_menu"
+                android:title="@string/app_name_connect" />
+
+            <item android:id="@+id/logviewer_menu"
+                android:title="@string/logViewer" />
+
+            <item android:id="@+id/exit_mnu"
+                android:icon="?attr/ed_exit_glyph"
+                android:title="@string/exit" />
+
+            <item android:id="@+id/about_mnu"
+                android:title="@string/about" />
+
+        </menu>
+    </item>
 </menu>

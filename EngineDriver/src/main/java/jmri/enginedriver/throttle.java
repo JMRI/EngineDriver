@@ -21,7 +21,6 @@ import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_A;
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.KeyEvent.KEYCODE_D;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_N;
@@ -5202,6 +5201,7 @@ public class throttle extends AppCompatActivity implements
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
                 if (!isScreenLocked) {
                     if (webViewIsOn && webView.canGoBack() && !clearHistory) {
                         webView.goBack();
@@ -6347,11 +6347,6 @@ public class throttle extends AppCompatActivity implements
     @Override
     public boolean onKeyUp(int key, KeyEvent event) {
 
-        // Handle pressing of the back button
-        if (key == KEYCODE_BACK) {
-            return true; // stop processing this key
-        }
-
         if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {
             doVolumeButtonAction(event.getAction(), key, 0);
             return (true); // stop processing this key
@@ -6362,7 +6357,6 @@ public class throttle extends AppCompatActivity implements
         return (super.onKeyUp(key, event)); // continue with normal key
         // processing
     }
-
 
     @Override
     public boolean onKeyDown(int key, KeyEvent event) {
