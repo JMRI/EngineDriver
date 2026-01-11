@@ -21,6 +21,7 @@ import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_A;
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.KeyEvent.KEYCODE_D;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_N;
@@ -6362,7 +6363,7 @@ public class throttle extends AppCompatActivity implements
     public boolean onKeyDown(int key, KeyEvent event) {
         int repeatCnt = event.getRepeatCount();
 
-            if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
+        if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
             doVolumeButtonAction(event.getAction(), key, repeatCnt);
             mainapp.exitDoubleBackButtonInitiated = 0;
             return (true); // stop processing this key
@@ -6371,7 +6372,9 @@ public class throttle extends AppCompatActivity implements
             mainapp.exitDoubleBackButtonInitiated = 0;
             return (true); // stop processing this key
         }
-        mainapp.exitDoubleBackButtonInitiated = 0;
+        if (key != KEYCODE_BACK)
+            mainapp.exitDoubleBackButtonInitiated = 0;
+
         return (super.onKeyDown(key, event)); // continue with normal key
         // processing
     }
