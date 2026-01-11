@@ -5202,7 +5202,21 @@ public class throttle extends AppCompatActivity implements
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                mainapp.checkExit(throttle.this);
+                if (!isScreenLocked) {
+                    if (webViewIsOn && webView.canGoBack() && !clearHistory) {
+                        webView.goBack();
+                        webView.setInitialScale((int) (100 * scale)); // restore scale
+                    } else {
+                        setImmersiveMode(webView);
+                        if (mainapp.throttle_msg_handler != null) {
+                            mainapp.checkExit(throttle.this);
+                        } else { // something has gone wrong and the activity did not shut down properly so force it
+                            shutdown();
+                        }
+                    }
+                } else {
+                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT);
+                }
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
@@ -5407,7 +5421,7 @@ public class throttle extends AppCompatActivity implements
             Log.d(threaded_application.applicationName, activityName + ": onResume(): connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 Intent in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
+                startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
@@ -6354,26 +6368,7 @@ public class throttle extends AppCompatActivity implements
     public boolean onKeyDown(int key, KeyEvent event) {
         int repeatCnt = event.getRepeatCount();
 
-        // Handle pressing of the back button
-        if (key == KEYCODE_BACK) {
-            if (!isScreenLocked) {
-                if (webViewIsOn && webView.canGoBack() && !clearHistory) {
-                    webView.goBack();
-                    webView.setInitialScale((int) (100 * scale)); // restore scale
-                    return (true);
-                } else {
-                    setImmersiveMode(webView);
-                    if (mainapp.throttle_msg_handler != null) {
-                        mainapp.checkExit(this);
-                    } else { // something has gone wrong and the activity did not shut down properly so force it
-                        shutdown();
-                    }
-                    return (true); // stop processing this key
-                }
-            } else {
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT);
-            }
-        } else if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
+            if ((key == KEYCODE_VOLUME_UP) || (key == KEYCODE_VOLUME_DOWN)) {  // use volume to change speed for specified loco
             doVolumeButtonAction(event.getAction(), key, repeatCnt);
             mainapp.exitDoubleBackButtonInitiated = 0;
             return (true); // stop processing this key
@@ -6558,7 +6553,7 @@ public class throttle extends AppCompatActivity implements
 
         } else if (item.getItemId() == R.id.settings_mnu) {
             in = new Intent().setClass(this, SettingsActivity.class);
-            startActivityForResult(in, 0);
+            startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 

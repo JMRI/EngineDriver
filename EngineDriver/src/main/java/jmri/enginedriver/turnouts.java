@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static android.text.TextUtils.substring;
-import static android.view.KeyEvent.KEYCODE_BACK;
 
 import static jmri.enginedriver.threaded_application.context;
 
@@ -37,6 +36,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
@@ -826,6 +827,24 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
 
+        // -------------------------------------------------------------------
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    Intent in = mainapp.getThrottleIntent();
+                    startACoreActivity(turnouts.this, in, false, 0);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
     } // end onCreate
 
     @SuppressLint("ApplySharedPref")
@@ -929,22 +948,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-
-    //Always go to throttle activity if back button pressed
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-
-//        InputDevice idev = getDevice(event.getDeviceId());
-        boolean rslt = mainapp.implDispatchKeyEvent(event);
-
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        return (super.onKeyDown(key, event));
-    }
-
     void endThisActivity() {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
@@ -1033,7 +1036,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             return true;
         } else if (item.getItemId() == R.id.settings_mnu) {
             in = new Intent().setClass(this, SettingsActivity.class);
-            startActivityForResult(in, 0);
+            startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 

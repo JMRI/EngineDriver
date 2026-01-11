@@ -29,6 +29,8 @@
  * Bug fix for the toolbar size when coming out of the Preferences sub folders
  * Additional time options for the children's timer
  * Move the ESU MCII/Pro helper classes to separate files
+ * Moved to the new way to deal with the Back Button
+ * Partial replacement of the deprecated startActivityForResult() with startActivity() - where the result was not used.
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212

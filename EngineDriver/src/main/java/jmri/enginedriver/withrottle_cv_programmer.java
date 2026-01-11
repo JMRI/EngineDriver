@@ -17,8 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +25,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
@@ -63,6 +63,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu menu;
     protected SharedPreferences prefs;
+    private int result = RESULT_OK;
 
 //    private String witCv = "";
 //    private String witCvValue = "";
@@ -589,6 +590,24 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         clear_commands_button_listener clearCommandsClickListener = new clear_commands_button_listener();
         clearCommandsButton.setOnClickListener(clearCommandsClickListener);
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(withrottle_cv_programmer.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
+
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
         statusLine = findViewById(R.id.status_line);
@@ -684,17 +703,6 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         adjustToolbarSize(menu);
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    //Handle pressing of the back button to end this activity
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
     }
 
     void endThisActivity() {

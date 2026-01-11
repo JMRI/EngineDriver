@@ -1,6 +1,5 @@
 package jmri.enginedriver.logviewer.ui;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -13,6 +12,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,6 @@ import androidx.core.content.FileProvider;
 
 import android.text.Html;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,7 +50,6 @@ import jmri.enginedriver.connection_activity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
@@ -64,6 +63,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private ArrayAdapter<String> adaptor = null;
     private LogReaderTask logReaderTask = null;
     private threaded_application mainapp;  // hold pointer to mainapp
+    private int result = RESULT_OK;
 
     private Button saveButton;
     private Button stopSaveButton;
@@ -140,6 +140,24 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.logviewer_msg_handler = new logviewer_handler(Looper.getMainLooper());
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(LogViewerActivity.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -265,17 +283,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //
 //        }
 //    }
-
-    //Handle pressing of the back button to end this activity
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
-    }
 
     void endThisActivity() {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");

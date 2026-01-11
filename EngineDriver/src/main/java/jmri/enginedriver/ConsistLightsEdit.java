@@ -17,8 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -28,12 +26,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 //import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -78,7 +77,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     private SimpleAdapter consistListAdapter;
     //    private ArrayList<ConLoco> consistObjList;
     private Consist consist;
-    private int result;                     // set to RESULT_FIRST_USER when something is edited
+    private int result = RESULT_OK;
 
     private int whichThrottle;
 
@@ -333,6 +332,23 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         refreshConsistLists();
         result = RESULT_OK;
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(ConsistLightsEdit.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
         statusLine = findViewById(R.id.status_line);
@@ -439,17 +455,6 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         } else {
             return super.onOptionsItemSelected(item);
         }
-    }
-
-    //Always go to throttle if back button pressed
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
     }
 
     void endThisActivity() {

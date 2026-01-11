@@ -17,23 +17,21 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -43,7 +41,6 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 
 public class about_page extends AppCompatActivity {
     static final String activityName = "about_page";
@@ -51,6 +48,7 @@ public class about_page extends AppCompatActivity {
     private threaded_application mainapp; // hold pointer to mainapp
     private Menu AMenu;
     private Toolbar toolbar;
+    private int result = RESULT_OK;
 
     /**
      * Called when the activity is first created.
@@ -80,6 +78,23 @@ public class about_page extends AppCompatActivity {
 
         //put pointer to this activity's handler in main app's shared variable
         mainapp.about_page_msg_handler = new about_page_handler(Looper.getMainLooper());
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(about_page.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         LinearLayout screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -173,17 +188,6 @@ public class about_page extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
-    }
-
-    //Handle pressing of the back button to end this activity
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
     }
 
     void endThisActivity() {

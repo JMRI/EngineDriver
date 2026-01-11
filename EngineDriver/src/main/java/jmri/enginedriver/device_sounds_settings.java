@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
@@ -28,6 +27,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
@@ -69,7 +70,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
     private int dssThrottle0Index;
     private int dssThrottle1Index;
-    private int result;
+    private int result = RESULT_OK;
     String[] deviceSoundsEntryValuesArray;
     String[] deviceSoundsEntriesArray; // display version
     private EditText etDeviceSoundsMomentum;
@@ -399,6 +400,24 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             dss_throttle1_label.setAlpha(0.5f);
         }
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                saveNumberEntries();
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(device_sounds_settings.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
         statusLine = (LinearLayout) findViewById(R.id.status_line);
@@ -568,19 +587,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         prefs.edit().putString("prefDeviceSoundsHornVolume", prefDeviceSoundsHornVolume).commit();  //reset the preference
     }
 
-    //Always go to throttle if back button pressed
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        saveNumberEntries();
-        mainapp.exitDoubleBackButtonInitiated = 0;
-
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
-    }
-
     @Override
     public boolean onDown(MotionEvent e) {
         return false;
@@ -609,13 +615,13 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         return false;
     }
 
-    private void disconnect() {
-        this.finish();
-    }
-
-    private void shutdown() {
-        this.finish();
-    }
+//    private void disconnect() {
+//        this.finish();
+//    }
+//
+//    private void shutdown() {
+//        this.finish();
+//    }
 
     @Override
     protected void attachBaseContext(Context base) {

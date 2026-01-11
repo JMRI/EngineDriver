@@ -21,7 +21,6 @@ import static android.view.InputDevice.getDevice;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_A;
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.KeyEvent.KEYCODE_D;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_N;
@@ -44,6 +43,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
@@ -87,7 +88,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
 //    private GestureDetector myGesture;
 
-    private int result;
+    private int result = RESULT_OK;
 
     private GamePadKeyLoader gamePadKeyLoader;
 
@@ -598,6 +599,23 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         //put pointer to this activity's handler in main app's shared variable
         mainapp.gamepad_test_msg_handler = new gamepad_test_handler(Looper.getMainLooper());
 
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(gamepad_test.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
         statusLine = (LinearLayout) findViewById(R.id.status_line);
@@ -755,17 +773,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
             }
         }
-    }
-
-    //Always go to throttle if back button pressed
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
     }
 
     void endThisActivity() {

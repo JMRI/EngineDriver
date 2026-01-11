@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 import static jmri.enginedriver.threaded_application.context;
 
@@ -30,11 +29,12 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -67,6 +67,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
+    private int result = RESULT_OK;
 
     //set up label, dcc function, toggle setting for each button
     private static boolean settingsCurrent = false;
@@ -139,6 +140,23 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)) ) {
             isSpecial = true;
         }
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(function_consist_settings.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
@@ -451,18 +469,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             move_settings_to_view(true);
             mainapp.buttonVibration();
         }
-    }
-
-    //Handle pressing of the back button to save settings
-    @Override
-    public boolean onKeyDown(int key, KeyEvent event) {
-        mainapp.exitDoubleBackButtonInitiated = 0;
-
-        if (key == KEYCODE_BACK) {
-            endThisActivity();
-            return true;
-        }
-        return (super.onKeyDown(key, event));
     }
 
     void endThisActivity() {
