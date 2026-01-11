@@ -124,7 +124,7 @@ public class ImportExportConnectionList {
             errMsg = except.getMessage();
             Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
             failureReason = errMsg;
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
+//                    threadedApplication.safeToast(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
         }
 
         //if demo host not already in list, add it at end

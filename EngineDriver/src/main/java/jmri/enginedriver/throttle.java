@@ -7517,9 +7517,6 @@ public class throttle extends AppCompatActivity implements
         boolean result = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
-//            Toast.makeText(getApplicationContext(),
-//                    getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName),
-//                    Toast.LENGTH_LONG).show();
             threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom), exportedPreferencesFileName), Toast.LENGTH_LONG);
         }
         forceRestartApp(forceRestartReason);
@@ -7698,7 +7695,6 @@ public class throttle extends AppCompatActivity implements
         if (((fixed[index] == 1) && (numThrottles != max[index]))
                 || ((fixed[index] == 0) && (numThrottles > max[index]))) {
             prefs.edit().putString("NumThrottle", textNumbers[max[index] - 1]).commit();
-//            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastNumThrottles, textNumbers[max[index] - 1]), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.toastNumThrottles), textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
         }
     }

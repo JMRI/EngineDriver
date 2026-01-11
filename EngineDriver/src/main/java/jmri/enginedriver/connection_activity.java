@@ -322,10 +322,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                 checkIfDccexServerName(connected_hostname, connected_port);
                 connect();
             } else {
-//                if (!mainapp.prefHideInstructionalToasts) {
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
-//                }
-//                mainapp.safeToastInstructional(getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT);
                 mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
             }
             mainapp.buttonVibration();
@@ -397,9 +393,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                     connect();
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
                 } else {
-//                    if (!mainapp.prefHideInstructionalToasts) {
-//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
-//                    }
                     mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
                 }
             }

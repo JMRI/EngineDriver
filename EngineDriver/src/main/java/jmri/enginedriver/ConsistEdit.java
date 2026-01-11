@@ -328,9 +328,6 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         result = RESULT_OK;
 
         if (!mainapp.shownToastConsistEdit) {
-//            if (!mainapp.prefHideInstructionalToasts) {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConsistEditHelp), Toast.LENGTH_LONG).show();
-//            }
             mainapp.safeToastInstructional(R.string.toastConsistEditHelp, Toast.LENGTH_LONG);
             mainapp.shownToastConsistEdit = true;
         }
