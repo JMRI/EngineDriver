@@ -65,7 +65,6 @@ public class InPhoneLocoSoundsLoader {
          Log.d(threaded_application.applicationName, activityName + ": LoadSoundCompleteDelayed.run: (locoSound)");
          mainapp.soundsSoundsAreBeingReloaded = false;
          mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.SOUNDS_FORCE_LOCO_SOUNDS_TO_START, "", 0);
-//            Toast.makeText(getApplicationContext(), "Sounds loaded. Delay: " + loadDelay, Toast.LENGTH_SHORT).show();
          Log.d(threaded_application.applicationName, activityName + ": LoadSoundCompleteDelayed.run. Delay: " + loadDelay);
 
       }

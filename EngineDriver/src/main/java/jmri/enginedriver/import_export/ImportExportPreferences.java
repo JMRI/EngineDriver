@@ -389,17 +389,14 @@ public class ImportExportPreferences {
 
             if (!res) {
                 if (srcExists) {
-//                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
                     threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportImportFailed,
                                                         exportedPreferencesFileName), Toast.LENGTH_LONG);
                 } else {
-//                    Toast.makeText(context, context.getResources().getString(R.string.toastImportExportServerImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG).show();
                     threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportServerImportFailed,
                                                         exportedPreferencesFileName), Toast.LENGTH_LONG);
                 }
             }
         } else {
-//            Toast.makeText(context, context.getResources().getString(R.string.toastImportExportCannotImport), Toast.LENGTH_LONG).show();
             threaded_application.safeToast(R.string.toastImportExportCannotImport, Toast.LENGTH_LONG);
         }
 
@@ -1294,7 +1291,6 @@ public class ImportExportPreferences {
                 try {
                     locoAddress = Integer.parseInt(ras[0]);   // convert address to int
                 } catch (NumberFormatException e) {
-//                    Toast.makeText(context, "ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportCouldNotParseAddress, e.getMessage()), Toast.LENGTH_SHORT);
                     return; //get out, don't try to acquire
                 }

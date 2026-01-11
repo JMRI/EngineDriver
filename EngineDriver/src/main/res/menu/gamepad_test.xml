@@ -22,7 +22,23 @@
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 
-    <item android:id="@+id/gamepad_test_mnu1" android:title="@string/gamepad1_test" />
-    <item android:id="@+id/gamepad_test_mnu2" android:title="@string/gamepad2_test" />
-    <item android:id="@+id/gamepad_test_mnu3" android:title="@string/gamepad3_test" />
+    <item
+        android:icon="?attr/ed_menu_glyph"
+        android:id="@+id/overflowMenu"
+        android:title=""
+        app:showAsAction="always">
+
+        <menu>
+
+            <item android:id="@+id/gamepad_test_mnu1"
+                android:title="@string/gamepad1_test" />
+
+            <item android:id="@+id/gamepad_test_mnu2"
+                android:title="@string/gamepad2_test" />
+
+            <item android:id="@+id/gamepad_test_mnu3"
+                android:title="@string/gamepad3_test" />
+
+        </menu>
+    </item>
 </menu>

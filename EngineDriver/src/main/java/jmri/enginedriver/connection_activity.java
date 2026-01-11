@@ -47,6 +47,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -321,10 +322,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                 checkIfDccexServerName(connected_hostname, connected_port);
                 connect();
             } else {
-//                if (!mainapp.prefHideInstructionalToasts) {
-//                    Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
-//                }
-//                mainapp.safeToastInstructional(getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT);
                 mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
             }
             mainapp.buttonVibration();
@@ -396,9 +393,6 @@ public class connection_activity extends AppCompatActivity implements Permission
                     connect();
                     threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
                 } else {
-//                    if (!mainapp.prefHideInstructionalToasts) {
-//                        Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectEnterAddress), Toast.LENGTH_SHORT).show();
-//                    }
                     mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
                 }
             }
@@ -674,7 +668,6 @@ public class connection_activity extends AppCompatActivity implements Permission
             @Override
             public void handleOnBackPressed() {
                 mainapp.checkExit(connection_activity.this);
-                mainapp.exitDoubleBackButtonInitiated = 0;
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
@@ -1383,6 +1376,8 @@ public class connection_activity extends AppCompatActivity implements Permission
     void adjustToolbarSize(Menu menu) {
         int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
+//        Drawable vectorDrawable = ContextCompat.getDrawable(context, R.drawable.menu_glyph_light);
+
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             View itemChooser = item.getActionView();
@@ -1399,5 +1394,26 @@ public class connection_activity extends AppCompatActivity implements Permission
                 });
             }
         }
+//
+//        Drawable overflowIcon = toolbar.getOverflowIcon();
+//
+//        if (overflowIcon != null) {
+//            // 2. Wrap the drawable for compatibility
+//            Drawable wrappedDrawable = DrawableCompat.wrap(overflowIcon).mutate();
+//
+////            // 3. Convert DP to pixels for consistent sizing across devices
+////            DisplayMetrics metrics = getResources().getDisplayMetrics();
+////            int widthPx = (int) (widthDp * metrics.density);
+////            int heightPx = (int) (heightDp * metrics.density);
+//            int widthPx = newHeightAndWidth;
+//            int heightPx = newHeightAndWidth;
+//
+//            // 4. Set the bounds (resizes the drawable)
+//            // setBounds(left, top, right, bottom)
+//            wrappedDrawable.setBounds(0, 0, widthPx, heightPx);
+//
+//            // 5. Re-set the modified drawable to the toolbar
+//            toolbar.setOverflowIcon(wrappedDrawable);
+//        }
     }
 }

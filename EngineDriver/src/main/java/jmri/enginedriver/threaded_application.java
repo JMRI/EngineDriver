@@ -2735,42 +2735,32 @@ public class threaded_application extends Application {
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_MANUAL: {
-//                Toast.makeText(context,
-//                        context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded, prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG).show();
                 safeToast(context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded,
                                         prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.RESET: {
-//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesResetSucceeded), Toast.LENGTH_LONG).show();
                 safeToast(R.string.toastPreferencesResetSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.THEME: {
-//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThemeChangeSucceeded), Toast.LENGTH_LONG).show();
                 safeToast(R.string.toastPreferencesThemeChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.BACKGROUND: {
-//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesBackgroundChangeSucceeded), Toast.LENGTH_LONG).show();
                 safeToast(R.string.toastPreferencesBackgroundChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.THROTTLE_PAGE:
             case restart_reason_type.THROTTLE_SWITCH: {
-//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesThrottleChangeSucceeded), Toast.LENGTH_LONG).show();
                 safeToast(R.string.toastPreferencesThrottleChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.LOCALE: {
-//                Toast.makeText(context, context.getResources().getString(R.string.toastPreferencesLocaleChangeSucceeded), Toast.LENGTH_LONG).show();
                 safeToast(R.string.toastPreferencesLocaleChangeSucceeded, Toast.LENGTH_LONG);
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_AUTO: {
-//                Toast.makeText(context,
-//                        context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded, prefs.getString("prefPreferencesImportFileName", "")),
-//                        Toast.LENGTH_LONG).show();
                 safeToast(context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded,
                                     prefs.getString("prefPreferencesImportFileName", "")),
                         Toast.LENGTH_LONG);
@@ -2952,7 +2942,6 @@ public class threaded_application extends Application {
                 Log.d(applicationName, "t_a: updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
                 comm_msg_handler.sendMessage(msg);
             } else {
-//                Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG).show();
                 safeToast(getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG);
             }
         }
