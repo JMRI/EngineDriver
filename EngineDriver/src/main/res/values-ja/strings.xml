@@ -1267,6 +1267,7 @@
     <string name="prefShowDispatchButtonTitle">ディスパッチボタンを表示</string>
     <string name="prefShowDispatchButtonSummary">機関車を解放するときに、\'r\'elease コマンドの代わりに WiThrottle \'d\'ispatch コマンドを使用するためのボタンを機関車選択画面に表示します。</string>
 
+    <string name="prefAutoServerIpConnectTitle">サーバーアドレスに自動接続</string>
     <string name="advancedConsistToolTitle">高度な構成ツール (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">構成アドレス</string>
     <string name="advancedConsistToolLocoAddressLabel">ロコアドレス</string>
@@ -1285,5 +1286,6 @@
     <string name="prefExtendedLoggingTitle">ログ記録を延長しますか?</string>
     <string name="prefLocoSelectHideIplsButtonTitle">機関車のサウンドボタンを非表示にする</string>
     <string name="newConnectionTitle">新しい接続</string>
+    <string name="prefAutoServerIpConnectSummary">検出されない場合でもサーバーアドレスに自動的に接続する</string>
 
 </resources>

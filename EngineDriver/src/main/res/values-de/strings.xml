@@ -1246,6 +1246,7 @@
     <string name="prefShowDispatchButtonTitle">Schaltfläche „Versand anzeigen“</string>
     <string name="prefShowDispatchButtonSummary">Zeigen Sie auf dem Bildschirm „Lok auswählen“ eine Schaltfläche an, um beim Freigeben einer Lok den WiThrottle-Befehl „d“ statt „r“ zu verwenden.</string>
 
+    <string name="prefAutoServerIpConnectTitle">Automatische Verbindung zur Serveradresse</string>
     <string name="advancedConsistToolTitle">Erweitertes Consist-Tool (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">Adresse</string>
     <string name="advancedConsistToolLocoAddressLabel">Loco Adresse</string>
@@ -1263,5 +1264,6 @@
     <string name="prefExtendedLoggingTitle">Erweiterte Protokollierung?</string>
     <string name="prefLocoSelectHideIplsButtonTitle">Schaltfläche „Lokgeräusche“ ausblenden</string>
     <string name="newConnectionTitle">Neue Verbindung</string>
+    <string name="prefAutoServerIpConnectSummary">Automatische Verbindung zu einer Serveradresse, auch wenn diese nicht erkannt wird</string>
 
 </resources>

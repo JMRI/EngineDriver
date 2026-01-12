@@ -2188,6 +2188,13 @@
             android:title="@string/prefAutoServerConnectTitle"
             android:layout="@layout/checkbox_no_icon"  />
 
+        <EditTextPreference
+            android:key="prefAutoServerIpConnect"
+            android:dialogLayout="@layout/auto_server_ip_connect_dialog"
+            android:summary="@string/prefAutoServerIpConnectSummary"
+            android:title="@string/prefAutoServerIpConnectTitle"
+            android:layout="@layout/checkbox_no_icon"  />
+
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideDemoServerDefaultValue"
             android:key="prefHideDemoServer"

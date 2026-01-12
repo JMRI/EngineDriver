@@ -111,6 +111,7 @@ import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.toolbar_button_size_to_use_type;
+import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -329,6 +330,7 @@ public class threaded_application extends Application {
     public static int toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
     public static final double MEDIUM_SCREEN_SIZE = 5.5; // inches
     public static final double LARGE_SCREEN_SIZE = 6.7; // inches
+    public static int toolbarButtonCount = 0;
 
     int notificationLevel = 0; // no notification
     NotificationManager notificationManager;
@@ -3569,6 +3571,7 @@ public class threaded_application extends Application {
 
     // note SettingsActivity does not use this
     public int adjustToolbarSize(Toolbar toolbar) {
+        getToolbarButtonSizeToUse();
         ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
         int toolbarHeight = layoutParams.height;
         int newHeightAndWidth = toolbarHeight;
@@ -3583,5 +3586,42 @@ public class threaded_application extends Application {
             toolbar.setLayoutParams(layoutParams);
         }
         return newHeightAndWidth;
+    }
+
+    public void countActiveToolbarButtons() {
+        threaded_application.toolbarButtonCount = 0;
+        String[] prefActionBarButtonPreferencesNames = getResources().getStringArray(R.array.prefActionBarButtonPreferencesNames);
+        for (String prefActionBarButtonPreferenceName : prefActionBarButtonPreferencesNames) {
+            if (prefs.getBoolean(prefActionBarButtonPreferenceName, false))
+                threaded_application.toolbarButtonCount++;
+        }
+    }
+
+    public void getToolbarButtonSizeToUse() {
+        countActiveToolbarButtons();
+        threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
+        if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO) ) {
+            if (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE) {
+                if (threaded_application.toolbarButtonCount <= 5) {
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+                } else if (threaded_application.toolbarButtonCount <= 9) {
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+                } else {
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+                }
+            } else if  (threaded_application.displayDiagonalInches >= threaded_application.MEDIUM_SCREEN_SIZE) {
+                if (threaded_application.toolbarButtonCount <= 5) {
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+                } else {
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+                }
+            }
+        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.LARGE)) {
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.SMALL)) {
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.MEDIUM)) {
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+        }
     }
 }

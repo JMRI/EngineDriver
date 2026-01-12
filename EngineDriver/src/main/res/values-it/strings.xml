@@ -1198,6 +1198,7 @@
     <string name="prefShowDispatchButtonTitle">Mostra pulsante Spedizione</string>
     <string name="prefShowDispatchButtonSummary">Mostra un pulsante nella schermata Seleziona locomotiva per utilizzare il comando WiThrottle \'d\'ispatch invece del comando \'r\'elease quando si rilascia una locomotiva</string>
 
+    <string name="prefAutoServerIpConnectTitle">Connessione automatica all\'indirizzo del server</string>
     <string name="advancedConsistToolTitle">Strumento di consistenza avanzato (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">Indirizzo consistente</string>
     <string name="advancedConsistToolLocoAddressLabel">Indirizzo Loco</string>
@@ -1215,5 +1216,6 @@
     <string name="prefExtendedLoggingTitle">Registrazione estesa?</string>
     <string name="prefLocoSelectHideIplsButtonTitle">Nascondi il pulsante Loco Sounds</string>
     <string name="newConnectionTitle">Nuova connessione</string>
+    <string name="prefAutoServerIpConnectSummary">Connettiti automaticamente a un indirizzo del server anche se non scoperto</string>
 
 </resources>

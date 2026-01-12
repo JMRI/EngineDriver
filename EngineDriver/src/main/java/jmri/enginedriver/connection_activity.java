@@ -687,6 +687,30 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         mainapp.gamepadFullReset();
 
+        String prefAutoServerIpConnect = prefs.getString("prefAutoServerIpConnect","");
+        if (!prefAutoServerIpConnect.isEmpty()) {
+            String ip = "";
+            String port = "";
+            boolean isDccEx = false;
+            if (!prefAutoServerIpConnect.isEmpty()) {
+                String[] parts = prefAutoServerIpConnect.split(":");
+                if (parts.length >= 2) {
+                    ip = parts[0];
+                    port = parts[1];
+                    if ( (parts.length == 3) && (!parts[3].isEmpty()) ) { // don't care what is there
+                        isDccEx = true;
+                    }
+                }
+                if ((!ip.isEmpty()) && (!port.isEmpty())) {
+                    connected_hostname = (isDccEx ? "DCC-EX " : "") + ip;
+                    connected_hostip = ip;
+                    connected_port = Integer.parseInt(port);
+                    checkIfDccexServerName(connected_hostname, connected_port);
+                    connect();
+                }
+            }
+        }
+
     } //end onCreate
 
     @Override

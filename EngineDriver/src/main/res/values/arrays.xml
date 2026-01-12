@@ -2584,6 +2584,22 @@
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used to count the number of buttons to decide which size to use for 'auto'. -->
+    <!-- Boolean ones only. Only include ones that can appear on the throttle screen-->
+    <string-array name="prefActionBarButtonPreferencesNames" translatable="false">  <!-- DO NOT TRANSLATE -->
+        <item>show_emergency_stop_menu_preference</item>
+        <item>show_layout_power_button_preference</item>
+        <item>prefFlashlightButtonDisplay</item>
+        <item>prefWebViewButton</item>
+        <item>prefThrottleSwitchButtonDisplay</item>
+        <item>prefDeviceSoundsButton</item>
+        <item>prefActionBarShowDccExButton</item>
+        <item>prefActionBarShowTurnoutsButton</item>
+        <item>prefActionBarShowRoutesButton</item>
+        <item>prefKidsTimerButton</item>
+    </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- The following preferences will only appear if the 'Advanced' preference options is enabled. -->
 

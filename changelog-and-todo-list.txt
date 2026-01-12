@@ -31,6 +31,7 @@
  * Move the ESU MCII/Pro helper classes to separate files
  * Moved to the new way to deal with the Back Button
  * Partial replacement of the deprecated startActivityForResult() with startActivity() - where the result was not used.
+ * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212
