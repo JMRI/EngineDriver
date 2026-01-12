@@ -1345,6 +1345,7 @@
     <string name="prefShowDispatchButtonTitle">Tlačítko Zobrazit odeslání</string>
     <string name="prefShowDispatchButtonSummary">Zobrazit tlačítko na obrazovce Výběr lokomotivy pro použití příkazu WiThrottle \'d\'ispatch místo příkazu \'r\'elease při uvolnění lokomotivy</string>
 
+    <string name="prefAutoServerIpConnectTitle">Automatické připojení k adrese serveru</string>
     <string name="advancedConsistToolTitle">Pokročilý nástroj pro sestavení (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">Adresa se skládá</string>
     <string name="advancedConsistToolLocoAddressLabel">Adresa lokomotivy</string>
@@ -1362,5 +1363,6 @@
     <string name="prefExtendedLoggingTitle">Rozšířené protokolování?</string>
     <string name="prefLocoSelectHideIplsButtonTitle">Skrýt tlačítko Zvuky lokomotivy</string>
     <string name="newConnectionTitle">Nové připojení</string>
+    <string name="prefAutoServerIpConnectSummary">Automatické připojení k serverové adrese, i když není nalezena</string>
 
 </resources>

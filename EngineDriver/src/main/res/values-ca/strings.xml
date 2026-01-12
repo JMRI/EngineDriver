@@ -1260,6 +1260,7 @@
     <string name="prefShowDispatchButtonTitle">Mostra el botó d\'enviament</string>
     <string name="prefShowDispatchButtonSummary">Mostra un botó a la pantalla Selecciona locomotora per utilitzar l\'ordre \'d\'ispatch de WiThrottle en lloc de l\'ordre \'r\'release en alliberar una locomotora.</string>
 
+    <string name="prefAutoServerIpConnectTitle">Connexió automàtica a l\'adreça del servidor</string>
     <string name="advancedConsistToolTitle">Eina de coherència avançada (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">Adreça consistent</string>
     <string name="advancedConsistToolLocoAddressLabel">Adreça de la locomotora</string>
@@ -1277,5 +1278,6 @@
     <string name="prefExtendedLoggingTitle">Registre ampliat?</string>
     <string name="prefLocoSelectHideIplsButtonTitle">Amaga el botó Sons de locomotora</string>
     <string name="newConnectionTitle">Nova connexió</string>
+    <string name="prefAutoServerIpConnectSummary">Connecta automàticament a una adreça de servidor fins i tot si no es detecta</string>
 
 </resources>

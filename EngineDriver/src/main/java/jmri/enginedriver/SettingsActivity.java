@@ -98,6 +98,7 @@ import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.pref_import_type;
 import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.AutoServerConnectDialogFragmentCompat;
+import jmri.enginedriver.util.AutoServerIpConnectDialogFragmentCompat;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
@@ -1803,8 +1804,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 // Create and show our custom dialog
                 DialogFragment dialogFragment = AutoServerConnectDialogFragmentCompat.newInstance(preference.getKey());
                 dialogFragment.setTargetFragment(this, 0);
-
-                // Use getFragmentManager() for the v7 support library
+                dialogFragment.show(getFragmentManager(), null); // Tag can be null or a custom string
+            } else if (preference.getKey().equals("prefAutoServerIpConnect")) {
+                // Create and show our custom dialog
+                DialogFragment dialogFragment = AutoServerIpConnectDialogFragmentCompat.newInstance(preference.getKey());
+                dialogFragment.setTargetFragment(this, 0);
                 dialogFragment.show(getFragmentManager(), null); // Tag can be null or a custom string
             } else {
                 // Let the default implementation handle all other preferences
@@ -1821,6 +1825,24 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 return mainapp.connectedHostName;
             }
             return "";
+        }
+        public String getConnectedHostAddress() {
+            if ( (mainapp != null) && (!mainapp.connectedHostip.isEmpty()) ) {
+                return mainapp.connectedHostip;
+            }
+            return "";
+        }
+        public String getConnectedHostPort() {
+            if ( (mainapp != null)  && (!mainapp.connectedHostip.isEmpty()) ) {
+                return Integer.toString(mainapp.port);
+            }
+            return "";
+        }
+        public Boolean getConnectedHostIsDccEx() {
+            if (mainapp != null) {
+                return mainapp.isDCCEX;
+            }
+            return false;
         }
 
         @SuppressLint("ApplySharedPref")

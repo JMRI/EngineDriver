@@ -1647,6 +1647,8 @@
     <string name="autoServerConnectCurrentServerButtonLabel">Get Current Server</string>
     <string name="prefAutoServerConnectSummary">Connect automatically to a \'named\' server if discovered</string>
     <string name="prefAutoServerConnectTitle">Auto-connect to named server</string>
+    <string name="prefAutoServerIpConnectSummary">Connect automatically to a server address even if not discovered</string>
+    <string name="prefAutoServerIpConnectTitle">Auto-connect to server address</string>
 
     <string name="advancedConsistToolTitle">Advanced Consist Tool (CV19)</string>
     <string name="advancedConsistToolConsistAddressLabel">Consist Address</string>
