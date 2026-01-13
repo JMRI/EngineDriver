@@ -3598,6 +3598,10 @@ public class threaded_application extends Application {
     }
 
     public void getToolbarButtonSizeToUse() {
+        if (MobileControl2.isMobileControl2()) {
+            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+            return;
+        }
         countActiveToolbarButtons();
         threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
         if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO) ) {
