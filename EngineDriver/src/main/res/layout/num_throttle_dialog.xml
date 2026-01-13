@@ -64,6 +64,7 @@
             android:text="@string/close_button"
             android:layout_marginEnd="8dp"
             android:drawableStart="?attr/ed_cross_glyph"
+            android:drawablePadding="10dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     </LinearLayout>

@@ -102,8 +102,7 @@
               android:id="@+id/auto_server_connect_clear"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@string/DccexClearCommands"
-              style="?android:attr/buttonBarButtonStyle"/>
+              android:text="@string/DccexClearCommands"/>
 
           <Space
             android:layout_width="0dp"
@@ -114,8 +113,7 @@
             android:id="@+id/auto_server_connect_current_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/autoServerConnectCurrentServerButtonLabel"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@string/autoServerConnectCurrentServerButtonLabel"/>
 
     </LinearLayout>
 

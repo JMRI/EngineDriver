@@ -107,7 +107,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/close_button"
-            style="?android:attr/buttonBarButtonStyle"
             android:drawableStart="?attr/ed_cross_glyph"
             android:drawablePadding="5dp"
             tools:ignore="RtlHardcoded" />
@@ -121,15 +120,13 @@
             android:id="@+id/advanced_consist_tool_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/advancedConsistToolAddButtonLabel"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@string/advancedConsistToolAddButtonLabel"/>
 
         <Button
             android:id="@+id/advanced_consist_tool_remove_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/advancedConsistToolRemoveButtonLabel"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@string/advancedConsistToolRemoveButtonLabel"/>
 
     </LinearLayout>
 

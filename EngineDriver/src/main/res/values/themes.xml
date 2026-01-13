@@ -186,6 +186,12 @@
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
 
+<!--        <item name="buttonStyle">@style/normal_button_style_black</item>-->
+<!--        <item name="buttonBarButtonStyle">@style/normal_button_style_black</item>-->
+<!--        <item name="buttonBarPositiveButtonStyle">@style/normal_button_style_black</item>-->
+<!--        <item name="buttonBarNegativeButtonStyle">@style/normal_button_style_black</item>-->
+<!--        <item name="buttonBarNeutralButtonStyle">@style/normal_button_style_black</item>-->
+
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
         <item name="android:itemBackground">#ff000000</item>
