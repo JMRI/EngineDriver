@@ -1,37 +1,41 @@
 **Version 2.42.216
- * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
- * Move to targetSdk 36
- * Immersive mode fixes for targetSdk 36 - enforced edge-to-edge mode
- * Significant changes to the way the UI elements are referenced (now in resources in arrays)
- * Bug fix for gamepad calibration when using joystick like settings
- * Linting
- * Added back in the VRBoxB gamepad type and fixed it
- * Move the IPLS code to a separate class. Not a complete move as the variables are still largely in threaded_application.
- * Bug fix for gamepads with the IPLS.  The tone generator for the beeps is not compatible with the IPLS.
- * Add 'None' option for the gamepad buttons
- * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
- * Removed the swipe up/down option to temperately turn off immersive mode as it is not really necessary anymore and did not work properly anymore anyway
- * Added toolbar buttons for preferences and the wizard on the connection screen. Can be turned off with the existing preference to hide instructional hints
- * Added option for medium size toolbar/action bar buttons. The 'auto' option will make screens >=139.7cm (5.5") will use the medium size buttons
- * Bug fix for F11 in the keyboard 'type' of gamepad
- * Added XBox gamepad support
- * Reinstated the log and file sharing capability
- * More Google translations
- * Bug fix for non-immersive mode on earlier versions of Android <15
- * Remove redundant API checks
- * Change API level to numbers instead of the names which I difficult follow with the latest APIs
- * Removed the swipe up/down option to temperately turn off immersive mode as it is not really necessary anymore and did not work properly anymore anyway
- * Moved the duplicated gamepad loading code to its own class
- * Moved most of the gamepad and keyboard checking code to separate classes that are only loaded if you attach a gamepad or keyboard
- * Reduced a fair amount of the duplicate code for gamepads and keyboards in throttles.java
- * Some minor fixes for the TTS
- * Added the concept of 'Extended Logging'. Some Log.d()s will only be logged if a new preference is enabled.
- * Bug fix for the toolbar size when coming out of the Preferences sub folders
- * Additional time options for the children's timer
- * Move the ESU MCII/Pro helper classes to separate files
- * Moved to the new way to deal with the Back Button
- * Partial replacement of the deprecated startActivityForResult() with startActivity() - where the result was not used.
- * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
+ * Code improvement or required changes
+    * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
+    * Move to targetSdk 36
+    * Immersive mode fixes for targetSdk 36 - enforced edge-to-edge mode
+    * Significant changes to the way the UI elements are referenced (now in resources in arrays)
+    * Move the IPLS code to a separate class. Not a complete move as the variables are still largely in threaded_application.
+    * Removed the swipe up/down option to temperately turn off immersive mode as it is not really necessary anymore and did not work properly anymore anyway
+    * Remove redundant API checks
+    * Change API level to numbers instead of the names which I difficult follow with the latest APIs
+    * Moved the duplicated gamepad loading code to its own class
+    * Moved most of the gamepad and keyboard checking code to separate classes that are only loaded if you attach a gamepad or keyboard
+    * Reduced a fair amount of the duplicate code for gamepads and keyboards in throttles.java
+    * Move the ESU MCII/Pro helper classes to separate files
+    * Moved to the new way to deal with the Back Button
+    * Partial replacement of the deprecated startActivityForResult() with startActivity() - where the result was not used.
+    * Added the concept of 'Extended Logging'. Some Log.d()s will only be logged if a new preference is enabled.
+    * Improvements to the style of the buttons in the dialogs in the Preferences
+    * Linting
+ * Bug fixes
+    * Bug fix for non-immersive mode on earlier versions of Android <15
+    * Bug fix for gamepad calibration when using joystick like settings
+    * Bug fix for gamepads with the IPLS.  The tone generator for the beeps is not compatible with the IPLS.
+    * Bug fix for F11 in the keyboard 'type' of gamepad
+    * Some minor fixes for the TTS
+    * Bug fix for the toolbar size when coming out of the Preferences sub folders
+ * New Features
+    * Added back in the VRBoxB gamepad type and fixed it
+    * Added XBox gamepad support
+    * Add 'None' option for the gamepad buttons
+    * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
+    * Added toolbar buttons for preferences and the wizard on the connection screen. Can be turned off with the existing preference to hide instructional hints
+    * Added option for medium size toolbar/action bar buttons. The 'auto' option will make screens >=139.7cm (5.5") will use the medium size buttons
+    * Reinstated the log and file sharing capability
+    * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
+ * Other Changes
+    * More Google translations
+    * Additional time options for the children's timer
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212

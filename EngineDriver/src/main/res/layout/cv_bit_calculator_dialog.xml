@@ -271,7 +271,6 @@
 
         <Button
             android:id="@+id/cv_bit_calculator_button_close"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="?attr/ed_cross_glyph"
@@ -288,8 +287,8 @@
             android:id="@+id/cv_bit_calculator_button_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dccexCvBitCalculatorConfirmButtonLabel"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:text="@string/dccexCvBitCalculatorConfirmButtonLabel"/>
+
     </LinearLayout>
 
 </LinearLayout>
