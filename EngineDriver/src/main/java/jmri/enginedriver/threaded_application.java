@@ -30,7 +30,7 @@ import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -331,6 +331,7 @@ public class threaded_application extends Application {
     public static final double MEDIUM_SCREEN_SIZE = 5.5; // inches
     public static final double LARGE_SCREEN_SIZE = 6.7; // inches
     public static int toolbarButtonCount = 0;
+    private int initialToolbarHeight = -1;
 
     int notificationLevel = 0; // no notification
     NotificationManager notificationManager;
@@ -3569,13 +3570,22 @@ public class threaded_application extends Application {
             Log.d(threaded_application.applicationName, logMessage);
     }
 
-    // note SettingsActivity does not use this
+    public void getInitialToolbarSize(Toolbar toolbar) {
+        if (initialToolbarHeight == -1) {
+            ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+            initialToolbarHeight = layoutParams.height;
+        }
+    }
+
     public int adjustToolbarSize(Toolbar toolbar) {
+
         getToolbarButtonSizeToUse();
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        int toolbarHeight = layoutParams.height;
+
+        getInitialToolbarSize(toolbar);
+        int toolbarHeight = initialToolbarHeight;
         int newHeightAndWidth = toolbarHeight;
 
+        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
         if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
             newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
             layoutParams.height = newHeightAndWidth;

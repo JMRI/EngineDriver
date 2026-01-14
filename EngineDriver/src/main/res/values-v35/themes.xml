@@ -9,6 +9,10 @@
         <item name="edit_label_style">@style/edit_label_style_black</item>
     </style>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Original Theme-->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <style name="app_theme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
 
@@ -58,12 +62,15 @@
         <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style</item>
         <item name="ed_small_button_style">@style/small_button_style</item>
-        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style
-        </item>
+        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style</item>
         <item name="ed_hover_button_style">@style/small_button_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style</item>
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
+
+        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
+        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
+        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
 
         <item name="ed_thumb">@drawable/original_thumb</item>
         <item name="ed_vertical_thumb">@drawable/original_vertical_thumb</item>
@@ -202,6 +209,8 @@
         <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
+        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
@@ -243,6 +252,10 @@
         <item name="ed_stop_button_style">@style/stop_button_style_black</item>
         <item name="ed_fn_button_style">@style/fn_button_style_black</item>
         <item name="ed_list_button_style">@style/list_button_style_black</item>
+
+        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
+        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
+        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
 
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
@@ -381,6 +394,8 @@
         <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
+        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
@@ -418,13 +433,15 @@
         <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_outline</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_outline</item>
         <item name="ed_small_button_style">@style/small_button_style_outline</item>
-        <item name="ed_small_button_condensed_text_style">
-            @style/small_button_condensed_text_style_outline
-        </item>
+        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_outline</item>
         <item name="ed_hover_button_style">@style/small_button_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_outline</item>
         <item name="ed_fn_button_style">@style/fn_button_style_outline</item>
         <item name="ed_list_button_style">@style/list_button_style_outline</item>
+
+        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
+        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
+        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
 
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
@@ -560,6 +577,8 @@
         <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
+        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
@@ -597,13 +616,15 @@
         <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_ultra</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_ultra</item>
         <item name="ed_small_button_style">@style/small_button_style_ultra</item>
-        <item name="ed_small_button_condensed_text_style">
-            @style/small_button_condensed_text_style_ultra
-        </item>
+        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_ultra</item>
         <item name="ed_hover_button_style">@style/small_button_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_ultra</item>
         <item name="ed_fn_button_style">@style/fn_button_style_ultra</item>
         <item name="ed_list_button_style">@style/list_button_style_ultra</item>
+
+        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
+        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
+        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
 
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
@@ -740,6 +761,8 @@
         <item name="android:alertDialogTheme">@style/alertDialogStyle_colorful</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_colorful</item>
         <item name="android:itemBackground">@color/transparent</item>
+        <item name="android:alertDialogStyle">@style/alertDialogStyle_colorful</item>
+        <item name="alertDialogStyle">@style/alertDialogStyle_colorful</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton_colorful</item>
         <!--        <item name="actionOverflowMenuStyle">@style/OverflowMenu_colorful</item>-->
@@ -782,13 +805,15 @@
         <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_colorful</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_colorful</item>
         <item name="ed_small_button_style">@style/small_button_style_colorful</item>
-        <item name="ed_small_button_condensed_text_style">
-            @style/small_button_condensed_text_style_colorful
-        </item>
+        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_colorful</item>
         <item name="ed_hover_button_style">@style/small_button_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_colorful</item>
         <item name="ed_fn_button_style">@style/fn_button_style_colorful</item>
         <item name="ed_list_button_style">@style/list_button_style_colorful</item>
+
+        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_colorful</item>
+        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_colorful</item>
+        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_colorful</item>
 
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
@@ -925,6 +950,8 @@
         <item name="dialogTheme">@style/dialogStyle_black</item>
         <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
         <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
+        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
+        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
@@ -963,13 +990,15 @@
         <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_neon</item>
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_neon</item>
         <item name="ed_small_button_style">@style/small_button_style_neon</item>
-        <item name="ed_small_button_condensed_text_style">
-            @style/small_button_condensed_text_style_neon
-        </item>
+        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_neon</item>
         <item name="ed_hover_button_style">@style/small_button_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_neon</item>
         <item name="ed_fn_button_style">@style/fn_button_style_neon</item>
         <item name="ed_list_button_style">@style/list_button_style_neon</item>
+
+        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
+        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
+        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
 
         <item name="android:divider">@drawable/neon_divider</item>
         <item name="android:listDivider">@drawable/neon_divider</item>

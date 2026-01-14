@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingStart="10dp"
-            android:text="@string/host_ip"/>
+            android:text="@string/host_ip"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@android:id/edit"
@@ -44,7 +45,8 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
-            android:text="@string/port"/>
+            android:text="@string/port"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/edit_port"
@@ -69,7 +71,8 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
-            android:text="@string/app_name_dcc_ex"/>
+            android:text="@string/app_name_dcc_ex"
+            tools:ignore="RtlSymmetry" />
 
         <CheckBox
             android:id="@+id/isDccEx"
@@ -77,32 +80,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="30dp"
-            android:inputType="number"
-            android:maxLength="5"
-            tools:ignore="Autofill,LabelFor" />
+            tools:ignore="Autofill,LabelFor,TextViewEdits" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="2px"
-        android:layout_marginTop="6sp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        android:background="@color/solidWhite"
-        tools:ignore="PxUsage"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="24dp"
         android:gravity="end">
 
           <Button
               android:id="@+id/auto_server_connect_clear"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="@string/DccexClearCommands"/>
               android:text="@string/DccexClearCommands"/>
 
           <Space

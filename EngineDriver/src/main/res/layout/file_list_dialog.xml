@@ -28,13 +28,13 @@
 
         <Button
             android:id="@+id/file_dialog_button_cancel"
-            style="?attr/ed_small_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:layout_marginEnd="8dp"
             android:padding="0dp"
             android:drawableStart="?attr/ed_cross_glyph"
+            style="?attr/ed_dialog_button_style"
             tools:ignore="RtlSymmetry" />
 
     </LinearLayout>

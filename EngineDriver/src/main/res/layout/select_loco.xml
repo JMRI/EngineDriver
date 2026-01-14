@@ -4,7 +4,8 @@
     android:id="@+id/select_loco_screen"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
     <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
