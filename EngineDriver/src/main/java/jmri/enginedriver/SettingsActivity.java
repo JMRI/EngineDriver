@@ -26,7 +26,7 @@ import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -65,7 +65,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -96,7 +95,6 @@ import jmri.enginedriver.type.message_type;
 
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.pref_import_type;
-import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.util.AutoServerConnectDialogFragmentCompat;
 import jmri.enginedriver.util.AutoServerIpConnectDialogFragmentCompat;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
@@ -120,7 +118,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private Toolbar toolbar;
     private LinearLayout statusLine;
     private Menu SAMenu;
-    private int initialToolbarHeight = -1;
 
     private String exportedPreferencesFileName = "exported_preferences.ed";
 //    private boolean overwriteFile = false;
@@ -2615,25 +2612,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
-    // this is slightly different to the code in the other activities
     void adjustToolbarSize(Menu menu) {
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        // this will be run multiple times coming in and out of the sub menus, so only grab the height the first time.
-        if (initialToolbarHeight == -1) {
-            initialToolbarHeight = layoutParams.height;
-        }
-        int toolbarHeight = initialToolbarHeight;
-        int newHeightAndWidth = toolbarHeight;
-
-        if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.MEDIUM) {
-            newHeightAndWidth = (int) ((float) toolbarHeight * 1.32);
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        } else if (threaded_application.toolbarButtonSizeToUse == toolbar_button_size_to_use_type.LARGE) {
-            newHeightAndWidth = toolbarHeight*2;
-            layoutParams.height = newHeightAndWidth;
-            toolbar.setLayoutParams(layoutParams);
-        }
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
 
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);

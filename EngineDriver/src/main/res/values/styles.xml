@@ -1355,26 +1355,33 @@
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:colorAccent">@color/primary_colorful</item>
     <item name="android:windowTitleStyle">@style/dialogTitle_colorful</item>
     <item name="android:buttonBarStyle">@style/dialogButtonBar_colorful</item>
 
-      <item name="buttonStyle">@style/alertDialogButtonStyle_colorful</item>
-      <item name="buttonBarButtonStyle">@style/alertDialogButtonStyle_colorful</item>
-      <item name="buttonBarPositiveButtonStyle">@style/alertDialogPositiveButtonStyle_colorful</item>
-      <item name="buttonBarNegativeButtonStyle">@style/alertDialogButtonStyle_colorful</item>
-      <item name="buttonBarNeutralButtonStyle">@style/large_button_style_colorful</item>
+    <item name="buttonStyle">@style/alertDialogButtonStyle_colorful</item>
+    <item name="buttonBarButtonStyle">@style/alertDialogButtonStyle_colorful</item>
+    <item name="buttonBarPositiveButtonStyle">@style/alertDialogPositiveButtonStyle_colorful</item>
+    <item name="buttonBarNegativeButtonStyle">@style/alertDialogButtonStyle_colorful</item>
+    <item name="buttonBarNeutralButtonStyle">@style/large_button_style_colorful</item>
+
   </style>
 
-    <style name="alertDialogButtonStyle_colorful" parent="Widget.AppCompat.Button">
-        <item name="android:padding">14dp</item>
-        <item name="android:layout_marginStart">20dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    <style name="alertDialogPositiveButtonStyle_colorful" parent="alertDialogButtonStyle_black">
-        <item name="android:textColor">@color/primary_colorful</item>
-        <item name="android:textStyle">bold</item>
-    </style>
+  <style name="alertDialogButtonStyle_colorful" parent="normal_button_style_colorful">
+    <item name="android:textColorPrimary">@color/primary_colorful</item>
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:colorAccent">@color/primary_colorful</item>
+    <item name="android:backgroundTint">@color/buttonFillGradiantLight_colorful</item>
+    <item name="android:background">@color/buttonFillGradiantLight_colorful</item>
+    <item name="android:padding">14dp</item>
+    <item name="android:layout_marginStart">20dp</item>
+    <item name="android:layout_marginLeft">20dp</item>
+    <item name="android:layout_height">wrap_content</item>
+  </style>
+  <style name="alertDialogPositiveButtonStyle_colorful" parent="alertDialogButtonStyle_colorful">
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:textStyle">bold</item>
+  </style>
 
   <style name="dialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
     <item name="android:background">@color/dialogBackground_colorful</item>
@@ -1384,8 +1391,15 @@
     <item name="android:textColorAlertDialogListItem">@color/primary_colorful</item>
     <item name="android:textColorPrimary">@color/primary_colorful</item>
     <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:colorAccent">@color/primary_colorful</item>
     <item name="android:windowTitleStyle">@style/dialogTitle_colorful</item>
-    <item name="android:buttonBarStyle">@style/dialogButtonBar_colorful</item>
+
+    <item name="buttonStyle">@style/alertDialogButtonStyle_colorful</item>
+    <item name="buttonBarButtonStyle">@style/alertDialogButtonStyle_colorful</item>
+    <item name="buttonBarPositiveButtonStyle">@style/alertDialogPositiveButtonStyle_colorful</item>
+    <item name="buttonBarNegativeButtonStyle">@style/alertDialogButtonStyle_colorful</item>
+    <item name="buttonBarNeutralButtonStyle">@style/large_button_style_colorful</item>
+
     <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
   </style>
 

@@ -13,23 +13,24 @@
         android:id="@+id/cv_bit_calculator_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/cvBitCalculatorTitle"
         android:textSize="16sp"
-        android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="12dp"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_marginBottom="0dp">
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?attr/edit_label_style"
             android:text="@string/cvBitCalculatorCvValueLabel"/>
 
         <EditText
@@ -40,7 +41,8 @@
             android:layout_marginEnd="30dp"
             android:digits="0123456789"
             android:inputType="number"
-            android:maxLength="3" />
+            android:maxLength="3"
+            tools:ignore="Autofill,LabelFor" />
 
     </LinearLayout>
 
@@ -48,22 +50,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cvBitCalculatorCvBitsLabel"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        style="?attr/edit_label_style"
         android:textSize="14sp"
         android:layout_marginBottom="2dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+        android:layout_marginBottom="16dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_7"
@@ -72,6 +75,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_bit_7_label"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="7"
@@ -82,8 +86,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_6"
@@ -94,6 +98,7 @@
                 android:id="@+id/cv_bit_calculator_bit_6_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?attr/edit_label_style"
                 android:text="6"
                 tools:ignore="HardcodedText" />
         </LinearLayout>
@@ -102,8 +107,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_5"
@@ -112,6 +117,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_bit_5_label"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5"
@@ -122,8 +128,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_4"
@@ -132,6 +138,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_bit_4_label"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4"
@@ -142,8 +149,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_3"
@@ -152,6 +159,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_bit_3_label"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3"
@@ -162,8 +170,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_2"
@@ -172,6 +180,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_bit_2_label"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2"
@@ -182,8 +191,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_1"
@@ -192,6 +201,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_bit_1_label"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
@@ -202,8 +212,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <CheckBox
                 android:id="@+id/cv_bit_calculator_bit_0"
@@ -212,6 +222,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_bit_0_label"
+                style="?attr/edit_label_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
@@ -230,8 +241,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="end"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -244,6 +255,7 @@
 
             <TextView
                 android:id="@+id/cv_bit_calculator_message"
+                style="?attr/edit_label_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -255,22 +267,14 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="2px"
-        android:layout_marginTop="6sp"
-        android:orientation="vertical"
-        android:padding="0dp"
-        android:background="@color/solidWhite"
-        tools:ignore="PxUsage"/>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end">
+        android:gravity="end"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/cv_bit_calculator_button_close"
+            style="?attr/ed_dialog_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="?attr/ed_cross_glyph"
@@ -285,9 +289,10 @@
 
         <Button
             android:id="@+id/cv_bit_calculator_button_confirm"
+            style="?attr/ed_dialog_positive_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dccexCvBitCalculatorConfirmButtonLabel"/>
+            android:text="@string/dccexCvBitCalculatorConfirmButtonLabel" />
 
     </LinearLayout>
 
