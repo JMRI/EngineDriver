@@ -32,8 +32,6 @@ import android.widget.RadioGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -47,9 +45,9 @@ public class intro_esu_mc2 extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        RadioGroup radioGroup = Objects.requireNonNull(getView()).findViewById(R.id.intro_esu_mc2_radio_group);
+        RadioGroup radioGroup = requireView().findViewById(R.id.intro_esu_mc2_radio_group);
 
         radioGroup.clearCheck();
         radioGroup.check(R.id.intro_esu_mc2_no);

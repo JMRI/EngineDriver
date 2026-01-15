@@ -624,7 +624,7 @@ public class threaded_application extends Application {
                 //noinspection deprecation
                 notificationCompatBuilder =
                         new NotificationCompat.Builder(this)
-                                .setSmallIcon(R.drawable.icon)
+                                .setSmallIcon(R.drawable.icon_notification)
                                 .setContentTitle(getResources().getString(R.string.notificationInBackgroundTitle))
                                 .setContentText("")
                                 .setOngoing(true)

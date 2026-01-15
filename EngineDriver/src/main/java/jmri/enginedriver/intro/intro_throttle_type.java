@@ -32,8 +32,6 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -47,14 +45,14 @@ public class intro_throttle_type extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         String currentValue = prefs.getString("prefThrottleScreenType", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         //    private Spinner spinner;
         //    private int introThrottleTypeValueIndex = 1;
         String[] nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntries);
         nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
-        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_throttle_type_default_name);
+        TextView v = requireView().findViewById(R.id.intro_throttle_type_default_name);
         v.setText(nameEntries[0]);
         v = getView().findViewById(R.id.intro_throttle_type_vertical_name);
         v.setText(nameEntries[1]);

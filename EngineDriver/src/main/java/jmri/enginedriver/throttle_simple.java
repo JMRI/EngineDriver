@@ -123,6 +123,7 @@ public class throttle_simple extends throttle {
 
     } // end of onResume()
 
+    @SuppressLint("ClickableViewAccessibility")
     void initialiseUiElements() {
         super.initialiseUiElements();
 

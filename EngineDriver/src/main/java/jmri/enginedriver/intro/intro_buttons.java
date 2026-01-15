@@ -32,8 +32,6 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -53,12 +51,12 @@ public class intro_buttons extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         boolean prefDisplaySpeedButtons = prefs.getBoolean("prefDisplaySpeedButtons", false);
         boolean prefHideSlider = prefs.getBoolean("prefHideSlider", false);
         boolean prefHideSliderAndSpeedButtons = prefs.getBoolean("prefHideSliderAndSpeedButtons", false);
 
-        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_buttons_slider_name);
+        TextView v = requireView().findViewById(R.id.intro_buttons_slider_name);
         v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
         v = getView().findViewById(R.id.intro_buttons_slider_and_buttons_name);
         v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));

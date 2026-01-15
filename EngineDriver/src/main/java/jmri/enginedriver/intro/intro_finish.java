@@ -24,25 +24,22 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
-import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.PermissionsHelper;
 
 public class intro_finish extends Fragment {
     static final String activityName = "intro_finish";
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
+//    }
 
     @Nullable
     @Override
@@ -57,7 +54,7 @@ public class intro_finish extends Fragment {
         if (isVisibleToUser) {
             PermissionsHelper phi = PermissionsHelper.getInstance();
             if (!phi.isPermissionGranted(this.getActivity(), PermissionsHelper.READ_PHONE_STATE)) {
-                SharedPreferences prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+                SharedPreferences prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
                 prefs.edit().putBoolean("prefStopOnPhoneCall", false).apply();
             }
         }

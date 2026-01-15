@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
@@ -43,7 +42,7 @@ public class HorizontalSeekBar extends SeekBar {
 
     // A change listener registration start and stop of tracking. Need an own listener because the listener in SeekBar
     // is private.
-    private OnSeekBarChangeListener mOnSeekBarChangeListener;
+//    private OnSeekBarChangeListener mOnSeekBarChangeListener;
 
     public boolean touchFromUser = false;
 //    public boolean realTouch = true;
@@ -83,11 +82,11 @@ public class HorizontalSeekBar extends SeekBar {
     @Override
     protected final void onDraw(final Canvas c) {
 
-        if (android.os.Build.VERSION.SDK_INT <= 21) {
-            Drawable progressDrawable = getResources().getDrawable(R.drawable.transparent_progress_bar);
-
-            this.setProgressDrawable(progressDrawable);
-        }
+//        if (android.os.Build.VERSION.SDK_INT <= 21) {
+//            Drawable progressDrawable = getResources().getDrawable(R.drawable.transparent_progress_bar);
+//
+//            this.setProgressDrawable(progressDrawable);
+//        }
 
         if (!tickMarksChecked) {
             tickMarksChecked = true;

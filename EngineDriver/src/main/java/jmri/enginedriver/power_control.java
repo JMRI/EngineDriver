@@ -28,6 +28,7 @@ import android.os.Message;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -171,7 +172,7 @@ public class power_control extends AppCompatActivity {
                 mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
             }
         }
-        Drawable img = getResources().getDrawable(outValue.resourceId);
+        Drawable img = AppCompatResources.getDrawable(this, outValue.resourceId);
         btn.setBackground(img);
     }
 
@@ -250,13 +251,13 @@ public class power_control extends AppCompatActivity {
 
         TypedValue outValue = new TypedValue();
         mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-        powerOnDrawable = getResources().getDrawable(outValue.resourceId);
+        powerOnDrawable = AppCompatResources.getDrawable(this, outValue.resourceId);
         mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-        powerOnAndOffDrawable = getResources().getDrawable(outValue.resourceId);
+        powerOnAndOffDrawable = AppCompatResources.getDrawable(this, outValue.resourceId);
         mainapp.theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-        powerOffDrawable = getResources().getDrawable(outValue.resourceId);
+        powerOffDrawable = AppCompatResources.getDrawable(this, outValue.resourceId);
         mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-        powerUnknownDrawable = getResources().getDrawable(outValue.resourceId);
+        powerUnknownDrawable = AppCompatResources.getDrawable(this, outValue.resourceId);
 
         //Set the button callbacks, storing the command to pass for each
         Button b = findViewById(R.id.power_control_button);
@@ -479,7 +480,6 @@ public class power_control extends AppCompatActivity {
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice idev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

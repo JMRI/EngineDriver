@@ -32,8 +32,6 @@ import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -49,7 +47,7 @@ public class intro_theme extends Fragment {
         Log.d(threaded_application.applicationName, activityName + ":");
 
         super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         String currentValue = prefs.getString("prefTheme", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
 
         //    private Spinner spinner;
@@ -57,7 +55,7 @@ public class intro_theme extends Fragment {
         String[] nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntries);
         nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntryValues);
         //    private String defaultName = "";
-        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_theme_default_name);
+        TextView v = requireView().findViewById(R.id.intro_theme_default_name);
         v.setText(nameEntries[0]);
         v = getView().findViewById(R.id.intro_theme_black_name);
         v.setText(nameEntries[1]);

@@ -31,8 +31,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -50,7 +48,7 @@ public class intro_dccex extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         boolean prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
 
 //        TextView v = getView().findViewById(R.id.intro_dccex_no);
@@ -58,7 +56,7 @@ public class intro_dccex extends Fragment {
 //        v = getView().findViewById(R.id.intro_dccex_yes);
 //        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));
 
-        RadioGroup radioGroup = Objects.requireNonNull(getView()).findViewById(R.id.intro_dccex_radio_group);
+        RadioGroup radioGroup = requireView().findViewById(R.id.intro_dccex_radio_group);
 
         radioGroup.clearCheck();
         if (!prefDccexConnectionOption) {radioGroup.check(R.id.intro_dccex_no); }

@@ -32,6 +32,7 @@ import android.os.Message;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
@@ -1422,7 +1423,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
             }
         }
-        Drawable img = getResources().getDrawable(outValue.resourceId);
+        Drawable img = AppCompatResources.getDrawable(this, outValue.resourceId);
         btn.setBackground(img);
     }
 

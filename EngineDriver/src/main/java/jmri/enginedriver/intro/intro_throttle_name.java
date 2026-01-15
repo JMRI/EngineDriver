@@ -31,8 +31,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -51,18 +49,18 @@ public class intro_throttle_name extends Fragment {
         Log.d(threaded_application.applicationName, activityName + ":");
 
         super.onActivityCreated(savedInstanceState);
-        mainapp = (threaded_application) Objects.requireNonNull(this.getActivity()).getApplication();
+        mainapp = (threaded_application) this.requireActivity().getApplication();
         prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
 
-        throttleNameView = Objects.requireNonNull(getView()).findViewById(R.id.intro_throttle_name_value);
+        throttleNameView = requireView().findViewById(R.id.intro_throttle_name_value);
         throttleNameView.setText(currentValue);
 
         throttleNameView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", Objects.requireNonNull(getActivity()).getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
+                    currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", requireActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
                     throttleNameView.setText(currentValue);
                 }
             }

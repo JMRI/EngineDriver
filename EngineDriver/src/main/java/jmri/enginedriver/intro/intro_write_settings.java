@@ -33,8 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.Objects;
-
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
@@ -46,14 +44,14 @@ public class intro_write_settings extends Fragment {
         Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
 
-        Button settingsButton = Objects.requireNonNull(getView()).findViewById(R.id.intro_write_settings_launch);
+        Button settingsButton = requireView().findViewById(R.id.intro_write_settings_launch);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 if (Build.VERSION.SDK_INT >= 23) {
                     intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                 }
-                Uri uri = Uri.fromParts("package", Objects.requireNonNull(getActivity()).getApplicationContext().getPackageName(), null);
+                Uri uri = Uri.fromParts("package", requireActivity().getApplicationContext().getPackageName(), null);
                 intent.setData(uri);
                 getActivity().startActivity(intent);
             }
