@@ -435,12 +435,12 @@ public class connection_activity extends AppCompatActivity implements Permission
                         discovery_list.add(hm);
                         discovery_list_adapter.notifyDataSetChanged();
 
-                        if (prefs.getBoolean("connect_to_first_server_preference", false)) {
+                        if (prefs.getBoolean("prefConnectToFirstServer", false)) {
                             connectA();
                         }
 
-                        String prefAutoServerConnect = prefs.getString("prefAutoServerConnect","").toLowerCase();
-                        if ( (!prefAutoServerConnect.isEmpty()) && (found_host_name != null) && (found_host_name.toLowerCase().equals(prefAutoServerConnect)) ) {
+                        String prefAutoServerNamedConnect = prefs.getString("prefAutoServerNamedConnect","").toLowerCase();
+                        if ( (!prefAutoServerNamedConnect.isEmpty()) && (found_host_name != null) && (found_host_name.toLowerCase().equals(prefAutoServerNamedConnect)) ) {
                             connectA();
                         }
                     }
@@ -764,7 +764,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         //	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);
 
-        if (prefs.getBoolean("connect_to_first_server_preference", false)) {
+        if (prefs.getBoolean("prefConnectToFirstServer", false)) {
             connectA();
         }
         setConnectionProtocolOption();
@@ -858,7 +858,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     private void set_labels() {
         SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         TextView v = findViewById(R.id.ca_footer);
-        String throttleName = prefs.getString("throttle_name_preference", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
+        String throttleName = prefs.getString("prefThrottleName", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
         throttleName = mainapp.fixThrottleName(throttleName); //insure uniqueness
         v.setText(String.format(getString(R.string.throttle_name), throttleName));
 
@@ -903,18 +903,18 @@ public class connection_activity extends AppCompatActivity implements Permission
 //
 //        PermissionsHelper phi = PermissionsHelper.getInstance();
 //        if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
-//            if (prefs.getBoolean("stop_on_phonecall_preference", mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
+//            if (prefs.getBoolean("prefStopOnPhoneCall", mainapp.getResources().getBoolean(R.bool.prefStopOnPhoneCallDefaultValue))) {
 //                if (Build.VERSION.SDK_INT >= 23) {
 //                    // how many times have we asked for this before?
-//                    int count = prefs.getInt("prefStopOnPhonecallCount", 0);
+//                    int count = prefs.getInt("prefStopOnPhoneCallCount", 0);
 //                    if (count < 5) {  // this is effectively counted twice each startup
 //                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.READ_PHONE_STATE);
 //                        count++;
 //                    } else {
-//                        prefs.edit().putBoolean("stop_on_phonecall_preference", false).apply();
+//                        prefs.edit().putBoolean("prefStopOnPhoneCall", false).apply();
 //                        count = 0;
 //                    }
-//                    prefs.edit().putInt("prefStopOnPhonecallCount", count).apply();
+//                    prefs.edit().putInt("prefStopOnPhoneCallCount", count).apply();
 //                }
 //            }
 //        }

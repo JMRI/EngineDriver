@@ -237,7 +237,7 @@ public class throttle_big_buttons extends throttle {
 
             //show speed buttons based on pref
             vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+            if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
                 vsbSpeeds[throttleIndex].setVisibility(View.GONE);
             }
         }
@@ -284,7 +284,7 @@ public class throttle_big_buttons extends throttle {
         myImage.getLayoutParams().height = screenHeight;
 
         // save part the screen for webview
-        if (!webViewLocation.equals(web_view_location_type.NONE)) {
+        if (!prefWebViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 screenHeight *= 0.5; // save half the screen

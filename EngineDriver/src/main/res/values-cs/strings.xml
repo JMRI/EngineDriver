@@ -205,8 +205,8 @@
     <string name="prefDirChangeWhileMovingSummary">Povolit změnu směru během jízdy.</string>
     <string name="prefStopOnDirectionChangeTitle">Zastavit při změně směru?</string>
     <string name="prefStopOnDirectionChangeSummary">Zastavit vlak při změně směru během jízdy.</string>
-    <string name="prefSelLocoWhileMovingTitle">Povolit výběr lokomotivy během jízdy?</string>
-    <string name="prefSelLocoWhileMovingSummary">Povolí tlačítko lokomotivy během jízdy.</string>
+    <string name="prefSelectLocoWhileMovingTitle">Povolit výběr lokomotivy během jízdy?</string>
+    <string name="prefSelectLocoWhileMovingSummary">Povolí tlačítko lokomotivy během jízdy.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Zobrazit adresu lokomotivy místo názvu?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Zobrazí DCC adresu lokomotivy místo názvu lokmotivy na stránce ovladače.</string>
     <string name="prefIncreaseWebViewSizeTitle">Zvětšit velikost zobrazení Webu?</string>
@@ -326,9 +326,9 @@
     <string name="prefMaximumThrottleChangeSummary">Dovolená maximální změna ovladače v %</string>
     <string name="prefWebViewTitle">Předvolby zobrazení Webu</string>
     <string name="prefWebViewSummary">Volby pro vzhled zobrazení Webu</string>
-    <string name="prefInitialThrotWebPageTitle">Výchozí Webová stránka ovladače</string>
+    <string name="prefInitialThrottleWebPageTitle">Výchozí Webová stránka ovladače</string>
 
-    <string name="prefInitialThrotWebPageSummary">Výchozí Webová stránka ovladače (např. jako \'/panel/\')</string>
+    <string name="prefInitialThrottleWebPageSummary">Výchozí Webová stránka ovladače (např. jako \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Zobrazení Web ovladače?</string>
 
     <string name="prefWebViewLocationSummary">Zahrnout zobrazení Webu na panelu ovladače</string>
@@ -340,8 +340,8 @@
     <string name="prefSelectiveLeadSoundF2Title">Vždy zacházet s F2 jako se Zvukem</string>
     <string name="prefSelectiveLeadSoundF2Summary">Pro volbu \'Výběrový zvuk vedoucí lokomotivy\'</string>
 
-    <string name="prefStopOnPhonecallTitle">Zastavit při telefonním hovoru?</string>
-    <string name="prefStopOnPhonecallSummary">Zastavit lokomotivu při přijetí nebo spuštění telefonního hovoru</string>
+    <string name="prefStopOnPhoneCallTitle">Zastavit při telefonním hovoru?</string>
+    <string name="prefStopOnPhoneCallSummary">Zastavit lokomotivu při přijetí nebo spuštění telefonního hovoru</string>
     <string name="prefStopOnBackgroundTitle">EZastavit na pozadí?</string>
     <string name="prefStopOnBackgroundSummary">EZastavte všechny lokomotivy na všech plynových pedálech, když je Engine Driver posunut na pozadí</string>
 
@@ -440,7 +440,7 @@
 
     <string name="prefStopButtonEStopOnLongPressSummary">ESTOP všechny lokomotivy na aktuálním plynu dlouhým stisknutím tlačítka Stop</string>
     <string name="PrefConnectToFirstServerTitle">Automatické připojení se k prvnímu serveru?</string>
-    <string name="PrefConnectToFirstServerSummary">Připojovat se automaticky k prvnímu nalezenému serveru?</string>
+    <string name="prefConnectToFirstServerSummary">Připojovat se automaticky k prvnímu nalezenému serveru?</string>
     <string name="prefDisplayClockTitle">Zobrazit modelové hodiny</string>
     <string name="prefDisplayClockSummary">Nastavit formát pro zobrazení modelových hodin v ovladači a obrazevce Webu.</string>
 
@@ -1331,8 +1331,8 @@
     <string name="autoServerConnectTitle">Automatické připojení k serveru</string>
     <string name="autoServerConnectLabel">Název serveru</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Získejte aktuální server</string>
-    <string name="prefAutoServerConnectSummary">V případě zjištění se automaticky připojit k pojmenovanému serveru</string>
-    <string name="prefAutoServerConnectTitle">Automatické připojení k pojmenovanému serveru</string>
+    <string name="prefAutoServerNamedConnectSummary">V případě zjištění se automaticky připojit k pojmenovanému serveru</string>
+    <string name="prefAutoServerNamedConnectTitle">Automatické připojení k pojmenovanému serveru</string>
     <string name="dccexInCv19Consist">Loko je v CV19 Skládá se: %s</string>
     <string name="dccexNotInCv19Consist">Loco NENÍ v CV19 Consist</string>
 

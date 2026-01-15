@@ -262,8 +262,8 @@
     <string name="prefDirChangeWhileMovingSummary">Allow direction changes when moving</string>
     <string name="prefStopOnDirectionChangeTitle">Stop on direction change?</string>
     <string name="prefStopOnDirectionChangeSummary">Stop loco if you change direction while moving</string>
-    <string name="prefSelLocoWhileMovingTitle">Allow loco select while moving?</string>
-    <string name="prefSelLocoWhileMovingSummary">Enables Loco Select button when moving</string>
+    <string name="prefSelectLocoWhileMovingTitle">Allow loco select while moving?</string>
+    <string name="prefSelectLocoWhileMovingSummary">Enables Loco Select button when moving</string>
     <string name="prefShowAddressInsteadOfNameTitle">Loco Address instead of Name?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Show loco DCC Address(es) instead of the Roster Name(s) on the Throttle screen</string>
     <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
@@ -419,9 +419,9 @@
     <string name="prefMaximumThrottleChangeSummary">Maximum allowed throttle change in %</string>
     <string name="prefWebViewTitle">Throttle Web View Preferences</string>
     <string name="prefWebViewSummary">Options for Throttle Web View appearance (Web page that will appear at the bottom of the Throttle Screen)</string>
-    <string name="prefInitialThrotWebPageTitle">Initial throttle Web Page</string>
-    <string name="prefInitialThrotWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefInitialThrotWebPageSummary">Initial throttle Web Page (such as \'/panel/\')</string>
+    <string name="prefInitialThrottleWebPageTitle">Initial throttle Web Page</string>
+    <string name="prefInitialThrottleWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefInitialThrottleWebPageSummary">Initial throttle Web Page (such as \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Throttle Web View?</string>
     <string name="prefWebViewLocationDefaultValue" translatable="false">none</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefWebViewLocationSummary">Include web view on Throttle screen</string>
@@ -464,8 +464,8 @@
     <string name="prefSelectiveLeadSoundF2Title">Always treat F2 as Sound?</string>
     <string name="prefSelectiveLeadSoundF2Summary">For the \'Selective Lead Unit Sound\' option</string>
 
-    <string name="prefStopOnPhonecallTitle">Stop on Phone Call?</string>
-    <string name="prefStopOnPhonecallSummary">Stop loco(s) when a phone call is answered or placed</string>
+    <string name="prefStopOnPhoneCallTitle">Stop on Phone Call?</string>
+    <string name="prefStopOnPhoneCallSummary">Stop loco(s) when a phone call is answered or placed</string>
     <string name="prefStopOnBackgroundTitle">EStop on Background?</string>
     <string name="prefStopOnBackgroundSummary">EStop all locos on all throttles when Engine Driver is pushed to background</string>
 
@@ -597,7 +597,7 @@
 
 
     <string name="PrefConnectToFirstServerTitle">Auto-Connect to Server?</string>
-    <string name="PrefConnectToFirstServerSummary">Connect automatically to \'first\' Server discovered</string>
+    <string name="prefConnectToFirstServerSummary">Connect automatically to \'first\' Server discovered</string>
     <string name="prefDisplayClockTitle">Fast Clock Display</string>
     <string name="prefDisplayClockSummary">Set format for Fast Clock display in action bar</string>
     <string name="prefDisplayClockDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
@@ -636,7 +636,7 @@
     <string name="prefGamePadTypeDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefSwipeUpOptionDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
     <!--    <string name="prefGamePadStartButtonDefaultValue" translatable="false">Next Throttle</string>  &lt;!&ndash; DO NOT TRANSLATE &ndash;&gt;-->
-    <string name="NumThrottleDefaultValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefNumThrottleDefaultValue" translatable="false">Two</string>  <!-- DO NOT TRANSLATE -->
     <string name="server_address">Server address</string>
     <string name="server">Server</string>
     <string name="routes_route">Route System Name</string>
@@ -1645,8 +1645,8 @@
     <string name="autoServerConnectTitle">Auto Server Connect</string>
     <string name="autoServerConnectLabel">Server name</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Get Current Server</string>
-    <string name="prefAutoServerConnectSummary">Connect automatically to a \'named\' server if discovered</string>
-    <string name="prefAutoServerConnectTitle">Auto-connect to named server</string>
+    <string name="prefAutoServerNamedConnectSummary">Connect automatically to a \'named\' server if discovered</string>
+    <string name="prefAutoServerNamedConnectTitle">Auto-connect to named server</string>
     <string name="prefAutoServerIpConnectSummary">Connect automatically to a server address even if not discovered</string>
     <string name="prefAutoServerIpConnectTitle">Auto-connect to server address</string>
 

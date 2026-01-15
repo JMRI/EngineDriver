@@ -426,7 +426,7 @@
     <string name="prefConnectTimeoutMsSummary">初期接続タイムアウトをミリ秒単位で設定します</string>
     <string name="prefConnectTimeoutMsTitle">初期接続タイムアウト</string>
     <string name="prefConnectTitle">接続設定</string>
-    <string name="PrefConnectToFirstServerSummary">最初に検出された サーバーに自動的に接続しますか?</string>
+    <string name="prefConnectToFirstServerSummary">最初に検出された サーバーに自動的に接続しますか?</string>
     <string name="prefStopButtonEStopOnLongPressSummary">停止ボタンを長押しすると、現在のスロットルにあるすべての機関車をESTOPします。</string>
     <string name="PrefConnectToFirstServerTitle">最初の サーバーに自動接続しますか?</string>
     <string name="prefConsistFollowAction1Summary">編成内のどの機関車が、見つかったヘッドライトファンクションに反応するか。</string>
@@ -677,8 +677,8 @@
     <string name="prefIncreaseWebViewSizeSummary">画面が小さい場合は、Web ビューのサイズを 60% に拡大します。</string>
     <string name="prefIncreaseWebViewSizeTitle">Web ビューのサイズを大きくしますか?</string>
 
-    <string name="prefInitialThrotWebPageSummary">初期スロットル Web ページ (\'/panel/\' など)</string>
-    <string name="prefInitialThrotWebPageTitle">初期スロットル Web ページ</string>
+    <string name="prefInitialThrottleWebPageSummary">初期スロットル Web ページ (\'/panel/\' など)</string>
+    <string name="prefInitialThrottleWebPageTitle">初期スロットル Web ページ</string>
 
     <string name="prefInitialWebPageSummary">最初の Web ページ (\'/panel\' など)</string>
     <string name="prefInitialWebPageTitle">最初の Web ページ</string>
@@ -772,8 +772,8 @@
     <string name="prefSelectiveLeadSoundSummary">EngineDriver 編成内のリード ユニットにのみ、ホーン/ベル機能を送信します。(ラベルの一部として \'ベル\'、\'ホーン\'、または \'ホイッスル\' を含む \'ラベル\' を持つ機能のみ/任意の機能。)</string>
     <string name="prefSelectiveLeadSoundTitle">セレクティブリードユニットサウンド?</string>
     <string name="prefSelectLocoTitle">ロコの設定を選択します</string>
-    <string name="prefSelLocoWhileMovingSummary">移動時にLocoボタンを有効にします。</string>
-    <string name="prefSelLocoWhileMovingTitle">移動中のロコ選択を許可しますか?</string>
+    <string name="prefSelectLocoWhileMovingSummary">移動時にLocoボタンを有効にします。</string>
+    <string name="prefSelectLocoWhileMovingTitle">移動中のロコ選択を許可しますか?</string>
     <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">加速速度ステップが繰り返される間隔 (ミリ秒単位)。小さいほど高速です。</string>
     <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">加速速度 ステップリピート遅延</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">エアブレーキがリフレッシュ/再充填する速度を調整します(ミリ秒単位)。小さいほど高速です。</string>
@@ -829,8 +829,8 @@
     <string name="prefStopOnDirectionChangeSummary">移動中に方向を変えると電車が止まります。</string>
     <string name="prefStopOnDirectionChangeTitle">方向転換で止まる？</string>
 
-    <string name="prefStopOnPhonecallSummary">電話に応答または発信されたときに機関車を停止します</string>
-    <string name="prefStopOnPhonecallTitle">電話で停止しますか?</string>
+    <string name="prefStopOnPhoneCallSummary">電話に応答または発信されたときに機関車を停止します</string>
+    <string name="prefStopOnPhoneCallTitle">電話で停止しますか?</string>
     <string name="prefStopOnBackgroundTitle">バックグラウンドで EStop を実行しますか?</string>
     <string name="prefStopOnBackgroundSummary">Engine Driverがバックグラウンドにプッシュされたときに、すべてのスロットルですべての機関車を停止します</string>
 
@@ -1253,8 +1253,8 @@
     <string name="autoServerConnectTitle">自動サーバー接続</string>
     <string name="autoServerConnectLabel">サーバー名</string>
     <string name="autoServerConnectCurrentServerButtonLabel">現在のサーバーを取得</string>
-    <string name="prefAutoServerConnectSummary">名前付きサーバーが検出された場合は自動的に接続します</string>
-    <string name="prefAutoServerConnectTitle">名前付きサーバーに自動接続</string>
+    <string name="prefAutoServerNamedConnectSummary">名前付きサーバーが検出された場合は自動的に接続します</string>
+    <string name="prefAutoServerNamedConnectTitle">名前付きサーバーに自動接続</string>
     <string name="dccexInCv19Consist">機関車はCV19編成です: %s</string>
     <string name="dccexNotInCv19Consist">機関車はCV19編成ではありません</string>
 

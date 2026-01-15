@@ -396,7 +396,7 @@
     <string name="prefConnectTimeoutMsSummary">Delai de connexion initiale par défaut.</string>
     <string name="prefConnectTimeoutMsTitle">Délai de connexion initiale</string>
 
-    <string name="PrefConnectToFirstServerSummary">Connexion automatique au premier serveur découvert?</string>
+    <string name="prefConnectToFirstServerSummary">Connexion automatique au premier serveur découvert?</string>
     <string name="PrefConnectToFirstServerTitle">Connexion automatique au premier serveur découvert?</string>
     <string name="prefConsistFollowAction1Summary">Préciser quelles locomotives de l\'unité multiple doivent réagir aux commandes de phares.</string>
 
@@ -641,8 +641,8 @@
     <string name="prefIncreaseWebViewSizeSummary">Augmentation de l\'affichage web de 60% pour les écrans de petite taille.</string>
     <string name="prefIncreaseWebViewSizeTitle">Augmentation de l\'affichage web?</string>
 
-    <string name="prefInitialThrotWebPageSummary">Page web initiale du régulateur (tel que \'/panel/\')</string>
-    <string name="prefInitialThrotWebPageTitle">Page web initiale du régulateur</string>
+    <string name="prefInitialThrottleWebPageSummary">Page web initiale du régulateur (tel que \'/panel/\')</string>
+    <string name="prefInitialThrottleWebPageTitle">Page web initiale du régulateur</string>
 
     <string name="prefInitialWebPageSummary">Page web initiale (tel que \'/panel/\')</string>
     <string name="prefInitialWebPageTitle">Page web initiale</string>
@@ -734,8 +734,8 @@
     <string name="prefSelectiveLeadSoundSummary">Seule la locomotive de tête répond aux commandes de Klaxon/Cloche.  Applicable aux fonctions ayant \'Klaxon\', \'Sifflet\' et \'Cloche\' dans le libellé ou partie du libellé.</string>
     <string name="prefSelectiveLeadSoundTitle">Son - Locomotive menante?</string>
     <string name="prefSelectLocoTitle">Sélection des préférences de locomotive</string>
-    <string name="prefSelLocoWhileMovingSummary">Active la sélection de locomotive en mouvement.</string>
-    <string name="prefSelLocoWhileMovingTitle">Permettre sélection en mouvement?</string>
+    <string name="prefSelectLocoWhileMovingSummary">Active la sélection de locomotive en mouvement.</string>
+    <string name="prefSelectLocoWhileMovingTitle">Permettre sélection en mouvement?</string>
     <string name="prefSemiRealisticThrottleAccelerationRepeatSummary">Délai d\'attente entre les variations d\'accroissement de vitesse (en millisecondes).  Une valeur réduite produira une accélération plus prononcée. </string>
     <string name="prefSemiRealisticThrottleAccelerationRepeatTitle">Délai entre les variations de vitesse</string>
     <string name="prefSemiRealisticThrottleAirRefreshRateSummary">Ajustement de la vitesse à laquelle les freins pneumatiques se refraîchissent/remplissent (en millisecondes).  Une valeur réduite accélère cette vitesse.</string>
@@ -788,8 +788,8 @@
     <string name="prefStopOnDirectionChangeSummary">Freiner le train en mouvement lors d\'un changement de direction.</string>
     <string name="prefStopOnDirectionChangeTitle">Freinage lors d\'un changement de direction?</string>
 
-    <string name="prefStopOnPhonecallSummary">Freiner les locomotives lors d\'un appel téléphonique</string>
-    <string name="prefStopOnPhonecallTitle">Freinage lors d\'un appel téléphonique?</string>
+    <string name="prefStopOnPhoneCallSummary">Freiner les locomotives lors d\'un appel téléphonique</string>
+    <string name="prefStopOnPhoneCallTitle">Freinage lors d\'un appel téléphonique?</string>
     <string name="prefStopOnReleaseSummary">Freiner les locomotives lorsqu\'elle est dissociée du régulateur</string>
     <string name="prefStopOnReleaseTitle">Freinage sur dissociation?</string>
 

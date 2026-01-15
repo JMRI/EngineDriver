@@ -168,7 +168,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             toolbar.showOverflowMenu();
 
             SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-            String name = prefs.getString("throttle_name_preference", "");
+            String name = prefs.getString("prefThrottleName", "");
 
             mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
                     getApplicationContext().getResources().getString(R.string.app_name) + " | " + name,

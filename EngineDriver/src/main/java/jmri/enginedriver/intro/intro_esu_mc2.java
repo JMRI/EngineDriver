@@ -67,8 +67,8 @@ public class intro_esu_mc2 extends Fragment {
                 } else if (checkedId == R.id.intro_esu_mc2_yes) {
                     esuMc2Yes = true;
                 }
-                prefs.edit().putBoolean("display_speed_arrows_buttons", !esuMc2Yes).commit();
-                prefs.edit().putBoolean("hide_slider_preference", esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefDisplaySpeedButtons", !esuMc2Yes).commit();
+                prefs.edit().putBoolean("prefHideSlider", esuMc2Yes).commit();
                 prefs.edit().putBoolean("prefHideSliderAndSpeedButtons", esuMc2Yes).commit();
                 prefs.edit().putBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", esuMc2Yes).commit();
                 prefs.edit().putBoolean("prefVolumeKeysFollowLastTouchedThrottleDefaultValue", esuMc2Yes).commit();

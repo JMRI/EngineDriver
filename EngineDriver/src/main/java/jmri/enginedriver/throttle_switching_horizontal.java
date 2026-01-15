@@ -75,7 +75,7 @@ public class throttle_switching_horizontal extends throttle {
     protected void getCommonPrefs(boolean isCreate) {
         super.getCommonPrefs(isCreate);
 
-        maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "prefMaximumThrottle", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
 
         prefSwitchingThrottleSliderDeadZone = Integer.parseInt(prefs.getString("prefSwitchingThrottleSliderDeadZone", getResources().getString(R.string.prefSwitchingThrottleSliderDeadZoneDefaultValue)));
@@ -252,7 +252,7 @@ public class throttle_switching_horizontal extends throttle {
 
         // Convert the dps to pixels, based on density scale
         int newHeight;
-        if (pref_increase_slider_height_preference) {
+        if (prefIncreaseSliderHeight) {
             newHeight = (int) (80 * denScale + 0.5f); // increased height
         } else {
             newHeight = (int) (50 * denScale + 0.5f); // normal height
@@ -347,19 +347,19 @@ public class throttle_switching_horizontal extends throttle {
             llSetSpeeds[throttleIndex].setLayoutParams(llLp);
 
             //set margins of slider areas
-            int sliderMargin = threaded_application.getIntPrefValue(prefs, "left_slider_margin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
+            int sliderMargin = threaded_application.getIntPrefValue(prefs, "prefLeftSliderMargin", getApplicationContext().getResources().getString(R.string.prefSliderLeftMarginDefaultValue));
 
             //show speed buttons based on pref
             llSetSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
 
             hsbSwitchingSpeeds[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
-            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
+            if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bRSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bLSpds[throttleIndex].setText(speedButtonLeftText);
                 bRSpds[throttleIndex].setText(speedButtonRightText);
                 //if buttons enabled, hide the slider if requested
-                if (prefs.getBoolean("hide_slider_preference", false)) {
+                if (prefs.getBoolean("prefHideSlider", false)) {
                     hsbSwitchingSpeeds[throttleIndex].setVisibility(View.GONE);
                     bLSpds[throttleIndex].setText(speedButtonDownText);
                     bRSpds[throttleIndex].setText(speedButtonUpText);
@@ -1009,7 +1009,7 @@ public class throttle_switching_horizontal extends throttle {
 
         double height = screenHeight;
         LinearLayout.LayoutParams overlayParams;
-        if(!webViewLocation.equals(web_view_location_type.NONE))     {
+        if(!prefWebViewLocation.equals(web_view_location_type.NONE))     {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 height *= 0.5; // save half the screen

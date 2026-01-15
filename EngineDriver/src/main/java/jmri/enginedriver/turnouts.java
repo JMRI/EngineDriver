@@ -201,8 +201,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (mainapp.isTurnoutControlAllowed()) {
             if (mainapp.to_user_names != null) { //none defined
                 int pos = 0;
-                String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
-                boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
+                String del = prefs.getString("prefDelimiter", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+                boolean hideIfNoUserName = prefs.getBoolean("prefHideIfNoUserName", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.to_user_names) {
                     boolean hasUserName = (username != null && !username.isEmpty());
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
@@ -255,7 +255,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (mainapp.isTurnoutControlAllowed()) {
             if (mainapp.to_user_names != null) { //none defined
                 int pos = 0;
-                boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
+                boolean hideIfNoUserName = prefs.getBoolean("prefHideIfNoUserName", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.to_user_names) {
                     boolean hasUserName = (username != null && !username.isEmpty());
                     if (hasUserName || !hideIfNoUserName) {  //skip turnouts without usernames if pref is set
@@ -291,7 +291,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     @SuppressWarnings("unchecked")
     private void filterTurnoutView() {
-        final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+        final String loc = location + prefs.getString("prefDelimiter", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
         turnouts_list.clear();
         for (HashMap<String, String> hm : turnoutsFullList) {
@@ -347,7 +347,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         if (activityMenu != null) {
             mainapp.displayEStop(activityMenu);
             mainapp.displayPowerStateMenuButton(activityMenu);
-//            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_turnouts_preference");
+//            mainapp.displayThrottleMenuButton(activityMenu, "prefSwipeThroughTurnouts");
         }
 
         return txtLen;
@@ -912,7 +912,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mainapp.displayRoutesButton(activityMenu);
             mainapp.displayPowerStateMenuButton(activityMenu);
             mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
-//            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
+//            mainapp.displayThrottleMenuButton(activityMenu, "prefSwipeThroughRoutes");
             mainapp.displayFlashlightMenuButton(activityMenu);
             mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
         }
@@ -963,7 +963,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.actionBarIconCountTurnouts = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.displayThrottleMenuButton(menu, "swipe_through_turnouts_preference");
+//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughTurnouts");
 
         mainapp.setPowerMenuOption(menu);
         if (findViewById(R.id.powerLayoutButton) == null) {
@@ -1367,12 +1367,12 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             lastTurnoutUsedName = turnoutSystemName;
 
             int numberOfRecentTurnoutsToWrite;
-            String smrl = prefs.getString("maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
+            String smrl = prefs.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
             try {
                 numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 3;
             } catch (Exception except) {
                 Log.e(threaded_application.applicationName, activityName
-                        + ": deleteRecentTurnoutsListFile: Turnouts: Error retrieving maximum_recent_locos_preference "
+                        + ": deleteRecentTurnoutsListFile: Turnouts: Error retrieving prefMaximumRecentLocos "
                         + except.getMessage());
                 numberOfRecentTurnoutsToWrite = 20;
             }

@@ -132,7 +132,9 @@ public class threaded_application extends Application {
     public static final String applicationName = "Engine_Driver";
     public static final String activityName = "t_a";
 
+    // it does not matter what these value are as long as they have never been used before
     public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
+    private static final String LAST_PREFERENCE_NAME_RUN = "0";  // set this to a different string to force the check and rename of the old preferences on next startup.
 
     private final threaded_application mainapp = this;
     public comm_thread commThread;
@@ -716,6 +718,7 @@ public class threaded_application extends Application {
         context = getApplicationContext();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+        renamePreferencesToNewFormat();
 
         commThread = new comm_thread(mainapp, prefs);
 
@@ -725,8 +728,8 @@ public class threaded_application extends Application {
         registerActivityLifecycleCallbacks(lifecycleHandler);
         registerComponentCallbacks(lifecycleHandler);
 
-        numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
-        //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaulValue))));
+        numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
+        //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue))));
         throttleLayoutViewId = R.layout.throttle;
 
         haveForcedWiFiConnection = false;
@@ -1406,7 +1409,7 @@ public class threaded_application extends Application {
     }
 
     public void displayPowerStateMenuButton(Menu menu) {
-        if (prefs.getBoolean("show_layout_power_button_preference", false) && (power_state != null)) {
+        if (prefs.getBoolean("prefShowLayoutPowerButton", false) && (power_state != null)) {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1678,7 +1681,7 @@ public class threaded_application extends Application {
 //    }
 
     public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
-        if (!prefs.getBoolean("show_layout_power_button_preference", false)) return;
+        if (!prefs.getBoolean("prefShowLayoutPowerButton", false)) return;
 
         if ( (menu == null) ||  (menuItemViewGroup  == null)) {
 //            // the menu or button is not available yet. Force an update request to the get it to update ASAP
@@ -1716,7 +1719,7 @@ public class threaded_application extends Application {
         MenuItem mi = menu.findItem(R.id.EmerStop);
         if (mi == null) return;
 
-        if (prefs.getBoolean("show_emergency_stop_menu_preference", false)) {
+        if (prefs.getBoolean("prefShowEmergencyStopButton", false)) {
             TypedValue outValue = new TypedValue();
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
@@ -2015,7 +2018,7 @@ public class threaded_application extends Application {
     @SuppressLint("SourceLockedOrientationActivity")
     public boolean setActivityOrientation(Activity activity) {
         boolean isWeb = (activity.getLocalClassName().equals("web_activity"));
-        String to = prefs.getString("ThrottleOrientation",
+        String to = prefs.getString("prefThrottleOrientation",
                 threaded_application.context.getResources().getString(R.string.prefThrottleOrientationDefaultValue));
         if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
             int orient = activity.getResources().getConfiguration().orientation;
@@ -2023,7 +2026,7 @@ public class threaded_application extends Application {
                     || (!isWeb && orient == Configuration.ORIENTATION_LANDSCAPE))
                 return (false);
         } else if (isWeb) {
-            to = prefs.getString("WebOrientation",
+            to = prefs.getString("prefWebOrientation",
                     threaded_application.context.getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
 
@@ -2223,10 +2226,10 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         String defaultWebViewLocation = getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue);
-        String webViewLocation = prefs.getString("WebViewLocation", defaultWebViewLocation);
+        String prefWebViewLocation = prefs.getString("prefWebViewLocation", defaultWebViewLocation);
 
         if ((prefs.getBoolean("prefWebViewButton", false))
-                && (!webViewLocation.equals(defaultWebViewLocation))
+                && (!prefWebViewLocation.equals(defaultWebViewLocation))
                 && (currentScreenSupportsWebView)) {
             actionBarIconCountThrottle++;
             mi.setVisible(true);
@@ -2434,7 +2437,7 @@ public class threaded_application extends Application {
             }
             newValue = defaultName + " " + deviceId;
         }
-        prefs.edit().putString("throttle_name_preference", newValue).commit();  //save new name to prefs
+        prefs.edit().putString("prefThrottleName", newValue).commit();  //save new name to prefs
         return newValue;
     }
 
@@ -2654,11 +2657,11 @@ public class threaded_application extends Application {
 
 
     public Intent getNextIntentInSwipeSequence(int currentScreen, float deltaX) {
-        prefSwipeThoughTurnouts = prefs.getBoolean("swipe_through_turnouts_preference",
+        prefSwipeThoughTurnouts = prefs.getBoolean("prefSwipeThroughTurnouts",
                 getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-        prefSwipeThoughRoutes = prefs.getBoolean("swipe_through_routes_preference",
-                getResources().getBoolean(R.bool.prefSwipeThroughTurnoutsDefaultValue));
-        prefSwipeThoughWeb = prefs.getBoolean("swipe_through_web_preference",
+        prefSwipeThoughRoutes = prefs.getBoolean("prefSwipeThroughRoutes",
+                getResources().getBoolean(R.bool.prefSwipeThroughRoutesDefaultValue));
+        prefSwipeThoughWeb = prefs.getBoolean("prefSwipeThroughWeb",
                 getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
 
         boolean swipeRoutes = isRouteControlAllowed();  //also check the allowed flag
@@ -2954,17 +2957,17 @@ public class threaded_application extends Application {
     public void throttleVibration(int speed, int lastSpeed) {
         if ((prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER))
                 || (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED))) {
-            int speedStepPref = getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            int prefDisplaySpeedUnits = getIntPrefValue(prefs, "prefDisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
             int xSpeed = speed;
             int xLastSpeed = lastSpeed;
             if (prefHapticFeedback.equals(HAPTIC_FEEDBACK_SLIDER_SCALED)) {
-                if (speedStepPref == 28) {
+                if (prefDisplaySpeedUnits == 28) {
                     xSpeed = speed / 2;
                     xLastSpeed = lastSpeed / 2;
-                } else if (speedStepPref == 100) {
+                } else if (prefDisplaySpeedUnits == 100) {
                     xSpeed = speed / 10;
                     xLastSpeed = lastSpeed / 10;
-                } else if (speedStepPref == 128) {
+                } else if (prefDisplaySpeedUnits == 128) {
                     xSpeed = speed / 6;
                     xLastSpeed = lastSpeed / 6;
                 }
@@ -3636,6 +3639,67 @@ public class threaded_application extends Application {
             threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
         } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.MEDIUM)) {
             threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+        }
+    }
+
+    // run at startup
+    // this method finds old preferences and renames them
+    // always include the date the 'preference' was added so that it can eventually be removed.
+    private void renamePreferencesToNewFormat() {
+        // list all the existing preferences, if extended logging is enabled
+        threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging", false);
+        if (threaded_application.prefExtendedLogging) {
+            Map<String, ?> allPreferences = prefs.getAll();
+            for (Map.Entry<String, ?> entry : allPreferences.entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+
+                // Log the key and its value
+                if (value != null) {
+                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: " + value.toString() + ", Type: " + value.getClass().getSimpleName());
+                } else {
+                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: null");
+                }
+            }
+        }
+
+        // check to see if the rename process has already run
+        String prefLastPrefRename = prefs.getString("prefLastPrefRename", "X");
+        if (prefLastPrefRename.equals(LAST_PREFERENCE_NAME_RUN)) return; // already checked
+
+        prefs.edit().putString("prefLastPrefRename", LAST_PREFERENCE_NAME_RUN).apply();
+
+        Log.d(threaded_application.applicationName, "PreferenceList: checking for old Preference Names");
+        String[] preferencesToRename = getResources().getStringArray(R.array.preferencesToRename);
+        for (String prefName : preferencesToRename) {
+            String[] prefValues = prefName.split(":");
+            if (prefValues.length ==2) {
+                renameAPreferenceToNewFormat(prefValues[0], prefValues[1]);
+            } else if (prefValues.length == 1) {
+                renameAPreferenceToNewFormat(prefValues[0], "");
+            }
+        }
+    }
+    @SuppressLint("ApplySharedPref")
+    private void renameAPreferenceToNewFormat(String oldName, String newName) {
+        if (prefs.contains(oldName)) {
+            if (!newName.isEmpty()) {
+                Object value = prefs.getAll().get(oldName);
+                if (value instanceof String) {
+                    prefs.edit().putString(newName, (String) value).apply();
+                } else if (value instanceof Integer) {
+                    prefs.edit().putInt(newName, (Integer) value).apply();
+                } else if (value instanceof Boolean) {
+                    prefs.edit().putBoolean(newName, (Boolean) value).apply();
+                } else if (value instanceof Float) {
+                    prefs.edit().putFloat(newName, (Float) value).apply();
+                } else if (value instanceof Long) {
+                    prefs.edit().putLong(newName, (Long) value).apply();
+                }
+            }
+            Log.d(threaded_application.applicationName, "PreferenceList: Renamed Key: " + oldName + " To: " + newName);
+
+            prefs.edit().remove(oldName).apply();
         }
     }
 }

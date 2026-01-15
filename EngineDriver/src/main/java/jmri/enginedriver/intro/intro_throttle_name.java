@@ -53,7 +53,7 @@ public class intro_throttle_name extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mainapp = (threaded_application) Objects.requireNonNull(this.getActivity()).getApplication();
         prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
-        currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
+        currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
 
         throttleNameView = Objects.requireNonNull(getView()).findViewById(R.id.intro_throttle_name_value);
         throttleNameView.setText(currentValue);
@@ -62,7 +62,7 @@ public class intro_throttle_name extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    currentValue = mainapp.fixThrottleName(prefs.getString("throttle_name_preference", Objects.requireNonNull(getActivity()).getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
+                    currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", Objects.requireNonNull(getActivity()).getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
                     throttleNameView.setText(currentValue);
                 }
             }
@@ -79,7 +79,7 @@ public class intro_throttle_name extends Fragment {
     @SuppressLint("ApplySharedPref")
     @Override
     public void onDestroyView() {
-        prefs.edit().putString("throttle_name_preference", throttleNameView.getText().toString()).commit();
+        prefs.edit().putString("prefThrottleName", throttleNameView.getText().toString()).commit();
         super.onDestroyView();
     }
 }

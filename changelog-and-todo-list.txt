@@ -17,6 +17,8 @@
     * Added the concept of 'Extended Logging'. Some Log.d()s will only be logged if a new preference is enabled.
     * Improvements to the style of the buttons in the dialogs in the Preferences
     * Linting
+    * Automatically rename the old preferences to the new format "pref.."
+    * If the Extended Logging is enabled, the full preference list is printed in the log at start-up.
  * Bug fixes
     * Bug fix for non-immersive mode on earlier versions of Android <15
     * Bug fix for gamepad calibration when using joystick like settings
@@ -556,7 +558,7 @@
  * Option to automatically import preferences from the JMRI Server on connect
  * Add location permission prompt
  * Add wifi & OS details to About screen for debugging
- * change default for DirChangeWhileMoving and selLocoWhileMoving to false
+ * change default for DirChangeWhileMoving and SelectLocoWhileMoving to false
  * add some edits to Turnout# input
  * show warnings when not using wifi network
  * update jmdns from 3.5.4 to 3.5.5 to keep up with JMRI

@@ -733,7 +733,7 @@ public class select_loco extends AppCompatActivity {
 
         // user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
         // ignore the preference if a recent consist was selected
-        if (prefs.getBoolean("drop_on_acquire_preference", false) && numberInConsist < 0) {
+        if (prefs.getBoolean("prefDropOnAcquire", false) && numberInConsist < 0) {
             ConLoco cl = consist.getLoco(sAddr);
             if (cl == null) { // if the newly selected loco is different/not in the consist, release everything
                 releaseLoco(whichThrottle);
@@ -1673,11 +1673,11 @@ public class select_loco extends AppCompatActivity {
                 }
                 locoSource = source_type.ROSTER;
 
-                boolean bRosterRecent = prefs.getBoolean("roster_recent_locos_preference",
+                boolean prefRosterRecentLocos = prefs.getBoolean("prefRosterRecentLocos",
                         getResources().getBoolean(R.bool.prefRosterRecentLocosDefaultValue));
 
                 overrideThrottleName = rosterNameString;
-                if (!acquireLoco(bRosterRecent, -1)) {
+                if (!acquireLoco(prefRosterRecentLocos, -1)) {
                     sWhichThrottle = keepsWhichThrottle;
                 }
                 mainapp.hideSoftKeyboard(v, activityName);
@@ -1832,7 +1832,7 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
-        defaultAddressLength = prefs.getString("default_address_length", this
+        defaultAddressLength = prefs.getString("prefDefaultAddressLength", this
                 .getResources().getString(
                         R.string.prefDefaultAddressLengthDefaultValue));
         Bundle extras = getIntent().getExtras();
@@ -2200,7 +2200,7 @@ public class select_loco extends AppCompatActivity {
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
         // checking address length here covers (future) case where prefs changed while paused
-        defaultAddressLength = prefs.getString("default_address_length", this
+        defaultAddressLength = prefs.getString("prefDefaultAddressLength", this
                 .getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
         updateAddressEntry();   // enable/disable buttons
         // suppress popup keyboard until EditText is touched

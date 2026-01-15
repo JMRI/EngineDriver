@@ -202,7 +202,7 @@ public class ImportExportConnectionList {
                     }
                 }
 
-                String smrc = prefs.getString("maximum_recent_connections_preference", ""); //retrieve pref for max recents to show
+                String smrc = prefs.getString("prefMaximumRecentConnections", ""); //retrieve pref for max recents to show
                 if (smrc.isEmpty()) { //if no value or entry removed, set to default
                     smrc = mainapp.getApplicationContext().getResources().getString(R.string.prefMaximumRecentConnectionsDefaultValue);
                 }

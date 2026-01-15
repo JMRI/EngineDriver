@@ -171,8 +171,8 @@
     <string name="prefDirChangeWhileMovingSummary">Autoriser les changements de sens si lok en marche</string>
     <string name="prefStopOnDirectionChangeTitle">Arrêt si changement de sens ?</string>
     <string name="prefStopOnDirectionChangeSummary">Arrêt du train si changement de sens en mouvement.</string>
-    <string name="prefSelLocoWhileMovingTitle">Autoriser un choix de loco en mouvement?</string>
-    <string name="prefSelLocoWhileMovingSummary">Autorise accès aux loco en mouvement</string>
+    <string name="prefSelectLocoWhileMovingTitle">Autoriser un choix de loco en mouvement?</string>
+    <string name="prefSelectLocoWhileMovingSummary">Autorise accès aux loco en mouvement</string>
     <string name="prefShowAddressInsteadOfNameTitle">Afficher adresse loco plutot que nom?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Afficher l adresse de la loco plutot que son nom sur le régulateur</string>
     <string name="prefIncreaseWebViewSizeTitle">Augmenter la taille de l affichage Web?</string>
@@ -272,9 +272,9 @@
     <string name="prefMaximumThrottleChangeSummary">Pourcentage de vitesse maxi pour le régulateur</string>
     <string name="prefWebViewTitle">Préférences vue Web</string>
     <string name="prefWebViewSummary">Options de la vue Web</string>
-    <string name="prefInitialThrotWebPageTitle">Page de démarrage Web</string>
+    <string name="prefInitialThrottleWebPageTitle">Page de démarrage Web</string>
 
-    <string name="prefInitialThrotWebPageSummary">Page de démarrage Web (comme \'/panel/\')</string>
+    <string name="prefInitialThrottleWebPageSummary">Page de démarrage Web (comme \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Affichage Web du régulateur?</string>
 
     <string name="prefWebViewLocationSummary">Intégrer la vue Web au régulateur</string>
@@ -286,8 +286,8 @@
     <string name="prefSelectiveLeadSoundF2Title">Toujours traiter F2 comme fonction son</string>
     <string name="prefSelectiveLeadSoundF2Summary">Pour la \'Locomotive sélectionnée en tete UM \' option</string>
 
-    <string name="prefStopOnPhonecallTitle">Arrêt si appel téléphone?</string>
-    <string name="prefStopOnPhonecallSummary">Arreter locomotive(s) si appel téléphone</string>
+    <string name="prefStopOnPhoneCallTitle">Arrêt si appel téléphone?</string>
+    <string name="prefStopOnPhoneCallSummary">Arreter locomotive(s) si appel téléphone</string>
     <string name="prefStopOnBackgroundTitle">Arret d urgence en arriere plan ?</string>
     <string name="prefStopOnBackgroundSummary">Arret d urgence complet si Engine Driver bascule en arriere Plan</string>
 
@@ -355,7 +355,7 @@
 
     <string name="prefStopButtonEStopOnLongPressSummary">Arret de toutes les locomotives de la commande actuelle par appui long sur STOP</string>
     <string name="PrefConnectToFirstServerTitle">Connexion automatique sur le 1er serveur?</string>
-    <string name="PrefConnectToFirstServerSummary">Connexion automatique sur le 1er serveur découvert?</string>
+    <string name="prefConnectToFirstServerSummary">Connexion automatique sur le 1er serveur découvert?</string>
     <string name="prefDisplayClockTitle">Affichage Horloge rapide</string>
     <string name="prefDisplayClockSummary">Definition format d affichage de l Horloge rapide.</string>
 
@@ -1254,8 +1254,8 @@
     <string name="autoServerConnectTitle">Connexion automatique au serveur</string>
     <string name="autoServerConnectLabel">Nom du serveur</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Obtenir le serveur actuel</string>
-    <string name="prefAutoServerConnectSummary">Se connecter automatiquement à un serveur nommé s\'il est découvert</string>
-    <string name="prefAutoServerConnectTitle">Connexion automatique au serveur nommé</string>
+    <string name="prefAutoServerNamedConnectSummary">Se connecter automatiquement à un serveur nommé s\'il est découvert</string>
+    <string name="prefAutoServerNamedConnectTitle">Connexion automatique au serveur nommé</string>
     <string name="dccexInCv19Consist">La locomotive fait partie d\'un CV19 composé de : %s</string>
     <string name="dccexNotInCv19Consist">La locomotive n\'est PAS dans une composition CV19</string>
 

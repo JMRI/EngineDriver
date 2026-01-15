@@ -64,7 +64,7 @@
             android:autofillHints="1-9999"
             android:digits="0123456789"
             android:inputType="number"
-            android:maxLength="4"
+            android:maxLength="5"
             tools:ignore="LabelFor" />
 
     </LinearLayout>
