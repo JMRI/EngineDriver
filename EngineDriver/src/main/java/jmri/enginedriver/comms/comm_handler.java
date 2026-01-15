@@ -165,7 +165,7 @@ public class comm_handler extends Handler {
                commThread.sendThrottleName();
                mainapp.sendMsgDelay(mainapp.comm_msg_handler, 5000L, message_type.CONNECTION_COMPLETED_CHECK);
 
-               if (prefs.getBoolean("stop_on_phonecall_preference", mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
+               if (prefs.getBoolean("prefStopOnPhoneCall", mainapp.getResources().getBoolean(R.bool.prefStopOnPhoneCallDefaultValue))) {
                   commThread.phone = new comm_thread.PhoneListener();
                }
             } else {
@@ -187,7 +187,7 @@ public class comm_handler extends Handler {
                mainapp.function_labels[whichThrottle] = new LinkedHashMap<>();
                mainapp.function_states[whichThrottle] = new boolean[threaded_application.MAX_FUNCTION_NUMBER +1];
             }
-            if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
+            if (prefs.getBoolean("prefStopOnRelease",                         //send stop command before releasing (if set in prefs)
                     mainapp.getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
                comm_thread.sendSpeedZero(whichThrottle);
 //               delays++;
@@ -211,7 +211,7 @@ public class comm_handler extends Handler {
                mainapp.function_labels[whichThrottle] = new LinkedHashMap<>();
                mainapp.function_states[whichThrottle] = new boolean[threaded_application.MAX_FUNCTION_NUMBER +1];
             }
-            if (prefs.getBoolean("stop_on_release_preference",                         //send stop command before releasing (if set in prefs)
+            if (prefs.getBoolean("prefStopOnRelease",                         //send stop command before releasing (if set in prefs)
                     mainapp.getResources().getBoolean(R.bool.prefStopOnReleaseDefaultValue))) {
                comm_thread.sendSpeedZero(whichThrottle);
             }
@@ -308,7 +308,7 @@ public class comm_handler extends Handler {
 //                        int delays = 0;
             final String addr = msg.obj.toString();
             final int whichThrottle = msg.arg1;
-            if (prefs.getBoolean("drop_on_acquire_preference",
+            if (prefs.getBoolean("prefDropOnAcquire",
                     mainapp.getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
 //               commThread.sendReleaseLoco("*", whichThrottle, 0);
                commThread.sendReleaseLoco("*", whichThrottle);
@@ -546,7 +546,7 @@ public class comm_handler extends Handler {
          case message_type.CLOCK_DISPLAY_CHANGED:
             if (!mainapp.doFinish) {
                try {
-                  mainapp.fastClockFormat = Integer.parseInt(Objects.requireNonNull(prefs.getString("ClockDisplayTypePreference", "0")));
+                  mainapp.fastClockFormat = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefClockDisplayType", "0")));
                } catch (NumberFormatException e) {
                   mainapp.fastClockFormat = 0;
                }

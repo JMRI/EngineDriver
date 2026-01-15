@@ -508,7 +508,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         // enable swipe/fling detection if enabled in Prefs
         ov = findViewById(R.id.web_overlay);
-        boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+        boolean swipeWeb = prefs.getBoolean("prefSwipeThroughWeb",
                 getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
         if (swipeWeb) {
             ov.addOnGestureListener(this);
@@ -633,7 +633,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.displayThrottleButton(menu);
-//        mainapp.displayThrottleMenuButton(menu, "swipe_through_web_preference");
+//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughWeb");
         mainapp.setPowerMenuOption(menu);
         if (findViewById(R.id.powerLayoutButton) == null) {
             final Handler handler = new Handler(Looper.getMainLooper());
@@ -794,7 +794,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
         // try the pref setting
         if (urlRestoreStep == 2) {
-            mainapp.defaultWebViewURL = prefs.getString("InitialWebPage",
+            mainapp.defaultWebViewURL = prefs.getString("prefInitialWebPage",
                     getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
             String url = mainapp.createUrl(mainapp.defaultWebViewURL);
             if (url != null) {      // if port is valid

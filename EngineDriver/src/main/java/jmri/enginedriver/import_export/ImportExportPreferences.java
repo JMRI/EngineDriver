@@ -163,7 +163,7 @@ public class ImportExportPreferences {
             threaded_application.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         }
 
-        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
+        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
 
         int prefCount;
         if (prefImportExportLocoList) {  // now clean out the preference data
@@ -221,7 +221,7 @@ public class ImportExportPreferences {
         if (!exportedPreferencesFileName.equals(".ed")) {
 
             // save a few values so that we can reset them. i.e. effectively don't import them
-            String currentThrottleNameValue = sharedPreferences.getString("throttle_name_preference", context.getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
+            String currentThrottleNameValue = sharedPreferences.getString("prefThrottleName", context.getResources().getString(R.string.prefThrottleNameDefaultValue)).trim();
             String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
 //            boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
             int prefForcedRestartReason = sharedPreferences.getInt("prefForcedRestartReason", restart_reason_type.NONE);
@@ -288,7 +288,7 @@ public class ImportExportPreferences {
 
                     // restore the remembered throttle name to avoid a duplicate throttle name if this is a different to device to where it was originally saved
                     if ((!restoredDeviceId.equals(deviceId)) || (restoredDeviceId.isEmpty())) {
-                        prefEdit.putString("throttle_name_preference", currentThrottleNameValue);
+                        prefEdit.putString("prefThrottleName", currentThrottleNameValue);
                     }
                     prefEdit.putString("prefImportExport", "None");  //reset the preference
                     prefEdit.putString("prefHostImportExport", "None");  //reset the preference
@@ -490,7 +490,7 @@ public class ImportExportPreferences {
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_ENGINES_FILENAME);
 
         PrintWriter list_output;
-        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
+        String smrl = sharedPreferences.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
         try {
             int mrl = Integer.parseInt(smrl);
             list_output = new PrintWriter(engine_list_file);
@@ -854,7 +854,7 @@ public class ImportExportPreferences {
         File consist_list_file = new File(context.getExternalFilesDir(null), RECENT_CONSISTS_FILENAME);
 
         PrintWriter list_output;
-        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
+        int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
         try {
             list_output = new PrintWriter(consist_list_file);
             if (numberOfRecentLocosToWrite > 0) {
@@ -1143,7 +1143,7 @@ public class ImportExportPreferences {
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
 
         PrintWriter list_output;
-        String smrl = sharedPreferences.getString("maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
+        String smrl = sharedPreferences.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
         try {
             int numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 2;
             numberOfRecentTurnoutsToWrite = min(numberOfRecentTurnoutsToWrite, recentTurnoutAddressList.size());
@@ -1267,10 +1267,10 @@ public class ImportExportPreferences {
         loadRecentLocosListFromFile();
 
         ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
-        int recentsSize = getIntPrefValue(sharedPreferences, "maximum_recent_locos_preference", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
+        int recentsSize = getIntPrefValue(sharedPreferences, "prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
         int requiredRecentsSize = rns.size()+ 10;
         if (requiredRecentsSize>recentsSize) { // force the preference for the max recents to larger than the roster
-            sharedPreferences.edit().putString("maximum_recent_locos_preference", String.format("%d",requiredRecentsSize)).commit();  //reset the preference
+            sharedPreferences.edit().putString("prefMaximumRecentLocos", String.format("%d",requiredRecentsSize)).commit();  //reset the preference
         }
 
         int j=0;

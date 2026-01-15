@@ -1086,11 +1086,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         if (prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC)) {
-            sharedPreferences.edit().putString("DisplaySpeedUnits", "100").commit();
+            sharedPreferences.edit().putString("prefDisplaySpeedUnits", "100").commit();
             prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
-            if( prefDisplaySemiRealisticThrottleNotches < 100) {
-                sharedPreferences.edit().putString("speed>Timer_arrows_throttle_speed_step", "1").commit();
-            }
+//            if( prefDisplaySemiRealisticThrottleNotches < 100) {
+//                sharedPreferences.edit().putString("speed>Timer_arrows_throttle_speed_step", "1").commit();
+//            }
         }
         if ( (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal))
         || (prefDisplaySemiRealisticThrottleNotchesOriginal != prefDisplaySemiRealisticThrottleNotches) ) {
@@ -1127,7 +1127,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String throttleTypePrefName, String numThrottlePrefName) {
         Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles()");
-        int numThrottles = mainapp.Numeralise(sharedPreferences.getString(numThrottlePrefName, getResources().getString(R.string.NumThrottleDefaultValue)));
+        int numThrottles = mainapp.Numeralise(sharedPreferences.getString(numThrottlePrefName, getResources().getString(R.string.prefNumThrottleDefaultValue)));
         getThrottleScreenType(sharedPreferences, throttleTypePrefName);
 
         int index = getThrottleScreenTypeArrayIndex(sharedPreferences, throttleTypePrefName);
@@ -1168,8 +1168,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     void showThrottleNumberPreferenceDialog(PreferenceScreen prefScreen) {
-//            String numThrottle = prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue));  // currentValue
-        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
+//            String numThrottle = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue));  // currentValue
+        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
 
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         int index = getThrottleScreenTypeArrayIndex(prefs);
@@ -1335,8 +1335,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void showHideAutoConnectPreferences(PreferenceScreen prefScreen) {
-        boolean enable = prefs.getBoolean("connect_to_first_server_preference", false);
-        enableDisablePreference(prefScreen, "prefAutoServerConnect", !enable);
+        boolean enable = prefs.getBoolean("prefConnectToFirstServer", false);
+        enableDisablePreference(prefScreen, "prefAutoServerNamedConnect", !enable);
     }
 
     private void showHideDispatchPreferences(PreferenceScreen prefScreen) {
@@ -1365,11 +1365,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void showHideWebSwipePreferences(PreferenceScreen prefScreen) {
         boolean enable = true;
-        String currentValue = prefs.getString("ThrottleOrientation", "");
+        String currentValue = prefs.getString("prefThrottleOrientation", "");
         if (!currentValue.equals("Auto-Web")) {
             enable = false;
         }
-        enableDisablePreference(prefScreen, "swipe_through_web_preference", !enable);
+        enableDisablePreference(prefScreen, "prefSwipeThroughWeb", !enable);
     }
 
     private void showHideTTSPreferences(PreferenceScreen prefScreen) {
@@ -1390,9 +1390,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     private void showHideConsistRuleStylePreferences(PreferenceScreen prefScreen) {
         boolean enable = prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL);
-        enableDisablePreference(prefScreen, "SelectiveLeadSound", enable);
-        enableDisablePreference(prefScreen, "SelectiveLeadSoundF1", enable);
-        enableDisablePreference(prefScreen, "SelectiveLeadSoundF2", enable);
+        enableDisablePreference(prefScreen, "prefSelectiveLeadSound", enable);
+        enableDisablePreference(prefScreen, "prefSelectiveLeadSoundF1", enable);
+        enableDisablePreference(prefScreen, "prefSelectiveLeadSoundF2", enable);
 
         enable = prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX);
         enableDisablePreference(prefScreen, "prefConsistFollowDefaultAction", enable);
@@ -1435,12 +1435,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         enable = !prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC);
         enableDisablePreference(prefScreen, "semi_realistic_throttle_preferences", !enable);
-        enableDisablePreference(prefScreen, "DisplaySpeedUnits", enable);
-//        enableDisablePreference(prefScreen, "maximum_throttle_preference", enable);
-        enableDisablePreference(prefScreen, "maximum_throttle_change_preference", enable);
-        enableDisablePreference(prefScreen, "speed_arrows_throttle_repeat_delay", enable);
+        enableDisablePreference(prefScreen, "prefDisplaySpeedUnits", enable);
+//        enableDisablePreference(prefScreen, "prefMaximumThrottle", enable);
+        enableDisablePreference(prefScreen, "prefMaximumThrottleChange", enable);
+        enableDisablePreference(prefScreen, "prefSpeedButtonsRepeat", enable);
         enableDisablePreference(prefScreen, "prefSpeedButtonsSpeedStepDecrement", enable);
-        enableDisablePreference(prefScreen, "DirChangeWhileMovingPreference", enable);
+        enableDisablePreference(prefScreen, "prefDirChangeWhileMoving", enable);
         enableDisablePreference(prefScreen, "prefStopOnDirectionChange", enable);
 
         enable = prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
@@ -1639,15 +1639,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
                 switch (key) {
-                    case "throttle_name_preference": {
+                    case "prefThrottleName": {
 //                        String currentValue = parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
                         parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
                         break;
                     }
-                    case "maximum_throttle_change_preference":
+                    case "prefMaximumThrottleChange":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "25");
                         break;
-                    case "speed_arrows_throttle_speed_step":
+                    case "prefSpeedButtonsSpeedStep":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 99, "4");
                         break;
                     case "prefScreenBrightnessDim":
@@ -1670,7 +1670,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         // the sounds will actually be reloaded in the throttle.onResume()
 //                        iplsLoader.loadSounds();
                         break;
-                    case "maximum_throttle_preference":
+                    case "prefMaximumThrottle":
                     case "prefDeviceSoundsLocoVolume":
                     case "prefDeviceSoundsBellVolume":
                     case "prefDeviceSoundsHornVolume":
@@ -1679,15 +1679,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefDeviceSoundsMomentum":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 2000, "1000");
                         break;
-                    case "ThrottleOrientation":
+                    case "prefThrottleOrientation":
                         setSwipeThroughWebPreference(); //disable web swipe if Auto-Web
                         //if mode was fixed (Port or Land) won't get callback so need explicit call here
                         parentActivity.mainapp.setActivityOrientation(parentActivity);
                         break;
-                    case "InitialWebPage":
+                    case "prefInitialWebPage":
                         parentActivity.mainapp.alert_activities(message_type.INITIAL_WEB_WEBPAGE, "");
                         break;
-                    case "ClockDisplayTypePreference":
+                    case "prefClockDisplayType":
                         parentActivity.mainapp.sendMsg(parentActivity.mainapp.comm_msg_handler, message_type.CLOCK_DISPLAY_CHANGED);
                         break;
                     case "prefNumberOfDefaultFunctionLabels":
@@ -1772,7 +1772,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                                 getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
                         break;
 
-                    case "connect_to_first_server_preference":
+                    case "prefConnectToFirstServer":
                         parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
                         break;
 
@@ -1797,7 +1797,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         @Override
         public void onDisplayPreferenceDialog(Preference preference) {
             // Check if this is the preference we want to handle
-            if (preference.getKey().equals("prefAutoServerConnect")) {
+            if (preference.getKey().equals("prefAutoServerNamedConnect")) {
                 // Create and show our custom dialog
                 DialogFragment dialogFragment = AutoServerConnectDialogFragmentCompat.newInstance(preference.getKey());
                 dialogFragment.setTargetFragment(this, 0);
@@ -1853,7 +1853,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //                mainapp.applyTheme(parentActivity, true);
 
                 if ( (!mainapp.isPowerControlAllowed()) && (!mainapp.connectedHostName.isEmpty()) ) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(), "show_layout_power_button_preference", false);
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefShowLayoutPowerButton", false);
                 }
 //                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
 //                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveMode", false);
@@ -2004,18 +2004,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         @SuppressLint("ApplySharedPref")
         private void setSwipeThroughWebPreference() {
-            String to = prefs.getString("ThrottleOrientation",
+            String to = prefs.getString("prefThrottleOrientation",
                     getResources().getString(R.string.prefThrottleOrientationDefaultValue));
             if (to.equals("Auto-Web")) {
-                parentActivity.enableDisablePreference(getPreferenceScreen(), "swipe_through_web_preference", false);
-                boolean swipeWeb = prefs.getBoolean("swipe_through_web_preference",
+                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSwipeThroughWeb", false);
+                boolean swipeWeb = prefs.getBoolean("prefSwipeThroughWeb",
                         getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
                 if (swipeWeb) {
-                    prefs.edit().putBoolean("swipe_through_web_preference", false).commit();  //make sure preference is off
+                    prefs.edit().putBoolean("prefSwipeThroughWeb", false).commit();  //make sure preference is off
                     threaded_application.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG);
                 }
             } else {
-                parentActivity.enableDisablePreference(getPreferenceScreen(), "swipe_through_web_preference", true);
+                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSwipeThroughWeb", true);
             }
         }
 
@@ -2028,8 +2028,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_SWITCHING_LEFT))
                     && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_VERTICAL_LEFT))
                     && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_LEFT)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_RIGHT));
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "increase_slider_height_preference", enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "left_slider_margin", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefIncreaseSliderHeight", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefLeftSliderMargin", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHideSliderAndSpeedButtons", enable);
 
             enable = !parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
@@ -2048,9 +2048,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_SWITCHING_LEFT)
                     || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_VERTICAL_LEFT)
                     || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "WebViewLocation", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewLocation", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefIncreaseWebViewSize", enable);
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "InitialThrotWebPage", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefInitialThrottleWebPage", enable);
 
             enable = !parentActivity.prefThrottleScreenType.equals(throttle_screen_type.DEFAULT);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTickMarksOnSliders", enable);
@@ -2482,16 +2482,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
 
-                    case "hide_slider_preference":
-                        parentActivity.prefHideSlider = sharedPreferences.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
+                    case "prefHideSlider":
+                        parentActivity.prefHideSlider = sharedPreferences.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
                         break;
 
-                    case "WebViewLocation":
+                    case "prefWebViewLocation":
                         parentActivity.mainapp.alert_activities(message_type.WEBVIEW_LOC, "");
                         parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
                         parentActivity.forceRestartAppOnPreferencesClose = true;
                         break;
-                    case "InitialThrotWebPage":
+                    case "prefInitialThrottleWebPage":
                         parentActivity.mainapp.alert_activities(message_type.INITIAL_THR_WEBPAGE, "");
                         break;
 
@@ -2531,7 +2531,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         parentActivity.checkThrottleScreenType(sharedPreferences);
                         break;
 
-                    case "maximum_throttle_preference":
+                    case "prefMaximumThrottle":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
                         break;
 

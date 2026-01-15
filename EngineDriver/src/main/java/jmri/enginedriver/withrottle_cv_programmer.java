@@ -335,7 +335,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                 }
 
 
-                String defaultAddressLength = prefs.getString("default_address_length", this
+                String defaultAddressLength = prefs.getString("prefDefaultAddressLength", this
                         .getResources().getString(R.string.prefDefaultAddressLengthDefaultValue));
                 // set address length
                 if (defaultAddressLength.equals("Long") ||

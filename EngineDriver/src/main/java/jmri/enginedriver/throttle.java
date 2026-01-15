@@ -203,7 +203,7 @@ public class throttle extends AppCompatActivity implements
     public static final int MAX_SPEED_VAL_WIT = 126;    // wit message maximum speed value, max speed slider value
     protected static int[] maxSpeedSteps = {100, 100, 100, 100, 100, 100};             // decoder max speed steps
     protected static int max_throttle_change;          // maximum allowable change of the sliders
-    protected static int speedStepPref = 100;
+    protected static int prefDisplaySpeedUnits = 100;
     private static double[] displayUnitScales;            // display units per slider count
 
     private static final String VOLUME_INDICATOR = "v";
@@ -367,7 +367,7 @@ public class throttle extends AppCompatActivity implements
     private String noUrl = "file:///android_asset/blank_page.html";
     private static final float initialScale = 1.5f;
     protected WebView webView = null;
-    protected String webViewLocation = web_view_location_type.NONE;
+    protected String prefWebViewLocation = web_view_location_type.NONE;
 
     private static float scale = initialScale;      // used to restore throttle web zoom level (after rotation)
     private static boolean clearHistory = false;    // flags webViewClient to clear history when page load finishes
@@ -503,7 +503,7 @@ public class throttle extends AppCompatActivity implements
     protected boolean prefThrottleViewImmersiveModeHideToolbar = false;
     protected int prefNumberOfDefaultFunctionLabels = MAX_FUNCTIONS;
     protected boolean prefDecreaseLocoNumberHeight = false;
-    protected boolean pref_increase_slider_height_preference = false;
+    protected boolean prefIncreaseSliderHeight = false;
     protected boolean prefShowAddressInsteadOfName = false;
     protected boolean prefIncreaseWebViewSize = false;
     protected boolean prefHideFunctionButtonsOfNonSelectedThrottle = false;
@@ -617,7 +617,7 @@ public class throttle extends AppCompatActivity implements
                 REP_DELAY = repeatDelay;
             } else {
                 try {
-                    REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
+                    REP_DELAY = Integer.parseInt(prefs.getString("prefSpeedButtonsRepeat", "100"));
                 } catch (NumberFormatException ex) {
                     REP_DELAY = 100;
                 }
@@ -999,9 +999,9 @@ public class throttle extends AppCompatActivity implements
                     break;
                 case message_type.WEBVIEW_LOC:      // webview location changed
                     // set new location
-                    webViewLocation = prefs
-                            .getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
-                    keepWebViewLocation = webViewLocation;
+                    prefWebViewLocation = prefs
+                            .getString("prefWebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+                    keepWebViewLocation = prefWebViewLocation;
                     webViewIsOn = false;
                     reloadWeb();
                     break;
@@ -1332,7 +1332,7 @@ public class throttle extends AppCompatActivity implements
 
                         switch (prefAccelerometerShake) {
                             case acceleratorometer_action_type.WEB_VIEW:
-                                if ((webViewLocation.equals(web_view_location_type.NONE)) && (keepWebViewLocation.equals(web_view_location_type.NONE))) {
+                                if ((prefWebViewLocation.equals(web_view_location_type.NONE)) && (keepWebViewLocation.equals(web_view_location_type.NONE))) {
                                     GamepadFeedbackSound(true);
                                     threaded_application.safeToast(R.string.toastShakeWebViewUnavailable, Toast.LENGTH_SHORT);
                                 } else {
@@ -1414,7 +1414,7 @@ public class throttle extends AppCompatActivity implements
     protected void getCommonPrefs(boolean isCreate) {
 
         if (isCreate) {  //only do onCreate
-            webViewLocation = prefs.getString("WebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
+            prefWebViewLocation = prefs.getString("prefWebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         }
         isSemiRealisticThrottle = false;
 
@@ -1456,17 +1456,17 @@ public class throttle extends AppCompatActivity implements
         addConsistFollowRule(prefConsistFollowStringtemp, prefConsistFollowActiontemp, consist_function_is_type.NOT_HEADLIGHT);
 
         // increase height of throttle slider (if requested in preferences)
-        pref_increase_slider_height_preference = prefs.getBoolean("increase_slider_height_preference", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
+        prefIncreaseSliderHeight = prefs.getBoolean("prefIncreaseSliderHeight", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
 
         // decrease height of Loco Id (if requested in preferences)
         prefDecreaseLocoNumberHeight = prefs.getBoolean("prefDecreaseLocoNumberHeight", getResources().getBoolean(R.bool.prefDecreaseLocoNumberHeightDefaultValue));
 
         // increase the web view height if the preference is set
         prefIncreaseWebViewSize = prefs.getBoolean("prefIncreaseWebViewSize", getResources().getBoolean(R.bool.prefIncreaseWebViewSizeDefaultValue));
-        mainapp.defaultWebViewURL = prefs.getString("InitialWebPage",
+        mainapp.defaultWebViewURL = prefs.getString("prefInitialWebPage",
                 getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
-        mainapp.defaultThrottleWebViewURL = prefs.getString("InitialThrotWebPage",
-                getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue));
+        mainapp.defaultThrottleWebViewURL = prefs.getString("prefInitialThrottleWebPage",
+                getApplicationContext().getResources().getString(R.string.prefInitialThrottleWebPageDefaultValue));
 
         prefThrottleViewImmersiveMode = prefs.getBoolean("prefThrottleViewImmersiveMode",
                 getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeDefaultValue));
@@ -1475,17 +1475,17 @@ public class throttle extends AppCompatActivity implements
 
         prefShowAddressInsteadOfName = prefs.getBoolean("prefShowAddressInsteadOfName", getResources().getBoolean(R.bool.prefShowAddressInsteadOfNameDefaultValue));
 
-        prefSwipeDownOption = prefs.getString("SwipeDownOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
-        prefSwipeUpOption = prefs.getString("SwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+        prefSwipeDownOption = prefs.getString("prefSwipeDownOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
+        prefSwipeUpOption = prefs.getString("prefSwipeUpOption", getApplicationContext().getResources().getString(R.string.prefSwipeUpOptionDefaultValue));
         isScreenLocked = false;
 
-        dirChangeWhileMoving = prefs.getBoolean("DirChangeWhileMovingPreference", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+        dirChangeWhileMoving = prefs.getBoolean("prefDirChangeWhileMoving", getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
         stopOnDirectionChange = prefs.getBoolean("prefStopOnDirectionChange", getResources().getBoolean(R.bool.prefStopOnDirectionChangeDefaultValue));
-        locoSelectWhileMoving = prefs.getBoolean("SelLocoWhileMovingPreference", getResources().getBoolean(R.bool.prefSelLocoWhileMovingDefaultValue));
+        locoSelectWhileMoving = prefs.getBoolean("prefSelectLocoWhileMoving", getResources().getBoolean(R.bool.prefSelectLocoWhileMovingDefaultValue));
 
         screenBrightnessDim = Integer.parseInt(prefs.getString("prefScreenBrightnessDim", getResources().getString(R.string.prefScreenBrightnessDimDefaultValue))) * 255 / 100;
 
-        prefConsistLightsLongClick = prefs.getBoolean("ConsistLightsLongClickPreference", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
+        prefConsistLightsLongClick = prefs.getBoolean("prefConsistLightsLongClick", getResources().getBoolean(R.bool.prefConsistLightsLongClickDefaultValue));
 
         prefGamepadTestEnforceTesting = prefs.getBoolean("prefGamepadTestEnforceTesting", getResources().getBoolean(R.bool.prefGamepadTestEnforceTestingDefaultValue));
         mainapp.prefGamePadFeedbackVolume = threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume",
@@ -1507,7 +1507,7 @@ public class throttle extends AppCompatActivity implements
         prefAccelerometerShake = prefs.getString("prefAccelerometerShake", getApplicationContext().getResources().getString(R.string.prefAccelerometerShakeDefaultValue));
 
         // set speed buttons speed step
-        prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
+        prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefSpeedButtonsSpeedStep", "4");
         prefVolumeSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
@@ -1521,18 +1521,18 @@ public class throttle extends AppCompatActivity implements
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
         prefEsuMc2StopButtonShortPress = prefs.getBoolean("prefEsuMc2StopButtonShortPress", getResources().getBoolean(R.bool.prefEsuMc2StopButtonShortPressDefaultValue));
 
-        mainapp.numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
+        mainapp.numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
-        prefSelectiveLeadSound = prefs.getBoolean("SelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
-        prefSelectiveLeadSoundF1 = prefs.getBoolean("SelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
-        prefSelectiveLeadSoundF2 = prefs.getBoolean("SelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
+        prefSelectiveLeadSound = prefs.getBoolean("prefSelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
+        prefSelectiveLeadSoundF1 = prefs.getBoolean("prefSelectiveLeadSoundF1", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF1DefaultValue));
+        prefSelectiveLeadSoundF2 = prefs.getBoolean("prefSelectiveLeadSoundF2", getResources().getBoolean(R.bool.prefSelectiveLeadSoundF2DefaultValue));
 
-        prefHideSlider = prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
+        prefHideSlider = prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
 
         prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", getResources().getBoolean(R.bool.prefLimitSpeedButtonDefaultValue));
         prefLimitSpeedPercent = Integer.parseInt(prefs.getString("prefLimitSpeedPercent", getResources().getString(R.string.prefLimitSpeedPercentDefaultValue)));
-        speedStepPref = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+        prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "prefDisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
         prefPauseSpeedButton = prefs.getBoolean("prefPauseSpeedButton", getResources().getBoolean(R.bool.prefPauseSpeedButtonDefaultValue));
         prefPauseAlternateButton = prefs.getBoolean("prefPauseAlternateButton", getResources().getBoolean(R.bool.prefPauseAlternateButtonDefaultValue));
         prefPauseSpeedRate = Integer.parseInt(prefs.getString("prefPauseSpeedRate", getResources().getString(R.string.prefPauseSpeedRateDefaultValue)));
@@ -1727,10 +1727,10 @@ public class throttle extends AppCompatActivity implements
     private void showHideWebView(String toastMsg) {
         if (!(keepWebViewLocation.equals(web_view_location_type.NONE))) { // show/hide the web view if the preference is set
             if (!webViewIsOn) {
-                webViewLocation = keepWebViewLocation;
+                prefWebViewLocation = keepWebViewLocation;
                 webView.setVisibility(VISIBLE);
             } else {
-                webViewLocation = web_view_location_type.NONE;
+                prefWebViewLocation = web_view_location_type.NONE;
                 webView.setVisibility(View.GONE);
                 if (!toastMsg.isEmpty())
                     threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
@@ -2249,8 +2249,8 @@ public class throttle extends AppCompatActivity implements
     //get max speedstep based on Preferences
     //unless pref is set to AUTO in which case just return the input value
     private int getSpeedSteps(int maxStep) {
-        if (speedStepPref != speed_step_type.STEPS_AUTO) {
-            maxStep = speedStepPref;
+        if (prefDisplaySpeedUnits != speed_step_type.STEPS_AUTO) {
+            maxStep = prefDisplaySpeedUnits;
         }
         return maxStep;
     }
@@ -3735,7 +3735,7 @@ public class throttle extends AppCompatActivity implements
             whichThrottle = WhichThrottle;
 
             try {
-                REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
+                REP_DELAY = Integer.parseInt(prefs.getString("prefSpeedButtonsRepeat", "100"));
             } catch (NumberFormatException ex) {
                 REP_DELAY = 100;
             }
@@ -4464,7 +4464,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     protected void limitSpeed(int whichThrottle) {
-        int maxThrottle = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        int maxThrottle = threaded_application.getIntPrefValue(prefs, "prefMaximumThrottle", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
@@ -5229,7 +5229,7 @@ public class throttle extends AppCompatActivity implements
                 @Override
                 public void run() {
                     mainapp.safeToastInstructional(R.string.prefThrottlesLocosToast, Toast.LENGTH_LONG);
-                    int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
+                    int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
                     importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, numThrottles);
                     setLabels();
                 }
@@ -5251,8 +5251,8 @@ public class throttle extends AppCompatActivity implements
         }
         gamepadBeepIds.recycle();
 
-        webViewIsOn = !webViewLocation.equals(web_view_location_type.NONE);
-        keepWebViewLocation = webViewLocation;
+        webViewIsOn = !prefWebViewLocation.equals(web_view_location_type.NONE);
+        keepWebViewLocation = prefWebViewLocation;
 
         isScreenLocked = false;
 
@@ -5292,8 +5292,8 @@ public class throttle extends AppCompatActivity implements
 
             getDirectionButtonPrefs();
 
-            webViewIsOn = !webViewLocation.equals(web_view_location_type.NONE);
-            keepWebViewLocation = webViewLocation;
+            webViewIsOn = !prefWebViewLocation.equals(web_view_location_type.NONE);
+            keepWebViewLocation = prefWebViewLocation;
 
             isScreenLocked = false;
 
@@ -5645,7 +5645,7 @@ public class throttle extends AppCompatActivity implements
 
         setActiveThrottle(0); // set the throttle the volume keys control depending on the preference to the default 0
 
-        if (prefs.getString("WebViewLocation", web_view_location_type.NONE).equals(web_view_location_type.TOP)) {
+        if (prefs.getString("prefWebViewLocation", web_view_location_type.NONE).equals(web_view_location_type.TOP)) {
             webView = findViewById(R.id.throttle_webview_top);
         } else {
             webView = findViewById(R.id.throttle_webview);
@@ -6105,15 +6105,15 @@ public class throttle extends AppCompatActivity implements
     // load the url
     private void load_webview() {
         String url = currentUrl;
-        webViewIsOn = !webViewLocation.equals(web_view_location_type.NONE);
+        webViewIsOn = !prefWebViewLocation.equals(web_view_location_type.NONE);
         if (!webViewIsOn) {                         // if not displaying webview
             url = noUrl;
             currentUrl = null;
             firstUrl = null;
         } else {
             if (url == null || url.equals(noUrl)) {                // if initializing
-                mainapp.defaultThrottleWebViewURL = prefs.getString("InitialThrotWebPage",
-                        getApplicationContext().getResources().getString(R.string.prefInitialThrotWebPageDefaultValue));
+                mainapp.defaultThrottleWebViewURL = prefs.getString("InitialThrottleWebPage",
+                        getApplicationContext().getResources().getString(R.string.prefInitialThrottleWebPageDefaultValue));
                 url = mainapp.createUrl(mainapp.defaultThrottleWebViewURL);
                 if (url == null) {      //if port is invalid
                     url = noUrl;
@@ -6285,14 +6285,14 @@ public class throttle extends AppCompatActivity implements
         setGamepadIndicator();
 
         // set up max speeds for throttles
-        int maxThrottle = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        int maxThrottle = threaded_application.getIntPrefValue(prefs, "prefMaximumThrottle", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (maxThrottle * .01)); // convert from percent
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             sbs[throttleIndex].setMax(maxThrottle);
         }
 
         // set max allowed change for throttles from prefs
-        int maxChange = threaded_application.getIntPrefValue(prefs, "maximum_throttle_change_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
+        int maxChange = threaded_application.getIntPrefValue(prefs, "prefMaximumThrottleChange", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleChangeDefaultValue));
         max_throttle_change = (int) Math.round(maxThrottle * (maxChange * .01));
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -6303,7 +6303,7 @@ public class throttle extends AppCompatActivity implements
                 limitSpeedMax[throttleIndex] = Math.round(100 * ((float) prefLimitSpeedPercent) / 100);
             }
             //get speed steps from prefs
-            speedStepPref = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+            prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "prefDisplaySpeedUnits", getApplicationContext().getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
             setDisplayUnitScale(throttleIndex);
 
             setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
@@ -6961,7 +6961,7 @@ public class throttle extends AppCompatActivity implements
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine, screenNameLine);
 
         // check if the sliders are already hidden by preference
-        if (!prefs.getBoolean("hide_slider_preference", false)) {
+        if (!prefs.getBoolean("prefHideSlider", false)) {
             // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
             for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
                 if ((sbs[throttleIndex].isEnabled())
@@ -7581,29 +7581,29 @@ public class throttle extends AppCompatActivity implements
 //        int maxThrottlesCurrentScreenTypeOriginal = mainapp.getMaxThrottlesForScreen(prefThrottleScreenType);
         String numThrottles;
 
-        if (!webViewLocation.equals(keepWebViewLocation)) {
+        if (!prefWebViewLocation.equals(keepWebViewLocation)) {
             showHideWebView("");
         }
 
         if (!prefThrottleSwitchButtonCycleAll) {
             if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
                 prefThrottleScreenType = prefThrottleSwitchOption2;
-                numThrottles = prefs.getString("prefThrottleSwitchOption2NumThrottles", getResources().getString(R.string.NumThrottleDefaultValue));
+                numThrottles = prefs.getString("prefThrottleSwitchOption2NumThrottles", getResources().getString(R.string.prefNumThrottleDefaultValue));
                 mainapp.numThrottles = mainapp.Numeralise(numThrottles);
             } else {
                 prefThrottleScreenType = prefThrottleSwitchOption1;
-                numThrottles = prefs.getString("prefThrottleSwitchOption1NumThrottles", getResources().getString(R.string.NumThrottleDefaultValue));
+                numThrottles = prefs.getString("prefThrottleSwitchOption1NumThrottles", getResources().getString(R.string.prefNumThrottleDefaultValue));
                 mainapp.numThrottles = mainapp.Numeralise(numThrottles);
             }
         } else {
             prefThrottleScreenType = mainapp.getNextThrottleLayout();
-            numThrottles = prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue));
+            numThrottles = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue));
             mainapp.numThrottles = mainapp.Numeralise(numThrottles);
         }
 
         prefs.edit().putString("prefThrottleScreenType", prefThrottleScreenType).commit();
         prefs.edit().putString("NumThrottle", numThrottles).commit();
-        prefs.edit().putString("WebViewLocation", webViewLocation).commit();
+        prefs.edit().putString("prefWebViewLocation", prefWebViewLocation).commit();
         fixNumThrottles();
 
 //        if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThrottlesForScreen(prefThrottleScreenType)) {
@@ -7677,7 +7677,7 @@ public class throttle extends AppCompatActivity implements
 
     @SuppressLint("ApplySharedPref")
     private void fixNumThrottles() {
-        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.NumThrottleDefaultValue)));
+        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
         String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         int index = -1;

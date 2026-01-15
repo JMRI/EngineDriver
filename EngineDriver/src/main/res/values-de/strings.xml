@@ -170,8 +170,8 @@
     <string name="prefDirChangeWhileMovingSummary">Erlaube Richtungswechsel während der Fahrt.</string>
     <string name="prefStopOnDirectionChangeTitle">Anhalten beim Richtungswechsel?</string>
     <string name="prefStopOnDirectionChangeSummary">Zug anhalten beim Richtungswechsel während der Fahrt.</string>
-    <string name="prefSelLocoWhileMovingTitle">Erlaube Lokauswahl während der Fahrt?</string>
-    <string name="prefSelLocoWhileMovingSummary">Ermöglicht Anzeige des Knopfs für Lokauswahl während der Fahrt.</string>
+    <string name="prefSelectLocoWhileMovingTitle">Erlaube Lokauswahl während der Fahrt?</string>
+    <string name="prefSelectLocoWhileMovingSummary">Ermöglicht Anzeige des Knopfs für Lokauswahl während der Fahrt.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Zeige Adresse statt Name der Lok?</string>
     <string name="prefShowAddressInsteadOfNameSummary">DCC Adresse statt Name der Lok im Fahrregler anzeigen.</string>
     <string name="prefIncreaseWebViewSizeTitle">Vergrößere Web Ansicht?</string>
@@ -273,9 +273,9 @@
     <string name="prefMaximumThrottleChangeSummary">Maximal erlaubte Fahrregleränderung in %</string>
     <string name="prefWebViewTitle">Web Ansicht Voreinstellungen</string>
     <string name="prefWebViewSummary">Optionen für die Web Ansicht</string>
-    <string name="prefInitialThrotWebPageTitle">Anfängliche Fahrregler Web Seite</string>
+    <string name="prefInitialThrottleWebPageTitle">Anfängliche Fahrregler Web Seite</string>
 
-    <string name="prefInitialThrotWebPageSummary">Anfängliche Fahrregler Web  Seite (Typ \'/panel/\')</string>
+    <string name="prefInitialThrottleWebPageSummary">Anfängliche Fahrregler Web  Seite (Typ \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Fahrregler Web Ansicht?</string>
 <!--    <string name="prefWebViewLocationDefaultValue">keine</string> -->
     <string name="prefWebViewLocationSummary">Web Ansicht im Fahrreglerfeld beifügen</string>
@@ -287,8 +287,8 @@
     <string name="prefSelectiveLeadSoundF2Title">Behandle F2 immer als Sound</string>
     <string name="prefSelectiveLeadSoundF2Summary">Für die Option \"Selective Lead Unit Sound\"</string>
 
-    <string name="prefStopOnPhonecallTitle">Stop bei Telefonanruf?</string>
-    <string name="prefStopOnPhonecallSummary">Stoppe Lok(s) wenn ein Telefonanruf angenommen oder gewählt wird</string>
+    <string name="prefStopOnPhoneCallTitle">Stop bei Telefonanruf?</string>
+    <string name="prefStopOnPhoneCallSummary">Stoppe Lok(s) wenn ein Telefonanruf angenommen oder gewählt wird</string>
     <string name="prefStopOnBackgroundTitle">EStop im Hintergrund?</string>
     <string name="prefStopOnBackgroundSummary">EStoppen Sie alle Loks auf allen Fahrreglern, wenn Engine Driver in den Hintergrund verschoben wird</string>
 
@@ -359,7 +359,7 @@
 
     <string name="prefStopButtonEStopOnLongPressSummary">ESTOP alle Lokomotiven auf dem aktuellen Fahrregler durch langes Drücken der Stopp-Taste</string>
     <string name="PrefConnectToFirstServerTitle">AutoVerbindung mit erstem Server?</string>
-    <string name="PrefConnectToFirstServerSummary">Automatisch mit zuerst gefundenem Server verbinden?</string>
+    <string name="prefConnectToFirstServerSummary">Automatisch mit zuerst gefundenem Server verbinden?</string>
     <string name="prefDisplayClockTitle">Anzeige Schnelle Uhr</string>
     <string name="prefDisplayClockSummary">Format einstellen für Schnelle Uhr in Fahrregler- und Webanzeigen.</string>
 
@@ -382,7 +382,7 @@
 <!--    <string name="prefGamePadTypeDefaultValue">Keine</string> -->
 <!--    <string name="prefSwipeUpOptionDefaultValue">Keine</string> -->
 <!--    <string name="prefGamePadStartButtonDefaultValue">Nächster Fahrregler</string> -->
-<!--    <string name="NumThrottleDefaultValue">Zwei</string> -->
+<!--    <string name="prefNumThrottleDefaultValue">Zwei</string> -->
     <string name="server_address">Serveradresse</string>
     <string name="routes_route">Fahrstraßenname</string>
 
@@ -1232,8 +1232,8 @@
     <string name="autoServerConnectTitle">Automatische Serververbindung</string>
     <string name="autoServerConnectLabel">Servername</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Aktuellen Server abrufen</string>
-    <string name="prefAutoServerConnectSummary">Automatische Verbindung zu einem benannten Server, wenn dieser erkannt wird</string>
-    <string name="prefAutoServerConnectTitle">Automatische Verbindung zum benannten Server</string>
+    <string name="prefAutoServerNamedConnectSummary">Automatische Verbindung zu einem benannten Server, wenn dieser erkannt wird</string>
+    <string name="prefAutoServerNamedConnectTitle">Automatische Verbindung zum benannten Server</string>
     <string name="dccexInCv19Consist">Lok ist in einem CV19-Verbund: %s</string>
     <string name="dccexNotInCv19Consist">Die Lok ist NICHT in einem CV19-Verbund enthalten</string>
 

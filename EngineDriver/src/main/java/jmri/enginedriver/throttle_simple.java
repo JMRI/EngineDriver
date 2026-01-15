@@ -233,7 +233,7 @@ public class throttle_simple extends throttle {
 
             //show speed buttons based on pref
             vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+            if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
                 vsbSpeeds[throttleIndex].setVisibility(View.GONE);
             }
         }
@@ -289,7 +289,7 @@ public class throttle_simple extends throttle {
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;
 
-        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+        if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
             speedButtonHeight = (int) ((screenHeight
                     - speedButtonHeight
                     - stopButtonParams.topMargin
@@ -301,7 +301,7 @@ public class throttle_simple extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
-            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
+            if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bRSpds[throttleIndex].setVisibility(View.VISIBLE);
 

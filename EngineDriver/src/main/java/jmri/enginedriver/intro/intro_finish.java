@@ -58,7 +58,7 @@ public class intro_finish extends Fragment {
             PermissionsHelper phi = PermissionsHelper.getInstance();
             if (!phi.isPermissionGranted(this.getActivity(), PermissionsHelper.READ_PHONE_STATE)) {
                 SharedPreferences prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
-                prefs.edit().putBoolean("stop_on_phonecall_preference", false).apply();
+                prefs.edit().putBoolean("prefStopOnPhoneCall", false).apply();
             }
         }
     }

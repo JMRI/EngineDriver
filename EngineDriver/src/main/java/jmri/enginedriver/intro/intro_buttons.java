@@ -54,8 +54,8 @@ public class intro_buttons extends Fragment {
         Log.d(threaded_application.applicationName, activityName + ":");
         super.onActivityCreated(savedInstanceState);
         prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
-        boolean prefDisplaySpeedButtons = prefs.getBoolean("display_speed_arrows_buttons", false);
-        boolean prefHideSlider = prefs.getBoolean("hide_slider_preference", false);
+        boolean prefDisplaySpeedButtons = prefs.getBoolean("prefDisplaySpeedButtons", false);
+        boolean prefHideSlider = prefs.getBoolean("prefHideSlider", false);
         boolean prefHideSliderAndSpeedButtons = prefs.getBoolean("prefHideSliderAndSpeedButtons", false);
 
         TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_buttons_slider_name);
@@ -95,8 +95,8 @@ public class intro_buttons extends Fragment {
                 } else if (checkedId == R.id.intro_buttons_no_slider_name) {
                     hideSliderAndButtons = false; displaySpeedButtons = true; hideSlider = true;
                 }
-                prefs.edit().putBoolean("display_speed_arrows_buttons", displaySpeedButtons).commit();
-                prefs.edit().putBoolean("hide_slider_preference", hideSlider).commit();
+                prefs.edit().putBoolean("prefDisplaySpeedButtons", displaySpeedButtons).commit();
+                prefs.edit().putBoolean("prefHideSlider", hideSlider).commit();
                 prefs.edit().putBoolean("prefHideSliderAndSpeedButtons", hideSliderAndButtons).commit();
          }
         });

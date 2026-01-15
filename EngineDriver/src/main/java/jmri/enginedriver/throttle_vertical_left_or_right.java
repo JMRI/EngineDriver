@@ -274,7 +274,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
             //show speed buttons based on pref
             vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+            if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
                 vsbSpeeds[throttleIndex].setVisibility(View.GONE);
             }
         }
@@ -314,7 +314,7 @@ public class throttle_vertical_left_or_right extends throttle {
         }
 
         // save part the screen for webview
-        if (webViewLocation.equals(web_view_location_type.TOP) || webViewLocation.equals(web_view_location_type.BOTTOM)) {
+        if (prefWebViewLocation.equals(web_view_location_type.TOP) || prefWebViewLocation.equals(web_view_location_type.BOTTOM)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
                 screenHeight *= 0.5; // save half the screen
@@ -337,7 +337,7 @@ public class throttle_vertical_left_or_right extends throttle {
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;
 
-        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+        if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
             speedButtonHeight = (int) ((screenHeight
                     - stopButtonParams.topMargin
                     - stopButtonParams.bottomMargin
@@ -346,7 +346,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
-            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
+            if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
                 bLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bRSpds[throttleIndex].setVisibility(View.VISIBLE);
 

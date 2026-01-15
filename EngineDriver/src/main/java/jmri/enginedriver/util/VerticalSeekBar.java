@@ -163,7 +163,7 @@ public class VerticalSeekBar extends SeekBar {
             prefSemiRealisticThrottleMaxLoadPcnt = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleMaxLoadPcnt", "1000");
 
             if (sliderPurpose == SLIDER_PURPOSE_THROTTLE) {
-                prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "DisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
+                prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "prefDisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
                 steps = prefDisplaySpeedUnits;
                 if (steps >= 100) {
                     steps = steps / 3;

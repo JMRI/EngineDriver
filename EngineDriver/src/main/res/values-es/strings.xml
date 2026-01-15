@@ -170,8 +170,8 @@
     <string name="prefDirChangeWhileMovingSummary">Permite cambio de dirección mientras circulas</string>
     <string name="prefStopOnDirectionChangeTitle">¿Detener al cambiar de dirección?</string>
     <string name="prefStopOnDirectionChangeSummary">Detener si se cambia la dirección mientras se está moviendo el tren</string>
-    <string name="prefSelLocoWhileMovingTitle">¿Permite seleccionar una Locomotora mientras se está moviendo?</string>
-    <string name="prefSelLocoWhileMovingSummary">Habilita la tecla de Locomotora mientras hay movimiento</string>
+    <string name="prefSelectLocoWhileMovingTitle">¿Permite seleccionar una Locomotora mientras se está moviendo?</string>
+    <string name="prefSelectLocoWhileMovingSummary">Habilita la tecla de Locomotora mientras hay movimiento</string>
     <string name="prefShowAddressInsteadOfNameTitle">¿Muestra la dirección de la Locomotora en vez del nombre?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Muestra la dirección DCC en lugar del nombre de la Locomotora en el Controlador</string>
     <string name="prefIncreaseWebViewSizeTitle">¿Incrementa el tamaño de la vista web?</string>
@@ -264,9 +264,9 @@
     <string name="prefMaximumThrottleChangeSummary">Cambio máximo permitido en el Controlador en %</string>
     <string name="prefWebViewTitle">Preferencias de la vista web</string>
     <string name="prefWebViewSummary">Opciones para el aspecto de la visualización web</string>
-    <string name="prefInitialThrotWebPageTitle">Página web inicial del Controlador</string>
+    <string name="prefInitialThrottleWebPageTitle">Página web inicial del Controlador</string>
 
-    <string name="prefInitialThrotWebPageSummary">Página web inicial de los Controladores (como \'/panel/\')</string>
+    <string name="prefInitialThrottleWebPageSummary">Página web inicial de los Controladores (como \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">¿Vista web del Controlador?</string>
 
     <string name="prefWebViewLocationSummary">Incluye una visualización web al panel del Controlador</string>
@@ -278,8 +278,8 @@
     <string name="prefSelectiveLeadSoundF2Title">Siempre trata F2 como sonido</string>
     <string name="prefSelectiveLeadSoundF2Summary">Para la opción de \'Sonido selectivo de la unidad principal\'</string>
 
-    <string name="prefStopOnPhonecallTitle">¿Detiene si se recibe una llamada de teléfono?</string>
-    <string name="prefStopOnPhonecallSummary">Detiene Locomotora(s) cuando responda o realice una llamada</string>
+    <string name="prefStopOnPhoneCallTitle">¿Detiene si se recibe una llamada de teléfono?</string>
+    <string name="prefStopOnPhoneCallSummary">Detiene Locomotora(s) cuando responda o realice una llamada</string>
     <string name="prefStopOnBackgroundTitle">¿Detenerse en segundo plano?</string>
     <string name="prefStopOnBackgroundSummary">EStop todas las locomotoras en todos los aceleradores cuando Engine Driver pasa a segundo plano</string>
 
@@ -347,7 +347,7 @@
 
     <string name="prefStopButtonEStopOnLongPressSummary">ESTOP todas las locomotoras en el acelerador actual con una pulsación prolongada del botón de parada</string>
     <string name="PrefConnectToFirstServerTitle">¿Auto-Conecta al primer servidor?</string>
-    <string name="PrefConnectToFirstServerSummary">¿Conecta automáticamente al primer servidor descubierto?</string>
+    <string name="prefConnectToFirstServerSummary">¿Conecta automáticamente al primer servidor descubierto?</string>
     <string name="prefDisplayClockTitle">Pantalla de reloj rápido</string>
     <string name="prefDisplayClockSummary">Establece el formato para el reloj rápido en pantalla de Controlador y web. </string>
 
@@ -1232,8 +1232,8 @@
     <string name="autoServerConnectTitle">Conexión automática al servidor</string>
     <string name="autoServerConnectLabel">Nombre del servidor</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Obtener el servidor actual</string>
-    <string name="prefAutoServerConnectSummary">Conectarse automáticamente a un servidor designado si se descubre</string>
-    <string name="prefAutoServerConnectTitle">Conectarse automáticamente al servidor nombrado</string>
+    <string name="prefAutoServerNamedConnectSummary">Conectarse automáticamente a un servidor designado si se descubre</string>
+    <string name="prefAutoServerNamedConnectTitle">Conectarse automáticamente al servidor nombrado</string>
     <string name="dccexInCv19Consist">Loco está en un CV19 Consist: %s</string>
     <string name="dccexNotInCv19Consist">Loco NO está en un CV19 Consist</string>
 

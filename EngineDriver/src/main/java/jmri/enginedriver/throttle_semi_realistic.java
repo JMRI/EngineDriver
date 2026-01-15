@@ -130,13 +130,13 @@ public class throttle_semi_realistic extends throttle {
 
         isSemiRealisticThrottle = true;
 
-        maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "maximum_throttle_preference", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "prefMaximumThrottle", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
         prefSemiRealisticThrottleSpeedStep = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleSpeedStep", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleSpeedStepDefaultValue));
         prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
         useNotches = (prefDisplaySemiRealisticThrottleNotches!=100);
-        prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "speed_arrows_throttle_speed_step", "4");
-        REP_DELAY = threaded_application.getIntPrefValue(prefs,"speed_arrows_throttle_repeat_delay", "100");
+        prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefSpeedButtonsSpeedStep", "4");
+        REP_DELAY = threaded_application.getIntPrefValue(prefs,"prefSpeedButtonsRepeat", "100");
 
         prefSemiRealisticThrottleNumberOfBrakeSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfBrakeSteps", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNumberOfBrakeStepsDefaultValue));
         prefSemiRealisticMaximumBrakePcnt = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticMaximumBrakePcnt", getApplicationContext().getResources().getString(R.string.prefSemiRealisticMaximumBrakePcntDefaultValue));
@@ -543,14 +543,14 @@ public class throttle_semi_realistic extends throttle {
 
             //show speed buttons based on pref
             vsbSpeeds[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+            if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
                 vsbSpeeds[throttleIndex].setVisibility(GONE);
             }
 
             vsbSpeeds[throttleIndex].setVisibility(GONE); //always hide the real slider
 
             vsbSemiRealisticThrottles[throttleIndex].setVisibility(View.VISIBLE); //always show as a default
-            if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+            if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
                 vsbSemiRealisticThrottles[throttleIndex].setVisibility(GONE);
             }
         }
@@ -590,7 +590,7 @@ public class throttle_semi_realistic extends throttle {
         }
 
         // save part the screen for webview
-        if (!webViewLocation.equals(web_view_location_type.NONE)) {
+        if (!prefWebViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             double height = screenHeight;
             if (!prefIncreaseWebViewSize) {
@@ -615,7 +615,7 @@ public class throttle_semi_realistic extends throttle {
         stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
         stopButtonParams.height = speedButtonHeight;
 
-        if (prefs.getBoolean("hide_slider_preference", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
+        if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
             speedButtonHeight = (int) ((screenHeight
                     - stopButtonParams.topMargin
                     - stopButtonParams.bottomMargin
@@ -624,7 +624,7 @@ public class throttle_semi_realistic extends throttle {
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
-            if (prefs.getBoolean("display_speed_arrows_buttons", false)) {
+            if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
                 bTargetLSpds[throttleIndex].setVisibility(View.VISIBLE);
                 bTargetRSpds[throttleIndex].setVisibility(View.VISIBLE);
 
@@ -1207,7 +1207,7 @@ public class throttle_semi_realistic extends throttle {
         private SemiRealisticThrottleVolumeKeysRptUpdater(int WhichThrottle) {
             whichThrottle = WhichThrottle;
             try {
-                REP_DELAY = Integer.parseInt(prefs.getString("speed_arrows_throttle_repeat_delay", "100"));
+                REP_DELAY = Integer.parseInt(prefs.getString("prefSpeedButtonsRepeat", "100"));
             } catch (NumberFormatException ex) {
                 REP_DELAY = 100;
             }

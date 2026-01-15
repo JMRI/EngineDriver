@@ -354,7 +354,7 @@ public class comm_thread extends Thread {
 
     private static void sendThrottleName(Boolean sendHWID) {
         if (!mainapp.isDCCEX) { // not DCC-EX
-            String s = prefs.getString("throttle_name_preference", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));
+            String s = prefs.getString("prefThrottleName", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));
             wifiSend("N" + s);  //send throttle name
             if (sendHWID) {
                 wifiSend("HU" + mainapp.getFakeDeviceId());
@@ -3043,8 +3043,8 @@ public class comm_thread extends Thread {
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
             if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
-                if (prefs.getBoolean("stop_on_phonecall_preference",
-                        mainapp.getResources().getBoolean(R.bool.prefStopOnPhonecallDefaultValue))) {
+                if (prefs.getBoolean("prefStopOnPhoneCall",
+                        mainapp.getResources().getBoolean(R.bool.prefStopOnPhoneCallDefaultValue))) {
                     Log.d(threaded_application.applicationName, activityName + ": onCallStateChanged(): Phone is OffHook, Stopping Trains");
                     for (int i = 0; i < mainapp.numThrottles; i++) {
                         if (mainapp.consists[i].isActive()) {

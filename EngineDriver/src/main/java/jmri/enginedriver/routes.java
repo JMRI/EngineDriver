@@ -119,7 +119,7 @@ public class routes extends AppCompatActivity
     public void refresh_route_view() {
         threaded_application.extendedLogging(activityName + ": refresh_route_view()");
 
-        boolean hidesystemroutes = prefs.getBoolean("hide_system_route_names_preference",
+        boolean hidesystemroutes = prefs.getBoolean("prefHideSystemRouteNames",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
 
         //specify logic for sort comparison (by username/in)
@@ -159,8 +159,8 @@ public class routes extends AppCompatActivity
         if (mainapp.routeStateNames != null) {  //not allowed
             if (mainapp.rt_user_names != null) { //none defined
                 int pos = 0;
-                String del = prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
-                boolean hideIfNoUserName = prefs.getBoolean("HideIfNoUserNamePreference", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
+                String del = prefs.getString("prefDelimiter", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+                boolean hideIfNoUserName = prefs.getBoolean("prefHideIfNoUserName", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.rt_user_names) {
                     boolean hasUserName = (username != null && !username.equals(""));
                     if (hasUserName || !hideIfNoUserName) {  //skip routes without usernames if pref is set
@@ -254,7 +254,7 @@ public class routes extends AppCompatActivity
     private void filterRouteView() {
         threaded_application.extendedLogging(activityName + ": filterRouteView()");
 
-        final String loc = location + prefs.getString("DelimiterPreference", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
+        final String loc = location + prefs.getString("prefDelimiter", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
         final boolean useAllLocations = getString(R.string.location_all).equals(location);
         routes_list.clear();
         for (HashMap<String, String> hm : routesFullList) {
@@ -701,7 +701,7 @@ public class routes extends AppCompatActivity
             mainapp.displayPowerStateMenuButton(activityMenu);
             mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
 
-//            mainapp.displayThrottleMenuButton(activityMenu, "swipe_through_routes_preference");
+//            mainapp.displayThrottleMenuButton(activityMenu, "prefSwipeThroughRoutes");
             mainapp.displayFlashlightMenuButton(activityMenu);
             mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
         }
@@ -777,7 +777,7 @@ public class routes extends AppCompatActivity
         mainapp.actionBarIconCountRoutes = 0;
         mainapp.displayEStop(menu);
         mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.displayThrottleMenuButton(menu, "swipe_through_routes_preference");
+//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughRoutes");
         mainapp.setPowerMenuOption(menu);
         mainapp.setDCCEXMenuOption(menu);
         mainapp.displayDccExButton(menu);

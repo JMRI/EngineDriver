@@ -183,8 +183,8 @@
     <string name="prefDirChangeWhileMovingSummary">Permettere inversione di direzione in movimento.</string>
     <string name="prefStopOnDirectionChangeTitle">Stop per inversione di direzione?</string>
     <string name="prefStopOnDirectionChangeSummary">Ferma il treno all\'inversione di direzione in movimento.</string>
-    <string name="prefSelLocoWhileMovingTitle">Permettere selezione di locomotiva in movimento?</string>
-    <string name="prefSelLocoWhileMovingSummary">Abilita il pulsante Locomotiva in movimento.</string>
+    <string name="prefSelectLocoWhileMovingTitle">Permettere selezione di locomotiva in movimento?</string>
+    <string name="prefSelectLocoWhileMovingSummary">Abilita il pulsante Locomotiva in movimento.</string>
     <string name="prefShowAddressInsteadOfNameTitle">Mostrare Indirizzo Locomotiva invece del Nome?</string>
     <string name="prefShowAddressInsteadOfNameSummary">Mostrare l\'indirizzo DCC della locomotiva al posto del Nome nella pagina del Controllore.</string>
     <string name="prefIncreaseWebViewSizeTitle">Aumentare dimensioni schermo Web?</string>
@@ -280,9 +280,9 @@
     <string name="prefMaximumThrottleChangeSummary">Massima variazione di controllo permessa in %</string>
     <string name="prefWebViewTitle">Preferenze vista Web</string>
     <string name="prefWebViewSummary">Opzioni di aspetto per la vista Web</string>
-    <string name="prefInitialThrotWebPageTitle">Pagina Web iniziale del Controllore</string>
+    <string name="prefInitialThrottleWebPageTitle">Pagina Web iniziale del Controllore</string>
 
-    <string name="prefInitialThrotWebPageSummary">Pagina Web iniziale del Controllore (tipo \'/panel/\')</string>
+    <string name="prefInitialThrottleWebPageSummary">Pagina Web iniziale del Controllore (tipo \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Vista Web Controllore?</string>
 
     <string name="prefWebViewLocationSummary">Includere vista web nel pannello del Controllore</string>
@@ -294,8 +294,8 @@
     <string name="prefSelectiveLeadSoundF2Title">Tratta sempre F2 come suono</string>
     <string name="prefSelectiveLeadSoundF2Summary">Per l\'opzione \'Selective Lead Unit Sound \'</string>
 
-    <string name="prefStopOnPhonecallTitle">Stop incaso di Chiamata?</string>
-    <string name="prefStopOnPhonecallSummary">Ferma locomotive quando si riceve o si effettua una chiamata</string>
+    <string name="prefStopOnPhoneCallTitle">Stop incaso di Chiamata?</string>
+    <string name="prefStopOnPhoneCallSummary">Ferma locomotive quando si riceve o si effettua una chiamata</string>
     <string name="prefStopOnBackgroundTitle">EStop sullo sfondo?</string>
     <string name="prefStopOnBackgroundSummary">EStop tutte le locomotive su tutte le manette quando Engine Driver viene portato in background</string>
 
@@ -375,7 +375,7 @@
 
     <string name="prefStopButtonEStopOnLongPressSummary">Arresta di emergenza tutte le locomotive con l\'acceleratore corrente premendo a lungo il pulsante Stop</string>
     <string name="PrefConnectToFirstServerTitle">Auto-Connessione al primo Server?</string>
-    <string name="PrefConnectToFirstServerSummary">Connessione automatica al primo Server trovato?</string>
+    <string name="prefConnectToFirstServerSummary">Connessione automatica al primo Server trovato?</string>
     <string name="prefDisplayClockTitle">Mostrare Orologio Veloce</string>
     <string name="prefDisplayClockSummary">Impostare Formato di Visualizzazione dell\'Orologio Veloce negli schermi Controllore e Web.</string>
 
@@ -395,7 +395,7 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Quantità incremento pulsante velocità</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Quanto la freccia di velocità altera la velocità del controllore.</string>
 
-<!--    <string name="NumThrottleDefaultValue">Due</string> -->
+<!--    <string name="prefNumThrottleDefaultValue">Due</string> -->
     <string name="server_address">Indirizzo Server</string>
     <string name="routes_route">Nome di Sistema della Rotta</string>
 
@@ -1184,8 +1184,8 @@
     <string name="autoServerConnectTitle">Connessione automatica al server</string>
     <string name="autoServerConnectLabel">Nome del server</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Ottieni il server attuale</string>
-    <string name="prefAutoServerConnectSummary">Connettiti automaticamente a un server denominato se scoperto</string>
-    <string name="prefAutoServerConnectTitle">Connessione automatica al server denominato</string>
+    <string name="prefAutoServerNamedConnectSummary">Connettiti automaticamente a un server denominato se scoperto</string>
+    <string name="prefAutoServerNamedConnectTitle">Connessione automatica al server denominato</string>
     <string name="dccexInCv19Consist">Loco è in un CV19 Consist: %s</string>
     <string name="dccexNotInCv19Consist">Loco NON è in un CV19 Consist</string>
 

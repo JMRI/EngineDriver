@@ -2587,8 +2587,8 @@
     <!-- Used to count the number of buttons to decide which size to use for 'auto'. -->
     <!-- Boolean ones only. Only include ones that can appear on the throttle screen-->
     <string-array name="prefActionBarButtonPreferencesNames" translatable="false">  <!-- DO NOT TRANSLATE -->
-        <item>show_emergency_stop_menu_preference</item>
-        <item>show_layout_power_button_preference</item>
+        <item>prefShowEmergencyStopButton</item>
+        <item>prefShowLayoutPowerButton</item>
         <item>prefFlashlightButtonDisplay</item>
         <item>prefWebViewButton</item>
         <item>prefThrottleSwitchButtonDisplay</item>
@@ -2597,6 +2597,61 @@
         <item>prefActionBarShowTurnoutsButton</item>
         <item>prefActionBarShowRoutesButton</item>
         <item>prefKidsTimerButton</item>
+    </string-array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- This list is the old names of preferences and the corresponding new name -->
+    <!-- CRITICAL! if you add to this list, change the value of LAST_PREFERENCE_NAME_RUN in t_a -->
+    <!--    -->
+    <!-- Always include the date the items were added so that they can eventually be removed.-->
+    <!-- Items added to this list should be removed after two years-->
+    <string-array name="preferencesToRename" translatable="false">  <!-- DO NOT TRANSLATE -->
+    <!-- The following block was added 2026-01-15-->
+        <item>ClockDisplayTypePreference:prefClockDisplayType</item>
+        <item>connect_to_first_server_preference:prefConnectToFirstServer</item>
+        <item>DelimiterPreference:prefDelimiter</item>
+        <item>DirChangeWhileMovingPreference:prefDirChangeWhileMoving</item>
+        <item>display_speed_arrows_buttons:prefDisplaySpeedButtons</item>
+        <item>DisplaySpeedUnits:prefDisplaySpeedUnits</item>
+        <item>drop_on_acquire_preference:prefDropOnAcquire</item>
+        <item>HideIfNoUserNamePreference:prefHideIfNoUserName</item>
+        <item>hide_slider_preference:prefHideSlider</item>
+        <item>hide_system_route_names_preference:prefHideSystemRouteNames</item>
+        <item>increase_slider_height_preference:prefIncreaseSliderHeight</item>
+        <item>InitialThrotWebPage:prefInitialThrottleWebPage</item>
+        <item>InitialWebPage:prefInitialWebPage</item>
+        <item>left_slider_margin:prefLeftSliderMargin</item>
+        <item>maximum_recent_connections_preference:prefMaximumRecentConnections</item>
+        <item>maximum_recent_locos_preference:prefMaximumRecentLocos</item>
+        <item>maximum_throttle_change_preference:prefMaximumThrottleChange</item>
+        <item>maximum_throttle_preference:prefMaximumThrottle</item>
+        <item>prefAutoServerConnect:prefAutoServerNamedConnect</item>
+        <item>roster_recent_locos_preference:prefRosterRecentLocos</item>
+        <item>SelectiveLeadSound:prefSelectiveLeadSound</item>
+        <item>SelectiveLeadSoundF1:prefSelectiveLeadSoundF1</item>
+        <item>SelectiveLeadSoundF2:prefSelectiveLeadSoundF2</item>
+        <item>SelLocoWhileMovingPreference:prefSelectLocoWhileMoving</item>
+        <item>show_emergency_stop_menu_preference:prefShowEmergencyStopButton</item>
+        <item>show_layout_power_button_preference:prefShowLayoutPowerButton</item>
+        <item>speed_arrows_throttle_repeat_delay:prefSpeedButtonsRepeat</item>
+        <item>speed_arrows_throttle_speed_step:prefSpeedButtonsSpeedStep</item>
+        <item>stop_on_release_preference:prefStopOnRelease</item>
+        <item>swipe_through_routes_preference:prefSwipeThroughRoutes</item>
+        <item>swipe_through_turnouts_preference:prefSwipeThroughTurnouts</item>
+        <item>swipe_through_web_preference:prefSwipeThroughWeb</item>
+        <item>throttle_name_preference:prefThrottleName</item>
+        <item>ThrottleOrientation:prefThrottleOrientation</item>
+        <item>WebOrientation:prefWebOrientation</item>
+        <item>WebViewLocation:prefWebViewLocation</item>
+        <item>stop_on_phonecall_preference:prefStopOnPhoneCall</item>
+        <item>SwipeDownOption:prefSwipeDownOption</item>
+        <item>SwipeUpOption:prefSwipeUpOption</item>
+        <item>ConsistLightsLongClickPreference:prefConsistLightsLongClick</item>
+
+        <item>speed>Timer_arrows_throttle_speed_step:</item>  <!-- Remove -->
+        <item>default_address_length:</item>  <!-- Remove -->
+<!-- end block 2025-01-15 -->
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -2628,10 +2683,10 @@
 
         <!-- Status Row Preferences -->
         <!-- <item>prefCategoryThrottleStatusRow</item> -->
-        <item>show_emergency_stop_menu_preference</item>
-        <!-- <item>show_layout_power_button_preference</item> -->
+        <item>prefShowEmergencyStopButton</item>
+        <!-- <item>prefShowLayoutPowerButton</item> -->
         <item>prefFlashlightButtonDisplay</item>
-        <item>ClockDisplayTypePreference</item>
+        <item>prefClockDisplayType</item>
         <item>prefWebViewButton</item>
         <item>prefThrottleSwitchButton</item>  <!-- PreferenceScreen -->
 
@@ -2644,10 +2699,10 @@
         <item>prefActionBarShowRoutesButton</item>
 
         <!-- Throttle Control Preferences -->
-        <item>maximum_throttle_preference</item>
-        <item>maximum_throttle_change_preference</item>
-        <item>speed_arrows_throttle_repeat_delay</item>
-        <item>DirChangeWhileMovingPreference</item>
+        <item>prefMaximumThrottle</item>
+        <item>prefMaximumThrottleChange</item>
+        <item>prefSpeedButtonsRepeat</item>
+        <item>prefDirChangeWhileMoving</item>
         <item>prefStopOnDirectionChange</item>
         <item>prefSpeedButtonsSpeedStepDecrement</item>
         <item>prefLimitSpeedButtonPreferences</item>  <!-- PreferenceScreen -->
@@ -2662,15 +2717,15 @@
         <!-- Select Loco Preferences -->
         <item>prefUseDispatchCommand</item>
         <item>prefShowDispatchButton</item>
-        <item>stop_on_release_preference</item>
-        <item>drop_on_acquire_preference</item>
-        <item>SelLocoWhileMovingPreference</item>
+        <item>prefStopOnRelease</item>
+        <item>prefDropOnAcquire</item>
+        <item>prefSelectLocoWhileMoving</item>
         <item>prefThrottlesLocos</item>
-        <item>default_address_length</item>
-        <item>roster_recent_locos_preference</item>
+        <item>prefDefaultAddressLength</item>
+        <item>prefRosterRecentLocos</item>
         <item>prefRosterRecentLocoNames</item>
-        <item>maximum_recent_locos_preference</item>
-        <item>ConsistLightsLongClickPreference</item>
+        <item>prefMaximumRecentLocos</item>
+        <item>prefConsistLightsLongClick</item>
         <item>prefRosterFilter</item>
         <item>prefCategorySelectLoco</item> <!-- Category -->
 
@@ -2686,11 +2741,12 @@
         <item>prefAlwaysUseFunctionsFromServer</item>
 
         <!-- Connect Preferences -->
-        <item>prefAutoServerConnect</item>
         <item>prefFeedbackWhenGoingToBackground</item>
-        <item>maximum_recent_connections_preference</item>
+        <item>prefMaximumRecentConnections</item>
         <item>prefHideDemoServer</item>
         <item>autoServerConnect</item>
+        <item>prefAutoServerNamedConnect</item>
+        <item>prefAutoServerIpConnect</item>
         <item>prefAllowMobileData</item>
         <item>prefConnectTimeoutMs</item>
         <item>prefSocketTimeoutMs</item>
@@ -2702,13 +2758,13 @@
 
         <!-- Web Preferences -->
         <item>WebOrientation</item>
-        <item>InitialWebPage</item>
+        <item>prefInitialWebPage</item>
         <item>prefCategoryWeb</item> <!-- Category -->
 
         <!-- Turnouts and Routes Preferences -->
-        <item>hide_system_route_names_preference</item>
-        <item>DelimiterPreference</item>
-        <item>HideIfNoUserNamePreference</item>
+        <item>prefHideSystemRouteNames</item>
+        <item>prefDelimiter</item>
+        <item>prefHideIfNoUserName</item>
         <item>prefTurnoutsShowThrowCloseButtons</item>
         <item>prefCategoryTurnouts</item> <!-- Category -->
         <item>prefDccexAutomationsAsk</item>
@@ -2725,9 +2781,9 @@
     <!-- no need to include the sub preference here if the whole PreferenceScreen is hidden-->
     <string-array name="advancedSubPreferences" translatable="false">
         <item>prefLeftRightSwipeChangesSpeed</item>
-        <item>increase_slider_height_preference</item>
-        <item>left_slider_margin</item>
-<!--        <item>hide_slider_preference</item>-->
+        <item>prefIncreaseSliderHeight</item>
+        <item>prefLeftSliderMargin</item>
+<!--        <item>prefHideSlider</item>-->
         <item>prefHideSliderAndSpeedButtons</item>
         <item>prefTickMarksOnSliders</item>
         <item>prefSwitchingThrottleSliderDeadZone</item>
