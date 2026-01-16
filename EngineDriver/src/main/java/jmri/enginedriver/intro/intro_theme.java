@@ -23,6 +23,8 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -43,12 +45,20 @@ public class intro_theme extends Fragment {
     private String[] nameEntryValues;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
 
-        super.onActivityCreated(savedInstanceState);
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String currentValue = prefs.getString("prefTheme", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+        String currentValue = prefs.getString("prefTheme", this.requireActivity().getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
 
         //    private Spinner spinner;
         //    private int introThemeValueIndex = 1;
@@ -57,15 +67,15 @@ public class intro_theme extends Fragment {
         //    private String defaultName = "";
         TextView v = requireView().findViewById(R.id.intro_theme_default_name);
         v.setText(nameEntries[0]);
-        v = getView().findViewById(R.id.intro_theme_black_name);
+        v = requireView().findViewById(R.id.intro_theme_black_name);
         v.setText(nameEntries[1]);
-        v = getView().findViewById(R.id.intro_theme_outline_name);
+        v = requireView().findViewById(R.id.intro_theme_outline_name);
         v.setText(nameEntries[2]);
-        v = getView().findViewById(R.id.intro_theme_ultra_name);
+        v = requireView().findViewById(R.id.intro_theme_ultra_name);
         v.setText(nameEntries[3]);
-        v = getView().findViewById(R.id.intro_theme_colorful_name);
+        v = requireView().findViewById(R.id.intro_theme_colorful_name);
         v.setText(nameEntries[4]);
-        v = getView().findViewById(R.id.intro_theme_neon_name);
+        v = requireView().findViewById(R.id.intro_theme_neon_name);
         v.setText(nameEntries[5]);
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
@@ -83,7 +93,7 @@ public class intro_theme extends Fragment {
         RadioGroup.OnCheckedChangeListener() {
           @SuppressLint("ApplySharedPref")
           @Override
-          public void onCheckedChanged(RadioGroup group, int checkedId) {
+          public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
               int Choice;
               if (checkedId == R.id.intro_theme_default_name) { Choice = 0; }
               else if (checkedId == R.id.intro_theme_black_name) { Choice = 1; }

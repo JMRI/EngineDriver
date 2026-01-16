@@ -40,9 +40,17 @@ public class intro_write_settings extends Fragment {
     static final String activityName = "intro_write_settings";
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
 
         Button settingsButton = requireView().findViewById(R.id.intro_write_settings_launch);
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +61,7 @@ public class intro_write_settings extends Fragment {
                 }
                 Uri uri = Uri.fromParts("package", requireActivity().getApplicationContext().getPackageName(), null);
                 intent.setData(uri);
-                getActivity().startActivity(intent);
+                requireActivity().startActivity(intent);
             }
         });
 

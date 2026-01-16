@@ -4,21 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="10dp"
+    android:layout_margin="0dp"
     android:background="@color/intro_background"
     android:baselineAligned="false"
+    android:fitsSystemWindows="true"
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingTop="4dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="80dp"
-    android:fitsSystemWindows="true" >
+    android:padding="0dp">
 
     <LinearLayout
         android:id="@+id/intro_buttons_title0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -35,7 +33,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="89dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -51,7 +53,7 @@
                 android:text="@string/introEsuMc2Summary"
                 android:textColor="@color/solidWhite"
                 android:textSize="16sp"
-                tools:ignore="RtlHardcoded, TextContrastCheck"  />
+                tools:ignore="RtlHardcoded, TextContrastCheck" />
 
             <RadioGroup
                 android:id="@+id/intro_esu_mc2_radio_group"
@@ -63,27 +65,33 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left"
+                    android:maxWidth="320dp"
                     android:padding="10dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/introEsuMc2QuestionNo"
                     android:textSize="16sp"
-                    tools:ignore="RtlHardcoded, TextContrastCheck"  />
+                    tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_esu_mc2_yes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left"
+                    android:maxWidth="320dp"
                     android:padding="10dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
                     android:text="@string/introEsuMc2QuestionYes"
                     android:textSize="16sp"
-                    tools:ignore="RtlHardcoded, TextContrastCheck"  />
+                    tools:ignore="RtlHardcoded, TextContrastCheck" />
 
             </RadioGroup>
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:contentDescription="@string/app_name"

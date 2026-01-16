@@ -3,19 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="0dp"
     android:background="@color/intro_background"
+    android:fitsSystemWindows="true"
     android:gravity="top"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingTop="4dp"
-    android:paddingRight="10dp"
-    android:paddingBottom="80dp"
-    android:fitsSystemWindows="true" >
+    android:padding="0dp">
 
     <TextView
         android:id="@+id/intro_theme_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:text="@string/prefThemeTitle"
         android:textColor="@color/solidWhite"
         android:textSize="24sp"
@@ -23,7 +22,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="89dp" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -42,7 +45,6 @@
                 tools:ignore="RtlHardcoded, TextContrastCheck" />
 
 
-
             <RadioGroup
                 android:id="@+id/intro_throttle_type_radio_group"
                 android:layout_width="match_parent"
@@ -51,85 +53,85 @@
                 <RadioButton
                     android:id="@+id/intro_theme_default_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="300dp"
-                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_theme_default"
+                    android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
+                    android:maxWidth="320dp"
+                    android:minWidth="300dp"
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
                     android:textSize="18sp"
-                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck, DuplicateSpeakableTextCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_black_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="300dp"
-                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_theme_black"
+                    android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
+                    android:maxWidth="320dp"
+                    android:minWidth="300dp"
                     android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
                     android:textSize="18sp"
-                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_outline_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="300dp"
-                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_theme_outline"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:textSize="18sp"
                     android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:maxWidth="320dp"
+                    android:minWidth="300dp"
+                    android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
+                    android:textSize="18sp"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_ultra_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="300dp"
-                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_theme_ultra"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:textSize="18sp"
                     android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:maxWidth="320dp"
+                    android:minWidth="300dp"
+                    android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
+                    android:textSize="18sp"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_colorful_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="300dp"
-                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_theme_colorful"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:textSize="18sp"
                     android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:maxWidth="320dp"
+                    android:minWidth="300dp"
+                    android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
+                    android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
                 <RadioButton
                     android:id="@+id/intro_theme_neon_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="300dp"
-                    android:maxWidth="320dp"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/intro_theme_neon"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:textSize="18sp"
                     android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:maxWidth="320dp"
+                    android:minWidth="300dp"
+                    android:padding="5dp"
                     android:text="@string/prefThemeDefaultValue"
+                    android:textSize="18sp"
                     tools:ignore="RtlHardcoded" />
 
             </RadioGroup>

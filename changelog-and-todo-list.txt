@@ -26,6 +26,7 @@
     * Bug fix for F11 in the keyboard 'type' of gamepad
     * Some minor fixes for the TTS
     * Bug fix for the toolbar size when coming out of the Preferences sub folders
+    * Bug fix for going into background from the connection screen
  * New Features
     * Added back in the VRBoxB gamepad type and fixed it
     * Added XBox gamepad support

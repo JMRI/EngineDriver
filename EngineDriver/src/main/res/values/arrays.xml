@@ -2652,6 +2652,9 @@
         <item>speed>Timer_arrows_throttle_speed_step:</item>  <!-- Remove -->
         <item>default_address_length:</item>  <!-- Remove -->
 <!-- end block 2025-01-15 -->
+<!-- The following block was added 2026-01-16-->
+        <item>prefDCCEXconnectionOption:prefDccexConnectionOption</item>
+<!-- end block 2025-01-16 -->
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

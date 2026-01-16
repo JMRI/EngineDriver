@@ -45,12 +45,20 @@ public class intro_throttle_name extends Fragment {
     private threaded_application mainapp; //pointer back to application
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
 
-        super.onActivityCreated(savedInstanceState);
         mainapp = (threaded_application) this.requireActivity().getApplication();
-        prefs = this.getActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
 
         throttleNameView = requireView().findViewById(R.id.intro_throttle_name_value);

@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -266,7 +267,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
             fragment = new intro_write_settings();
 //            fragment.setArguments(args);
             addSlide(fragment);
-        }
+        } // end onCreate()
 
 
         fragment = new intro_throttle_name();

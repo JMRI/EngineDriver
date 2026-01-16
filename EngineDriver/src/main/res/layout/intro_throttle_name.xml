@@ -4,37 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="0dp"
     android:background="@color/intro_background"
+    android:fitsSystemWindows="true"
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingTop="4dp"
-    android:paddingRight="10dp"
-    android:paddingBottom="4dp"
-    android:fitsSystemWindows="true" >
+    android:padding="0dp">
 
     <TextView
         android:id="@+id/intro_throttle_name_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/prefThrottleNameTitle"
         android:textColor="@color/solidWhite"
         android:textSize="24sp"
-        android:fontFamily="sans-serif-condensed"
         android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/line0"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="5dp">
+        android:layout_margin="10dp"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/intro_throttle_name_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
+            android:paddingTop="0dp"
             android:text="@string/introThrottleNameSummary"
             android:textColor="@color/solidWhite"
             android:textSize="18sp"
@@ -68,9 +68,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/intro_withrottle_window"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"/>
 
 </LinearLayout>

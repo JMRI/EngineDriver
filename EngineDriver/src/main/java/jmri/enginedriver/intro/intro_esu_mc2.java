@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -42,9 +43,18 @@ public class intro_esu_mc2 extends Fragment {
     private boolean esuMc2Yes;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
+
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         RadioGroup radioGroup = requireView().findViewById(R.id.intro_esu_mc2_radio_group);
@@ -57,7 +67,7 @@ public class intro_esu_mc2 extends Fragment {
             RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("ApplySharedPref")
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 if (checkedId == R.id.intro_esu_mc2_no) {
                     esuMc2Yes = false;
                     prefs.edit().putString("prefThrottleScreenType", "Default").commit();
