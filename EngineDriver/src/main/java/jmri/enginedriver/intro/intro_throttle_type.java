@@ -23,6 +23,8 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -31,8 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import java.util.Objects;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -44,41 +44,50 @@ public class intro_throttle_type extends Fragment {
     private String[] nameEntryValues;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String currentValue = prefs.getString("prefThrottleScreenType", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
+
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
+        String currentValue = prefs.getString("prefThrottleScreenType", this.requireActivity().getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         //    private Spinner spinner;
         //    private int introThrottleTypeValueIndex = 1;
         String[] nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntries);
         nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
-        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_throttle_type_default_name);
+        TextView v = requireView().findViewById(R.id.intro_throttle_type_default_name);
         v.setText(nameEntries[0]);
-        v = getView().findViewById(R.id.intro_throttle_type_vertical_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_vertical_name);
         v.setText(nameEntries[1]);
-        v = getView().findViewById(R.id.intro_throttle_type_big_left_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_big_left_name);
         v.setText(nameEntries[2]);
-        v = getView().findViewById(R.id.intro_throttle_type_big_right_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_big_right_name);
         v.setText(nameEntries[3]);
-        v = getView().findViewById(R.id.intro_throttle_type_vertical_left_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_vertical_left_name);
         v.setText(nameEntries[4]);
-        v = getView().findViewById(R.id.intro_throttle_type_vertical_right_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_vertical_right_name);
         v.setText(nameEntries[5]);
-        v = getView().findViewById(R.id.intro_throttle_type_switching_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_switching_name);
         v.setText(nameEntries[6]);
-        v = getView().findViewById(R.id.intro_throttle_type_switching_left_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_switching_left_name);
         v.setText(nameEntries[7]);
-        v = getView().findViewById(R.id.intro_throttle_type_switching_right_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_switching_right_name);
         v.setText(nameEntries[8]);
-        v = getView().findViewById(R.id.intro_throttle_type_switching_horizontal_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_switching_horizontal_name);
         v.setText(nameEntries[9]);
-        v = getView().findViewById(R.id.intro_throttle_type_simple_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_simple_name);
         v.setText(nameEntries[10]);
-        v = getView().findViewById(R.id.intro_throttle_type_tablet_switching_left_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_tablet_switching_left_name);
         v.setText(nameEntries[11]);
-        v = getView().findViewById(R.id.intro_throttle_type_tablet_vertical_left_name);
+        v = requireView().findViewById(R.id.intro_throttle_type_tablet_vertical_left_name);
         v.setText(nameEntries[12]);
 
 
@@ -104,7 +113,7 @@ public class intro_throttle_type extends Fragment {
             RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("ApplySharedPref")
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 int Choice;
                 if (checkedId == R.id.intro_throttle_type_default_name) { Choice = 0; }
                 else if (checkedId == R.id.intro_throttle_type_vertical_name) { Choice = 1; }

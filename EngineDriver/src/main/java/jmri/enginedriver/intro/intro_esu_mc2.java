@@ -29,10 +29,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import java.util.Objects;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -44,12 +43,21 @@ public class intro_esu_mc2 extends Fragment {
     private boolean esuMc2Yes;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
 
-        RadioGroup radioGroup = Objects.requireNonNull(getView()).findViewById(R.id.intro_esu_mc2_radio_group);
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        RadioGroup radioGroup = requireView().findViewById(R.id.intro_esu_mc2_radio_group);
 
         radioGroup.clearCheck();
         radioGroup.check(R.id.intro_esu_mc2_no);
@@ -59,7 +67,7 @@ public class intro_esu_mc2 extends Fragment {
             RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("ApplySharedPref")
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 if (checkedId == R.id.intro_esu_mc2_no) {
                     esuMc2Yes = false;
                     prefs.edit().putString("prefThrottleScreenType", "Default").commit();

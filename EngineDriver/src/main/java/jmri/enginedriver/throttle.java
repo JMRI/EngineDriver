@@ -3855,8 +3855,8 @@ public class throttle extends AppCompatActivity implements
         public void onPhysicalSliderPositionChanged(int position) {
             float pcntPos = Math.round((((float) position) / 255 * 100));
             Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
-            if (mainapp.esuMc2BrakePostion != pcntPos) {
-                mainapp.esuMc2BrakePostion = pcntPos;
+            if (mainapp.esuMc2BrakePosition != pcntPos) {
+                mainapp.esuMc2BrakePosition = pcntPos;
                 if (mainapp.prefEsuMc2SliderType.equals("dim")) {
                     setScreenBrightness(255 - position);
                 } else {
@@ -3885,7 +3885,7 @@ public class throttle extends AppCompatActivity implements
             functionShouldBeOnOff[k] = -1; // -1 don't care, 1 = on, 0 = off
         }
 
-        double brakePcnt = mainapp.esuMc2BrakePostion;
+        double brakePcnt = mainapp.esuMc2BrakePosition;
         int foundBrakeLevel = -1;
         for (int i = 0; i <= 2; i++) {  // cycle through the thresholds from low to high
             if (mainapp.esuMc2BrakeLevels[i] >= 0) {  // ignore it if it is set to -1

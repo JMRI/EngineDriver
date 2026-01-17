@@ -21,7 +21,8 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:visibility="gone"
-        app:srcCompat="@drawable/tick_glyph_large_dark" /> <!-- Placeholder, create this drawable -->
+        app:srcCompat="@drawable/tick_glyph_large_dark"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textViewFileReceiverStatus"

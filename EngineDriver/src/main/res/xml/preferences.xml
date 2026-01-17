@@ -2278,7 +2278,7 @@
 
                 <CheckBoxPreference
                     android:defaultValue="@bool/prefDccexConnectionOptionDefaultValue"
-                    android:key="prefDCCEXconnectionOption"
+                    android:key="prefDccexConnectionOption"
                     android:summary="@string/prefDccexConnectionOptionSummary"
                     android:title="@string/prefDccexConnectionOptionTitle"
                     android:layout="@layout/checkbox_no_icon" />

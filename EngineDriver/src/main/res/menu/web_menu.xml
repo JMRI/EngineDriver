@@ -90,6 +90,7 @@
                 android:title="@string/routes" />
 
             <item android:id="@+id/power_control_mnu"
+                android:icon="?attr/ed_power_glyph"
                 android:title="@string/power" />
 
             <item android:id="@+id/connect_menu"

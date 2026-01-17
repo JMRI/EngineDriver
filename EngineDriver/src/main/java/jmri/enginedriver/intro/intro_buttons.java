@@ -23,6 +23,8 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -31,8 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import java.util.Objects;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -50,27 +50,36 @@ public class intro_buttons extends Fragment {
     private boolean hideSliderAndButtons = false;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
+
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         boolean prefDisplaySpeedButtons = prefs.getBoolean("prefDisplaySpeedButtons", false);
         boolean prefHideSlider = prefs.getBoolean("prefHideSlider", false);
         boolean prefHideSliderAndSpeedButtons = prefs.getBoolean("prefHideSliderAndSpeedButtons", false);
 
-        TextView v = Objects.requireNonNull(getView()).findViewById(R.id.intro_buttons_slider_name);
-        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
-        v = getView().findViewById(R.id.intro_buttons_slider_and_buttons_name);
-        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));
-        v = getView().findViewById(R.id.intro_buttons_no_slider_name);
-        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsNoSlider));
+        TextView v = requireView().findViewById(R.id.intro_buttons_slider_name);
+        v.setText(this.requireActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
+        v = requireView().findViewById(R.id.intro_buttons_slider_and_buttons_name);
+        v.setText(this.requireActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));
+        v = requireView().findViewById(R.id.intro_buttons_no_slider_name);
+        v.setText(this.requireActivity().getApplicationContext().getResources().getString(R.string.introButtonsNoSlider));
 
 
 
-        RadioGroup radioGroup = getView().findViewById(R.id.intro_buttons_radio_group);
+        RadioGroup radioGroup = requireView().findViewById(R.id.intro_buttons_radio_group);
 
         radioGroup.clearCheck();
-        if (prefHideSliderAndSpeedButtons) { // overrides the othe options
+        if (prefHideSliderAndSpeedButtons) { // overrides the other options
             radioGroup.check(R.id.intro_buttons_no_slider_or_buttons_name);
         } else if (!prefDisplaySpeedButtons && !prefHideSlider) {
             radioGroup.check(R.id.intro_buttons_slider_name);
@@ -85,7 +94,7 @@ public class intro_buttons extends Fragment {
             RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("ApplySharedPref")
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 if (checkedId == R.id.intro_buttons_no_slider_or_buttons_name) {
                     hideSliderAndButtons = true; displaySpeedButtons = false; hideSlider = false;
                 } else if (checkedId == R.id.intro_buttons_slider_name) {

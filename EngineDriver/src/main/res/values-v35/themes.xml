@@ -163,6 +163,7 @@
         <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
         <item name="ed_menu_glyph">@drawable/menu_glyph_light</item>
         <item name="ed_exit_glyph">@drawable/exit_glyph_light</item>
+        <item name="ed_power_glyph">@drawable/power_glyph_light</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
         <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
@@ -351,6 +352,7 @@
         <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
         <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
         <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
+        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
         <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
@@ -534,6 +536,7 @@
         <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
         <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
         <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
+        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
         <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
         <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
@@ -716,6 +719,7 @@
         <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
         <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
         <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
+        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
         <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 
@@ -898,6 +902,7 @@
         <item name="ed_preferences_glyph">@drawable/preferences_glyph_light</item>
         <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
         <item name="ed_exit_glyph">@drawable/exit_glyph_light</item>
+        <item name="ed_power_glyph">@drawable/power_glyph_light</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
         <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
 
@@ -1093,6 +1098,7 @@
         <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
         <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
         <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
+        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
         <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
         <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
 

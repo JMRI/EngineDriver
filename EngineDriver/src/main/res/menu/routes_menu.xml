@@ -73,6 +73,7 @@
                 android:title="@string/web" />
 
             <item android:id="@+id/power_control_mnu"
+                android:icon="?attr/ed_power_glyph"
                 android:title="@string/power" />
 
             <item android:id="@+id/dcc_ex_mnu"

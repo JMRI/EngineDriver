@@ -23,6 +23,8 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -30,8 +32,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-
-import java.util.Objects;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -47,18 +47,27 @@ public class intro_dccex extends Fragment {
     private boolean dccexYes;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ":");
-        super.onActivityCreated(savedInstanceState);
-        prefs = Objects.requireNonNull(this.getActivity()).getSharedPreferences("jmri.enginedriver_preferences", 0);
-        boolean prefDccexConnectionOption = prefs.getBoolean("prefDCCEXconnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        Log.d(threaded_application.applicationName, activityName + ":");
+//        super.onActivityCreated(savedInstanceState);
+
+        prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
+        boolean prefDccexConnectionOption = prefs.getBoolean("prefDccexConnectionOption", getResources().getBoolean(R.bool.prefDccexConnectionOptionDefaultValue));
 
 //        TextView v = getView().findViewById(R.id.intro_dccex_no);
 //        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSlider));
 //        v = getView().findViewById(R.id.intro_dccex_yes);
 //        v.setText(this.getActivity().getApplicationContext().getResources().getString(R.string.introButtonsSliderAndButtons));
 
-        RadioGroup radioGroup = Objects.requireNonNull(getView()).findViewById(R.id.intro_dccex_radio_group);
+        RadioGroup radioGroup = requireView().findViewById(R.id.intro_dccex_radio_group);
 
         radioGroup.clearCheck();
         if (!prefDccexConnectionOption) {radioGroup.check(R.id.intro_dccex_no); }
@@ -69,7 +78,7 @@ public class intro_dccex extends Fragment {
             RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("ApplySharedPref")
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 if (checkedId == R.id.intro_dccex_no) {
                     dccexYes = false;
                     prefs.edit().putString("prefUseDccexProtocol","No").commit();
@@ -77,7 +86,7 @@ public class intro_dccex extends Fragment {
                     dccexYes = true;
                     prefs.edit().putString("prefUseDccexProtocol","Auto").commit();
                 }
-                prefs.edit().putBoolean("prefDCCEXconnectionOption", dccexYes).commit();
+                prefs.edit().putBoolean("prefDccexConnectionOption", dccexYes).commit();
                 prefs.edit().putBoolean("prefActionBarShowDccExButton", dccexYes).commit();
          }
         });

@@ -4,28 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="0dp"
     android:background="@color/intro_background"
+    android:fitsSystemWindows="true"
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingTop="4dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="80dp"
-    android:fitsSystemWindows="true" >
+    android:padding="0dp">
 
     <TextView
         android:id="@+id/intro_write_settings_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/permissionsRequestTitle"
         android:textColor="@color/solidWhite"
         android:textSize="24sp"
-        android:fontFamily="sans-serif-condensed"
         android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="89dp">
 
         <LinearLayout
             android:id="@+id/line0"
@@ -36,20 +39,20 @@
 
             <ImageView
                 android:id="@+id/intro_write_settings_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
+                android:contentDescription="@string/app_name"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:srcCompat="@drawable/icon_vector"
-                android:contentDescription="@string/app_name"
-                tools:ignore="ContentDescriptio, ImageContrastCheck" />
-
+                tools:ignore="ContentDescription, ImageContrastCheck" />
 
             <TextView
                 android:id="@+id/intro_write_settings_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingBottom="5dp"
                 android:text="@string/permissionsWriteSettings"
                 android:textColor="@color/solidWhite"
@@ -60,6 +63,7 @@
                 android:id="@+id/intro_write_settings_label_Additional"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/permissionsWriteSettingsAdditional"
@@ -71,6 +75,7 @@
                 android:id="@+id/intro_write_settings_label_Additional2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/permissionsWriteSettingsAdditional2"

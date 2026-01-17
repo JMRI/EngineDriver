@@ -132,9 +132,9 @@ public class threaded_application extends Application {
     public static final String applicationName = "Engine_Driver";
     public static final String activityName = "t_a";
 
-    // it does not matter what these value are as long as they have never been used before
+    // it does not matter what these value are as long as they have never been used before (so just add 1)
     public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
-    private static final String LAST_PREFERENCE_NAME_RUN = "0";  // set this to a different string to force the check and rename of the old preferences on next startup.
+    private static final String LAST_PREFERENCE_NAME_RUN = "1";  // set this to a different string to force the check and rename of the old preferences on next startup.
 
     private final threaded_application mainapp = this;
     public comm_thread commThread;
@@ -531,7 +531,7 @@ public class threaded_application extends Application {
     public int [][] esuMc2BrakeFunctions = {{4,0,0,0,0}, {5,0,0,0,0}, {6,0,0,0,0} };
     public int [] esuMc2BrakeLevels = {30, 60, 100};
     public boolean [][] esuMc2BrakeActive = {{false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}};
-    public float esuMc2BrakePostion = 0;
+    public float esuMc2BrakePosition = 0;
     public boolean [] EsuMc2FirstServerUpdate = {false, false, false, false, false, false };
 
     public static boolean isActivityVisible() {
@@ -624,7 +624,7 @@ public class threaded_application extends Application {
                 //noinspection deprecation
                 notificationCompatBuilder =
                         new NotificationCompat.Builder(this)
-                                .setSmallIcon(R.drawable.icon)
+                                .setSmallIcon(R.drawable.icon_notification)
                                 .setContentTitle(getResources().getString(R.string.notificationInBackgroundTitle))
                                 .setContentText("")
                                 .setOngoing(true)
@@ -788,7 +788,7 @@ public class threaded_application extends Application {
 
         @Override
         public void onActivityResumed(@NonNull Activity activity) {
-            Log.d(applicationName, "t_a: ALO/ALH: onActivityResumed(): " + activity.getComponentName() + " : " + (isInBackground ? "Coming out of Background" : "forground"));
+            Log.d(applicationName, "t_a: ALO/ALH: onActivityResumed(): " + activity.getComponentName() + " : " + (isInBackground ? "Coming out of Background" : "foreground"));
             if (isInBackground) {                           // if coming out of background
                 isInBackground = false;
                 exitConfirmed = false;
@@ -846,9 +846,11 @@ public class threaded_application extends Application {
                     if (prefs.getBoolean("prefStopOnBackground",
                             mainapp.getResources().getBoolean(R.bool.prefStopOnBackgroundDefaultValue))) {
                         Log.d(threaded_application.applicationName, activityName + ": onTrimMemory(): Stopping Trains");
-                        for (int i = 0; i < mainapp.numThrottles; i++) {
-                            if (mainapp.consists[i].isActive()) {
-                                sendMsg(comm_msg_handler, message_type.ESTOP_ONE_THROTTLE, "", i);
+                        if (mainapp.consists != null) {
+                            for (int i = 0; i < mainapp.numThrottles; i++) {
+                                if ( (mainapp.consists[i] != null) && (mainapp.consists[i].isActive()) ) {
+                                    sendMsg(comm_msg_handler, message_type.ESTOP_ONE_THROTTLE, "", i);
+                                }
                             }
                         }
                     }
@@ -3032,7 +3034,7 @@ public class threaded_application extends Application {
         int rslt = 0;
         if (toolbar!=null) rslt = toolbar.getHeight();
         if (statusLine!=null) rslt = rslt + statusLine.getHeight();
-        if (screenNameLine!=null) rslt = rslt + + screenNameLine.getHeight();
+        if (screenNameLine!=null) rslt = rslt + screenNameLine.getHeight();
         return rslt;
     }
 

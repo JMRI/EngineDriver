@@ -23,21 +23,14 @@ package jmri.enginedriver.intro;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import jmri.enginedriver.R;
-import jmri.enginedriver.threaded_application;
 
 public class intro_alert extends Fragment {
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, "intro_alert: onActivityCreated()" );
-        super.onActivityCreated(savedInstanceState);
-    }
 
     @Nullable
     @Override
