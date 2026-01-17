@@ -1,5 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd
-  mstevetodd@gmail.com
+/*Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -622,7 +621,7 @@ public class comm_handler extends Handler {
             String retrievedServerName = msg.obj.toString();
             if (!mainapp.connectedHostName.isEmpty() &&
                     !retrievedServerName.equals(mainapp.connectedHostName) &&
-                    !mainapp.connectedHostName.equals(threaded_application.demo_host)) {
+                    !mainapp.connectedHostName.equals(threaded_application.DEMO_HOST)) {
                mainapp.updateConnectionList(retrievedServerName);
             }
             break;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -879,10 +879,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccexCommonCommandsSpinner.setOnItemSelectedListener(new DccExCommonCommandsSpinnerListener());
         dccexCommonCommandsSpinner.setSelection(dccCmdIndex);
 
-        vn = 4;
-        try {
-            vn = Float.parseFloat(mainapp.DccexVersion);
-        } catch (Exception ignored) { } // invalid version
+        vn = mainapp.getDccexVersionNumeric();
 
         if (vn <= 04.002007) {  // need to remove the track manager option
             dccexActionTypeEntryValuesArray = new String[2];

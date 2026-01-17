@@ -1,5 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd
-  mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -175,7 +174,7 @@ public class threaded_application extends Application {
     public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
     public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
-    public ArrayList<HashMap<String, String>> rosterFullList; // populated by select_loco. as different to roster wich is populated using XML via the WebServer
+    public ArrayList<HashMap<String, String>> rosterFullList; // populated by select_loco. as different to roster which is populated using XML via the WebServer
     public int rosterOrder = sort_type.NAME;
     public int recentLocosOrder = sort_type.LAST_USED;
     public int recentConsistsOrder = sort_type.LAST_USED;
@@ -196,11 +195,6 @@ public class threaded_application extends Application {
     public Long fastClockSeconds = 0L;
 //    public int androidVersion = 0;
     public String appVersion = "";
-    //minimum Android version for some features
-//    public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-//    public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
-//    public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
-//    public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
     //all heartbeat values are in milliseconds
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
@@ -210,7 +204,7 @@ public class threaded_application extends Application {
     public int routes_list_position = 0;
 
     public static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
-    //  WiThrottle server, can be chgd for specific servers
+    //  WiThrottle server, can be changed for specific servers
     //   do not exceed 200, unless slider delay is also changed
 
     public static final int MAX_FUNCTIONS = 32;              // total number of supported functions
@@ -219,8 +213,12 @@ public class threaded_application extends Application {
 
     public String deviceId = "";
 
-    public static final String demo_host = "jmri.mstevetodd.com";
-    private static final String demo_port = "44444";
+    public static final String DEMO_HOST = "jmri.mstevetodd.com";
+    public static final String DEMO_PORT = "44444";
+    public static final String DUMMY_HOST = "999";
+    public static final String DUMMY_ADDRESS = "999";
+    public static final int DUMMY_PORT = 999;
+    public static final String DUMMY_SSID = "";
 
     public String client_address; //address string of the client address
     public Inet4Address client_address_inet4; //inet4 value of the client address
@@ -274,8 +272,6 @@ public class threaded_application extends Application {
     public boolean [] dccexTurnoutDetailsReceived;  // used to process the turnout list
 
     public boolean dccexRoutesBeingProcessed = false;
-//    public boolean dccexRoutesRequested = false;
-//    public boolean dccexRoutesFullyReceived = false;
     public String dccexRouteString = ""; // used to process the route list
     public int [] dccexRouteIDs;  // used to process the route list
     public String [] dccexRouteNames;  // used to process the route list
@@ -357,9 +353,9 @@ public class threaded_application extends Application {
     public String connectedHostName = "";
     @NonNull
     public String connectedHostip = "";
-    public int getConnectedPort() {
-        return connectedPort;
-    }
+//    public int getConnectedPort() {
+//        return connectedPort;
+//    }
     public int connectedPort = 0;
     public String connectedSsid = "";
     public String connectedServiceType = "";
@@ -477,9 +473,6 @@ public class threaded_application extends Application {
     public ArrayQueue[] soundsLocoQueue = new ArrayQueue[2];
 
     public int[] soundsLocoSteps = new int[2];
-
-//    private static final int SOUNDS_STARTUP_INDEX = 20;
-//    private static final int SOUNDS_SHUTDOWN_INDEX = 21;
 
     public ArrayList<String> iplsNames;
     public ArrayList<String> iplsFileNames;
@@ -722,7 +715,7 @@ public class threaded_application extends Application {
 
         commThread = new comm_thread(mainapp, prefs);
 
-        flashlight = Flashlight.newInstance(threaded_application.context);
+        flashlight = Flashlight.newInstance(getApplicationContext());
 
         lifecycleHandler = new ApplicationLifecycleHandler();
         registerActivityLifecycleCallbacks(lifecycleHandler);
@@ -734,12 +727,12 @@ public class threaded_application extends Application {
 
         haveForcedWiFiConnection = false;
 
-        try {
-            Map<String, ?> ddd = prefs.getAll();
-            String dwr = prefs.getString("TypeThrottle", "false");
-        } catch (Exception ex) {
-            String dwr = ex.toString();
-        }
+//        try {
+//            Map<String, ?> ddd = prefs.getAll();
+//            String dwr = prefs.getString("TypeThrottle", "false");
+//        } catch (Exception ex) {
+//            String dwr = ex.toString();
+//        }
 
         for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
             function_states[i] = new boolean[MAX_FUNCTION_NUMBER+1];
@@ -756,9 +749,6 @@ public class threaded_application extends Application {
         }, "DefaultFunctionLabels").start();
 
         CookieManager cookieManager = CookieManager.getInstance();
-//        if (Build.VERSION.SDK_INT < 21) {
-//            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
-//        }
         cookieManager.setAcceptCookie(true);
 
         prefShowTimeOnLogEntry = prefs.getBoolean("prefShowTimeOnLogEntry",
@@ -813,7 +803,7 @@ public class threaded_application extends Application {
         public void onActivityDestroyed(@NonNull Activity activity) {
             Log.d(applicationName, "t_a: ALO/ALH: onActivityDestroyed(): " + activity.getComponentName());
             if (isInBackground && activity == runningActivity) {
-                removeNotification((runningActivity != null) ? runningActivity.getIntent() : null); // destroyed in background so remove notification
+                removeNotification(runningActivity.getIntent()); // destroyed in background so remove notification
             }
         }
 
@@ -861,7 +851,7 @@ public class threaded_application extends Application {
                 if (!isActivityVisible()) {   // double check it is in background
 //                        updateNotification(getResources().getString(R.string.notificationInBackgroundTextLowMemory));
                     if (runningActivity != null) {
-                        removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
+                        removeNotification(runningActivity.getIntent());
                         addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
                         // if this is called, assume that we will need to recreate the Throttle Screen
                         mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
@@ -905,7 +895,7 @@ public class threaded_application extends Application {
         String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);
         String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
         String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
-        String latchingDefaultEnglish = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
+//        String latchingDefaultEnglish = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
 
         int numberOfDefaultFunctionLabels = MAX_FUNCTIONS;
         int numberOfDefaultFunctionLabelsForRoster = MAX_FUNCTIONS;
@@ -932,10 +922,10 @@ public class threaded_application extends Application {
                     String[] temp = line.split(":");
                     if (temp.length >= 2) {
                         if (i <= numberOfDefaultFunctionLabels) {
-                            function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                            function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put functions and labels into global default
                         }
                         if (i <= numberOfDefaultFunctionLabelsForRoster) {
-                            function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                            function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put functions and labels into global default
                         }
                     }
                     if (temp.length == 4) {
@@ -1105,9 +1095,10 @@ public class threaded_application extends Application {
                 getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
 
         if (prefRosterRecentLocoNames) {
-            if ((roster_entries != null) && (roster_entries.size() > 0)) {
+            if ((roster_entries != null) && (!roster_entries.isEmpty())) {
                 for (String rosterName : roster_entries.keySet()) {  // loop thru roster entries,
-                    if (roster_entries.get(rosterName).equals(addr_str)) { //looking for value = input parm
+                    String rosterEntryName = roster_entries.get(rosterName);
+                    if ( (rosterEntryName!=null) && (rosterEntryName.equals(addr_str)) ) { //looking for value = input parm
                         return rosterName;  //if found, return the roster name (key)
                     }
                 }
@@ -1122,10 +1113,10 @@ public class threaded_application extends Application {
     }
 
     public String findLocoNameInRoster(String searchName) {
-        if ((roster_entries != null) && (roster_entries.size() > 0)) {
+        if ((roster_entries != null) && (!roster_entries.isEmpty())) {
             String rslt = roster_entries.get(searchName);
             if (rslt != null) {
-                if (rslt.length() > 0) {
+                if (!rslt.isEmpty()) {
                     return searchName;
                 }
             }
@@ -1137,7 +1128,7 @@ public class threaded_application extends Application {
         if (addr_str.charAt(0) == 'S' || addr_str.charAt(0) == 'L') { //convert from S123 to 123(S) formatting if needed
             addr_str = cvtToAddrP(addr_str);
         }
-        if ((consist_entries != null) && (consist_entries.size() > 0)) {
+        if ((consist_entries != null) && (!consist_entries.isEmpty())) {
             return consist_entries.get(addr_str);  //consists are keyed by address "123(L)"
         }
         return null;
@@ -1317,9 +1308,6 @@ public class threaded_application extends Application {
         dccexTurnoutsFullyReceived = false;
 
         dccexRoutesBeingProcessed = false;
-//        dccexRoutesRequested = false;
-//        dccexRoutesFullyReceived = false;
-
         dccexScreenIsOpen = false;
         witScreenIsOpen = false;
 
@@ -1368,18 +1356,18 @@ public class threaded_application extends Application {
     static public String[] splitByString(String input, String divider) {
 
         //bail on empty input string, return input as single element
-        if (input == null || input.length() == 0) return new String[]{input};
+        if (input == null || input.isEmpty()) return new String[]{input};
 
         int size = 0;
         String temp = input;
 
         // count entries
-        while (temp.length() > 0) {
+        while (!temp.isEmpty()) {
             size++;
             int index = temp.indexOf(divider);
             if (index < 0) break;    // break not found
             temp = temp.substring(index + divider.length());
-            if (temp.length() == 0) {  // found at end
+            if (temp.isEmpty()) {  // found at end
                 size++;
                 break;
             }
@@ -1390,7 +1378,7 @@ public class threaded_application extends Application {
         // find entries
         temp = input;
         size = 0;
-        while (temp.length() > 0) {
+        while (!temp.isEmpty()) {
             int index = temp.indexOf(divider);
             if (index < 0) break;    // done with all but last
             result[size] = temp.substring(0, index);
@@ -1433,10 +1421,6 @@ public class threaded_application extends Application {
         displayPowerStateMenuButton(pMenu);
     }
 
-//    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
-//        menu.findItem(R.id.throttle_button_mnu).setVisible(!prefs.getBoolean(swipePreferenceToCheck, false));
-//    }
-
     /**
      * for menu passed in, set the text or hide the menu option based on connected system
      *
@@ -1473,14 +1457,11 @@ public class threaded_application extends Application {
         if (menu != null) {
             boolean any = false;
             for (int i = 1; i <= 3; i++) {
-                MenuItem item = menu.findItem(R.id.gamepad_test_mnu1);
-                switch (i) {
-                    case 2:
-                        item = menu.findItem(R.id.gamepad_test_mnu2);
-                        break;
-                    case 3:
-                        item = menu.findItem(R.id.gamepad_test_mnu3);
-                }
+                MenuItem item = switch (i) {
+                    case 2 -> menu.findItem(R.id.gamepad_test_mnu2);
+                    case 3 -> menu.findItem(R.id.gamepad_test_mnu3);
+                    default -> menu.findItem(R.id.gamepad_test_mnu1);
+                };
 
                 result = i <= gamepadCount;
 
@@ -1494,8 +1475,8 @@ public class threaded_application extends Application {
                 }
             }
             if (any) {
-                menu.findItem(R.id.gamepad_test_menu).setVisible(any);
-                menu.findItem(R.id.gamepad_test_reset).setVisible(any);
+                menu.findItem(R.id.gamepad_test_menu).setVisible(true);
+                menu.findItem(R.id.gamepad_test_reset).setVisible(true);
             }
 
         }
@@ -1655,33 +1636,6 @@ public class threaded_application extends Application {
         return (to_state_names != null);
     }
 
-//    public void setPowerStateButton(Menu menu) {
-//        if (menu != null) {
-//            TypedValue outValue = new TypedValue();
-//            if (power_state == null) {
-//                theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-//            } else if (power_state.equals("2")) {
-//                if (!mainapp.isDCCEX) {
-//                    theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-//                } else {
-//                    theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-//                }
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-//            } else if (power_state.equals("1")) {
-//                theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
-//            } else {
-//                theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
-//            }
-//        }
-//    }
-
     public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
         if (!prefs.getBoolean("prefShowLayoutPowerButton", false)) return;
 
@@ -1722,7 +1676,7 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if (prefs.getBoolean("prefShowEmergencyStopButton", false)) {
-            TypedValue outValue = new TypedValue();
+//            TypedValue outValue = new TypedValue();
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1906,7 +1860,7 @@ public class threaded_application extends Application {
         if ( (port > 0) || (defaultUrl.toLowerCase().startsWith("http")) ) {
             if (defaultUrl.toLowerCase().startsWith("http")) { //if url starts with http, use it as is
                 url = defaultUrl;
-            } else { //, else prepend servername and port and slash if needed
+            } else { //, else prepend server name and port and slash if needed
                 url = "http://" + host_ip + ":" + port + (defaultUrl.startsWith("/") ? "" : "/") + defaultUrl;
             }
         }
@@ -1933,33 +1887,22 @@ public class threaded_application extends Application {
     public int getSelectedTheme(boolean isPreferences) {
         String prefTheme = getCurrentTheme();
         if (!isPreferences) {  // not a preferences activity
-            switch (prefTheme) {
-                case "Black":
-                    return R.style.app_theme_black;
-                case "Outline":
-                    return R.style.app_theme_outline;
-                case "Ultra":
-                    return R.style.app_theme_ultra;
-                case "Colorful":
-                    return R.style.app_theme_colorful;
-                case "Neon":
-                    return R.style.app_theme_neon;
-                default:
-                    return R.style.app_theme;
-            }
+            return switch (prefTheme) {
+                case "Black" -> R.style.app_theme_black;
+                case "Outline" -> R.style.app_theme_outline;
+                case "Ultra" -> R.style.app_theme_ultra;
+                case "Colorful" -> R.style.app_theme_colorful;
+                case "Neon" -> R.style.app_theme_neon;
+                default -> R.style.app_theme;
+            };
         } else {
-            switch (prefTheme) {
-                case "Black":
-                case "Outline":
-                case "Ultra":
-                case "Neon":
-                case "Colorful":
-                    return R.style.app_theme_black_preferences;
-//                case "Colorful":
-//                    return R.style.app_theme_colorful;
-                default:
-                    return R.style.app_theme_preferences;
-            }
+            return switch (prefTheme) {
+                case "Black", "Outline", "Ultra", "Neon", "Colorful" ->
+                        R.style.app_theme_black_preferences;
+//                case "Colorful ->
+//                    R.style.app_theme_colorful;
+                default -> R.style.app_theme_preferences;
+            };
         }
     }
 
@@ -2067,24 +2010,24 @@ public class threaded_application extends Application {
         }
     }
 
-    public void checkExit(final Activity activity, boolean forceFastDisconnect) {
-        Log.d(applicationName, "t_a: checkExit(2): ");
-        boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
-        if (!prefDoubleBackButtonToExit) {
-            checkAskExit(activity, forceFastDisconnect);
-        } else {
-            long time = System.currentTimeMillis();
-            if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
-                exitDoubleBackButtonInitiated = time;
-                safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
-            } else {
-                exitConfirmed = true;
-                exitDoubleBackButtonInitiated = 0;
-                sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);  //trigger fast disconnect / shutdown sequence
-                buttonVibration();
-            }
-        }
-    }
+//    public void checkExit(final Activity activity, boolean forceFastDisconnect) {
+//        Log.d(applicationName, "t_a: checkExit(2): ");
+//        boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
+//        if (!prefDoubleBackButtonToExit) {
+//            checkAskExit(activity, forceFastDisconnect);
+//        } else {
+//            long time = System.currentTimeMillis();
+//            if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
+//                exitDoubleBackButtonInitiated = time;
+//                safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
+//            } else {
+//                exitConfirmed = true;
+//                exitDoubleBackButtonInitiated = 0;
+//                sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);  //trigger fast disconnect / shutdown sequence
+//                buttonVibration();
+//            }
+//        }
+//    }
 
     public void checkAskExit(final Activity activity) {
         checkAskExit(activity, false);
@@ -2118,15 +2061,18 @@ public class threaded_application extends Application {
         Button positiveButton = alert.findViewById(android.R.id.button1);
         Button negativeButton = alert.findViewById(android.R.id.button2);
         // then get their parent ViewGroup
-        ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
-        int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
-        int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
-        if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
-            // prepare exchange their index in ViewGroup
-            buttonPanelContainer.removeView(positiveButton);
-            buttonPanelContainer.removeView(negativeButton);
-            buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
-            buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+        if ( (positiveButton != null) && (negativeButton != null) ) {
+            ViewGroup buttonPanelContainer;
+            buttonPanelContainer = (ViewGroup) positiveButton.getParent();
+            int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
+            int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
+            if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
+                // prepare exchange their index in ViewGroup
+                buttonPanelContainer.removeView(positiveButton);
+                buttonPanelContainer.removeView(negativeButton);
+                buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
+                buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+            }
         }
     }
 
@@ -2138,21 +2084,6 @@ public class threaded_application extends Application {
         }
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
     }
-
-//    public void setFlashlightButton(Menu menu) {
-//        if (menu != null) {
-//            TypedValue outValue = new TypedValue();
-//            if (flashState) {
-//                theme.resolveAttribute(R.attr.ed_flashlight_on_button, outValue, true);
-//                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
-//            } else {
-//                theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
-//                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
-//            }
-//        }
-//    }
 
     public void setFlashlightActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
         if (menu == null) return;
@@ -2346,18 +2277,8 @@ public class threaded_application extends Application {
      * @return true if a flashlight is available; false if not
      */
     public boolean isFlashlightAvailable() {
-        return flashlight.isFlashlightAvailable();
+        return flashlight.isFlashlightAvailable(getApplicationContext());
     }
-
-//    public void toggleFlashlight(Activity activity, Menu menu) {
-//        if (flashState) {
-//            flashlight.setFlashlightOff();
-//            flashState = false;
-//        } else {
-//            flashState = flashlight.setFlashlightOn(activity);
-//        }
-//        setFlashlightButton(menu);
-//    }
 
     public void toggleFlashlightActionView(Activity activity, Menu menu, ViewGroup menuItemViewGroup) {
         if (flashState) {
@@ -2370,21 +2291,15 @@ public class threaded_application extends Application {
     }
 
     public int Numeralise(String value) {
-        switch (value) {
-            case "One":
-                return 1;
-            case "Two":
-                return 2;
-            case "Three":
-                return 3;
-            case "Four":
-                return 4;
-            case "Five":
-                return 5;
-            case "Six":
-                return 6;
-        }
-        return 1; // default to 1 in case of problems
+        return switch (value) {
+            case "One" -> 1;
+            case "Two" -> 2;
+            case "Three" -> 3;
+            case "Four" -> 4;
+            case "Five" -> 5;
+            case "Six" -> 6;
+            default -> 1;
+        };
     }
 
     //
@@ -2538,122 +2453,76 @@ public class threaded_application extends Application {
     }
 
     public int getMaxThrottlesForScreen(String throttleScreenType) {
-        switch (throttleScreenType) {
-            case throttle_screen_type.SIMPLE:
-                return max_throttles_current_screen_type.SIMPLE;
-            case throttle_screen_type.VERTICAL:
-                return max_throttles_current_screen_type.VERTICAL;
-            case throttle_screen_type.VERTICAL_LEFT:
-            case throttle_screen_type.VERTICAL_RIGHT:
-                return max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
-            case throttle_screen_type.TABLET_VERTICAL_LEFT:
-                return max_throttles_current_screen_type.VERTICAL_TABLET;
-            case throttle_screen_type.SWITCHING:
-                return max_throttles_current_screen_type.SWITCHING;
-            case throttle_screen_type.SWITCHING_LEFT:
-            case throttle_screen_type.SWITCHING_RIGHT:
-                return max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;
-            case throttle_screen_type.TABLET_SWITCHING_LEFT:
-                return max_throttles_current_screen_type.TABLET_SWITCHING;
-            case throttle_screen_type.SWITCHING_HORIZONTAL:
-                return max_throttles_current_screen_type.SWITCHING_HORIZONTAL;
-            case throttle_screen_type.BIG_LEFT:
-            case throttle_screen_type.BIG_RIGHT:
-                return max_throttles_current_screen_type.BIG_BUTTONS;
-            case throttle_screen_type.SEMI_REALISTIC_LEFT:
-                return max_throttles_current_screen_type.SEMI_REALISTIC;
-            case throttle_screen_type.DEFAULT:
-            default:
-                return max_throttles_current_screen_type.DEFAULT;
-        }
+        return switch (throttleScreenType) {
+            case throttle_screen_type.SIMPLE
+                    -> max_throttles_current_screen_type.SIMPLE;
+            case throttle_screen_type.VERTICAL
+                    -> max_throttles_current_screen_type.VERTICAL;
+            case throttle_screen_type.VERTICAL_LEFT, throttle_screen_type.VERTICAL_RIGHT
+                    ->  max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT
+                    -> max_throttles_current_screen_type.VERTICAL_TABLET;
+            case throttle_screen_type.SWITCHING
+                    -> max_throttles_current_screen_type.SWITCHING;
+            case throttle_screen_type.SWITCHING_LEFT, throttle_screen_type.SWITCHING_RIGHT
+                    -> max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;
+            case throttle_screen_type.TABLET_SWITCHING_LEFT
+                    -> max_throttles_current_screen_type.TABLET_SWITCHING;
+            case throttle_screen_type.SWITCHING_HORIZONTAL
+                    -> max_throttles_current_screen_type.SWITCHING_HORIZONTAL;
+            case throttle_screen_type.BIG_LEFT, throttle_screen_type.BIG_RIGHT
+                    -> max_throttles_current_screen_type.BIG_BUTTONS;
+            case throttle_screen_type.SEMI_REALISTIC_LEFT
+                    -> max_throttles_current_screen_type.SEMI_REALISTIC;
+            default
+                    -> max_throttles_current_screen_type.DEFAULT;
+        };
     }
 
     public Intent getThrottleIntent() {
         Intent throttle;
         appIsFinishing = false;
-        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
-            case throttle_screen_type.SIMPLE:
-                throttle = new Intent().setClass(this, throttle_simple.class);
-                break;
-            case throttle_screen_type.VERTICAL:
-            case throttle_screen_type.VERTICAL_LEFT:
-            case throttle_screen_type.VERTICAL_RIGHT:
-            case throttle_screen_type.TABLET_VERTICAL_LEFT:
-                throttle = new Intent().setClass(this, throttle_vertical_left_or_right.class);
-                break;
-            case throttle_screen_type.SWITCHING:
-            case throttle_screen_type.SWITCHING_LEFT:
-            case throttle_screen_type.SWITCHING_RIGHT:
-            case throttle_screen_type.TABLET_SWITCHING_LEFT:
-                throttle = new Intent().setClass(this, throttle_switching_left_or_right.class);
-                break;
-            case throttle_screen_type.SWITCHING_HORIZONTAL:
-                throttle = new Intent().setClass(this, throttle_switching_horizontal.class);
-                break;
-            case throttle_screen_type.BIG_LEFT:
-            case throttle_screen_type.BIG_RIGHT:
-                throttle = new Intent().setClass(this, throttle_big_buttons.class);
-                break;
-            case throttle_screen_type.SEMI_REALISTIC_LEFT:
-                throttle = new Intent().setClass(this, throttle_semi_realistic.class);
-                break;
-            case throttle_screen_type.DEFAULT:
-            default:
-                throttle = new Intent().setClass(this, throttle_original.class);
-                break;
-        }
+        throttle = switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case throttle_screen_type.SIMPLE
+                    -> new Intent().setClass(this, throttle_simple.class);
+            case throttle_screen_type.VERTICAL, throttle_screen_type.VERTICAL_LEFT,
+                 throttle_screen_type.VERTICAL_RIGHT, throttle_screen_type.TABLET_VERTICAL_LEFT
+                    -> new Intent().setClass(this, throttle_vertical_left_or_right.class);
+            case throttle_screen_type.SWITCHING, throttle_screen_type.SWITCHING_LEFT,
+                 throttle_screen_type.SWITCHING_RIGHT, throttle_screen_type.TABLET_SWITCHING_LEFT
+                    -> new Intent().setClass(this, throttle_switching_left_or_right.class);
+            case throttle_screen_type.SWITCHING_HORIZONTAL
+                    -> new Intent().setClass(this, throttle_switching_horizontal.class);
+            case throttle_screen_type.BIG_LEFT, throttle_screen_type.BIG_RIGHT
+                    -> new Intent().setClass(this, throttle_big_buttons.class);
+            case throttle_screen_type.SEMI_REALISTIC_LEFT
+                    -> new Intent().setClass(this, throttle_semi_realistic.class);
+            default
+                    -> new Intent().setClass(this, throttle_original.class);
+        };
         return throttle;
     }
 
     public String getNextThrottleLayout() {
-        Intent throttle;
+//        Intent throttle;
         appIsFinishing = false;
         String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        switch (prefThrottleScreenType) {
-            case throttle_screen_type.SIMPLE:
-                prefThrottleScreenType = throttle_screen_type.VERTICAL;
-                break;
-            case throttle_screen_type.VERTICAL:
-                prefThrottleScreenType = throttle_screen_type.VERTICAL_LEFT;
-                break;
-            case throttle_screen_type.VERTICAL_LEFT:
-                prefThrottleScreenType = throttle_screen_type.VERTICAL_RIGHT;
-                break;
-            case throttle_screen_type.VERTICAL_RIGHT:
-                prefThrottleScreenType = throttle_screen_type.TABLET_VERTICAL_LEFT;
-                break;
-            case throttle_screen_type.TABLET_VERTICAL_LEFT:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING;
-                break;
-            case throttle_screen_type.SWITCHING:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING_LEFT;
-                break;
-            case throttle_screen_type.SWITCHING_LEFT:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING_RIGHT;
-                break;
-            case throttle_screen_type.SWITCHING_RIGHT:
-                prefThrottleScreenType = throttle_screen_type.TABLET_SWITCHING_LEFT;
-                break;
-            case throttle_screen_type.TABLET_SWITCHING_LEFT:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING_HORIZONTAL;
-                break;
-            case throttle_screen_type.SWITCHING_HORIZONTAL:
-                prefThrottleScreenType = throttle_screen_type.BIG_LEFT;
-                break;
-            case throttle_screen_type.BIG_LEFT:
-                prefThrottleScreenType = throttle_screen_type.BIG_RIGHT;
-                break;
-            case throttle_screen_type.BIG_RIGHT:
-                prefThrottleScreenType = throttle_screen_type.SEMI_REALISTIC_LEFT;
-                break;
-            case throttle_screen_type.SEMI_REALISTIC_LEFT:
-                prefThrottleScreenType = throttle_screen_type.DEFAULT;
-                break;
-            case throttle_screen_type.DEFAULT:
-            default:
-                prefThrottleScreenType = throttle_screen_type.SIMPLE;
-                break;
-        }
+        prefThrottleScreenType = switch (prefThrottleScreenType) {
+            case throttle_screen_type.SIMPLE -> throttle_screen_type.VERTICAL;
+            case throttle_screen_type.VERTICAL -> throttle_screen_type.VERTICAL_LEFT;
+            case throttle_screen_type.VERTICAL_LEFT -> throttle_screen_type.VERTICAL_RIGHT;
+            case throttle_screen_type.VERTICAL_RIGHT -> throttle_screen_type.TABLET_VERTICAL_LEFT;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT -> throttle_screen_type.SWITCHING;
+            case throttle_screen_type.SWITCHING -> throttle_screen_type.SWITCHING_LEFT;
+            case throttle_screen_type.SWITCHING_LEFT -> throttle_screen_type.SWITCHING_RIGHT;
+            case throttle_screen_type.SWITCHING_RIGHT -> throttle_screen_type.TABLET_SWITCHING_LEFT;
+            case throttle_screen_type.TABLET_SWITCHING_LEFT -> throttle_screen_type.SWITCHING_HORIZONTAL;
+            case throttle_screen_type.SWITCHING_HORIZONTAL -> throttle_screen_type.BIG_LEFT;
+            case throttle_screen_type.BIG_LEFT -> throttle_screen_type.BIG_RIGHT;
+            case throttle_screen_type.BIG_RIGHT -> throttle_screen_type.SEMI_REALISTIC_LEFT;
+            case throttle_screen_type.SEMI_REALISTIC_LEFT -> throttle_screen_type.DEFAULT;
+            default -> throttle_screen_type.SIMPLE;
+        };
         return prefThrottleScreenType;
     }
 
@@ -2711,23 +2580,12 @@ public class threaded_application extends Application {
             }
         }
 
-        Intent nextIntent;
-        switch (nextScreen) {
-            case screen_swipe_index_type.ROUTES:
-                nextIntent = new Intent().setClass(this, routes.class);
-                break;
-            case screen_swipe_index_type.TURNOUTS:
-                nextIntent = new Intent().setClass(this, turnouts.class);
-                break;
-            case screen_swipe_index_type.WEB:
-                nextIntent = new Intent().setClass(this, web_activity.class);
-                break;
-            case screen_swipe_index_type.THROTTLE:
-            default:
-                nextIntent = getThrottleIntent();
-                break;
-        }
-        return nextIntent;
+        return switch (nextScreen) {
+            case screen_swipe_index_type.ROUTES -> new Intent().setClass(this, routes.class);
+            case screen_swipe_index_type.TURNOUTS -> new Intent().setClass(this, turnouts.class);
+            case screen_swipe_index_type.WEB -> new Intent().setClass(this, web_activity.class);
+            default -> getThrottleIntent();
+        };
     }
 
     /***
@@ -2830,7 +2688,7 @@ public class threaded_application extends Application {
 
     public boolean supportsRoster() {
         //true if roster entries exist
-        if ((roster_entries != null) && (roster_entries.size() > 0)) return true;
+        if ((roster_entries != null) && (!roster_entries.isEmpty())) return true;
         //always show roster panel for these entries
         return (serverType.equals("JMRI") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
@@ -2855,12 +2713,12 @@ public class threaded_application extends Application {
         Integer locoAddress = conLoco.getIntAddress();
         Integer locoAddressSize = conLoco.getIntAddressLength();
         String locoName = conLoco.getFormatAddress();
-        Integer locoSource = conLoco.getWhichSource();
+        int locoSource = conLoco.getWhichSource();
         if (conLoco.getIsFromRoster()) {
-            if ( (conLoco.getRosterName() != null) && (conLoco.getRosterName().length() > 0)) {
+            if ( (conLoco.getRosterName() != null) && (!conLoco.getRosterName().isEmpty())) {
                 locoName = conLoco.getRosterName();
             } else {
-                if (conLoco.getDesc().length() > 0) {
+                if (!conLoco.getDesc().isEmpty()) {
                     locoName = conLoco.getDesc();
                 }
             }
@@ -2998,8 +2856,15 @@ public class threaded_application extends Application {
         return withrottle_version;
     }
 
-    public String getDCCEXVersion() {
+    public String getDccexVersion() {
         return DccexVersion;
+    }
+    public float getDccexVersionNumeric() {
+        float versionNumber = 4;
+        try {
+            versionNumber = Float.parseFloat(DccexVersion);
+        } catch (Exception ignored) { } // invalid version
+        return versionNumber;
     }
 
     public String getTurnoutState(String turnoutSystemName) {
@@ -3128,9 +2993,9 @@ public class threaded_application extends Application {
                 }
             }
 
-            for (int type = 0; type < soundsLocoStreamId.length; type++) {
+            for (int[] ints : soundsLocoStreamId) {
                 for (int mSound = 0; mSound < soundsLocoStreamId.length; mSound++) {
-                    soundPool.stop(soundsLocoStreamId[type][mSound]);
+                    soundPool.stop(ints[mSound]);
                 }
             }
 
@@ -3223,7 +3088,7 @@ public class threaded_application extends Application {
                     gamepadCount++;
                     gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
                     gamePadDeviceNames[gamepadCount - 1] = eventDeviceName;
-                    whichGamePadDeviceId = gamepadCount - 1;
+//                    whichGamePadDeviceId = gamepadCount - 1;
                 }
 
                 for (i = 0; i < numThrottles; i++) {
@@ -3232,7 +3097,7 @@ public class threaded_application extends Application {
                             gamePadIdsAssignedToThrottles[i] = eventDeviceId;
 //                            if (reassigningGamepad == -1) { // not a reassignment
 //                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
-//                            } else { // reasigning
+//                            } else { // reassigning
                             if (reassigningGamepad != -1) { // not a reassignment
                                 gamePadThrottleAssignment[i] = reassigningGamepad;
                             }
@@ -3273,7 +3138,7 @@ public class threaded_application extends Application {
 
     // listener for the joystick events
     public boolean implDispatchGenericMotionEvent(android.view.MotionEvent event) {
-        //Log.d(applicationName, "dgme " + event.getAction());
+        //Log.d(applicationName, activityName + "implDispatchGenericMotionEvent(): " + event.getAction());
         if ((!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             int action;
@@ -3320,8 +3185,8 @@ public class threaded_application extends Application {
             isExternal = true;
         }
         if (!isExternal) {
-            for (int i = 0; i < gamePadDeviceNames.length; i++) {
-                if (eventDeviceName.equals(gamePadDeviceNames[i])) {
+            for (String gamePadDeviceName : gamePadDeviceNames) {
+                if (eventDeviceName.equals(gamePadDeviceName)) {
                     isExternal = true;
                     break;
                 }
@@ -3467,8 +3332,8 @@ public class threaded_application extends Application {
     @SuppressLint("DefaultLocale")
     static public String formatNumberInName (String name) {
         if (name==null) return ""; //avoid npe
-        String tempName = name;
-        String tempNo = "";
+        StringBuilder tempName = new StringBuilder(name);
+        StringBuilder tempNo = new StringBuilder();
         //noinspection UnusedAssignment
         int tempVal = 0;
         char tempChar;
@@ -3483,28 +3348,28 @@ public class threaded_application extends Application {
             }
         }
         if (hasNumber) {
-            tempName = "";
+            tempName = new StringBuilder();
             for (int i=0; i<name.length();i++) {
                 tempChar = name.charAt(i);
                 if ((tempChar>='0') && (tempChar<='9')) {  // numeric
                     haveNo = true;
-                    tempNo = tempNo + name.charAt(i);
+                    tempNo.append(name.charAt(i));
                 } else {
                     if (haveNo) {
-                        tempVal = Integer.parseInt(tempNo);
-                        tempName = tempName + String.format("%6d",tempVal);
+                        tempVal = Integer.parseInt(tempNo.toString());
+                        tempName.append(String.format("%6d", tempVal));
                         haveNo = false;
-                        tempNo = "";
+                        tempNo = new StringBuilder();
                     }
-                    tempName = tempName + name.charAt(i);
+                    tempName.append(name.charAt(i));
                 }
             }
             if (haveNo) {
-                tempVal = Integer.parseInt(tempNo);
-                tempName = tempName + String.format("%6d",tempVal);
+                tempVal = Integer.parseInt(tempNo.toString());
+                tempName.append(String.format("%6d", tempVal));
             }
         }
-        return tempName;
+        return tempName.toString();
     }
 
     public void toastSortType(int sortType) {
@@ -3557,15 +3422,15 @@ public class threaded_application extends Application {
     public void getDefaultSortOrderRoster() {
         String prefSortOrderRoster = prefs.getString("prefSortOrderRoster", this.getResources().getString(R.string.prefSortOrderRosterDefaultValue));
         switch (prefSortOrderRoster) {
-            default:
-            case "name":
-                mainapp.rosterOrder = sort_type.NAME;
-                break;
             case "id":
                 mainapp.rosterOrder = sort_type.ID;
                 break;
             case "position":
                 mainapp.rosterOrder = sort_type.POSITION;
+                break;
+            case "name":
+            default:
+                mainapp.rosterOrder = sort_type.NAME;
                 break;
         }
     }
@@ -3619,28 +3484,30 @@ public class threaded_application extends Application {
         }
         countActiveToolbarButtons();
         threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
-        if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO) ) {
-            if (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE) {
-                if (threaded_application.toolbarButtonCount <= 5) {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
-                } else if (threaded_application.toolbarButtonCount <= 9) {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
-                } else {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
-                }
-            } else if  (threaded_application.displayDiagonalInches >= threaded_application.MEDIUM_SCREEN_SIZE) {
-                if (threaded_application.toolbarButtonCount <= 5) {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
-                } else {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+        switch (threaded_application.prefToolbarButtonSize) {
+            case toolbar_button_size_type.AUTO -> {
+                if (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE) {
+                    if (threaded_application.toolbarButtonCount <= 5) {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+                    } else if (threaded_application.toolbarButtonCount <= 9) {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+                    } else {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+                    }
+                } else if (threaded_application.displayDiagonalInches >= threaded_application.MEDIUM_SCREEN_SIZE) {
+                    if (threaded_application.toolbarButtonCount <= 5) {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+                    } else {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+                    }
                 }
             }
-        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.LARGE)) {
-            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
-        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.SMALL)) {
-            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
-        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.MEDIUM)) {
-            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+            case toolbar_button_size_type.LARGE ->
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+            case toolbar_button_size_type.SMALL ->
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+            case toolbar_button_size_type.MEDIUM ->
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
         }
     }
 
@@ -3658,7 +3525,7 @@ public class threaded_application extends Application {
 
                 // Log the key and its value
                 if (value != null) {
-                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: " + value.toString() + ", Type: " + value.getClass().getSimpleName());
+                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: " + value + ", Type: " + value.getClass().getSimpleName());
                 } else {
                     Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: null");
                 }

@@ -32,12 +32,12 @@ public class ImportExportConnectionList {
     private final boolean prefHideDemoServer;
     public boolean foundDemoHost = false;
 
-    private static final String demo_host = "jmri.mstevetodd.com";
-    private static final String demo_port = "44444";
-//    private static final String DUMMY_HOST = "999";
-    private static final String DUMMY_ADDRESS = "999";
-    private static final int DUMMY_PORT = 999;
-//    private static final String DUMMY_SSID = "";
+//    private static final String demo_host = "jmri.mstevetodd.com";
+//    private static final String demo_port = "44444";
+////    private static final String DUMMY_HOST = "999";
+//    private static final String DUMMY_ADDRESS = "999";
+//    private static final int DUMMY_PORT = 999;
+////    private static final String DUMMY_SSID = "";
 
 //    private static final int FAILURE_REASON_ERROR_READING = 1;
     public String failureReason = "";
@@ -97,7 +97,7 @@ public class ImportExportConnectionList {
                             if (port > 0) {  //skip if port not converted to integer
 
                                 boolean includeThisHost = true;
-                                if (host_name.equals(demo_host) && Integer.toString(port).equals(demo_port)) {
+                                if (host_name.equals(threaded_application.DEMO_HOST) && Integer.toString(port).equals(threaded_application.DEMO_PORT)) {
                                     foundDemoHost = true;
                                     if (prefHideDemoServer) includeThisHost = false;
                                 }
@@ -130,9 +130,9 @@ public class ImportExportConnectionList {
         //if demo host not already in list, add it at end
         if ((!prefHideDemoServer) && (!foundDemoHost)) {
             HashMap<String, String> hm = new HashMap<>();
-            hm.put("ip_address", demo_host);
-            hm.put("host_name", demo_host);
-            hm.put("port", demo_port);
+            hm.put("ip_address", threaded_application.DEMO_HOST);
+            hm.put("host_name", threaded_application.DEMO_HOST);
+            hm.put("port", threaded_application.DEMO_PORT);
             hm.put("ssid", "");
             hm.put("service_type", "_withrottle._tcp.local.");
             connections_list.add(hm);
@@ -176,7 +176,7 @@ public class ImportExportConnectionList {
             foundDemoHost = false;
             boolean isBlankOrDemo = false;
             boolean isDemo = false;
-            if (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) {
+            if (connected_hostname.equals(threaded_application.DEMO_HOST) && connected_port.toString().equals(threaded_application.DEMO_PORT)) {
                 isDemo = true;
                 foundDemoHost = true;
             }
@@ -193,7 +193,7 @@ public class ImportExportConnectionList {
                 File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
 
-                if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
+                if (!(connected_hostip.equals(threaded_application.DUMMY_ADDRESS)) || (connected_port != threaded_application.DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
                     //Write selected connection to file, then write all others (skipping selected if found)
                     if (isBlankOrDemo) {
                         list_output.format("%s:%s:%d:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType);
@@ -225,7 +225,7 @@ public class ImportExportConnectionList {
 
                         boolean doWrite = !connected_hostip.equals(sIpAddress) || (connected_port.intValue() != port.intValue());
                         //don't write it out if same as selected
-                        if (sIpAddress.equals(demo_host) && port.toString().equals(demo_port) && (foundDemoHost)) {
+                        if (sIpAddress.equals(threaded_application.DEMO_HOST) && port.toString().equals(threaded_application.DEMO_PORT) && (foundDemoHost)) {
                             doWrite = false;
                         }
                         if (doWrite) {

@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -574,7 +574,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         vn = 4;
         try {
-            vn = Float.parseFloat(mainapp.DccexVersion);
+            vn = Float.parseFloat(mainapp.getDccexVersion());
         } catch (Exception ignored) { } // invalid version
 
         witProgrammingCommonCvsLayout = findViewById(R.id.wit_programmingCommonCvsLayout);

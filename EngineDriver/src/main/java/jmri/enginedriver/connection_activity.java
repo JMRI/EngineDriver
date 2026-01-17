@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -125,12 +125,12 @@ public class connection_activity extends AppCompatActivity implements Permission
     private String connected_ssid;
     private String connected_serviceType;
 
-    private static final String demo_host = "jmri.mstevetodd.com";
-    private static final String demo_port = "44444";
-    private static final String DUMMY_HOST = "999";
-    private static final String DUMMY_ADDRESS = "999";
-    private static final int DUMMY_PORT = 999;
-    private static final String DUMMY_SSID = "";
+//    private static final String demo_host = "jmri.mstevetodd.com";
+//    private static final String demo_port = "44444";
+//    private static final String DUMMY_HOST = "999";
+//    private static final String DUMMY_ADDRESS = "999";
+//    private static final int DUMMY_PORT = 999;
+//    private static final String DUMMY_SSID = "";
 
     private static Method overridePendingTransition;
 
@@ -335,12 +335,12 @@ public class connection_activity extends AppCompatActivity implements Permission
         TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
         TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
         TextView ssidView = (TextView) vg.getChildAt(3); // get port from 4th box
-        if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
+        if (!(hnv.getText().toString().equals(threaded_application.DEMO_HOST)) || !(hpv.getText().toString().equals(threaded_application.DEMO_PORT))) {
             getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
-            connected_hostip = DUMMY_ADDRESS;
-            connected_hostname = DUMMY_HOST;
-            connected_port = DUMMY_PORT;
-            connected_ssid = DUMMY_SSID;
+            connected_hostip = threaded_application.DUMMY_ADDRESS;
+            connected_hostname = threaded_application.DUMMY_HOST;
+            connected_port = threaded_application.DUMMY_PORT;
+            connected_ssid = threaded_application.DUMMY_SSID;
 
             Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
             anim.setDuration(500);

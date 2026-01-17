@@ -1,5 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd
-  mstevetodd@gmail.com
+/*Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -337,9 +336,9 @@ public class comm_thread extends Thread {
 //            dlMetadataTask.stop();
 
         // make sure flashlight is switched off at shutdown
-        if (threaded_application.flashlight != null) {
-            threaded_application.flashlight.setFlashlightOff();
-            threaded_application.flashlight.teardown();
+        if (mainapp.flashlight != null) {
+            mainapp.flashlight.setFlashlightOff();
+            mainapp.flashlight.teardown();
         }
         mainapp.flashState = false;
         Log.d(threaded_application.applicationName, activityName + ": Shutdown(): end");
@@ -682,10 +681,7 @@ public class comm_thread extends Thread {
 
     protected static void sendRequestTracks() {
         if (mainapp.isDCCEX) { // DCC-EX only
-            float vn = 4;
-            try {
-                vn = Float.parseFloat(mainapp.DccexVersion);
-            } catch (Exception ignored) { } // invalid version
+            float vn = mainapp.getDccexVersionNumeric();
 
             if (vn >= 04.002007) {  /// need to remove the track manager option
                 String msgTxt = "<=>";
@@ -890,14 +886,14 @@ public class comm_thread extends Thread {
                 for (Consist.ConLoco l : con.getLocos()) {
                     int newDir = dir;
                     if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                    String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                    String fmt = ( (mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                     msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], newDir);
                     wifiSend(msgTxt);
                     mainapp.dccexLastKnownDirection[whichThrottle] = newDir;
 //                    Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
                 }
             } else {
-                String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                String fmt = ( (mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                 msgTxt = String.format(fmt, addr.substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], dir);
                 wifiSend(msgTxt);
                 if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
@@ -925,7 +921,7 @@ public class comm_thread extends Thread {
             for (Consist.ConLoco l : con.getLocos()) {
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                String fmt = ((Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>");
+                String fmt = ((mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>");
                 if (speed >= 0) { // not Estop
                     msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
                 } else { // Estop
@@ -1379,14 +1375,14 @@ public class comm_thread extends Thread {
 
                     switch (responseStr.charAt(1)) {
                         case 'i': // Command Station Information
-                            String old_vn = mainapp.DccexVersion;
+                            String old_vn = mainapp.getDccexVersion();
                             String [] vn1 = args[1].split("-");
                             String [] vn2 = vn1[1].split("\\.");
                             String vn = "4.";
                             try {
                                 vn = String.format("%02d.", Integer.parseInt(vn2[0]));
                             } catch (Exception e) {
-                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.DccexVersion + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.getDccexVersion() + ", ignoring");
                             }
                             if (vn2.length>=2) {
                                 try { vn = vn +String.format("%03d",Integer.parseInt(vn2[1]));
@@ -1415,10 +1411,10 @@ public class comm_thread extends Thread {
                                 }
                             }
                             mainapp.DccexVersion = vn;
-                            if (!mainapp.DccexVersion.equals(old_vn)) { //only if changed
+                            if (!mainapp.getDccexVersion().equals(old_vn)) { //only if changed
                                 mainapp.sendMsg(mainapp.connection_msg_handler, message_type.CONNECTED);
                             } else {
-                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.DccexVersion + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.getDccexVersion() + ", ignoring");
                             }
 
                             mainapp.withrottle_version = 4.0;  // fudge it
