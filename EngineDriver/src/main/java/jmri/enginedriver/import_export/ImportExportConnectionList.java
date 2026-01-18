@@ -1,7 +1,23 @@
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 package jmri.enginedriver.import_export;
 
-import static jmri.enginedriver.threaded_application.context;
-
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
@@ -42,13 +58,13 @@ public class ImportExportConnectionList {
 //    private static final int FAILURE_REASON_ERROR_READING = 1;
     public String failureReason = "";
 
-    public ImportExportConnectionList(SharedPreferences p) {
+    public ImportExportConnectionList(Context context, SharedPreferences p) {
 
         prefs = p;
         prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", context.getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
         connections_list = new ArrayList<>();
     }
-    public void getConnectionsList(String addressToRemove, String portToRemove) {
+    public void getConnectionsList(Context context, String addressToRemove, String portToRemove) {
         connections_list.clear();
         String errMsg;
 
@@ -190,7 +206,7 @@ public class ImportExportConnectionList {
                 return;
             }
             try {
-                File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+                File connections_list_file = new File(mainapp.getApplicationContext().getExternalFilesDir(null), "connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
 
                 if (!(connected_hostip.equals(threaded_application.DUMMY_ADDRESS)) || (connected_port != threaded_application.DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
@@ -246,7 +262,7 @@ public class ImportExportConnectionList {
                     String currentDateAndTime = sdf.format(new Date());
                     String connection_log_file_name = "connections_log.txt";
 
-                    File connections_log_file = new File(context.getExternalFilesDir(null), connection_log_file_name);
+                    File connections_log_file = new File(mainapp.getApplicationContext().getExternalFilesDir(null), connection_log_file_name);
                     FileWriter fileWriter = new FileWriter(connections_log_file , true);
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter, 1024);
                     PrintWriter log_output = getPrintWriter(bufferedWriter, isBlankOrDemo, currentDateAndTime);
@@ -275,7 +291,7 @@ public class ImportExportConnectionList {
 
         protected void displayError(String errMsg) {
             if (!errMsg.isEmpty())
-                threaded_application.safeToast(mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT);
+                mainapp.safeToast(mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT);
         }
     }
 }

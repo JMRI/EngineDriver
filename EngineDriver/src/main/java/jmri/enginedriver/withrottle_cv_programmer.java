@@ -328,7 +328,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
                     if (addr>maxAddr) {
                         addr = -1;
-                        threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax,
+                        mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax,
                                 txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
                         etWitAddressValue.setText(""); //clear the bad entry
                     }
@@ -360,7 +360,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
                     if (addr>maxCv) {
 //                        addr = -1;
-                        threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxCv))
+                        mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxCv))
                                 , Toast.LENGTH_LONG);
                         etWitCv.setText(""); //clear the bad entry
                     }
@@ -381,7 +381,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
                     if (addr>maxCvValue) {
 //                        addr = -1;
-                        threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax), txt, Integer.toString(maxCvValue))
+                        mainapp.safeToast(String.format(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax), txt, Integer.toString(maxCvValue))
                                 , Toast.LENGTH_LONG);
                         etWitCvValue.setText(""); //clear the bad entry
                     }

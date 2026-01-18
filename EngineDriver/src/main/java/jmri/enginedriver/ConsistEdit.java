@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -405,9 +405,9 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         super.onDestroy();
 
         if (saveConsistsFile == 'Y') {
-            importExportPreferences.loadRecentConsistsListFromFile();
+            importExportPreferences.loadRecentConsistsListFromFile(getApplicationContext());
             int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConsistToBeginningOfList(consist);
-            importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
+            importExportPreferences.writeRecentConsistsListToFile(getApplicationContext(), prefs, whichEntryIsBeingUpdated);
         }
         if (mainapp.consist_edit_msg_handler != null) {
             mainapp.consist_edit_msg_handler.removeCallbacksAndMessages(null);

@@ -1076,6 +1076,7 @@
 <!--    <string name="permissionsStoreAndReadPreferences">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
 <!--    <string name="permissionsCHANGE_NETWORK_STATE">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="prefExtendedLoggingSummary">Zaznamenávejte další, podrobnější protokoly</string>
+    <string name="prefLogOnNextStartupSummary">Automaticky spustit zaznamenávání protokolu při příštím spuštění ovladače motoru. Tato předvolba se po použití resetuje.</string>
     <string name="prefSortOrderRosterTitle">Pořadí řazení seznamu</string>
     <string name="prefSortOrderRosterSummary">Nařiďte, aby se položky rozpisu ve výchozím nastavení objevily při každém spuštění ovladače motoru</string>
     <string name="prefSortOrderTurnoutsTitle">Pořadí řazení výhybek</string>
@@ -1364,5 +1365,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">Skrýt tlačítko Zvuky lokomotivy</string>
     <string name="newConnectionTitle">Nové připojení</string>
     <string name="prefAutoServerIpConnectSummary">Automatické připojení k serverové adrese, i když není nalezena</string>
+    <string name="prefLogOnNextStartupTitle">Začít se přihlašovat při dalším spuštění?</string>
 
 </resources>

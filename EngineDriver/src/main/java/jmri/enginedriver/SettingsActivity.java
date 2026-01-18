@@ -1,5 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd
-  mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,15 +13,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
-The SettingActivity is a replacement for the original preferences activity that
-was rewritten to support AppCompat.V7
  */
 
 package jmri.enginedriver;
 
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -195,7 +190,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         //put pointer to this activity's message handler in main app's shared variable (If needed)
 //        mainapp.preferences_msg_handler = new SettingsActivity.settings_handler(Looper.getMainLooper());
 
-        InPhoneLocoSoundsLoader iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        InPhoneLocoSoundsLoader iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, getApplicationContext());
         iplsLoader.getIplsList();
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
@@ -391,7 +386,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public ArrayList<File> getFilesForDialog() {
         ArrayList<File> logFiles = new ArrayList<>();
         try {
-            File dir = new File(context.getExternalFilesDir(null).getPath());
+            File dir = new File(getApplicationContext().getExternalFilesDir(null).getPath());
             if (dir.exists() && dir.isDirectory()) {
                 File[] filesList = dir.listFiles();
                 if (filesList != null) {
@@ -404,7 +399,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             }
         } catch (Exception e) {
             Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
-            threaded_application.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
+            mainapp.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
         }
         return logFiles;
     }
@@ -439,7 +434,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         dialogListView.setOnItemClickListener((parent, view, position, id) -> {
             File selectedFile = logFiles.get(position);
-//            threaded_application.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
+//            mainapp.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
             shareFile(selectedFile,selectedFile.getName());
             dialog.dismiss();
         });
@@ -467,7 +462,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
         } else {
-            threaded_application.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
+            mainapp.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
         }
         this.reload();
     }
@@ -483,15 +478,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //        Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
         sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
         if (!exportedPreferencesFileName.equals(".ed")) {
-            File dst = new File(context.getExternalFilesDir(null), exportedPreferencesFileName);
+            File dst = new File(getApplicationContext().getExternalFilesDir(null), exportedPreferencesFileName);
 
             if ((dst.exists()) && (confirmDialog)) {
                 overwriteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
             } else {
-                importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
             }
         } else {
-            threaded_application.safeToast(R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG);
+            mainapp.safeToast(R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG);
         }
     }
 
@@ -505,7 +500,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                        importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
 //                        overwriteFile = true;
                         break;
 
@@ -561,10 +556,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + exportedPreferencesFileName);
-        boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
+        boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG);
         }
         forceRestartApp(forceRestartReason);
     }
@@ -616,7 +611,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void delete_auto_import_settings_files() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File dir = new File(context.getExternalFilesDir(null), ENGINE_DRIVER_DIR);
+            File dir = new File(getApplicationContext().getExternalFilesDir(null), ENGINE_DRIVER_DIR);
             File[] edFiles = dir.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File folder, String name) {
@@ -633,7 +628,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
     private void delete_settings_file(String file_name) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File settings_file = new File(context.getExternalFilesDir(null), file_name);
+            File settings_file = new File(getApplicationContext().getExternalFilesDir(null), file_name);
             if (settings_file.exists()) {
                 if (settings_file.delete()) {
                     Log.d(threaded_application.applicationName, activityName + ": delete_settings_file(): Settings: " + file_name + " deleted");
@@ -684,7 +679,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File not Found");
                     prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
                     prefs.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
                             prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))),
                             Toast.LENGTH_LONG);
                     reload();
@@ -974,7 +969,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 forceRestartAppOnPreferencesCloseReason = restart_reason_type.BACKGROUND;
             }
             else {
-                threaded_application.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
+                mainapp.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
             }
         } catch (Exception e) {
             Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
@@ -991,18 +986,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
                 prefText.setText(Integer.toString(maxVal));
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                         Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
                 prefText.setText(Integer.toString(minVal));
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                         Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                                         Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
     }
@@ -1024,12 +1019,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 if (newVal > maxVal) {
                     pass = 1; // need to rewrite
                     prefValues[i] = Integer.toString(maxVal);
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                             Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG);
                 } else if (newVal < minVal) {
                     pass = 1; // need to rewrite
                     prefValues[i] = Integer.toString(minVal);
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                             Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG);
                 }
             } catch (NumberFormatException e) {
@@ -1049,7 +1044,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         } else if (pass==2) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                     Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
     }
@@ -1064,18 +1059,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (newVal > maxVal) {
                 sharedPreferences.edit().putString(key, Float.toString(maxVal)).commit();
                 prefText.setText(Float.toString(maxVal));
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                     Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 sharedPreferences.edit().putString(key, Float.toString(minVal)).commit();
                 prefText.setText(Float.toString(minVal));
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                                     Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
             sharedPreferences.edit().putString(key, defaultVal).commit();
             prefText.setText(defaultVal);
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                                     Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
     }
@@ -1143,7 +1138,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             sharedPreferences.edit().putString(numThrottlePrefName, textNumbers[max[index]-1]).commit();
             if (numThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
                                         textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
             }
             ListPreference listPref = (ListPreference) prefScreen.findPreference(numThrottlePrefName);
@@ -1497,7 +1492,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         String errMsg;
 
         try {
-            File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+            File connections_list_file = new File(getApplicationContext().getExternalFilesDir(null), "connections_list.txt");
 
             if (connections_list_file.exists()) {
                 BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
@@ -1525,7 +1520,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         } catch (IOException except) {
             errMsg = except.getMessage();
             Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingList) + " " + errMsg, Toast.LENGTH_SHORT);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingList) + " " + errMsg, Toast.LENGTH_SHORT);
         }
 
         if (!foundDemoHost) {
@@ -1714,7 +1709,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                            && (prefs.getString("prefSimpleThrottleLayoutShowFunctionButtonCount", parentActivity.getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue)).equals("0"))
                            && ( (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none"))
                               || (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none")) ) ) {
-                            threaded_application.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastDeviceSoundsSimpleLayoutWarning), Toast.LENGTH_LONG);
+                            mainapp.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastDeviceSoundsSimpleLayoutWarning), Toast.LENGTH_LONG);
                         }
                         parentActivity.showThrottleNumberPreferenceDialog(getPreferenceScreen());
 
@@ -2012,7 +2007,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
                 if (swipeWeb) {
                     prefs.edit().putBoolean("prefSwipeThroughWeb", false).commit();  //make sure preference is off
-                    threaded_application.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG);
+                    mainapp.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG);
                 }
             } else {
                 parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSwipeThroughWeb", true);

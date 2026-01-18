@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -252,7 +252,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         if (testComplete) {
             tvGamepadComplete.setText(R.string.gamepadTestComplete);
             if (!whichGamepadNo.equals(" ")) {
-                threaded_application.safeToast(R.string.gamepadTestCompleteToast, Toast.LENGTH_SHORT);
+                mainapp.safeToast(R.string.gamepadTestCompleteToast, Toast.LENGTH_SHORT);
                 if (result != RESULT_OK) {
                     result = RESULT_OK;
                     endThisActivity(gamepad_test_type.PASS);

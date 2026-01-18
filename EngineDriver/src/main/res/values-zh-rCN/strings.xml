@@ -1144,6 +1144,7 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <string name="prefShowTimeOnLogEntrySummary">在日志屏幕上显示每条记录的日期和时间。</string>
     <string name="prefExtendedLoggingSummary">捕获更多更详细的日志</string>
+    <string name="prefLogOnNextStartupSummary">下次引擎驱动程序启动时自动开始捕获日志。此设置将在使用后重置。</string>
     <string name="prefSortOrderRosterTitle">名册排序顺序</string>
     <string name="prefSortOrderRosterSummary">每次启动Engine Driver时名册条目的默认显示顺序</string>
 
@@ -1381,6 +1382,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefDccexAutomationsAskTitle">EXRAIL自动化系统的机车地址</string>
     <string name="prefExtendedLoggingTitle">扩展日志记录？</string>
     <string name="prefAutoServerIpConnectSummary">即使未发现服务器地址，也自动连接到该服务器地址。</string>
+    <string name="prefLogOnNextStartupTitle">下次启动时开始记录日志？</string>
 
 </resources>
 

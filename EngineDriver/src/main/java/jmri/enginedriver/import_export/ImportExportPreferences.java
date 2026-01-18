@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver.import_export;
 
 import static java.lang.Math.min;
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -90,7 +89,7 @@ public class ImportExportPreferences {
     public ArrayList<Integer> recentTurnoutSourceList;
     public ArrayList<String> recentTurnoutServerList;
 
-    private void writeExportFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
+    private void writeExportFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
         Log.d(threaded_application.applicationName, activityName + ": writeExportFile(): Writing export file");
         boolean result = false;
         ObjectOutputStream output = null;
@@ -101,7 +100,7 @@ public class ImportExportPreferences {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
             @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
-            threaded_application.safeToast(m, Toast.LENGTH_SHORT);
+            mainapp.safeToast(m, Toast.LENGTH_SHORT);
             Log.d(threaded_application.applicationName, activityName + ": " + m);
             result = true;
         } catch (FileNotFoundException e) {
@@ -120,14 +119,14 @@ public class ImportExportPreferences {
         }
         if (!result) {
             Log.e(threaded_application.applicationName, activityName + ": writeExportFile(): Export Failed");
-            threaded_application.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
+            mainapp.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         } else {
             Log.d(threaded_application.applicationName, activityName + ": writeExportFile(): Export succeeded");
 
         }
     }
 
-    public void writeSharedPreferencesToFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
+    public void writeSharedPreferencesToFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
         Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
 
         boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
@@ -137,14 +136,14 @@ public class ImportExportPreferences {
             recentLocoNameList = new ArrayList<>();
             recentLocoSourceList = new ArrayList<>();
             recentLocoFunctionsList = new ArrayList<>();
-            loadRecentLocosListFromFile();
+            loadRecentLocosListFromFile(context);
             saveIntListDataToPreferences(recentLocoAddressList, "prefRecentLoco", sharedPreferences);
             saveIntListDataToPreferences(recentLocoAddressSizeList, "prefRecentLocoSize", sharedPreferences);
             saveStringListDataToPreferences(recentLocoNameList, "prefRecentLocoName", sharedPreferences);
             saveIntListDataToPreferences(recentLocoSourceList, "prefRecentLocoSource", sharedPreferences);
             saveStringListDataToPreferences(recentLocoFunctionsList, "prefRecentLocoFunction", sharedPreferences);
 
-            loadRecentConsistsListFromFile();
+            loadRecentConsistsListFromFile(context);
             saveStringListDataToPreferences(recentConsistNameList, "prefRecentConsistName", sharedPreferences);
             // note recentConsistNameHtmlList is not save or loaded. it is generated as needed
             for (int i = 0; i < recentConsistNameList.size(); i++) {
@@ -158,9 +157,9 @@ public class ImportExportPreferences {
         }
 
         if (!exportedPreferencesFileName.equals(".ed")) {
-            writeExportFile(context, sharedPreferences, exportedPreferencesFileName);
+            writeExportFile(mainapp, context, sharedPreferences, exportedPreferencesFileName);
         } else {
-            threaded_application.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
+            mainapp.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         }
 
         int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
@@ -211,7 +210,7 @@ public class ImportExportPreferences {
     }
 
     @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
-    public boolean loadSharedPreferencesFromFile(Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
+    public boolean loadSharedPreferencesFromFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
         Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
@@ -311,7 +310,7 @@ public class ImportExportPreferences {
                     @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
                     Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + m);
-                    threaded_application.safeToast(m, Toast.LENGTH_SHORT);
+                    mainapp.safeToast(m, Toast.LENGTH_SHORT);
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -349,7 +348,7 @@ public class ImportExportPreferences {
                     getStringListDataFromPreferences(recentLocoNameList, "prefRecentLocoName", sharedPreferences, recentLocoAddressList.size(), "");
                     getIntListDataFromPreferences(recentLocoSourceList, "prefRecentLocoSource", sharedPreferences, recentLocoAddressList.size(), source_type.UNKNOWN);
                     getStringListDataFromPreferences(recentLocoFunctionsList, "prefRecentLocoFunctions", sharedPreferences, recentLocoAddressList.size(), "");
-                    writeRecentLocosListToFile(sharedPreferences);
+                    writeRecentLocosListToFile(context, sharedPreferences);
 
                     ArrayList<String> tempRecentConsistNameList = new ArrayList<>();
                     getStringListDataFromPreferences(tempRecentConsistNameList, "prefRecentConsistName", sharedPreferences, -1, "");
@@ -379,25 +378,25 @@ public class ImportExportPreferences {
 
                     }
 
-                    writeRecentConsistsListToFile(sharedPreferences, -1);
+                    writeRecentConsistsListToFile(context, sharedPreferences, -1);
                 }
             } else {
-                deleteFile(RECENT_ENGINES_FILENAME);
-                deleteFile(RECENT_CONSISTS_FILENAME);
-                deleteFile(RECENT_TURNOUTS_FILENAME);
+                deleteFile(context, RECENT_ENGINES_FILENAME);
+                deleteFile(context, RECENT_CONSISTS_FILENAME);
+                deleteFile(context, RECENT_TURNOUTS_FILENAME);
             }
 
             if (!res) {
                 if (srcExists) {
-                    threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportImportFailed,
+                    mainapp.safeToast(context.getResources().getString(R.string.toastImportExportImportFailed,
                                                         exportedPreferencesFileName), Toast.LENGTH_LONG);
                 } else {
-                    threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportServerImportFailed,
+                    mainapp.safeToast(context.getResources().getString(R.string.toastImportExportServerImportFailed,
                                                         exportedPreferencesFileName), Toast.LENGTH_LONG);
                 }
             }
         } else {
-            threaded_application.safeToast(R.string.toastImportExportCannotImport, Toast.LENGTH_LONG);
+            mainapp.safeToast(R.string.toastImportExportCannotImport, Toast.LENGTH_LONG);
         }
 
         prefEdit.commit();
@@ -405,7 +404,7 @@ public class ImportExportPreferences {
         return res;
     }
 
-    public void loadRecentLocosListFromFile() {
+    public void loadRecentLocosListFromFile(Context context) {
         Log.d(threaded_application.applicationName, activityName + ": loadRecentLocosListFromFile()): Loading recent locos list from file");
         if (recentLocoAddressList == null) { //make sure arrays are valid
             recentLocoAddressList = new ArrayList<>();
@@ -483,7 +482,7 @@ public class ImportExportPreferences {
         }
     }
 
-    public void writeRecentLocosListToFile(SharedPreferences sharedPreferences) {
+    public void writeRecentLocosListToFile(Context context, SharedPreferences sharedPreferences) {
         Log.d(threaded_application.applicationName, activityName + ": writeRecentLocosListToFile(): Writing recent locos list to file");
 
         // write it out from the saved preferences to the file
@@ -519,7 +518,7 @@ public class ImportExportPreferences {
         }
     }
 
-    public void loadRecentConsistsListFromFile() {
+    public void loadRecentConsistsListFromFile(Context context) {
         Log.d(threaded_application.applicationName, activityName + ": loadRecentConsistsListFromFile(): Loading recent consists list from file");
 
         recentConsistLocoAddressList = new ArrayList<>();
@@ -847,7 +846,7 @@ public class ImportExportPreferences {
     }
 
 
-    public void writeRecentConsistsListToFile(SharedPreferences sharedPreferences, int whichEntryIsBeingUpdated) {
+    public void writeRecentConsistsListToFile(Context context, SharedPreferences sharedPreferences, int whichEntryIsBeingUpdated) {
         Log.d(threaded_application.applicationName, activityName + ": writeRecentConsistsListToFile(): Writing recent consists list to file");
 
         // write it out from the saved preferences to the file
@@ -898,7 +897,7 @@ public class ImportExportPreferences {
     }
 
     @SuppressLint("DefaultLocale")
-    public void writeThrottlesEnginesListToFile(threaded_application mainapp, int numThrottles) {
+    public void writeThrottlesEnginesListToFile(threaded_application mainapp, Context context, int numThrottles) {
         Log.d(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Writing throttles engines list to file");
 
         File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
@@ -932,7 +931,7 @@ public class ImportExportPreferences {
         }
     }
 
-    public void loadThrottlesEnginesListFromFile(threaded_application mainapp, int numThrottles) {
+    public void loadThrottlesEnginesListFromFile(threaded_application mainapp, Context context, int numThrottles) {
         Log.d(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Reading throttles engines list from file");
 
         File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
@@ -967,7 +966,7 @@ public class ImportExportPreferences {
 
                                 // see if we can find it in the recents list and load the function labels
                                 if (recentLocoAddressList == null) {
-                                    loadRecentLocosListFromFile();
+                                    loadRecentLocosListFromFile(context);
                                 }
                                 boolean found = false;
                                 String functions = "";
@@ -993,7 +992,7 @@ public class ImportExportPreferences {
                                 if (!consist.isEmpty()) {
                                     for (int j = 0; j <= consist.size(); j++) {
                                         if (consist.getLoco(locoAddress) != null) {
-                                            threaded_application.safeToast(context.getResources().getString(R.string.toastLocoAlreadySelected, locoAddress), Toast.LENGTH_SHORT);
+                                            mainapp.safeToast(context.getResources().getString(R.string.toastLocoAlreadySelected, locoAddress), Toast.LENGTH_SHORT);
                                             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, locoAddress, whichThrottle);  // send the acquire message anyway
                                             result = false;
                                             break;
@@ -1137,7 +1136,7 @@ public class ImportExportPreferences {
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void writeRecentTurnoutsListToFile(SharedPreferences sharedPreferences) {
+    public void writeRecentTurnoutsListToFile(Context context, SharedPreferences sharedPreferences) {
 //        Log.d(threaded_application.applicationName, activityName + ": writeRecentTurnoutsListToFile(): Writing recent turnouts list to file");
 
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
@@ -1159,7 +1158,7 @@ public class ImportExportPreferences {
 //                    numberOfRecentTurnoutsToWrite--;
                 }
             } else {
-                deleteFile(RECENT_TURNOUTS_FILENAME);
+                deleteFile(context, RECENT_TURNOUTS_FILENAME);
                 return;
             }
             list_output.flush();
@@ -1176,7 +1175,7 @@ public class ImportExportPreferences {
     }
 
     /** @noinspection UnusedReturnValue*/
-    public boolean deleteFile(String filename) {
+    public boolean deleteFile(Context context, String filename) {
         Log.d(threaded_application.applicationName, activityName + ": deleteFile():");
 
         File file = new File(context.getExternalFilesDir(null), filename);
@@ -1192,7 +1191,7 @@ public class ImportExportPreferences {
         return(false);
     }
 
-        public void loadRecentTurnoutsListFromFile() {
+        public void loadRecentTurnoutsListFromFile(Context context) {
 //        Log.d(threaded_application.applicationName, activityName + ": loadRecentTurnoutsListFromFile(): Loading recent turnouts list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
@@ -1264,7 +1263,7 @@ public class ImportExportPreferences {
 
     @SuppressLint({"DefaultLocale", "ApplySharedPref"})
     public void downloadRosterToRecents(Context context, SharedPreferences sharedPreferences, threaded_application mainapp) {
-        loadRecentLocosListFromFile();
+        loadRecentLocosListFromFile(context);
 
         ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
         int recentsSize = getIntPrefValue(sharedPreferences, "prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
@@ -1291,7 +1290,7 @@ public class ImportExportPreferences {
                 try {
                     locoAddress = Integer.parseInt(ras[0]);   // convert address to int
                 } catch (NumberFormatException e) {
-                    threaded_application.safeToast(context.getResources().getString(R.string.toastImportExportCouldNotParseAddress, e.getMessage()), Toast.LENGTH_SHORT);
+                    mainapp.safeToast(context.getResources().getString(R.string.toastImportExportCouldNotParseAddress, e.getMessage()), Toast.LENGTH_SHORT);
                     return; //get out, don't try to acquire
                 }
                 if ("loco".equals(rosterEntryType)) {
@@ -1322,7 +1321,7 @@ public class ImportExportPreferences {
             j++;
         }
 
-        writeRecentLocosListToFile(sharedPreferences);
+        writeRecentLocosListToFile(context, sharedPreferences);
 
         // now get all the function labels
         j=0;

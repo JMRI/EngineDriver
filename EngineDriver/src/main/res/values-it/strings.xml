@@ -904,6 +904,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Regola l\'effetto del cursore del carico sulle variazioni di velocità. &gt;100% = carico maggiore</string>-->
     <string name="prefCategoryDevicePageTitle">preferenze dei dispositivi</string>
     <string name="prefExtendedLoggingSummary">Acquisisci registri aggiuntivi e più dettagliati</string>
+    <string name="prefLogOnNextStartupSummary">Avvia automaticamente l\'acquisizione di un registro al successivo avvio del driver del motore. Questa preferenza verrà reimpostata dopo l\'uso.</string>
     <string name="prefSortOrderRosterTitle">Ordinamento degli elenchi</string>
     <string name="prefSortOrderRosterSummary">Ordina che le voci dell\'elenco vengano visualizzate, per impostazione predefinita, ogni volta che avvii Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Ordinamento degli afflussi</string>
@@ -1217,5 +1218,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">Nascondi il pulsante Loco Sounds</string>
     <string name="newConnectionTitle">Nuova connessione</string>
     <string name="prefAutoServerIpConnectSummary">Connettiti automaticamente a un indirizzo del server anche se non scoperto</string>
+    <string name="prefLogOnNextStartupTitle">Vuoi iniziare a registrare al prossimo avvio?</string>
 
 </resources>

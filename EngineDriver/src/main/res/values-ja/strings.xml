@@ -801,6 +801,7 @@
     <string name="prefShowTimeOnLogEntrySummary">ログ画面の各エントリの日時を表示します。</string>
     <string name="prefShowTimeOnLogEntryTitle">ログにタイムスタンプを表示</string>
     <string name="prefExtendedLoggingSummary">追加の、より詳細なログをキャプチャする</string>
+    <string name="prefLogOnNextStartupSummary">次回エンジンドライバーを起動したときに、自動的にログのキャプチャを開始します。この設定は使用後にリセットされます。</string>
     <string name="prefSortOrderRosterTitle">列車情報の並び順</string>
     <string name="prefSortOrderRosterSummary">エンジンドライバーを起動するたびに、デフォルトで列車情報エントリが表示されるようにする</string>
     <string name="prefSortOrderTurnoutsTitle">分岐器の並び順</string>
@@ -1287,5 +1288,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">機関車のサウンドボタンを非表示にする</string>
     <string name="newConnectionTitle">新しい接続</string>
     <string name="prefAutoServerIpConnectSummary">検出されない場合でもサーバーアドレスに自動的に接続する</string>
+    <string name="prefLogOnNextStartupTitle">次回の起動時にログ記録を開始しますか?</string>
 
 </resources>

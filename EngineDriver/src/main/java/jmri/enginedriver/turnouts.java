@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static android.text.TextUtils.substring;
-
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -451,7 +449,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     try {
                         Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
                     } catch (Exception except) {
-                        threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT);
+                        mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT);
                         return;
                     }
                 }
@@ -1234,7 +1232,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         //if no SD Card present then there is no recent consists list
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
             int pos = 0;
-            importExportPreferences.loadRecentTurnoutsListFromFile();
+            importExportPreferences.loadRecentTurnoutsListFromFile(getApplicationContext());
             for (int i = 0; i < importExportPreferences.recentTurnoutAddressList.size(); i++) {
                 // only load the turnout if it came from the current server
                 if (importExportPreferences.recentTurnoutServerList.get(i).equals(mainapp.connectedHostip)) {
@@ -1367,7 +1365,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             lastTurnoutUsedName = turnoutSystemName;
 
             int numberOfRecentTurnoutsToWrite;
-            String smrl = prefs.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
+            String smrl = prefs.getString("prefMaximumRecentLocos", getApplicationContext().getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
             try {
                 numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 3;
             } catch (Exception except) {
@@ -1410,7 +1408,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         removingTurnoutOrForceReload = false;
 
-        importExportPreferences.writeRecentTurnoutsListToFile(prefs);
+        importExportPreferences.writeRecentTurnoutsListToFile(getApplicationContext(), prefs);
     }
 
 
@@ -1455,9 +1453,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
 
         if (importExportPreferences.recentTurnoutAddressList.size() == 0) {
-            importExportPreferences.deleteFile(ImportExportPreferences.RECENT_TURNOUTS_FILENAME);
+            importExportPreferences.deleteFile(getApplicationContext(), ImportExportPreferences.RECENT_TURNOUTS_FILENAME);
         } else {
-            importExportPreferences.writeRecentTurnoutsListToFile(prefs);
+            importExportPreferences.writeRecentTurnoutsListToFile(getApplicationContext(), prefs);
         }
         recentTurnoutsList.clear();
     }
@@ -1703,9 +1701,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;
             if (deltaX>0) {
-                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_right_in, R.anim.push_right_out);
+                options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.push_right_in, R.anim.push_right_out);
             } else {
-                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_left_in, R.anim.push_left_out);
+                options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.push_left_in, R.anim.push_left_out);
             }
             startActivity(in, options.toBundle());
 //            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));
@@ -1715,16 +1713,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     void getDefaultSortOrderTurnouts() {
         String prefSortOrderTurnouts = prefs.getString("prefSortOrderTurnouts", this.getResources().getString(R.string.prefSortOrderTurnoutsDefaultValue));
         switch (prefSortOrderTurnouts) {
-            default:
-            case "name":
-                mainapp.turnoutsOrder = sort_type.NAME;
-                break;
-            case "id":
-                mainapp.turnoutsOrder = sort_type.ID;
-                break;
-            case "position":
-                mainapp.turnoutsOrder = sort_type.POSITION;
-                break;
+            case "id" -> mainapp.turnoutsOrder = sort_type.ID;
+            case "position" -> mainapp.turnoutsOrder = sort_type.POSITION;
+            default -> mainapp.turnoutsOrder = sort_type.NAME;
         }
     }
 

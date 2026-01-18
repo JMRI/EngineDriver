@@ -910,6 +910,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste o efeito do controle deslizante de carga nas mudanças de velocidade. >100% = mais carga</string>-->
     <string name="prefCategoryDevicePageTitle">Preferências do dispositivo</string>
     <string name="prefExtendedLoggingSummary">Capture registros adicionais e mais detalhados.</string>
+    <string name="prefLogOnNextStartupSummary">Iniciar automaticamente a captura de um registro na próxima vez que o Driver do Motor for iniciado. Essa preferência será redefinida após o uso.</string>
     <string name="prefSortOrderRosterTitle">Ordem de classificação da lista</string>
     <string name="prefSortOrderRosterSummary">Ordene que as entradas da lista apareçam, por padrão, cada vez que você iniciar o Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Ordem de classificação de comparecimentos</string>
@@ -1222,4 +1223,5 @@
     <string name="prefLocoSelectHideIplsButtonTitle">Ocultar o botão Sons da Locomotiva</string>
     <string name="newConnectionTitle">Nova conexão</string>
     <string name="prefAutoServerIpConnectSummary">Conectar-se automaticamente a um endereço de servidor, mesmo que não seja descoberto.</string>
+    <string name="prefLogOnNextStartupTitle">Iniciar o registro de logs na próxima inicialização?</string>
 </resources>

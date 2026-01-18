@@ -1,5 +1,5 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
-  
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 3 of the License, or
@@ -13,11 +13,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
+ */
 
 package jmri.enginedriver;
-
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -868,9 +866,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;
             if (deltaX>0) {
-                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_right_in, R.anim.push_right_out);
+                options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.push_right_in, R.anim.push_right_out);
             } else {
-                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_left_in, R.anim.push_left_out);
+                options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.push_left_in, R.anim.push_left_out);
             }
             startActivity(in, options.toBundle());
 //            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));

@@ -377,7 +377,7 @@ public class threaded_application extends Application {
     public boolean exitConfirmed = false;
     /** @noinspection FieldCanBeLocal*/
     private ApplicationLifecycleHandler lifecycleHandler;
-    public static Context context;
+//    public static Context context;
 
     public long exitDoubleBackButtonInitiated = 0;
 
@@ -400,6 +400,7 @@ public class threaded_application extends Application {
 
     public boolean prefShowTimeOnLogEntry = false;
     public static boolean prefExtendedLogging = false;
+    public static boolean prefLogOnNextStartup = false;
     public String logSaveFilename = "";
     public Process logcatProcess;
 
@@ -708,7 +709,7 @@ public class threaded_application extends Application {
 
         Log.i(applicationName, "Engine Driver:" + appVersion + ", SDK:" + android.os.Build.VERSION.SDK_INT);
 
-        context = getApplicationContext();
+//        context = getApplicationContext();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         renamePreferencesToNewFormat();
@@ -761,8 +762,7 @@ public class threaded_application extends Application {
         prefHideInstructionalToasts = prefs.getBoolean("prefHideInstructionalToasts",
                 getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
 
-    } // end onCreate
-
+    } // end onCreate()
 
     public class ApplicationLifecycleHandler implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
         private boolean isInBackground = true;
@@ -912,7 +912,7 @@ public class threaded_application extends Application {
         function_consist_locos = new LinkedHashMap<>();
         function_consist_latching = new LinkedHashMap<>();
         try {
-            File settings_file = new File(context.getExternalFilesDir(null), "function_settings.txt");
+            File settings_file = new File(getApplicationContext().getExternalFilesDir(null), "function_settings.txt");
             if (settings_file.exists()) {  //if file found, use it for settings arrays
                 BufferedReader settings_reader = new BufferedReader(new FileReader(settings_file));
                 //read settings into local arrays
@@ -946,15 +946,15 @@ public class threaded_application extends Application {
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
                 if (numberOfDefaultFunctionLabels >= 0) {
-                    function_labels_default.put(0, threaded_application.context.getResources().getString(R.string.functionButton00DefaultValue));
+                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefaultValue));
                     function_consist_latching.put(0, latchingLightBellDefault);
                 }
                 if (numberOfDefaultFunctionLabels >= 1) {
-                    function_labels_default.put(1, threaded_application.context.getResources().getString(R.string.functionButton01DefaultValue));
+                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefaultValue));
                     function_consist_latching.put(1, latchingLightBellDefault);
                 }
                 if (numberOfDefaultFunctionLabels >= 2) {
-                    function_labels_default.put(2, threaded_application.context.getResources().getString(R.string.functionButton02DefaultValue));
+                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefaultValue));
                     function_consist_latching.put(2, latchingDefault);
                 }
                 if (numberOfDefaultFunctionLabels >= 3) {
@@ -1451,7 +1451,7 @@ public class threaded_application extends Application {
      * @param menu - menu object that will be adjusted
      */
     public void setGamepadTestMenuOption(Menu menu, int gamepadCount) {
-        String prefGamePadType = prefs.getString("prefGamePadType", threaded_application.context.getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        String prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         boolean result;
 
         if (menu != null) {
@@ -1867,18 +1867,17 @@ public class threaded_application extends Application {
         return url;
     }
 
-    // build a full uri
-    // returns: full uri    if webServerPort is valid
-    //          null        otherwise
-    public String createUri() {
-        String uri = "";
-        int port = web_server_port;
-        if (port > 0) {
-            uri = "ws://" + host_ip + ":" + port + "/json/";
-        }
-        return uri;
-    }
-
+//    // build a full uri
+//    // returns: full uri    if webServerPort is valid
+//    //          null        otherwise
+//    public String createUri() {
+//        String uri = "";
+//        int port = web_server_port;
+//        if (port > 0) {
+//            uri = "ws://" + host_ip + ":" + port + "/json/";
+//        }
+//        return uri;
+//    }
 
     public int getSelectedTheme() {
         return getSelectedTheme(false);
@@ -1930,7 +1929,7 @@ public class threaded_application extends Application {
      * @return a String representation of the selected theme
      */
     public String getCurrentTheme() {
-        return prefs.getString("prefTheme", threaded_application.context.getResources().getString(R.string.prefThemeDefaultValue));
+        return prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
     }
 
     /**
@@ -1964,7 +1963,7 @@ public class threaded_application extends Application {
     public boolean setActivityOrientation(Activity activity) {
         boolean isWeb = (activity.getLocalClassName().equals("web_activity"));
         String to = prefs.getString("prefThrottleOrientation",
-                threaded_application.context.getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+                getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
         if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
             int orient = activity.getResources().getConfiguration().orientation;
             if ((isWeb && orient == ORIENTATION_PORTRAIT)
@@ -1972,7 +1971,7 @@ public class threaded_application extends Application {
                 return (false);
         } else if (isWeb) {
             to = prefs.getString("prefWebOrientation",
-                    threaded_application.context.getResources().getString(R.string.prefWebOrientationDefaultValue));
+                    getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
 
         try {
@@ -2285,19 +2284,19 @@ public class threaded_application extends Application {
             flashlight.setFlashlightOff();
             flashState = false;
         } else {
-            flashState = flashlight.setFlashlightOn(activity);
+            flashState = flashlight.setFlashlightOn(mainapp, activity);
         }
         setFlashlightActionViewButton(menu, menuItemViewGroup);
     }
 
     public int Numeralise(String value) {
         return switch (value) {
-            case "One" -> 1;
             case "Two" -> 2;
             case "Three" -> 3;
             case "Four" -> 4;
             case "Five" -> 5;
             case "Six" -> 6;
+//            case "One" -> 1;
             default -> 1;
         };
     }
@@ -2342,7 +2341,7 @@ public class threaded_application extends Application {
 
     @SuppressLint("ApplySharedPref")
     public String fixThrottleName(String currentValue) {
-        String defaultName = threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue);
+        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 
         String newValue = currentValue;
         //if name is blank or the default name, make it unique
@@ -2350,7 +2349,7 @@ public class threaded_application extends Application {
             deviceId = mainapp.getFakeDeviceId();
             if (MobileControl2.isMobileControl2()) {
                 // Change default name for ESU MCII
-                defaultName = threaded_application.context.getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
+                defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
             }
             newValue = defaultName + " " + deviceId;
         }
@@ -2368,7 +2367,7 @@ public class threaded_application extends Application {
     public void vibrate(int duration) {
         //we need vibrate permissions, otherwise do nothing
         PermissionsHelper phi = PermissionsHelper.getInstance();
-        if (phi.isPermissionGranted(threaded_application.context, PermissionsHelper.VIBRATE)) {
+        if (phi.isPermissionGranted(getApplicationContext(), PermissionsHelper.VIBRATE)) {
             try {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 // Vibrate for 500 milliseconds
@@ -2414,7 +2413,7 @@ public class threaded_application extends Application {
 
     // used for Instructional Toasts.  They can be blocked by preference
     public void safeToastInstructional(final int resourceId, final int length) {
-        safeToastInstructional(context.getResources().getString(resourceId), length);
+        safeToastInstructional(getApplicationContext().getResources().getString(resourceId), length);
     }
     public void safeToastInstructional(final String msg_txt, final int length) {
         if (!prefHideInstructionalToasts) {
@@ -2423,7 +2422,7 @@ public class threaded_application extends Application {
     }
     /** @noinspection SameReturnValue*/
     public boolean safeToastInstructionalShowOnce(final int resourceId, final int length, boolean shownBefore) {
-        return safeToastInstructionalShowOnce(context.getResources().getString(resourceId), length, shownBefore);
+        return safeToastInstructionalShowOnce(getApplicationContext().getResources().getString(resourceId), length, shownBefore);
     }
     /** @noinspection SameReturnValue*/
     public boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
@@ -2434,20 +2433,20 @@ public class threaded_application extends Application {
     }
 
     //display msg using Toast() safely by ensuring Toast() is called from the UI Thread
-    public static void safeToast(final int resourceId, final int length) {
-        safeToast(context.getResources().getString(resourceId), length);
+    public void safeToast(final int resourceId, final int length) {
+        safeToast(getApplicationContext().getResources().getString(resourceId), length);
     }
-    public static void safeToast(final String msg_txt) {
+    public  void safeToast(final String msg_txt) {
         safeToast(msg_txt, Toast.LENGTH_SHORT);
     }
-    public static void safeToast(final String msg_txt, final int length) {
+    public void safeToast(final String msg_txt, final int length) {
         Log.d(applicationName, "t_a: safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
         h.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(threaded_application.context, msg_txt, length).show();
+                Toast.makeText(getApplicationContext(), msg_txt, length).show();
             }
         });
     }
@@ -2601,7 +2600,7 @@ public class threaded_application extends Application {
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_MANUAL: {
-                safeToast(context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded,
+                safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualSucceeded,
                                         prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG);
                 break;
             }
@@ -2627,7 +2626,7 @@ public class threaded_application extends Application {
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_AUTO: {
-                safeToast(context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded,
+                safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded,
                                     prefs.getString("prefPreferencesImportFileName", "")),
                         Toast.LENGTH_LONG);
                 break;
@@ -2658,7 +2657,7 @@ public class threaded_application extends Application {
     public void writeSharedPreferencesToFileIfAllowed() {
         Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
+        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
         if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
             if (!this.connectedHostName.isEmpty()) {
@@ -2666,7 +2665,7 @@ public class threaded_application extends Application {
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-                    importExportPreferences.writeSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
+                    importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
                 Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: done");
             } else {
@@ -2708,7 +2707,7 @@ public class threaded_application extends Application {
             return;
         }
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-        importExportPreferences.loadRecentLocosListFromFile();
+        importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
 
         Integer locoAddress = conLoco.getIntAddress();
         Integer locoAddressSize = conLoco.getIntAddressLength();
@@ -2751,16 +2750,16 @@ public class threaded_application extends Application {
         // now append it to the beginning of the list
         importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);
 
-        importExportPreferences.writeRecentLocosListToFile(prefs);
+        importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
         Log.d(applicationName, "t_a: Loco '" + locoName + "' added to Recents");
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
 
     }
 
     public int findLocoInRecents(Integer address, Integer size, String name) {
         int position = -1;
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-        importExportPreferences.loadRecentLocosListFromFile();
+        importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
 
         for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
             if (address.equals(importExportPreferences.recentLocoAddressList.get(i))
@@ -2782,9 +2781,9 @@ public class threaded_application extends Application {
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
 
-        ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(prefs);
+        ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(getApplicationContext(), prefs);
         importExportConnectionList.connections_list.clear();
-        importExportConnectionList.getConnectionsList("", "");
+        importExportConnectionList.getConnectionsList(getApplicationContext(), "", "");
         importExportConnectionList.saveConnectionsListExecute(
                 this, connectedHostip, connectedHostName, connectedPort, retrievedServerName, connectedSsid, connectedServiceType);
         connectedHostName = retrievedServerName;
@@ -2800,7 +2799,7 @@ public class threaded_application extends Application {
             if (!connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-                importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
+                importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
 
                 Message msg = Message.obtain();
                 msg.what = message_type.RESTART_APP;
@@ -2922,7 +2921,7 @@ public class threaded_application extends Application {
             }
 
             TextView tvToolbarServerDesc;
-            int screenLayout = context.getResources().getConfiguration().screenLayout;
+            int screenLayout = getApplicationContext().getResources().getConfiguration().screenLayout;
             screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
             if (screenLayout >= Configuration.SCREENLAYOUT_SIZE_XLARGE) {
                 tvToolbarServerDesc = toolbar.findViewById(R.id.toolbar_server_desc_x_large);
@@ -3376,16 +3375,16 @@ public class threaded_application extends Application {
         if (!mainapp.prefHideInstructionalToasts) {
             switch (sortType) {
                 case sort_type.NAME:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByName), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedByName), Toast.LENGTH_SHORT);
                     break;
                 case sort_type.ID:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedById), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedById), Toast.LENGTH_SHORT);
                     break;
                 case sort_type.LAST_USED:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByLastUsed), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedByLastUsed), Toast.LENGTH_SHORT);
                     break;
                 case sort_type.POSITION:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByPosition), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedByPosition), Toast.LENGTH_SHORT);
                     break;
             }
         }
@@ -3511,12 +3510,8 @@ public class threaded_application extends Application {
         }
     }
 
-    // run at startup
-    // this method finds old preferences and renames them
-    // always include the date the 'preference' was added so that it can eventually be removed.
-    private void renamePreferencesToNewFormat() {
+    public void logAllPreference() {
         // list all the existing preferences, if extended logging is enabled
-        threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging", false);
         if (threaded_application.prefExtendedLogging) {
             Map<String, ?> allPreferences = prefs.getAll();
             for (Map.Entry<String, ?> entry : allPreferences.entrySet()) {
@@ -3531,6 +3526,14 @@ public class threaded_application extends Application {
                 }
             }
         }
+    }
+
+    // run at startup
+    // this method finds old preferences and renames them
+    // always include the date the 'preference' was added so that it can eventually be removed.
+    private void renamePreferencesToNewFormat() {
+        threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging", false);
+        logAllPreference();
 
         // check to see if the rename process has already run
         String prefLastPrefRename = prefs.getString("prefLastPrefRename", "X");
@@ -3571,4 +3574,5 @@ public class threaded_application extends Application {
             prefs.edit().remove(oldName).apply();
         }
     }
+
 }

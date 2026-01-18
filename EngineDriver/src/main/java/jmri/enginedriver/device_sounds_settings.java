@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 package jmri.enginedriver;
-
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -111,14 +109,14 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                         Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                         Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
@@ -126,7 +124,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             sVal = defaultVal;
             et.setText(sVal);
             isValid = false;
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                     Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
         if (isValid) sVal = Integer.toString(newVal);
@@ -273,7 +271,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, getApplicationContext());
         iplsLoader.getIplsList();        //see if there any custom ipls files
         int ipslCount = mainapp.iplsNames.size();
         int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;

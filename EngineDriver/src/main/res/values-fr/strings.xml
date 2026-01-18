@@ -989,6 +989,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajustement du multiplicateur de ratio de charge affectant les changements de vitesse..  &gt;100% = charge additionnelle.</string>-->
     <string name="prefCategoryDevicePageTitle">Préférences du terminal</string>
     <string name="prefExtendedLoggingSummary">Capturez des journaux supplémentaires et plus détaillés</string>
+    <string name="prefLogOnNextStartupSummary">Lancer automatiquement l\'enregistrement d\'un journal au prochain démarrage du pilote moteur. Cette préférence sera réinitialisée après utilisation.</string>
     <string name="prefSortOrderRosterTitle">Sens de tri de la liste de locos</string>
     <string name="prefSortOrderRosterSummary">Sens de tri préférentiel pour les locos à l ouverture d Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Sens de tri des aiguillages</string>
@@ -1287,5 +1288,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">Masquer le bouton Sons de la locomotive</string>
     <string name="newConnectionTitle">Nouvelle connexion</string>
     <string name="prefAutoServerIpConnectSummary">Se connecter automatiquement à une adresse de serveur même si elle n\'est pas découverte</string>
+    <string name="prefLogOnNextStartupTitle">Démarrer l\'enregistrement au prochain démarrage ?</string>
 
 </resources>

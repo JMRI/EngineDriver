@@ -1524,6 +1524,8 @@
     <string name="prefShowTimeOnLogEntrySummary">Show Date Time for each entry on the log screen</string>
     <string name="prefExtendedLoggingTitle">Extended logging?</string>
     <string name="prefExtendedLoggingSummary">Capture additional, more detailed, logs</string>
+    <string name="prefLogOnNextStartupTitle">Start logging on next startup?</string>
+    <string name="prefLogOnNextStartupSummary">Automatically start capturing a log the next time Engine Driver Starts. This preference will reset after use.</string>
 
     <string name="prefSortOrderRosterTitle">Roster sort order</string>
     <string name="prefSortOrderRosterSummary">Order that the roster entries will appear, by default, each time you start Engine Driver</string>

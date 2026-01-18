@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
 package jmri.enginedriver;
-
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -277,7 +275,7 @@ public class reconnect_status extends AppCompatActivity {
         if (activity != null && in != null) {
             threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(context, R.anim.fade_in, R.anim.fade_out);
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fade_in, R.anim.fade_out);
             startActivity(in, options.toBundle());
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }

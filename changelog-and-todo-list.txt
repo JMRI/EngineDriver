@@ -36,6 +36,7 @@
     * Added option for medium size toolbar/action bar buttons. The 'auto' option will make screens >=139.7cm (5.5") will use the medium size buttons
     * Reinstated the log and file sharing capability
     * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
+    * Added preference to start logging immediately after app startup.  Resets itself after use.
  * Other Changes
     * More Google translations
     * Additional time options for the children's timer

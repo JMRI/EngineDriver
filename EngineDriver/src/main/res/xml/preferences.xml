@@ -2589,6 +2589,13 @@
                     android:layout="@layout/checkbox_no_icon" />
 
                 <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="prefLogOnNextStartup"
+                    android:summary="@string/prefLogOnNextStartupSummary"
+                    android:title="@string/prefLogOnNextStartupTitle"
+                    android:layout="@layout/checkbox_no_icon" />
+
+                <CheckBoxPreference
                     android:defaultValue="@bool/prefShareFileNowDefaultValue"
                     android:key="prefShareFileNow"
                     android:summary="@string/prefShareFileNowSummary"
