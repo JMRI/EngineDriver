@@ -58,6 +58,7 @@
     <string name="consist_list_label">編成中の全てのロコ</string>
     <string name="consist_trail_label">後続機関車</string>
     <string name="prefActionBarShowRoutesButtonTitle">ルートボタン？</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">高度な構成 (CV19) ボタン?</string>
     <string name="ConsistEditLabelLead">先頭</string>
     <string name="ConsistEditLabelTrail">後続</string>
     <string name="consistLights_help">ロコをクリックすると、そのロコのライトが \'オフ\' または \'ファンクションボタンに従う\' に切り替わります。\n\nロコを長押しすると、ロコにコマンドを送信せずに、ライトの状態を \'オフ\' に強制します (ED が混乱している場合など)。\n\n完了したら、戻る矢印を押します。</string>
@@ -1290,5 +1291,8 @@
     <string name="newConnectionTitle">新しい接続</string>
     <string name="prefAutoServerIpConnectSummary">検出されない場合でもサーバーアドレスに自動的に接続する</string>
     <string name="prefLogOnNextStartupTitle">次回の起動時にログ記録を開始しますか?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">アクションバーにボタンを表示して、Advance Consist (CV19) 画面を開きます。</string>
+    <string name="prefActionBarShowWebButtonSummary">アクションバーにWeb画面に切り替えるボタンを表示する</string>
+    <string name="prefActionBarShowWebButtonTitle">ウェブボタン？</string>
 
 </resources>

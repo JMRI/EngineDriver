@@ -646,6 +646,7 @@
     <string name="functionButtonLookForRear">POSTERIOR</string>
 
     <string name="prefActionBarShowRoutesButtonTitle">Botão de rotas?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Botão Consistente Avançado (CV19)?</string>
     <string name="ConsistEditLabelLead">CONDUZIR</string>
     <string name="ConsistEditLabelTrail">TRILHA</string>
     <string name="prefConsistFollowRuleStyleTitle">Funções Consistem - Siga o Estilo da Regra</string>
@@ -1224,4 +1225,7 @@
     <string name="newConnectionTitle">Nova conexão</string>
     <string name="prefAutoServerIpConnectSummary">Conectar-se automaticamente a um endereço de servidor, mesmo que não seja descoberto.</string>
     <string name="prefLogOnNextStartupTitle">Iniciar o registro de logs na próxima inicialização?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Exibir botão na barra de ações para abrir a tela de Configuração Avançada (CV19)</string>
+    <string name="prefActionBarShowWebButtonSummary">Exibir botão na barra de ações para alternar para a tela da Web.</string>
+    <string name="prefActionBarShowWebButtonTitle">Botão da Web?</string>
 </resources>

@@ -33,12 +33,13 @@
     * Added back in the VRBoxB gamepad type and fixed it
     * Added XBox gamepad support
     * Add 'None' option for the gamepad buttons
-    * Add options for action bar buttons to navigate between Throttle, Turnouts/Points and Routes
+    * Add options for action bar buttons to navigate between Throttle, Turnouts/Points, Routes and Web screens
     * Added toolbar buttons for preferences and the wizard on the connection screen. Can be turned off with the existing preference to hide instructional hints
     * Added option for medium size toolbar/action bar buttons. The 'auto' option will make screens >=139.7cm (5.5") will use the medium size buttons
     * Reinstated the log and file sharing capability
     * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
     * Added preference to start logging immediately after app startup.  Resets itself after use.
+    * Added preference to hide the Advanced Consist (CV19) action bar button on the select loco screen.
  * Other Changes
     * More Google translations
     * Additional time options for the children's timer
@@ -1041,9 +1042,9 @@
  *   TODO: add preference to set throttles to zero when track power is turned off
  *   TODO: option to show roster images above each throttle
  * Gamepads (throttle):
- *   TODO: move code to a separate class
+ *   TODO: move code to a separate class. This is now partly done.
  * In Phone Loco Sounds (throttle):
- *   TODO: move code to a separate class. This is now partly done, but the variables are still in ta
+ *   TODO: move code to a separate class. This is now partly done, but the variables are still in t_a
  *   TODO: custom sound profiles to be able to specify/override the momentum delay
  *   TODO: work out when to play the engine shut down sounds
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
@@ -1059,7 +1060,6 @@
  *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
- *   TODO: Add preference to hide the CV19 tool button
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from

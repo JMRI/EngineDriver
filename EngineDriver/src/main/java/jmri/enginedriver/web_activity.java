@@ -631,6 +631,8 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         mainapp.displayPowerStateMenuButton(menu);
         mainapp.displayThrottleButton(menu);
+        mainapp.displayTurnoutsButton(menu);
+        mainapp.displayRoutesButton(menu);
 //        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughWeb");
         mainapp.setPowerMenuOption(menu);
         if (findViewById(R.id.powerLayoutButton) == null) {
@@ -660,6 +662,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         mainapp.setRoutesMenuOption(menu);
         mainapp.setTurnoutsMenuOption(menu);
+        mainapp.displayThrottleButton(menu);
+        mainapp.displayTurnoutsButton(menu);
+        mainapp.displayRoutesButton(menu);
         mainapp.setPowerMenuOption(menu);
 
         adjustToolbarSize(menu);
