@@ -1087,6 +1087,12 @@ public class throttle extends AppCompatActivity implements
                     setSpeed(whichThrottle, 0, speed_commands_from_type.BUTTONS);
                     break;
 
+                case message_type.WEB_PORT_RECEIVED:
+                    if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
+                        new AutoImportFromURL();
+                    }
+                    break;
+
                 case message_type.REOPEN_THROTTLE:
                     // ignore
                     break;
@@ -1379,7 +1385,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     protected void addConsistFollowRule(String consistFollowString, String consistFollowAction, Integer consistFollowHeadlight) {
-        if (consistFollowString.trim().length() > 0) {
+        if (!consistFollowString.trim().isEmpty()) {
             String[] prefConsistFollowStringstemp = threaded_application.splitByString(consistFollowString, ",");
             for (int i = 0; i < prefConsistFollowStringstemp.length; i++) {
                 prefConsistFollowStrings.add(prefConsistFollowStringstemp[i].trim());
@@ -5763,10 +5769,6 @@ public class throttle extends AppCompatActivity implements
 
         tts = new Tts(prefs, mainapp);
 
-        if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
-            autoImportFromURL();
-        }
-
         queryAllSpeedsAndDirectionsWiT();
 
 //        loadBackgroundImage();
@@ -7374,11 +7376,6 @@ public class throttle extends AppCompatActivity implements
         }
     }
 
-    private void autoImportFromURL() {
-
-        new AutoImportFromURL();
-    }
-
     public class AutoImportFromURL  implements Runnable{   // Background Async Task to download file
 
         public AutoImportFromURL() {
@@ -7468,11 +7465,6 @@ public class throttle extends AppCompatActivity implements
 
 
     private void autoImportUrlAskToImport() {
-//        navigateToHandler(PermissionsHelper.READ_SERVER_AUTO_PREFERENCES);
-//        autoImportUrlAskToImportImpl();
-//    }
-//
-//    private void autoImportUrlAskToImportImpl() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
             @SuppressLint("ApplySharedPref")

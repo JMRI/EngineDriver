@@ -28,6 +28,7 @@
     * Bug fix for the toolbar size when coming out of the Preferences sub folders
     * Bug fix for going into background from the connection screen
     * Bug fix for a children's timer problem, introduced by the menu item glyphs.
+    * Bug fix for a timing issue for retrieving the preferences on a server
  * New Features
     * Added back in the VRBoxB gamepad type and fixed it
     * Added XBox gamepad support

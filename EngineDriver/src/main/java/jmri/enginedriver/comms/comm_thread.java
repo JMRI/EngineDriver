@@ -1337,6 +1337,7 @@ public class comm_thread extends Thread {
                             int oldPort = mainapp.web_server_port;
                             try {
                                 mainapp.web_server_port = Integer.parseInt(responseStr.substring(2));  //set app variable
+                                mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.WEB_PORT_RECEIVED);
                             } catch (Exception e) {
                                 Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid web server port string");
                             }
