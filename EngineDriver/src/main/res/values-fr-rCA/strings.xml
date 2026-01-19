@@ -26,6 +26,7 @@
     <string name="app_name_device_sounds_settings">Sons des locomotives via le téléphone</string>
     <string name="app_name_functions">Paramètres des fonctions par défaut</string>
     <string name="app_name_gamepad_test">Manette de jeu</string>
+    <string name="gamepad_test_menu">Manette de jeu/USB</string>
 
     <string name="app_name_log_viewer">Visionneuse du journal</string>
     <string name="app_name_power_control">Contrôle de l\'alimentation</string>

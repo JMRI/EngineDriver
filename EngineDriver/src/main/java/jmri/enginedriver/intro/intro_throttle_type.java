@@ -59,10 +59,8 @@ public class intro_throttle_type extends Fragment {
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         String currentValue = prefs.getString("prefThrottleScreenType", this.requireActivity().getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
-        //    private Spinner spinner;
-        //    private int introThrottleTypeValueIndex = 1;
-        String[] nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntries);
-        nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
+        String[] nameEntries = this.requireActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntries);
+        nameEntryValues = this.requireActivity().getApplicationContext().getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
         TextView v = requireView().findViewById(R.id.intro_throttle_type_default_name);
         v.setText(nameEntries[0]);
         v = requireView().findViewById(R.id.intro_throttle_type_vertical_name);
@@ -91,7 +89,7 @@ public class intro_throttle_type extends Fragment {
         v.setText(nameEntries[12]);
 
 
-        RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
+        RadioGroup radioGroup = requireView().findViewById(R.id.intro_throttle_type_radio_group);
 
         radioGroup.clearCheck();
         if (nameEntryValues[0].equals(currentValue)) {radioGroup.check(R.id.intro_throttle_type_default_name); }

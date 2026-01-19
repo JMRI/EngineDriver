@@ -27,6 +27,8 @@
     * Some minor fixes for the TTS
     * Bug fix for the toolbar size when coming out of the Preferences sub folders
     * Bug fix for going into background from the connection screen
+    * Bug fix for a children's timer problem, introduced by the menu item glyphs.
+    * Bug fix for a timing issue for retrieving the preferences on a server
  * New Features
     * Added back in the VRBoxB gamepad type and fixed it
     * Added XBox gamepad support
@@ -36,6 +38,7 @@
     * Added option for medium size toolbar/action bar buttons. The 'auto' option will make screens >=139.7cm (5.5") will use the medium size buttons
     * Reinstated the log and file sharing capability
     * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
+    * Added preference to start logging immediately after app startup.  Resets itself after use.
  * Other Changes
     * More Google translations
     * Additional time options for the children's timer
@@ -1056,6 +1059,7 @@
  *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
+ *   TODO: Add preference to hide the CV19 tool button
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from

@@ -59,7 +59,7 @@ public class intro_throttle_name extends Fragment {
 
         mainapp = (threaded_application) this.requireActivity().getApplication();
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
-        currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", this.getActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
+        currentValue = mainapp.fixThrottleName(prefs.getString("prefThrottleName", this.requireActivity().getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue)));
 
         throttleNameView = requireView().findViewById(R.id.intro_throttle_name_value);
         throttleNameView.setText(currentValue);

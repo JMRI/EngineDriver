@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ package jmri.enginedriver;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -570,7 +569,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         //Save the valid function labels to the settings.txt file.
 //        File sdcard_path = Environment.getExternalStorageDirectory();
 //        File settings_file = new File(sdcard_path, "engine_driver/function_settings.txt");
-        File settings_file = new File(context.getExternalFilesDir(null), "function_settings.txt");
+        File settings_file = new File(getApplicationContext().getExternalFilesDir(null), "function_settings.txt");
         PrintWriter settings_output;
         String errMsg = "";
         try {
@@ -593,9 +592,9 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
         if (errMsg.length() != 0)
-            threaded_application.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
+            mainapp.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
-            threaded_application.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
+            mainapp.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
 
         prefs.edit().putString("prefNumberOfDefaultFunctionLabels", prefNumberOfDefaultFunctionLabels).commit();  //reset the preference
         prefs.edit().putString("prefNumberOfDefaultFunctionLabelsForRoster", prefNumberOfDefaultFunctionLabelsForRoster).commit();  //reset the preference
@@ -616,14 +615,14 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 sVal = Integer.toString(maxVal);
                 et.setText(sVal);
                 isValid = false;
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                         Integer.toString(minVal), Integer.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
             } else if (newVal < minVal) {
                 prefs.edit().putString(key, Integer.toString(minVal)).commit();
                 sVal = Integer.toString(minVal);
                 et.setText(sVal);
                 isValid = false;
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
                         Integer.toString(minVal), Integer.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
             }
         } catch (NumberFormatException e) {
@@ -631,7 +630,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             sVal = defaultVal;
             et.setText(sVal);
             isValid = false;
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
                     Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
         }
         if (isValid) sVal = Integer.toString(newVal);

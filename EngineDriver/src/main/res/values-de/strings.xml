@@ -902,8 +902,8 @@
     <string name="toastPreferencesBackgroundChangeSucceeded">Hintergrund ändern Succeeded.</string>
     <string name="throttleSwitchAction">Schalten Gas Screens</string>
     <string name="prefBackgroundImagePreferencesTitle">Hintergrundbild Einstellungen</string>
-    <string name="edit_consist_menu">\≡ Bearbeiten Consist</string>
-    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="edit_consist_menu">Bearbeiten Consist</string>
+    <string name="gamepad_test_menu">Gamepads/USB</string>
     <string name="prefSwipeDownOptionSummary">Was soll passieren, wenn Sie auf der Fahrregler-Ansicht nach unten wischen.</string>
     <string name="prefSwipeDownOptionTitle">Wischen nach unten Aktion in der Fahrregler-Ansicht?</string>
     <string name="prefPauseSpeedButtonTitle">Show \'Pause\' Taste</string>
@@ -971,6 +971,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Passen Sie die Auswirkung des Lastreglers auf die Geschwindigkeitsänderungen an. &gt;100 % = mehr Last</string>-->
     <string name="prefCategoryDevicePageTitle">Geräteeinstellungen</string>
     <string name="prefExtendedLoggingSummary">Erfassen Sie zusätzliche, detailliertere Protokolle.</string>
+    <string name="prefLogOnNextStartupSummary">Die Protokollierung wird beim nächsten Start des Engine-Treibers automatisch gestartet. Diese Einstellung wird nach der Verwendung zurückgesetzt.</string>
     <string name="prefSortOrderRosterTitle">Sortierreihenfolge des Dienstplans</string>
     <string name="prefSortOrderRosterSummary">Ordnen Sie an, dass die Dienstplaneinträge standardmäßig bei jedem Start von Engine Driver angezeigt werden</string>
     <string name="prefSortOrderTurnoutsTitle">Sortierreihenfolge der Weichen</string>
@@ -1265,5 +1266,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">Schaltfläche „Lokgeräusche“ ausblenden</string>
     <string name="newConnectionTitle">Neue Verbindung</string>
     <string name="prefAutoServerIpConnectSummary">Automatische Verbindung zu einer Serveradresse, auch wenn diese nicht erkannt wird</string>
+    <string name="prefLogOnNextStartupTitle">Beim nächsten Start die Protokollierung aktivieren?</string>
 
 </resources>

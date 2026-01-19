@@ -42,6 +42,7 @@
         <menu>
 
             <item android:id="@+id/intro_mnu"
+                android:icon="?attr/ed_wizard_glyph"
                 android:title="@string/introMenu" />
 
             <item android:id="@+id/settings_mnu"
@@ -49,6 +50,7 @@
                 android:title="@string/preferences" />
 
             <item android:id="@+id/logviewer_menu"
+                android:icon="?attr/ed_history_glyph"
                 android:title="@string/logViewer" />
 
             <item android:id="@+id/exit_mnu"
@@ -56,6 +58,7 @@
                 android:title="@string/exit" />
 
             <item android:id="@+id/about_mnu"
+                android:icon="?attr/ed_about_glyph"
                 android:title="@string/about" />
 
 

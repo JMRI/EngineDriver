@@ -1,5 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd
-  mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -68,6 +67,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -175,7 +175,7 @@ public class threaded_application extends Application {
     public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
     public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
-    public ArrayList<HashMap<String, String>> rosterFullList; // populated by select_loco. as different to roster wich is populated using XML via the WebServer
+    public ArrayList<HashMap<String, String>> rosterFullList; // populated by select_loco. as different to roster which is populated using XML via the WebServer
     public int rosterOrder = sort_type.NAME;
     public int recentLocosOrder = sort_type.LAST_USED;
     public int recentConsistsOrder = sort_type.LAST_USED;
@@ -196,11 +196,6 @@ public class threaded_application extends Application {
     public Long fastClockSeconds = 0L;
 //    public int androidVersion = 0;
     public String appVersion = "";
-    //minimum Android version for some features
-//    public final int minImmersiveModeVersion = android.os.Build.VERSION_CODES.JELLY_BEAN_MR2;
-//    public final int minThemeVersion = android.os.Build.VERSION_CODES.HONEYCOMB;
-//    public final int minScreenDimNewMethodVersion = Build.VERSION_CODES.KITKAT;
-//    public final int minActivatedButtonsVersion = Build.VERSION_CODES.ICE_CREAM_SANDWICH;
 
     //all heartbeat values are in milliseconds
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
@@ -210,7 +205,7 @@ public class threaded_application extends Application {
     public int routes_list_position = 0;
 
     public static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
-    //  WiThrottle server, can be chgd for specific servers
+    //  WiThrottle server, can be changed for specific servers
     //   do not exceed 200, unless slider delay is also changed
 
     public static final int MAX_FUNCTIONS = 32;              // total number of supported functions
@@ -219,8 +214,12 @@ public class threaded_application extends Application {
 
     public String deviceId = "";
 
-    public static final String demo_host = "jmri.mstevetodd.com";
-    private static final String demo_port = "44444";
+    public static final String DEMO_HOST = "jmri.mstevetodd.com";
+    public static final String DEMO_PORT = "44444";
+    public static final String DUMMY_HOST = "999";
+    public static final String DUMMY_ADDRESS = "999";
+    public static final int DUMMY_PORT = 999;
+    public static final String DUMMY_SSID = "";
 
     public String client_address; //address string of the client address
     public Inet4Address client_address_inet4; //inet4 value of the client address
@@ -274,8 +273,6 @@ public class threaded_application extends Application {
     public boolean [] dccexTurnoutDetailsReceived;  // used to process the turnout list
 
     public boolean dccexRoutesBeingProcessed = false;
-//    public boolean dccexRoutesRequested = false;
-//    public boolean dccexRoutesFullyReceived = false;
     public String dccexRouteString = ""; // used to process the route list
     public int [] dccexRouteIDs;  // used to process the route list
     public String [] dccexRouteNames;  // used to process the route list
@@ -357,9 +354,9 @@ public class threaded_application extends Application {
     public String connectedHostName = "";
     @NonNull
     public String connectedHostip = "";
-    public int getConnectedPort() {
-        return connectedPort;
-    }
+//    public int getConnectedPort() {
+//        return connectedPort;
+//    }
     public int connectedPort = 0;
     public String connectedSsid = "";
     public String connectedServiceType = "";
@@ -381,7 +378,7 @@ public class threaded_application extends Application {
     public boolean exitConfirmed = false;
     /** @noinspection FieldCanBeLocal*/
     private ApplicationLifecycleHandler lifecycleHandler;
-    public static Context context;
+//    public static Context context;
 
     public long exitDoubleBackButtonInitiated = 0;
 
@@ -404,6 +401,7 @@ public class threaded_application extends Application {
 
     public boolean prefShowTimeOnLogEntry = false;
     public static boolean prefExtendedLogging = false;
+    public static boolean prefLogOnNextStartup = false;
     public String logSaveFilename = "";
     public Process logcatProcess;
 
@@ -477,9 +475,6 @@ public class threaded_application extends Application {
     public ArrayQueue[] soundsLocoQueue = new ArrayQueue[2];
 
     public int[] soundsLocoSteps = new int[2];
-
-//    private static final int SOUNDS_STARTUP_INDEX = 20;
-//    private static final int SOUNDS_SHUTDOWN_INDEX = 21;
 
     public ArrayList<String> iplsNames;
     public ArrayList<String> iplsFileNames;
@@ -715,14 +710,14 @@ public class threaded_application extends Application {
 
         Log.i(applicationName, "Engine Driver:" + appVersion + ", SDK:" + android.os.Build.VERSION.SDK_INT);
 
-        context = getApplicationContext();
+//        context = getApplicationContext();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         renamePreferencesToNewFormat();
 
         commThread = new comm_thread(mainapp, prefs);
 
-        flashlight = Flashlight.newInstance(threaded_application.context);
+        flashlight = Flashlight.newInstance(getApplicationContext());
 
         lifecycleHandler = new ApplicationLifecycleHandler();
         registerActivityLifecycleCallbacks(lifecycleHandler);
@@ -734,12 +729,12 @@ public class threaded_application extends Application {
 
         haveForcedWiFiConnection = false;
 
-        try {
-            Map<String, ?> ddd = prefs.getAll();
-            String dwr = prefs.getString("TypeThrottle", "false");
-        } catch (Exception ex) {
-            String dwr = ex.toString();
-        }
+//        try {
+//            Map<String, ?> ddd = prefs.getAll();
+//            String dwr = prefs.getString("TypeThrottle", "false");
+//        } catch (Exception ex) {
+//            String dwr = ex.toString();
+//        }
 
         for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
             function_states[i] = new boolean[MAX_FUNCTION_NUMBER+1];
@@ -756,9 +751,6 @@ public class threaded_application extends Application {
         }, "DefaultFunctionLabels").start();
 
         CookieManager cookieManager = CookieManager.getInstance();
-//        if (Build.VERSION.SDK_INT < 21) {
-//            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
-//        }
         cookieManager.setAcceptCookie(true);
 
         prefShowTimeOnLogEntry = prefs.getBoolean("prefShowTimeOnLogEntry",
@@ -771,8 +763,7 @@ public class threaded_application extends Application {
         prefHideInstructionalToasts = prefs.getBoolean("prefHideInstructionalToasts",
                 getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
 
-    } // end onCreate
-
+    } // end onCreate()
 
     public class ApplicationLifecycleHandler implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
         private boolean isInBackground = true;
@@ -813,7 +804,7 @@ public class threaded_application extends Application {
         public void onActivityDestroyed(@NonNull Activity activity) {
             Log.d(applicationName, "t_a: ALO/ALH: onActivityDestroyed(): " + activity.getComponentName());
             if (isInBackground && activity == runningActivity) {
-                removeNotification((runningActivity != null) ? runningActivity.getIntent() : null); // destroyed in background so remove notification
+                removeNotification(runningActivity.getIntent()); // destroyed in background so remove notification
             }
         }
 
@@ -861,7 +852,7 @@ public class threaded_application extends Application {
                 if (!isActivityVisible()) {   // double check it is in background
 //                        updateNotification(getResources().getString(R.string.notificationInBackgroundTextLowMemory));
                     if (runningActivity != null) {
-                        removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
+                        removeNotification(runningActivity.getIntent());
                         addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
                         // if this is called, assume that we will need to recreate the Throttle Screen
                         mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
@@ -905,7 +896,7 @@ public class threaded_application extends Application {
         String locosDefault = getResources().getString(R.string.prefFunctionConsistLocosDefaultValue);
         String latchingDefault = getResources().getString(R.string.prefFunctionConsistLatchingDefaultValue);
         String latchingLightBellDefault = getResources().getString(R.string.prefFunctionConsistLatchingLightBellDefaultValue);
-        String latchingDefaultEnglish = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
+//        String latchingDefaultEnglish = mainapp.getString(R.string.prefFunctionConsistLatchingLightBellDefaultValueEnglish); // can not change with language
 
         int numberOfDefaultFunctionLabels = MAX_FUNCTIONS;
         int numberOfDefaultFunctionLabelsForRoster = MAX_FUNCTIONS;
@@ -922,7 +913,7 @@ public class threaded_application extends Application {
         function_consist_locos = new LinkedHashMap<>();
         function_consist_latching = new LinkedHashMap<>();
         try {
-            File settings_file = new File(context.getExternalFilesDir(null), "function_settings.txt");
+            File settings_file = new File(getApplicationContext().getExternalFilesDir(null), "function_settings.txt");
             if (settings_file.exists()) {  //if file found, use it for settings arrays
                 BufferedReader settings_reader = new BufferedReader(new FileReader(settings_file));
                 //read settings into local arrays
@@ -932,10 +923,10 @@ public class threaded_application extends Application {
                     String[] temp = line.split(":");
                     if (temp.length >= 2) {
                         if (i <= numberOfDefaultFunctionLabels) {
-                            function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                            function_labels_default.put(Integer.parseInt(temp[1]), temp[0]); //put functions and labels into global default
                         }
                         if (i <= numberOfDefaultFunctionLabelsForRoster) {
-                            function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put funcs and labels into global default
+                            function_labels_default_for_roster.put(Integer.parseInt(temp[1]), temp[0]); //put functions and labels into global default
                         }
                     }
                     if (temp.length == 4) {
@@ -956,15 +947,15 @@ public class threaded_application extends Application {
                 settings_reader.close();
             } else {          //hard-code some buttons and default the rest
                 if (numberOfDefaultFunctionLabels >= 0) {
-                    function_labels_default.put(0, threaded_application.context.getResources().getString(R.string.functionButton00DefaultValue));
+                    function_labels_default.put(0, getApplicationContext().getResources().getString(R.string.functionButton00DefaultValue));
                     function_consist_latching.put(0, latchingLightBellDefault);
                 }
                 if (numberOfDefaultFunctionLabels >= 1) {
-                    function_labels_default.put(1, threaded_application.context.getResources().getString(R.string.functionButton01DefaultValue));
+                    function_labels_default.put(1, getApplicationContext().getResources().getString(R.string.functionButton01DefaultValue));
                     function_consist_latching.put(1, latchingLightBellDefault);
                 }
                 if (numberOfDefaultFunctionLabels >= 2) {
-                    function_labels_default.put(2, threaded_application.context.getResources().getString(R.string.functionButton02DefaultValue));
+                    function_labels_default.put(2, getApplicationContext().getResources().getString(R.string.functionButton02DefaultValue));
                     function_consist_latching.put(2, latchingDefault);
                 }
                 if (numberOfDefaultFunctionLabels >= 3) {
@@ -1105,9 +1096,10 @@ public class threaded_application extends Application {
                 getResources().getBoolean(R.bool.prefRosterRecentLocoNamesDefaultValue));
 
         if (prefRosterRecentLocoNames) {
-            if ((roster_entries != null) && (roster_entries.size() > 0)) {
+            if ((roster_entries != null) && (!roster_entries.isEmpty())) {
                 for (String rosterName : roster_entries.keySet()) {  // loop thru roster entries,
-                    if (roster_entries.get(rosterName).equals(addr_str)) { //looking for value = input parm
+                    String rosterEntryName = roster_entries.get(rosterName);
+                    if ( (rosterEntryName!=null) && (rosterEntryName.equals(addr_str)) ) { //looking for value = input parm
                         return rosterName;  //if found, return the roster name (key)
                     }
                 }
@@ -1122,10 +1114,10 @@ public class threaded_application extends Application {
     }
 
     public String findLocoNameInRoster(String searchName) {
-        if ((roster_entries != null) && (roster_entries.size() > 0)) {
+        if ((roster_entries != null) && (!roster_entries.isEmpty())) {
             String rslt = roster_entries.get(searchName);
             if (rslt != null) {
-                if (rslt.length() > 0) {
+                if (!rslt.isEmpty()) {
                     return searchName;
                 }
             }
@@ -1137,7 +1129,7 @@ public class threaded_application extends Application {
         if (addr_str.charAt(0) == 'S' || addr_str.charAt(0) == 'L') { //convert from S123 to 123(S) formatting if needed
             addr_str = cvtToAddrP(addr_str);
         }
-        if ((consist_entries != null) && (consist_entries.size() > 0)) {
+        if ((consist_entries != null) && (!consist_entries.isEmpty())) {
             return consist_entries.get(addr_str);  //consists are keyed by address "123(L)"
         }
         return null;
@@ -1317,9 +1309,6 @@ public class threaded_application extends Application {
         dccexTurnoutsFullyReceived = false;
 
         dccexRoutesBeingProcessed = false;
-//        dccexRoutesRequested = false;
-//        dccexRoutesFullyReceived = false;
-
         dccexScreenIsOpen = false;
         witScreenIsOpen = false;
 
@@ -1368,18 +1357,18 @@ public class threaded_application extends Application {
     static public String[] splitByString(String input, String divider) {
 
         //bail on empty input string, return input as single element
-        if (input == null || input.length() == 0) return new String[]{input};
+        if (input == null || input.isEmpty()) return new String[]{input};
 
         int size = 0;
         String temp = input;
 
         // count entries
-        while (temp.length() > 0) {
+        while (!temp.isEmpty()) {
             size++;
             int index = temp.indexOf(divider);
             if (index < 0) break;    // break not found
             temp = temp.substring(index + divider.length());
-            if (temp.length() == 0) {  // found at end
+            if (temp.isEmpty()) {  // found at end
                 size++;
                 break;
             }
@@ -1390,7 +1379,7 @@ public class threaded_application extends Application {
         // find entries
         temp = input;
         size = 0;
-        while (temp.length() > 0) {
+        while (!temp.isEmpty()) {
             int index = temp.indexOf(divider);
             if (index < 0) break;    // done with all but last
             result[size] = temp.substring(0, index);
@@ -1433,10 +1422,6 @@ public class threaded_application extends Application {
         displayPowerStateMenuButton(pMenu);
     }
 
-//    public void displayThrottleMenuButton(Menu menu, String swipePreferenceToCheck) {
-//        menu.findItem(R.id.throttle_button_mnu).setVisible(!prefs.getBoolean(swipePreferenceToCheck, false));
-//    }
-
     /**
      * for menu passed in, set the text or hide the menu option based on connected system
      *
@@ -1467,20 +1452,17 @@ public class threaded_application extends Application {
      * @param menu - menu object that will be adjusted
      */
     public void setGamepadTestMenuOption(Menu menu, int gamepadCount) {
-        String prefGamePadType = prefs.getString("prefGamePadType", threaded_application.context.getResources().getString(R.string.prefGamePadTypeDefaultValue));
+        String prefGamePadType = prefs.getString("prefGamePadType", getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
         boolean result;
 
         if (menu != null) {
             boolean any = false;
             for (int i = 1; i <= 3; i++) {
-                MenuItem item = menu.findItem(R.id.gamepad_test_mnu1);
-                switch (i) {
-                    case 2:
-                        item = menu.findItem(R.id.gamepad_test_mnu2);
-                        break;
-                    case 3:
-                        item = menu.findItem(R.id.gamepad_test_mnu3);
-                }
+                MenuItem item = switch (i) {
+                    case 2 -> menu.findItem(R.id.gamepad_test_mnu2);
+                    case 3 -> menu.findItem(R.id.gamepad_test_mnu3);
+                    default -> menu.findItem(R.id.gamepad_test_mnu1);
+                };
 
                 result = i <= gamepadCount;
 
@@ -1494,8 +1476,8 @@ public class threaded_application extends Application {
                 }
             }
             if (any) {
-                menu.findItem(R.id.gamepad_test_menu).setVisible(any);
-                menu.findItem(R.id.gamepad_test_reset).setVisible(any);
+                menu.findItem(R.id.gamepad_test_menu).setVisible(true);
+                menu.findItem(R.id.gamepad_test_reset).setVisible(true);
             }
 
         }
@@ -1575,10 +1557,20 @@ public class threaded_application extends Application {
         if (!show) {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
-                //if ((item.getItemId() == R.id.preferences_mnu) || (item.getItemId() == R.id.timer_mnu)) {
-                item.setVisible(item.getItemId() == R.id.timer_mnu);
+                item.setVisible(item.getItemId() == R.id.overflowMenu);
+
+                if (item.hasSubMenu()) { // really only R.id.overflowMenu
+                    SubMenu subMenu = item.getSubMenu();
+                    if (subMenu != null) {
+                        for (int j = 0; j < subMenu.size(); j++) {
+                            MenuItem subMenuItem = subMenu.getItem(j);
+                            subMenuItem.setVisible(subMenuItem.getItemId() == R.id.timer_mnu);
+                        }
+                    }
+                }
             }
         } else {
+            menu.findItem(R.id.overflowMenu).setVisible(true);
             menu.findItem(R.id.settings_mnu).setVisible(true);
             setPowerMenuOption(menu);
             mainapp.setDCCEXMenuOption(menu);
@@ -1655,33 +1647,6 @@ public class threaded_application extends Application {
         return (to_state_names != null);
     }
 
-//    public void setPowerStateButton(Menu menu) {
-//        if (menu != null) {
-//            TypedValue outValue = new TypedValue();
-//            if (power_state == null) {
-//                theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-//            } else if (power_state.equals("2")) {
-//                if (!mainapp.isDCCEX) {
-//                    theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-//                } else {
-//                    theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-//                }
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-//            } else if (power_state.equals("1")) {
-//                theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
-//            } else {
-//                theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-//                menu.findItem(R.id.powerLayoutButton).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
-//            }
-//        }
-//    }
-
     public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
         if (!prefs.getBoolean("prefShowLayoutPowerButton", false)) return;
 
@@ -1722,7 +1687,7 @@ public class threaded_application extends Application {
         if (mi == null) return;
 
         if (prefs.getBoolean("prefShowEmergencyStopButton", false)) {
-            TypedValue outValue = new TypedValue();
+//            TypedValue outValue = new TypedValue();
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1906,25 +1871,24 @@ public class threaded_application extends Application {
         if ( (port > 0) || (defaultUrl.toLowerCase().startsWith("http")) ) {
             if (defaultUrl.toLowerCase().startsWith("http")) { //if url starts with http, use it as is
                 url = defaultUrl;
-            } else { //, else prepend servername and port and slash if needed
+            } else { //, else prepend server name and port and slash if needed
                 url = "http://" + host_ip + ":" + port + (defaultUrl.startsWith("/") ? "" : "/") + defaultUrl;
             }
         }
         return url;
     }
 
-    // build a full uri
-    // returns: full uri    if webServerPort is valid
-    //          null        otherwise
-    public String createUri() {
-        String uri = "";
-        int port = web_server_port;
-        if (port > 0) {
-            uri = "ws://" + host_ip + ":" + port + "/json/";
-        }
-        return uri;
-    }
-
+//    // build a full uri
+//    // returns: full uri    if webServerPort is valid
+//    //          null        otherwise
+//    public String createUri() {
+//        String uri = "";
+//        int port = web_server_port;
+//        if (port > 0) {
+//            uri = "ws://" + host_ip + ":" + port + "/json/";
+//        }
+//        return uri;
+//    }
 
     public int getSelectedTheme() {
         return getSelectedTheme(false);
@@ -1933,33 +1897,22 @@ public class threaded_application extends Application {
     public int getSelectedTheme(boolean isPreferences) {
         String prefTheme = getCurrentTheme();
         if (!isPreferences) {  // not a preferences activity
-            switch (prefTheme) {
-                case "Black":
-                    return R.style.app_theme_black;
-                case "Outline":
-                    return R.style.app_theme_outline;
-                case "Ultra":
-                    return R.style.app_theme_ultra;
-                case "Colorful":
-                    return R.style.app_theme_colorful;
-                case "Neon":
-                    return R.style.app_theme_neon;
-                default:
-                    return R.style.app_theme;
-            }
+            return switch (prefTheme) {
+                case "Black" -> R.style.app_theme_black;
+                case "Outline" -> R.style.app_theme_outline;
+                case "Ultra" -> R.style.app_theme_ultra;
+                case "Colorful" -> R.style.app_theme_colorful;
+                case "Neon" -> R.style.app_theme_neon;
+                default -> R.style.app_theme;
+            };
         } else {
-            switch (prefTheme) {
-                case "Black":
-                case "Outline":
-                case "Ultra":
-                case "Neon":
-                case "Colorful":
-                    return R.style.app_theme_black_preferences;
-//                case "Colorful":
-//                    return R.style.app_theme_colorful;
-                default:
-                    return R.style.app_theme_preferences;
-            }
+            return switch (prefTheme) {
+                case "Black", "Outline", "Ultra", "Neon", "Colorful" ->
+                        R.style.app_theme_black_preferences;
+//                case "Colorful ->
+//                    R.style.app_theme_colorful;
+                default -> R.style.app_theme_preferences;
+            };
         }
     }
 
@@ -1987,7 +1940,7 @@ public class threaded_application extends Application {
      * @return a String representation of the selected theme
      */
     public String getCurrentTheme() {
-        return prefs.getString("prefTheme", threaded_application.context.getResources().getString(R.string.prefThemeDefaultValue));
+        return prefs.getString("prefTheme", getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
     }
 
     /**
@@ -2021,7 +1974,7 @@ public class threaded_application extends Application {
     public boolean setActivityOrientation(Activity activity) {
         boolean isWeb = (activity.getLocalClassName().equals("web_activity"));
         String to = prefs.getString("prefThrottleOrientation",
-                threaded_application.context.getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+                getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
         if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
             int orient = activity.getResources().getConfiguration().orientation;
             if ((isWeb && orient == ORIENTATION_PORTRAIT)
@@ -2029,7 +1982,7 @@ public class threaded_application extends Application {
                 return (false);
         } else if (isWeb) {
             to = prefs.getString("prefWebOrientation",
-                    threaded_application.context.getResources().getString(R.string.prefWebOrientationDefaultValue));
+                    getApplicationContext().getResources().getString(R.string.prefWebOrientationDefaultValue));
         }
 
         try {
@@ -2067,24 +2020,24 @@ public class threaded_application extends Application {
         }
     }
 
-    public void checkExit(final Activity activity, boolean forceFastDisconnect) {
-        Log.d(applicationName, "t_a: checkExit(2): ");
-        boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
-        if (!prefDoubleBackButtonToExit) {
-            checkAskExit(activity, forceFastDisconnect);
-        } else {
-            long time = System.currentTimeMillis();
-            if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
-                exitDoubleBackButtonInitiated = time;
-                safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
-            } else {
-                exitConfirmed = true;
-                exitDoubleBackButtonInitiated = 0;
-                sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);  //trigger fast disconnect / shutdown sequence
-                buttonVibration();
-            }
-        }
-    }
+//    public void checkExit(final Activity activity, boolean forceFastDisconnect) {
+//        Log.d(applicationName, "t_a: checkExit(2): ");
+//        boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
+//        if (!prefDoubleBackButtonToExit) {
+//            checkAskExit(activity, forceFastDisconnect);
+//        } else {
+//            long time = System.currentTimeMillis();
+//            if ( (time==0) || ((time - exitDoubleBackButtonInitiated) > 3000)) {
+//                exitDoubleBackButtonInitiated = time;
+//                safeToast(R.string.toastDoubleBackButtonToExit, Toast.LENGTH_SHORT);
+//            } else {
+//                exitConfirmed = true;
+//                exitDoubleBackButtonInitiated = 0;
+//                sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);  //trigger fast disconnect / shutdown sequence
+//                buttonVibration();
+//            }
+//        }
+//    }
 
     public void checkAskExit(final Activity activity) {
         checkAskExit(activity, false);
@@ -2118,15 +2071,18 @@ public class threaded_application extends Application {
         Button positiveButton = alert.findViewById(android.R.id.button1);
         Button negativeButton = alert.findViewById(android.R.id.button2);
         // then get their parent ViewGroup
-        ViewGroup buttonPanelContainer = (ViewGroup) positiveButton.getParent();
-        int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
-        int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
-        if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
-            // prepare exchange their index in ViewGroup
-            buttonPanelContainer.removeView(positiveButton);
-            buttonPanelContainer.removeView(negativeButton);
-            buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
-            buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+        if ( (positiveButton != null) && (negativeButton != null) ) {
+            ViewGroup buttonPanelContainer;
+            buttonPanelContainer = (ViewGroup) positiveButton.getParent();
+            int positiveButtonIndex = buttonPanelContainer.indexOfChild(positiveButton);
+            int negativeButtonIndex = buttonPanelContainer.indexOfChild(negativeButton);
+            if (positiveButtonIndex < negativeButtonIndex) {  // force 'No' 'Yes' order
+                // prepare exchange their index in ViewGroup
+                buttonPanelContainer.removeView(positiveButton);
+                buttonPanelContainer.removeView(negativeButton);
+                buttonPanelContainer.addView(negativeButton, positiveButtonIndex);
+                buttonPanelContainer.addView(positiveButton, negativeButtonIndex);
+            }
         }
     }
 
@@ -2138,21 +2094,6 @@ public class threaded_application extends Application {
         }
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
     }
-
-//    public void setFlashlightButton(Menu menu) {
-//        if (menu != null) {
-//            TypedValue outValue = new TypedValue();
-//            if (flashState) {
-//                theme.resolveAttribute(R.attr.ed_flashlight_on_button, outValue, true);
-//                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOn);
-//            } else {
-//                theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
-//                menu.findItem(R.id.flashlight_button).setIcon(outValue.resourceId);
-//                menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
-//            }
-//        }
-//    }
 
     public void setFlashlightActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
         if (menu == null) return;
@@ -2346,45 +2287,29 @@ public class threaded_application extends Application {
      * @return true if a flashlight is available; false if not
      */
     public boolean isFlashlightAvailable() {
-        return flashlight.isFlashlightAvailable();
+        return flashlight.isFlashlightAvailable(getApplicationContext());
     }
-
-//    public void toggleFlashlight(Activity activity, Menu menu) {
-//        if (flashState) {
-//            flashlight.setFlashlightOff();
-//            flashState = false;
-//        } else {
-//            flashState = flashlight.setFlashlightOn(activity);
-//        }
-//        setFlashlightButton(menu);
-//    }
 
     public void toggleFlashlightActionView(Activity activity, Menu menu, ViewGroup menuItemViewGroup) {
         if (flashState) {
             flashlight.setFlashlightOff();
             flashState = false;
         } else {
-            flashState = flashlight.setFlashlightOn(activity);
+            flashState = flashlight.setFlashlightOn(mainapp, activity);
         }
         setFlashlightActionViewButton(menu, menuItemViewGroup);
     }
 
     public int Numeralise(String value) {
-        switch (value) {
-            case "One":
-                return 1;
-            case "Two":
-                return 2;
-            case "Three":
-                return 3;
-            case "Four":
-                return 4;
-            case "Five":
-                return 5;
-            case "Six":
-                return 6;
-        }
-        return 1; // default to 1 in case of problems
+        return switch (value) {
+            case "Two" -> 2;
+            case "Three" -> 3;
+            case "Four" -> 4;
+            case "Five" -> 5;
+            case "Six" -> 6;
+//            case "One" -> 1;
+            default -> 1;
+        };
     }
 
     //
@@ -2427,7 +2352,7 @@ public class threaded_application extends Application {
 
     @SuppressLint("ApplySharedPref")
     public String fixThrottleName(String currentValue) {
-        String defaultName = threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue);
+        String defaultName = getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 
         String newValue = currentValue;
         //if name is blank or the default name, make it unique
@@ -2435,7 +2360,7 @@ public class threaded_application extends Application {
             deviceId = mainapp.getFakeDeviceId();
             if (MobileControl2.isMobileControl2()) {
                 // Change default name for ESU MCII
-                defaultName = threaded_application.context.getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
+                defaultName = getApplicationContext().getResources().getString(R.string.prefEsuMc2ThrottleNameDefaultValue);
             }
             newValue = defaultName + " " + deviceId;
         }
@@ -2453,7 +2378,7 @@ public class threaded_application extends Application {
     public void vibrate(int duration) {
         //we need vibrate permissions, otherwise do nothing
         PermissionsHelper phi = PermissionsHelper.getInstance();
-        if (phi.isPermissionGranted(threaded_application.context, PermissionsHelper.VIBRATE)) {
+        if (phi.isPermissionGranted(getApplicationContext(), PermissionsHelper.VIBRATE)) {
             try {
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 // Vibrate for 500 milliseconds
@@ -2499,7 +2424,7 @@ public class threaded_application extends Application {
 
     // used for Instructional Toasts.  They can be blocked by preference
     public void safeToastInstructional(final int resourceId, final int length) {
-        safeToastInstructional(context.getResources().getString(resourceId), length);
+        safeToastInstructional(getApplicationContext().getResources().getString(resourceId), length);
     }
     public void safeToastInstructional(final String msg_txt, final int length) {
         if (!prefHideInstructionalToasts) {
@@ -2508,7 +2433,7 @@ public class threaded_application extends Application {
     }
     /** @noinspection SameReturnValue*/
     public boolean safeToastInstructionalShowOnce(final int resourceId, final int length, boolean shownBefore) {
-        return safeToastInstructionalShowOnce(context.getResources().getString(resourceId), length, shownBefore);
+        return safeToastInstructionalShowOnce(getApplicationContext().getResources().getString(resourceId), length, shownBefore);
     }
     /** @noinspection SameReturnValue*/
     public boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
@@ -2519,141 +2444,95 @@ public class threaded_application extends Application {
     }
 
     //display msg using Toast() safely by ensuring Toast() is called from the UI Thread
-    public static void safeToast(final int resourceId, final int length) {
-        safeToast(context.getResources().getString(resourceId), length);
+    public void safeToast(final int resourceId, final int length) {
+        safeToast(getApplicationContext().getResources().getString(resourceId), length);
     }
-    public static void safeToast(final String msg_txt) {
+    public  void safeToast(final String msg_txt) {
         safeToast(msg_txt, Toast.LENGTH_SHORT);
     }
-    public static void safeToast(final String msg_txt, final int length) {
+    public void safeToast(final String msg_txt, final int length) {
         Log.d(applicationName, "t_a: safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
         h.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(threaded_application.context, msg_txt, length).show();
+                Toast.makeText(getApplicationContext(), msg_txt, length).show();
             }
         });
     }
 
     public int getMaxThrottlesForScreen(String throttleScreenType) {
-        switch (throttleScreenType) {
-            case throttle_screen_type.SIMPLE:
-                return max_throttles_current_screen_type.SIMPLE;
-            case throttle_screen_type.VERTICAL:
-                return max_throttles_current_screen_type.VERTICAL;
-            case throttle_screen_type.VERTICAL_LEFT:
-            case throttle_screen_type.VERTICAL_RIGHT:
-                return max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
-            case throttle_screen_type.TABLET_VERTICAL_LEFT:
-                return max_throttles_current_screen_type.VERTICAL_TABLET;
-            case throttle_screen_type.SWITCHING:
-                return max_throttles_current_screen_type.SWITCHING;
-            case throttle_screen_type.SWITCHING_LEFT:
-            case throttle_screen_type.SWITCHING_RIGHT:
-                return max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;
-            case throttle_screen_type.TABLET_SWITCHING_LEFT:
-                return max_throttles_current_screen_type.TABLET_SWITCHING;
-            case throttle_screen_type.SWITCHING_HORIZONTAL:
-                return max_throttles_current_screen_type.SWITCHING_HORIZONTAL;
-            case throttle_screen_type.BIG_LEFT:
-            case throttle_screen_type.BIG_RIGHT:
-                return max_throttles_current_screen_type.BIG_BUTTONS;
-            case throttle_screen_type.SEMI_REALISTIC_LEFT:
-                return max_throttles_current_screen_type.SEMI_REALISTIC;
-            case throttle_screen_type.DEFAULT:
-            default:
-                return max_throttles_current_screen_type.DEFAULT;
-        }
+        return switch (throttleScreenType) {
+            case throttle_screen_type.SIMPLE
+                    -> max_throttles_current_screen_type.SIMPLE;
+            case throttle_screen_type.VERTICAL
+                    -> max_throttles_current_screen_type.VERTICAL;
+            case throttle_screen_type.VERTICAL_LEFT, throttle_screen_type.VERTICAL_RIGHT
+                    ->  max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT
+                    -> max_throttles_current_screen_type.VERTICAL_TABLET;
+            case throttle_screen_type.SWITCHING
+                    -> max_throttles_current_screen_type.SWITCHING;
+            case throttle_screen_type.SWITCHING_LEFT, throttle_screen_type.SWITCHING_RIGHT
+                    -> max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;
+            case throttle_screen_type.TABLET_SWITCHING_LEFT
+                    -> max_throttles_current_screen_type.TABLET_SWITCHING;
+            case throttle_screen_type.SWITCHING_HORIZONTAL
+                    -> max_throttles_current_screen_type.SWITCHING_HORIZONTAL;
+            case throttle_screen_type.BIG_LEFT, throttle_screen_type.BIG_RIGHT
+                    -> max_throttles_current_screen_type.BIG_BUTTONS;
+            case throttle_screen_type.SEMI_REALISTIC_LEFT
+                    -> max_throttles_current_screen_type.SEMI_REALISTIC;
+            default
+                    -> max_throttles_current_screen_type.DEFAULT;
+        };
     }
 
     public Intent getThrottleIntent() {
         Intent throttle;
         appIsFinishing = false;
-        switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
-            case throttle_screen_type.SIMPLE:
-                throttle = new Intent().setClass(this, throttle_simple.class);
-                break;
-            case throttle_screen_type.VERTICAL:
-            case throttle_screen_type.VERTICAL_LEFT:
-            case throttle_screen_type.VERTICAL_RIGHT:
-            case throttle_screen_type.TABLET_VERTICAL_LEFT:
-                throttle = new Intent().setClass(this, throttle_vertical_left_or_right.class);
-                break;
-            case throttle_screen_type.SWITCHING:
-            case throttle_screen_type.SWITCHING_LEFT:
-            case throttle_screen_type.SWITCHING_RIGHT:
-            case throttle_screen_type.TABLET_SWITCHING_LEFT:
-                throttle = new Intent().setClass(this, throttle_switching_left_or_right.class);
-                break;
-            case throttle_screen_type.SWITCHING_HORIZONTAL:
-                throttle = new Intent().setClass(this, throttle_switching_horizontal.class);
-                break;
-            case throttle_screen_type.BIG_LEFT:
-            case throttle_screen_type.BIG_RIGHT:
-                throttle = new Intent().setClass(this, throttle_big_buttons.class);
-                break;
-            case throttle_screen_type.SEMI_REALISTIC_LEFT:
-                throttle = new Intent().setClass(this, throttle_semi_realistic.class);
-                break;
-            case throttle_screen_type.DEFAULT:
-            default:
-                throttle = new Intent().setClass(this, throttle_original.class);
-                break;
-        }
+        throttle = switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
+            case throttle_screen_type.SIMPLE
+                    -> new Intent().setClass(this, throttle_simple.class);
+            case throttle_screen_type.VERTICAL, throttle_screen_type.VERTICAL_LEFT,
+                 throttle_screen_type.VERTICAL_RIGHT, throttle_screen_type.TABLET_VERTICAL_LEFT
+                    -> new Intent().setClass(this, throttle_vertical_left_or_right.class);
+            case throttle_screen_type.SWITCHING, throttle_screen_type.SWITCHING_LEFT,
+                 throttle_screen_type.SWITCHING_RIGHT, throttle_screen_type.TABLET_SWITCHING_LEFT
+                    -> new Intent().setClass(this, throttle_switching_left_or_right.class);
+            case throttle_screen_type.SWITCHING_HORIZONTAL
+                    -> new Intent().setClass(this, throttle_switching_horizontal.class);
+            case throttle_screen_type.BIG_LEFT, throttle_screen_type.BIG_RIGHT
+                    -> new Intent().setClass(this, throttle_big_buttons.class);
+            case throttle_screen_type.SEMI_REALISTIC_LEFT
+                    -> new Intent().setClass(this, throttle_semi_realistic.class);
+            default
+                    -> new Intent().setClass(this, throttle_original.class);
+        };
         return throttle;
     }
 
     public String getNextThrottleLayout() {
-        Intent throttle;
+//        Intent throttle;
         appIsFinishing = false;
         String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-        switch (prefThrottleScreenType) {
-            case throttle_screen_type.SIMPLE:
-                prefThrottleScreenType = throttle_screen_type.VERTICAL;
-                break;
-            case throttle_screen_type.VERTICAL:
-                prefThrottleScreenType = throttle_screen_type.VERTICAL_LEFT;
-                break;
-            case throttle_screen_type.VERTICAL_LEFT:
-                prefThrottleScreenType = throttle_screen_type.VERTICAL_RIGHT;
-                break;
-            case throttle_screen_type.VERTICAL_RIGHT:
-                prefThrottleScreenType = throttle_screen_type.TABLET_VERTICAL_LEFT;
-                break;
-            case throttle_screen_type.TABLET_VERTICAL_LEFT:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING;
-                break;
-            case throttle_screen_type.SWITCHING:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING_LEFT;
-                break;
-            case throttle_screen_type.SWITCHING_LEFT:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING_RIGHT;
-                break;
-            case throttle_screen_type.SWITCHING_RIGHT:
-                prefThrottleScreenType = throttle_screen_type.TABLET_SWITCHING_LEFT;
-                break;
-            case throttle_screen_type.TABLET_SWITCHING_LEFT:
-                prefThrottleScreenType = throttle_screen_type.SWITCHING_HORIZONTAL;
-                break;
-            case throttle_screen_type.SWITCHING_HORIZONTAL:
-                prefThrottleScreenType = throttle_screen_type.BIG_LEFT;
-                break;
-            case throttle_screen_type.BIG_LEFT:
-                prefThrottleScreenType = throttle_screen_type.BIG_RIGHT;
-                break;
-            case throttle_screen_type.BIG_RIGHT:
-                prefThrottleScreenType = throttle_screen_type.SEMI_REALISTIC_LEFT;
-                break;
-            case throttle_screen_type.SEMI_REALISTIC_LEFT:
-                prefThrottleScreenType = throttle_screen_type.DEFAULT;
-                break;
-            case throttle_screen_type.DEFAULT:
-            default:
-                prefThrottleScreenType = throttle_screen_type.SIMPLE;
-                break;
-        }
+        prefThrottleScreenType = switch (prefThrottleScreenType) {
+            case throttle_screen_type.SIMPLE -> throttle_screen_type.VERTICAL;
+            case throttle_screen_type.VERTICAL -> throttle_screen_type.VERTICAL_LEFT;
+            case throttle_screen_type.VERTICAL_LEFT -> throttle_screen_type.VERTICAL_RIGHT;
+            case throttle_screen_type.VERTICAL_RIGHT -> throttle_screen_type.TABLET_VERTICAL_LEFT;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT -> throttle_screen_type.SWITCHING;
+            case throttle_screen_type.SWITCHING -> throttle_screen_type.SWITCHING_LEFT;
+            case throttle_screen_type.SWITCHING_LEFT -> throttle_screen_type.SWITCHING_RIGHT;
+            case throttle_screen_type.SWITCHING_RIGHT -> throttle_screen_type.TABLET_SWITCHING_LEFT;
+            case throttle_screen_type.TABLET_SWITCHING_LEFT -> throttle_screen_type.SWITCHING_HORIZONTAL;
+            case throttle_screen_type.SWITCHING_HORIZONTAL -> throttle_screen_type.BIG_LEFT;
+            case throttle_screen_type.BIG_LEFT -> throttle_screen_type.BIG_RIGHT;
+            case throttle_screen_type.BIG_RIGHT -> throttle_screen_type.SEMI_REALISTIC_LEFT;
+            case throttle_screen_type.SEMI_REALISTIC_LEFT -> throttle_screen_type.DEFAULT;
+            default -> throttle_screen_type.SIMPLE;
+        };
         return prefThrottleScreenType;
     }
 
@@ -2711,23 +2590,12 @@ public class threaded_application extends Application {
             }
         }
 
-        Intent nextIntent;
-        switch (nextScreen) {
-            case screen_swipe_index_type.ROUTES:
-                nextIntent = new Intent().setClass(this, routes.class);
-                break;
-            case screen_swipe_index_type.TURNOUTS:
-                nextIntent = new Intent().setClass(this, turnouts.class);
-                break;
-            case screen_swipe_index_type.WEB:
-                nextIntent = new Intent().setClass(this, web_activity.class);
-                break;
-            case screen_swipe_index_type.THROTTLE:
-            default:
-                nextIntent = getThrottleIntent();
-                break;
-        }
-        return nextIntent;
+        return switch (nextScreen) {
+            case screen_swipe_index_type.ROUTES -> new Intent().setClass(this, routes.class);
+            case screen_swipe_index_type.TURNOUTS -> new Intent().setClass(this, turnouts.class);
+            case screen_swipe_index_type.WEB -> new Intent().setClass(this, web_activity.class);
+            default -> getThrottleIntent();
+        };
     }
 
     /***
@@ -2743,7 +2611,7 @@ public class threaded_application extends Application {
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_MANUAL: {
-                safeToast(context.getResources().getString(R.string.toastPreferencesImportServerManualSucceeded,
+                safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualSucceeded,
                                         prefs.getString("prefPreferencesImportFileName", "")), Toast.LENGTH_LONG);
                 break;
             }
@@ -2769,7 +2637,7 @@ public class threaded_application extends Application {
                 break;
             }
             case restart_reason_type.IMPORT_SERVER_AUTO: {
-                safeToast(context.getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded,
+                safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerAutoSucceeded,
                                     prefs.getString("prefPreferencesImportFileName", "")),
                         Toast.LENGTH_LONG);
                 break;
@@ -2800,7 +2668,7 @@ public class threaded_application extends Application {
     public void writeSharedPreferencesToFileIfAllowed() {
         Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", threaded_application.context.getResources().getString(R.string.prefAutoImportExportDefaultValue));
+        String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
         if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
             if (!this.connectedHostName.isEmpty()) {
@@ -2808,7 +2676,7 @@ public class threaded_application extends Application {
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-                    importExportPreferences.writeSharedPreferencesToFile(threaded_application.context, sharedPreferences, exportedPreferencesFileName);
+                    importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
                 Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: done");
             } else {
@@ -2830,7 +2698,7 @@ public class threaded_application extends Application {
 
     public boolean supportsRoster() {
         //true if roster entries exist
-        if ((roster_entries != null) && (roster_entries.size() > 0)) return true;
+        if ((roster_entries != null) && (!roster_entries.isEmpty())) return true;
         //always show roster panel for these entries
         return (serverType.equals("JMRI") || serverType.equals("MRC") || serverType.equals("DCC-EX"));
     }
@@ -2850,17 +2718,17 @@ public class threaded_application extends Application {
             return;
         }
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-        importExportPreferences.loadRecentLocosListFromFile();
+        importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
 
         Integer locoAddress = conLoco.getIntAddress();
         Integer locoAddressSize = conLoco.getIntAddressLength();
         String locoName = conLoco.getFormatAddress();
-        Integer locoSource = conLoco.getWhichSource();
+        int locoSource = conLoco.getWhichSource();
         if (conLoco.getIsFromRoster()) {
-            if ( (conLoco.getRosterName() != null) && (conLoco.getRosterName().length() > 0)) {
+            if ( (conLoco.getRosterName() != null) && (!conLoco.getRosterName().isEmpty())) {
                 locoName = conLoco.getRosterName();
             } else {
-                if (conLoco.getDesc().length() > 0) {
+                if (!conLoco.getDesc().isEmpty()) {
                     locoName = conLoco.getDesc();
                 }
             }
@@ -2869,9 +2737,9 @@ public class threaded_application extends Application {
         String keepFunctions = "";
         String functionLabels;
         if (locoSource == source_type.ROSTER) {
-            functionLabels = mainapp.packFunctionLabels(functionLabelsMap);
+            functionLabels = threaded_application.packFunctionLabels(functionLabelsMap);
         } else {
-            functionLabels = mainapp.packFunctionLabels(mainapp.function_labels_default);
+            functionLabels = threaded_application.packFunctionLabels(mainapp.function_labels_default);
         }
         for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
             if (locoAddress.equals(importExportPreferences.recentLocoAddressList.get(i))
@@ -2893,16 +2761,16 @@ public class threaded_application extends Application {
         // now append it to the beginning of the list
         importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);
 
-        importExportPreferences.writeRecentLocosListToFile(prefs);
+        importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
         Log.d(applicationName, "t_a: Loco '" + locoName + "' added to Recents");
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
 
     }
 
     public int findLocoInRecents(Integer address, Integer size, String name) {
         int position = -1;
         ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-        importExportPreferences.loadRecentLocosListFromFile();
+        importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
 
         for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
             if (address.equals(importExportPreferences.recentLocoAddressList.get(i))
@@ -2924,9 +2792,9 @@ public class threaded_application extends Application {
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
 
-        ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(prefs);
+        ImportExportConnectionList importExportConnectionList = new ImportExportConnectionList(getApplicationContext(), prefs);
         importExportConnectionList.connections_list.clear();
-        importExportConnectionList.getConnectionsList("", "");
+        importExportConnectionList.getConnectionsList(getApplicationContext(), "", "");
         importExportConnectionList.saveConnectionsListExecute(
                 this, connectedHostip, connectedHostName, connectedPort, retrievedServerName, connectedSsid, connectedServiceType);
         connectedHostName = retrievedServerName;
@@ -2942,7 +2810,7 @@ public class threaded_application extends Application {
             if (!connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 ImportExportPreferences importExportPreferences = new ImportExportPreferences();
-                importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
+                importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
 
                 Message msg = Message.obtain();
                 msg.what = message_type.RESTART_APP;
@@ -2998,8 +2866,15 @@ public class threaded_application extends Application {
         return withrottle_version;
     }
 
-    public String getDCCEXVersion() {
+    public String getDccexVersion() {
         return DccexVersion;
+    }
+    public float getDccexVersionNumeric() {
+        float versionNumber = 4;
+        try {
+            versionNumber = Float.parseFloat(DccexVersion);
+        } catch (Exception ignored) { } // invalid version
+        return versionNumber;
     }
 
     public String getTurnoutState(String turnoutSystemName) {
@@ -3057,7 +2932,7 @@ public class threaded_application extends Application {
             }
 
             TextView tvToolbarServerDesc;
-            int screenLayout = context.getResources().getConfiguration().screenLayout;
+            int screenLayout = getApplicationContext().getResources().getConfiguration().screenLayout;
             screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
             if (screenLayout >= Configuration.SCREENLAYOUT_SIZE_XLARGE) {
                 tvToolbarServerDesc = toolbar.findViewById(R.id.toolbar_server_desc_x_large);
@@ -3128,9 +3003,9 @@ public class threaded_application extends Application {
                 }
             }
 
-            for (int type = 0; type < soundsLocoStreamId.length; type++) {
+            for (int[] ints : soundsLocoStreamId) {
                 for (int mSound = 0; mSound < soundsLocoStreamId.length; mSound++) {
-                    soundPool.stop(soundsLocoStreamId[type][mSound]);
+                    soundPool.stop(ints[mSound]);
                 }
             }
 
@@ -3223,7 +3098,7 @@ public class threaded_application extends Application {
                     gamepadCount++;
                     gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
                     gamePadDeviceNames[gamepadCount - 1] = eventDeviceName;
-                    whichGamePadDeviceId = gamepadCount - 1;
+//                    whichGamePadDeviceId = gamepadCount - 1;
                 }
 
                 for (i = 0; i < numThrottles; i++) {
@@ -3232,7 +3107,7 @@ public class threaded_application extends Application {
                             gamePadIdsAssignedToThrottles[i] = eventDeviceId;
 //                            if (reassigningGamepad == -1) { // not a reassignment
 //                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
-//                            } else { // reasigning
+//                            } else { // reassigning
                             if (reassigningGamepad != -1) { // not a reassignment
                                 gamePadThrottleAssignment[i] = reassigningGamepad;
                             }
@@ -3273,7 +3148,7 @@ public class threaded_application extends Application {
 
     // listener for the joystick events
     public boolean implDispatchGenericMotionEvent(android.view.MotionEvent event) {
-        //Log.d(applicationName, "dgme " + event.getAction());
+        //Log.d(applicationName, activityName + "implDispatchGenericMotionEvent(): " + event.getAction());
         if ((!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             int action;
@@ -3320,8 +3195,8 @@ public class threaded_application extends Application {
             isExternal = true;
         }
         if (!isExternal) {
-            for (int i = 0; i < gamePadDeviceNames.length; i++) {
-                if (eventDeviceName.equals(gamePadDeviceNames[i])) {
+            for (String gamePadDeviceName : gamePadDeviceNames) {
+                if (eventDeviceName.equals(gamePadDeviceName)) {
                     isExternal = true;
                     break;
                 }
@@ -3467,8 +3342,8 @@ public class threaded_application extends Application {
     @SuppressLint("DefaultLocale")
     static public String formatNumberInName (String name) {
         if (name==null) return ""; //avoid npe
-        String tempName = name;
-        String tempNo = "";
+        StringBuilder tempName = new StringBuilder(name);
+        StringBuilder tempNo = new StringBuilder();
         //noinspection UnusedAssignment
         int tempVal = 0;
         char tempChar;
@@ -3483,44 +3358,44 @@ public class threaded_application extends Application {
             }
         }
         if (hasNumber) {
-            tempName = "";
+            tempName = new StringBuilder();
             for (int i=0; i<name.length();i++) {
                 tempChar = name.charAt(i);
                 if ((tempChar>='0') && (tempChar<='9')) {  // numeric
                     haveNo = true;
-                    tempNo = tempNo + name.charAt(i);
+                    tempNo.append(name.charAt(i));
                 } else {
                     if (haveNo) {
-                        tempVal = Integer.parseInt(tempNo);
-                        tempName = tempName + String.format("%6d",tempVal);
+                        tempVal = Integer.parseInt(tempNo.toString());
+                        tempName.append(String.format("%6d", tempVal));
                         haveNo = false;
-                        tempNo = "";
+                        tempNo = new StringBuilder();
                     }
-                    tempName = tempName + name.charAt(i);
+                    tempName.append(name.charAt(i));
                 }
             }
             if (haveNo) {
-                tempVal = Integer.parseInt(tempNo);
-                tempName = tempName + String.format("%6d",tempVal);
+                tempVal = Integer.parseInt(tempNo.toString());
+                tempName.append(String.format("%6d", tempVal));
             }
         }
-        return tempName;
+        return tempName.toString();
     }
 
     public void toastSortType(int sortType) {
         if (!mainapp.prefHideInstructionalToasts) {
             switch (sortType) {
                 case sort_type.NAME:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByName), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedByName), Toast.LENGTH_SHORT);
                     break;
                 case sort_type.ID:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedById), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedById), Toast.LENGTH_SHORT);
                     break;
                 case sort_type.LAST_USED:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByLastUsed), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedByLastUsed), Toast.LENGTH_SHORT);
                     break;
                 case sort_type.POSITION:
-                    safeToast(threaded_application.context.getResources().getString(R.string.toastSortedByPosition), Toast.LENGTH_SHORT);
+                    safeToast(getApplicationContext().getResources().getString(R.string.toastSortedByPosition), Toast.LENGTH_SHORT);
                     break;
             }
         }
@@ -3557,15 +3432,15 @@ public class threaded_application extends Application {
     public void getDefaultSortOrderRoster() {
         String prefSortOrderRoster = prefs.getString("prefSortOrderRoster", this.getResources().getString(R.string.prefSortOrderRosterDefaultValue));
         switch (prefSortOrderRoster) {
-            default:
-            case "name":
-                mainapp.rosterOrder = sort_type.NAME;
-                break;
             case "id":
                 mainapp.rosterOrder = sort_type.ID;
                 break;
             case "position":
                 mainapp.rosterOrder = sort_type.POSITION;
+                break;
+            case "name":
+            default:
+                mainapp.rosterOrder = sort_type.NAME;
                 break;
         }
     }
@@ -3619,37 +3494,35 @@ public class threaded_application extends Application {
         }
         countActiveToolbarButtons();
         threaded_application.prefToolbarButtonSize = prefs.getString("prefToolbarButtonSize", getApplicationContext().getResources().getString(R.string.prefToolbarButtonSizeDefaultValue));
-        if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.AUTO) ) {
-            if (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE) {
-                if (threaded_application.toolbarButtonCount <= 5) {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
-                } else if (threaded_application.toolbarButtonCount <= 9) {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
-                } else {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
-                }
-            } else if  (threaded_application.displayDiagonalInches >= threaded_application.MEDIUM_SCREEN_SIZE) {
-                if (threaded_application.toolbarButtonCount <= 5) {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
-                } else {
-                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+        switch (threaded_application.prefToolbarButtonSize) {
+            case toolbar_button_size_type.AUTO -> {
+                if (threaded_application.displayDiagonalInches >= threaded_application.LARGE_SCREEN_SIZE) {
+                    if (threaded_application.toolbarButtonCount <= 5) {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+                    } else if (threaded_application.toolbarButtonCount <= 9) {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+                    } else {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+                    }
+                } else if (threaded_application.displayDiagonalInches >= threaded_application.MEDIUM_SCREEN_SIZE) {
+                    if (threaded_application.toolbarButtonCount <= 5) {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+                    } else {
+                        threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+                    }
                 }
             }
-        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.LARGE)) {
-            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
-        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.SMALL)) {
-            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
-        } else if (threaded_application.prefToolbarButtonSize.equals(toolbar_button_size_type.MEDIUM)) {
-            threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
+            case toolbar_button_size_type.LARGE ->
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.LARGE;
+            case toolbar_button_size_type.SMALL ->
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+            case toolbar_button_size_type.MEDIUM ->
+                    threaded_application.toolbarButtonSizeToUse = toolbar_button_size_to_use_type.MEDIUM;
         }
     }
 
-    // run at startup
-    // this method finds old preferences and renames them
-    // always include the date the 'preference' was added so that it can eventually be removed.
-    private void renamePreferencesToNewFormat() {
+    public void logAllPreference() {
         // list all the existing preferences, if extended logging is enabled
-        threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging", false);
         if (threaded_application.prefExtendedLogging) {
             Map<String, ?> allPreferences = prefs.getAll();
             for (Map.Entry<String, ?> entry : allPreferences.entrySet()) {
@@ -3658,12 +3531,20 @@ public class threaded_application extends Application {
 
                 // Log the key and its value
                 if (value != null) {
-                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: " + value.toString() + ", Type: " + value.getClass().getSimpleName());
+                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: " + value + ", Type: " + value.getClass().getSimpleName());
                 } else {
                     Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: null");
                 }
             }
         }
+    }
+
+    // run at startup
+    // this method finds old preferences and renames them
+    // always include the date the 'preference' was added so that it can eventually be removed.
+    private void renamePreferencesToNewFormat() {
+        threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging", false);
+        logAllPreference();
 
         // check to see if the rename process has already run
         String prefLastPrefRename = prefs.getString("prefLastPrefRename", "X");
@@ -3704,4 +3585,5 @@ public class threaded_application extends Application {
             prefs.edit().remove(oldName).apply();
         }
     }
+
 }

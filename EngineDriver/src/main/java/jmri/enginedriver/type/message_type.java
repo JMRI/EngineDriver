@@ -112,5 +112,6 @@ public interface message_type {
     int RECEIVED_CONSIST_ADDRESS = 89;
     int DISPATCH = 90;
     int START_AUTOMATION = 91;
+    int WEB_PORT_RECEIVED = 92;
 
 }

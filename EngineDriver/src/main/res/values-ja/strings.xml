@@ -28,6 +28,7 @@
     <string name="app_name_device_sounds_settings">電話でのロコサウンド</string>
     <string name="app_name_functions">デフォルトファンクションの設定</string>
     <string name="app_name_gamepad_test">ゲームパッドテスト</string>
+    <string name="gamepad_test_menu">ゲームパッド/USB</string>
 
     <string name="app_name_log_viewer">ログビューア</string>
     <string name="app_name_power_control">電力制御</string>
@@ -133,7 +134,7 @@
     <string name="disabled">無効</string>
     <string name="discovered_services">検出されたサーバー (WiFi: %1$s)</string>
 
-    <string name="edit_consist_menu">\≡ 編成の編集</string>
+    <string name="edit_consist_menu">編成の編集</string>
     <string name="edit_consist_lights_throttle_1">編成ライト スロットル 1 の編集</string>
     <string name="edit_consist_lights_throttle_2">編成ライト スロットル 2 の編集</string>
     <string name="edit_consist_lights_throttle_3">編成ライト スロットル 3 の編集</string>
@@ -801,6 +802,7 @@
     <string name="prefShowTimeOnLogEntrySummary">ログ画面の各エントリの日時を表示します。</string>
     <string name="prefShowTimeOnLogEntryTitle">ログにタイムスタンプを表示</string>
     <string name="prefExtendedLoggingSummary">追加の、より詳細なログをキャプチャする</string>
+    <string name="prefLogOnNextStartupSummary">次回エンジンドライバーを起動したときに、自動的にログのキャプチャを開始します。この設定は使用後にリセットされます。</string>
     <string name="prefSortOrderRosterTitle">列車情報の並び順</string>
     <string name="prefSortOrderRosterSummary">エンジンドライバーを起動するたびに、デフォルトで列車情報エントリが表示されるようにする</string>
     <string name="prefSortOrderTurnoutsTitle">分岐器の並び順</string>
@@ -1287,5 +1289,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">機関車のサウンドボタンを非表示にする</string>
     <string name="newConnectionTitle">新しい接続</string>
     <string name="prefAutoServerIpConnectSummary">検出されない場合でもサーバーアドレスに自動的に接続する</string>
+    <string name="prefLogOnNextStartupTitle">次回の起動時にログ記録を開始しますか?</string>
 
 </resources>

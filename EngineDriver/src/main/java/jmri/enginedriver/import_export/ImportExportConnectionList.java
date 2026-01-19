@@ -1,7 +1,23 @@
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 package jmri.enginedriver.import_export;
 
-import static jmri.enginedriver.threaded_application.context;
-
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
@@ -32,23 +48,23 @@ public class ImportExportConnectionList {
     private final boolean prefHideDemoServer;
     public boolean foundDemoHost = false;
 
-    private static final String demo_host = "jmri.mstevetodd.com";
-    private static final String demo_port = "44444";
-//    private static final String DUMMY_HOST = "999";
-    private static final String DUMMY_ADDRESS = "999";
-    private static final int DUMMY_PORT = 999;
-//    private static final String DUMMY_SSID = "";
+//    private static final String demo_host = "jmri.mstevetodd.com";
+//    private static final String demo_port = "44444";
+////    private static final String DUMMY_HOST = "999";
+//    private static final String DUMMY_ADDRESS = "999";
+//    private static final int DUMMY_PORT = 999;
+////    private static final String DUMMY_SSID = "";
 
 //    private static final int FAILURE_REASON_ERROR_READING = 1;
     public String failureReason = "";
 
-    public ImportExportConnectionList(SharedPreferences p) {
+    public ImportExportConnectionList(Context context, SharedPreferences p) {
 
         prefs = p;
         prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", context.getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
         connections_list = new ArrayList<>();
     }
-    public void getConnectionsList(String addressToRemove, String portToRemove) {
+    public void getConnectionsList(Context context, String addressToRemove, String portToRemove) {
         connections_list.clear();
         String errMsg;
 
@@ -97,7 +113,7 @@ public class ImportExportConnectionList {
                             if (port > 0) {  //skip if port not converted to integer
 
                                 boolean includeThisHost = true;
-                                if (host_name.equals(demo_host) && Integer.toString(port).equals(demo_port)) {
+                                if (host_name.equals(threaded_application.DEMO_HOST) && Integer.toString(port).equals(threaded_application.DEMO_PORT)) {
                                     foundDemoHost = true;
                                     if (prefHideDemoServer) includeThisHost = false;
                                 }
@@ -130,9 +146,9 @@ public class ImportExportConnectionList {
         //if demo host not already in list, add it at end
         if ((!prefHideDemoServer) && (!foundDemoHost)) {
             HashMap<String, String> hm = new HashMap<>();
-            hm.put("ip_address", demo_host);
-            hm.put("host_name", demo_host);
-            hm.put("port", demo_port);
+            hm.put("ip_address", threaded_application.DEMO_HOST);
+            hm.put("host_name", threaded_application.DEMO_HOST);
+            hm.put("port", threaded_application.DEMO_PORT);
             hm.put("ssid", "");
             hm.put("service_type", "_withrottle._tcp.local.");
             connections_list.add(hm);
@@ -176,7 +192,7 @@ public class ImportExportConnectionList {
             foundDemoHost = false;
             boolean isBlankOrDemo = false;
             boolean isDemo = false;
-            if (connected_hostname.equals(demo_host) && connected_port.toString().equals(demo_port)) {
+            if (connected_hostname.equals(threaded_application.DEMO_HOST) && connected_port.toString().equals(threaded_application.DEMO_PORT)) {
                 isDemo = true;
                 foundDemoHost = true;
             }
@@ -190,10 +206,10 @@ public class ImportExportConnectionList {
                 return;
             }
             try {
-                File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+                File connections_list_file = new File(mainapp.getApplicationContext().getExternalFilesDir(null), "connections_list.txt");
                 PrintWriter list_output = new PrintWriter(connections_list_file);
 
-                if (!(connected_hostip.equals(DUMMY_ADDRESS)) || (connected_port != DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
+                if (!(connected_hostip.equals(threaded_application.DUMMY_ADDRESS)) || (connected_port != threaded_application.DUMMY_PORT)) {  // will have been called from the remove connection longClick so ignore the current connection values
                     //Write selected connection to file, then write all others (skipping selected if found)
                     if (isBlankOrDemo) {
                         list_output.format("%s:%s:%d:%s:%s\n", connected_hostname, connected_hostip, connected_port, connected_ssid, serviceType);
@@ -225,7 +241,7 @@ public class ImportExportConnectionList {
 
                         boolean doWrite = !connected_hostip.equals(sIpAddress) || (connected_port.intValue() != port.intValue());
                         //don't write it out if same as selected
-                        if (sIpAddress.equals(demo_host) && port.toString().equals(demo_port) && (foundDemoHost)) {
+                        if (sIpAddress.equals(threaded_application.DEMO_HOST) && port.toString().equals(threaded_application.DEMO_PORT) && (foundDemoHost)) {
                             doWrite = false;
                         }
                         if (doWrite) {
@@ -246,7 +262,7 @@ public class ImportExportConnectionList {
                     String currentDateAndTime = sdf.format(new Date());
                     String connection_log_file_name = "connections_log.txt";
 
-                    File connections_log_file = new File(context.getExternalFilesDir(null), connection_log_file_name);
+                    File connections_log_file = new File(mainapp.getApplicationContext().getExternalFilesDir(null), connection_log_file_name);
                     FileWriter fileWriter = new FileWriter(connections_log_file , true);
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter, 1024);
                     PrintWriter log_output = getPrintWriter(bufferedWriter, isBlankOrDemo, currentDateAndTime);
@@ -275,7 +291,7 @@ public class ImportExportConnectionList {
 
         protected void displayError(String errMsg) {
             if (!errMsg.isEmpty())
-                threaded_application.safeToast(mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT);
+                mainapp.safeToast(mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT);
         }
     }
 }

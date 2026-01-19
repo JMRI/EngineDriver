@@ -16,7 +16,7 @@
         <item name="buttonBarButtonStyle">@style/alertDialogButtonStyle_colorful</item>
         <item name="buttonBarPositiveButtonStyle">@style/alertDialogPositiveButtonStyle_colorful</item>
         <item name="buttonBarNegativeButtonStyle">@style/alertDialogButtonStyle_colorful</item>
-        <item name="buttonBarNeutralButtonStyle">@style/large_button_style_colorful</item>
+        <item name="buttonBarNeutralButtonStyle">@style/alertDialogButtonStyle_colorful</item>
     </style>
 
     <style name="alertDialogButtonStyle_colorful" parent="normal_button_style_colorful">
@@ -50,7 +50,7 @@
         <item name="buttonBarButtonStyle">@style/alertDialogButtonStyle_colorful</item>
         <item name="buttonBarPositiveButtonStyle">@style/alertDialogPositiveButtonStyle_colorful</item>
         <item name="buttonBarNegativeButtonStyle">@style/alertDialogButtonStyle_colorful</item>
-        <item name="buttonBarNeutralButtonStyle">@style/large_button_style_colorful</item>
+        <item name="buttonBarNeutralButtonStyle">@style/alertDialogButtonStyle_colorful</item>
 
         <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
     </style>

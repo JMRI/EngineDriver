@@ -1,6 +1,22 @@
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 package jmri.enginedriver.util;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -25,18 +41,19 @@ import jmri.enginedriver.threaded_application;
 public abstract class Flashlight {
     static final String activityName = "Flashlight";
 
-    private static Context flashlightContext;
+//    protected Context flashlightContext;
 
     public static Flashlight newInstance(Context context) {
-        flashlightContext = context;
         final int sdkVersion = Build.VERSION.SDK_INT;
         Flashlight flashlight;
-        if (sdkVersion < Build.VERSION_CODES.M){
+        if (sdkVersion < 23){
             flashlight = new FroyoFlashlight();
         } else {
             flashlight = new MarshmallowFlashlight();
         }
-        flashlight.init();
+        // Use Application Context to avoid memory leaks
+//        flashlight.flashlightContext = context.getApplicationContext();
+        flashlight.init(context);
         Log.d(threaded_application.applicationName, activityName + ": newInstance(): Created new " + flashlight.getClass());
         return flashlight;
     }
@@ -44,7 +61,7 @@ public abstract class Flashlight {
     /**
      * Allow for any needed initialisation for concrete implementations
      */
-    protected abstract void init();
+    protected abstract void init(Context context);
 
     /**
      * Allow for any needed teardown for concrete implementations
@@ -56,8 +73,9 @@ public abstract class Flashlight {
      *
      * @return true if a flashlight is available; false if not
      */
-    public boolean isFlashlightAvailable() {
-        return flashlightContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    public boolean isFlashlightAvailable(Context context) {
+//        return flashlightContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     /**
@@ -66,36 +84,36 @@ public abstract class Flashlight {
      * @param activity the requesting activity
      * @return true if the flashlight successfully switch on; false if unsuccessful
      */
-    public abstract boolean setFlashlightOn(Activity activity);
+    public abstract boolean setFlashlightOn(threaded_application mainapp, Activity activity);
 
     /**
      * Switch off the flashlight
      */
     public abstract void setFlashlightOff();
 
+    // -- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * Concrete implementation for Froyo API8 (and later) devices
-     * This uses the legacy {@link android.hardware.Camera} API.
-     * On certain devices, we need to ensure that the orientation of the camera preview
-     * matches that of the activity, otherwise 'bad things happen' using the newly available
-     * {@link android.hardware.Camera#setDisplayOrientation(int)} method.
+     * This uses the legacy API.  Deprecated in API21
      */
+    @SuppressWarnings("deprecation")
     private static class FroyoFlashlight extends Flashlight {
-        private static Camera camera;
+        private Camera camera;
 
         @Override
-        protected void init() {
+        protected void init(Context context) {
             // No specific initialisation needed - do nothing
         }
 
         @Override
         public void teardown() {
-            // No specific teardown needed - do nothing
+            setFlashlightOff();
         }
 
         /** @noinspection deprecation*/
         @Override
-        public boolean setFlashlightOn(Activity activity) {
+        public boolean setFlashlightOn(threaded_application mainapp, Activity activity) {
             try {
                 camera = Camera.open();
                 Camera.Parameters parameters = camera.getParameters();
@@ -107,7 +125,7 @@ public abstract class Flashlight {
                 return true;
             } catch (Exception ex) {
                 Log.e(threaded_application.applicationName, activityName + ": Error switching on flashlight: " + ex.getMessage());
-                threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
+                mainapp.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             }
         }
@@ -124,7 +142,7 @@ public abstract class Flashlight {
                 Log.d(threaded_application.applicationName, activityName + ": Flashlight switched off");
             } catch (Exception ex) {
                 Log.e(threaded_application.applicationName, activityName + ": Error switching off flashlight: " + ex.getMessage());
-                threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
+//                mainapp.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             }
         }
 
@@ -135,56 +153,58 @@ public abstract class Flashlight {
          * @return screen orientation as integer number of degrees
          */
         private int getDisplayOrientation(Activity activity) {
-            switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
-                case Surface.ROTATION_0: return 0;
-                case Surface.ROTATION_180: return 180;
-                case Surface.ROTATION_270: return 270;
-                case Surface.ROTATION_90:
-                default: return 90;
-            }
+            return switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
+                case Surface.ROTATION_0 -> 0;
+                case Surface.ROTATION_180 -> 180;
+                case Surface.ROTATION_270 -> 270;
+                default -> 90;
+            };
         }
     }
+
+    // -- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
      * Concrete implementation for Marshmallow API 23 (and later) devices
      * This uses the {@link android.hardware.camera2.CameraManager#setTorchMode(String, boolean)}
      * method now available in API 23 to greatly simplify things.
      */
-//    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-//    @TargetApi(Build.VERSION_CODES.M)
     @RequiresApi(23)
     private static class MarshmallowFlashlight extends Flashlight {
 
-        private static CameraManager cameraManager;
-        private static String cameraId;
+        private CameraManager cameraManager;
+        private String cameraId;
 
         @Override
-        protected void init() {
-            cameraManager = (CameraManager) flashlightContext.getSystemService(Context.CAMERA_SERVICE);
+        protected void init(Context context) {
+//            cameraManager = (CameraManager) flashlightContext.getSystemService(Context.CAMERA_SERVICE);
+            cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
             try {
-                cameraId = cameraManager.getCameraIdList()[0];
-            } catch (CameraAccessException|SecurityException ex) {
-                Log.e(threaded_application.applicationName, activityName + ": Error initiating camera manager: " + ex.getMessage());
-            } catch (ArrayIndexOutOfBoundsException ex) {
+                if (cameraManager != null) {
+                    cameraId = cameraManager.getCameraIdList()[0];
+                }
+            } catch (CameraAccessException|SecurityException|ArrayIndexOutOfBoundsException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": Error initiating camera manager: " + ex.getMessage());
             }
-
         }
 
         @Override
         public void teardown() {
-            // No specific teardown needed - do nothing
+            setFlashlightOff();
         }
 
         @Override
-        public boolean setFlashlightOn(Activity activity) {
+        public boolean setFlashlightOn(threaded_application mainapp, Activity activity) {
             try {
-                cameraManager.setTorchMode(cameraId, true);
-                Log.d(threaded_application.applicationName, activityName + ": setFlashlightOn(): Flashlight switched on");
-                return true;
+                if (cameraManager != null && cameraId != null) {
+                    cameraManager.setTorchMode(cameraId, true);
+                    Log.d(threaded_application.applicationName, activityName + ": setFlashlightOn(): Flashlight switched on");
+                    return true;
+                }
+                return false;
             } catch (CameraAccessException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": setFlashlightOn(): Error switching on flashlight: " + ex.getMessage());
-                threaded_application.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
+                mainapp.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             } catch (IllegalArgumentException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": Problem switching on flashlight:" + ex.getMessage());
@@ -195,11 +215,13 @@ public abstract class Flashlight {
         @Override
         public void setFlashlightOff() {
             try {
-                cameraManager.setTorchMode(cameraId, false);
-                Log.d(threaded_application.applicationName, activityName + ": setFlashlightOff(): Flashlight switched off");
+                if (cameraManager != null && cameraId != null) {
+                    cameraManager.setTorchMode(cameraId, false);
+                    Log.d(threaded_application.applicationName, activityName + ": setFlashlightOff(): Flashlight switched off");
+                }
             } catch (CameraAccessException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Error switching off flashlight: " + ex.getMessage());
-                threaded_application.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
+//                mainapp.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             } catch (IllegalArgumentException ex) {
                 Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Problem switching off flashlight:" + ex.getMessage());
             }

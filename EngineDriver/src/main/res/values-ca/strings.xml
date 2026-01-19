@@ -910,8 +910,8 @@
     <string name="throttleSwitchAction">Canvia el disseny de la pantalla del Controlador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferències de la imatge de fons</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferències de la tecla de canvi de dissenys</string>
-    <string name="edit_consist_menu">\≡ Editar el Controlador</string>
-    <string name="gamepad_test_menu">\≡ Prova de gamepad</string>
+    <string name="edit_consist_menu">Editar el Controlador</string>
+    <string name="gamepad_test_menu">Gamepads/USB</string>
     <string name="prefSwipeDownOptionSummary">El que hauria de passar quan es llisca cap avall a la vista del Controlador</string>
     <string name="prefSwipeDownOptionTitle">Acció de lliscar cap avall en la vista del Controlador?</string>
     <string name="prefPauseSpeedButtonSummary">Mostra un botó per reduir la velocitat i aturar la Locomotora, a continuació, tornar a la velocitat d\'alliberament</string>
@@ -971,6 +971,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajusteu l\'efecte del control lliscant de càrrega sobre els canvis de velocitat. &gt;100% = més càrrega</string>-->
     <string name="prefCategoryDevicePageTitle">Preferències del Dispositiu</string>
     <string name="prefExtendedLoggingSummary">Captura registres addicionals i més detallats</string>
+    <string name="prefLogOnNextStartupSummary">Inicia automàticament la captura d\'un registre la propera vegada que Engine Driver s\'iniciï. Aquesta preferència es restablirà després de l\'ús.</string>
     <string name="prefSortOrderRosterTitle">Ordre d\'ordenació de la llista</string>
     <string name="prefSortOrderRosterSummary">Ordeneu que les entrades de la llista apareguin, de manera predeterminada, cada vegada que inicieu el controlador del motor</string>
     <string name="prefSortOrderTurnoutsTitle">Ordre d\'ordenació de les sortides</string>
@@ -1279,5 +1280,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">Amaga el botó Sons de locomotora</string>
     <string name="newConnectionTitle">Nova connexió</string>
     <string name="prefAutoServerIpConnectSummary">Connecta automàticament a una adreça de servidor fins i tot si no es detecta</string>
+    <string name="prefLogOnNextStartupTitle">Voleu començar a iniciar la sessió a la propera reinici?</string>
 
 </resources>

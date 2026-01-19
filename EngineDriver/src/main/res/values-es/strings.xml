@@ -900,8 +900,8 @@
     <string name="throttleSwitchAction">Cambia el diseño de la pantalla del Controlador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferencias de la imagen de fondo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferencias de la tecla de cambio de diseño</string>
-    <string name="edit_consist_menu">\≡ Edita el Controlador</string>
-    <string name="gamepad_test_menu">\≡ Prueba de gamepad</string>
+    <string name="edit_consist_menu">Edita el Controlador</string>
+    <string name="gamepad_test_menu">Gamepads/USB</string>
     <string name="prefSwipeDownOptionSummary">Lo que debería ocurrir cuando se desliza hacia abajo en la vista del Controlador</string>
     <string name="prefSwipeDownOptionTitle">Acción de deslizar hacia abajo en la vista del Controlador?</string>
     <string name="prefPauseSpeedButtonTitle">Muestra el botón \'Pausa\'</string>
@@ -967,6 +967,7 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajuste el efecto del control deslizante de carga en los cambios de velocidad. >100% = más carga</string>-->
     <string name="prefCategoryDevicePageTitle">Preferencias del Dispositivo</string>
     <string name="prefExtendedLoggingSummary">Capturar registros adicionales y más detallados</string>
+    <string name="prefLogOnNextStartupSummary">Iniciar la captura automática de un registro la próxima vez que se inicie el controlador del motor. Esta preferencia se restablecerá después de su uso.</string>
     <string name="prefSortOrderRosterTitle">Orden de clasificación de la lista</string>
     <string name="prefSortOrderRosterSummary">Ordene que las entradas de la lista aparezcan, de forma predeterminada, cada vez que inicie Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Orden de clasificación de desvíos</string>
@@ -1266,5 +1267,6 @@
     <string name="prefLocoSelectHideIplsButtonTitle">Ocultar el botón Sonidos de locomotoras</string>
     <string name="newConnectionTitle">Nueva conexión</string>
     <string name="prefAutoServerIpConnectSummary">Conectarse automáticamente a una dirección de servidor incluso si no se descubre</string>
+    <string name="prefLogOnNextStartupTitle">¿Iniciar sesión en el próximo inicio?</string>
 
 </resources>

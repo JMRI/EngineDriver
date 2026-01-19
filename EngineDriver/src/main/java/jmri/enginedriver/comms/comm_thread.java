@@ -1,5 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd
-  mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -199,11 +198,11 @@ public class comm_thread extends Thread {
                 Log.d(threaded_application.applicationName, activityName + ": startJmdns(): listener created");
 
             } else {
-                threaded_application.safeToast(R.string.toastThreadedAppNoLocalIp, Toast.LENGTH_LONG);
+                mainapp.safeToast(R.string.toastThreadedAppNoLocalIp, Toast.LENGTH_LONG);
             }
         } catch (Exception except) {
             Log.e(threaded_application.applicationName, activityName + ": startJmdns(): Error creating withrottle listener: " + except.getMessage());
-            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), LENGTH_SHORT);
+            mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingWiThrottle, except.getMessage()), LENGTH_SHORT);
         }
     }
 
@@ -337,9 +336,9 @@ public class comm_thread extends Thread {
 //            dlMetadataTask.stop();
 
         // make sure flashlight is switched off at shutdown
-        if (threaded_application.flashlight != null) {
-            threaded_application.flashlight.setFlashlightOff();
-            threaded_application.flashlight.teardown();
+        if (mainapp.flashlight != null) {
+            mainapp.flashlight.setFlashlightOff();
+            mainapp.flashlight.teardown();
         }
         mainapp.flashState = false;
         Log.d(threaded_application.applicationName, activityName + ": Shutdown(): end");
@@ -354,7 +353,7 @@ public class comm_thread extends Thread {
 
     private static void sendThrottleName(Boolean sendHWID) {
         if (!mainapp.isDCCEX) { // not DCC-EX
-            String s = prefs.getString("prefThrottleName", threaded_application.context.getResources().getString(R.string.prefThrottleNameDefaultValue));
+            String s = prefs.getString("prefThrottleName", mainapp.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue));
             wifiSend("N" + s);  //send throttle name
             if (sendHWID) {
                 wifiSend("HU" + mainapp.getFakeDeviceId());
@@ -682,10 +681,7 @@ public class comm_thread extends Thread {
 
     protected static void sendRequestTracks() {
         if (mainapp.isDCCEX) { // DCC-EX only
-            float vn = 4;
-            try {
-                vn = Float.parseFloat(mainapp.DccexVersion);
-            } catch (Exception ignored) { } // invalid version
+            float vn = mainapp.getDccexVersionNumeric();
 
             if (vn >= 04.002007) {  /// need to remove the track manager option
                 String msgTxt = "<=>";
@@ -890,14 +886,14 @@ public class comm_thread extends Thread {
                 for (Consist.ConLoco l : con.getLocos()) {
                     int newDir = dir;
                     if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                    String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                    String fmt = ( (mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                     msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], newDir);
                     wifiSend(msgTxt);
                     mainapp.dccexLastKnownDirection[whichThrottle] = newDir;
 //                    Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
                 }
             } else {
-                String fmt = ( (Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                String fmt = ( (mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                 msgTxt = String.format(fmt, addr.substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], dir);
                 wifiSend(msgTxt);
                 if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
@@ -925,7 +921,7 @@ public class comm_thread extends Thread {
             for (Consist.ConLoco l : con.getLocos()) {
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                String fmt = ((Float.parseFloat(mainapp.DccexVersion) < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>");
+                String fmt = ((mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>");
                 if (speed >= 0) { // not Estop
                     msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
                 } else { // Estop
@@ -1207,7 +1203,7 @@ public class comm_thread extends Thread {
 //                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.withrottle_version + ", ignoring");
                             }
                         } else {
-                            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, responseStr.substring(2)), LENGTH_SHORT);
+                            mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, responseStr.substring(2)), LENGTH_SHORT);
                             socketWiT.disconnect(false);
                         }
                     } else {
@@ -1227,7 +1223,7 @@ public class comm_thread extends Thread {
                             mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
                         }
                         mainapp.vibrate(new long[]{1000, 500, 1000, 500});
-                        threaded_application.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
+                        mainapp.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                         //see if it is a turnout fail
                         if ((responseStr.contains("Turnout")) || (responseStr.contains("create not allowed"))) {
                             Pattern pattern = Pattern.compile(".*'(.*)'.*");
@@ -1238,7 +1234,7 @@ public class comm_thread extends Thread {
                         }
 
                     } else if (responseStr.charAt(1) == 'm') { //info message sent from server to throttle
-                        threaded_application.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
+                        mainapp.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                     }
                     break;
 
@@ -1341,6 +1337,7 @@ public class comm_thread extends Thread {
                             int oldPort = mainapp.web_server_port;
                             try {
                                 mainapp.web_server_port = Integer.parseInt(responseStr.substring(2));  //set app variable
+                                mainapp.sendMsg(mainapp.throttle_msg_handler, message_type.WEB_PORT_RECEIVED);
                             } catch (Exception e) {
                                 Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid web server port string");
                             }
@@ -1379,14 +1376,14 @@ public class comm_thread extends Thread {
 
                     switch (responseStr.charAt(1)) {
                         case 'i': // Command Station Information
-                            String old_vn = mainapp.DccexVersion;
+                            String old_vn = mainapp.getDccexVersion();
                             String [] vn1 = args[1].split("-");
                             String [] vn2 = vn1[1].split("\\.");
                             String vn = "4.";
                             try {
                                 vn = String.format("%02d.", Integer.parseInt(vn2[0]));
                             } catch (Exception e) {
-                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.DccexVersion + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.getDccexVersion() + ", ignoring");
                             }
                             if (vn2.length>=2) {
                                 try { vn = vn +String.format("%03d",Integer.parseInt(vn2[1]));
@@ -1415,10 +1412,10 @@ public class comm_thread extends Thread {
                                 }
                             }
                             mainapp.DccexVersion = vn;
-                            if (!mainapp.DccexVersion.equals(old_vn)) { //only if changed
+                            if (!mainapp.getDccexVersion().equals(old_vn)) { //only if changed
                                 mainapp.sendMsg(mainapp.connection_msg_handler, message_type.CONNECTED);
                             } else {
-                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.DccexVersion + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.getDccexVersion() + ", ignoring");
                             }
 
                             mainapp.withrottle_version = 4.0;  // fudge it
@@ -1519,7 +1516,7 @@ public class comm_thread extends Thread {
                         case 'm': // alert / info message sent from server to throttle
                             mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
                             mainapp.vibrate(new long[]{1000, 500, 1000, 500});
-                            threaded_application.safeToast(args[1], Toast.LENGTH_LONG); // copy to UI as toast message
+                            mainapp.safeToast(args[1], Toast.LENGTH_LONG); // copy to UI as toast message
                             break;
                     }
 
@@ -1815,7 +1812,7 @@ public class comm_thread extends Thread {
                 }
 
             }  else {// else {} did not succeed
-                threaded_application.safeToast(R.string.DCCEXrequestLocoIdFailed, LENGTH_SHORT);
+                mainapp.safeToast(R.string.DCCEXrequestLocoIdFailed, LENGTH_SHORT);
             }
 
         } else {
@@ -1845,7 +1842,7 @@ public class comm_thread extends Thread {
                                 mainapp.dccexRosterDetailsReceived[i] = false;
                                 wifiSend("<JR " + args[i + 1] + ">");
                             } catch (Exception e) {
-                                threaded_application.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]), Toast.LENGTH_LONG);
+                                mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]), Toast.LENGTH_LONG);
                             }
                         }
                     }
@@ -2577,7 +2574,7 @@ public class comm_thread extends Thread {
                 try {
                     host_address = InetAddress.getByName(mainapp.host_ip);
                 } catch (UnknownHostException except) {
-                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), LENGTH_SHORT);
+                    mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), LENGTH_SHORT);
                     socketOk = false;
                 } catch (Exception except) {
                     Log.d(threaded_application.applicationName, activityName + ": connect(): Unknown error.");
@@ -2598,12 +2595,12 @@ public class comm_thread extends Thread {
                     Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: set timeout successful.");
                 } catch (Exception except) {
                     if (!firstConnect) {
-                        threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppCantConnect,
+                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
                                 mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
                     }
                     if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) { //show additional message if using mobile data
                         Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
-                        threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI,
+                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI,
                                 mainapp.client_type), Toast.LENGTH_LONG);
                     }
                     socketOk = false;
@@ -2615,7 +2612,7 @@ public class comm_thread extends Thread {
                 try {
                     inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 } catch (IOException except) {
-                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), LENGTH_SHORT);
+                    mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), LENGTH_SHORT);
                     socketOk = false;
                 }
             }
@@ -2628,7 +2625,7 @@ public class comm_thread extends Thread {
                         this.start();
                     } catch (IllegalThreadStateException except) {
                         //ignore "already started" errors
-                        threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), LENGTH_SHORT);
+                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), LENGTH_SHORT);
                     }
                 }
             }
@@ -2641,7 +2638,7 @@ public class comm_thread extends Thread {
                         socketOk = false;
                     }
                 } catch (IOException e) {
-                    threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), LENGTH_SHORT);
+                    mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorCreatingOutputStream, e.getMessage()), LENGTH_SHORT);
                     socketOk = false;
                 }
             }
@@ -2664,7 +2661,7 @@ public class comm_thread extends Thread {
                         try {
                             Thread.sleep(connectTimeoutMs);     //  give run() a chance to see endRead and exit
                         } catch (InterruptedException e) {
-                            threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), LENGTH_SHORT);
+                            mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), LENGTH_SHORT);
                         }
                     }
                 }
@@ -2720,13 +2717,13 @@ public class comm_thread extends Thread {
             if (!socketGood || inboundTimeout) {
                 String status;
                 if (mainapp.client_address == null) {
-                    status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNotConnected);
+                    status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
                     Log.d(threaded_application.applicationName, activityName + ": send(): Not Connected: WiT send reconnection attempt.");
                 } else if (inboundTimeout) {
-                    status = threaded_application.context.getResources().getString(R.string.statusThreadedAppNoResponse, mainapp.host_ip, Integer.toString(mainapp.port), heart.getInboundInterval());
+                    status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, mainapp.host_ip, Integer.toString(mainapp.port), heart.getInboundInterval());
                     Log.d(threaded_application.applicationName, activityName + ": send(): No Response: WiT receive reconnection attempt.");
                 } else {
-                    status = threaded_application.context.getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
+                    status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
                     Log.d(threaded_application.applicationName, activityName + ": send(): Unable to connect: WiT send reconnection attempt.");
                 }
                 socketGood = false;

@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -341,8 +340,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     //take data from arrays and update the editing view
     void move_settings_to_view(boolean isReset) {
 
-//        if ((!isSpecial) && (mainapp.isDCCEX)) {   // if it is for DCC-EX only, we don't show the lead/trail etc options soexpand the space for the instructions
-        if ( (!isSpecial) && (!isReset) ) {   // if it is for DCC-EX only, we don't show the lead/trail etc options soexpand the space for the instructions
+//        if ((!isSpecial) && (mainapp.isDCCEX)) {   // if it is for DCC-EX only, we don't show the lead/trail etc options so expand the space for the instructions
+        if ( (!isSpecial) && (!isReset) ) {   // if it is for DCC-EX only, we don't show the lead/trail etc options so expand the space for the instructions
             View v = findViewById(R.id.function_consist_instruction);
             ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
             Double newWidth = layoutParams.width * 2.0;
@@ -494,7 +493,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         //Save the valid function labels to the settings.txt file.
 //        File sdcard_path = Environment.getExternalStorageDirectory();
 //        File settings_file = new File(sdcard_path, "engine_driver/function_settings.txt");
-        File settings_file = new File(context.getExternalFilesDir(null), "function_settings.txt");
+        File settings_file = new File(getApplicationContext().getExternalFilesDir(null), "function_settings.txt");
         PrintWriter settings_output;
         String errMsg = "";
         try {
@@ -514,9 +513,9 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
         if (!errMsg.isEmpty())
-            threaded_application.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
+            mainapp.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
-            threaded_application.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
+            mainapp.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
 
     }
 

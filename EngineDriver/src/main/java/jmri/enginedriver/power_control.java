@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -245,9 +245,7 @@ public class power_control extends AppCompatActivity {
         // request this as early as possible
         if (mainapp.isDCCEX) mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_TRACKS, "");
 
-        try {
-            vn = Float.parseFloat(mainapp.DccexVersion);
-        } catch (Exception ignored) { } // invalid version
+        vn = mainapp.getDccexVersionNumeric();
 
         TypedValue outValue = new TypedValue();
         mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);

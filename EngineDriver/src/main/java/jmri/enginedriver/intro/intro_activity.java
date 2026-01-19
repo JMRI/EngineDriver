@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -400,7 +400,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
         mainapp.introIsRunning = false;
         if (!introComplete) {
-            threaded_application.safeToast(R.string.introbackButtonPress, Toast.LENGTH_LONG);
+            mainapp.safeToast(R.string.introbackButtonPress, Toast.LENGTH_LONG);
         }
         super.onDestroy();
     }

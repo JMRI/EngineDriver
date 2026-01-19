@@ -103,7 +103,23 @@
     <attr name="ed_read_glyph" format="reference" />
     <attr name="ed_preferences_glyph" format="reference" />
     <attr name="ed_menu_glyph" format="reference" />
+    <attr name="ed_wizard_glyph" format="reference" />
+    <attr name="ed_blank_glyph" format="reference" />
+    <attr name="ed_pom_glyph" format="reference" />
+    <attr name="ed_timer_glyph" format="reference" />
+    <attr name="ed_web_glyph" format="reference" />
+    <attr name="ed_dccex_glyph" format="reference" />
+    <attr name="ed_gamepad_glyph" format="reference" />
+    <attr name="ed_edit_consist_glyph" format="reference" />
+    <attr name="ed_functions_glyph" format="reference" />
     <attr name="ed_exit_glyph" format="reference" />
+    <attr name="ed_throttle_glyph" format="reference" />
+    <attr name="ed_turnouts_glyph" format="reference" />
+    <attr name="ed_routes_glyph" format="reference" />
+    <attr name="ed_device_sounds_glyph" format="reference" />
+    <attr name="ed_reconnect_glyph" format="reference" />
+    <attr name="ed_about_glyph" format="reference" />
+    <attr name="ed_history_glyph" format="reference" />
     <attr name="ed_power_glyph" format="reference" />
     <attr name="ed_write_glyph" format="reference" />
     <attr name="ed_write_off_glyph" format="reference" />

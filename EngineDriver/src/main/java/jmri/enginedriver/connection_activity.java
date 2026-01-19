@@ -1,4 +1,4 @@
-/* Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@ package jmri.enginedriver;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.widget.Toast.LENGTH_LONG;
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -125,12 +124,12 @@ public class connection_activity extends AppCompatActivity implements Permission
     private String connected_ssid;
     private String connected_serviceType;
 
-    private static final String demo_host = "jmri.mstevetodd.com";
-    private static final String demo_port = "44444";
-    private static final String DUMMY_HOST = "999";
-    private static final String DUMMY_ADDRESS = "999";
-    private static final int DUMMY_PORT = 999;
-    private static final String DUMMY_SSID = "";
+//    private static final String demo_host = "jmri.mstevetodd.com";
+//    private static final String demo_port = "44444";
+//    private static final String DUMMY_HOST = "999";
+//    private static final String DUMMY_ADDRESS = "999";
+//    private static final int DUMMY_PORT = 999;
+//    private static final String DUMMY_SSID = "";
 
     private static Method overridePendingTransition;
 
@@ -242,7 +241,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.exitDoubleBackButtonInitiated = 0;
             if (connectionsListSwipeDetector.swipeDetected()) { // check for swipe
                 if (connectionsListSwipeDetector.getAction() == SwipeDetector.Action.LR) {
-                    clearConnectionsListItem(v, position, id);
+                    clearConnectionsListItem(getApplicationContext(), v, position, id);
                     connectionsListSwipeDetector.swipeReset();
 //                } else {
                 }
@@ -313,7 +312,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 try {
                     connected_port = Integer.parseInt(entry.getText().toString());
                 } catch (Exception except) {
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
                     connected_port = 0;
                     return;
                 }
@@ -328,19 +327,19 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    private void clearConnectionsListItem(View v, int position, long id) {
+    private void clearConnectionsListItem(Context context, View v, int position, long id) {
         //When a connection swiped , remove it from the list
         ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
         TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
         TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
         TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
         TextView ssidView = (TextView) vg.getChildAt(3); // get port from 4th box
-        if (!(hnv.getText().toString().equals(demo_host)) || !(hpv.getText().toString().equals(demo_port))) {
-            getConnectionsListImpl(hip.getText().toString(), hpv.getText().toString());
-            connected_hostip = DUMMY_ADDRESS;
-            connected_hostname = DUMMY_HOST;
-            connected_port = DUMMY_PORT;
-            connected_ssid = DUMMY_SSID;
+        if (!(hnv.getText().toString().equals(threaded_application.DEMO_HOST)) || !(hpv.getText().toString().equals(threaded_application.DEMO_PORT))) {
+            getConnectionsListImpl(context, hip.getText().toString(), hpv.getText().toString());
+            connected_hostip = threaded_application.DUMMY_ADDRESS;
+            connected_hostname = threaded_application.DUMMY_HOST;
+            connected_port = threaded_application.DUMMY_PORT;
+            connected_ssid = threaded_application.DUMMY_SSID;
 
             Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
             anim.setDuration(500);
@@ -366,7 +365,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             });
 
         } else {
-            threaded_application.safeToast(R.string.toastConnectRemoveDemoHostError, Toast.LENGTH_SHORT);
+            mainapp.safeToast(R.string.toastConnectRemoveDemoHostError, Toast.LENGTH_SHORT);
         }
     }
 
@@ -383,7 +382,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     try {
                         connected_port = Integer.parseInt(tm.get("port"));
                     } catch (Exception except) {
-                        threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
+                        mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
                         connected_port = 0;
                         return;
                     }
@@ -391,7 +390,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     connected_ssid = mainapp.client_ssid;
                     checkIfDccexServerName(connected_hostname, connected_port);
                     connect();
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
                 } else {
                     mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
                 }
@@ -550,7 +549,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         discover_list.setAdapter(discovery_list_adapter);
         discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
 
-        importExportConnectionList = new ImportExportConnectionList(prefs);
+        importExportConnectionList = new ImportExportConnectionList(getApplicationContext(),prefs);
         //Set up a list adapter to allow adding the list of recent connections to the UI.
 //            connections_list = new ArrayList<>();
         connection_list_adapter = new SimpleAdapter(this, importExportConnectionList.connections_list, R.layout.connections_list_item,
@@ -721,6 +720,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
                 getResources().getBoolean(R.bool.prefExtendedLoggingDefaultValue));
+        startLogging();
     }
 
     @Override
@@ -881,7 +881,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoverySsidUnavailable));
                 discoveredServersWarning.setText(warningTextBuilder.toString());
             }
-            threaded_application.safeToast(warningTextBuilder.toString(), Toast.LENGTH_LONG);
+            mainapp.safeToast(warningTextBuilder.toString(), Toast.LENGTH_LONG);
 //            discoveredServersWarning.setVisibility(VISIBLE);
         } else {
             discoveredServersWarning.setVisibility(GONE);
@@ -972,7 +972,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             }
 
             // determine if the location service is enabled
-            LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+            LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
             try {
                 mainapp.clientLocationServiceEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             } catch (Exception except) {
@@ -1130,7 +1130,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //if no SD Card present then nothing to do
         if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            threaded_application.safeToast(R.string.toastConnectErrorReadingRecentConnections, Toast.LENGTH_SHORT);
+            mainapp.safeToast(R.string.toastConnectErrorReadingRecentConnections, Toast.LENGTH_SHORT);
         } else {
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -1138,7 +1138,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
-                            File connections_list_file = new File(context.getExternalFilesDir(null), "connections_list.txt");
+                            File connections_list_file = new File(getApplicationContext().getExternalFilesDir(null), "connections_list.txt");
 
                             if (connections_list_file.exists()) {
                                 //noinspection ResultOfMethodCallIgnored
@@ -1166,10 +1166,10 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private void getConnectionsList() {
 //            navigateToHandler(PermissionsHelper.READ_CONNECTION_LIST);
-        getConnectionsListImpl("", "");
+        getConnectionsListImpl(getApplicationContext(), "", "");
     }
 
-    private void getConnectionsListImpl(String addressToRemove, String portToRemove) {
+    private void getConnectionsListImpl(Context context, String addressToRemove, String portToRemove) {
         importExportConnectionList.connections_list.clear();
 
         SharedPreferences prefsNoBackup = getSharedPreferences("jmri.enginedriver_preferences_no_backup", 0);
@@ -1180,16 +1180,16 @@ public class connection_activity extends AppCompatActivity implements Permission
                 TextView v = findViewById(R.id.recent_connections_heading);
                 v.setText(getString(R.string.ca_recent_conn_notice));
             } else {
-                importExportConnectionList.getConnectionsList(addressToRemove, portToRemove);
+                importExportConnectionList.getConnectionsList(context, addressToRemove, portToRemove);
 
                 if (!importExportConnectionList.failureReason.isEmpty()) {
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT);
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + importExportConnectionList.failureReason, Toast.LENGTH_SHORT);
                 } else {
                     if (((importExportConnectionList.foundDemoHost)
                             && (importExportConnectionList.connections_list.size() > 1)) || (!importExportConnectionList.connections_list.isEmpty())) {
                         // use connToast so onPause can cancel toast if connection is made
                         if (!mainapp.prefHideInstructionalToasts) {
-                            connToast.setText(threaded_application.context.getResources().getString(R.string.toastConnectionsListHelp));
+                            connToast.setText(getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp));
                             connToast.setDuration(LENGTH_LONG);
                             connToast.show();
                         }
@@ -1232,10 +1232,10 @@ public class connection_activity extends AppCompatActivity implements Permission
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
 
                 if (!exportedPreferencesFileName.equals(".ed")) {
-                    importExportPreferences.writeSharedPreferencesToFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+                    importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
             } else {
-                threaded_application.safeToast(R.string.toastConnectUnableToSavePref, LENGTH_LONG);
+                mainapp.safeToast(R.string.toastConnectUnableToSavePref, LENGTH_LONG);
             }
         }
     }
@@ -1259,9 +1259,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                 || (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_ONLY))) {  // automatically load the host specific preferences, if the preference is set
             if (!mainapp.connectedHostName.isEmpty()) {
                 String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-                importExportPreferences.loadSharedPreferencesFromFile(mainapp.getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);
+                importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, true);
             } else {
-                threaded_application.safeToast(R.string.toastConnectUnableToLoadPref, LENGTH_LONG);
+                mainapp.safeToast(R.string.toastConnectUnableToLoadPref, LENGTH_LONG);
             }
         }
     }
@@ -1288,7 +1288,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //                        break;
 //                    case PermissionsHelper.READ_CONNECTION_LIST:
 //                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
-//                        getConnectionsListImpl("", "");
+//                        getConnectionsListImpl(context, "", "");
 //                        break;
 //                    case PermissionsHelper.STORE_PREFERENCES:
 //                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_PREFERENCES - navigate to writeSharedPreferencesToFileImpl()");
@@ -1439,5 +1439,26 @@ public class connection_activity extends AppCompatActivity implements Permission
 //            // 5. Re-set the modified drawable to the toolbar
 //            toolbar.setOverflowIcon(wrappedDrawable);
 //        }
+    }
+
+    // start logging if the transient preference is set
+    private void startLogging() {
+        mainapp.prefLogOnNextStartup = prefs.getBoolean("prefLogOnNextStartup",false);
+        if (mainapp.prefLogOnNextStartup) {
+            prefs.edit().putBoolean("prefLogOnNextStartup", false).commit(); /// reset it
+            File logFile = new File(mainapp.getApplicationContext().getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + ".txt");
+            try {
+                Runtime.getRuntime().exec("logcat -c");
+                mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
+                mainapp.logSaveFilename = logFile.toString();
+                Log.d(mainapp.applicationName, "Logging started to: " + logFile);
+                Log.d(mainapp.applicationName, mainapp.getAboutInfo());
+                Log.d(mainapp.applicationName, mainapp.getAboutInfo(false));
+                mainapp.logAllPreference();
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+        }
     }
 }

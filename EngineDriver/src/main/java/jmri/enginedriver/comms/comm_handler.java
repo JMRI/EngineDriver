@@ -1,5 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd
-  mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -101,7 +100,7 @@ public class comm_handler extends Handler {
                } else {
                   //show message if using mobile data
                   if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) {
-                     threaded_application.safeToast(threaded_application.context.getResources().getString(R.string.toastThreadedAppNotWIFI, mainapp.client_type), Toast.LENGTH_LONG);
+                     mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, mainapp.client_type), Toast.LENGTH_LONG);
                   }
                   if (commThread.jmdns == null) {   //start jmdns if not started
                      commThread.startJmdns();
@@ -158,7 +157,7 @@ public class comm_handler extends Handler {
             if (comm_thread.socketWiT.connect()) {
                if (mainapp.isDCCEX) {
                   if (!mainapp.prefHideInstructionalToasts) {
-                     threaded_application.safeToast(R.string.usingProtocolDCCEX, Toast.LENGTH_LONG);
+                     mainapp.safeToast(R.string.usingProtocolDCCEX, Toast.LENGTH_LONG);
                   }
                }
 
@@ -558,12 +557,12 @@ public class comm_handler extends Handler {
             //if not successfully connected to a 2.0+ server by this time, kill connection
             if (mainapp.withrottle_version < 2.0) {
                if (!mainapp.isDCCEX) {
-                  threaded_application.safeToast(
-                          threaded_application.context.getResources().getString(R.string.toastWaitingForConnection, mainapp.host_ip, Integer.toString(mainapp.port)),
+                  mainapp.safeToast(
+                          mainapp.getApplicationContext().getResources().getString(R.string.toastWaitingForConnection, mainapp.host_ip, Integer.toString(mainapp.port)),
                           Toast.LENGTH_SHORT);
                } else {
-                  threaded_application.safeToast(
-                          threaded_application.context.getResources().getString(R.string.toastWaitingForConnectionDccEx, mainapp.host_ip, Integer.toString(mainapp.port)),
+                  mainapp.safeToast(
+                          mainapp.getApplicationContext().getResources().getString(R.string.toastWaitingForConnectionDccEx, mainapp.host_ip, Integer.toString(mainapp.port)),
                           Toast.LENGTH_SHORT);
                }
 
@@ -598,7 +597,7 @@ public class comm_handler extends Handler {
 
          //send whatever message string comes in obj as a long toast message
          case message_type.TOAST_MESSAGE:
-            threaded_application.safeToast(msg.obj.toString(), Toast.LENGTH_LONG);
+            mainapp.safeToast(msg.obj.toString(), Toast.LENGTH_LONG);
             break;
 
          case message_type.KIDS_TIMER_ENABLE:
@@ -622,7 +621,7 @@ public class comm_handler extends Handler {
             String retrievedServerName = msg.obj.toString();
             if (!mainapp.connectedHostName.isEmpty() &&
                     !retrievedServerName.equals(mainapp.connectedHostName) &&
-                    !mainapp.connectedHostName.equals(threaded_application.demo_host)) {
+                    !mainapp.connectedHostName.equals(threaded_application.DEMO_HOST)) {
                mainapp.updateConnectionList(retrievedServerName);
             }
             break;

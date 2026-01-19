@@ -1,25 +1,7 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 package jmri.enginedriver;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -130,7 +112,7 @@ public class select_loco extends AppCompatActivity {
     private RosterSimpleAdapter rosterListAdapter;
     private RecentSimpleAdapter recentListAdapter;
 
-    public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
+//    public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
     public static final int ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE = 6;
 
     // recent consists
@@ -673,7 +655,7 @@ public class select_loco extends AppCompatActivity {
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);
         mainapp.consists[whichThrottle].release();
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass 0, 1 or 2 in message
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
     }
 
    // request dispatch of specified throttle
@@ -682,7 +664,7 @@ public class select_loco extends AppCompatActivity {
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);  //not relevant to DCC-EX
         mainapp.consists[whichThrottle].release();
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISPATCH, "", whichThrottle); // pass 0, 1 or 2 in message
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
     }
 
     boolean saveUpdateList;         // save value across ConsistEdit activity 
@@ -720,7 +702,7 @@ public class select_loco extends AppCompatActivity {
             for (int i = 0; i <= consist.size(); i++) {
                 if (consist.getLoco(sAddr) != null) {
                     overrideThrottleName = "";
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected, sAddr), Toast.LENGTH_SHORT);
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected, sAddr), Toast.LENGTH_SHORT);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);  // send the acquire message anyway
                     return false;
                 }
@@ -942,8 +924,8 @@ public class select_loco extends AppCompatActivity {
             Log.d(threaded_application.applicationName, activityName + ": saveRecentLocosList(): Loco '"+ locoName + "' added to Recents");
         }
 
-        importExportPreferences.writeRecentLocosListToFile(prefs);
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, mainapp.numThrottles);
+        importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
     }
 
     private void refreshRecentLocosList(boolean reload) {
@@ -971,7 +953,7 @@ public class select_loco extends AppCompatActivity {
             rbRecent.setVisibility(GONE); // if the list is empty, hide the radio button
         } else {
 
-            importExportPreferences.loadRecentLocosListFromFile();
+            importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
 
             for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
                 HashMap<String, String> hm = new HashMap<>();
@@ -1060,7 +1042,7 @@ public class select_loco extends AppCompatActivity {
             v.setText(getString(R.string.sl_recent_engine_notice));
             myRadioButton.setVisibility(GONE); // if the list is empty, hide the radio button
         } else {
-            importExportPreferences.loadRecentConsistsListFromFile();
+            importExportPreferences.loadRecentConsistsListFromFile(getApplicationContext());
             for (int i = 0; i < importExportPreferences.recentConsistLocoAddressList.size(); i++) {
                 HashMap<String, String> hm = new HashMap<>();
                 hm.put("consist_name", mainapp.getRosterNameFromAddress(importExportPreferences.recentConsistNameHtmlList.get(i),
@@ -1204,7 +1186,7 @@ public class select_loco extends AppCompatActivity {
                     tempRecentConsistLightList_inner);
 
         }
-        importExportPreferences.writeRecentConsistsListToFile(prefs, whichEntryIsBeingUpdated);
+        importExportPreferences.writeRecentConsistsListToFile(getApplicationContext(), prefs, whichEntryIsBeingUpdated);
     }
 
 
@@ -1216,7 +1198,7 @@ public class select_loco extends AppCompatActivity {
             try {
                 locoAddress = Integer.parseInt(entry.getText().toString());
             } catch (NumberFormatException e) {
-                threaded_application.safeToast("ERROR - Please enter a valid DCC address.\n" + e.getMessage(), Toast.LENGTH_SHORT);
+                mainapp.safeToast("ERROR - Please enter a valid DCC address.\n" + e.getMessage(), Toast.LENGTH_SHORT);
                 return;
             }
             Spinner spinner = findViewById(R.id.address_length);
@@ -1345,8 +1327,8 @@ public class select_loco extends AppCompatActivity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
 //                            downloadRosterToRecents();
-                            importExportPreferences.loadRecentLocosListFromFile();
-                            importExportPreferences.downloadRosterToRecents(context,prefs,mainapp);
+                            importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
+                            importExportPreferences.downloadRosterToRecents(getApplicationContext(),prefs,mainapp);
                             recreate();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -1663,7 +1645,7 @@ public class select_loco extends AppCompatActivity {
                 try {
                     locoAddress = Integer.parseInt(ras[0]);   // convert address to int
                 } catch (NumberFormatException e) {
-                    threaded_application.safeToast("ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT);
+                    mainapp.safeToast("ERROR - could not parse address\n" + e.getMessage(), Toast.LENGTH_SHORT);
                     return; //get out, don't try to acquire
                 }
                 String keepsWhichThrottle = sWhichThrottle;
@@ -2152,7 +2134,7 @@ public class select_loco extends AppCompatActivity {
     //Clears recent connection list of locos
     public void clearList() {
         Log.d(threaded_application.applicationName, activityName + ": clearList()");
-        File engineListFile = new File(context.getExternalFilesDir(null), "recent_engine_list.txt");
+        File engineListFile = new File(getApplicationContext().getExternalFilesDir(null), "recent_engine_list.txt");
 
         if (engineListFile.exists()) {
             //noinspection ResultOfMethodCallIgnored
@@ -2163,7 +2145,7 @@ public class select_loco extends AppCompatActivity {
 
     public void clearConsistsList() {
         Log.d(threaded_application.applicationName, activityName + ": clearConsistsList()");
-        File consists_list_file = new File(context.getExternalFilesDir(null), "recent_consist_list.txt");
+        File consists_list_file = new File(getApplicationContext().getExternalFilesDir(null), "recent_consist_list.txt");
 
         if (consists_list_file.exists()) {
             //noinspection ResultOfMethodCallIgnored
@@ -2333,7 +2315,7 @@ public class select_loco extends AppCompatActivity {
 
             if (addr>maxAddr) {
                 addr = -1;
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastAddressExceedsMax, txt, Integer.toString(maxAddr)), Toast.LENGTH_LONG);
                 la.setText(""); //clear the bad entry
             }
         }
@@ -2385,8 +2367,8 @@ public class select_loco extends AppCompatActivity {
             res = re.toString();
         } else {
 //            res = "\n DCC Address: " + rosterAddressString +"\n Roster Entry: " + rosterNameString + "\n";
-            res = "\n" + threaded_application.context.getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + rosterAddressString
-                    +"\n" + threaded_application.context.getResources().getString(R.string.rosterDecoderInfoRosterEntry) + " " +rosterNameString + "\n";
+            res = "\n" + getApplicationContext().getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + rosterAddressString
+                    +"\n" + getApplicationContext().getResources().getString(R.string.rosterDecoderInfoRosterEntry) + " " +rosterNameString + "\n";
         }
         TextView tv = dialog.findViewById(R.id.rosterEntryText);
         tv.setText(res);
@@ -2826,7 +2808,7 @@ public class select_loco extends AppCompatActivity {
     }
 
     /** @noinspection SameParameterValue*/
-    private static Bitmap viewToBitmap(View view, int maxHeight)
+    private static Bitmap viewToBitmap(Context context, View view, int maxHeight)
     {
         int originalWidth = view.getWidth();
         int originalHeight = view.getHeight();
@@ -2849,7 +2831,7 @@ public class select_loco extends AppCompatActivity {
     /** @noinspection UnusedReturnValue*/
     private boolean writeLocoImageToFile(String rosterNameString, ImageView imageView) {
         try {
-            File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
+            File dir = new File(getApplicationContext().getExternalFilesDir(null), RECENT_LOCO_DIR);
             if (!dir.exists()) {
                 if (!dir.mkdir()) { // in case the folder does not already exist
                     unableToSaveLocoImage();
@@ -2857,7 +2839,7 @@ public class select_loco extends AppCompatActivity {
                 }
             }
             String imgFileName = mainapp.fixFilename(rosterNameString) + ".png";
-            File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+            File imageFile = new File(getApplicationContext().getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
             if (imageFile.exists()) {
                 if (!imageFile.delete()) { // delete the old version if it exists
                     unableToSaveLocoImage();
@@ -2865,8 +2847,8 @@ public class select_loco extends AppCompatActivity {
                 }
             }
             FileOutputStream fileOutputStream =
-                    new FileOutputStream(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
-            Bitmap bitmap = viewToBitmap(imageView, 52);   //52dp
+                    new FileOutputStream(getApplicationContext().getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+            Bitmap bitmap = viewToBitmap(getApplicationContext(), imageView, 52);   //52dp
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
@@ -2884,7 +2866,7 @@ public class select_loco extends AppCompatActivity {
     private boolean deleteLocoImageFile(String rosterNameString) {
 //        Log.d(threaded_application.applicationName, activityName + ": deleteLocoImageFile()");
         try {
-            File dir = new File(context.getExternalFilesDir(null), RECENT_LOCO_DIR);
+            File dir = new File(getApplicationContext().getExternalFilesDir(null), RECENT_LOCO_DIR);
             if (!dir.exists()) {
                 if(!dir.mkdir()) { // in case the folder does not already exist
                     unableToDeleteLocoImage();
@@ -2892,7 +2874,7 @@ public class select_loco extends AppCompatActivity {
                 }
             }
             String imgFileName = mainapp.fixFilename(rosterNameString + ".png");
-            File imageFile = new File(context.getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
+            File imageFile = new File(getApplicationContext().getExternalFilesDir(null) + "/" + RECENT_LOCO_DIR + "/" + imgFileName);
             if (imageFile.exists()) {
                 if (!imageFile.delete()) {
                     unableToDeleteLocoImage();

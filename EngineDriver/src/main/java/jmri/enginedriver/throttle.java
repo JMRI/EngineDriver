@@ -1,4 +1,4 @@
-/*Copyright (C) 2018 M. Steve Todd mstevetodd@gmail.com
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
 import static android.view.View.VISIBLE;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
-import static jmri.enginedriver.threaded_application.context;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -686,7 +685,7 @@ public class throttle extends AppCompatActivity implements
 
             case kids_timer_action_type.DEMO:
                 if (arg == 0) { // not onResume
-                    threaded_application.safeToast(R.string.toastKidsTimerDemoMode, Toast.LENGTH_SHORT);
+                    mainapp.safeToast(R.string.toastKidsTimerDemoMode, Toast.LENGTH_SHORT);
                     if (kidsTimer != null) kidsTimer.cancel();
                     kidsTimerRunning = kids_timer_action_type.DEMO;
                     for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -1088,6 +1087,12 @@ public class throttle extends AppCompatActivity implements
                     setSpeed(whichThrottle, 0, speed_commands_from_type.BUTTONS);
                     break;
 
+                case message_type.WEB_PORT_RECEIVED:
+                    if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
+                        new AutoImportFromURL();
+                    }
+                    break;
+
                 case message_type.REOPEN_THROTTLE:
                     // ignore
                     break;
@@ -1170,7 +1175,7 @@ public class throttle extends AppCompatActivity implements
                 try {
                     Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, brightnessModeValue);
                 } catch (Exception e) {
-                    threaded_application.safeToast(R.string.toastUnableToSetBrightness, Toast.LENGTH_SHORT);
+                    mainapp.safeToast(R.string.toastUnableToSetBrightness, Toast.LENGTH_SHORT);
                 }
             }
 //        }
@@ -1295,7 +1300,7 @@ public class throttle extends AppCompatActivity implements
             setScreenBrightnessMode(screenBrightnessModeOriginal);
         } else {
             screenDimmed = true;
-            threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
+            mainapp.safeToast(toastMsg, Toast.LENGTH_SHORT);
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
         }
@@ -1305,13 +1310,13 @@ public class throttle extends AppCompatActivity implements
     private void setRestoreScreenLockDim(String toastMsg) {
         if (isScreenLocked) {
             isScreenLocked = false;
-            threaded_application.safeToast(R.string.toastThrottleScreenUnlocked, Toast.LENGTH_SHORT);
+            mainapp.safeToast(R.string.toastThrottleScreenUnlocked, Toast.LENGTH_SHORT);
             setScreenBrightness(screenBrightnessOriginal);
             setScreenBrightnessMode(screenBrightnessModeOriginal);
             setImmersiveMode(webView);
         } else {
             isScreenLocked = true;
-            threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
+            mainapp.safeToast(toastMsg, Toast.LENGTH_SHORT);
             screenBrightnessOriginal = getScreenBrightness();
             setScreenBrightness(screenBrightnessDim);
             setImmersiveMode(webView);
@@ -1334,7 +1339,7 @@ public class throttle extends AppCompatActivity implements
                             case acceleratorometer_action_type.WEB_VIEW:
                                 if ((prefWebViewLocation.equals(web_view_location_type.NONE)) && (keepWebViewLocation.equals(web_view_location_type.NONE))) {
                                     GamepadFeedbackSound(true);
-                                    threaded_application.safeToast(R.string.toastShakeWebViewUnavailable, Toast.LENGTH_SHORT);
+                                    mainapp.safeToast(R.string.toastShakeWebViewUnavailable, Toast.LENGTH_SHORT);
                                 } else {
                                     GamepadFeedbackSound(false);
                                     showHideWebView(getApplicationContext().getResources().getString(R.string.toastShakeWebViewHidden));
@@ -1374,13 +1379,13 @@ public class throttle extends AppCompatActivity implements
                 });
                 accelerometerCurrent = true;
             } else {
-                threaded_application.safeToast(R.string.toastAccelerometerNotFound, Toast.LENGTH_LONG);
+                mainapp.safeToast(R.string.toastAccelerometerNotFound, Toast.LENGTH_LONG);
             }
         }
     }
 
     protected void addConsistFollowRule(String consistFollowString, String consistFollowAction, Integer consistFollowHeadlight) {
-        if (consistFollowString.trim().length() > 0) {
+        if (!consistFollowString.trim().isEmpty()) {
             String[] prefConsistFollowStringstemp = threaded_application.splitByString(consistFollowString, ",");
             for (int i = 0; i < prefConsistFollowStringstemp.length; i++) {
                 prefConsistFollowStrings.add(prefConsistFollowStringstemp[i].trim());
@@ -1733,7 +1738,7 @@ public class throttle extends AppCompatActivity implements
                 prefWebViewLocation = web_view_location_type.NONE;
                 webView.setVisibility(View.GONE);
                 if (!toastMsg.isEmpty())
-                    threaded_application.safeToast(toastMsg, Toast.LENGTH_SHORT);
+                    mainapp.safeToast(toastMsg, Toast.LENGTH_SHORT);
             }
             webViewIsOn = !webViewIsOn;
 
@@ -2170,7 +2175,7 @@ public class throttle extends AppCompatActivity implements
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
         if (speed < 0) {
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
@@ -2190,7 +2195,7 @@ public class throttle extends AppCompatActivity implements
         double speedScale = getDisplayUnitScale(whichThrottle);
         speed_label = tvSpdVals[whichThrottle];
         if (speed < 0) {
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastThrottleAlertEstop, getConsistAddressString(whichThrottle)), Toast.LENGTH_LONG);
             speed = 0;
         }
         int scaleSpeed = (int) Math.round(speed * speedScale);
@@ -4085,7 +4090,7 @@ public class throttle extends AppCompatActivity implements
 
         if (isEsuMc2Stopped) {
             Log.d(threaded_application.applicationName, activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Device button presses whilst stopped ignored");
-            threaded_application.safeToast(R.string.toastEsuMc2NoButtonPresses, Toast.LENGTH_SHORT);
+            mainapp.safeToast(R.string.toastEsuMc2NoButtonPresses, Toast.LENGTH_SHORT);
             return;
         }
 
@@ -4420,13 +4425,13 @@ public class throttle extends AppCompatActivity implements
         public void onClick(View v) {
             mainapp.exitDoubleBackButtonInitiated = 0;
             if (IS_ESU_MCII && isEsuMc2Stopped) {
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT);
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoLocoChange), Toast.LENGTH_SHORT);
             } else if (isSelectLocoAllowed(whichThrottle)) {
                 // don't loco change while moving if the preference is set
                 start_select_loco_activity(whichThrottle); // pass throttle #
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
             } else {
-                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT);
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoChangeNotAllowed), Toast.LENGTH_SHORT);
             }
             mainapp.buttonVibration();
         }
@@ -4584,7 +4589,7 @@ public class throttle extends AppCompatActivity implements
                             //v.playSoundEffect(SoundEffectConstants.CLICK);
                             currentSwapForwardReverseButtons[whichThrottle] = !currentSwapForwardReverseButtons[whichThrottle];
                             setDirectionButtonLabels();
-                            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT);
+                            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastDirectionButtonsSwapped), Toast.LENGTH_SHORT);
                         }
                         doButtonPress();
                     }
@@ -4914,7 +4919,7 @@ public class throttle extends AppCompatActivity implements
                                 setLabels();
                             }
                             if (IS_ESU_MCII && isEsuMc2Stopped) {
-                                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT);
+                                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastEsuMc2NoThrottleChange), Toast.LENGTH_SHORT);
                             }
                             break;
 
@@ -5216,7 +5221,7 @@ public class throttle extends AppCompatActivity implements
                         }
                     }
                 } else {
-                    threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT);
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastShakeScreenLockedActionNotAllowed), Toast.LENGTH_SHORT);
                 }
             }
         };
@@ -5230,7 +5235,7 @@ public class throttle extends AppCompatActivity implements
                 public void run() {
                     mainapp.safeToastInstructional(R.string.prefThrottlesLocosToast, Toast.LENGTH_LONG);
                     int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
-                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, numThrottles);
+                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, getApplicationContext(), numThrottles);
                     setLabels();
                 }
             }, 2000);
@@ -5763,10 +5768,6 @@ public class throttle extends AppCompatActivity implements
         setupSensor(); // setup the support for shake actions.
 
         tts = new Tts(prefs, mainapp);
-
-        if (prefs.getBoolean("prefImportServerAuto", getApplicationContext().getResources().getBoolean(R.bool.prefImportServerAutoDefaultValue))) {
-            autoImportFromURL();
-        }
 
         queryAllSpeedsAndDirectionsWiT();
 
@@ -6719,7 +6720,7 @@ public class throttle extends AppCompatActivity implements
                 prefs.edit().putString("prefKidsTimer", prefKidsTimerButtonDefault).commit();
                 kidsTimerActions(kids_timer_action_type.ENABLED, 0);
             } else {
-                threaded_application.safeToast(R.string.toastKidsTimerNoLoco, Toast.LENGTH_SHORT);
+                mainapp.safeToast(R.string.toastKidsTimerNoLoco, Toast.LENGTH_SHORT);
             }
             return true;
 
@@ -7094,7 +7095,7 @@ public class throttle extends AppCompatActivity implements
 //                            if (immersiveModeIsOn) {
 //                                immersiveModeTempIsOn = false;
 //                                setImmersiveModeOff(webView, true);
-//                                threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT);
+//                                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastImmersiveModeDisabled), Toast.LENGTH_SHORT);
 //                            } else {
 //                                immersiveModeTempIsOn = true;
 //                                setImmersiveModeOn(webView, true);
@@ -7375,11 +7376,6 @@ public class throttle extends AppCompatActivity implements
         }
     }
 
-    private void autoImportFromURL() {
-
-        new AutoImportFromURL();
-    }
-
     public class AutoImportFromURL  implements Runnable{   // Background Async Task to download file
 
         public AutoImportFromURL() {
@@ -7407,7 +7403,7 @@ public class throttle extends AppCompatActivity implements
 
             try {
                 urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
-                urlPreferencesFilePath = context.getExternalFilesDir(null) + "/" + urlPreferencesFileName;
+                urlPreferencesFilePath = getApplicationContext().getExternalFilesDir(null) + "/" + urlPreferencesFileName;
                 Log.d(threaded_application.applicationName, activityName + ": Import preferences from Server: linkg for: " + urlPreferencesFilePath);
                 url = new URL(n_url);
 
@@ -7469,11 +7465,6 @@ public class throttle extends AppCompatActivity implements
 
 
     private void autoImportUrlAskToImport() {
-//        navigateToHandler(PermissionsHelper.READ_SERVER_AUTO_PREFERENCES);
-//        autoImportUrlAskToImportImpl();
-//    }
-//
-//    private void autoImportUrlAskToImportImpl() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
             @SuppressLint("ApplySharedPref")
@@ -7514,10 +7505,10 @@ public class throttle extends AppCompatActivity implements
     // note: should verify that permissions have been granted before calling this method since it will try to read the preference file
     private void loadSharedPreferencesFromFileImpl(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
         Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFileImpl(): Loading saved preferences from file: " + exportedPreferencesFileName);
-        boolean result = importExportPreferences.loadSharedPreferencesFromFile(getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
+        boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
-            threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom), exportedPreferencesFileName), Toast.LENGTH_LONG);
+            mainapp.safeToast(String.format(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom), exportedPreferencesFileName), Toast.LENGTH_LONG);
         }
         forceRestartApp(forceRestartReason);
     }
@@ -7695,7 +7686,7 @@ public class throttle extends AppCompatActivity implements
         if (((fixed[index] == 1) && (numThrottles != max[index]))
                 || ((fixed[index] == 0) && (numThrottles > max[index]))) {
             prefs.edit().putString("NumThrottle", textNumbers[max[index] - 1]).commit();
-            threaded_application.safeToast(String.format(getApplicationContext().getResources().getString(R.string.toastNumThrottles), textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
+            mainapp.safeToast(String.format(getApplicationContext().getResources().getString(R.string.toastNumThrottles), textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
         }
     }
 
@@ -7898,7 +7889,7 @@ public class throttle extends AppCompatActivity implements
     protected void loadSounds() {
         Log.d(threaded_application.applicationName, activityName + ": loadSounds(): (ipls)" );
         if (ipls == null) ipls = new InPhoneLocoSounds(mainapp, prefs);
-        if (iplsLoader == null) iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, context);
+        if (iplsLoader == null) iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, getApplicationContext());
         mainapp.soundsReloadSounds = true;
         iplsLoader.loadSounds();
         iplsLoader = null;
@@ -7912,9 +7903,9 @@ public class throttle extends AppCompatActivity implements
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options;
             if (deltaX > 0) {
-                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_right_in, R.anim.push_right_out);
+                options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.push_right_in, R.anim.push_right_out);
             } else {
-                options = ActivityOptions.makeCustomAnimation(context, R.anim.push_left_in, R.anim.push_left_out);
+                options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.push_left_in, R.anim.push_left_out);
             }
             startActivity(in, options.toBundle());
 //            overridePendingTransition(mainapp.getFadeIn(swipe, deltaX), mainapp.getFadeOut(swipe, deltaX));

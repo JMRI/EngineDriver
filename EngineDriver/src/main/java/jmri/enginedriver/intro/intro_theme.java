@@ -60,10 +60,8 @@ public class intro_theme extends Fragment {
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
         String currentValue = prefs.getString("prefTheme", this.requireActivity().getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
 
-        //    private Spinner spinner;
-        //    private int introThemeValueIndex = 1;
-        String[] nameEntries = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntries);
-        nameEntryValues = this.getActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntryValues);
+        String[] nameEntries = this.requireActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntries);
+        nameEntryValues = this.requireActivity().getApplicationContext().getResources().getStringArray(R.array.prefThemeEntryValues);
         //    private String defaultName = "";
         TextView v = requireView().findViewById(R.id.intro_theme_default_name);
         v.setText(nameEntries[0]);

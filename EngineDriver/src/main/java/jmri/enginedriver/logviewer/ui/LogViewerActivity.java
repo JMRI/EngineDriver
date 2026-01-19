@@ -1,7 +1,5 @@
 package jmri.enginedriver.logviewer.ui;
 
-import static jmri.enginedriver.threaded_application.context;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -182,9 +180,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     } // end onCreate
 
     @Override
-    public void onPause() {
-        super.onPause();
-        threaded_application.activityPaused(activityName);
+    public void onStart() {
+        super.onStart();
+        showHideSaveButton();
     }
 
     @Override
@@ -346,12 +344,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     }
 
     private void saveLogFile() {
-        File logFile = new File(context.getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + ".txt");
+        File logFile = new File(mainapp.getApplicationContext().getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + ".txt");
 
         try {
             Runtime.getRuntime().exec("logcat -c");
             mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
-            threaded_application.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();
             Log.d(threaded_application.applicationName, "Logging started to: " + logFile);
@@ -368,7 +366,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             mainapp.logcatProcess.destroy(); // Sends SIGTERM to the process
             mainapp.logcatProcess = null;
             Log.d(threaded_application.applicationName, "Logcat file recording stopped.");
-            threaded_application.safeToast("Logcat recording stopped.", Toast.LENGTH_SHORT);
+            mainapp.safeToast("Logcat recording stopped.", Toast.LENGTH_SHORT);
             // You might want to update UI or mainapp.logSaveFilename here if needed
             mainapp.logSaveFilename = ""; // Or indicate it's no longer active
             showHideSaveButton();
@@ -585,7 +583,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         mainapp.iplsNames = new ArrayList<>();
 
         try {
-            File dir = new File(context.getExternalFilesDir(null).getPath());
+            File dir = new File(mainapp.getApplicationContext().getExternalFilesDir(null).getPath());
             File[] filesList = dir.listFiles();
             if (filesList != null) {
                 for (File file : filesList) {
@@ -605,7 +603,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     public ArrayList<File> getLogFilesForDialog() {
         ArrayList<File> logFiles = new ArrayList<>();
         try {
-            File dir = new File(context.getExternalFilesDir(null).getPath());
+            File dir = new File(mainapp.getApplicationContext().getExternalFilesDir(null).getPath());
             if (dir.exists() && dir.isDirectory()) {
                 File[] filesList = dir.listFiles();
                 if (filesList != null) {
@@ -622,7 +620,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             }
         } catch (Exception e) {
             Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
-            threaded_application.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
+            mainapp.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
         }
         return logFiles;
     }
@@ -657,7 +655,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         dialogListView.setOnItemClickListener((parent, view, position, id) -> {
             File selectedFile = logFiles.get(position);
-//            threaded_application.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
+//            mainapp.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
             shareFile(selectedFile,selectedFile.getName());
             dialog.dismiss();
         });
@@ -685,7 +683,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         if (shareIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
         } else {
-            threaded_application.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
+            mainapp.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
         }
     }
 
