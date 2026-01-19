@@ -877,6 +877,7 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">路线按钮？</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">高级组成（CV19）按钮？</string>
     <string name="ConsistEditLabelLead">主车</string>
     <string name="ConsistEditLabelTrail">从车</string>
 
@@ -1383,6 +1384,9 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefExtendedLoggingTitle">扩展日志记录？</string>
     <string name="prefAutoServerIpConnectSummary">即使未发现服务器地址，也自动连接到该服务器地址。</string>
     <string name="prefLogOnNextStartupTitle">下次启动时开始记录日志？</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">在操作栏中显示按钮，以打开“高级编组 (CV19)”屏幕</string>
+    <string name="prefActionBarShowWebButtonSummary">在操作栏中显示切换到 Web 屏幕的按钮</string>
+    <string name="prefActionBarShowWebButtonTitle">网页按钮？</string>
 
 </resources>
 

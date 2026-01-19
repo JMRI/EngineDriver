@@ -747,6 +747,7 @@
     <string name="prefImportExportErrorNotConnected">Non connecté à un hôte</string>
 
     <string name="prefActionBarShowRoutesButtonTitle">Bouton Itinéraires ?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Bouton Advanced Consist (CV19) ?</string>
     <string name="ConsistEditLabelLead">TETE</string>
     <string name="ConsistEditLabelTrail">QUEUE</string>
     <string name="prefConsistFollowRuleStyleTitle">Fonctions d unités multiples (UM) - respecter la règle</string>
@@ -1289,5 +1290,8 @@
     <string name="newConnectionTitle">Nouvelle connexion</string>
     <string name="prefAutoServerIpConnectSummary">Se connecter automatiquement à une adresse de serveur même si elle n\'est pas découverte</string>
     <string name="prefLogOnNextStartupTitle">Démarrer l\'enregistrement au prochain démarrage ?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Afficher le bouton dans la barre d\'actions pour ouvrir l\'écran de composition avancée (CV19)</string>
+    <string name="prefActionBarShowWebButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran Web</string>
+    <string name="prefActionBarShowWebButtonTitle">Bouton Web ?</string>
 
 </resources>

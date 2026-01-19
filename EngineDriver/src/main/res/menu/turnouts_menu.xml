@@ -30,6 +30,12 @@
         app:showAsAction="always"
         android:visible="false" />
 
+    <item android:id="@+id/web_button"
+        app:actionLayout="@layout/toolbar_button_web"
+        android:title="@string/web"
+        app:showAsAction="always"
+        android:visible="false" />
+
     <item android:id="@+id/flashlight_button"
         app:actionLayout="@layout/toolbar_button_flashlight_off"
         android:title="@string/flashlightAction"

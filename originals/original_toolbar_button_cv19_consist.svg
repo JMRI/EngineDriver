@@ -7,8 +7,8 @@
    viewBox="0 0 607.0866 607.08659"
    id="svg2"
    version="1.1"
-   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   sodipodi:docname="original_toolbar_cv19_consist_button.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="original_toolbar_button_cv19_consist.svg"
    inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-hdpi\flashlight_on.png"
    inkscape:export-xdpi="10.8"
    inkscape:export-ydpi="10.8"
@@ -63,11 +63,11 @@
        inkscape:collect="always"
        id="linearGradient895">
       <stop
-         style="stop-color:#1fbd00;stop-opacity:1;"
+         style="stop-color:#b7ffa5;stop-opacity:1;"
          offset="0"
          id="stop891" />
       <stop
-         style="stop-color:#203a00;stop-opacity:1;"
+         style="stop-color:#2f5100;stop-opacity:1;"
          offset="1"
          id="stop893" />
     </linearGradient>
@@ -102,7 +102,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.70710678"
-     inkscape:cx="267.28636"
+     inkscape:cx="266.57926"
      inkscape:cy="301.9346"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"

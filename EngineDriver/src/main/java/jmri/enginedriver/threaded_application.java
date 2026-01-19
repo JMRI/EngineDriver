@@ -511,6 +511,7 @@ public class threaded_application extends Application {
     public boolean prefActionBarShowThrottleButton = false;
     public boolean prefActionBarShowTurnoutsButton = false;
     public boolean prefActionBarShowRoutesButton = false;
+    public boolean prefActionBarShowWebButton = false;
 
     public String witCv = "";
     public String witCvValue = "";
@@ -2243,6 +2244,20 @@ public class threaded_application extends Application {
         if (mi != null) {
             boolean rslt = prefActionBarShowRoutesButton && isRouteControlAllowed();
             if (rslt) {
+                actionBarIconCountThrottle++;
+                mi.setVisible(true);
+            } else {
+                mi.setVisible(false);
+            }
+        }
+    }
+
+    public void displayWebButton(Menu menu) {
+        MenuItem mi;
+        mi = menu.findItem(R.id.web_button);
+        if (mi != null) {
+            boolean rslt = prefActionBarShowWebButton;
+            if ( (isWebAllowed()) && (rslt) ) {
                 actionBarIconCountThrottle++;
                 mi.setVisible(true);
             } else {

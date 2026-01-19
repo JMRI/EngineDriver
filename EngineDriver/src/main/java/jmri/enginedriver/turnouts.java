@@ -908,6 +908,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mainapp.displayDccExButton(activityMenu);
             mainapp.displayThrottleButton(activityMenu);
             mainapp.displayRoutesButton(activityMenu);
+            mainapp.displayWebButton(activityMenu);
             mainapp.displayPowerStateMenuButton(activityMenu);
             mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
 //            mainapp.displayThrottleMenuButton(activityMenu, "prefSwipeThroughRoutes");
@@ -980,6 +981,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.displayDccExButton(menu);
         mainapp.displayThrottleButton(menu);
         mainapp.displayRoutesButton(menu);
+        mainapp.displayWebButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
         mainapp.setWebMenuOption(menu);
         mainapp.setRoutesMenuOption(menu);
@@ -1019,7 +1021,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             in = new Intent().setClass(this, routes.class);
             startACoreActivity(this, in, false, 0);
             return true;
-        } else if (item.getItemId() == R.id.web_mnu) {
+        } else if ( (item.getItemId() == R.id.web_mnu)
+                || (item.getItemId() == R.id.web_button) ) {
             in = new Intent().setClass(this, web_activity.class);
             startACoreActivity(this, in, false, 0);
             mainapp.webMenuSelected = true;

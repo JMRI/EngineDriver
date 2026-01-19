@@ -1145,6 +1145,10 @@
     <string name="prefActionBarShowTurnoutsButtonTitle">Turnouts button?</string>
     <string name="prefActionBarShowRoutesButtonSummary">Show button in action bar to switch to the Routes Screen</string>
     <string name="prefActionBarShowRoutesButtonTitle">Routes button?</string>
+    <string name="prefActionBarShowWebButtonSummary">Show button in action bar to switch to the Web Screen</string>
+    <string name="prefActionBarShowWebButtonTitle">Web button?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Show button in action bar to open the Advance Consist (CV19) Screen</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Advanced Consist (CV19) button?</string>
 
     <!--    <string name="logViewerTitle">LogViewerActivity | %1$s</string>-->
 

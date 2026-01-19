@@ -687,6 +687,7 @@
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">¿Botón de rutas?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">¿Botón de consistencia avanzada (CV19)?</string>
     <string name="ConsistEditLabelLead">DELANTERA</string>
     <string name="ConsistEditLabelTrail">TRASERA</string>
 
@@ -1268,5 +1269,8 @@
     <string name="newConnectionTitle">Nueva conexión</string>
     <string name="prefAutoServerIpConnectSummary">Conectarse automáticamente a una dirección de servidor incluso si no se descubre</string>
     <string name="prefLogOnNextStartupTitle">¿Iniciar sesión en el próximo inicio?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostrar botón en la barra de acción para abrir la pantalla de Consistencia avanzada (CV19)</string>
+    <string name="prefActionBarShowWebButtonSummary">Mostrar botón en la barra de acción para cambiar a la pantalla web</string>
+    <string name="prefActionBarShowWebButtonTitle">¿Botón web?</string>
 
 </resources>

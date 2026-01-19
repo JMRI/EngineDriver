@@ -687,6 +687,7 @@
 <!--    <string name="logViewerTitle">Aktivitäten-Log | Fahrregler Name: %1$s</string>-->
 
     <string name="prefActionBarShowRoutesButtonTitle">Schaltfläche „Routen“?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Schaltfläche „Erweiterte Konsistenz (CV19)“?</string>
     <string name="ConsistEditLabelLead">FÜHREN</string>
     <string name="ConsistEditLabelTrail">WEG</string>
     <string name="prefConsistFollowRuleStyleTitle">Consist-Funktionen - Folgen Sie dem Regelstil</string>
@@ -1267,5 +1268,8 @@
     <string name="newConnectionTitle">Neue Verbindung</string>
     <string name="prefAutoServerIpConnectSummary">Automatische Verbindung zu einer Serveradresse, auch wenn diese nicht erkannt wird</string>
     <string name="prefLogOnNextStartupTitle">Beim nächsten Start die Protokollierung aktivieren?</string>
+    <string name="prefActionBarShowWebButtonTitle">Web-Button?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um den Bildschirm „Erweiterte Konsistenz (CV19)“ zu öffnen</string>
+    <string name="prefActionBarShowWebButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zur Webansicht zu wechseln</string>
 
 </resources>

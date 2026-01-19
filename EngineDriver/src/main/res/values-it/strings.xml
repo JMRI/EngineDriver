@@ -640,6 +640,7 @@
     <string name="functionButtonLookForRear">POSTERIORE</string>
 
     <string name="prefActionBarShowRoutesButtonTitle">Pulsante Percorsi?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Pulsante Consistenza avanzata (CV19)?</string>
     <string name="ConsistEditLabelLead">CONDURRE</string>
     <string name="ConsistEditLabelTrail">TRAIL</string>
     <string name="prefConsistFollowRuleStyleTitle">Funzioni consistenti - Segui lo stile delle regole</string>
@@ -1219,5 +1220,8 @@
     <string name="newConnectionTitle">Nuova connessione</string>
     <string name="prefAutoServerIpConnectSummary">Connettiti automaticamente a un indirizzo del server anche se non scoperto</string>
     <string name="prefLogOnNextStartupTitle">Vuoi iniziare a registrare al prossimo avvio?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostra il pulsante nella barra delle azioni per aprire la schermata Advance Consist (CV19)</string>
+    <string name="prefActionBarShowWebButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Web</string>
+    <string name="prefActionBarShowWebButtonTitle">Pulsante Web?</string>
 
 </resources>

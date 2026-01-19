@@ -1,3 +1,20 @@
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
@@ -677,6 +694,7 @@ public class routes extends AppCompatActivity
             mainapp.displayEStop(activityMenu);
             mainapp.displayDccExButton(activityMenu);
             mainapp.displayThrottleButton(activityMenu);
+            mainapp.displayWebButton(activityMenu);
             mainapp.displayTurnoutsButton(activityMenu);
 
             mainapp.displayPowerStateMenuButton(activityMenu);
@@ -763,6 +781,7 @@ public class routes extends AppCompatActivity
         mainapp.setDCCEXMenuOption(menu);
         mainapp.displayDccExButton(menu);
         mainapp.displayThrottleButton(menu);
+        mainapp.displayWebButton(menu);
         mainapp.displayTurnoutsButton(menu);
         mainapp.setWithrottleCvProgrammerMenuOption(menu);
         if (findViewById(R.id.powerLayoutButton) == null) {
@@ -817,7 +836,8 @@ public class routes extends AppCompatActivity
             in = new Intent().setClass(this, turnouts.class);
             startACoreActivity(this, in, false, 0);
             return true;
-        } else if (item.getItemId() == R.id.web_mnu) {
+        } else if ( (item.getItemId() == R.id.web_mnu)
+                || (item.getItemId() == R.id.web_button) ) {
             in = new Intent().setClass(this, web_activity.class);
             startACoreActivity(this, in, false, 0);
             mainapp.webMenuSelected = true;

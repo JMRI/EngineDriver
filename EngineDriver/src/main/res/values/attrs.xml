@@ -42,6 +42,7 @@
     <attr name="ed_wizard_button" format="reference" />
     <attr name="ed_preferences_button" format="reference" />
     <attr name="ed_throttle_button" format="reference" />
+    <attr name="ed_web_button" format="reference" />
     <attr name="ed_turnouts_button" format="reference" />
     <attr name="ed_routes_button" format="reference" />
     <attr name="ed_flashlight_on_button" format="reference" />

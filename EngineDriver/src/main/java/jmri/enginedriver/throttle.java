@@ -1648,6 +1648,8 @@ public class throttle extends AppCompatActivity implements
                 getResources().getBoolean(R.bool.prefActionBarShowTurnoutsButtonDefaultValue));
         mainapp.prefActionBarShowRoutesButton = prefs.getBoolean("prefActionBarShowRoutesButton",
                 getResources().getBoolean(R.bool.prefActionBarShowRoutesButtonDefaultValue));
+        mainapp.prefActionBarShowWebButton = prefs.getBoolean("prefActionBarShowWebButton",
+                getResources().getBoolean(R.bool.prefActionBarShowWebButtonDefaultValue));
     }
 
     protected void getDirectionButtonPrefs() {
@@ -6342,6 +6344,7 @@ public class throttle extends AppCompatActivity implements
             mainapp.displayDccExButton(TMenu);
             mainapp.displayTurnoutsButton(TMenu);
             mainapp.displayRoutesButton(TMenu);
+            mainapp.displayWebButton(TMenu);
 //            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
         }
     }
@@ -6494,7 +6497,7 @@ public class throttle extends AppCompatActivity implements
         mainapp.displayDeviceSoundsThrottleButton(menu);
         mainapp.displayDccExButton(menu);
         mainapp.displayTurnoutsButton(menu);
-        mainapp.displayRoutesButton(menu);
+        mainapp.displayWebButton(menu);
 
         adjustToolbarSize(menu);
 
@@ -6521,7 +6524,8 @@ public class throttle extends AppCompatActivity implements
             startACoreActivity(this, in, false, 0);
             return true;
 
-        } else if (item.getItemId() == R.id.web_mnu) {
+        } else if ( (item.getItemId() == R.id.web_mnu)
+        || (item.getItemId() == R.id.web_button) ) {
             in = new Intent().setClass(this, web_activity.class);
             startACoreActivity(this, in, false, 0);
             mainapp.webMenuSelected = true;

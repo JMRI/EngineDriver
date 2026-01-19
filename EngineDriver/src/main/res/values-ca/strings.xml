@@ -693,6 +693,7 @@
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">Botó de rutes?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Botó Consist avançat (CV19)?</string>
     <string name="ConsistEditLabelLead">DAVANTERA</string>
     <string name="ConsistEditLabelTrail">DEL DARRERA</string>
 
@@ -1281,5 +1282,8 @@
     <string name="newConnectionTitle">Nova connexió</string>
     <string name="prefAutoServerIpConnectSummary">Connecta automàticament a una adreça de servidor fins i tot si no es detecta</string>
     <string name="prefLogOnNextStartupTitle">Voleu començar a iniciar la sessió a la propera reinici?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostra el botó a la barra d\'accions per obrir la pantalla Consist avançat (CV19)</string>
+    <string name="prefActionBarShowWebButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla web</string>
+    <string name="prefActionBarShowWebButtonTitle">Botó web?</string>
 
 </resources>

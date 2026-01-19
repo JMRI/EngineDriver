@@ -824,6 +824,7 @@
 
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">Tlačítko Trasy?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Tlačítko Pokročilá sestava (CV19)?</string>
     <string name="ConsistEditLabelLead">PŘÍPŘEŽ</string>
     <string name="ConsistEditLabelTrail">POSTRK</string>
 
@@ -1366,5 +1367,8 @@
     <string name="newConnectionTitle">Nové připojení</string>
     <string name="prefAutoServerIpConnectSummary">Automatické připojení k serverové adrese, i když není nalezena</string>
     <string name="prefLogOnNextStartupTitle">Začít se přihlašovat při dalším spuštění?</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Zobrazit tlačítko v panelu akcí pro otevření obrazovky Pokročilé sestavení (CV19)</string>
+    <string name="prefActionBarShowWebButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na webovou obrazovku</string>
+    <string name="prefActionBarShowWebButtonTitle">Webové tlačítko?</string>
 
 </resources>

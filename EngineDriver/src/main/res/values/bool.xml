@@ -124,6 +124,8 @@
     <bool name="prefActionBarShowThrottleButtonDefaultValue">false</bool>
     <bool name="prefActionBarShowTurnoutsButtonDefaultValue">false</bool>
     <bool name="prefActionBarShowRoutesButtonDefaultValue">false</bool>
+    <bool name="prefActionBarShowWebButtonDefaultValue">false</bool>
+    <bool name="prefActionBarShowAdvancedConsistButtonDefaultValue">true</bool>
     <bool name="prefAlwaysUseFunctionsFromServerDefaultValue">false</bool>
 
     <bool name="prefHideInstructionalToastsDefaultValue">false</bool>
