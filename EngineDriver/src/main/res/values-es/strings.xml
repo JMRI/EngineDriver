@@ -900,8 +900,8 @@
     <string name="throttleSwitchAction">Cambia el diseño de la pantalla del Controlador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferencias de la imagen de fondo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferencias de la tecla de cambio de diseño</string>
-    <string name="edit_consist_menu">\≡ Edita el Controlador</string>
-    <string name="gamepad_test_menu">\≡ Prueba de gamepad</string>
+    <string name="edit_consist_menu">Edita el Controlador</string>
+    <string name="gamepad_test_menu">Gamepads/USB</string>
     <string name="prefSwipeDownOptionSummary">Lo que debería ocurrir cuando se desliza hacia abajo en la vista del Controlador</string>
     <string name="prefSwipeDownOptionTitle">Acción de deslizar hacia abajo en la vista del Controlador?</string>
     <string name="prefPauseSpeedButtonTitle">Muestra el botón \'Pausa\'</string>

@@ -24,6 +24,7 @@
         <menu>
 
             <item android:id="@+id/logviewer_menu"
+                android:icon="?attr/ed_history_glyph"
                 android:title="@string/logViewer" />
 
             <item android:id="@+id/exit_mnu"

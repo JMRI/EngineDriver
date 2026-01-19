@@ -910,8 +910,8 @@
     <string name="throttleSwitchAction">Canvia el disseny de la pantalla del Controlador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferències de la imatge de fons</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferències de la tecla de canvi de dissenys</string>
-    <string name="edit_consist_menu">\≡ Editar el Controlador</string>
-    <string name="gamepad_test_menu">\≡ Prova de gamepad</string>
+    <string name="edit_consist_menu">Editar el Controlador</string>
+    <string name="gamepad_test_menu">Gamepads/USB</string>
     <string name="prefSwipeDownOptionSummary">El que hauria de passar quan es llisca cap avall a la vista del Controlador</string>
     <string name="prefSwipeDownOptionTitle">Acció de lliscar cap avall en la vista del Controlador?</string>
     <string name="prefPauseSpeedButtonSummary">Mostra un botó per reduir la velocitat i aturar la Locomotora, a continuació, tornar a la velocitat d\'alliberament</string>

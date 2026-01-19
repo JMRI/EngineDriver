@@ -835,8 +835,8 @@
     <string name="throttleSwitchAction">Passare da una schermata a farfalla</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferenze immagine di sfondo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Throttle Interruttore Preferenze Button</string>
-    <string name="edit_consist_menu">\≡ Modifica Consistono</string>
-    <string name="gamepad_test_menu">\≡ Test Gamepad</string>
+    <string name="edit_consist_menu">Modifica Consistono</string>
+    <string name="gamepad_test_menu">Gamepad/USB</string>
     <string name="prefSwipeDownOptionSummary">Che cosa dovrebbe accadere quando si scorrere verso il basso la vista acceleratore.</string>
     <string name="prefSwipeDownOptionTitle">Swipe l\'azione verso il basso nella vista Throttle?</string>
     <string name="prefPauseSpeedButtonTitle">Visualizza \'Pausa\' pulsante</string>

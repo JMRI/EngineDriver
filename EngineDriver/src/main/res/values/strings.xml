@@ -65,7 +65,7 @@
     <string name="app_name_gamepad_test">Gamepad\/USB Test</string>
     <string name="app_name_log_viewer">Log Viewer</string>
     <string name="app_name_device_sounds_settings">In Phone Loco Sounds</string>
-    <string name="gamepad_test_menu">\≡ Gamepads\/USB</string>
+    <string name="gamepad_test_menu">Gamepads\/USB</string>
     <string name="gamepad_test_reset">Gamepads\/USB Full Reset</string>
     <string name="gamepad1_test">Gamepad\/USB 1 Test</string>
     <string name="gamepad2_test">Gamepad\/USB 2 Test</string>
@@ -1357,7 +1357,7 @@
     <string name="introEsuMc2QuestionNo">No, I will choose my own settings</string>
 
     <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction</string>
-    <string name="edit_consist_menu">\≡ Edit Consist</string>
+    <string name="edit_consist_menu">Edit Consist</string>
     <string name="edit_consist_throttle_1">Edit Consist Throttle 1</string>
     <string name="edit_consist_throttle_2">Edit Consist Throttle 2</string>
     <string name="edit_consist_throttle_3">Edit Consist Throttle 3</string>

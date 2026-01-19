@@ -67,6 +67,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -1556,10 +1557,20 @@ public class threaded_application extends Application {
         if (!show) {
             for (int i = 0; i < menu.size(); i++) {
                 MenuItem item = menu.getItem(i);
-                //if ((item.getItemId() == R.id.preferences_mnu) || (item.getItemId() == R.id.timer_mnu)) {
-                item.setVisible(item.getItemId() == R.id.timer_mnu);
+                item.setVisible(item.getItemId() == R.id.overflowMenu);
+
+                if (item.hasSubMenu()) { // really only R.id.overflowMenu
+                    SubMenu subMenu = item.getSubMenu();
+                    if (subMenu != null) {
+                        for (int j = 0; j < subMenu.size(); j++) {
+                            MenuItem subMenuItem = subMenu.getItem(j);
+                            subMenuItem.setVisible(subMenuItem.getItemId() == R.id.timer_mnu);
+                        }
+                    }
+                }
             }
         } else {
+            menu.findItem(R.id.overflowMenu).setVisible(true);
             menu.findItem(R.id.settings_mnu).setVisible(true);
             setPowerMenuOption(menu);
             mainapp.setDCCEXMenuOption(menu);
@@ -2726,9 +2737,9 @@ public class threaded_application extends Application {
         String keepFunctions = "";
         String functionLabels;
         if (locoSource == source_type.ROSTER) {
-            functionLabels = mainapp.packFunctionLabels(functionLabelsMap);
+            functionLabels = threaded_application.packFunctionLabels(functionLabelsMap);
         } else {
-            functionLabels = mainapp.packFunctionLabels(mainapp.function_labels_default);
+            functionLabels = threaded_application.packFunctionLabels(mainapp.function_labels_default);
         }
         for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
             if (locoAddress.equals(importExportPreferences.recentLocoAddressList.get(i))

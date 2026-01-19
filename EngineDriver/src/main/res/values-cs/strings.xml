@@ -46,7 +46,7 @@
     <string name="app_name_ConsistEdit">Upravit Soupravy</string>
     <string name="app_name_ConsistLightsEdit">Souprava světla</string>
     <string name="app_name_gamepad_test">Gamepad Test</string>
-    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="gamepad_test_menu">Gamepady/USB</string>
     <string name="gamepad_test_reset">Úplný reset gamepadů</string>
     <string name="gamepad1_test">Test gamepadu 1</string>
     <string name="gamepad2_test">Test gamepadu 2</string>
@@ -946,7 +946,7 @@
     <string name="introDccexQuestionNo">Ne, EX-CommandStation NEBUDU používat</string>
     <string name="introEsuMc2QuestionNo">Ne, vyberu si vlastní nastavení</string>
     <string name="introbackButtonPress">Prosím restartujte aplikaci Engine Driver pro dokončení úvodního nastavení.</string>
-    <string name="edit_consist_menu">\≡ Upravit soupravu</string>
+    <string name="edit_consist_menu">Upravit soupravu</string>
     <string name="edit_consist_throttle_1">Upravit soupravu ovladače 1</string>
     <string name="edit_consist_throttle_2">Upravit soupravu ovladače 2</string>
     <string name="edit_consist_throttle_3">Upravit soupravu ovladače 3</string>

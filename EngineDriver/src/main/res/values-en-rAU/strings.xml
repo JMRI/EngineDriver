@@ -68,7 +68,7 @@
     <string name="consist_list_label">All Locos in Consist (MU)</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists (MUs)</string>
 
-    <string name="edit_consist_menu">\≡ Edit Consist (MU)</string>
+    <string name="edit_consist_menu">Edit Consist (MU)</string>
     <string name="edit_consist_lights_throttle_1">Edit Consist (MU) Lights Throttle 1</string>
     <string name="edit_consist_lights_throttle_2">Edit Consist (MU) Lights Throttle 2</string>
     <string name="edit_consist_lights_throttle_3">Edit Consist (MU) Lights Throttle 3</string>

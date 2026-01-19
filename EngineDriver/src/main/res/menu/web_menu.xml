@@ -81,12 +81,15 @@
         <menu>
 
             <item android:id="@+id/throttle_mnu"
+                android:icon="?attr/ed_throttle_glyph"
                 android:title="@string/throttle" />
 
             <item android:id="@+id/turnouts_mnu"
+                android:icon="?attr/ed_turnouts_glyph"
                 android:title="@string/turnouts" />
 
             <item android:id="@+id/routes_mnu"
+                android:icon="?attr/ed_routes_glyph"
                 android:title="@string/routes" />
 
             <item android:id="@+id/power_control_mnu"
@@ -94,6 +97,7 @@
                 android:title="@string/power" />
 
             <item android:id="@+id/connect_menu"
+                android:icon="?attr/ed_reconnect_glyph"
                 android:title="@string/app_name_connect" />
 
             <item android:id="@+id/settings_mnu"
@@ -101,6 +105,7 @@
                 android:title="@string/preferences" />
 
             <item android:id="@+id/logviewer_menu"
+                android:icon="?attr/ed_history_glyph"
                 android:title="@string/logViewer" />
 
             <item android:id="@+id/exit_mnu"
@@ -108,6 +113,7 @@
                 android:title="@string/exit" />
 
             <item android:id="@+id/about_mnu"
+                android:icon="?attr/ed_about_glyph"
                 android:title="@string/about" />
 
         </menu>

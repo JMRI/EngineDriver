@@ -60,7 +60,7 @@ b) 非花名册机车。
     <string name="app_name_web_short">网页</string>
     <string name="app_name_log_viewer">日志查看器</string>
     <string name="app_name_device_sounds_settings">手机机车声音</string>
-    <string name="gamepad_test_menu">≡ 游戏手柄/USB</string>
+    <string name="gamepad_test_menu">游戏手柄/USB</string>
     <string name="gamepad_test_reset">游戏手柄/USB完全重置</string>
     <string name="gamepad1_test">游戏手柄/USB 1测试</string>
     <string name="gamepad2_test">游戏手柄/USB 2测试</string>
@@ -1016,7 +1016,7 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <string name="introEsuMc2QuestionNo">不，我会自己选择设置。</string>
     <string name="introbackButtonPress">请重新启动引擎驱动程序应用程序以完成设置向导。</string>
-    <string name="edit_consist_menu">≡ 编辑编组</string>
+    <string name="edit_consist_menu">编辑编组</string>
     <string name="edit_consist_throttle_1">编辑编组节流阀 1</string>
     <string name="edit_consist_throttle_2">编辑编组节流阀 2</string>
     <string name="edit_consist_throttle_3">编辑编组节流阀 3</string>

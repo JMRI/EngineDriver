@@ -902,8 +902,8 @@
     <string name="toastPreferencesBackgroundChangeSucceeded">Hintergrund ändern Succeeded.</string>
     <string name="throttleSwitchAction">Schalten Gas Screens</string>
     <string name="prefBackgroundImagePreferencesTitle">Hintergrundbild Einstellungen</string>
-    <string name="edit_consist_menu">\≡ Bearbeiten Consist</string>
-    <string name="gamepad_test_menu">\≡ Gamepad Test</string>
+    <string name="edit_consist_menu">Bearbeiten Consist</string>
+    <string name="gamepad_test_menu">Gamepads/USB</string>
     <string name="prefSwipeDownOptionSummary">Was soll passieren, wenn Sie auf der Fahrregler-Ansicht nach unten wischen.</string>
     <string name="prefSwipeDownOptionTitle">Wischen nach unten Aktion in der Fahrregler-Ansicht?</string>
     <string name="prefPauseSpeedButtonTitle">Show \'Pause\' Taste</string>

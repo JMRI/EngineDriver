@@ -841,8 +841,8 @@
     <string name="introDccexSummary">O Engine Driver pode fornecer funcionalidades adicionais, incluindo programação CV, se você estiver usando um DCC-EX EX-CommandStation diretamente. (Não via JMRI)\n\nSe você responder \'Sim\' abaixo, o Engine Driver usará como padrão comandos DCC-EX Native em vez de WiThrottle se o nome do servidor contiver \'DCC-EX\' ou \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Sim, usarei uma EX-CommandStation</string>
     <string name="introDccexQuestionNo">Não, NÃO usarei um EX-CommandStation</string>
-    <string name="edit_consist_menu">\≡ Editar Consistem</string>
-    <string name="gamepad_test_menu">\≡ Teste Gamepad</string>
+    <string name="edit_consist_menu">Editar Consistem</string>
+    <string name="gamepad_test_menu">Gamepads/USB</string>
     <string name="prefSwipeDownOptionSummary">O que deve acontecer quando você deslizar para baixo na visão do acelerador.</string>
     <string name="prefSwipeDownOptionTitle">ação baixo furto na visão do acelerador?</string>
     <string name="prefPauseSpeedButtonTitle">Mostrar \'Pausa\' botão</string>

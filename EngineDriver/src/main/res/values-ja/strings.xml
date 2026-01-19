@@ -28,6 +28,7 @@
     <string name="app_name_device_sounds_settings">電話でのロコサウンド</string>
     <string name="app_name_functions">デフォルトファンクションの設定</string>
     <string name="app_name_gamepad_test">ゲームパッドテスト</string>
+    <string name="gamepad_test_menu">ゲームパッド/USB</string>
 
     <string name="app_name_log_viewer">ログビューア</string>
     <string name="app_name_power_control">電力制御</string>
@@ -133,7 +134,7 @@
     <string name="disabled">無効</string>
     <string name="discovered_services">検出されたサーバー (WiFi: %1$s)</string>
 
-    <string name="edit_consist_menu">\≡ 編成の編集</string>
+    <string name="edit_consist_menu">編成の編集</string>
     <string name="edit_consist_lights_throttle_1">編成ライト スロットル 1 の編集</string>
     <string name="edit_consist_lights_throttle_2">編成ライト スロットル 2 の編集</string>
     <string name="edit_consist_lights_throttle_3">編成ライト スロットル 3 の編集</string>
