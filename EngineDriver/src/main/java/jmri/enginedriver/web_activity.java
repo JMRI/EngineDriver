@@ -677,76 +677,74 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
         Intent in;
-        switch (item.getItemId()) {
-            case R.id.throttle_button_mnu:
-            case R.id.throttle_mnu:
+        if ( (item.getItemId() == R.id.throttle_button_mnu)
+            || (item.getItemId() == R.id.throttle_mnu) ) {
 //                navigateAway(true, null);
-                in = mainapp.getThrottleIntent();
-                startACoreActivity(this, in, false, 0);
-                return true;
+            in = mainapp.getThrottleIntent();
+            startACoreActivity(this, in, false, 0);
+            return true;
 
-            case R.id.turnouts_mnu:
-            case R.id.turnouts_button:
+        } else if ( (item.getItemId() == R.id.turnouts_mnu)
+            || (item.getItemId() == R.id.turnouts_button) ) {
 //                navigateAway(true, turnouts.class);
-                in = new Intent().setClass(this, turnouts.class);
-                startACoreActivity(this, in, false, 0);
-                return true;
+            in = new Intent().setClass(this, turnouts.class);
+            startACoreActivity(this, in, false, 0);
+            return true;
 
-            case R.id.routes_mnu:
-            case R.id.routes_button:
+        } else if ( (item.getItemId() == R.id.routes_mnu)
+            || (item.getItemId() == R.id.routes_button) ) {
 //                navigateAway(true, routes.class);
-                in = new Intent().setClass(this, routes.class);
-                startACoreActivity(this, in, false, 0);
-                return true;
+            in = new Intent().setClass(this, routes.class);
+            startACoreActivity(this, in, false, 0);
+            return true;
 
-            case R.id.exit_mnu:
-                mainapp.checkAskExit(this);
-                return true;
+        } else if (item.getItemId() == R.id.exit_mnu) {
+            mainapp.checkAskExit(this);
+            return true;
 
-            case R.id.power_control_mnu:
-                threaded_application.activityInTransition(activityName);
-                navigateAway(false, power_control.class);
-                return true;
-/*            case R.id.preferences_mnu:
-                navigateAway(false, SettingsActivity.class);
-                return true;*/
-            case R.id.settings_mnu:
-                threaded_application.activityInTransition(activityName);
-                in = new Intent().setClass(this, SettingsActivity.class);
-                startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-                return true;
+        } else if (item.getItemId() == R.id.power_control_mnu) {
+            threaded_application.activityInTransition(activityName);
+            navigateAway(false, power_control.class);
+            return true;
 
-            case R.id.EmerStop:
-                mainapp.sendEStopMsg();
-                mainapp.buttonVibration();
-                return true;
+        } else if (item.getItemId() == R.id.settings_mnu) {
+            threaded_application.activityInTransition(activityName);
+            in = new Intent().setClass(this, SettingsActivity.class);
+            startActivity(in);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            return true;
 
-            case R.id.logviewer_menu:
-                threaded_application.activityInTransition(activityName);
-                navigateAway(false, LogViewerActivity.class);
-                return true;
+        } else if (item.getItemId() == R.id.EmerStop) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
 
-            case R.id.about_mnu:
-                threaded_application.activityInTransition(activityName);
-                navigateAway(false, about_page.class);
-                return true;
+        } else if (item.getItemId() == R.id.logviewer_menu) {
+            threaded_application.activityInTransition(activityName);
+            navigateAway(false, LogViewerActivity.class);
+            return true;
 
-            case R.id.flashlight_button:
-                mainapp.toggleFlashlightActionView(this, WMenu, findViewById(R.id.flashlight_button));
-                mainapp.buttonVibration();
-                return true;
+        } else if (item.getItemId() == R.id.about_mnu) {
+            threaded_application.activityInTransition(activityName);
+            navigateAway(false, about_page.class);
+            return true;
 
-            case R.id.powerLayoutButton:
-                if (!mainapp.isPowerControlAllowed()) {
-                    mainapp.powerControlNotAllowedDialog(WMenu);
-                } else {
-                    mainapp.powerStateMenuButton();
-                }
-                mainapp.buttonVibration();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlightActionView(this, WMenu, findViewById(R.id.flashlight_button));
+            mainapp.buttonVibration();
+            return true;
+
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(WMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
