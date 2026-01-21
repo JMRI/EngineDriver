@@ -26,11 +26,8 @@
     <string name="functionConsistColumnLabel">标签</string>
     <string name="functionConsistColumnLocos">机车</string>
     <string name="prefFunctionConsistLocosDefaultValue">前端</string>
-    <string name="functionConsistHelpText">用于：\na) "特殊"编组功能跟随选项。
-b) 非花名册机车。
-
-对于"a"，选择每个功能的文本如何在编组中每个机车的功能标签中搜索。</string>
-    <string name="functionConsistHeader">功能操作</string>
+    <string name="functionConsistHelpText">用途：\n1. 非名册机车，或\n\n2. “特殊”编组功能，以下选项。\n\n对于“2”，选择如何在编组中每台机车的功能标签中搜索每个功能的文本。</string>
+    <string name="functionConsistHeader">非名册和组成职能行动</string>
 
     <string name="app_description">Engine Driver - 安卓手机控制器。此应用可连接到JMRI、DCC-EX、MRC或DigiTrax WiThrottle服务器，或DCC-EX原生服务器，进而控制您的机车。支持1至6台机车的速度、方向和多达32个DCC功能。</string>
     <string name="app_name_intro">介绍</string>
@@ -99,7 +96,7 @@ b) 非花名册机车。
     <string name="airLineShort">空气管路 %d%%</string>
     <string name="load">负载</string>
     <string name="none">无</string>
-    <string name="fb_helptext">按显示顺序输入标签和功能编号。标签留空可隐藏按钮。在花名册功能不可用时使用。</string>
+    <string name="fb_help_text">按显示顺序输入标签和功能编号。标签留空可隐藏按钮。在花名册功能不可用时使用。</string>
     <string name="copy_function_labels">从花名册复制标签</string>
     <string name="fb_header">编辑功能</string>
 

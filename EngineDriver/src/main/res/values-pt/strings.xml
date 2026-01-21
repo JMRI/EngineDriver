@@ -75,7 +75,7 @@
     <string name="airLineShort">Companhia Aérea %d%%</string>
     <string name="load">Carregar</string>
     <string name="none">Nada</string>
-    <string name="fb_helptext">Inserir etiquetas e n. funções na lista a direita. Deixar em branco para esconder o botão. Estes são usados quando as funções de lista não estão disponíveis.</string>
+    <string name="fb_help_text">Inserir etiquetas e n. funções na lista a direita. Deixar em branco para esconder o botão. Estes são usados quando as funções de lista não estão disponíveis.</string>
     <string name="copy_function_labels">Copiar Etiquetas da Lista</string>
     <string name="fb_header">Editar Funções</string>
 
@@ -865,8 +865,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">Nenhum</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">trancando</string>
     <string name="prefFunctionConsistLocosDefaultValue">conduzir</string>
-    <string name="functionConsistHelpText">Apenas usada para o \'especial \' consistem de função seguintes opções + DCC-EX. Escolha como o texto de cada função será procurado nos rótulos de função para cada loco no composto.</string>
-    <string name="functionConsistHeader">Consistem Ações de função</string>
+    <string name="functionConsistHelpText">Usado para:\na) Locomotivas fora da lista, ou\n\nb) a função de composição \'Especial\' seguindo as opções.\n\nPara \'b\', selecione como o texto de cada função será pesquisado nos rótulos de função para cada locomotiva na composição.</string>
+    <string name="functionConsistHeader">Ações de função não relacionadas à lista e à composição</string>
     <string name="app_name_consist_functions">Consistem configurações de funções</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostrar Timestamps em Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostrar Data Hora para cada entrada na tela de log.</string>

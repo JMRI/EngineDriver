@@ -79,7 +79,7 @@
     <string name="airLineShort">Tube air %d%%</string>
     <string name="load">Chargement</string>
     <string name="none">Aucun/Aucune</string>
-    <string name="fb_helptext">Entrez les noms et les numéros de fonction sur le côté droit de la liste. Les libellés vides servent à masquer les boutons (utilisation des libellés par défaut si les fonctions de la locomotive ne sont pas définies).</string>
+    <string name="fb_help_text">Entrez les noms et les numéros de fonction sur le côté droit de la liste. Les libellés vides servent à masquer les boutons (utilisation des libellés par défaut si les fonctions de la locomotive ne sont pas définies).</string>
     <string name="copy_function_labels">Copier les libellés à partir du catalogue (Roster)</string>
     <string name="fb_header">Editer/Modifier les fonctions</string>
     <string name="consist_help">Choisir une locomotive pour définir son sens de marche en fonction du sens de la locomotive de tête. Un appui long supprime la locomotive de l UM. Faire un retour arrière une fois terminé.</string>
@@ -947,8 +947,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">aucun</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">verrouillage</string>
     <string name="prefFunctionConsistLocosDefaultValue">de tete</string>
-    <string name="functionConsistHelpText">Utilisation uniquement pour \'Special\' les options suivantes en UM + DCC-EX. Choisiir methode  affichage texte des fonctions pour chaque loco de l UM.</string>
-    <string name="functionConsistHeader">Fonctions UM actives</string>
+    <string name="functionConsistHelpText">Utilisé pour:\na) les locomotives hors liste, ou\n\nb) les options de la fonction de composition «Spéciale».\n\nPour «b», sélectionnez comment le texte de chaque fonction sera recherché dans les étiquettes de fonction de chaque locomotive de la composition.</string>
+    <string name="functionConsistHeader">Actions de fonction hors liste et constantes</string>
     <string name="app_name_consist_functions">Parametrage Engine Driver pour les fonctions en UM</string>
     <string name="prefShowTimeOnLogEntryTitle">Afficher horodatage dans la log</string>
     <string name="prefShowTimeOnLogEntrySummary">Afficher horodatage pour toutes les entrees de la logdans la log</string>

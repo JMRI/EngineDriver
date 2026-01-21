@@ -149,7 +149,7 @@
     <string name="fb_column_function"># Fonct.</string>
 
     <string name="fb_header">Modifier les fonctions</string>
-    <string name="fb_helptext">Saisir les libellés et numéros de fonction dans la liste de droite.  Laisser le libellé à blanc pour masquer cette touche.  Ils serviront lorsque les informations du catalogue ne sont pas disponibles.</string>
+    <string name="fb_help_text">Saisir les libellés et numéros de fonction dans la liste de droite.  Laisser le libellé à blanc pour masquer cette touche.  Ils serviront lorsque les informations du catalogue ne sont pas disponibles.</string>
 
     <string name="fbResetFunctionLabels">Réinitialisation complète</string>
 
@@ -205,8 +205,8 @@
 
 
 
-    <string name="functionConsistHeader">Actions des fonctions d\'unités multiples</string>
-    <string name="functionConsistHelpText">Utilisation uniquement pour les fonctions d\'unités multiples \'Spéciales\' suivantes.  Spécifier comment sera recherché le libellé de chaque fonction pour chacune des locomotives de l\'unité multiple.</string>
+    <string name="functionConsistHeader">Actions de fonction hors liste et constantes</string>
+    <string name="functionConsistHelpText">Utilisé pour:\na) les locomotives hors liste, ou\n\nb) les options de la fonction de composition «Spéciale».\n\nPour «b», sélectionnez comment le texte de chaque fonction sera recherché dans les étiquettes de fonction de chaque locomotive de la composition.</string>
     <string name="functionConsistSettings">Paramètres d\'unités multiples</string>
     <string name="gamepad_test_reset">Réinitialisation complète de la manette de jeu</string>
     <string name="gamepad1_test">Vérification de la manette de jeu 1</string>

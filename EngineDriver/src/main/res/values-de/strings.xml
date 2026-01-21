@@ -80,7 +80,7 @@
     <string name="airLineShort">Luftlinie %d%%</string>
     <string name="load">Laden</string>
     <string name="none">Keine</string>
-    <string name="fb_helptext">Bezeichnungen und Funktionsnummern auf der rechten Seite der Liste eingeben. Lasse die Beschriftung leer, um die Knöpfe auszublenden. Diese werden verwendet, wenn Funktionen vom Lokverzeichnis nicht verfügbar sind.</string>
+    <string name="fb_help_text">Bezeichnungen und Funktionsnummern auf der rechten Seite der Liste eingeben. Lasse die Beschriftung leer, um die Knöpfe auszublenden. Diese werden verwendet, wenn Funktionen vom Lokverzeichnis nicht verfügbar sind.</string>
     <string name="copy_function_labels">Bezeichnungen aus dem Lokverzeichnis kopieren</string>
     <string name="fb_header">Funktionen bearbeiten</string>
     <string name="consist_help">Eine Lok anklicken um ihre Richtung im Vergleich zum Kopf des Lokverbundes zu ändern. Lange auf eine Lok drücken, um sie aus dem Lokverbund zu entfernen. Zurück-Pfeil drücken wenn fertig.</string>
@@ -926,8 +926,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">keiner</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">Einrastend</string>
     <string name="prefFunctionConsistLocosDefaultValue">führen</string>
-    <string name="functionConsistHelpText" tools:ignore="Typos">Nur für die \\ verwendet Sonder \\ \'Funktion folgende Optionen bestehen + DCC-EX. Wählen Sie, wie der Text der einzelnen Funktionen wird in der bestehen für jede Lok in den Funktionsetiketten gesucht werden.</string>
-    <string name="functionConsistHeader">Funktion Aktionen</string>
+    <string name="functionConsistHelpText" tools:ignore="Typos">Verwendet für:\na) Nicht im Lokplan aufgeführte Lokomotiven oder\n\nb) die Funktion „Spezialzug“ mit folgenden Optionen.\n\nWählen Sie für „b“ aus, wie der Text jeder Funktion in den Funktionsbezeichnungen für jede Lokomotive im Zugverband gesucht werden soll.</string>
+    <string name="functionConsistHeader">Aktionen der Nicht-Roster- und Consist-Funktion</string>
     <string name="app_name_consist_functions">Consist Funktionseinstellungen</string>
     <string name="prefShowTimeOnLogEntryTitle">Zeige Zeitstempel auf Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Zeige Datum und Zeit für jeden Eintrag auf dem Log-Bildschirm.</string>

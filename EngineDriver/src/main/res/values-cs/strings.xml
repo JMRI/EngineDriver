@@ -84,7 +84,7 @@
     <string name="airLineShort">Letecká linka %d%%</string>
     <string name="load">Zatížení</string>
     <string name="none">Nic</string>
-    <string name="fb_helptext">Zadejte štítky a funkce v seznamu. Pro skrytí tlačítka ponechte prázdné. Použijte v případě, že funkce v evidenci nejsou k dispozici.</string>
+    <string name="fb_help_text">Zadejte štítky a funkce v seznamu. Pro skrytí tlačítka ponechte prázdné. Použijte v případě, že funkce v evidenci nejsou k dispozici.</string>
     <string name="copy_function_labels">Kopírovat štítky z evidence</string>
     <string name="fb_header">Upravit Funkce</string>
 
@@ -1059,8 +1059,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">žádný</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">aretací</string>
     <string name="prefFunctionConsistLocosDefaultValue">Vést</string>
-    <string name="functionConsistHelpText">Používá se pouze pro \'Speciální\\‘ skládat volby funkce následující + DCC-EX. Zvolit, jak bude text každé funkce hledali v popisky funkčních pro každou lokomotivu v sestavě.</string>
-    <string name="functionConsistHeader">Skládat Funkce Akce</string>
+    <string name="functionConsistHelpText">Používá se pro:\na) Lokomotivy bez soupisky, nebo\n\nb) následující možnosti funkce sestavy \'Speciální\'.\n\nPro \'b\' vyberte, jak bude text každé funkce vyhledáván v popiscích funkcí pro každou lokomotivu v sestavě.</string>
+    <string name="functionConsistHeader">Akce funkcí mimo seznam a konzistentních akcí</string>
     <string name="app_name_consist_functions">Skládat nastavení funkcí</string>
     <string name="prefShowTimeOnLogEntryTitle">Zobrazovat časová razítka na Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Ukázat Datum Čas pro každou položku na obrazovce protokolu.</string>

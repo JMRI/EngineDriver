@@ -32,7 +32,7 @@
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">latching</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValueEnglish" translatable="false">latching</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefFunctionConsistLocosDefaultValue">lead</string>
-    <string name="functionConsistHelpText">Used for:\na) the \'Special\' consist function following options.\nb) non-roster locos.\n\nFor \'a\' Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
+    <string name="functionConsistHelpText">Used for:\na) Non-roster locos, or\n\nb) the \'Special\' consist function following options.\n\nFor \'b\' Select how the text of each function will be searched for in the function labels for each loco in the consist.</string>
     <string name="functionConsistHeader">Function Actions</string>
 
     <string name="app_name" translatable="false">Engine Driver</string>  <!-- DO NOT TRANSLATE -->
@@ -105,7 +105,7 @@
     <string name="airLineShort">Air Line %d%%</string>
     <string name="load">Load</string>
     <string name="none">None</string>
-    <string name="fb_helptext">Enter labels and function#s, in the order you\'d like them displayed. Leave label blank to hide button. Used when roster functions are not available.</string>
+    <string name="fb_help_text">Enter labels and function#s, in the order you\'d like them displayed. Leave label blank to hide button. Used when roster functions are not available.</string>
     <string name="copy_function_labels">Copy Labels from Roster</string>
     <string name="fb_header">Edit Functions</string>
 
@@ -1147,7 +1147,7 @@
     <string name="prefActionBarShowRoutesButtonTitle">Routes button?</string>
     <string name="prefActionBarShowWebButtonSummary">Show button in action bar to switch to the Web Screen</string>
     <string name="prefActionBarShowWebButtonTitle">Web button?</string>
-    <string name="prefActionBarShowAdvancedConsistButtonSummary">Show button in action bar to open the Advance Consist (CV19) Screen</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Show button in action bar to open the Advanced Consist (CV19) Screen</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">Advanced Consist (CV19) button?</string>
 
     <!--    <string name="logViewerTitle">LogViewerActivity | %1$s</string>-->
