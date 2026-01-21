@@ -5,7 +5,7 @@
    viewBox="0 0 607.0866 607.08659"
    id="svg2"
    version="1.1"
-   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
    sodipodi:docname="outline_toolbar_button_routes.svg"
    inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\throttle_outline.png"
    inkscape:export-xdpi="14.4"
@@ -157,20 +157,6 @@
       <g
          transform="matrix(0.61871659,0.61871659,-0.61871659,0.61871659,382.8425,177.48605)"
          id="g42" />
-      <g
-         transform="matrix(0.66291262,0.66291262,-0.66291262,0.66291262,376.7307,168.63325)"
-         id="g6"
-         style="fill:#ffffff;fill-opacity:1">
-        <g
-           id="g4"
-           style="fill:#ffffff;fill-opacity:1">
-          <path
-             inkscape:connector-curvature="0"
-             d="M 379.853,0 H 132.147 c -24.085,0 -43.68,19.595 -43.68,43.68 v 424.64 c 0,24.085 19.595,43.68 43.68,43.68 h 247.706 c 24.085,0 43.68,-19.595 43.68,-43.68 V 43.68 C 423.533,19.595 403.938,0 379.853,0 Z m 27.093,468.32 c 0,14.939 -12.154,27.093 -27.093,27.093 H 132.147 c -14.939,0 -27.093,-12.154 -27.093,-27.093 V 43.68 c 0,-14.939 12.154,-27.093 27.093,-27.093 h 247.706 c 14.939,0 27.093,12.154 27.093,27.093 z"
-             id="path2"
-             style="fill:#ffffff;fill-opacity:1" />
-        </g>
-      </g>
       <rect
          style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:20;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect5645"
@@ -184,15 +170,9 @@
          inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
          inkscape:export-xdpi="14.4"
          inkscape:export-ydpi="14.4" />
-      <path
-         inkscape:connector-curvature="0"
-         d="M 584.13842,449.98505 431.62596,297.47259 c -3.03614,-3.03614 -13.26289,2.2665 -16.2997,5.3033 -3.03614,3.03614 -8.34011,13.26289 -5.3033,16.2997 l 152.51246,152.51245 c 3.03614,3.03614 13.26289,-2.26649 16.2997,-5.3033 3.03547,-3.0368 8.33944,-13.26355 5.3033,-16.29969 z"
-         id="path68-0-2-9-9-5"
-         sodipodi:nodetypes="ssssscs"
-         style="fill:#ffffff;fill-opacity:1;stroke-width:0.9375" />
       <g
          id="g409"
-         transform="matrix(8.3718951,8.3718951,-8.3718951,8.3718951,356.69711,330.97232)"
+         transform="matrix(17.652672,17.652672,-17.652672,17.652672,377.91039,87.020479)"
          style="fill:#ffffff;stroke:none">
         <g
            id="g407"

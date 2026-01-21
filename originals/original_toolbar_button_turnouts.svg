@@ -5,7 +5,7 @@
    viewBox="0 0 607.0866 607.08659"
    id="svg2"
    version="1.1"
-   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
    sodipodi:docname="original_toolbar_button_turnouts.svg"
    inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\throttle.png"
    inkscape:export-xdpi="14.4"
@@ -61,11 +61,11 @@
        inkscape:collect="always"
        id="linearGradient895">
       <stop
-         style="stop-color:#8fffeb;stop-opacity:1;"
+         style="stop-color:#00d4b0;stop-opacity:1;"
          offset="0"
          id="stop891" />
       <stop
-         style="stop-color:#f3d800;stop-opacity:1;"
+         style="stop-color:#b5a200;stop-opacity:1;"
          offset="1"
          id="stop893" />
     </linearGradient>
@@ -101,7 +101,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.70710678"
      inkscape:cx="562.14989"
-     inkscape:cy="307.59145"
+     inkscape:cy="306.17724"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"
      showgrid="false"
@@ -211,33 +211,8 @@
          transform="matrix(0.61871659,0.61871659,-0.61871659,0.61871659,382.8425,177.48605)"
          id="g42" />
       <g
-         transform="matrix(0.66291262,0.66291262,-0.66291262,0.66291262,376.7307,168.63325)"
-         id="g6"
-         style="fill:#ffffff;fill-opacity:1">
-        <g
-           id="g4"
-           style="fill:#ffffff;fill-opacity:1">
-          <path
-             inkscape:connector-curvature="0"
-             d="M 379.853,0 H 132.147 c -24.085,0 -43.68,19.595 -43.68,43.68 v 424.64 c 0,24.085 19.595,43.68 43.68,43.68 h 247.706 c 24.085,0 43.68,-19.595 43.68,-43.68 V 43.68 C 423.533,19.595 403.938,0 379.853,0 Z m 27.093,468.32 c 0,14.939 -12.154,27.093 -27.093,27.093 H 132.147 c -14.939,0 -27.093,-12.154 -27.093,-27.093 V 43.68 c 0,-14.939 12.154,-27.093 27.093,-27.093 h 247.706 c 14.939,0 27.093,12.154 27.093,27.093 z"
-             id="path2"
-             style="fill:#ffffff;fill-opacity:1" />
-        </g>
-      </g>
-      <path
-         inkscape:connector-curvature="0"
-         id="path2-9"
-         d="m 336.0451,748.85813 c -9.90325,9.90325 -26.01733,9.90325 -35.92058,0 L 135.91709,584.65069 c -9.90326,-9.90325 -9.90326,-26.01733 0,-35.92058 L 417.4163,267.2309 c 9.90325,-9.90326 26.01733,-9.90326 35.92058,0 l 164.20744,164.20743 c 9.90325,9.90325 9.90325,26.01733 0,35.92058 z"
-         style="fill:#000000;fill-opacity:1;stroke-width:0.9375" />
-      <path
-         inkscape:connector-curvature="0"
-         d="M 584.13842,449.98505 431.62596,297.47259 c -3.03614,-3.03614 -13.26289,2.2665 -16.2997,5.3033 -3.03614,3.03614 -8.34011,13.26289 -5.3033,16.2997 l 152.51246,152.51245 c 3.03614,3.03614 13.26289,-2.26649 16.2997,-5.3033 3.03547,-3.0368 8.33944,-13.26355 5.3033,-16.29969 z"
-         id="path68-0-2-9-9-5"
-         sodipodi:nodetypes="ssssscs"
-         style="fill:#ffffff;fill-opacity:1;stroke-width:0.9375" />
-      <g
          id="g302"
-         transform="matrix(11.623396,11.623396,-11.623396,11.623396,341.0513,240.13302)"
+         transform="matrix(17.957894,17.957894,-17.957894,17.957894,359.90758,56.579885)"
          style="fill:#ffffff;stroke:none">
         <path
            d="M 14.59,15.59 16,17 20,13 16,9 14.59,10.41 16.17,12 C 14.66,11.67 12.44,12.08 11,13.36 V 6.83 L 12.59,8.42 14,7 10,3 6,7 7.41,8.41 9,6.83 V 21 h 2 v -4 c 0.73,-2.58 3.07,-3.47 5.17,-3 z"
