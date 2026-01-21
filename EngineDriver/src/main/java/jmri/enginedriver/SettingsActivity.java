@@ -104,6 +104,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public static final int RESULT_LOAD_IMG = 1;
     private int result = RESULT_OK;
 
+    public static final String DELIMITER = "\n --> ";
+
     private String deviceId = "";
 
     public SharedPreferences prefs;
@@ -700,6 +702,27 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
             }
         }
+    }
+
+    public void updatePreference(Preference preference, String key) {
+        if (preference == null) return;
+
+        String summary = (String) preference.getSummary();
+        if (summary == null) return;
+        if (summary.contains(DELIMITER)) {
+            summary = summary.substring(0, summary.indexOf(DELIMITER));
+            preference.setSummary(summary);
+        }
+        if (preference instanceof ListPreference) {
+            ListPreference listPreference = (ListPreference) preference;
+            listPreference.setSummary(summary + DELIMITER + listPreference.getEntry());
+        } else if (preference instanceof EditTextPreference) {
+            EditTextPreference editTextPref = (EditTextPreference) preference;
+            editTextPref.setSummary(summary + DELIMITER + editTextPref.getText());
+        }
+
+//            SharedPreferences sharedPrefs = getPreferenceManager().getSharedPreferences();
+//            preference.setSummary(sharedPrefs.getString(key, "Default"));
     }
 
 //    @Override
@@ -1547,7 +1570,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         return false;
     }
 
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1605,6 +1627,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     .registerOnSharedPreferenceChangeListener(this);
 
             setPreferencesUI();
+
+            for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); ++i) {
+                Preference preference = getPreferenceScreen().getPreference(i);
+                if (preference instanceof PreferenceGroup) {
+                    PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
+                    for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
+                        Preference singlePref = preferenceGroup.getPreference(j);
+                        parentActivity.updatePreference(singlePref, singlePref.getKey());
+                    }
+                } else {
+                    parentActivity.updatePreference(preference, preference.getKey());
+                }
+            }
 
             // Re-apply filter on resume
             if (parentActivity != null) {
@@ -1787,6 +1822,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 }
             }
+
+            parentActivity.updatePreference(findPreference(key), key);
         }
 
         @Override
@@ -2256,6 +2293,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
 //            showHideLeftRightSwipePreferences();
 
+            for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); ++i) {
+                Preference preference = getPreferenceScreen().getPreference(i);
+                if (preference instanceof PreferenceGroup) {
+                    PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
+                    for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
+                        Preference singlePref = preferenceGroup.getPreference(j);
+                        parentActivity.updatePreference(singlePref, singlePref.getKey());
+                    }
+                } else {
+                    parentActivity.updatePreference(preference, preference.getKey());
+                }
+            }
+
             // Re-apply filter on resume
             if (parentActivity != null) {
                 filterPreferences(parentActivity.getCurrentSearchQuery());
@@ -2604,6 +2654,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
                 }
             }
+            parentActivity.updatePreference(findPreference(key), key);
         }
     }
 

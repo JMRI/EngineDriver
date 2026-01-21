@@ -77,7 +77,7 @@
     <string name="airLineShort">Ris. aria %d%%</string>
     <string name="load">Carico</string>
     <string name="none">Niente</string>
-    <string name="fb_helptext">Inserire etichette e n. funzioni nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
+    <string name="fb_help_text">Inserire etichette e n. funzioni nella lista a destra. Lasciare in bianco per nascondere il pulsante. Questi sono usati quando le funzioni di elenco non sono disponibili.</string>
     <string name="copy_function_labels">Copiare Etichette dall\'Elenco</string>
     <string name="fb_header">Modifica Funzioni</string>
 
@@ -859,8 +859,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">nessuna</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">aggancio</string>
     <string name="prefFunctionConsistLocosDefaultValue">condurre</string>
-    <string name="functionConsistHelpText">Utilizzato solo per il \'Special\' costituito opzioni seguente funzione + DCC-EX. Selezionare come il testo di ciascuna funzione verrà cercato nelle etichette funzione per ogni loco nel consistere.</string>
-    <string name="functionConsistHeader">Azioni di funzione</string>
+    <string name="functionConsistHelpText">Utilizzato per:\na) Locomotive non di turno, oppure\n\nb) la funzione di composizione \'Speciale\' seguendo le opzioni.\n\nPer \'b\' selezionare come verrà ricercato il testo di ciascuna funzione nelle etichette delle funzioni per ciascuna locomotiva nella composizione.</string>
+    <string name="functionConsistHeader">Azioni di funzione non di elenco e consistenti</string>
     <string name="app_name_consist_functions">Consistono Impostazioni delle funzioni</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra timestamp su Log</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostra Data Ora per ogni voce nella schermata di log.</string>
@@ -1220,7 +1220,7 @@
     <string name="newConnectionTitle">Nuova connessione</string>
     <string name="prefAutoServerIpConnectSummary">Connettiti automaticamente a un indirizzo del server anche se non scoperto</string>
     <string name="prefLogOnNextStartupTitle">Vuoi iniziare a registrare al prossimo avvio?</string>
-    <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostra il pulsante nella barra delle azioni per aprire la schermata Advance Consist (CV19)</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostra il pulsante nella barra delle azioni per aprire la schermata Advanced Consist (CV19)</string>
     <string name="prefActionBarShowWebButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Web</string>
     <string name="prefActionBarShowWebButtonTitle">Pulsante Web?</string>
 

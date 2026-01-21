@@ -160,7 +160,7 @@
     <string name="fb_column_function">ファンクション#</string>
     <string name="fb_column_label">ラベル</string>
     <string name="fb_header">ファンクション編集</string>
-    <string name="fb_helptext">すべての列車情報エントリを最近の機関車リストにダウンロードすることを確認します右側のリストにラベルとファンクション番号を入力します。ボタンを非表示にするには、ラベルを空白のままにします。これらは、列車情報ファンクションが使用できない場合に使用されます。</string>
+    <string name="fb_help_text">すべての列車情報エントリを最近の機関車リストにダウンロードすることを確認します右側のリストにラベルとファンクション番号を入力します。ボタンを非表示にするには、ラベルを空白のままにします。これらは、列車情報ファンクションが使用できない場合に使用されます。</string>
 
     <string name="fbResetFunctionLabels">すべてリセット</string>
 
@@ -217,8 +217,8 @@
     <string name="functionConsistColumnLabel">ラベル</string>
     <string name="functionConsistColumnLatching">ラッチング</string>
     <string name="functionConsistColumnLocos">ロコ</string>
-    <string name="functionConsistHeader">編成ファンクション動作</string>
-    <string name="functionConsistHelpText">「特別」編成ファンクションの次のオプションにのみ使用されます。編成内の各車両のファンクションラベルで各ファンクションのテキストを検索する方法を選択します。</string>
+    <string name="functionConsistHeader">非名簿および構成機能アクション</string>
+    <string name="functionConsistHelpText">使用対象:\n1. 非登録機関車、または\n\n2. \'特別\' 編成機能の次のオプション。\n\n\'2\' の場合、編成内の各機関車の機能ラベルで各機能のテキストを検索する方法を選択します。</string>
     <string name="functionConsistSettings">コンシストファンクションの設定</string>
     <string name="gamepad_test_reset">ゲームパッドのフルリセット</string>
     <string name="gamepad1_test">ゲームパッド 1 のテスト</string>
@@ -1291,7 +1291,7 @@
     <string name="newConnectionTitle">新しい接続</string>
     <string name="prefAutoServerIpConnectSummary">検出されない場合でもサーバーアドレスに自動的に接続する</string>
     <string name="prefLogOnNextStartupTitle">次回の起動時にログ記録を開始しますか?</string>
-    <string name="prefActionBarShowAdvancedConsistButtonSummary">アクションバーにボタンを表示して、Advance Consist (CV19) 画面を開きます。</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">アクションバーにボタンを表示して、Advanced Consist (CV19) 画面を開きます。</string>
     <string name="prefActionBarShowWebButtonSummary">アクションバーにWeb画面に切り替えるボタンを表示する</string>
     <string name="prefActionBarShowWebButtonTitle">ウェブボタン？</string>
 

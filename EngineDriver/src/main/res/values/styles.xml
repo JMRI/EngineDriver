@@ -175,6 +175,7 @@
   </style>
 
   <style name="edit_func_style">
+    <item name="fontFamily">sans-serif-condensed</item>
     <item name="android:textSize">18sp</item>
     <item name="android:singleLine">true</item>
     <item name="android:maxLength">2</item>
@@ -636,6 +637,7 @@
   </style>
 
   <style name="edit_func_style_black">
+    <item name="fontFamily">sans-serif-condensed</item>
     <item name="android:textSize">18sp</item>
     <item name="android:singleLine">true</item>
     <item name="android:maxLength">2</item>
@@ -1318,6 +1320,7 @@
   </style>
 
   <style name="edit_func_style_colorful">
+    <item name="fontFamily">sans-serif-condensed</item>
     <item name="android:textSize">18sp</item>
     <item name="android:singleLine">true</item>
     <item name="android:maxLength">2</item>

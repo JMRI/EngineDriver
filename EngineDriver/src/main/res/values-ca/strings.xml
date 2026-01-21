@@ -77,7 +77,7 @@
     <string name="airLineShort">Línia aèria %d%%</string>
     <string name="load">Carrega</string>
     <string name="none">Cap</string>
-    <string name="fb_helptext">Entra etiquetes i funcions a la llista de la dreta. Deixa-la en blanc  per amagar la tecla. Aquests s\'utilitzen quan les funcions de la flota no estan disponibles</string>
+    <string name="fb_help_text">Entra etiquetes i funcions a la llista de la dreta. Deixa-la en blanc  per amagar la tecla. Aquests s\'utilitzen quan les funcions de la flota no estan disponibles</string>
     <string name="copy_function_labels">Copiar etiquetes des de la flota</string>
     <string name="fb_header">Modificar funcions</string>
 
@@ -935,8 +935,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">cap</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">Enclavament</string>
     <string name="prefFunctionConsistLocosDefaultValue">Davantera</string>
-    <string name="functionConsistHelpText">Només s\'utilitza per a les següents funcions de Tracció Múltiple \'Especial\' + DCC-EX. Seleccioneu com es buscarà el text de cada funció en les etiquetes de funció per a cada Tracció Múltiple</string>
-    <string name="functionConsistHeader">Accions de Funcions</string>
+    <string name="functionConsistHelpText">S\'utilitza per a:\na) Locomotores que no formen part de la llista, o\n\nb) les opcions següents de la funció de consistència \'Especial\'.\n\nPer a \'b\', seleccioneu com es cercarà el text de cada funció a les etiquetes de funció de cada locomotora de la consistència.</string>
+    <string name="functionConsistHeader">Accions de funció no de llista i consistent</string>
     <string name="app_name_consist_functions">Ajustos de les Funcions de Tracció Múltiple</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostra marques de temps en els registres</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostra la Data i l\'Hora per a cada entrada en la pantalla de registres</string>

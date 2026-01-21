@@ -81,8 +81,8 @@
     <string name="edit_consist_throttle_4">Edit Consist (MU) Throttle 4</string>
     <string name="edit_consist_throttle_5">Edit Consist (MU) Throttle 5</string>
     <string name="edit_consist_throttle_6">Edit Consist Throttle 6</string>
-    <string name="functionConsistHeader">Consist (MU) Function Actions</string>
-    <string name="functionConsistHelpText">Only used for the \'Special\' consist (MU) function following options. Select how the text of each function will be searched for in the function labels for each loco in the consist (MU).</string>
+    <string name="functionConsistHeader">Non-Roster and Consist (MU) Function Actions</string>
+    <string name="functionConsistHelpText">Used for:\na) Non-roster locos, or\n\nb) the \'Special\' consist (MU) function following options.\n\nFor \'b\' Select how the text of each function will be searched for in the function labels for each loco in the consist (MU).</string>
     <string name="functionConsistSettings">Consist (MU) Function Settings</string>
     <string name="LocoSelectMethodRecentConsist">Recent Consist (MU)</string>
 

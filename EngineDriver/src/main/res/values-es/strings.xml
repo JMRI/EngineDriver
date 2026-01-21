@@ -77,7 +77,7 @@
     <string name="airLineShort">Línea aérea %d%%</string>
     <string name="load">Carga</string>
     <string name="none">Ninguna</string>
-    <string name="fb_helptext">Entra etiquetas y funciones en la lista de la derecha. Déjala en blanco para esconder la tecla. Estos se utilizan cuando las funciones de la flota no están disponibles</string>
+    <string name="fb_help_text">Entra etiquetas y funciones en la lista de la derecha. Déjala en blanco para esconder la tecla. Estos se utilizan cuando las funciones de la flota no están disponibles</string>
     <string name="copy_function_labels">Copiar etiquetas desde la flota</string>
     <string name="fb_header">Modificar funciones</string>
     <string name="consist_help">Pulsar una Locomotora para cambiar su dirección respecto a la de la Tracción Múltiple. Mantener pulsado para eliminar una Locomotora de la Tracción Múltiple. Pulsar Atrás para terminar</string>
@@ -924,8 +924,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">ninguna</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">enclavamiento</string>
     <string name="prefFunctionConsistLocosDefaultValue">Delantera</string>
-    <string name="functionConsistHelpText">Solo se utiliza para las siguientes opciones de la función de Tracción Múltiple \'Especial\' + DCC-EX. Selección de cómo se buscará el texto de cada función en las etiquetas de función para cada Locomotora de la Tracción Múltiple.</string>
-    <string name="functionConsistHeader">Acciones de Funciones</string>
+    <string name="functionConsistHelpText">Se utiliza para:\na) Locomotoras que no están en la lista, o\n\nb) la función de composición \'Especial\' que sigue a las opciones.\n\nPara \'b\' Seleccione cómo se buscará el texto de cada función en las etiquetas de función para cada locomotora en la composición.</string>
+    <string name="functionConsistHeader">Acciones de funciones no programadas y consistentes</string>
     <string name="app_name_consist_functions">Ajustes de las Funciones de Tracción Múltiple</string>
     <string name="prefShowTimeOnLogEntryTitle">Mostrar marcas de tiempo en registro</string>
     <string name="prefShowTimeOnLogEntrySummary">Mostrar Fecha y Hora para cada entrada en la pantalla de registro</string>

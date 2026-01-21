@@ -40,6 +40,7 @@
     * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
     * Added preference to start logging immediately after app startup.  Resets itself after use.
     * Added preference to hide the Advanced Consist (CV19) action bar button on the select loco screen.
+    * Preferences screen shows the current value of a list or text preference without opening it.
  * Other Changes
     * More Google translations
     * Additional time options for the children's timer
