@@ -134,7 +134,7 @@ public class threaded_application extends Application {
 
     // it does not matter what these value are as long as they have never been used before (so just add 1)
     public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
-    private static final String LAST_PREFERENCE_NAME_RUN = "1";  // set this to a different string to force the check and rename of the old preferences on next startup.
+    private static final String LAST_PREFERENCE_NAME_RUN = "2";  // set this to a different string to force the check and rename of the old preferences on next startup.
 
     private final threaded_application mainapp = this;
     public comm_thread commThread;
