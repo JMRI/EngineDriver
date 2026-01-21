@@ -496,7 +496,7 @@
                     android:defaultValue="@string/prefWebViewLocationDefaultValue"
                     android:entries="@array/WebViewLocationEntries"
                     android:entryValues="@array/WebViewLocationEntryValues"
-                    android:key="WebViewLocation"
+                    android:key="prefWebViewLocation"
                     android:layout="@layout/checkbox_no_icon"
                     android:summary="@string/prefWebViewLocationSummary"
                     android:title="@string/prefWebViewLocationTitle" />
