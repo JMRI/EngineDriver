@@ -704,7 +704,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
-    public void updatePreference(Preference preference, String key) {
+    public void updatePreference(Preference preference) {
         if (preference == null) return;
 
         String summary = (String) preference.getSummary();
@@ -1003,7 +1003,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     protected void limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
         Log.d(threaded_application.applicationName, activityName + ": limitIntPrefValue()");
-        EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
+        EditTextPreference prefText = prefScreen.findPreference(key);
+
+        if (prefText == null) return;
+
         try {
             int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
             if (newVal > maxVal) {
@@ -1035,7 +1038,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         int pass = 0; // all good
 
-        EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
+        EditTextPreference prefText = prefScreen.findPreference(key);
         for (int i = 0; i < prefValues.length; i++) {
             try {
                 int newVal = Integer.parseInt(prefValues[i].trim());
@@ -1054,6 +1057,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 pass = 2; //fail
             }
         }
+
+        if (prefText == null) return;
 
         if (pass==1) {
             StringBuilder newValue = new StringBuilder();
@@ -1076,7 +1081,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     @SuppressLint("ApplySharedPref")
     protected void limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
         Log.d(threaded_application.applicationName, activityName + ": limitFloatPrefValue()");
-        EditTextPreference prefText = (EditTextPreference) prefScreen.findPreference(key);
+        EditTextPreference prefText = prefScreen.findPreference(key);
+        if (prefText == null) return;
         try {
             float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
             if (newVal > maxVal) {
@@ -1125,18 +1131,20 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     String getThrottleScreenType(SharedPreferences sharedPreferences, String throttleTypePrefName) {
-        switch (throttleTypePrefName) {
-            case "prefThrottleSwitchOption1":
+        return switch (throttleTypePrefName) {
+            case "prefThrottleSwitchOption1" -> {
                 prefThrottleSwitchOption1 = sharedPreferences.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-                return prefThrottleSwitchOption1;
-            case "prefThrottleSwitchOption2":
+                yield prefThrottleSwitchOption1;
+            }
+            case "prefThrottleSwitchOption2" -> {
                 prefThrottleSwitchOption2 = sharedPreferences.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-                return prefThrottleSwitchOption2;
-            case "prefThrottleScreenType":
-            default:
+                yield prefThrottleSwitchOption2;
+            }
+            default -> {
                 prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
-                return prefThrottleScreenType;
-        }
+                yield prefThrottleScreenType;
+            }
+        };
     }
 
     public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
@@ -1164,7 +1172,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
                                         textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
             }
-            ListPreference listPref = (ListPreference) prefScreen.findPreference(numThrottlePrefName);
+            ListPreference listPref = prefScreen.findPreference(numThrottlePrefName);
             if (listPref != null) {
                 ignoreThisThrottleNumChange = true;
                 Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
@@ -1180,7 +1188,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     /** @noinspection SameParameterValue*/
     @SuppressLint("ApplySharedPref")
     void setSharedPreferenceValueString(PreferenceScreen prefScreen, String key, String val) {
-        ListPreference prefList = (ListPreference) prefScreen.findPreference(key);
+        ListPreference prefList = prefScreen.findPreference(key);
+        if (prefList == null) return;
         prefList.setValue(val);
         prefs.edit().putString(key, val).commit();
     }
@@ -1634,10 +1643,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
                     for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
                         Preference singlePref = preferenceGroup.getPreference(j);
-                        parentActivity.updatePreference(singlePref, singlePref.getKey());
+                        parentActivity.updatePreference(singlePref);
                     }
                 } else {
-                    parentActivity.updatePreference(preference, preference.getKey());
+                    parentActivity.updatePreference(preference);
                 }
             }
 
@@ -1823,7 +1832,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 }
             }
 
-            parentActivity.updatePreference(findPreference(key), key);
+            parentActivity.updatePreference(findPreference(key));
         }
 
         @Override
@@ -1931,12 +1940,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 }
 
                 ListPreference lp = findPreference("prefDeviceSounds0");
-                lp.setEntries(deviceSoundsEntriesArray);
-                lp.setEntryValues(deviceSoundsEntryValuesArray);
+                if (lp != null) {
+                    lp.setEntries(deviceSoundsEntriesArray);
+                    lp.setEntryValues(deviceSoundsEntryValuesArray);
+                }
 
                 lp = findPreference("prefDeviceSounds1");
-                lp.setEntries(deviceSoundsEntriesArray);
-                lp.setEntryValues(deviceSoundsEntryValuesArray);
+                if (lp != null) {
+                    lp.setEntries(deviceSoundsEntriesArray);
+                    lp.setEntryValues(deviceSoundsEntryValuesArray);
+                }
             }
 
 
@@ -2299,10 +2312,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
                     for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
                         Preference singlePref = preferenceGroup.getPreference(j);
-                        parentActivity.updatePreference(singlePref, singlePref.getKey());
+                        parentActivity.updatePreference(singlePref);
                     }
                 } else {
-                    parentActivity.updatePreference(preference, preference.getKey());
+                    parentActivity.updatePreference(preference);
                 }
             }
 
@@ -2653,8 +2666,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
 
                 }
+                parentActivity.updatePreference(findPreference(key));
             }
-            parentActivity.updatePreference(findPreference(key), key);
         }
     }
 
