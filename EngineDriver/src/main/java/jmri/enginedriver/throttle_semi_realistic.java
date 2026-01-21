@@ -239,7 +239,7 @@ public class throttle_semi_realistic extends throttle {
         if (mainapp.appIsFinishing) { return; }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if (throttleIndex < mainapp.numThrottles) {
+            if (throttleIndex < mainapp.prefNumThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
                 lThrottles[throttleIndex].setVisibility(GONE);
@@ -566,7 +566,7 @@ public class throttle_semi_realistic extends throttle {
         final float denScale = dm.density;
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = screenWidth / mainapp.numThrottles;
+        int throttleWidth = screenWidth / mainapp.prefNumThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
@@ -1171,7 +1171,7 @@ public class throttle_semi_realistic extends throttle {
             mVolumeKeysAutoDecrement = false;
         } else {
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
-                for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+                for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                     if (throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                             && (mainapp.consists[throttleIndex].isActive())) {
                         if (key == KEYCODE_VOLUME_UP) {

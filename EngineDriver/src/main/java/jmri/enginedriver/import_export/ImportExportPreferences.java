@@ -31,7 +31,6 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -103,8 +102,6 @@ public class ImportExportPreferences {
             mainapp.safeToast(m, Toast.LENGTH_SHORT);
             Log.d(threaded_application.applicationName, activityName + ": " + m);
             result = true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -234,7 +231,7 @@ public class ImportExportPreferences {
             boolean prefDisplaySpeedButtons = false;
             boolean prefHideSlider = false;
 
-            if (prefPreferencesImportAll.equals(pref_import_type.ALL_PARTIAL)) { // save some additional prefereneces for restoration
+            if (prefPreferencesImportAll.equals(pref_import_type.ALL_PARTIAL)) { // save some additional preferences for restoration
                 prefTheme = sharedPreferences.getString("prefTheme", "");
                 prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", "Default");
                 prefDisplaySpeedButtons = sharedPreferences.getBoolean("prefDisplaySpeedButtons", false);
@@ -312,13 +309,7 @@ public class ImportExportPreferences {
                     Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + m);
                     mainapp.safeToast(m, Toast.LENGTH_SHORT);
 
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    Log.e(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Exception: " + e);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Exception: " + e);
-                } catch (ClassNotFoundException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                     Log.e(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Exception: " + e);
                 } finally {
@@ -489,12 +480,12 @@ public class ImportExportPreferences {
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_ENGINES_FILENAME);
 
         PrintWriter list_output;
-        String smrl = sharedPreferences.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
+        String prefMaximumRecentLocos = sharedPreferences.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
         try {
-            int mrl = Integer.parseInt(smrl);
+            int maximumRecentLocos = Integer.parseInt(prefMaximumRecentLocos);
             list_output = new PrintWriter(engine_list_file);
-            if (mrl > 0) {
-                for (int i = 0; i < recentLocoAddressList.size() && i < mrl; i++) {
+            if (maximumRecentLocos > 0) {
+                for (int i = 0; i < recentLocoAddressList.size() && i < maximumRecentLocos; i++) {
                     list_output.format("%d:%d%d~%s]\\[%s\n",
                             recentLocoAddressList.get(i),
                             recentLocoAddressSizeList.get(i),
@@ -897,7 +888,7 @@ public class ImportExportPreferences {
     }
 
     @SuppressLint("DefaultLocale")
-    public void writeThrottlesEnginesListToFile(threaded_application mainapp, Context context, int numThrottles) {
+    public void writeThrottlesEnginesListToFile(threaded_application mainapp, Context context, int prefNumThrottles) {
         Log.d(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Writing throttles engines list to file");
 
         File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
@@ -905,8 +896,8 @@ public class ImportExportPreferences {
         PrintWriter list_output;
         try {
             list_output = new PrintWriter(throttles_engines_list_file);
-            if (numThrottles > 0) {
-                for (int whichThrottle = 0; whichThrottle < numThrottles; whichThrottle++) {
+            if (prefNumThrottles > 0) {
+                for (int whichThrottle = 0; whichThrottle < prefNumThrottles; whichThrottle++) {
                     Consist con = mainapp.consists[whichThrottle];
 
                     StringBuilder throttleLocoStrBuilder = new StringBuilder();
@@ -917,7 +908,6 @@ public class ImportExportPreferences {
                         throttleLocoStrBuilder.append(String.format("%d<,>%s<,>%s<,>%d<,>%d<;>",
                                 l.getIntAddress(), name, l.getAddress(), l.getWhichSource(), dir));
                     }
-//                    list_output.format("%s<~>%d%s", mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_"), whichThrottle, throttleLocoStrBuilder.toString());
                     list_output.format("%d<~>%s", whichThrottle, throttleLocoStrBuilder.toString());
                     list_output.format("\n");
                 }
@@ -931,7 +921,7 @@ public class ImportExportPreferences {
         }
     }
 
-    public void loadThrottlesEnginesListFromFile(threaded_application mainapp, Context context, int numThrottles) {
+    public void loadThrottlesEnginesListFromFile(threaded_application mainapp, Context context) {
         Log.d(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Reading throttles engines list from file");
 
         File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
@@ -1142,20 +1132,18 @@ public class ImportExportPreferences {
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
 
         PrintWriter list_output;
-        String smrl = sharedPreferences.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
+        String prefMaximumRecentLocos = sharedPreferences.getString("prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
         try {
-            int numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 2;
+            int numberOfRecentTurnoutsToWrite = Integer.parseInt(prefMaximumRecentLocos) * 2;
             numberOfRecentTurnoutsToWrite = min(numberOfRecentTurnoutsToWrite, recentTurnoutAddressList.size());
             list_output = new PrintWriter(engine_list_file);
             if (numberOfRecentTurnoutsToWrite > 0) {
-//                for (int i = 0; i < recentTurnoutAddressList.size() && numberOfRecentTurnoutsToWrite > 0; i++) {
                 for (int i = 0; i < numberOfRecentTurnoutsToWrite; i++) {
                     list_output.format("%s:%d<~>%s<~>%s\n",
                             recentTurnoutAddressList.get(i),
                             recentTurnoutSourceList.get(i),
                             recentTurnoutServerList.get(i),
                             recentTurnoutNameList.get(i));
-//                    numberOfRecentTurnoutsToWrite--;
                 }
             } else {
                 deleteFile(context, RECENT_TURNOUTS_FILENAME);
@@ -1181,7 +1169,8 @@ public class ImportExportPreferences {
         File file = new File(context.getExternalFilesDir(null), filename);
         if (file.exists()) {
             try {
-                file.delete();
+                if(!file.delete())
+                    Log.e(threaded_application.applicationName, activityName + ": deleteRecentTurnoutsListFile(): Unable to delete : " + filename);
                 return(true);
             } catch (Exception except) {
                 Log.e(threaded_application.applicationName, activityName + ": deleteRecentTurnoutsListFile(): Error deleting : " + filename
@@ -1265,15 +1254,15 @@ public class ImportExportPreferences {
     public void downloadRosterToRecents(Context context, SharedPreferences sharedPreferences, threaded_application mainapp) {
         loadRecentLocosListFromFile(context);
 
-        ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
+        ArrayList<String> rosterNameEntries = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
         int recentsSize = getIntPrefValue(sharedPreferences, "prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
-        int requiredRecentsSize = rns.size()+ 10;
+        int requiredRecentsSize = rosterNameEntries.size()+ 10;
         if (requiredRecentsSize>recentsSize) { // force the preference for the max recents to larger than the roster
             sharedPreferences.edit().putString("prefMaximumRecentLocos", String.format("%d",requiredRecentsSize)).commit();  //reset the preference
         }
 
         int j=0;
-        for (String rostername : rns) {
+        for (String rosterName : rosterNameEntries) {
             HashMap<String, String> hm = mainapp.rosterFullList.get(j);
             String rosterNameString = hm.get("roster_name");
             String rosterAddressString = hm.get("roster_address");
@@ -1325,7 +1314,7 @@ public class ImportExportPreferences {
 
         // now get all the function labels
         j=0;
-        for (String rostername : rns) {
+        for (String rosterName : rosterNameEntries) {
             String sAddr = locoAddressToString(recentLocoAddressList.get(j),
                     recentLocoAddressSizeList.get(j), true);
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, mainapp.maxThrottles);  // one past the actual number of allow throttles

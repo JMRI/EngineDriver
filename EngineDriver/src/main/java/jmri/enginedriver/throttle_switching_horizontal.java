@@ -133,7 +133,7 @@ public class throttle_switching_horizontal extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if( throttleIndex < mainapp.numThrottles) {
+            if( throttleIndex < mainapp.prefNumThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
@@ -911,13 +911,13 @@ public class throttle_switching_horizontal extends throttle {
 
         if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
 
-            if (mainapp.numThrottles == 1) {        // just one throttle
+            if (mainapp.prefNumThrottles == 1) {        // just one throttle
                 throttleHeights[0] = height;
             } else {
                 boolean[] throttlesInUse = {false, false, false, false, false, false};
                 int throttlesInUseCount = 0;
 //                double newHeight = 0;
-                for (int i = 0; i < mainapp.numThrottles; i++) {
+                for (int i = 0; i < mainapp.prefNumThrottles; i++) {
                     if ((mainapp.consists[i] != null) && (mainapp.consists[i].isActive())) {
                         throttlesInUse[i] = true;
                         throttlesInUseCount++;
@@ -930,7 +930,7 @@ public class throttle_switching_horizontal extends throttle {
 
                 if (!prefHideFunctionButtonsOfNonSelectedThrottle) {
 
-                    if (mainapp.numThrottles == 2) {
+                    if (mainapp.prefNumThrottles == 2) {
                         if (throttlesInUseCount <= 1) {
                             activeHeight = height - llLocoIdAndSpeedViewGroups[0].getHeight();
                         } else {  // equals 2
@@ -945,7 +945,7 @@ public class throttle_switching_horizontal extends throttle {
                             activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / (float) 3;
                         }
                     }
-                    for (int i = 0; i < mainapp.numThrottles; i++) {
+                    for (int i = 0; i < mainapp.prefNumThrottles; i++) {
                         if (throttlesInUse[i]) {
                             throttleHeights[i] = (int) activeHeight;
                         } else {
@@ -955,13 +955,13 @@ public class throttle_switching_horizontal extends throttle {
 
                 } else { // hide function buttons of non-selected throttle
                     int semiActiveCount = (throttlesInUseCount == 0) ? 0 : (throttlesInUseCount - 1);
-                    int inactiveCount = (throttlesInUseCount == 0) ? mainapp.numThrottles : (mainapp.numThrottles - 1 - semiActiveCount);
+                    int inactiveCount = (throttlesInUseCount == 0) ? mainapp.prefNumThrottles : (mainapp.prefNumThrottles - 1 - semiActiveCount);
                     semiActiveHeight = llLocoIdAndSpeedViewGroups[0].getHeight()
 //                            + llLocoDirectionButtonViewGroups[0].getHeight()
                             + llSetSpeeds[0].getHeight() + 6 * displayMetrics.density;  // 6 is for the padding;
                     activeHeight = height - (semiActiveHeight * semiActiveCount) - (inactiveHeight * inactiveCount);
 
-                    for (int i = 0; i < mainapp.numThrottles; i++) {
+                    for (int i = 0; i < mainapp.prefNumThrottles; i++) {
                         if (throttlesInUse[i]) {
                             if (i == whichVolume) {
                                 throttleHeights[i] = (int) activeHeight;

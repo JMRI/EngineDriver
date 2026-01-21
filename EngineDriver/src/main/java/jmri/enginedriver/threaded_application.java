@@ -134,7 +134,7 @@ public class threaded_application extends Application {
 
     // it does not matter what these value are as long as they have never been used before (so just add 1)
     public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
-    private static final String LAST_PREFERENCE_NAME_RUN = "2";  // set this to a different string to force the check and rename of the old preferences on next startup.
+    private static final String LAST_PREFERENCE_NAME_RUN = "3";  // set this to a different string to force the check and rename of the old preferences on next startup.
 
     private final threaded_application mainapp = this;
     public comm_thread commThread;
@@ -343,7 +343,7 @@ public class threaded_application extends Application {
 
     public boolean EStopActivated = false;  // Has EStop been sent?
 
-    public int numThrottles = 1;
+    public int prefNumThrottles = 1;
     public int maxThrottles = 6;   // maximum number of throttles the system supports
     public int maxThrottlesCurrentScreen = 6;   // maximum number of throttles the current screen supports
     public boolean currentScreenSupportsWebView = true;
@@ -724,8 +724,7 @@ public class threaded_application extends Application {
         registerActivityLifecycleCallbacks(lifecycleHandler);
         registerComponentCallbacks(lifecycleHandler);
 
-        numThrottles = Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
-        //numThrottles = Numeralise(Objects.requireNonNull(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue))));
+        prefNumThrottles = Numeralise(prefs.getString("prefNumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
         throttleLayoutViewId = R.layout.throttle;
 
         haveForcedWiFiConnection = false;
@@ -839,7 +838,7 @@ public class threaded_application extends Application {
                             mainapp.getResources().getBoolean(R.bool.prefStopOnBackgroundDefaultValue))) {
                         Log.d(threaded_application.applicationName, activityName + ": onTrimMemory(): Stopping Trains");
                         if (mainapp.consists != null) {
-                            for (int i = 0; i < mainapp.numThrottles; i++) {
+                            for (int i = 0; i < mainapp.prefNumThrottles; i++) {
                                 if ( (mainapp.consists[i] != null) && (mainapp.consists[i].isActive()) ) {
                                     sendMsg(comm_msg_handler, message_type.ESTOP_ONE_THROTTLE, "", i);
                                 }
@@ -2778,7 +2777,7 @@ public class threaded_application extends Application {
 
         importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
         Log.d(applicationName, "t_a: Loco '" + locoName + "' added to Recents");
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
 
     }
 
@@ -3051,7 +3050,7 @@ public class threaded_application extends Application {
 
     public int getGamePadIndexFromThrottleNo(int whichThrottle) {
         int whichGamepad = -1;
-        for (int i = 0; i < numThrottles; i++) {
+        for (int i = 0; i < prefNumThrottles; i++) {
             if (gamePadIdsAssignedToThrottles[whichThrottle] == gamePadDeviceIds[i]) {
                 whichGamepad = i;
                 break;
@@ -3074,7 +3073,7 @@ public class threaded_application extends Application {
 
             // set for only one but the device id has changed - probably turned off then on
             if ( (gamepadCount==1) && (prefGamepadOnlyOneGamepad) && (gamePadDeviceIds[0] != eventDeviceId) ) {
-                for (int k = 0; k < numThrottles; k++) {
+                for (int k = 0; k < prefNumThrottles; k++) {
                     if (gamePadIdsAssignedToThrottles[k] == gamePadDeviceIds[0]) {
                         gamePadIdsAssignedToThrottles[k] = eventDeviceId;
                         break;
@@ -3086,7 +3085,7 @@ public class threaded_application extends Application {
             }
 
             // find out if this gamepad is already assigned
-            for (i = 0; i < numThrottles; i++) {
+            for (i = 0; i < prefNumThrottles; i++) {
                 if (gamePadIdsAssignedToThrottles[i] == eventDeviceId) {
                     if (getConsist(i).isActive()) { //found the throttle and it is active
                         whichGamePad = i;
@@ -3116,7 +3115,7 @@ public class threaded_application extends Application {
 //                    whichGamePadDeviceId = gamepadCount - 1;
                 }
 
-                for (i = 0; i < numThrottles; i++) {
+                for (i = 0; i < prefNumThrottles; i++) {
                     if (gamePadIdsAssignedToThrottles[i] == 0) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
                             gamePadIdsAssignedToThrottles[i] = eventDeviceId;
