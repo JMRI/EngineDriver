@@ -1,3 +1,4 @@
+**Version 2.42.218
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
