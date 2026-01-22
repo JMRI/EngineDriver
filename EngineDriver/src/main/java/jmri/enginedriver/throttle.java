@@ -807,7 +807,7 @@ public class throttle extends AppCompatActivity implements
                             } catch (Exception e) {
                                 addr = "";
                             }
-                            if ((whichThrottle >= 0) && (whichThrottle < mainapp.numThrottles)) {
+                            if ((whichThrottle >= 0) && (whichThrottle < mainapp.prefNumThrottles)) {
                                 if (com2 == '+' || com2 == 'L') { // if loco added or function labels updated
                                     if (com2 == ('+')) {
                                         enableDisableButtons(whichThrottle); // direction and slider: pass whichthrottle
@@ -1526,7 +1526,7 @@ public class throttle extends AppCompatActivity implements
         prefEsuMc2EndStopDirectionChange = prefs.getBoolean("prefEsuMc2EndStopDirectionChange", getResources().getBoolean(R.bool.prefEsuMc2EndStopDirectionChangeDefaultValue));
         prefEsuMc2StopButtonShortPress = prefs.getBoolean("prefEsuMc2StopButtonShortPress", getResources().getBoolean(R.bool.prefEsuMc2StopButtonShortPressDefaultValue));
 
-        mainapp.numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
+        mainapp.prefNumThrottles = mainapp.Numeralise(prefs.getString("prefNumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         prefSelectiveLeadSound = prefs.getBoolean("prefSelectiveLeadSound", getResources().getBoolean(R.bool.prefSelectiveLeadSoundDefaultValue));
@@ -1820,7 +1820,7 @@ public class throttle extends AppCompatActivity implements
 
     // set speed slider to absolute value on all throttles
     protected void speedUpdate(int speed) {
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             speedUpdate(throttleIndex, speed);
         }
     }
@@ -2121,7 +2121,7 @@ public class throttle extends AppCompatActivity implements
 
     // combined - deal with the SRT specific requirements
     void speedUpdateAndNotifyCombined(int speed) {
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             speedUpdateAndNotifyCombined(throttleIndex, speed);
         }
     }
@@ -2135,7 +2135,7 @@ public class throttle extends AppCompatActivity implements
 
     // set speed slider and notify server for all throttles
     void speedUpdateAndNotify(int speed) {
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             speedUpdateAndNotify(throttleIndex, speed);
         }
     }
@@ -2335,7 +2335,7 @@ public class throttle extends AppCompatActivity implements
 
     // update the direction indicators
     void showDirectionIndications() {
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             showDirectionIndication(throttleIndex, dirs[throttleIndex]);
         }
     }
@@ -2540,7 +2540,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     void applySpeedRelatedOptions() {
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             applySpeedRelatedOptions(throttleIndex);
         }  // repeat for all three throttles
     }
@@ -2679,7 +2679,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void clearVolumeAndGamepadAdditionalIndicators() {
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             if (throttleIndex < bSels.length) {
                 if ((prefSelectedLocoIndicator.equals(selected_loco_indicator_type.NONE))
                         || (prefSelectedLocoIndicator.equals(selected_loco_indicator_type.GAMEPAD))) {
@@ -2702,13 +2702,13 @@ public class throttle extends AppCompatActivity implements
 
                 if ((isVolume) && (((prefSelectedLocoIndicator.equals(selected_loco_indicator_type.BOTH)) || (prefSelectedLocoIndicator.equals(selected_loco_indicator_type.VOLUME))))) { // note: 'Volume' option is no longer available
                     if (!prefDisableVolumeKeys) { // don't set the indicators if the volume keys are disabled the preferences
-                        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+                        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                             bSels[throttleIndex].setActivated(whichThrottle == throttleIndex);
                         }
                     }
 //                }
                 if ((!isVolume) && (((prefSelectedLocoIndicator.equals(selected_loco_indicator_type.BOTH)) || (prefSelectedLocoIndicator.equals(selected_loco_indicator_type.GAMEPAD))))) {
-                    for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+                    for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                         bSels[throttleIndex].setHovered(whichThrottle == throttleIndex);
                     }
                 }
@@ -2719,7 +2719,7 @@ public class throttle extends AppCompatActivity implements
     // Set the original volume indicator a small 'v' near the speed
     protected void setVolumeIndicator() {
         // hide or display volume control indicator based on variable
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             tvVols[throttleIndex].setText("");
             if (!prefDisableVolumeKeys) { // don't set the indicators if the volume keys are disabled
                 tvVols[whichVolume].setText(VOLUME_INDICATOR);
@@ -2745,7 +2745,7 @@ public class throttle extends AppCompatActivity implements
     protected void setGamepadIndicator() {
         // hide or display gamepad number indicator based on variable
         boolean isSet = false;
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             if (mainapp.gamePadThrottleAssignment[throttleIndex] != -1) {
                 tvGamePads[throttleIndex].setText(String.valueOf(mainapp.gamePadThrottleAssignment[throttleIndex]));
             } else {
@@ -2776,7 +2776,7 @@ public class throttle extends AppCompatActivity implements
         int index = -1;
 
         // find current Volume throttle
-        for (i = 0; i < mainapp.numThrottles; i++) {
+        for (i = 0; i < mainapp.prefNumThrottles; i++) {
             if (i == whichVolume) {
                 index = i;
                 break;
@@ -2785,7 +2785,7 @@ public class throttle extends AppCompatActivity implements
         // find next active throttle
         i = index + 1;
         while (i != index) {                        // check until we get back to current Volume throttle
-            if (i >= mainapp.numThrottles) {                // wrap
+            if (i >= mainapp.prefNumThrottles) {                // wrap
                 i = 0;
             } else {
                 int whichThrottle = i;
@@ -2842,9 +2842,9 @@ public class throttle extends AppCompatActivity implements
         index = fromThrottle - 1;
 
         // need to count through all the throttle, but need to start from the current one, not zero
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             index++;
-            if (index >= mainapp.numThrottles) {
+            if (index >= mainapp.prefNumThrottles) {
                 index = 0;
             }
             if (mainapp.gamePadIdsAssignedToThrottles[index] == 0) {  // unassigned
@@ -2892,7 +2892,7 @@ public class throttle extends AppCompatActivity implements
 
             // set for only one but the device id has changed - probably turned off then on
             if ((mainapp.gamepadCount == 1) && (mainapp.prefGamepadOnlyOneGamepad) && (mainapp.gamePadDeviceIds[0] != eventDeviceId)) {
-                for (int k = 0; k < mainapp.numThrottles; k++) {
+                for (int k = 0; k < mainapp.prefNumThrottles; k++) {
                     if (mainapp.gamePadIdsAssignedToThrottles[k] == mainapp.gamePadDeviceIds[0]) {
                         mainapp.gamePadIdsAssignedToThrottles[k] = eventDeviceId;
                         break;
@@ -2904,7 +2904,7 @@ public class throttle extends AppCompatActivity implements
             }
 
             // find out if this gamepad is already assigned
-            for (i = 0; i < mainapp.numThrottles; i++) {
+            for (i = 0; i < mainapp.prefNumThrottles; i++) {
                 if (mainapp.gamePadIdsAssignedToThrottles[i] == eventDeviceId) {
                     if (getConsist(i).isActive()) { //found the throttle and it is active
                         whichGamePad = i;
@@ -2939,7 +2939,7 @@ public class throttle extends AppCompatActivity implements
 
                 }
 
-                for (i = 0; i < mainapp.numThrottles; i++) {
+                for (i = 0; i < mainapp.prefNumThrottles; i++) {
                     if (mainapp.gamePadIdsAssignedToThrottles[i] == 0) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
                             mainapp.gamePadIdsAssignedToThrottles[i] = eventDeviceId;
@@ -4006,7 +4006,7 @@ public class throttle extends AppCompatActivity implements
                     esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.LONG_FLASH);
                     esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                     // Set all throttles to zero
-                    for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+                    for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                         set_stop_button(throttleIndex, true);
                         speedUpdateAndNotify(throttleIndex, 0);
                         setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, false);
@@ -4038,7 +4038,7 @@ public class throttle extends AppCompatActivity implements
                 } else {
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListner(): doStopButtonUp(): ESU_MCII: Resume control without speed revert");
                     origSpeed = 0;
-                    for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+                    for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                         set_stop_button(throttleIndex, false);
                         setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, true);
                     }
@@ -4082,7 +4082,7 @@ public class throttle extends AppCompatActivity implements
         esuThrottleFragment.setZeroPosition(zeroTrim);
 
         // now throttle scales
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             esuThrottleScales[throttleIndex] = new ThrottleScale(zeroTrim, esuThrottleScales[throttleIndex].getStepCount());
         }
     }
@@ -5236,8 +5236,7 @@ public class throttle extends AppCompatActivity implements
                 @Override
                 public void run() {
                     mainapp.safeToastInstructional(R.string.prefThrottlesLocosToast, Toast.LENGTH_LONG);
-                    int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
-                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, getApplicationContext(), numThrottles);
+                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, getApplicationContext());
                     setLabels();
                 }
             }, 2000);
@@ -6405,7 +6404,7 @@ public class throttle extends AppCompatActivity implements
             mVolumeKeysAutoDecrement = false;
         } else {
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
-                for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+                for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                     if (throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                             && (mainapp.consists[throttleIndex].isActive())) {
                         if (key == KEYCODE_VOLUME_UP) {
@@ -6427,7 +6426,7 @@ public class throttle extends AppCompatActivity implements
 
     private void releaseThrottles() {
         //loop thru all throttles and send release to server for any that are active
-        for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+        for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             if (getConsist(throttleIndex).isActive()) {
                 release_loco(throttleIndex);
             }
@@ -6968,7 +6967,7 @@ public class throttle extends AppCompatActivity implements
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("prefHideSlider", false)) {
             // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
-            for (int throttleIndex = 0; throttleIndex < mainapp.numThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                 if ((sbs[throttleIndex].isEnabled())
                         && (
                         ((gestureStartX >= sliderTopLeftX[throttleIndex])
@@ -7223,8 +7222,8 @@ public class throttle extends AppCompatActivity implements
     }
 
     protected void setThrottleNumLimits() {
-        if (mainapp.numThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
-            mainapp.numThrottles = mainapp.maxThrottlesCurrentScreen;
+        if (mainapp.prefNumThrottles > mainapp.maxThrottlesCurrentScreen) {   // Maximum number of throttles this screen supports
+            mainapp.prefNumThrottles = mainapp.maxThrottlesCurrentScreen;
         }
     }
 
@@ -7583,17 +7582,17 @@ public class throttle extends AppCompatActivity implements
         if (!prefThrottleSwitchButtonCycleAll) {
             if (prefThrottleScreenType.equals(prefThrottleSwitchOption1)) {
                 prefThrottleScreenType = prefThrottleSwitchOption2;
-                numThrottles = prefs.getString("prefThrottleSwitchOption2NumThrottles", getResources().getString(R.string.prefNumThrottleDefaultValue));
-                mainapp.numThrottles = mainapp.Numeralise(numThrottles);
+                numThrottles = prefs.getString("prefThrottleSwitchOption2NumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue));
+                mainapp.prefNumThrottles = mainapp.Numeralise(numThrottles);
             } else {
                 prefThrottleScreenType = prefThrottleSwitchOption1;
-                numThrottles = prefs.getString("prefThrottleSwitchOption1NumThrottles", getResources().getString(R.string.prefNumThrottleDefaultValue));
-                mainapp.numThrottles = mainapp.Numeralise(numThrottles);
+                numThrottles = prefs.getString("prefThrottleSwitchOption1NumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue));
+                mainapp.prefNumThrottles = mainapp.Numeralise(numThrottles);
             }
         } else {
             prefThrottleScreenType = mainapp.getNextThrottleLayout();
-            numThrottles = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue));
-            mainapp.numThrottles = mainapp.Numeralise(numThrottles);
+            numThrottles = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottlesDefaultValue));
+            mainapp.prefNumThrottles = mainapp.Numeralise(numThrottles);
         }
 
         prefs.edit().putString("prefThrottleScreenType", prefThrottleScreenType).commit();
@@ -7672,7 +7671,7 @@ public class throttle extends AppCompatActivity implements
 
     @SuppressLint("ApplySharedPref")
     private void fixNumThrottles() {
-        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
+        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
         String prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         int index = -1;

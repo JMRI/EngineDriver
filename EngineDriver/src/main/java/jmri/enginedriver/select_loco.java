@@ -672,7 +672,7 @@ public class select_loco extends AppCompatActivity {
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);
         mainapp.consists[whichThrottle].release();
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass 0, 1 or 2 in message
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
     }
 
    // request dispatch of specified throttle
@@ -681,7 +681,7 @@ public class select_loco extends AppCompatActivity {
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);  //not relevant to DCC-EX
         mainapp.consists[whichThrottle].release();
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISPATCH, "", whichThrottle); // pass 0, 1 or 2 in message
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
     }
 
     boolean saveUpdateList;         // save value across ConsistEdit activity 
@@ -942,7 +942,7 @@ public class select_loco extends AppCompatActivity {
         }
 
         importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
-        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.numThrottles);
+        importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
     }
 
     private void refreshRecentLocosList(boolean reload) {

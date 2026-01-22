@@ -111,7 +111,7 @@ public class throttle_simple extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if( throttleIndex < mainapp.numThrottles) {
+            if( throttleIndex < mainapp.prefNumThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
                 Separators[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
@@ -251,7 +251,7 @@ public class throttle_simple extends throttle {
         int sep = (int) (denScale * 12); // separator
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = (screenWidth - (sep * (mainapp.numThrottles-1)))/ mainapp.numThrottles;
+        int throttleWidth = (screenWidth - (sep * (mainapp.prefNumThrottles-1)))/ mainapp.prefNumThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;

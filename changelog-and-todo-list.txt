@@ -44,6 +44,7 @@
  * Other Changes
     * More Google translations
     * Additional time options for the children's timer
+    * Glyphs added to most menu items
 **Version 2.41.214
  * Bug fix for everything that checks for DCC-EX version numbers. Calculation was wrong.
 **Version 2.41.212

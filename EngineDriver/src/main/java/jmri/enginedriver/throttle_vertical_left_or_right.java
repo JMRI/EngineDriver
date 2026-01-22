@@ -130,7 +130,7 @@ public class throttle_vertical_left_or_right extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if (throttleIndex < mainapp.numThrottles) {
+            if (throttleIndex < mainapp.prefNumThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
@@ -288,7 +288,7 @@ public class throttle_vertical_left_or_right extends throttle {
 
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = screenWidth / mainapp.numThrottles;
+        int throttleWidth = screenWidth / mainapp.prefNumThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;

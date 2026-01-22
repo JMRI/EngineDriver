@@ -150,7 +150,6 @@
 
     <string name="prefThrottleNameSummary">Wähle einen Namen für dieses Gerät (angezeigt auf JMRI WiThrottle Bildschirm)</string>
     <string name="prefThrottleOrientationTitle">Orientierung des Bildschirms</string>
-<!--    <string name="prefThrottleOrientationDefaultValue">Hochformat</string> -->
     <string name="prefThrottleOrientationSummary">Bildschirmorientierung (außer Web)</string>
     <string name="prefThrottlePageTitle">Voreinstellungen der Fahrreglerdarstellung</string>
     <string name="prefThrottleTitle">Voreinstellungen des Fahrreglers</string>
@@ -211,33 +210,18 @@
     <string name="prefGamePadButtonDownTitle">Aktion für Gamepad DPAD Unten</string>
     <string name="prefGamePadButtonLeftTitle">Aktion für Gamepad DPAD Links</string>
     <string name="prefGamePadButtonSummary">Wähle die Aktion beim Drücken des Knopfes</string>
-<!--
-    <string name="prefGamePadButton1DefaultValue">Stop</string>
-    <string name="prefGamePadButton2DefaultValue">Funktion 00/Licht</string>
-    <string name="prefGamePadButton3DefaultValue">Funktion 01/Glocke</string>
-    <string name="prefGamePadButton4DefaultValue">Funktion 02/Horn</string>
-    <string name="prefGamePadButtonStartDefaultValue">Nächster Fahrregler</string>
-    <string name="prefGamePadButtonReturnDefaultValue">Alle anhalten</string>
-    <string name="prefGamePadButtonUpDefaultValue">Erhöhe Geschwindigkeit</string>
-    <string name="prefGamePadButtonRightDefaultValue">Umkehren</string>
-    <string name="prefGamePadButtonDownDefaultValue">Verringere Geschwindigkeit</string>
-    <string name="prefGamePadButtonLeftDefaultValue">Vorwärts</string>
--->
+
     <string name="prefEsuMc2Title">ESU MobileControl II/Pro Optionen</string>
     <string name="prefEsuMc2Summary">Wähle ESU MobileControl II/Pro Optionen</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Optionen für seitliche Knöpfe</string>
     <string name="prefEsuMc2ButtonTLTitle">Aktion für Knopf Oben-Links</string>
     <string name="prefEsuMc2ButtonTLSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-<!--    <string name="prefEsuMc2ButtonTLDefaultValue">Geschwindigkeit erhöhen</string> -->
     <string name="prefEsuMc2ButtonBLTitle">Aktion für Knopf Unten-Links</string>
     <string name="prefEsuMc2ButtonBLSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-<!--    <string name="prefEsuMc2ButtonBLDefaultValue"> Geschwindigkeit mindern</string> -->
     <string name="prefEsuMc2ButtonTRTitle">Aktion für Knopf Oben-Rechts</string>
     <string name="prefEsuMc2ButtonTRSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-<!--    <string name="prefEsuMc2ButtonTRDefaultValue">Vorwärts/Rückwärts umschalten</string> -->
     <string name="prefEsuMc2ButtonBRTitle">Aktion für Knopf Unten-Rechts</string>
     <string name="prefEsuMc2ButtonBRSummary">Wähle die Aktion für das Drücken des Knopfes.</string>
-<!--    <string name="prefEsuMc2ButtonBRDefaultValue">Nächster Fahrregler</string> -->
     <string name="prefEsuMc2ButtonsRepeatTitle">Knopf Wiederholungsverzögerung</string>
     <string name="prefEsuMc2ButtonsRepeatSummary">Wie lange zwischen Wiederholungen der seitlichen Knöpfe.\n Kleiner ist schneller.</string>
 
@@ -277,7 +261,6 @@
 
     <string name="prefInitialThrottleWebPageSummary">Anfängliche Fahrregler Web  Seite (Typ \'/panel/\')</string>
     <string name="prefWebViewLocationTitle">Fahrregler Web Ansicht?</string>
-<!--    <string name="prefWebViewLocationDefaultValue">keine</string> -->
     <string name="prefWebViewLocationSummary">Web Ansicht im Fahrreglerfeld beifügen</string>
     <string name="prefSelectLocoTitle">Wähle Lok Voreinstellungen</string>
     <string name="prefSelectiveLeadSoundTitle">Selektiver Sound der führenden Einheit?</string>
@@ -322,7 +305,6 @@
 
     <string name="prefDisplaySpeedUnitsSummary">Geschwindigkeitsanzeige in Prozent oder Stufen?</string>
     <string name="prefWebOrientationTitle">Web Bildschirmorientierung</string>
-<!--    <string name="prefWebOrientationDefaultValue">Auto-Drehen</string> -->
     <string name="prefWebOrientationSummary">Web Bildschirmorientierung</string>
     <string name="prefInitialWebPageTitle">Web Startseite</string>
 
@@ -368,7 +350,6 @@
 
     <string name="prefSelectedLocoIndicatorTitle">Zusätzlicher Indikator für gewählte Lok</string>
     <string name="prefSelectedLocoIndicatorSummary">Zusätzliches Hervorheben des Knopfes für Lokauswahl basierend auf der Auswahlmethode.</string>
-<!--    <string name="prefSelectedLocoIndicatorDefaultValue">Keine</string> -->
     <string name="prefDisableVolumeKeysTitle">Lautstärketasten ausschalten</string>
     <string name="prefDisableVolumeKeysSummary">Schaltet die Lautstärketasten des Telefons/Tablets aus, welche sonst Geschwindigkeit steuern. Hinweis: Wenn gewählt wird \'Zusätzlicher Indikator für gewählte Lok\' ignoriert.</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Lautstärketasten folgen Berührung</string>
@@ -379,10 +360,6 @@
     <string name="prefSpeedButtonsSpeedStepTitle">Veränderung durch Geschwindigkeitsknöpfe</string>
     <string name="prefSpeedButtonsSpeedStepSummary">Wie viel die Geschwindigkeitspfeile die Geschwindigkeit des Fahrregler verändern.</string>
 
-<!--    <string name="prefGamePadTypeDefaultValue">Keine</string> -->
-<!--    <string name="prefSwipeUpOptionDefaultValue">Keine</string> -->
-<!--    <string name="prefGamePadStartButtonDefaultValue">Nächster Fahrregler</string> -->
-<!--    <string name="prefNumThrottleDefaultValue">Zwei</string> -->
     <string name="server_address">Serveradresse</string>
     <string name="routes_route">Fahrstraßenname</string>
 
@@ -398,7 +375,6 @@
     <string name="prefThrottleImportExportSummary">Voreinstellungen für Import/Export/Zurücksetzen</string>
     <string name="prefImportExportTitle">Import, Export, oder Zurücksetzen</string>
     <string name="prefImportExportSummary">\'Import\' oder \'Export\' der Voreinstellungen im \'\\Android\\data\\jmri.enginedriver\\files\\\' Verzeichnis oder setze sie zurück.\nWird SOFORT nach Wahl der Option ausgeführt.\n(Voreinstellungen können mit Kopieren der Datei auf ein anderes Telefon übertragen werden.)</string>
-<!--    <string name="prefImportExportDefaultValue">Keine</string> -->
     <string name="prefImportExportLocoListTitle">Einbeziehen der Liste kürzlich verwendeter Loks</string>
     <string name="prefImportExportLocoListSummary">Einbeziehen der Loks in der Liste kürzlich verwendeter Loks beim \'Import\' oder \'Export\'.</string>
     <string name="prefAutoImportExportTitle">Auto Host spezifischer Import/Export</string>
@@ -416,7 +392,6 @@
 
     <string name="prefHostImportExportTitle">Manueller Host spezifischer Import/Export</string>
     <string name="prefHostImportExportSummary" tools:ignore="Typos">\'Import\' oder \'Export\' deiner Voreinstellungen von/zu einem spezifischen Host in das \'\\Android\\data\\jmri.enginedriver\\files\\\' Verzeichnis. Der Host muß in deiner Liste Letzte Verbindungen sein.\nWird SOFORT nach Auswahl der Option ausgeführt.\n(Nur verfügbar wenn momentan nicht verbunden.)</string>
-<!--    <string name="prefHostImportExportDefaultValue">Keine</string> -->
     <string name="prefSwapForwardReverseButtonsTitle">Vertausche Richtungsknöpfe</string>
     <string name="prefSwapForwardReverseButtonsSummary">Vertausche die beiden Richtungsknöpfe permanent für alle Fahrregler.</string>
     <string name="prefSwapForwardReverseButtonsLongPressTitle">Langes Drücken zum Vertauschen der Richtungsknöpfe</string>
@@ -447,18 +422,15 @@
     <string name="prefThemeTitle">Motiv/Stil</string>
 
     <string name="prefThemeSummary">App Motiv.</string>
-<!--    <string name="prefThemeDefaultValue">Standard</string> -->
     <string name="prefHideDemoServerTitle">Demo Server ausblenden</string>
     <string name="prefHideDemoServerSummary">Verberge den Demo Server \'jmri.mstevetodd.com\' in der Liste der Verbindungen.</string>
 <!--    <string name="prefDirectionButtonsTitle">Bezeichnungen der Richtungsknöpfe</string>-->
 <!--    <string name="prefDirectionButtonsSummary">Bezeichnungen für alle Richtungsknöpfe</string>-->
-<!--    <string name="prefDirectionButtonsDefaultValue">Vorwärts</string>-->
 
     <string name="prefAccelerometerTitle">Voreinstellungen für Beschleunigungsmesser</string>
     <string name="prefAccelerometerSummary">Optionen für Gerätebewegung auf der Seite Fahrregler</string>
     <string name="prefAccelerometerShakeTitle">Aktion beim Schütteln</string>
     <string name="prefAccelerometerShakeSummary">Optionen für das Schütteln des Gerätes</string>
-<!--    <string name="prefAccelerometerShakeDefaultValue">Keine</string>  -->
     <string name="prefAccelerometerShakeThresholdTitle">Schütteln Schwellwert</string>
     <string name="prefAccelerometerShakeThresholdSummary">Schwellwert bei dem Schütteln erkannt wird. (1.5&#8211;3.5) Kleiner Wert reagiert auf eine leichte Bewegung.\n Erfordert Neustart von Engine Driver nach Änderung um wirksam zu werden.</string>
 
@@ -580,15 +552,6 @@
     <string name="prefTtsSummary">Schlüsselereignisse ansagen</string>
     <string name="prefTtsWhenTitle">Sprachausgabe</string>
     <string name="prefTtsWhenSummary">Zum Ankündigen von Schlüsselereignissen und Aktionen Text to Speech (TTS) verwenden.</string>
-    <!--
-        <string name="prefTtsWhenDefaultValue">Keine</string>
-        <string name="prefTtsThrottleTitle">Beim Fahrreglerwechsel</string>
-        <string name="prefTtsThrottleSummary">Wenn ein anderer Fahrregler gewählt wird.</string>
-        <string name="prefTtsThrottleSpeedTitle">+ Geschwindigkeit</string>
-        <string name="prefTtsThrottleSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann wird auch die Geschwindigkeit angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
-        <string name="prefTtsThrottleLocoSpeedTitle">+ Lok</string>
-        <string name="prefTtsThrottleLocoSpeedSummary">Wenn ein anderer Fahrregler auf dem Gamepad gewählt wird, dann werden auch die Loknummern angesagt. Übergeht die Optionen einzelner Fahrregler.</string>
-    -->
     <string name="prefTtsGamepadTestTitle">Beim Gamepad-Test</string>
     <string name="prefTtsGamepadTestSummary">Wenn die Gamepad-Testseite gestartet wird.</string>
     <string name="prefTtsGamepadTestCompleteTitle">Wenn der Gamepad-Test fertig ist.</string>

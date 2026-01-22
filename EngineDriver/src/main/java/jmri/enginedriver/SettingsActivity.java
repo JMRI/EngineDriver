@@ -1148,12 +1148,12 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
-        limitNumThrottles(prefScreen, sharedPreferences, "prefThrottleScreenType", "NumThrottle");
+        limitNumThrottles(prefScreen, sharedPreferences, "prefThrottleScreenType", "prefNumThrottles");
     }
     @SuppressLint("ApplySharedPref")
-    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String throttleTypePrefName, String numThrottlePrefName) {
+    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String throttleTypePrefName, String numThrottlesPrefName) {
         Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles()");
-        int numThrottles = mainapp.Numeralise(sharedPreferences.getString(numThrottlePrefName, getResources().getString(R.string.prefNumThrottleDefaultValue)));
+        int prefNumThrottles = mainapp.Numeralise(sharedPreferences.getString(numThrottlesPrefName, getResources().getString(R.string.prefNumThrottlesDefaultValue)));
         getThrottleScreenType(sharedPreferences, throttleTypePrefName);
 
         int index = getThrottleScreenTypeArrayIndex(sharedPreferences, throttleTypePrefName);
@@ -1163,16 +1163,16 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         if (index < 0) return; //bail if no matches
 
-        if ( ((fixed[index] == 1) && (numThrottles != max[index]))
-                || ((fixed[index] == 0) && (numThrottles > max[index])) ) {
-            Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: numThrottles " +  numThrottles + " fixed " + fixed[index] + " max " + max[index]);
+        if ( ((fixed[index] == 1) && (prefNumThrottles != max[index]))
+                || ((fixed[index] == 0) && (prefNumThrottles > max[index])) ) {
+            Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: prefNumThrottles " +  prefNumThrottles + " fixed " + fixed[index] + " max " + max[index]);
 
-            sharedPreferences.edit().putString(numThrottlePrefName, textNumbers[max[index]-1]).commit();
-            if (numThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
+            sharedPreferences.edit().putString(numThrottlesPrefName, textNumbers[max[index]-1]).commit();
+            if (prefNumThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
                 mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
                                         textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
             }
-            ListPreference listPref = prefScreen.findPreference(numThrottlePrefName);
+            ListPreference listPref = prefScreen.findPreference(numThrottlesPrefName);
             if (listPref != null) {
                 ignoreThisThrottleNumChange = true;
                 Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
@@ -1195,8 +1195,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     void showThrottleNumberPreferenceDialog(PreferenceScreen prefScreen) {
-//            String numThrottle = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue));  // currentValue
-        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottleDefaultValue)));
+//            String numThrottle = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottlesDefaultValue));  // currentValue
+        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
 
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         int index = getThrottleScreenTypeArrayIndex(prefs);

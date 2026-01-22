@@ -2981,7 +2981,7 @@ public class comm_thread extends Thread {
                 if (heartbeatIntervalSetpoint != 0) {
                     boolean anySent = false;
                     if (!mainapp.isDCCEX) {
-                        for (int i = 0; i < mainapp.numThrottles; i++) {
+                        for (int i = 0; i < mainapp.prefNumThrottles; i++) {
                             if (mainapp.consists[i].isActive()) {
                                 sendRequestSpeedAndDir(i);
                                 anySent = true;
@@ -3043,7 +3043,7 @@ public class comm_thread extends Thread {
                 if (prefs.getBoolean("prefStopOnPhoneCall",
                         mainapp.getResources().getBoolean(R.bool.prefStopOnPhoneCallDefaultValue))) {
                     Log.d(threaded_application.applicationName, activityName + ": onCallStateChanged(): Phone is OffHook, Stopping Trains");
-                    for (int i = 0; i < mainapp.numThrottles; i++) {
+                    for (int i = 0; i < mainapp.prefNumThrottles; i++) {
                         if (mainapp.consists[i].isActive()) {
                             sendSpeedZero(i);
                         }

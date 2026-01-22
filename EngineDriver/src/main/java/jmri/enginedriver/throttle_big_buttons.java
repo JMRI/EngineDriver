@@ -113,7 +113,7 @@ public class throttle_big_buttons extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if( throttleIndex < mainapp.numThrottles) {
+            if( throttleIndex < mainapp.prefNumThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
@@ -251,7 +251,7 @@ public class throttle_big_buttons extends throttle {
         final float denScale = dm.density;
 
         int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
-        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.numThrottles;
+        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.prefNumThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;

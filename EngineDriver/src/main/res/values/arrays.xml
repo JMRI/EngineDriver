@@ -2648,6 +2648,8 @@
         <item>SwipeDownOption:prefSwipeDownOption</item>
         <item>SwipeUpOption:prefSwipeUpOption</item>
         <item>ConsistLightsLongClickPreference:prefConsistLightsLongClick</item>
+        <item>WebViewLocation:prefWebViewLocation</item>
+        <item>NumThrottle:prefNumThrottles</item>
 
         <item>speed>Timer_arrows_throttle_speed_step:</item>  <!-- Remove -->
         <item>default_address_length:</item>  <!-- Remove -->
