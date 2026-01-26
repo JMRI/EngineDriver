@@ -2189,12 +2189,12 @@
             android:summary="@string/prefMaximumRecentConnectionsSummary"
             android:title="@string/prefMaximumRecentConnectionsTitle" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefConnectToFirstServer"
-            android:key="prefConnectToFirstServer"
+        <EditTextPreference
+            android:dialogLayout="@layout/auto_server_ip_connect_dialog"
+            android:key="prefAutoServerIpConnect"
             android:layout="@layout/checkbox_no_icon"
-            android:summary="@string/prefConnectToFirstServerSummary"
-            android:title="@string/PrefConnectToFirstServerTitle" />
+            android:summary="@string/prefAutoServerIpConnectSummary"
+            android:title="@string/prefAutoServerIpConnectTitle" />
 
         <EditTextPreference
             android:dialogLayout="@layout/auto_server_connect_dialog"
@@ -2203,12 +2203,12 @@
             android:summary="@string/prefAutoServerNamedConnectSummary"
             android:title="@string/prefAutoServerNamedConnectTitle" />
 
-        <EditTextPreference
-            android:dialogLayout="@layout/auto_server_ip_connect_dialog"
-            android:key="prefAutoServerIpConnect"
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefConnectToFirstServer"
+            android:key="prefConnectToFirstServer"
             android:layout="@layout/checkbox_no_icon"
-            android:summary="@string/prefAutoServerIpConnectSummary"
-            android:title="@string/prefAutoServerIpConnectTitle" />
+            android:summary="@string/prefConnectToFirstServerSummary"
+            android:title="@string/PrefConnectToFirstServerTitle" />
 
         <CheckBoxPreference
             android:defaultValue="@bool/prefHideDemoServerDefaultValue"

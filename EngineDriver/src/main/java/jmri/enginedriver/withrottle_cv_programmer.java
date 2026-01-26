@@ -902,23 +902,6 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         return rslt;
     }
 
-//    void setPowerButton(Button btn, int powerState) {
-//        TypedValue outValue = new TypedValue();
-//        if (powerState == 1) {
-//            mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-//        } else if (powerState == 0) {
-//            mainapp.theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-//        } else {
-//            if (!mainapp.isDCCEX) {
-//                mainapp.theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-//            } else {
-//                mainapp.theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-//            }
-//        }
-//        Drawable img = getResources().getDrawable(outValue.resourceId);
-//        btn.setBackground(img);
-//    }
-
     String num2binStr(int val, int bits) { // bits = number of bits to return - dictates the max val allowed
         StringBuilder rslt = new StringBuilder();
         double tempVal = val;
