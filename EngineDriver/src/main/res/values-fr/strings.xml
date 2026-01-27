@@ -213,8 +213,8 @@
     <string name="prefGamePadButtonLeftTitle">Action touche DPAD Gauche</string>
     <string name="prefGamePadButtonSummary">Choisir l action affectée à la touche</string>
 
-    <string name="prefEsuMc2Title">Options ESU MobileControl II/Pro</string>
-    <string name="prefEsuMc2Summary">Choisir les options pour ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Title">Options ESU MobileControl Pro</string>
+    <string name="prefEsuMc2Summary">Choisir les options pour ESU MobileControl Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Options touches latérales</string>
     <string name="prefEsuMc2ButtonTLTitle">Action de la touche en Haut à Gauche</string>
     <string name="prefEsuMc2ButtonTLSummary">Choisir l action affectée à la touche</string>
@@ -246,9 +246,9 @@
     <string name="prefEsuMc2EndStopDirectionChangeSummary">Autorise le changement de sens en butée 0 via la molette de commande</string>
     <string name="prefEsuMc2KnobButtonTitle">Affiche molette désactivée</string>
     <string name="prefEsuMc2KnobButtonSummary">Permet de désactiver la molette via l écran du régulateur</string>
-    <string name="toastEsuMc2NoLocoChange">Changement de locomotive interdit: Mobile Control II/Pro en mode Stop</string>
-    <string name="toastEsuMc2NoThrottleChange">Changement de commande interdit: Mobile Control II/Pro en mode Stop</string>
-    <string name="toastEsuMc2NoButtonPresses">Utilisation des touches interdite: Mobile Control II/Pro en mode Stop</string>
+    <string name="toastEsuMc2NoLocoChange">Changement de locomotive interdit: ESU MobileControl Pro en mode Stop</string>
+    <string name="toastEsuMc2NoThrottleChange">Changement de commande interdit: ESU MobileControl Pro en mode Stop</string>
+    <string name="toastEsuMc2NoButtonPresses">Utilisation des touches interdite: ESU MobileControl Pro en mode Stop</string>
     <string name="EsuMc2KnobAction">Active/désactive molette de commande</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilisation des libellés de fonctions par défaut?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Laisser votre appareil se connecter en Data à JMRI</string>
@@ -725,8 +725,8 @@
     <string name="introButtonsSummary">Choisissez comment controler la vitesse de vos trains.</string>
     <string name="introButtonsSlider">Curseur Seul\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Curseur + Touches\n(pas possible si \'Big Buttons\')</string>
-    <string name="introButtonsNoSlider">Aucun curseur ni bouto, recommandation pour Mobile Control Pro ou 2 ESU</string>
-    <string name="introButtonsNoSliderOrButtons">Aucun curseur ni bouton recommandé pour ESU MC 2/Pro</string>
+    <string name="introButtonsNoSlider">Aucun curseur ni bouto, recommandation pour ESU MobileControl Pro ou 2 ESU</string>
+    <string name="introButtonsNoSliderOrButtons">Aucun curseur ni bouton recommandé pour ESU MC Pro</string>
     <string name="introDccexTitle">Options pour station de commande EX</string>
     <string name="introDccexSummary">Engine Driver permet des foncstionnalités supplémentaires, par exemple la programmation directe de CV sur une centrale DCC-EX (et pas via JMRI)
         \n\nSi vous repondez \'Oui\' ci-dessous, Engine Driver utiliserales commandes natives DCC-EX et pas celle de WiThrottle si le nom du serveur contient \'DCC-EX\' or \'DCCEX\'.</string>
@@ -1233,8 +1233,8 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Action du bouton STOP</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Choix action du bouton STOP</string>
     <string name="statusThreadedAppNoLocationService">SSID inaccessible</string>
-    <string name="introEsuMc2Title">ESU Mobile Control Pro ou 2</string>
-    <string name="introEsuMc2Summary">L ecran de la Mobile Control Pro ou 2 est limité et certains boutons sont redondants avec d autres écrans Engine Driver. Si vous choisissez Oui, quelques réglages seront modifiés pour mieux s adapter a la commande Moble Control Pro / 2</string>
+    <string name="introEsuMc2Title">ESU MobileControl Pro ou 2</string>
+    <string name="introEsuMc2Summary">L ecran de la MobileControl Pro ou 2 est limité et certains boutons sont redondants avec d autres écrans Engine Driver. Si vous choisissez Oui, quelques réglages seront modifiés pour mieux s adapter a la commande Moble Control Pro / 2</string>
     <string name="introEsuMc2QuestionYes">Oui, utilisation des réglages recommandés</string>
     <string name="prefEsuMc2SliderTypeTitle">Type de curseur</string>
     <string name="prefEsuMc2SliderTypeSummary">Definir action du ciurseur</string>

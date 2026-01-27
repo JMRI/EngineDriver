@@ -294,7 +294,7 @@
     <string name="introThrottleTypeSummary2">選択したタイプに応じて、画面上の個々のスロットルの数 (1 ～ 6) が制限されます。</string>
     <string name="introWelcomeSummary">このアプリは、JMRI、MRC、または DigiTrax WiThrottle サーバーに接続して、DCC ロコとデバイスを制御できます。次のページでは、初期設定について説明します。</string>
     <string name="introWelcomeTitle">\nエンジン ドライバーへようこそ</string>
-    <string name="introButtonsNoSliderOrButtons">ESU MC 2/Pro にはスライダーやボタンは推奨されません</string>
+    <string name="introButtonsNoSliderOrButtons">ESU MC Pro にはスライダーやボタンは推奨されません</string>
     <string name="introDccexTitle">EX-CommandStation オプション</string>
     <string name="introDccexSummary">DCC-EX EX-CommandStation を直接使用している場合、エンジン ドライバーは CV プログラミングなどの追加機能を提供できます。 (JMRI 経由ではありません)\n\n以下で「はい」と応答すると、サーバー名に「DCC-EX」または「DCCEX」が含まれている場合、エンジン ドライバーはデフォルトで WiThrottle ではなく DCC-EX ネイティブ コマンドを使用します。 。</string>
     <string name="introDccexQuestionYes">はい、EX-CommandStation を使用します</string>
@@ -558,9 +558,9 @@
     <string name="prefEsuMc2StopButtonDelayTitle">停止ボタンの長押しの遅延</string>
     <string name="prefEsuMc2StopButtonShortPressSummary">「短押し」すると、現在制御されている機関車が一時停止します。\n運転が再開されると元の速度に戻ります。</string>
     <string name="prefEsuMc2StopButtonShortPressTitle">短押しを有効にする</string>
-    <string name="prefEsuMc2Summary">ESU MobileControl II/Pro オプションの選択</string>
+    <string name="prefEsuMc2Summary">ESU MobileControl Pro オプションの選択</string>
 
-    <string name="prefEsuMc2Title">ESU MobileControl II/Pro オプション</string>
+    <string name="prefEsuMc2Title">ESU MobileControl Pro オプション</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">コントロールノブのオプション</string>
 
     <string name="prefEsuMc2ZeroTrimSummary">コントロールノブのゼロトリム設定を設定します。\n小さいほど反時計回りのエンドストップ位置に近くなります。\n許可される範囲は 0&#8211;255 です。</string>
@@ -1034,9 +1034,9 @@
     <string name="toastConsistEditHelp">タッチすると方向が変わります。エントリを削除するには、左から右にスワイプします。</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">ファンクションボタンエリアのサイズを大きくすることをお勧めします。そうしないと、ベル/ホーン/ミュートサウンドファンクションにアクセスできなくなります。</string>
     <string name="toastDirectionButtonsSwapped">方向ボタンが一時的に入れ替わりました。それらを永久に交換するには、環境設定を変更してください</string>
-    <string name="toastEsuMc2NoButtonPresses">ボタンを押すことはできません: Mobile Control II/Pro は現在停止モードです</string>
-    <string name="toastEsuMc2NoLocoChange">ロコ変更は許可されていません: Mobile Control II/Pro は現在停止モードです</string>
-    <string name="toastEsuMc2NoThrottleChange">スロットル変更は許可されていません: Mobile Control II/Pro は現在停止モードです</string>
+    <string name="toastEsuMc2NoButtonPresses">ボタンを押すことはできません: ESU MobileControl Pro は現在停止モードです</string>
+    <string name="toastEsuMc2NoLocoChange">ロコ変更は許可されていません: ESU MobileControl Pro は現在停止モードです</string>
+    <string name="toastEsuMc2NoThrottleChange">スロットル変更は許可されていません: ESU MobileControl Pro は現在停止モードです</string>
     <string name="toastFlashlightOffFailed">ごめん！懐中電灯をオフにする際に問題が発生しました&#8230;</string>
     <string name="toastFlashlightOnFailed">ごめん！懐中電灯のスイッチを入れる際に問題が発生しました&#8230;</string>
     <string name="toastImmersiveModeDisabled">イマーシブ モードが一時的に無効になっています。環境設定の変更を永続的に無効にするには</string>
@@ -1233,8 +1233,8 @@
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">スロットル機能ラッチをオーバーライドする</string>
     <string name="statusThreadedAppNoLocationService">SSIDにアクセスできない</string>
     <string name="prefSelectLocoByRadioButtonsTitle">ロコメソッドの外観を選択</string>
-    <string name="introEsuMc2Title">ESU モバイルコントロール 2/Pro</string>
-    <string name="introEsuMc2Summary">ESU Mobile Control 2/Pro の画面スペースは限られており、物理的なコントロールにより Engine Driver の画面上のコントロールの一部が不要になります。以下の「はい」を選択すると、ESU MC2/Pro の画面を最大限に活用するために一部の設定が変更されます。</string>
+    <string name="introEsuMc2Title">ESU モバイルコントロール Pro</string>
+    <string name="introEsuMc2Summary">ESU MobileControl Pro の画面スペースは限られており、物理的なコントロールにより Engine Driver の画面上のコントロールの一部が不要になります。以下の「はい」を選択すると、ESU MC Pro の画面を最大限に活用するために一部の設定が変更されます。</string>
     <string name="introEsuMc2QuestionYes">はい、推奨設定を使用します</string>
     <string name="prefEsuMc2SliderTypeTitle">スライダータイプ</string>
     <string name="prefEsuMc2SliderTypeSummary">スライダーの動作を定義する</string>

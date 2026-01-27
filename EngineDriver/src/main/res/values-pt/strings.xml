@@ -224,8 +224,8 @@
     <string name="prefGamePadButtonLeftTitle">Ação Gamepad DPAD Esquerda</string>
     <string name="prefGamePadButtonSummary">Escolha a ação ao apertar o botão.</string>
 
-    <string name="prefEsuMc2Title">Opções ESU MobileControl II/Pro</string>
-    <string name="prefEsuMc2Summary">Escolha Opções ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Title">Opções ESU MobileControl Pro</string>
+    <string name="prefEsuMc2Summary">Escolha Opções ESU MobileControl Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Opções botões laterais dispositivo</string>
     <string name="prefEsuMc2ButtonTLTitle">Ação botão alto-esquerda</string>
     <string name="prefEsuMc2ButtonTLSummary">Escolha a ação ao apertar o botão.</string>
@@ -251,9 +251,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Regulagem Zero Manopla de Controle</string>
     <string name="prefEsuMc2ZeroTrimSummary">Regula o zero da Manopla de Controle.\n Menor is mais perto à posição extrema antiorária.\nValores permitidos 0&#8211;255.</string>
 
-    <string name="toastEsuMc2NoLocoChange">Troca de Locomotiva não permitida: Mobile Control II/Pro em modo parada</string>
-    <string name="toastEsuMc2NoThrottleChange">Troca de Controlador não permitida: Mobile Control II/Pro atualmente em modo parada</string>
-    <string name="toastEsuMc2NoButtonPresses">Pressão de botões não permitida:Mobile Control II/Pro atualmente em modo parada</string>
+    <string name="toastEsuMc2NoLocoChange">Troca de Locomotiva não permitida: ESU MobileControl Pro em modo parada</string>
+    <string name="toastEsuMc2NoThrottleChange">Troca de Controlador não permitida: ESU MobileControl Pro atualmente em modo parada</string>
+    <string name="toastEsuMc2NoButtonPresses">Pressão de botões não permitida:ESU MobileControl Pro atualmente em modo parada</string>
 
     <string name="prefDefaultFunctionsTitle">Preferências Funções Padrão</string>
     <string name="prefDefaultFunctionsSummary">Quando e como as etiquetas das funções padrão são mostradas.</string>
@@ -837,7 +837,7 @@
     <string name="throttleSwitchAction">Mudar telas do acelerador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferências imagem de fundo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferências do botão do acelerador Interruptor</string>
-    <string name="introButtonsNoSliderOrButtons">Nenhum controle deslizante ou botões recomendados para ESU MC 2/Pro</string>
+    <string name="introButtonsNoSliderOrButtons">Nenhum controle deslizante ou botões recomendados para ESU MC Pro</string>
     <string name="introDccexTitle">Opções EX-CommandStation</string>
     <string name="introDccexSummary">O Engine Driver pode fornecer funcionalidades adicionais, incluindo programação CV, se você estiver usando um DCC-EX EX-CommandStation diretamente. (Não via JMRI)\n\nSe você responder \'Sim\' abaixo, o Engine Driver usará como padrão comandos DCC-EX Native em vez de WiThrottle se o nome do servidor contiver \'DCC-EX\' ou \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Sim, usarei uma EX-CommandStation</string>
@@ -1167,8 +1167,8 @@
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Ação do botão Parar</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Escolha o que o botão Parar faz</string>
     <string name="statusThreadedAppNoLocationService">Não consigo acessar o SSID</string>
-    <string name="introEsuMc2Title">Controle Móvel ESU 2/Pro</string>
-    <string name="introEsuMc2Summary">O ESU Mobile Control 2/Pro tem espaço de tela limitado e os controles físicos tornam redundantes alguns dos controles na tela do Engine Driver. Se você escolher \"Sim\" abaixo, algumas configurações serão alteradas para aproveitar ao máximo a tela do ESU MC2/Pro.</string>
+    <string name="introEsuMc2Title">Controle Móvel ESU Pro</string>
+    <string name="introEsuMc2Summary">O ESU MobileControl Pro tem espaço de tela limitado e os controles físicos tornam redundantes alguns dos controles na tela do Engine Driver. Se você escolher \"Sim\" abaixo, algumas configurações serão alteradas para aproveitar ao máximo a tela do ESU MC2/Pro.</string>
     <string name="introEsuMc2QuestionYes">Sim, use as configurações recomendadas</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipo de controle deslizante</string>
     <string name="prefEsuMc2SliderTypeSummary">Defina o que o Slider fará</string>

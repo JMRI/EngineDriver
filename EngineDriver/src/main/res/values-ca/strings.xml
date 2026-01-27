@@ -213,8 +213,8 @@
     <string name="prefGamePadButtonLeftTitle">Acció esquerra gamepad DPAD</string>
     <string name="prefGamePadButtonSummary">Tria una acció quan premis la tecla</string>
 
-    <string name="prefEsuMc2Title">Opcions de ESU MobileControl II/Pro</string>
-    <string name="prefEsuMc2Summary">Escull opcions de ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Title">Opcions de ESU MobileControl Pro</string>
+    <string name="prefEsuMc2Summary">Escull opcions de ESU MobileControl Pro</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Opcions de la tecla lateral del dispositiu</string>
     <string name="prefEsuMc2ButtonTLTitle">Acció de la tecla superior esquerra</string>
     <string name="prefEsuMc2ButtonTLSummary">Escull una acció quan premis la tecla</string>
@@ -241,9 +241,9 @@
     <string name="prefEsuMc2ZeroTrimTitle">Posada a Zero de la tecla regulador</string>
     <string name="prefEsuMc2ZeroTrimSummary">Estableix els paràmetres de posada a zero de la tecla regulador.\nUn valor més petit és més proper a la posició de parada final en el sentit antihorari.\nRang permès 0&#8211;255</string>
 
-    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: Mobile Control II/Pro en mode d\'aturada</string>
-    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: Mobile Control II/Pro en mode d\'aturada</string>
-    <string name="toastEsuMc2NoButtonPresses">Prémer la tecla no està permès: Mobile Control II/Pro en mode d\'aturada</string>
+    <string name="toastEsuMc2NoLocoChange">Canvi de Locomotora no permès: ESU MobileControl Pro en mode d\'aturada</string>
+    <string name="toastEsuMc2NoThrottleChange">Canvi de Controlador no permès: ESU MobileControl Pro en mode d\'aturada</string>
+    <string name="toastEsuMc2NoButtonPresses">Prémer la tecla no està permès: ESU MobileControl Pro en mode d\'aturada</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsTitle">Utilitza les etiquetes de les funcions per defecte?</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Mostra les etiquetes de funció predeterminades en lloc de les etiquetes de les entrades de la flota</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Anul·lació del bloqueig de la funció de l\'accelerador</string>
@@ -815,7 +815,7 @@
     <string name="introButtonsSliderAndButtons">Control lliscant i tecles\n(no és possible amb \'Botons grans\')</string>
     <string name="introButtonsNoSlider">Només tecles de velocitat</string>
 
-    <string name="introButtonsNoSliderOrButtons">No es recomana cap control lliscant ni botons per a ESU MC 2/Pro</string>
+    <string name="introButtonsNoSliderOrButtons">No es recomana cap control lliscant ni botons per a ESU MC Pro</string>
     <string name="introDccexTitle">Opcions de l\'EX-CommandStation</string>
     <string name="introDccexSummary">El controlador del motor pot proporcionar funcionalitats addicionals, inclosa la programació de CV, si utilitzeu directament una DCC-EX EX-CommandStation. (No mitjançant JMRI)\n\nSi responeu \'Sí\' a continuació, el controlador del motor utilitzarà per defecte les ordres natives de DCC-EX en comptes de WiThrottle si el nom del servidor conté \'DCC-EX\' o \'DCCEX\' .</string>
     <string name="introDccexQuestionYes">Sí, faré servir una EX-CommandStation</string>
@@ -1225,8 +1225,8 @@
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Utilitzeu els valors per defecte per a les entrades de la llista sense funcions</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Acció del botó Stop</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">Trieu què fa el botó Atura</string>
-    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
-    <string name="introEsuMc2Summary">L\'ESU Mobile Control 2/Pro té un espai limitat a la pantalla i els controls físics fan que alguns dels controls a la pantalla de Engine Driver siguin redundants.   Si trieu \"Sí\" a continuació, alguns paràmetres es modificaran per fer un millor ús de la pantalla ESU MC2/Pro.</string>
+    <string name="introEsuMc2Title">ESU MobileControl Pro</string>
+    <string name="introEsuMc2Summary">L\'ESU MobileControl Pro té un espai limitat a la pantalla i els controls físics fan que alguns dels controls a la pantalla de Engine Driver siguin redundants.   Si trieu \"Sí\" a continuació, alguns paràmetres es modificaran per fer un millor ús de la pantalla ESU MC2/Pro.</string>
     <string name="introEsuMc2QuestionYes">Sí, utilitza la configuració recomanada</string>
     <string name="prefEsuMc2SliderTypeTitle">Tipus de control lliscant</string>
     <string name="prefEsuMc2SliderTypeSummary">Definiu què farà el control lliscant</string>

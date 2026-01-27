@@ -277,8 +277,8 @@
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
-    <string name="prefEsuMc2Title">ESU MobileControl II 选项</string>
-    <string name="prefEsuMc2Summary">选择 ESU MobileControl II 选项</string>
+    <string name="prefEsuMc2Title">ESU MobileControl Pro 选项</string>
+    <string name="prefEsuMc2Summary">选择 ESU MobileControl Pro 选项</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">设备侧按钮选项</string>
     <string name="prefEsuMc2ButtonTLTitle">左上角按钮操作</string>
     <string name="prefEsuMc2ButtonTLSummary">选择按下按钮时执行的操作</string>
@@ -306,9 +306,9 @@
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
-    <string name="toastEsuMc2NoLocoChange">机车切换不允许：Mobile Control II 当前处于停止模式</string>
-    <string name="toastEsuMc2NoThrottleChange">控制器切换不允许：Mobile Control II 当前处于停止模式</string>
-    <string name="toastEsuMc2NoButtonPresses">按钮操作不允许：Mobile Control II 当前处于停止模式</string>
+    <string name="toastEsuMc2NoLocoChange">机车切换不允许：ESU MobileControl Pro 当前处于停止模式</string>
+    <string name="toastEsuMc2NoThrottleChange">控制器切换不允许：ESU MobileControl Pro 当前处于停止模式</string>
+    <string name="toastEsuMc2NoButtonPresses">按钮操作不允许：ESU MobileControl Pro 当前处于停止模式</string>
     <string name="EsuMc2KnobAction">启用/禁用旋钮</string>
     <!-- ESU MCII Messages -->
 
@@ -1006,7 +1006,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="introButtonsSliderAndButtons">滑块 + 按钮（不支持“大按钮”）。</string>
     <string name="introButtonsNoSlider">仅限速度按钮</string>
 
-    <string name="introButtonsNoSliderOrButtons">ESU MC 2/Pro 不建议使用滑块或按钮。</string>
+    <string name="introButtonsNoSliderOrButtons">ESU MC Pro 不建议使用滑块或按钮。</string>
     <string name="introDccexTitle">EX-CommandStation选项</string>
     <string name="introDccexSummary">如果您直接使用DCC-EX EX-CommandStation（不通过JMRI），Engine Driver可以提供额外功能，包括CV编程。\n\n如果您在下方选择“是”，当服务器名称包含“DCC-EX”或“DCCEX”或使用端口“2560”时，Engine Driver将默认使用DCC-EX原生命令而非WiThrottle。</string>
     <string name="introDccexQuestionYes">是，我将使用EX-CommandStation</string>
@@ -1332,7 +1332,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="advancedConsistToolAddButtonLabel">添加</string>
     <string name="prefConsistFollowString4Summary">在编组中机车的功能标签中查找的逗号分隔字符串，用于识别相似功能。（仅适用于复杂匹配规则）</string>
     <string name="prefConsistFollowAction4Title">字符串 4 的操作</string>
-    <string name="introEsuMc2Summary">ESU Mobile Control 2/Pro 的屏幕空间有限，而且其实体按键使得 Engine Driver 的一些屏幕控制功能显得多余。如果您在下方选择“是”，我们将调整部分设置，以充分利用 ESU MC2/Pro 的屏幕空间。</string>
+    <string name="introEsuMc2Summary">ESU MobileControl Pro 的屏幕空间有限，而且其实体按键使得 Engine Driver 的一些屏幕控制功能显得多余。如果您在下方选择“是”，我们将调整部分设置，以充分利用 ESU MC Pro 的屏幕空间。</string>
     <string name="introEsuMc2QuestionYes">是的，请使用推荐设置</string>
     <string name="prefEsuMc2SliderTypeTitle">滑块类型</string>
     <string name="prefEsuMc2SliderTypeSummary">定义滑块的功能</string>
