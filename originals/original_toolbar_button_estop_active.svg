@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="171.33333mm"
+   height="171.33333mm"
+   viewBox="0 0 607.0866 607.08659"
+   id="svg2"
+   version="1.1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="original_toolbar_button_estop_active.svg"
+   inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-hdpi\estop.png"
+   inkscape:export-xdpi="10.8"
+   inkscape:export-ydpi="10.8"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4155"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4157" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4149">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4151" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4139"
+       inkscape:swatch="gradient">
+      <stop
+         style="stop-color:#2b2200;stop-opacity:1;"
+         offset="0"
+         id="stop4141" />
+      <stop
+         style="stop-color:#2b2200;stop-opacity:0;"
+         offset="1"
+         id="stop4143" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient895"
+       id="linearGradient897"
+       x1="366.55923"
+       y1="-167.54758"
+       x2="771.93915"
+       y2="235.0571"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0360467,0,0,1.0360467,-21.405804,-2.2083549)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient895">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0"
+         id="stop891" />
+      <stop
+         style="stop-color:#3a0000;stop-opacity:1;"
+         offset="1"
+         id="stop893" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient8256"
+       id="linearGradient8258"
+       x1="358.23788"
+       y1="-175.91824"
+       x2="776.63855"
+       y2="239.61804"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.0038046,0,0,1.0038046,-1.2341505,0.79208018)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient8256">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop8254" />
+      <stop
+         style="stop-color:#250000;stop-opacity:1;"
+         offset="1"
+         id="stop8252" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="246.78027"
+     inkscape:cy="351.43207"
+     inkscape:document-units="px"
+     inkscape:current-layer="g4165"
+     showgrid="false"
+     fit-margin-top="1"
+     fit-margin-left="1"
+     fit-margin-right="1"
+     fit-margin-bottom="1"
+     units="mm"
+     inkscape:window-width="1600"
+     inkscape:window-height="829"
+     inkscape:window-x="-8"
+     inkscape:window-y="114"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-65.224067,-173.70181)">
+    <g
+       id="g4165"
+       transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,-256.86318,384.18552)">
+      <rect
+         style="fill:url(#linearGradient897);fill-opacity:1;stroke:url(#linearGradient8258);stroke-width:3.88518;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5645"
+         width="600.9071"
+         height="600.9071"
+         x="326.32312"
+         y="-206.24785"
+         ry="98.424438"
+         rx="98.424438"
+         inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4"
+         transform="rotate(45)" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:16.25;stroke-miterlimit:4;stroke-dasharray:none"
+         id="rect5645-4"
+         width="471.25"
+         height="471.25"
+         x="390.00555"
+         y="-142.5654"
+         transform="rotate(45)"
+         ry="77.1875"
+         rx="77.1875"
+         inkscape:export-filename="C:\Users\uketmh\Documents\ModelRailway\JMRIDev\EngineDriver\res\drawable-xhdpi\flashlight_on.png"
+         inkscape:export-xdpi="14.4"
+         inkscape:export-ydpi="14.4" />
+      <g
+         transform="matrix(11.611879,11.611879,-11.611879,11.611879,349.69999,188.38577)"
+         id="g12-1"
+         style="fill:#5e0000;fill-opacity:1">
+        <circle
+           style="fill:#5e0000;fill-opacity:1"
+           cx="21.732"
+           cy="5.5"
+           r="1.5"
+           id="circle2-6" />
+        <circle
+           style="fill:#5e0000;fill-opacity:1"
+           cx="17.732"
+           cy="2.5"
+           r="1.5"
+           id="circle4-4" />
+        <circle
+           style="fill:#5e0000;fill-opacity:1"
+           cx="13.732"
+           cy="1.5"
+           r="1.5"
+           id="circle6-2" />
+        <circle
+           style="fill:#5e0000;fill-opacity:1"
+           cx="9.7320004"
+           cy="3.5"
+           r="1.5"
+           id="circle8-9" />
+        <path
+           inkscape:connector-curvature="0"
+           style="fill:#5e0000;fill-opacity:1"
+           d="M 20.232,5.5 V 12 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 2.5 h -3 V 11 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 1.5 h -3 V 11 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 3.5 h -3 V 16 L 6.207,13.229 c -0.6,-0.925 -1.771,-1.235 -2.629,-0.705 -0.855,0.542 -1.067,1.724 -0.475,2.646 0,0 3.266,4.943 4.658,7.059 1.392,2.116 3.647,3.771 7.864,3.771 6.982,0 7.607,-5.392 7.607,-7 0,-1.608 0,-13.5 0,-13.5 z"
+           id="path10-1" />
+      </g>
+      <g
+         transform="matrix(11.611879,11.611879,-11.611879,11.611879,349.69999,177.77913)"
+         id="g12"
+         style="fill:#ff0000;fill-opacity:1">
+        <circle
+           style="fill:#ff0000;fill-opacity:1"
+           cx="21.732"
+           cy="5.5"
+           r="1.5"
+           id="circle2" />
+        <circle
+           style="fill:#ff0000;fill-opacity:1"
+           cx="17.732"
+           cy="2.5"
+           r="1.5"
+           id="circle4" />
+        <circle
+           style="fill:#ff0000;fill-opacity:1"
+           cx="13.732"
+           cy="1.5"
+           r="1.5"
+           id="circle6" />
+        <circle
+           style="fill:#ff0000;fill-opacity:1"
+           cx="9.7320004"
+           cy="3.5"
+           r="1.5"
+           id="circle8" />
+        <path
+           inkscape:connector-curvature="0"
+           style="fill:#ff0000;fill-opacity:1"
+           d="M 20.232,5.5 V 12 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 2.5 h -3 V 11 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 1.5 h -3 V 11 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 3.5 h -3 V 16 L 6.207,13.229 c -0.6,-0.925 -1.771,-1.235 -2.629,-0.705 -0.855,0.542 -1.067,1.724 -0.475,2.646 0,0 3.266,4.943 4.658,7.059 1.392,2.116 3.647,3.771 7.864,3.771 6.982,0 7.607,-5.392 7.607,-7 0,-1.608 0,-13.5 0,-13.5 z"
+           id="path10" />
+      </g>
+    </g>
+  </g>
+</svg>

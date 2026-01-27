@@ -344,9 +344,9 @@
     <!--    Gamepad button preferences   -->
 
     <!-- ESU MCII preferences -->
-    <string name="prefEsuMc2ThrottleNameDefaultValue" translatable="false">ESU MobileControl II/Pro</string>  <!-- DO NOT TRANSLATE -->
-    <string name="prefEsuMc2Title">ESU MobileControl II/Pro Options</string>
-    <string name="prefEsuMc2Summary">Choose ESU MobileControl II/Pro options</string>
+    <string name="prefEsuMc2ThrottleNameDefaultValue" translatable="false">ESU MobileControl Pro</string>  <!-- DO NOT TRANSLATE -->
+    <string name="prefEsuMc2Title">ESU MobileControl Pro Options</string>
+    <string name="prefEsuMc2Summary">Choose ESU MobileControl Pro options</string>
     <string name="prefEsuMc2ButtonsCategoryTitle">Device side button options</string>
     <string name="prefEsuMc2ButtonTLTitle">Top-left button action</string>
     <string name="prefEsuMc2ButtonTLSummary">Choose the action when you press the button</string>
@@ -381,9 +381,9 @@
     <!-- ESU MCII preferences -->
 
     <!-- ESU MCII Messages -->
-    <string name="toastEsuMc2NoLocoChange">Loco change not allowed: Mobile Control II/Pro currently in stop mode</string>
-    <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: Mobile Control II/Pro currently in stop mode</string>
-    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: Mobile Control II/Pro currently in stop mode</string>
+    <string name="toastEsuMc2NoLocoChange">Loco change not allowed: MobileControl Pro currently in stop mode</string>
+    <string name="toastEsuMc2NoThrottleChange">Throttle change not allowed: MobileControl Pro currently in stop mode</string>
+    <string name="toastEsuMc2NoButtonPresses">Button presses not allowed: MobileControl Pro currently in stop mode</string>
     <string name="EsuMc2KnobAction">Enable/Disable Knob</string>
     <!-- ESU MCII Messages -->
 
@@ -1345,7 +1345,7 @@
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
-    <string name="introButtonsNoSliderOrButtons">No Slider or Buttons   Recommended for ESU MC 2/Pro</string>
+    <string name="introButtonsNoSliderOrButtons">No Slider or Buttons   Recommended for ESU MC Pro</string>
 
     <string name="introDccexTitle">EX-CommandStation Options</string>
     <string name="introDccexSummary">Engine Driver can provide additional functionality, including CV programming,
@@ -1355,8 +1355,8 @@
     <string name="introDccexQuestionYes">Yes, I will be using an EX-CommandStation</string>
     <string name="introDccexQuestionNo">No, I will NOT be using an EX-CommandStation</string>
 
-    <string name="introEsuMc2Title">ESU Mobile Control 2/Pro</string>
-    <string name="introEsuMc2Summary">The ESU Mobile Control 2/Pro has limited screen space and the physical controls         make some of Engine Driver\'s on-screen controls redundant.   If you choose \'Yes\' below,         some settings will be altered to make best use of the ESU MC2/Pro screen.</string>
+    <string name="introEsuMc2Title">ESU MobileControl Pro</string>
+    <string name="introEsuMc2Summary">The ESU MobileControl Pro has limited screen space and the physical controls         make some of Engine Driver\'s on-screen controls redundant.   If you choose \'Yes\' below,         some settings will be altered to make best use of the ESU MC Pro screen.</string>
     <string name="introEsuMc2QuestionYes">Yes, Use recommended settings</string>
     <string name="introEsuMc2QuestionNo">No, I will choose my own settings</string>
 

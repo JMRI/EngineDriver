@@ -677,15 +677,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     loadSharedPreferencesFromFile(prefs, EXTERNAL_URL_PREFERENCES_IMPORT, deviceId, restart_reason_type.IMPORT_SERVER_MANUAL);
                     break;
 
-                case message_type.IMPORT_SERVER_MANUAL_FAIL:
-                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File not Found");
-                    prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
-                    prefs.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
-                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
-                            prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))),
-                            Toast.LENGTH_LONG);
-                    reload();
-                    break;
+//                case message_type.IMPORT_SERVER_MANUAL_FAIL:
+//                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Settings: Message: Import preferences from Server: File not Found");
+//                    prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
+//                    prefs.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
+//                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesImportServerManualFailed,
+//                            prefs.getString("prefImportServerManual", getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue))),
+//                            Toast.LENGTH_LONG);
+//                    reload();
+//                    break;
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.SETTINGS)
@@ -713,12 +713,13 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             summary = summary.substring(0, summary.indexOf(DELIMITER));
             preference.setSummary(summary);
         }
-        if (preference instanceof ListPreference) {
-            ListPreference listPreference = (ListPreference) preference;
-            listPreference.setSummary(summary + DELIMITER + listPreference.getEntry());
-        } else if (preference instanceof EditTextPreference) {
-            EditTextPreference editTextPref = (EditTextPreference) preference;
-            editTextPref.setSummary(summary + DELIMITER + editTextPref.getText());
+        String prefValue = "";
+        if (preference instanceof ListPreference listPreference) {
+            prefValue = (String) listPreference.getEntry();
+            listPreference.setSummary(summary + DELIMITER + (prefValue!=null ? prefValue : ""));
+        } else if (preference instanceof EditTextPreference editTextPref) {
+            prefValue = editTextPref.getText();
+            editTextPref.setSummary(summary + DELIMITER + ((prefValue!=null) &&(!prefValue.equals("::")) ? prefValue : ""));
         }
 
 //            SharedPreferences sharedPrefs = getPreferenceManager().getSharedPreferences();
@@ -1195,8 +1196,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     void showThrottleNumberPreferenceDialog(PreferenceScreen prefScreen) {
-//            String numThrottle = prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottlesDefaultValue));  // currentValue
-        int numThrottles = mainapp.Numeralise(prefs.getString("NumThrottle", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
+        int numThrottles = mainapp.Numeralise(prefs.getString("prefNumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
 
         prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         int index = getThrottleScreenTypeArrayIndex(prefs);
@@ -1240,7 +1240,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     RadioButton btn = (RadioButton) group.getChildAt(x);
                     if (btn.getId() == checkedId) {
                         Log.e(threaded_application.applicationName, activityName + ": selected RadioButton-> " + btn.getText().toString());
-                        setSharedPreferenceValueString(prefScreen, "NumThrottle", entryValueList.get(x));
+                        setSharedPreferenceValueString(prefScreen, "prefNumThrottles", entryValueList.get(x));
                     }
                 }
                 dialog.cancel();
@@ -1757,7 +1757,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         }
                         parentActivity.showThrottleNumberPreferenceDialog(getPreferenceScreen());
 
-                    case "NumThrottle":
+                    case "prefNumThrottles":
                         showHideThrottleNumberPreference(sharedPreferences);
                         if (!parentActivity.ignoreThisThrottleNumChange) {
                             parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences);
@@ -1918,9 +1918,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSelectedLocoIndicator", false);
 //                }
 
-                if ((!mainapp.connectedHostip.isEmpty()) || (mainapp.web_server_port == 0)) {
-                    parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
-                }
+//                if ((!mainapp.connectedHostip.isEmpty()) || (mainapp.web_server_port == 0)) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
+//                }
 
 //                iplsLoader.getIplsList();
                 int ipslCount = mainapp.iplsNames.size();
@@ -1985,6 +1985,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 showHideThrottleNumberPreference(prefs);
                 showHideThrottleWebViewPreferences(prefs);
                 parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+                showHideFilterPreferences();
 
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
@@ -2002,7 +2003,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 setSwipeThroughWebPreference();
 
                 parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
-
                 parentActivity.showHideDispatchPreferences(getPreferenceScreen());
 
                 advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
@@ -2036,7 +2036,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 enable = false;
             }
 
-            parentActivity.enableDisablePreference(getPreferenceScreen(), "NumThrottle", !enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefNumThrottles", !enable);
         }
 
         private void showHideThrottleWebViewPreferences(SharedPreferences sharedPreferences) {
@@ -2046,6 +2046,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
         }
 
+        private void showHideFilterPreferences() {
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefRosterOwnersFilterShowOption", !mainapp.isDCCEX);
+        }
 
         @SuppressLint("ApplySharedPref")
         private void setSwipeThroughWebPreference() {

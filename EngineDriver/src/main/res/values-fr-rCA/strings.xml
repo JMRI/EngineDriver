@@ -523,9 +523,9 @@
     <string name="prefEsuMc2StopButtonDelayTitle">Durée de l\'appui prolongé de la touche d\'arrêt</string>
     <string name="prefEsuMc2StopButtonShortPressSummary"> Une \'pression rapide\' suspend la locomotive ou l\'unité multiple actuelle.\nLa vitesse sera rétablie à la reprise des opérationsl.</string>
     <string name="prefEsuMc2StopButtonShortPressTitle">Activer la \'pression rapide\'</string>
-    <string name="prefEsuMc2Summary"> Sélectionner les options du module ESU MobileControl II</string>
+    <string name="prefEsuMc2Summary"> Sélectionner les options du module ESU MobileControl Pro</string>
 
-    <string name="prefEsuMc2Title">Options du module ESU MobileControl II/Pro</string>
+    <string name="prefEsuMc2Title">Options du module ESU MobileControl Pro</string>
     <string name="prefEsuMc2ZeroTrimCategoryTitle">Options de la molette de contrôle</string>
 
     <string name="prefEsuMc2ZeroTrimSummary">Définir la zone d\'arrêt de la molette de commande.\nUne valeur basse déplace la zone vers l\'extrémité anti-horaire.\nÉtendue autorisée 0&#8211;255.</string>
@@ -965,9 +965,9 @@
     <string name="toastConsistEditHelp">Appuyer pour changer la direction de marche.  Défiler vers la gauche ou la droite pour supprimer une entrée.</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Il est recommandé d\'accroître la taille de la zone des touches de fonctions sinon les fonctions sonores Cloche / Klaxon / Muet ne seront pas accessibles</string>
     <string name="toastDirectionButtonsSwapped">Touches de direction de marche temporairement inversées.  Accéder aux préférences pour une inversion permanente, </string>
-    <string name="toastEsuMc2NoButtonPresses">Pression sur les touches n\'est pas autorisée: Mobile Control II/Pro actuellement en mode Arrêt</string>
-    <string name="toastEsuMc2NoLocoChange">Changement de locomotive n\'est pas autorisé: Mobile Control II/Pro actuellement en mode Arrêt</string>
-    <string name="toastEsuMc2NoThrottleChange">Changement de régulateur n\'est pas autorisé: Mobile Control II/Pro actuellement en mode Arrêt</string>
+    <string name="toastEsuMc2NoButtonPresses">Pression sur les touches n\'est pas autorisée: ESU MobileControl Pro actuellement en mode Arrêt</string>
+    <string name="toastEsuMc2NoLocoChange">Changement de locomotive n\'est pas autorisé: ESU MobileControl Pro actuellement en mode Arrêt</string>
+    <string name="toastEsuMc2NoThrottleChange">Changement de régulateur n\'est pas autorisé: ESU MobileControl Pro actuellement en mode Arrêt</string>
     <string name="toastFlashlightOffFailed">Désolé!  Un problème est survenu à l\'extinction de la lampe de poche&#8230;</string>
     <string name="toastFlashlightOnFailed">Désolé!  Un problème est survenu à l\'activation de la lampe de poche&#8230;</string>
     <string name="toastImmersiveModeDisabled"> Mode immersif temporairement désactivé.  Accéder aux préférences pour une désactivation permanente.</string>

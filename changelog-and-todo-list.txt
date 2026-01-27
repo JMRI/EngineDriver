@@ -1,4 +1,6 @@
 **Version 2.42.218
+ * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
+ * Linting
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
@@ -38,6 +40,7 @@
     * Added toolbar buttons for preferences and the wizard on the connection screen. Can be turned off with the existing preference to hide instructional hints
     * Added option for medium size toolbar/action bar buttons. The 'auto' option will make screens >=139.7cm (5.5") will use the medium size buttons
     * Reinstated the log and file sharing capability
+    * For DCC-EX automations, you are asked which loco to send on the automation. (Defaults to the currently selected loco.)  There is a preference to disable if prefered.
     * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
     * Added preference to start logging immediately after app startup.  Resets itself after use.
     * Added preference to hide the Advanced Consist (CV19) action bar button on the select loco screen.
@@ -1029,6 +1032,8 @@
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it
  * throttle:
+ *   TODO: Add option to send a real eStop
+ *   TODO: Add option is use the new eStop/Resume feature in DCC-EX. commands: <!P> and <!R>
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
  *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
