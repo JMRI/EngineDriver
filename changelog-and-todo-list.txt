@@ -1,6 +1,7 @@
 **Version 2.42.218
  * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
  * Linting
+ * Remove references to the ESU MobileControl II
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
