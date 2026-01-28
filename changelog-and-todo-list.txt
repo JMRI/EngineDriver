@@ -2,6 +2,9 @@
  * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
  * Linting
  * Remove references to the ESU MobileControl II
+ * Added localisation files for English (Singapore) and English (India). Same as UK/Australia/NZ
+ * Added preference to 'Swap' the throw/close labels for all DCC-EX turnouts
+ * More Google Translations
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
@@ -19,7 +22,6 @@
     * Moved to the new way to deal with the Back Button
     * Partial replacement of the deprecated startActivityForResult() with startActivity() - where the result was not used.
     * Added the concept of 'Extended Logging'. Some Log.d()s will only be logged if a new preference is enabled.
-    * Improvements to the style of the buttons in the dialogs in the Preferences
     * Linting
     * Automatically rename the old preferences to the new format "pref.."
     * If the Extended Logging is enabled, the full preference list is printed in the log at start-up.
@@ -47,6 +49,7 @@
     * Added preference to hide the Advanced Consist (CV19) action bar button on the select loco screen.
     * Preferences screen shows the current value of a list or text preference without opening it.
  * Other Changes
+    * Improvements to the style of the buttons in the dialogs in the Preferences
     * More Google translations
     * Additional time options for the children's timer
     * Glyphs added to most menu items
@@ -1005,6 +1008,7 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.
+ *   TODO: add the English (Singapore) and English (India) to the localisation preference.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web

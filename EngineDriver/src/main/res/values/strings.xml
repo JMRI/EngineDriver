@@ -1562,6 +1562,9 @@
     <string name="prefDccexPreferencesSummary">Options for using a EX-CommandStation</string>
     <string name="prefUseDccexProtocolDefaultValue" translatable="false">Auto</string>
 
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Swap Turnouts Throw/Close</string>
+    <string name="prefDccexSwapThrowCloseSummary">Swap the throw/close labels for all DCC-EX turnouts. Reconnection required</string>
+
     <string name="prefDccexTitle">Use native DCC-EX commands</string>
     <string name="prefDccexSummary">Use native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\" or use port 2560\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
 

@@ -101,9 +101,8 @@ public class throttle_switching_horizontal extends throttle {
 
         mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
 
-        if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
-            setScreenDetails();
-        }
+        setScreenDetails();
+
         super.onCreate(savedInstanceState);
 
     } // end of onCreate()
@@ -113,7 +112,9 @@ public class throttle_switching_horizontal extends throttle {
         Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
         if (mainapp.appIsFinishing) return;
 
-        setScreenDetails();
+        if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
+            setScreenDetails();
+        }
         super.onStart();
 
     } // end onStart()

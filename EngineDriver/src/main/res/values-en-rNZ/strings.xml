@@ -114,4 +114,7 @@
 
     <string name="dccexInCv19Consist">Loco is in a CV19 Consist (MU): %s</string>
     <string name="dccexNotInCv19Consist">Loco is NOT in a CV19 Consist (MU)</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Swap Points Throw/Close</string>
+    <string name="prefDccexSwapThrowCloseSummary">Swap the throw/close labels for all DCC-EX points. Reconnection required</string>
+
 </resources>
