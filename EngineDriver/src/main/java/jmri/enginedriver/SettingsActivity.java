@@ -713,7 +713,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             summary = summary.substring(0, summary.indexOf(DELIMITER));
             preference.setSummary(summary);
         }
-        String prefValue = "";
+        String prefValue;
         if (preference instanceof ListPreference listPreference) {
             prefValue = (String) listPreference.getEntry();
             listPreference.setSummary(summary + DELIMITER + (prefValue!=null ? prefValue : ""));
@@ -1986,6 +1986,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 showHideThrottleWebViewPreferences(prefs);
                 parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
                 showHideFilterPreferences();
+                showHideTurnoutsPreferences();
 
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
@@ -2048,6 +2049,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
         private void showHideFilterPreferences() {
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefRosterOwnersFilterShowOption", !mainapp.isDCCEX);
+        }
+
+        private void showHideTurnoutsPreferences() {
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefDccexSwapThrowClose", ((mainapp.isDCCEX) || (parentActivity.mainapp.connectedHostName.isEmpty())) );
         }
 
         @SuppressLint("ApplySharedPref")
