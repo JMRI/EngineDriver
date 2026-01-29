@@ -1056,6 +1056,7 @@
     <string name="prefGamePadDoublePressStopTitle">Double Press Stop -Aktion</string>
     <string name="prefGamePadDoublePressStopSummary">Wählen Sie die Aktion, wenn Sie eine Taste drücken, die als \"Stopp\" konfiguriert ist</string>
     <string name="prefDccexSummary">Verwenden Sie die nativen DCC-EX-Befehle anstatt für alle Verbindungen. \nHINWEIS: Wir wirken erst wirksam, wenn Sie den Engine -Treiber neu starten und eine Verbindung zu einem Server herstellen.</string>
+    <string name="prefDccexSwapThrowCloseSummary">Tauschen Sie die Stell-/Schließmarkierungen an allen DCC-EX-Weichen. Wiederanschluss erforderlich.</string>
     <string name="prefDccexTitle">Verwenden Sie native DCC-EX-Befehle</string>
     <string name="useProtocolDCCEX">Zu verwendendes Protokoll?</string>
     <string name="useProtocolDCCEXplusAutoHint">Zu verwendendes Protokoll?\n<small><small>(\'Auto\' sucht nach \"DCCEX\", \"DCC-EX\" oder Port 2560)</small></small></string>
@@ -1234,5 +1235,6 @@
     <string name="prefActionBarShowWebButtonTitle">Web-Button?</string>
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um den Bildschirm „Erweiterte Konsistenz (CV19)“ zu öffnen</string>
     <string name="prefActionBarShowWebButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zur Webansicht zu wechseln</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX – Weichen stellen/schließen</string>
 
 </resources>

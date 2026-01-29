@@ -2042,9 +2042,16 @@ public class comm_thread extends Thread {
                 if ((ready) && (!mainapp.dccexTurnoutsFullyReceived) ) {
                     mainapp.dccexTurnoutString = getTurnoutsString(noTurnouts);
 
+                    String throwCode = "4";
+                    String closeCode = "2";
+                    if (prefs.getBoolean("prefDccexSwapThrowClose",
+                            mainapp.getResources().getBoolean(R.bool.prefDccexSwapThrowCloseDefaultValue))) {
+                        throwCode = "2";
+                        closeCode ="4";
+                    }
                     processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{2]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{4]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{" + closeCode + "]\\["
+                            + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{" + throwCode + "]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutUnknown) + "}|{1]\\["
                             + mainapp.getResources().getString(R.string.DCCEXturnoutInconsistent) + "}|{8");
                     processTurnoutList(mainapp.dccexTurnoutString);

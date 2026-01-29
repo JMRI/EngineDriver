@@ -1033,6 +1033,7 @@
     <string name="prefGamePadDoublePressStopTitle">Azione di arresto a doppia stampa</string>
     <string name="prefGamePadDoublePressStopSummary">Scegli l\'azione quando si preme qualsiasi pulsante che è configurato come \'Stop\'</string>
     <string name="prefDccexSummary">Utilizzare i comandi DCC-EX nativi invece di Withrottle per tutte le connessioni. \nNOTA: non avrà effetto fino a quando non riavvia il driver del motore e si connette a un server.</string>
+    <string name="prefDccexSwapThrowCloseSummary">Scambiare le etichette di lancio/chiusura per tutti gli scambi DCC-EX. È necessario ricollegarli.</string>
     <string name="prefDccexTitle">Usa i comandi DCC-Ex nativi</string>
     <string name="useProtocolDCCEX">Protocollo da utilizzare?</string>
     <string name="useProtocolDCCEXplusAutoHint">Protocollo da utilizzare?\n<small><small>(\'Auto\' cerca \"DCCEX\", \"DCC-EX\" o porta 2560)</small></small></string>
@@ -1222,5 +1223,6 @@
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostra il pulsante nella barra delle azioni per aprire la schermata Advanced Consist (CV19)</string>
     <string name="prefActionBarShowWebButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Web</string>
     <string name="prefActionBarShowWebButtonTitle">Pulsante Web?</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Scambio scambi Lancia/Chiudi</string>
 
 </resources>
