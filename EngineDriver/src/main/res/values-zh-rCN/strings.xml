@@ -1280,6 +1280,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="cvBitCalculatorCvBitsLabel">比特：</string>
     <string name="idngo_help_text">按下按钮向服务器发送请求，以识别和获取已在编程轨道上的机车，并将值返回到此油门。</string>
     <string name="logviewerStopSave">停止</string>
+    <string name="prefDccexSwapThrowCloseSummary">交换所有 DCC-EX 道岔的开合标签。需要重新连接。</string>
     <string name="prefDccexTitle">使用 DCC-EX 原生命令</string>
     <string name="prefDccexSummary">所有连接均请使用 DCC-EX 原生命令，而非 wiThrottle。注意：此设置需重启引擎驱动程序并连接服务器后方可生效。</string>
     <string name="prefDccexAutomationsAskSummary">对于 DCC-EX 自动化系统，请询问应该将哪台机车发送到自动化系统上。</string>
@@ -1384,6 +1385,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefActionBarShowAdvancedConsistButtonSummary">在操作栏中显示按钮，以打开“高级编组 (CV19)”屏幕</string>
     <string name="prefActionBarShowWebButtonSummary">在操作栏中显示切换到 Web 屏幕的按钮</string>
     <string name="prefActionBarShowWebButtonTitle">网页按钮？</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - 道岔交换开关</string>
 
 </resources>
 

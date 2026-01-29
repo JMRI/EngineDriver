@@ -468,6 +468,7 @@
     <string name="prefDccexPreferencesSummary">EX-CommandStation を使用するためのオプション</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation の設定</string>
     <string name="prefDccexSummary">すべての接続に wiThrottle の代わりにネイティブ DCC-EX コマンドを使用します。注: この機能は、エンジン ドライバーを再起動してサーバーに接続するまで有効になりません。</string>
+    <string name="prefDccexSwapThrowCloseSummary">すべてのDCC-EX分岐器の投射/閉方向ラベルを交換します。再接続が必要です。</string>
     <string name="prefDccexTitle">ネイティブ DCC-EX コマンドを使用する</string>
     <string name="prefDecreaseLocoNumberHeightSummary">ロコの番号、速度、方向ボタンには小さいボタンを使用します。</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsSummary">関数ラベルのない名簿エントリにはエンジン ドライバーのデフォルト関数を使用する</string>
@@ -1294,5 +1295,6 @@
     <string name="prefActionBarShowAdvancedConsistButtonSummary">アクションバーにボタンを表示して、Advanced Consist (CV19) 画面を開きます。</string>
     <string name="prefActionBarShowWebButtonSummary">アクションバーにWeb画面に切り替えるボタンを表示する</string>
     <string name="prefActionBarShowWebButtonTitle">ウェブボタン？</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - ターンアウトのスロー/クローズの切り替え</string>
 
 </resources>

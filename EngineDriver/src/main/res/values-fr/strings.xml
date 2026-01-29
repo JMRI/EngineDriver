@@ -1100,6 +1100,7 @@
     <string name="prefGamePadDoublePressStopTitle">STOP si appuyé 2 Fois</string>
     <string name="prefGamePadDoublePressStopSummary">Choisissez l action suite appui sur bouton STOP</string>
     <string name="prefDccexSummary">Pour toutes les connexions, utilisez les commandes natives DCC-EX plutot que la WiThrottle. PS: cela ne prendra effet qu apres redemarrage Engine Driver et connexion à un serveur.</string>
+    <string name="prefDccexSwapThrowCloseSummary">Inverser les étiquettes d\'ouverture/fermeture de tous les aiguillages DCC-EX. Reconnexion requise.</string>
     <string name="prefDccexTitle">Utilisez les commandes natives DCC-EX</string>
     <string name="useProtocolDCCEX">Protocole a utiliser?</string>
     <string name="prefPauseAlternateButtonSummary">Bouton pause alternatif</string>
@@ -1293,5 +1294,6 @@
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Afficher le bouton dans la barre d\'actions pour ouvrir l\'écran de composition avancée (CV19)</string>
     <string name="prefActionBarShowWebButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran Web</string>
     <string name="prefActionBarShowWebButtonTitle">Bouton Web ?</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Aiguillages à manœuvrer (ouverture/fermeture)</string>
 
 </resources>

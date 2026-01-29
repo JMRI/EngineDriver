@@ -2402,6 +2402,13 @@
             android:title="@string/prefTurnoutsShowThrowCloseButtonsTitle" />
 
         <CheckBoxPreference
+            android:defaultValue="@bool/prefDccexSwapThrowCloseDefaultValue"
+            android:key="prefDccexSwapThrowClose"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefDccexSwapThrowCloseSummary"
+            android:title="@string/prefDccexSwapThrowCloseTitle" />
+
+        <CheckBoxPreference
             android:defaultValue="@bool/prefDccexAutomationsAskDefaultValue"
             android:key="prefDccexAutomationsAsk"
             android:layout="@layout/checkbox_no_icon"

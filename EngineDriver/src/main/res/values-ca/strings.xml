@@ -1102,6 +1102,7 @@
     <string name="prefGamePadDoublePressStopSummary">Trieu l\'acció quan premeu qualsevol botó que es configuri com a \"parar\"</string>
     <string name="prefGamePadDoublePressStopTitle">Acció de parada de doble premsa</string>
     <string name="prefDccexSummary">Utilitzeu les ordres natives DCC-EX en lloc de WithRottle per a totes les connexions. \nNota: no tindrà efecte fins que reinicieu el controlador del motor i connecteu-vos a un servidor.</string>
+    <string name="prefDccexSwapThrowCloseSummary">Intercanvieu les etiquetes de llançament/tancament per a tots els desviaments DCC-EX. Cal reconnexió.</string>
     <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
     <string name="useProtocolDCCEX">Protocol a utilitzar?</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé (%1$s)</string>
@@ -1285,5 +1286,6 @@
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostra el botó a la barra d\'accions per obrir la pantalla Consist avançat (CV19)</string>
     <string name="prefActionBarShowWebButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla web</string>
     <string name="prefActionBarShowWebButtonTitle">Botó web?</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Intercanvi de desviaments Llançar/Tancament</string>
 
 </resources>

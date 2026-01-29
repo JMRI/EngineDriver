@@ -1093,6 +1093,7 @@
     <string name="prefGamePadDoublePressStopTitle">Acción de parada de doble prensa</string>
     <string name="prefGamePadDoublePressStopSummary">Elija la acción cuando presione cualquier botón que esté configurado como \'Stop\'</string>
     <string name="prefDccexSummary">Use los comandos nativos de DCC-EX en lugar de Withrottle para todas las conexiones. \nNota: No entrará en vigencia hasta que reinicie el controlador del motor y se conecte a un servidor.</string>
+    <string name="prefDccexSwapThrowCloseSummary">Intercambie las etiquetas de cierre/lanzamiento para todos los desvíos DCC-EX. Requiere reconexión.</string>
     <string name="prefDccexTitle">Use comandos nativos de DCC-EX</string>
     <string name="useProtocolDCCEX">¿Protocolo a utilizar?</string>
     <string name="useProtocolDCCEXplusAutoHint">¿Protocolo a utilizar?\n<small><small>(\'Auto\' busca \"DCCEX\", \"DCC-EX\" o el puerto 2560)</small></small></string>
@@ -1272,5 +1273,6 @@
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Mostrar botón en la barra de acción para abrir la pantalla de Consistencia avanzada (CV19)</string>
     <string name="prefActionBarShowWebButtonSummary">Mostrar botón en la barra de acción para cambiar a la pantalla web</string>
     <string name="prefActionBarShowWebButtonTitle">¿Botón web?</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Intercambio de desvíos Lanzar/Cerrar</string>
 
 </resources>

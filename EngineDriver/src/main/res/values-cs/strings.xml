@@ -1191,6 +1191,7 @@
     <string name="prefGamePadDoublePressStopSummary">Při stisknutí libovolného tlačítka vyberte akci, které je nakonfigurováno jako „Stop“</string>
     <string name="prefGamePadDoublePressStopTitle">Dvojitá stisknutí STOP AKCE</string>
     <string name="prefDccexSummary">Pro všechna připojení použijte nativní příkazy DCC-EX namísto Withrottle. \nPOZNÁMKA: Nebude účinnost, dokud restartujete ovladač motoru a připojíte se k serveru.</string>
+    <string name="prefDccexSwapThrowCloseSummary">Vyměňte štítky pro vhození/zavírání u všech výhybek DCC-EX. Je nutné přepojení.</string>
     <string name="prefDccexTitle">Použijte nativní příkazy DCC-EX</string>
     <string name="useProtocolDCCEX">Protokol použít?</string>
     <string name="useProtocolDCCEXplusAutoHint">Protokol, který chcete použít?\n<small><small>(\'Auto\' hledá \"DCCEX\", \"DCC-EX\" nebo port 2560)</small></small></string>
@@ -1370,5 +1371,6 @@
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Zobrazit tlačítko v panelu akcí pro otevření obrazovky Pokročilé sestavení (CV19)</string>
     <string name="prefActionBarShowWebButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na webovou obrazovku</string>
     <string name="prefActionBarShowWebButtonTitle">Webové tlačítko?</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Výměna výhybek - Vyhození/Zavření</string>
 
 </resources>
