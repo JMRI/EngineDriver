@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/*Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ public class throttle_big_buttons extends throttle {
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.BIG_BUTTONS;
 
     private LinearLayout[] lThrottles;
-    private ScrollView[] svFnBtns;
+    private ScrollView[] svFunctionButtons;
 
     protected void removeLoco(int whichThrottle) {
         super.removeLoco(whichThrottle);
@@ -138,17 +138,17 @@ public class throttle_big_buttons extends throttle {
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
+        svFunctionButtons = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
 
         lThrottles[0] = findViewById(R.id.throttle_0);
         llSetSpeeds[0] = findViewById(R.id.throttle_0_set_speed);
         vsbSpeeds[0] = findViewById(R.id.speed_0);
-        svFnBtns[0] = findViewById(R.id.function_buttons_scroller_0);
+        svFunctionButtons[0] = findViewById(R.id.function_buttons_scroller_0);
         bPauses[0] = findViewById(R.id.button_pause_0);
 
-        PauseSpeedButtonTouchListener psvtl = new PauseSpeedButtonTouchListener(0);
-        bPauses[0].setOnTouchListener(psvtl);
+        PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(0);
+        bPauses[0].setOnTouchListener(pauseSpeedButtonTouchListener);
 
         setAllFunctionLabelsAndListeners();
 
@@ -173,14 +173,14 @@ public class throttle_big_buttons extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         // avoid NPE by not letting this run too early (reported to Play Store)
-        if (tvVols[0] == null) return;
+        if (tvVolumeIndicators[0] == null) return;
 
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
         String bLabelPlainText;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            Button b = bSels[throttleIndex];
+            Button b = bSelects[throttleIndex];
             if ( (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                     && (mainapp.consists[throttleIndex].isActive()) ) {
                 if (!prefShowAddressInsteadOfName) {
@@ -202,12 +202,12 @@ public class throttle_big_buttons extends throttle {
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
 
-                tvbSelsLabels[throttleIndex].setVisibility(View.GONE);
+                tvbSelectsLabels[throttleIndex].setVisibility(View.GONE);
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
                 // whichVolume = 'S'; //set the next throttle to use volume control
-                tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
+                tvbSelectsLabels[throttleIndex].setVisibility(View.VISIBLE);
 
             }
             double textScale = 1.0;
@@ -250,21 +250,21 @@ public class throttle_big_buttons extends throttle {
         // Get the screen's density scale
         final float denScale = dm.density;
 
-        int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
+        int screenWidth = vThrottleScreenWrap.getWidth(); // get the width of usable area
         int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.prefNumThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
 
-            llSetSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFnBtns[throttleIndex].getWidth();
+            llSetSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFunctionButtons[throttleIndex].getWidth();
             llSetSpeeds[throttleIndex].requestLayout();
         }
 
         setImmersiveMode(webView);
         if ( (systemStatusRowHeightKeep==0) || (systemNavigationRowHeightKeep==0) ) return; // not ready yet
 
-        int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        int screenHeight = vThrottleScreenWrap.getHeight(); // get the Height of usable area
         screenHeight = screenHeight - systemStatusRowHeight - systemNavigationRowHeight; // cater for immersive mode
         int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar))  {
@@ -277,7 +277,7 @@ public class throttle_big_buttons extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d(threaded_application.applicationName, activityName + ": vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            //Log.d(threaded_application.applicationName, activityName + ": vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         ImageView myImage = findViewById(R.id.backgroundImgView);
@@ -287,15 +287,15 @@ public class throttle_big_buttons extends throttle {
         if (!prefWebViewLocation.equals(web_view_location_type.NONE)) {
             webViewIsOn = true;
             if (!prefIncreaseWebViewSize) {
-                screenHeight *= 0.5; // save half the screen
+                screenHeight = (int) Math.round(screenHeight * 0.5); // save half the screen
             } else {
-                screenHeight *= 0.4; // save 60% of the screen for web view
+                screenHeight = (int) Math.round(screenHeight * 0.4); // save 60% of the screen for web view
             }
             LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,fullScreenHeight - titleBar - screenHeight);
             webView.setLayoutParams(webViewParams);
         }
 
-        int speedButtonHeight = (int) (50 * denScale);
+//        int speedButtonHeight = (int) (50 * denScale);
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -311,7 +311,7 @@ public class throttle_big_buttons extends throttle {
         boolean newEnabledState = false;
         // avoid index and null crashes
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
-                || bFwds[whichThrottle] == null) {
+                || bForwards[whichThrottle] == null) {
             return;
         }
         if (!forceDisable) { // avoid index crash, but may simply push to next line

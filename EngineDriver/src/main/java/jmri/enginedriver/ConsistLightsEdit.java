@@ -56,6 +56,7 @@ import java.util.Objects;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.activity_outcome_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
@@ -68,8 +69,6 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     public static String LIGHT_TEXT_ON = "On";
     public static String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
     public static String LIGHT_TEXT_UNKNOWN = "Unknown";
-
-    static public final int RESULT_CON_LIGHTS_EDIT = RESULT_FIRST_USER;
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu CLEMenu;
@@ -133,7 +132,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         }
 
         consistListAdapter.notifyDataSetChanged();
-        result = RESULT_CON_LIGHTS_EDIT;
+        result = activity_outcome_type.RESULT_CON_LIGHTS_EDIT;
     }
 
 

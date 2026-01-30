@@ -3180,6 +3180,24 @@
         <item>@id/gamepad_test_button_right_thumb</item>
     </array>
 
+    <array name="edit_consist_menu_ids">
+        <item>@id/EditConsist0_menu</item>
+        <item>@id/EditConsist1_menu</item>
+        <item>@id/EditConsist2_menu</item>
+        <item>@id/EditConsist3_menu</item>
+        <item>@id/EditConsist5_menu</item>
+        <item>@id/EditConsist5_menu</item>
+    </array>
+
+    <array name="edit_lights_consist_menu_ids">
+        <item>@id/EditLightsConsist0_menu</item>
+        <item>@id/EditLightsConsist1_menu</item>
+        <item>@id/EditLightsConsist2_menu</item>
+        <item>@id/EditLightsConsist3_menu</item>
+        <item>@id/EditLightsConsist5_menu</item>
+        <item>@id/EditLightsConsist5_menu</item>
+    </array>
+
 
 
 </resources>

@@ -85,7 +85,6 @@ public class routes extends AppCompatActivity
     private threaded_application mainapp;  // hold pointer to mainapp
 
     private SharedPreferences prefs;
-    private int result = RESULT_OK;
 
     private ArrayList<HashMap<String, String>> routesFullList;
     private ArrayList<HashMap<String, String>> routes_list;
@@ -117,7 +116,7 @@ public class routes extends AppCompatActivity
     public void refresh_route_view() {
         threaded_application.extendedLogging(activityName + ": refresh_route_view()");
 
-        boolean hidesystemroutes = prefs.getBoolean("prefHideSystemRouteNames",
+        boolean hideSystemRoutes = prefs.getBoolean("prefHideSystemRouteNames",
                 getResources().getBoolean(R.bool.prefHideSystemRouteNamesDefaultValue));
 
         //specify logic for sort comparison (by username/in)
@@ -160,24 +159,24 @@ public class routes extends AppCompatActivity
                 String del = prefs.getString("prefDelimiter", getApplicationContext().getResources().getString(R.string.prefDelimiterDefaultValue));
                 boolean hideIfNoUserName = prefs.getBoolean("prefHideIfNoUserName", getResources().getBoolean(R.bool.prefHideIfNoUserNameDefaultValue));
                 for (String username : mainapp.rt_user_names) {
-                    boolean hasUserName = (username != null && !username.equals(""));
+                    boolean hasUserName = (username != null && !username.isEmpty());
                     if (hasUserName || !hideIfNoUserName) {  //skip routes without usernames if pref is set
                         //get values from global array
                         String systemName = mainapp.routeSystemNames[pos];
                         String currentState = mainapp.routeStates[pos];
-                        String currentDCCEXstate = String.valueOf(mainapp.routeDccexStates[pos]);
-                        String currentDCCEXlabel = mainapp.routeDccexLabels[pos];
+                        String currentDccexState = String.valueOf(mainapp.routeDccexStates[pos]);
+                        String currentDccexLabel = mainapp.routeDccexLabels[pos];
 
-                        String currentstatedesc = mainapp.routeStateNames.get(currentState);
-                        if (currentstatedesc == null) {
-                            currentstatedesc = "   ???";
+                        String currentStateDesc = mainapp.routeStateNames.get(currentState);
+                        if (currentStateDesc == null) {
+                            currentStateDesc = "   ???";
                         }
 
-                        if (!currentDCCEXstate.equals("-1")) { // is DCC-EX
-                            currentstatedesc = currentDCCEXlabel;
+                        if (!currentDccexState.equals("-1")) { // is DCC-EX
+                            currentStateDesc = currentDccexLabel;
                         }
 
-                        if (!currentDCCEXstate.equals("2")) { // not hidden
+                        if (!currentDccexState.equals("2")) { // not hidden
                             //put values into temp hashmap
                             HashMap<String, String> hm = new HashMap<>();
                             if (hasUserName)
@@ -185,16 +184,16 @@ public class routes extends AppCompatActivity
                             else
                                 hm.put("rt_user_name", systemName);
                             hm.put("rt_system_name_hidden", systemName);
-                            if (!hidesystemroutes) {  //check prefs for show or not show this
+                            if (!hideSystemRoutes) {  //check prefs for show or not show this
                                 hm.put("rt_system_name", systemName);
                             }
-                            hm.put("rt_current_state_desc", currentstatedesc);
-                            hm.put("rt_current_dccex_state", currentDCCEXstate);
+                            hm.put("rt_current_state_desc", currentStateDesc);
+                            hm.put("rt_current_dccex_state", currentDccexState);
                             hm.put("rt_pos", Integer.toString(pos));
                             routesFullList.add(hm);
 
                             //if location is new, add to list
-                            if (del.length() > 0 && hasUserName) {
+                            if (!del.isEmpty() && hasUserName) {
                                 int delim = username.indexOf(del);
                                 if (delim >= 0) {
                                     String loc = username.substring(0, delim);
@@ -222,7 +221,7 @@ public class routes extends AppCompatActivity
         filterRouteView();
     }
 
-    private void setDCCEXbuttonStates() {
+    private void setDccexButtonStates() {
         ListView listView = findViewById(R.id.routes_list);
 
         for (int i = 0; i < listView.getChildCount(); i++) {
@@ -231,11 +230,6 @@ public class routes extends AppCompatActivity
             Button button = (Button) itemLayout.getChildAt(1);
             String state = (String) textView.getText();
             switch (state) {
-                case "0":
-                default:
-                    button.setEnabled(true);
-                    button.setSelected(false);
-                    break;
                 case "1":
                     button.setEnabled(true);
                     button.setSelected(true);
@@ -243,6 +237,11 @@ public class routes extends AppCompatActivity
                 case "2":
                 case "4":
                     button.setEnabled(false);
+                    button.setSelected(false);
+                    break;
+                case "0":
+                default:
+                    button.setEnabled(true);
                     button.setSelected(false);
                     break;
             }
@@ -259,10 +258,10 @@ public class routes extends AppCompatActivity
             String userName = hm.get("rt_user_name");
             if (useAllLocations || userName.startsWith(loc)) {
                 @SuppressWarnings("unchecked")
-                HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone();
+                HashMap<String, String> hmFilter = (HashMap<String, String>) hm.clone();
                 if (!useAllLocations)
-                    hmFilt.put("rt_user_name", userName.substring(loc.length()));
-                routes_list.add(hmFilt);
+                    hmFilter.put("rt_user_name", userName.substring(loc.length()));
+                routes_list.add(hmFilter);
             }
         }
         routes_list_adapter.notifyDataSetChanged();  //update the list
@@ -381,13 +380,13 @@ public class routes extends AppCompatActivity
         }
 
         public void onClick(View v) {
-            EditText entryv = findViewById(R.id.route_entry);
-            String entrytext = entryv.getText().toString().trim();
-            if (entrytext.length() > 0) {
+            EditText entryView = findViewById(R.id.route_entry);
+            String entryText = entryView.getText().toString().trim();
+            if (!entryText.isEmpty()) {
                 if (!mainapp.isDCCEX) {
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entrytext);
+                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entryText);
                 } else {
-                    getLocoForDccExAutomationHandoff(entrytext);
+                    getLocoForDccExAutomationHandoff(entryText);
                 }
             }
             mainapp.buttonVibration();
@@ -473,8 +472,8 @@ public class routes extends AppCompatActivity
 
         public void onClick(View v) {
             ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
-            ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
-            TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
+            ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemName and userName
+            TextView snv = (TextView) rl.getChildAt(1); // get systemName text from 2nd box
             String systemName = snv.getText().toString();
             if (!mainapp.isDCCEX) {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, "2" + systemName); // 2=toggle
@@ -545,11 +544,11 @@ public class routes extends AppCompatActivity
         routes_lv.setAdapter(routes_list_adapter);
 
         if (mainapp.isDCCEX) {
-            // need to setup a listerner so that we can update the buttons states AFTER the list has been fully updated
+            // need to setup a listener so that we can update the buttons states AFTER the list has been fully updated
             ViewTreeObserver viewTreeObserver = routes_lv.getViewTreeObserver();
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 public void onGlobalLayout() {
-                    setDCCEXbuttonStates();
+                    setDccexButtonStates();
                 }
             });
         }
@@ -1122,7 +1121,7 @@ public class routes extends AppCompatActivity
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);
@@ -1151,15 +1150,15 @@ public class routes extends AppCompatActivity
     void getDefaultSortOrderRoutes() {
         String prefSortOrderRoutes = prefs.getString("prefSortOrderTurnouts", this.getResources().getString(R.string.prefSortOrderRoutesDefaultValue));
         switch (prefSortOrderRoutes) {
-            default:
-            case "name":
-                mainapp.routesOrder = sort_type.NAME;
-                break;
             case "id":
                 mainapp.routesOrder = sort_type.ID;
                 break;
             case "position":
                 mainapp.routesOrder = sort_type.POSITION;
+                break;
+            case "name":
+            default:
+                mainapp.routesOrder = sort_type.NAME;
                 break;
         }
     }

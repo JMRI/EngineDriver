@@ -23,6 +23,9 @@ import static android.widget.Toast.LENGTH_LONG;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -165,6 +168,14 @@ public class connection_activity extends AppCompatActivity implements Permission
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
     private LinearLayout statusLine;
+
+    protected final ActivityResultLauncher<Intent> settingsActivityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.d(threaded_application.applicationName, activityName + ": settingsActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                // fall through to the default onActivityResult();
+            }
+    );
 
     static {
         try {
@@ -627,9 +638,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             Log.d(threaded_application.applicationName, activityName + ": onCreate(); Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-                Intent in = new Intent().setClass(this, SettingsActivity.class);
-                startActivityForResult(in, 0);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                startSettingsActivity();
             }
         }
 
@@ -696,7 +705,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 if (parts.length >= 2) {
                     ip = parts[0];
                     port = parts[1];
-                    if ( (parts.length == 3) && (!parts[3].isEmpty()) ) { // don't care what is there
+                    if ( (parts.length == 3) && (!parts[2].isEmpty()) ) { // don't care what is there
                         isDccEx = true;
                     }
                 }
@@ -1060,9 +1069,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.checkAskExit(this);
             return true;
         } else if ( (item.getItemId() == R.id.settings_mnu) || (item.getItemId() == R.id.settings_button) ) {
-            in = new Intent().setClass(this, SettingsActivity.class);
-            startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            startSettingsActivity();
             return true;
         } else if (item.getItemId() == R.id.about_mnu) {
             in = new Intent().setClass(this, about_page.class);
@@ -1092,11 +1099,21 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
+    void startSettingsActivity() {
+        try {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            settingsActivityLauncher.launch(intent);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        } catch (Exception ex) {
+            Log.d(threaded_application.applicationName, activityName + ": startSettingsActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+        }
+    }
+
     //handle return from menu items
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //only one activity with results here
-        set_labels();
         super.onActivityResult(requestCode, resultCode, data);
+        set_labels();
     }
 
     private void checkIP() {

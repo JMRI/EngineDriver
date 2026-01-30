@@ -21,6 +21,9 @@ import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -87,6 +90,7 @@ import jmri.enginedriver.type.consist_function_rule_style_type;
 import jmri.enginedriver.type.import_export_option_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.activity_outcome_type;
 
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.pref_import_type;
@@ -99,9 +103,6 @@ import jmri.enginedriver.util.LocaleHelper;
 public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
     static final String activityName = "SettingsActivity";
 
-    static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
-    static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
-    public static final int RESULT_LOAD_IMG = 1;
     private int result = RESULT_OK;
 
     public static final String DELIMITER = "\n --> ";
@@ -142,8 +143,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private int forceRestartAppOnPreferencesCloseReason = 0;
     private boolean forceReLaunchAppOnPreferencesClose = false;
 
-    private boolean isInSubScreen = false;
-
     private String prefThrottleSwitchOption1 = "Default";
     private String prefThrottleSwitchOption2 = "Default";
 
@@ -162,6 +161,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private boolean ignoreThisThrottleNumChange = false;
 
     private String currentSearchQuery = "";
+
+    protected final ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.d(threaded_application.applicationName, activityName + ": galleryLauncher callback received. ResultCode: " + result.getResultCode());
+
+                int resultCode = result.getResultCode();
+                if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
+                    Intent data = result.getData();
+                    handleGalleryResult(data);
+                }
+            }
+    );
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -200,7 +212,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             public void handleOnBackPressed() {
                 Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
-                isInSubScreen = false;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
                 } else {
@@ -356,7 +367,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     @SuppressLint("ApplySharedPref")
-    public void start_gamepad_test_activity() {
+    public void startGamepadTestActivity() {
 
         boolean result = prefs.getBoolean("prefGamepadTestNow", getResources().getBoolean(R.bool.prefGamepadTestNowDefaultValue));
 
@@ -369,7 +380,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d(threaded_application.applicationName, activityName + ": start_gamepad_test_activity(): Settings: " + ex.getMessage());
+                Log.d(threaded_application.applicationName, activityName + ": startGamepadTestActivity(): Settings: " + ex.getMessage());
             }
         }
     }
@@ -843,11 +854,51 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //    }
 
     protected void loadImagefromGallery() {
-       // Create intent to Open Image applications like Gallery, Google Photos
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // Start the Intent
-        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+        try {
+            // Create intent to Open Image applications like Gallery, Google Photos
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryLauncher.launch(intent);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        } catch (Exception ex) {
+            Log.d(threaded_application.applicationName, activityName + ": loadImagefromGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private void handleGalleryResult(Intent data) {
+        Log.d(threaded_application.applicationName, activityName + ": handleGalleryResult() ");
+
+        try {
+            // When an Image is picked
+            if (data != null) {
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.MediaColumns.DATA };
+
+                // Get the cursor
+                assert selectedImage != null;
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgpath = cursor.getString(columnIndex);
+                cursor.close();
+
+                SharedPreferences.Editor edit=prefs.edit();
+                edit.putString("prefBackgroundImageFileName",imgpath);
+                edit.commit();
+
+                forceRestartAppOnPreferencesClose = true;
+                forceRestartAppOnPreferencesCloseReason = restart_reason_type.BACKGROUND;
+            }
+            else {
+                mainapp.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
+            }
+        } catch (Exception e) {
+            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
+        }
     }
 
     void endThisActivity() {
@@ -961,44 +1012,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         } else {
             return super.onOptionsItemSelected(item);
         }
-    }
-
-    @SuppressLint("ApplySharedPref")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(threaded_application.applicationName, activityName + ": onActivityResult()");
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            // When an Image is picked
-            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
-                // Get the Image from data
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = { MediaStore.MediaColumns.DATA };
-
-                // Get the cursor
-                assert selectedImage != null;
-                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                assert cursor != null;
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imgpath = cursor.getString(columnIndex);
-                cursor.close();
-
-                SharedPreferences.Editor edit=prefs.edit();
-                edit.putString("prefBackgroundImageFileName",imgpath);
-                edit.commit();
-
-                forceRestartAppOnPreferencesClose = true;
-                forceRestartAppOnPreferencesCloseReason = restart_reason_type.BACKGROUND;
-            }
-            else {
-                mainapp.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
-            }
-        } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
-        }
-
     }
 
     @SuppressLint("ApplySharedPref")
@@ -1586,9 +1599,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 
     public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-//        static public final int RESULT_GAMEPAD = RESULT_FIRST_USER;
-//        static public final int RESULT_ESUMCII = RESULT_GAMEPAD + 1;
-
         public threaded_application mainapp;  // hold pointer to mainapp
         private SharedPreferences prefs;
 
@@ -2251,8 +2261,6 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 parentActivity.loadSharedPreferences();
             }
 
-            parentActivity.isInSubScreen = true;
-
             showHideAll();
 
             // option is only available when there is no current connection
@@ -2497,19 +2505,19 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         }
                         break;
                     case "prefGamepadTestNow":
-                        parentActivity.start_gamepad_test_activity();
+                        parentActivity.startGamepadTestActivity();
                         break;
                     case "prefGamePadFeedbackVolume":
                         //limit check new value
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key,
                                 ToneGenerator.MIN_VOLUME, ToneGenerator.MAX_VOLUME,
                                 parentActivity.getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue));
-                        parentActivity.result = RESULT_GAMEPAD;
+                        parentActivity.result = activity_outcome_type.RESULT_GAMEPAD;
                         break;
                     case "prefGamePadType":
                         parentActivity.setGamePadPrefLabels(getPreferenceScreen(), sharedPreferences);
                     case "prefGamePadStartButton":
-                        parentActivity.result = RESULT_GAMEPAD;
+                        parentActivity.result = activity_outcome_type.RESULT_GAMEPAD;
                         break;
 
                     case "prefShareFileNow":
@@ -2570,7 +2578,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     case "prefEsuMc2ZeroTrim":
                         // limit check new value
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 255, "10");
-                        parentActivity.result = RESULT_ESUMCII;
+                        parentActivity.result = activity_outcome_type.RESULT_ESUMCII;
                         break;
                     case "prefEsuMc2ButtonsRepeatDelay":
                     case "prefEsuMc2StopButtonDelay":

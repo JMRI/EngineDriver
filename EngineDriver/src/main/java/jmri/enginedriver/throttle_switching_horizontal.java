@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/*Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -192,13 +192,13 @@ public class throttle_switching_horizontal extends throttle {
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        throttleSwitchingListener thsl;
+        ThrottleSwitchingListener throttleSwitchingListener;
 
         for (int i=0; i < mainapp.maxThrottlesCurrentScreen; i++) {
             // set up listeners for all throttles
-            thsl = new throttleSwitchingListener(i);
-            hsbSwitchingSpeeds[i].setOnSeekBarChangeListener(thsl);
-            hsbSwitchingSpeeds[i].setOnTouchListener(thsl);
+            throttleSwitchingListener = new ThrottleSwitchingListener(i);
+            hsbSwitchingSpeeds[i].setOnSeekBarChangeListener(throttleSwitchingListener);
+            hsbSwitchingSpeeds[i].setOnTouchListener(throttleSwitchingListener);
         }
 
         function_buttons_table_resource_ids.recycle();
@@ -233,7 +233,7 @@ public class throttle_switching_horizontal extends throttle {
 //        int[] heights = {0, 0, 0, 0, 0, 0};
 
         // avoid NPE by not letting this run too early (reported to Play Store)
-        if (tvVols[0] == null) return;
+        if (tvVolumeIndicators[0] == null) return;
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
@@ -270,7 +270,7 @@ public class throttle_switching_horizontal extends throttle {
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            Button b = bSels[throttleIndex];
+            Button b = bSelects[throttleIndex];
             bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
             bLabelPlainText = bLabel;
 
@@ -301,9 +301,9 @@ public class throttle_switching_horizontal extends throttle {
                     bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
 //                    throttle_count++;
 
-                    tvbSelsLabels[throttleIndex].setVisibility(View.GONE);
+                    tvbSelectsLabels[throttleIndex].setVisibility(View.GONE);
                 } else {
-                    tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
+                    tvbSelectsLabels[throttleIndex].setVisibility(View.VISIBLE);
                 }
             }
             double textScale = 1.0;
@@ -340,7 +340,7 @@ public class throttle_switching_horizontal extends throttle {
             llLocoIdAndSpeedViewGroups[throttleIndex].setLayoutParams(llLidp);
             llLocoDirectionButtonViewGroups[throttleIndex].setLayoutParams(llLidp);
             //
-            tvSpdVals[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
+            tvSpeedValues[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
             // SPDHT
 
             //set height of slider areas
@@ -355,19 +355,19 @@ public class throttle_switching_horizontal extends throttle {
 
             hsbSwitchingSpeeds[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
             if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
-                bLSpds[throttleIndex].setVisibility(View.VISIBLE);
-                bRSpds[throttleIndex].setVisibility(View.VISIBLE);
-                bLSpds[throttleIndex].setText(speedButtonLeftText);
-                bRSpds[throttleIndex].setText(speedButtonRightText);
+                bLeftSpeeds[throttleIndex].setVisibility(View.VISIBLE);
+                bRightSpeeds[throttleIndex].setVisibility(View.VISIBLE);
+                bLeftSpeeds[throttleIndex].setText(speedButtonLeftText);
+                bRightSpeeds[throttleIndex].setText(speedButtonRightText);
                 //if buttons enabled, hide the slider if requested
                 if (prefs.getBoolean("prefHideSlider", false)) {
                     hsbSwitchingSpeeds[throttleIndex].setVisibility(View.GONE);
-                    bLSpds[throttleIndex].setText(speedButtonDownText);
-                    bRSpds[throttleIndex].setText(speedButtonUpText);
+                    bLeftSpeeds[throttleIndex].setText(speedButtonDownText);
+                    bRightSpeeds[throttleIndex].setText(speedButtonUpText);
                 }
             } else {  //hide speed buttons based on pref
-                bLSpds[throttleIndex].setVisibility(View.GONE);
-                bRSpds[throttleIndex].setVisibility(View.GONE);
+                bLeftSpeeds[throttleIndex].setVisibility(View.GONE);
+                bRightSpeeds[throttleIndex].setVisibility(View.GONE);
 //                sliderMargin += 30;  //a little extra margin previously in button
             }
             if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
@@ -436,7 +436,7 @@ public class throttle_switching_horizontal extends throttle {
         boolean newEnabledState = false;
         // avoid index and null crashes
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
-                || bFwds[whichThrottle] == null) {
+                || bForwards[whichThrottle] == null) {
             return;
         }
         if (!forceDisable) { // avoid index crash, but may simply push to next line
@@ -511,7 +511,7 @@ public class throttle_switching_horizontal extends throttle {
     }
 
     //Listeners for the throttle slider
-    protected class throttleSwitchingListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
+    protected class ThrottleSwitchingListener implements SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
         int whichThrottle;
         int lastSliderPosition;
         int lastDir;
@@ -519,7 +519,7 @@ public class throttle_switching_horizontal extends throttle {
         int jumpSpeed;
         int jumpDir;
 
-        protected throttleSwitchingListener(int new_whichThrottle) {
+        protected ThrottleSwitchingListener(int new_whichThrottle) {
             whichThrottle = new_whichThrottle; // store values for this listener
             lastSliderPosition = throttleMidPointZero[whichThrottle];
             limitedJump[whichThrottle] = false;
@@ -810,7 +810,7 @@ public class throttle_switching_horizontal extends throttle {
             speed = (int) Math.round((sliderPosition - throttleMidPointDeadZoneUpper[whichThrottle]) * scale);
         } else if (sliderPosition <= (throttleMidPointDeadZoneLower[whichThrottle])) { // reverse
             speed = (int) Math.round((throttleMidPointDeadZoneLower[whichThrottle] - sliderPosition) * scale);
-        } else { // zero - deadzone
+        } else { // zero - dead zone
             speed = 0;
         }
 //        Log.d(threaded_application.applicationName, activityName + ": getSpeedFromSliderPosition():  scale: " + scale + " sliderPosition: " + sliderPosition + " speed: " + speed );
@@ -824,7 +824,7 @@ public class throttle_switching_horizontal extends throttle {
             dir = direction_type.FORWARD;
         } else if (sliderPosition <= (throttleMidPointDeadZoneLower[whichThrottle])) { // reverse
             dir = direction_type.REVERSE;
-        } else { // zero - deadzone
+        } else { // zero - dead zone
             dir = direction_type.FORWARD;
         }
         return dir;
@@ -993,7 +993,7 @@ public class throttle_switching_horizontal extends throttle {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 //        final float density = displayMetrics.density;
 
-        int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        int screenHeight = vThrottleScreenWrap.getHeight(); // get the height of usable area
         screenHeight = screenHeight - systemStatusRowHeight - systemNavigationRowHeight; // cater for immersive mode
         int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar)) {
@@ -1005,7 +1005,7 @@ public class throttle_switching_horizontal extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = displayMetrics.heightPixels - (int) (titleBar * (displayMetrics.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d(threaded_application.applicationName, activityName + ": getAvailableSreenHeight(): vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            //Log.d(threaded_application.applicationName, activityName + ": getAvailableScreenHeight(): vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         double height = screenHeight;

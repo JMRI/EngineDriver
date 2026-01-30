@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/*Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ public class throttle_semi_realistic extends throttle {
     private LinearLayout[] lThrottles;
     private LinearLayout[] lUppers;
     private LinearLayout[] lLowers;
-    private ScrollView[] svFnBtns;
+    private ScrollView[] svFunctionButtons;
 
 //    private static final int SLIDER_PURPOSE_THROTTLE = 0;
     private static final int SLIDER_PURPOSE_BRAKE = 1;
@@ -95,7 +95,7 @@ public class throttle_semi_realistic extends throttle {
     int prefSemiRealisticMaximumBrakePcnt = 70;
     boolean prefSemiRealisticThrottleDisableAir = true;
     boolean airEnabled = true;
-    int prefSemiRealisticThrottleAcceleratonRepeat = 300;
+    int prefSemiRealisticThrottleAccelerationRepeat = 300;
     int prefSemiRealisticThrottleDecelerationRepeat = 600;
     boolean useNotches = false;
     Button [] bEStops;
@@ -103,6 +103,21 @@ public class throttle_semi_realistic extends throttle {
     double maxLoad = 1000;
     double maxBrake = 70;
     double maxBrakeUnderPower = 70;
+
+    protected Handler[] semiRealisticTargetSpeedUpdateHandlers = {null, null, null, null, null, null};
+    protected Handler[] semiRealisticSpeedButtonUpdateHandlers = {null, null, null, null, null, null};
+//    protected int[] mSemiRealisticAutoIncrementOrDecrement = {0, 0, 0, 0, 0, 0};  //off
+    protected int[] mSemiRealisticSpeedButtonsAutoIncrementOrDecrement = {0, 0, 0, 0, 0, 0};  //off
+    protected boolean semiRealisticSpeedButtonLongPressActive = false;
+    protected ImageView[] airIndicators = {null, null, null, null, null, null};
+    protected ImageView[] airLineIndicators = {null, null, null, null, null, null};
+    protected int[] airValues = {100, 100, 100, 100, 100, 100};
+    protected int[] airLineValues = {100, 100, 100, 100, 100, 100};
+    protected boolean isAirRecharging = false;
+    protected boolean isAirLineRecharging = false;
+    protected int[] previousBrakePosition = {0, 0, 0, 0, 0, 0};
+    protected Handler[] semiRealisticAirUpdateHandlers = {null, null, null, null, null, null};
+    protected Handler[] semiRealisticAirLineUpdateHandlers = {null, null, null, null, null, null};
 
     String prefDisplaySemiRealisticThrottleDecoderBrakeType = "none";
     String prefSemiRealisticThrottleStopButtonAction = "tz";
@@ -151,7 +166,7 @@ public class throttle_semi_realistic extends throttle {
         prefSemiRealisticThrottleMaxLoadPcnt = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleMaxLoadPcnt", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleMaxLoadPcntDefaultValue));
         maxLoad = prefSemiRealisticThrottleMaxLoadPcnt;
 
-        prefSemiRealisticThrottleAcceleratonRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAcceleratonRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAccelerationRepeatDefaultValue));
+        prefSemiRealisticThrottleAccelerationRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleAccelerationRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleAccelerationRepeatDefaultValue));
         prefSemiRealisticThrottleDecelerationRepeat = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleDecelerationRepeat", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecelerationRepeatDefaultValue));
 
         prefDisplaySemiRealisticThrottleDecoderBrakeType = prefs.getString("prefDisplaySemiRealisticThrottleDecoderBrakeType", getApplicationContext().getResources().getString(R.string.prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue));
@@ -251,11 +266,11 @@ public class throttle_semi_realistic extends throttle {
     void initialiseUiElements() {
         super.initialiseUiElements();
 
-        bTargetFwds = new Button[mainapp.maxThrottlesCurrentScreen];
-        bTargetRevs = new Button[mainapp.maxThrottlesCurrentScreen];
+        bTargetForwards = new Button[mainapp.maxThrottlesCurrentScreen];
+        bTargetReverses = new Button[mainapp.maxThrottlesCurrentScreen];
         bTargetNeutrals = new Button[mainapp.maxThrottlesCurrentScreen];
-        bTargetRSpds = new Button[mainapp.maxThrottlesCurrentScreen];
-        bTargetLSpds = new Button[mainapp.maxThrottlesCurrentScreen];
+        bTargetRightSpeeds = new Button[mainapp.maxThrottlesCurrentScreen];
+        bTargetLeftSpeeds = new Button[mainapp.maxThrottlesCurrentScreen];
         bTargetStops = new Button[mainapp.maxThrottlesCurrentScreen];
         bEStops = new Button[mainapp.maxThrottlesCurrentScreen];
         bAirs = new Button[mainapp.maxThrottlesCurrentScreen];
@@ -298,12 +313,12 @@ public class throttle_semi_realistic extends throttle {
             tvTargetSpdVals[throttleIndex] = findViewById(target_speed_value_label_resource_ids.getResourceId(throttleIndex,0));
             tvTargetAccelerationVals[throttleIndex] = findViewById(target_acceleration_value_label_resource_ids.getResourceId(throttleIndex,0));
 
-            bTargetFwds[throttleIndex] = findViewById(button_target_fwd_resource_ids.getResourceId(throttleIndex,0));
-            bTargetRevs[throttleIndex] = findViewById(button_target_rev_resource_ids.getResourceId(throttleIndex,0));
+            bTargetForwards[throttleIndex] = findViewById(button_target_fwd_resource_ids.getResourceId(throttleIndex,0));
+            bTargetReverses[throttleIndex] = findViewById(button_target_rev_resource_ids.getResourceId(throttleIndex,0));
             bTargetNeutrals[throttleIndex] = findViewById(button_target_neutral_resource_ids.getResourceId(throttleIndex,0));
 
-            bTargetRSpds[throttleIndex] = findViewById(right_target_speed_button_resource_ids.getResourceId(throttleIndex,0));
-            bTargetLSpds[throttleIndex] = findViewById(left_target_speed_button_resource_ids.getResourceId(throttleIndex,0));
+            bTargetRightSpeeds[throttleIndex] = findViewById(right_target_speed_button_resource_ids.getResourceId(throttleIndex,0));
+            bTargetLeftSpeeds[throttleIndex] = findViewById(left_target_speed_button_resource_ids.getResourceId(throttleIndex,0));
             bTargetStops[throttleIndex] = findViewById(button_target_stop_resource_ids.getResourceId(throttleIndex,0));
 
             bEStops[throttleIndex] = findViewById(button_e_stop_resource_ids.getResourceId(throttleIndex,0));
@@ -312,17 +327,17 @@ public class throttle_semi_realistic extends throttle {
             airIndicators[throttleIndex] = findViewById(air_indicator_resource_ids.getResourceId(throttleIndex,0));
             airLineIndicators[throttleIndex] = findViewById(air_line_indicator_resource_ids.getResourceId(throttleIndex,0));
 
-            bTargetRSpds[throttleIndex].setClickable(true);
+            bTargetRightSpeeds[throttleIndex].setClickable(true);
             targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.RIGHT);
-            bTargetRSpds[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
-            bTargetRSpds[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
-            bTargetRSpds[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
+            bTargetRightSpeeds[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
+            bTargetRightSpeeds[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
+            bTargetRightSpeeds[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
 
-            bTargetLSpds[throttleIndex].setClickable(true);
+            bTargetLeftSpeeds[throttleIndex].setClickable(true);
             targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, speed_button_type.LEFT);
-            bTargetLSpds[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
-            bTargetLSpds[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
-            bTargetLSpds[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
+            bTargetLeftSpeeds[throttleIndex].setOnLongClickListener(targetArrowSpeedButtonTouchListener);
+            bTargetLeftSpeeds[throttleIndex].setOnTouchListener(targetArrowSpeedButtonTouchListener);
+            bTargetLeftSpeeds[throttleIndex].setOnClickListener(targetArrowSpeedButtonTouchListener);
 
             bTargetStops[throttleIndex].setClickable(true);
             targetArrowSpeedButtonTouchListener = new TargetArrowSpeedButtonTouchListener(throttleIndex, "stop");
@@ -345,7 +360,7 @@ public class throttle_semi_realistic extends throttle {
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        svFnBtns = new ScrollView[mainapp.maxThrottlesCurrentScreen];
+        svFunctionButtons = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         vsbSemiRealisticThrottles = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
         vsbBrakes = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
@@ -360,9 +375,9 @@ public class throttle_semi_realistic extends throttle {
             llSetSpeeds[throttleIndex] = findViewById(throttle_set_speed_resource_ids.getResourceId(throttleIndex,0));
 
             SemiRealisticDirectionButtonTouchListener directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(direction_type.FORWARD, throttleIndex);
-            bTargetFwds[throttleIndex].setOnTouchListener(directionButtonTouchListener);
+            bTargetForwards[throttleIndex].setOnTouchListener(directionButtonTouchListener);
             directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(direction_type.REVERSE, throttleIndex);
-            bTargetRevs[throttleIndex].setOnTouchListener(directionButtonTouchListener);
+            bTargetReverses[throttleIndex].setOnTouchListener(directionButtonTouchListener);
             directionButtonTouchListener = new SemiRealisticDirectionButtonTouchListener(direction_type.NEUTRAL, throttleIndex);
             bTargetNeutrals[throttleIndex].setOnTouchListener(directionButtonTouchListener);
 
@@ -372,7 +387,7 @@ public class throttle_semi_realistic extends throttle {
             vsbBrakes[throttleIndex] = findViewById(brake_resource_ids.getResourceId(throttleIndex,0));
             vsbLoads[throttleIndex] = findViewById(load_resource_ids.getResourceId(throttleIndex,0));
 
-            svFnBtns[throttleIndex] = findViewById(function_buttons_scroller_resource_ids.getResourceId(throttleIndex,0));
+            svFunctionButtons[throttleIndex] = findViewById(function_buttons_scroller_resource_ids.getResourceId(throttleIndex,0));
 
 //            vsbSemiRealisticThrottles[throttleIndex].setMax(Math.round(maxThrottle));
             vsbSemiRealisticThrottles[throttleIndex].setMax(prefDisplaySemiRealisticThrottleNotches);
@@ -397,15 +412,15 @@ public class throttle_semi_realistic extends throttle {
         // set label and dcc functions (based on settings) or hide if no label
         setAllFunctionLabelsAndListeners();
 
-        SemiRealisticThrottleSliderListener srtsl;
+        SemiRealisticThrottleSliderListener semiRealisticThrottleSliderListener;
         BrakeSliderListener bsl;
         LoadSliderListener lsl;
 
         for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
             // set up listeners for all throttles
-            srtsl = new SemiRealisticThrottleSliderListener(i);
-            vsbSemiRealisticThrottles[i].setOnSeekBarChangeListener(srtsl);
-            vsbSemiRealisticThrottles[i].setOnTouchListener(srtsl);
+            semiRealisticThrottleSliderListener = new SemiRealisticThrottleSliderListener(i);
+            vsbSemiRealisticThrottles[i].setOnSeekBarChangeListener(semiRealisticThrottleSliderListener);
+            vsbSemiRealisticThrottles[i].setOnTouchListener(semiRealisticThrottleSliderListener);
 
             bsl = new BrakeSliderListener(i);
             vsbBrakes[i].setOnSeekBarChangeListener(bsl);
@@ -480,14 +495,14 @@ public class throttle_semi_realistic extends throttle {
         if (mainapp.appIsFinishing) { return; }
 
         // avoid NPE by not letting this run too early
-        if (tvVols[0] == null) return;
+        if (tvVolumeIndicators[0] == null) return;
 
         final int conNomTextSize = 24;
         final double minTextScale = 0.5;
         String bLabel;
         String bLabelPlainText;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            Button b = bSels[throttleIndex];
+            Button b = bSelects[throttleIndex];
             if ((mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                     && (mainapp.consists[throttleIndex].isActive())) {
                 if (!prefShowAddressInsteadOfName) {
@@ -507,12 +522,12 @@ public class throttle_semi_realistic extends throttle {
                     bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
-                tvbSelsLabels[throttleIndex].setVisibility(GONE);
+                tvbSelectsLabels[throttleIndex].setVisibility(GONE);
 
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
-                tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
+                tvbSelectsLabels[throttleIndex].setVisibility(View.VISIBLE);
             }
 
             double textScale = 1.0;
@@ -565,7 +580,7 @@ public class throttle_semi_realistic extends throttle {
         // Get the screen's density scale
         final float denScale = dm.density;
 
-        int screenWidth = vThrotScrWrap.getWidth(); // get the width of usable area
+        int screenWidth = vThrottleScreenWrap.getWidth(); // get the width of usable area
         int throttleWidth = screenWidth / mainapp.prefNumThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -575,7 +590,7 @@ public class throttle_semi_realistic extends throttle {
         }
 
         setImmersiveMode(webView);
-        int screenHeight = vThrotScrWrap.getHeight(); // get the Height of usable area
+        int screenHeight = vThrottleScreenWrap.getHeight(); // get the Height of usable area
         screenHeight = screenHeight - systemStatusRowHeight - systemNavigationRowHeight; // cater for immersive mode
         int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar)) {
@@ -625,23 +640,23 @@ public class throttle_semi_realistic extends throttle {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             //show speed buttons based on pref
             if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
-                bTargetLSpds[throttleIndex].setVisibility(View.VISIBLE);
-                bTargetRSpds[throttleIndex].setVisibility(View.VISIBLE);
+                bTargetLeftSpeeds[throttleIndex].setVisibility(View.VISIBLE);
+                bTargetRightSpeeds[throttleIndex].setVisibility(View.VISIBLE);
 
-                bTargetLSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                bTargetLSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
-                bTargetLSpds[throttleIndex].requestLayout();
-                bTargetRSpds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                bTargetRSpds[throttleIndex].getLayoutParams().height = speedButtonHeight;
-                bTargetRSpds[throttleIndex].requestLayout();
+                bTargetLeftSpeeds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                bTargetLeftSpeeds[throttleIndex].getLayoutParams().height = speedButtonHeight;
+                bTargetLeftSpeeds[throttleIndex].requestLayout();
+                bTargetRightSpeeds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+                bTargetRightSpeeds[throttleIndex].getLayoutParams().height = speedButtonHeight;
+                bTargetRightSpeeds[throttleIndex].requestLayout();
             } else {
-                bTargetLSpds[throttleIndex].setVisibility(GONE);
-                bTargetRSpds[throttleIndex].setVisibility(GONE);
+                bTargetLeftSpeeds[throttleIndex].setVisibility(GONE);
+                bTargetRightSpeeds[throttleIndex].setVisibility(GONE);
             }
 
             // always hide the real buttons
-            bLSpds[throttleIndex].setVisibility(GONE);
-            bRSpds[throttleIndex].setVisibility(GONE);
+            bLeftSpeeds[throttleIndex].setVisibility(GONE);
+            bRightSpeeds[throttleIndex].setVisibility(GONE);
             bStops[throttleIndex].setVisibility(GONE);
 
 
@@ -652,7 +667,7 @@ public class throttle_semi_realistic extends throttle {
 //        int lowerButtonsHeight = findViewById(R.id.loco_buttons_group_0).getHeight();
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            svFnBtns[throttleIndex].requestLayout();
+            svFunctionButtons[throttleIndex].requestLayout();
             lLowers[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
             lLowers[throttleIndex].requestLayout();
 
@@ -701,7 +716,7 @@ public class throttle_semi_realistic extends throttle {
         boolean newEnabledState = false;
         // avoid index and null crashes
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
-                || bFwds[whichThrottle] == null) {
+                || bForwards[whichThrottle] == null) {
             return;
         }
         if (!forceDisable) { // avoid index crash, but may simply push to next line
@@ -719,8 +734,8 @@ public class throttle_semi_realistic extends throttle {
             vsbLoads[whichThrottle].setProgress(0);
         }
 
-        bTargetLSpds[whichThrottle].setEnabled(newEnabledState);
-        bTargetRSpds[whichThrottle].setEnabled(newEnabledState);
+        bTargetLeftSpeeds[whichThrottle].setEnabled(newEnabledState);
+        bTargetRightSpeeds[whichThrottle].setEnabled(newEnabledState);
         bTargetStops[whichThrottle].setEnabled(newEnabledState);
 
         vsbSemiRealisticThrottles[whichThrottle].setEnabled(newEnabledState);
@@ -1475,15 +1490,14 @@ public class throttle_semi_realistic extends throttle {
                 if (targetSpeed <= getSpeed(whichThrottle))  {
 //                    intermediateBrake = -1 * (1 - (effectiveBrake * effectiveBrake * maxBrakeUnderPower));
                     intermediateBrake = -1 * ( 1 - effectiveBrake * maxBrakeUnderPower);
-                    targetAcceleration = intermediateBrake;
-//                    Log.d(threaded_application.applicationName, activityName + ": X (Lower Speed) intermediateBrake: %.2f targetSpeed: %d",intermediateBrake, targetSpeed));
+                    //                    Log.d(threaded_application.applicationName, activityName + ": X (Lower Speed) intermediateBrake: %.2f targetSpeed: %d",intermediateBrake, targetSpeed));
 
                 } else {
 //                    intermediateBrake = 1 - (effectiveBrake * effectiveBrake * maxBrake);
                     intermediateBrake = 1 + (1 - effectiveBrake * maxBrake);
-                    targetAcceleration = intermediateBrake;
-//                    Log.d(threaded_application.applicationName, activityName + ": X (Higher Speed) intermediateBrake: %.2f targetSpeed: %d",intermediateBrake, targetSpeed));
+                    //                    Log.d(threaded_application.applicationName, activityName + ": X (Higher Speed) intermediateBrake: %.2f targetSpeed: %d",intermediateBrake, targetSpeed));
                 }
+                targetAcceleration = intermediateBrake;
             }
         }
 //        Log.d(threaded_application.applicationName, activityName + ": X intermediateBrake: %.2f targetAcceleration: %.2f",intermediateBrake, targetAcceleration));
@@ -1728,8 +1742,8 @@ public class throttle_semi_realistic extends throttle {
 //                airValues[whichThrottle] = 0;
 //            }
 
-            if (!isAirRechaging) startSemiRealisticThrottleAirRepeater(whichThrottle);
-            if (!isAirLineRechaging) startSemiRealisticThrottleAirLineRepeater(whichThrottle);
+            if (!isAirRecharging) startSemiRealisticThrottleAirRepeater(whichThrottle);
+            if (!isAirLineRecharging) startSemiRealisticThrottleAirLineRepeater(whichThrottle);
             showAirIndicator(whichThrottle);
             showAirLineIndicator(whichThrottle);
         }
@@ -1853,41 +1867,41 @@ public class throttle_semi_realistic extends throttle {
     // indicate direction using the button pressed state
     @Override
     protected void showTargetDirectionIndication(int whichThrottle) {
-        Button bFwd = bTargetFwds[whichThrottle];
-        Button bRev = bTargetRevs[whichThrottle];
+        Button bForward = bTargetForwards[whichThrottle];
+        Button bReverse = bTargetReverses[whichThrottle];
         Button bNeutral = bTargetNeutrals[whichThrottle];
         if (directionButtonsAreCurrentlyReversed(whichThrottle)) {
-            bRev = bTargetFwds[whichThrottle];
-            bFwd = bTargetRevs[whichThrottle];
+            bReverse = bTargetForwards[whichThrottle];
+            bForward = bTargetReverses[whichThrottle];
         }
 
         if (!getConsist(whichThrottle).isActive()) {
-            bTargetFwds[whichThrottle].setSelected(false);
-            bTargetRevs[whichThrottle].setSelected(false);
+            bTargetForwards[whichThrottle].setSelected(false);
+            bTargetReverses[whichThrottle].setSelected(false);
             bTargetNeutrals[whichThrottle].setSelected(false);
         } else {
             int speed = getSpeed(whichThrottle);
 
-            bRev.setSelected(false);
-            bRev.setTypeface(null, Typeface.NORMAL);
-            bRev.setEnabled(false);
+            bReverse.setSelected(false);
+            bReverse.setTypeface(null, Typeface.NORMAL);
+            bReverse.setEnabled(false);
 
-            bFwd.setSelected(false);
-            bFwd.setTypeface(null, Typeface.NORMAL);
-            bFwd.setEnabled(false);
+            bForward.setSelected(false);
+            bForward.setTypeface(null, Typeface.NORMAL);
+            bForward.setEnabled(false);
 
             bNeutral.setSelected(false);
             bNeutral.setTypeface(null, Typeface.NORMAL);
 
             if (targetDirections[whichThrottle] == direction_type.FORWARD) {
-                bFwd.setSelected(true);
-                bFwd.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-                bFwd.setEnabled(true);
+                bForward.setSelected(true);
+                bForward.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bForward.setEnabled(true);
 
             } else if (targetDirections[whichThrottle] == direction_type.REVERSE) {
-                bRev.setSelected(true);
-                bRev.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-                bRev.setEnabled(true);
+                bReverse.setSelected(true);
+                bReverse.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+                bReverse.setEnabled(true);
             } else if (targetDirections[whichThrottle] == direction_type.NEUTRAL) {
                 bNeutral.setSelected(true);
                 bNeutral.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
@@ -1896,15 +1910,15 @@ public class throttle_semi_realistic extends throttle {
 
                 int currentDirection = getDirection(whichThrottle);
                 if ( (speed == 0) || (currentDirection == direction_type.FORWARD) ) {
-                    bFwd.setEnabled(true);
+                    bForward.setEnabled(true);
                 }
                 if ( (speed == 0) || (currentDirection == direction_type.REVERSE) ) {
-                    bRev.setEnabled(true);
+                    bReverse.setEnabled(true);
                 }
             }
             if (speed == 0) {
-                bFwd.setEnabled(true);
-                bRev.setEnabled(true);
+                bForward.setEnabled(true);
+                bReverse.setEnabled(true);
             }
             bTargetNeutrals[whichThrottle].setEnabled(true);
         }
@@ -2066,7 +2080,7 @@ public class throttle_semi_realistic extends throttle {
 
         if (repeatDelay==0) {
             if (mSemiRealisticAutoIncrementOrDecrement[whichThrottle] == auto_increment_or_decrement_type.INCREMENT) {
-                repeatDelay = prefSemiRealisticThrottleAcceleratonRepeat;
+                repeatDelay = prefSemiRealisticThrottleAccelerationRepeat;
             } else {
                 repeatDelay = prefSemiRealisticThrottleDecelerationRepeat;
             }
@@ -2121,11 +2135,11 @@ public class throttle_semi_realistic extends throttle {
             if (mainapp.appIsFinishing) { return;}
 
             if (getAirValue(whichThrottle) >= 100) {
-                isAirRechaging = false;
+                isAirRecharging = false;
                 return;
             }
 
-//            airValues[whichThrottle] = getAirValue(whichThrottle) + ((isAirLineRechaging) ? 2 : 10);
+//            airValues[whichThrottle] = getAirValue(whichThrottle) + ((isAirLineRecharging) ? 2 : 10);
             setAirValue(whichThrottle, getAirValue(whichThrottle) + 5);
 
             setTargetSpeed(whichThrottle,false);
@@ -2139,7 +2153,7 @@ public class throttle_semi_realistic extends throttle {
 
     void startSemiRealisticThrottleAirRepeater(int whichThrottle) {
         Log.d(threaded_application.applicationName, activityName + ": restartSemiRealisticThrottleAirRepeater():");
-        isAirRechaging = true;
+        isAirRecharging = true;
         semiRealisticAirUpdateHandlers[whichThrottle].removeCallbacks(null);
         semiRealisticAirUpdateHandlers[whichThrottle]
                 .postDelayed(new SemiRealisticAirRptUpdater(whichThrottle,prefSemiRealisticThrottleAirRefreshRate), prefSemiRealisticThrottleAirRefreshRate);
@@ -2161,21 +2175,21 @@ public class throttle_semi_realistic extends throttle {
             if (mainapp.appIsFinishing) { return;}
 
             if ( (getAirLineValue(whichThrottle) >= 100) || (getBrakeSliderPosition(whichThrottle) > 0)) {  // can't recharge the line if the brake is active
-                isAirLineRechaging = false;
-                if ( (airValues[whichThrottle]<100) && (!isAirRechaging) ) startSemiRealisticThrottleAirRepeater(whichThrottle);
+                isAirLineRecharging = false;
+                if ( (airValues[whichThrottle]<100) && (!isAirRecharging) ) startSemiRealisticThrottleAirRepeater(whichThrottle);
                 return;
             }
 
             if (airValues[whichThrottle] >= 20 ) {
                 setAirLineValue(whichThrottle, getAirLineValue(whichThrottle) + 20);
                 setAirValue(whichThrottle, airValues[whichThrottle] - 20);
-                if (!isAirRechaging) startSemiRealisticThrottleAirRepeater(whichThrottle);
+                if (!isAirRecharging) startSemiRealisticThrottleAirRepeater(whichThrottle);
 
             }  else if (airValues[whichThrottle] >= 0 ) {
                 int availableAir = airValues[whichThrottle];  // In case it have been partly refilled in the mean time
                 setAirLineValue(whichThrottle, getAirLineValue(whichThrottle) + availableAir);
                 setAirValue(whichThrottle, airValues[whichThrottle] - availableAir);
-                if (!isAirRechaging) startSemiRealisticThrottleAirRepeater(whichThrottle);
+                if (!isAirRecharging) startSemiRealisticThrottleAirRepeater(whichThrottle);
             } // else nothing to charge with
 
             setTargetSpeed(whichThrottle,false);
@@ -2188,7 +2202,7 @@ public class throttle_semi_realistic extends throttle {
 
     void startSemiRealisticThrottleAirLineRepeater(int whichThrottle) {
         Log.d(threaded_application.applicationName, activityName + ": restartSemiRealisticThrottleAirLineRepeater():");
-        isAirLineRechaging = true;
+        isAirLineRecharging = true;
         semiRealisticAirLineUpdateHandlers[whichThrottle].removeCallbacks(null);
         semiRealisticAirLineUpdateHandlers[whichThrottle]
                 .postDelayed(new SemiRealisticAirLineRptUpdater(whichThrottle,prefSemiRealisticThrottleAirRefreshRate), prefSemiRealisticThrottleAirRefreshRate);

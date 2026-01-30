@@ -22,6 +22,10 @@ import static android.view.View.VISIBLE;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -34,7 +38,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.RectF;
-import android.media.ExifInterface;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -105,17 +109,16 @@ import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.address_type;
+import jmri.enginedriver.type.activity_outcome_type;
 
 import jmri.enginedriver.util.AdvancedConsistTool;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.direction_type;
-import jmri.enginedriver.type.sub_activity_type;
 
 public class select_loco extends AppCompatActivity {
     static final String activityName = "select_loco";
-    static public final int RESULT_LOCO_EDIT = RESULT_FIRST_USER;
 
     String prefSelectLocoMethod = select_loco_method_type.FIRST;
 
@@ -203,10 +206,34 @@ public class select_loco extends AppCompatActivity {
 
     LinearLayout[] selectMethodLayouts = new LinearLayout[5];
 
-//    LinearLayout dispatchButtonLayout;
-//    Button dispatchButton;
-
     private int maxAddr = 9999;
+
+    protected final ActivityResultLauncher<Intent> consistEditActivityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.d(threaded_application.applicationName, activityName + ": consistEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
+
+                int resultCode = result.getResultCode();
+                if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
+                    handleConsistEditActivityResult();
+                }
+            }
+    );
+
+    protected final ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.d(threaded_application.applicationName, activityName + ": galleryLauncher callback received. ResultCode: " + result.getResultCode());
+
+                int resultCode = result.getResultCode();
+                if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
+                    Intent data = result.getData();
+                    if (data != null) {
+                        handleGalleryResult(data);
+                    }
+                }
+            }
+    );
 
     // populate the on-screen roster view from global hashmap
     @SuppressLint("DefaultLocale")
@@ -232,15 +259,15 @@ public class select_loco extends AppCompatActivity {
             //put roster entries into screen list
             if (mainapp.roster_entries != null) {
                 ArrayList<String> rns = new ArrayList<>(mainapp.roster_entries.keySet());  //copy from synchronized map to avoid holding it while iterating
-                for (String rostername : rns) {
+                for (String rosterName : rns) {
                     // put key and values into temp hashmap
                     HashMap<String, String> hm = new HashMap<>();
-                    hm.put("roster_name", rostername);
-                    hm.put("roster_address", mainapp.roster_entries.get(rostername));
+                    hm.put("roster_name", rosterName);
+                    hm.put("roster_address", mainapp.roster_entries.get(rosterName));
                     hm.put("roster_entry_type", "loco");
                     String owner = "";
-                    if ((mainapp.rosterJmriWeb!=null) && (mainapp.rosterJmriWeb.get(rostername)!=null)) {
-                        owner = Objects.requireNonNull(mainapp.rosterJmriWeb.get(rostername)).getOwner();
+                    if ((mainapp.rosterJmriWeb!=null) && (mainapp.rosterJmriWeb.get(rosterName)!=null)) {
+                        owner = Objects.requireNonNull(mainapp.rosterJmriWeb.get(rosterName)).getOwner();
                         boolean foundOwner = false;
                         for (int j=0;j< rosterOwnersList.size(); j++) {
                             if (rosterOwnersList.get(j).equals(owner)) {
@@ -260,7 +287,7 @@ public class select_loco extends AppCompatActivity {
                     if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0) ) {
                         includeInList = true;
                     } else if ((!prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0)) {
-                         if (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase())) {
+                         if (rosterName.toUpperCase().contains(prefRosterFilter.toUpperCase())) {
                             includeInList = true;
                          }
                     } else if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex > 0)) {
@@ -268,7 +295,7 @@ public class select_loco extends AppCompatActivity {
                             includeInList = true;
                         }
                     } else { // if ((prefRosterFilter.length() > 0) && (rosterOwnersFilterIndex > 0)) {
-                        if ( (rostername.toUpperCase().contains(prefRosterFilter.toUpperCase()))
+                        if ( (rosterName.toUpperCase().contains(prefRosterFilter.toUpperCase()))
                             && owner.equals(rosterOwnersList.get(rosterOwnersFilterIndex)) ) {
                             includeInList = true;
                         }
@@ -278,15 +305,15 @@ public class select_loco extends AppCompatActivity {
                     if (includeInList) {
                         //add icon if url set
                         if (mainapp.rosterJmriWeb != null) {
-                            if (mainapp.rosterJmriWeb.get(rostername) != null) {
-                                String iconPath = Objects.requireNonNull(mainapp.rosterJmriWeb.get(rostername)).getIconPath();
+                            if (mainapp.rosterJmriWeb.get(rosterName) != null) {
+                                String iconPath = Objects.requireNonNull(mainapp.rosterJmriWeb.get(rosterName)).getIconPath();
                                 if (iconPath != null) {
                                     hm.put("roster_icon", iconPath + "?maxHeight=52");  //include sizing instructions
                                 } else {
-                                    Log.d(threaded_application.applicationName, activityName + ": refreshRosterList(): xml roster entry " + rostername + " found, but no icon specified.");
+                                    Log.d(threaded_application.applicationName, activityName + ": refreshRosterList(): xml roster entry " + rosterName + " found, but no icon specified.");
                                 }
                             } else {
-                                Log.w(threaded_application.applicationName, activityName + ": refreshRosterList(): WiThrottle roster entry " + rostername + " not found in xml roster.");
+                                Log.w(threaded_application.applicationName, activityName + ": refreshRosterList(): WiThrottle roster entry " + rosterName + " not found in xml roster.");
                             }
                         }
                         // add temp hashmap to list which view is hooked to
@@ -387,13 +414,13 @@ public class select_loco extends AppCompatActivity {
 //        Log.d(threaded_application.applicationName, activityName + ": getLocoIconUrlFromRoster()");
         if (prefRosterRecentLocoNames) {
             if ((mainapp.roster_entries != null) && (!mainapp.roster_entries.isEmpty()) && (mainapp.rosterJmriWeb != null)) {
-                for (String rostername : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
+                for (String rosterName : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
                     if (engineName.isEmpty()) {
-                        String rosterEntryRosterName = mainapp.roster_entries.get(rostername);
+                        String rosterEntryRosterName = mainapp.roster_entries.get(rosterName);
                         if (rosterEntryRosterName == null) return "";
 
                         if (rosterEntryRosterName.equals(engineAddress)) {
-                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
+                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rosterName);
                             if (rosterentry == null) return "";
                             String iconPath = rosterentry.getIconPath();  //if found, return the icon url
                             if (iconPath == null) return "";
@@ -402,8 +429,8 @@ public class select_loco extends AppCompatActivity {
 
                     } else { // if there is a name as well, confirm they match (for entries with the same address)
 
-                        if (rostername.equals(engineName)) {
-                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rostername);
+                        if (rosterName.equals(engineName)) {
+                            RosterEntry rosterentry = mainapp.rosterJmriWeb.get(rosterName);
                             if (rosterentry == null) return "";
                             String iconPath = rosterentry.getIconPath();  //if found, return the icon url
                             if (iconPath == null) return "";
@@ -570,9 +597,9 @@ public class select_loco extends AppCompatActivity {
 
     void adjustCurrentLocosListTextViewWidth() {
         TextView textView = findViewById(R.id.current_locos_text);
-        LinearLayout consistButtonlayout = findViewById(R.id.consist_buttons_layout1);
+        LinearLayout consistButtonLayout = findViewById(R.id.consist_buttons_layout1);
         LinearLayout consistOptionsLayout = findViewById(R.id.current_locos_options_layout1);
-        int bWidth = consistButtonlayout.getWidth() - consistOptionsLayout.getWidth();
+        int bWidth = consistButtonLayout.getWidth() - consistOptionsLayout.getWidth();
         if (bWidth>0) {
             textView.getLayoutParams().width = bWidth;
             textView.requestLayout();
@@ -762,14 +789,9 @@ public class select_loco extends AppCompatActivity {
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
 
                 saveUpdateList = bUpdateList;
-                Intent consistEdit = new Intent().setClass(this, ConsistEdit.class);
-                consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
-
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
-
                 if (numberInConsist < 0) { // don't show the Consist edit screen.  Only used for Recent Consists
-                    startActivityForResult(consistEdit, sub_activity_type.CONSIST);
-                    connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                    startConsistEditActivity(whichThrottle,false);
                 }
             }
         }
@@ -797,109 +819,133 @@ public class select_loco extends AppCompatActivity {
         mainapp.function_labels[whichThrottle] = functionLabelsMap; //set the appropriate global variable from the temp
     }
 
-    //handle return from ConsistEdit
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case sub_activity_type.CONSIST: // edit consist
-                if (newEngine) {
-                    saveRecentConsistsList(saveUpdateList);
-                }
-                result = RESULT_LOCO_EDIT;                 //tell Throttle to update loco directions
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-                overrideThrottleName = "";
-                endThisActivity();
-                break;
-
-            case ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE: // edit consist
-                if (resultCode == RESULT_OK && data != null) {
-                    // Get the Image from data
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.MediaColumns.DATA};
-                    if (selectedImage == null) break;
-
-                    // Get the cursor
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    if (cursor == null) break;
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String imgpath = cursor.getString(columnIndex);
-                    cursor.close();
-
-                    File image_file = null;
-                    try {
-                        image_file = new File(imgpath);
-                    } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
-                        Log.d(threaded_application.applicationName, activityName + ": onActivityResult(): Load image failed : " + imgpath);
-                    }
-                    if ( (image_file != null) && (image_file.exists()) ) {
-                        try {
-                            int inWidth;
-                            int inHeight;
-
-                            InputStream in = new FileInputStream(image_file.getPath());
-
-                            // decode image size (decode metadata only, not the whole image)
-                            BitmapFactory.Options options = new BitmapFactory.Options();
-                            options.inJustDecodeBounds = true;
-                            BitmapFactory.decodeStream(in, null, options);
-                            in.close();
-
-                            // save width and height
-                            inWidth = options.outWidth;
-                            inHeight = options.outHeight;
-
-                            // decode full image pre-resized
-                            in = new FileInputStream(image_file.getPath());
-                            options = new BitmapFactory.Options();
-                            // calc rough re-size (this is no exact resize)
-                            options.inSampleSize = Math.max(inWidth/150, inHeight/150);
-                            // decode full image
-                            Bitmap roughBitmap = BitmapFactory.decodeStream(in, null, options);
-                            if (roughBitmap == null) {
-                                imageFileFoundButCannotBeLoaded();
-                                return;
-                            }
-                            // calc exact destination size
-                            Matrix m = new Matrix();
-                            RectF inRect = new RectF(0, 0, roughBitmap.getWidth(), roughBitmap.getHeight());
-                            RectF outRect = new RectF(0, 0, 150, 150);
-                            m.setRectToRect(inRect, outRect, Matrix.ScaleToFit.CENTER);
-                            float[] values = new float[9];
-                            m.getValues(values);
-
-                            // resize bitmap
-                            Bitmap resizedBitmap = Bitmap.createScaledBitmap(roughBitmap, (int) (roughBitmap.getWidth() * values[0]),
-                                    (int) (roughBitmap.getHeight() * values[4]), true);
-
-                            int degree = getRotateDegreeFromExif(image_file.getPath());
-                            Matrix matrix = new Matrix();
-                            matrix.postRotate(degree);/*from   w  w w.  j  a v  a2 s  .co  m*/
-                            if (degree!=0) {
-                                Bitmap rotatedImage = Bitmap.createBitmap(resizedBitmap, 0, 0,
-                                        resizedBitmap.getWidth(), resizedBitmap.getHeight(), matrix, true);
-                                detailsRosterImageView.setImageBitmap(rotatedImage);
-                            } else {
-                                detailsRosterImageView.setImageBitmap(resizedBitmap);
-                            }
-
-//                            detailsRosterImageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
-                            detailsRosterImageView.setVisibility(VISIBLE);
-                            detailsRosterImageView.invalidate();
-                            newRosterImageSelected = true;
-                            hasLocalRosterImage = true;
-                            LocalRosterImageRemoved = false;
-                            buttonRemoveRosterImage.setVisibility(VISIBLE);
-                            buttonClose.setText(getString(R.string.rosterEntryImageSaveButtonText));
-                        } catch (Exception e) {
-                            imageFileFoundButCannotBeLoaded();
-                        }
-                    }
-                }
-                break;
+    void startConsistEditActivity(int whichThrottle, boolean saveConsistsFile) {
+        try {
+            Intent intent = new Intent().setClass(this, ConsistEdit.class);
+            intent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
+            if (saveConsistsFile) intent.putExtra("saveConsistsFile", 'Y');
+            consistEditActivityLauncher.launch(intent);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        } catch (Exception ex) {
+            Log.d(threaded_application.applicationName, activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
+
+    private void handleConsistEditActivityResult() {
+        Log.d(threaded_application.applicationName, activityName + ": handleConsistEditActivityResult() ");
+
+        if (newEngine) {
+            saveRecentConsistsList(saveUpdateList);
+        }
+        result = activity_outcome_type.RESULT_LOCO_EDIT;  //tell Throttle to update loco directions
+
+        overrideThrottleName = "";
+        endThisActivity();
+    }
+
+    void startGallery() {
+        try {
+            // Create intent to Open Image applications like Gallery, Google Photos
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryLauncher.launch(intent);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        } catch (Exception ex) {
+            Log.d(threaded_application.applicationName, activityName + ": startGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+        }
+    }
+
+    private void handleGalleryResult(@NonNull Intent data) {
+        Log.d(threaded_application.applicationName, activityName + ": handleGalleryResult() ");
+
+        // Get the Image from data
+        Uri selectedImage = data.getData();
+        String[] filePathColumn = {MediaStore.MediaColumns.DATA};
+        if (selectedImage == null) return;
+
+        // Get the cursor
+        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        if (cursor == null) return;
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String imgpath = cursor.getString(columnIndex);
+        cursor.close();
+
+        File image_file = null;
+        try {
+            image_file = new File(imgpath);
+        } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
+            Log.d(threaded_application.applicationName, activityName + ": onActivityResult(): Load image failed : " + imgpath);
+        }
+        if ( (image_file != null) && (image_file.exists()) ) {
+            try {
+                int inWidth;
+                int inHeight;
+
+                InputStream in = new FileInputStream(image_file.getPath());
+
+                // decode image size (decode metadata only, not the whole image)
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeStream(in, null, options);
+                in.close();
+
+                // save width and height
+                inWidth = options.outWidth;
+                inHeight = options.outHeight;
+
+                // decode full image pre-resized
+                in = new FileInputStream(image_file.getPath());
+                options = new BitmapFactory.Options();
+                // calc rough re-size (this is no exact resize)
+                options.inSampleSize = Math.max(inWidth/150, inHeight/150);
+                // decode full image
+                Bitmap roughBitmap = BitmapFactory.decodeStream(in, null, options);
+                if (roughBitmap == null) {
+                    imageFileFoundButCannotBeLoaded();
+                    return;
+                }
+                // calc exact destination size
+                Matrix m = new Matrix();
+                RectF inRect = new RectF(0, 0, roughBitmap.getWidth(), roughBitmap.getHeight());
+                RectF outRect = new RectF(0, 0, 150, 150);
+                m.setRectToRect(inRect, outRect, Matrix.ScaleToFit.CENTER);
+                float[] values = new float[9];
+                m.getValues(values);
+
+                // resize bitmap
+                Bitmap resizedBitmap = Bitmap.createScaledBitmap(roughBitmap, (int) (roughBitmap.getWidth() * values[0]),
+                        (int) (roughBitmap.getHeight() * values[4]), true);
+
+                int degree = getRotateDegreeFromExif(image_file.getPath());
+                Matrix matrix = new Matrix();
+                matrix.postRotate(degree);/*from   w  w w.  j  a v  a2 s  .co  m*/
+                if (degree!=0) {
+                    Bitmap rotatedImage = Bitmap.createBitmap(resizedBitmap, 0, 0,
+                            resizedBitmap.getWidth(), resizedBitmap.getHeight(), matrix, true);
+                    detailsRosterImageView.setImageBitmap(rotatedImage);
+                } else {
+                    detailsRosterImageView.setImageBitmap(resizedBitmap);
+                }
+
+//                            detailsRosterImageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
+                detailsRosterImageView.setVisibility(VISIBLE);
+                detailsRosterImageView.invalidate();
+                newRosterImageSelected = true;
+                hasLocalRosterImage = true;
+                LocalRosterImageRemoved = false;
+                buttonRemoveRosterImage.setVisibility(VISIBLE);
+                buttonClose.setText(getString(R.string.rosterEntryImageSaveButtonText));
+            } catch (Exception e) {
+                imageFileFoundButCannotBeLoaded();
+            }
+        }
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     private void imageFileFoundButCannotBeLoaded() {
         Log.d(threaded_application.applicationName, activityName + ": onActivityResult(): load image - image file found but could not loaded");
@@ -1298,13 +1344,8 @@ public class select_loco extends AppCompatActivity {
 
         public void onClick(View v) {
             Log.d(threaded_application.applicationName, activityName + ": EditConsistButtonListener(): onClick()");
-            Intent consistEdit = new Intent().setClass(_selectLocoActivity, ConsistEdit.class);
-            consistEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
-            consistEdit.putExtra("saveConsistsFile", 'Y');
-
             mainapp.hideSoftKeyboard(v, activityName);
-            startActivityForResult(consistEdit, sub_activity_type.CONSIST);
-            connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
+            startConsistEditActivity(whichThrottle, true);
             mainapp.buttonVibration();
         }
     }
@@ -1324,7 +1365,6 @@ public class select_loco extends AppCompatActivity {
             consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
             mainapp.hideSoftKeyboard(v, activityName);
-//            startActivityForResult(consistLightsEdit, sub_activity_type.CONSIST_LIGHTS);
             startActivity(consistLightsEdit);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             mainapp.buttonVibration();
@@ -1439,8 +1479,7 @@ public class select_loco extends AppCompatActivity {
 
         public void onClick(View v) {
             Log.d(threaded_application.applicationName, activityName + ": DeviceSoundsButtonListener(): onClick()");
-            Intent deviceSounds = new Intent().setClass(_selectLocoActivity, device_sounds_settings.class);
-//            startActivityForResult(deviceSounds, ACTIVITY_DEVICE_SOUNDS_SETTINGS);
+            Intent deviceSounds = new Intent().setClass(_selectLocoActivity, DeviceSoundsSettings.class);
             startActivity(deviceSounds);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             result = RESULT_OK;
@@ -1518,19 +1557,19 @@ public class select_loco extends AppCompatActivity {
                 if (mainapp.consists==null) return; // attempt to catch NPEs
 
                 HashMap<String, String> hm = recentConsistsList.get(position);
-                int actualPostion = Integer.parseInt(Objects.requireNonNull(hm.get("last_used")));
+                int actualPosition = Integer.parseInt(Objects.requireNonNull(hm.get("last_used")));
 
-                overrideThrottleName = importExportPreferences.recentConsistNameList.get(actualPostion);
+                overrideThrottleName = importExportPreferences.recentConsistNameList.get(actualPosition);
 
-                for (int i = 0; i < importExportPreferences.recentConsistLocoAddressList.get(actualPostion).size(); i++) {
+                for (int i = 0; i < importExportPreferences.recentConsistLocoAddressList.get(actualPosition).size(); i++) {
 
-                    locoAddress = importExportPreferences.recentConsistLocoAddressList.get(actualPostion).get(i);
-                    locoAddressSize = importExportPreferences.recentConsistAddressSizeList.get(actualPostion).get(i);
+                    locoAddress = importExportPreferences.recentConsistLocoAddressList.get(actualPosition).get(i);
+                    locoAddressSize = importExportPreferences.recentConsistAddressSizeList.get(actualPosition).get(i);
                     sAddr = importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, true);
-                    locoSource = importExportPreferences.recentConsistSourceList.get(actualPostion).get(i);
+                    locoSource = importExportPreferences.recentConsistSourceList.get(actualPosition).get(i);
                     locoName = mainapp.getRosterNameFromAddress(importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, false), false);
-                    if ((locoSource != source_type.ADDRESS) && (!importExportPreferences.recentConsistRosterNameList.get(actualPostion).get(i).isEmpty())) {
-                        locoName = importExportPreferences.recentConsistRosterNameList.get(actualPostion).get(i);
+                    if ((locoSource != source_type.ADDRESS) && (!importExportPreferences.recentConsistRosterNameList.get(actualPosition).get(i).isEmpty())) {
+                        locoName = importExportPreferences.recentConsistRosterNameList.get(actualPosition).get(i);
                     }
                     sWhichThrottle = tempsWhichThrottle
                             + locoName;
@@ -1539,7 +1578,7 @@ public class select_loco extends AppCompatActivity {
 
                     Consist consist = mainapp.consists[whichThrottle];
 
-                    dir = importExportPreferences.recentConsistDirectionList.get(actualPostion).get(i);
+                    dir = importExportPreferences.recentConsistDirectionList.get(actualPosition).get(i);
                     if (dir == direction_type.BACKWARD) {
                         consist.setBackward(sAddr, true);
                     }
@@ -1554,7 +1593,7 @@ public class select_loco extends AppCompatActivity {
                         mainapp.function_labels[whichThrottle] = new LinkedHashMap<>(mainapp.function_labels_default);
                     }
 
-                    light = importExportPreferences.recentConsistLightList.get(actualPostion).get(i);
+                    light = importExportPreferences.recentConsistLightList.get(actualPosition).get(i);
                     if (light != light_follow_type.UNKNOWN) {
                         consist.setLight(sAddr, light);
                     }
@@ -1562,7 +1601,7 @@ public class select_loco extends AppCompatActivity {
                 }
                 saveRecentConsistsList(saveUpdateList);
 
-                result = RESULT_LOCO_EDIT;
+                result = activity_outcome_type.RESULT_LOCO_EDIT;
                 mainapp.buttonVibration();
                 mainapp.hideSoftKeyboard(v, activityName);
                 endThisActivity();
@@ -1571,13 +1610,13 @@ public class select_loco extends AppCompatActivity {
     }
 
     //Clears recent connection list of locos when button is touched or clicked
-    public class ClearLocoListButtonListner implements AdapterView.OnClickListener {
+    public class ClearLocoListButtonListener implements AdapterView.OnClickListener {
         public void onClick(View v) {
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 //@Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Log.d(threaded_application.applicationName, activityName + ": ClearLocoListButtonListner(): onClick()");
+                    Log.d(threaded_application.applicationName, activityName + ": ClearLocoListButtonListener(): onClick()");
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             clearList();
@@ -1705,7 +1744,7 @@ public class select_loco extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
-        result = RESULT_CANCELED;
+        result = RESULT_OK;
         if (mainapp.isForcingFinish()) {     // expedite
             return;
         }
@@ -1801,7 +1840,7 @@ public class select_loco extends AppCompatActivity {
         Button button = findViewById(R.id.acquire_button);
         button.setOnClickListener(new AcquireButtonListener());
         button = findViewById(R.id.clear_Loco_List_button);
-        button.setOnClickListener(new ClearLocoListButtonListner());
+        button.setOnClickListener(new ClearLocoListButtonListener());
         button = findViewById(R.id.clear_consists_list_button);
         button.setOnClickListener(new ClearConsistsListButtonListener());
         button = findViewById(R.id.idngo_button);
@@ -1974,7 +2013,7 @@ public class select_loco extends AppCompatActivity {
         selectLocoMethodRadioButtonsGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (prefSelectLocoByRadioButtons) { // otherwise ignore any cheges to these
+                if (prefSelectLocoByRadioButtons) { // otherwise ignore any changes to these
                     if (checkedId == R.id.select_loco_method_roster_button) {
                         showMethod(select_loco_method_type.ROSTER);
                     } else if (checkedId == R.id.select_loco_method_recent_button) {
@@ -2413,12 +2452,7 @@ public class select_loco extends AppCompatActivity {
         buttonSelectRosterImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 detailsRosterNameString = rosterNameString; // store the name for the return result
-                // Create intent to Open Image applications like Gallery, Google Photos
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                // Start the Intent
-                startActivityForResult(galleryIntent, ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE);
-
+                startGallery();
                 mainapp.buttonVibration();
             }
         });
@@ -2478,10 +2512,10 @@ public class select_loco extends AppCompatActivity {
         if (onScreenPosition >= recentLocosList.size()) return;
 
         HashMap<String, String> hm = recentLocosList.get(onScreenPosition);
-        int postionInFullList = Integer.parseInt(Objects.requireNonNull(hm.get("last_used")));
-        if (postionInFullList >= importExportPreferences.recentLocoAddressList.size()) return;
+        int positionInFullList = Integer.parseInt(Objects.requireNonNull(hm.get("last_used")));
+        if (positionInFullList >= importExportPreferences.recentLocoAddressList.size()) return;
 
-        importExportPreferences.removeRecentLocoFromList(postionInFullList);
+        importExportPreferences.removeRecentLocoFromList(positionInFullList);
 
         removingLocoOrForceReload = true;
 
@@ -2520,10 +2554,10 @@ public class select_loco extends AppCompatActivity {
         if (onScreenPosition >= recentConsistsList.size()) return;
 
         HashMap<String, String> hm = recentConsistsList.get(onScreenPosition);
-        int postionInFullList = Integer.parseInt(Objects.requireNonNull(hm.get("last_used")));
-        if (postionInFullList >= importExportPreferences.recentConsistLocoAddressList.size()) return;
+        int positionInFullList = Integer.parseInt(Objects.requireNonNull(hm.get("last_used")));
+        if (positionInFullList >= importExportPreferences.recentConsistLocoAddressList.size()) return;
 
-        importExportPreferences.removeRecentConsistFromListAtPosition(postionInFullList);
+        importExportPreferences.removeRecentConsistFromListAtPosition(positionInFullList);
         removingConsistOrForceRewrite = true;
 
         Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
@@ -2816,7 +2850,7 @@ public class select_loco extends AppCompatActivity {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent()");
-//        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

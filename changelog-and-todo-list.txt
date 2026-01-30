@@ -1,10 +1,14 @@
 **Version 2.42.218
  * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
+ * Bug fix for the 'additional' gamepad and volume indicators. This can't have worked properly for a long time.
  * Linting
- * Remove references to the ESU MobileControl II
+ * Removed references to the ESU MobileControl II
  * Added localisation files for English (Singapore) and English (India). Same as UK/Australia/NZ
  * Added preference to 'Swap' the throw/close labels for all DCC-EX turnouts
  * More Google Translations
+ * Full removal of the deprecated use of startActivityForResult().  Moved to the new Activity Result APIs.
+ * Rename of some of the original variables to remove the confusing abbreviations.
+ * Typos in field and method names
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
@@ -1073,6 +1077,7 @@
  *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
+ *   TODO: add a 'back' button to allow users to continuing adding to the consist without returning to the throttle screen
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from

@@ -266,7 +266,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         for (int i = 0; i < turnouts_lv.getCount() && !found; i++) {
                             ViewGroup vg = (ViewGroup) turnouts_lv.getChildAt(i);  //start with the list item the button belongs to
                             if (vg != null) {
-                                ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
+                                ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemName and username
                                 TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
                                 String rowUserName = unv.getText().toString();
 
@@ -440,23 +440,23 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
 
         public void onClick(View v) {
-//            EditText entryv = findViewById(R.id.turnout_entry);
-            String entrytext = trn.getText().toString().trim();
-            if (entrytext.length() > 0) {
+//            EditText entryView = findViewById(R.id.turnout_entry);
+            String entryText = trn.getText().toString().trim();
+            if (!entryText.isEmpty()) {
                 //if text starts with a digit, check number and prefix with hardware_system and "T"
                 //otherwise send the text as is
-                if (Character.isDigit(entrytext.charAt(0))) {
+                if (Character.isDigit(entryText.charAt(0))) {
                     try {
-                        Integer.valueOf(entrytext);  //edit check address by attempting conversion to int
+                        Integer.valueOf(entryText);  //edit check address by attempting conversion to int
                     } catch (Exception except) {
                         mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastTurnoutInvalidNumber) + " " + except.getMessage(), Toast.LENGTH_SHORT);
                         return;
                     }
                 }
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entrytext);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entryText);
 
-                turnoutSystemName = entrytext;
-                turnoutUserName = entrytext;
+                turnoutSystemName = entryText;
+                turnoutUserName = entryText;
                 turnoutSource = source_type.ADDRESS;
 
                 boolean reloadRecents = false;
@@ -511,8 +511,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         public void onClick(View v) {
             ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
-            ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
-            TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
+            ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemName and username
+            TextView snv = (TextView) rl.getChildAt(1); // get systemName text from 2nd box
             TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
             turnoutSystemName = snv.getText().toString();
             turnoutUserName = unv.getText().toString();
@@ -534,9 +534,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         public void onClick(View v) {
             ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
-            ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemname and username
+            ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemName and username
             TextView source = (TextView) rl.getChildAt(2); // get source from 3nd (hidden) box
-            TextView snv = (TextView) rl.getChildAt(1); // get systemname text from 2nd box
+            TextView snv = (TextView) rl.getChildAt(1); // get systemName text from 2nd box
             TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
             turnoutSystemName = snv.getText().toString();
             turnoutUserName = unv.getText().toString();
@@ -628,14 +628,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         };
         turnouts_lv = findViewById(R.id.turnouts_list);
         turnouts_lv.setAdapter(turnouts_list_adapter);
-
-//        OnTouchListener gestureListener = new ListView.OnTouchListener() {
-//            @SuppressLint("ClickableViewAccessibility")
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return myGesture != null && myGesture.onTouchEvent(event);
-//            }
-//        };
-//        turnouts_lv.setOnTouchListener(gestureListener);
 
         turnouts_lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -744,12 +736,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         };
         recentTurnoutsListView = findViewById(R.id.turnouts_recent_list);
         recentTurnoutsListView.setAdapter(recentTurnoutsListAdapter);
-//        OnTouchListener recentTurnoutsGestureListener = new ListView.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return myGesture != null && myGesture.onTouchEvent(event);
-//            }
-//        };
-//        recentTurnoutsListView.setOnTouchListener(recentTurnoutsGestureListener);
 
         loadRecentTurnoutsList();
         b = findViewById(R.id.clear_turnouts_list_button);
@@ -1123,9 +1109,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     //handle return from menu items
-    @SuppressLint("MissingSuperCall")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         //since we always do the same action no need to distinguish between requests
         refreshTurnoutsView();
         refreshTurnoutViewStates();
@@ -1368,9 +1354,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             lastTurnoutUsedName = turnoutSystemName;
 
             int numberOfRecentTurnoutsToWrite;
-            String smrl = prefs.getString("prefMaximumRecentLocos", getApplicationContext().getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
+            String prefMaximumRecentLocos = prefs.getString("prefMaximumRecentLocos", getApplicationContext().getResources().getString(R.string.prefMaximumRecentLocosDefaultValue)); //retrieve pref for max recent locos to show
             try {
-                numberOfRecentTurnoutsToWrite = Integer.parseInt(smrl) * 3;
+                numberOfRecentTurnoutsToWrite = Integer.parseInt(prefMaximumRecentLocos) * 3;
             } catch (Exception except) {
                 Log.e(threaded_application.applicationName, activityName
                         + ": deleteRecentTurnoutsListFile: Turnouts: Error retrieving prefMaximumRecentLocos "
@@ -1455,7 +1441,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        if (importExportPreferences.recentTurnoutAddressList.size() == 0) {
+        if (importExportPreferences.recentTurnoutAddressList.isEmpty()) {
             importExportPreferences.deleteFile(getApplicationContext(), ImportExportPreferences.RECENT_TURNOUTS_FILENAME);
         } else {
             importExportPreferences.writeRecentTurnoutsListToFile(getApplicationContext(), prefs);
@@ -1687,7 +1673,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

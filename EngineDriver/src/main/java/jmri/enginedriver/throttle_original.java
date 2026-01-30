@@ -1,4 +1,4 @@
-/*Copyright (C) 2017 M. Steve Todd mstevetodd@gmail.com
+/*Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -211,7 +211,7 @@ public class throttle_original extends throttle {
         int[] heights = {0, 0, 0, 0, 0, 0};
 
         // avoid NPE by not letting this run too early (reported to Play Store)
-        if (tvVols[0] == null) return;
+        if (tvVolumeIndicators[0] == null) return;
 
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
@@ -248,7 +248,7 @@ public class throttle_original extends throttle {
         }
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            Button b = bSels[throttleIndex];
+            Button b = bSelects[throttleIndex];
             bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
             bLabelPlainText = bLabel;
 
@@ -278,9 +278,9 @@ public class throttle_original extends throttle {
                     bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
                     throttle_count++;
 
-                    tvbSelsLabels[throttleIndex].setVisibility(View.GONE);
+                    tvbSelectsLabels[throttleIndex].setVisibility(View.GONE);
                 } else {
-                    tvbSelsLabels[throttleIndex].setVisibility(View.VISIBLE);
+                    tvbSelectsLabels[throttleIndex].setVisibility(View.VISIBLE);
                 }
             }
             double textScale = 1.0;
@@ -316,7 +316,7 @@ public class throttle_original extends throttle {
             llLocoIdAndSpeedViewGroups[throttleIndex].setLayoutParams(llLidp);
             llLocoDirectionButtonViewGroups[throttleIndex].setLayoutParams(llLidp);
 
-            tvSpdVals[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
+            tvSpeedValues[throttleIndex].setTextSize(TypedValue.COMPLEX_UNIT_SP, newDlihFontSize);
 
             //set height of slider areas
             LinearLayout.LayoutParams llLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, newHeight);
@@ -330,19 +330,19 @@ public class throttle_original extends throttle {
 
             sbs[throttleIndex].setVisibility(View.VISIBLE);  //always show slider if buttons not shown
             if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
-                bLSpds[throttleIndex].setVisibility(View.VISIBLE);
-                bRSpds[throttleIndex].setVisibility(View.VISIBLE);
-                bLSpds[throttleIndex].setText(speedButtonLeftText);
-                bRSpds[throttleIndex].setText(speedButtonRightText);
+                bLeftSpeeds[throttleIndex].setVisibility(View.VISIBLE);
+                bRightSpeeds[throttleIndex].setVisibility(View.VISIBLE);
+                bLeftSpeeds[throttleIndex].setText(speedButtonLeftText);
+                bRightSpeeds[throttleIndex].setText(speedButtonRightText);
                 //if buttons enabled, hide the slider if requested
                 if (prefs.getBoolean("prefHideSlider", false)) {
                     sbs[throttleIndex].setVisibility(View.GONE);
-                    bLSpds[throttleIndex].setText(speedButtonDownText);
-                    bRSpds[throttleIndex].setText(speedButtonUpText);
+                    bLeftSpeeds[throttleIndex].setText(speedButtonDownText);
+                    bRightSpeeds[throttleIndex].setText(speedButtonUpText);
                 }
             } else {  //hide speed buttons based on pref
-                bLSpds[throttleIndex].setVisibility(View.GONE);
-                bRSpds[throttleIndex].setVisibility(View.GONE);
+                bLeftSpeeds[throttleIndex].setVisibility(View.GONE);
+                bRightSpeeds[throttleIndex].setVisibility(View.GONE);
 //                sliderMargin += 30;  //a little extra margin previously in button
             }
             if (prefs.getBoolean("prefHideSliderAndSpeedButtons", getResources().getBoolean(R.bool.prefHideSliderAndSpeedButtonsDefaultValue))) {
@@ -493,9 +493,9 @@ public class throttle_original extends throttle {
 
     int getAvailableScreenHeight() {   // excluding the webview if displayed
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        final float density = displayMetrics.density;
+//        final float density = displayMetrics.density;
 
-        int screenHeight = vThrotScrWrap.getHeight(); // get the height of usable area
+        int screenHeight = vThrottleScreenWrap.getHeight(); // get the height of usable area
         screenHeight = screenHeight - systemStatusRowHeight - systemNavigationRowHeight; // cater for immersive mode
         int fullScreenHeight = screenHeight;
         if ((toolbar != null) && (!prefThrottleViewImmersiveModeHideToolbar)) {
@@ -507,7 +507,7 @@ public class throttle_original extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = displayMetrics.heightPixels - (int) (titleBar * (displayMetrics.densityDpi / 160.)); // allow for title bar, etc
-            // Log.d(threaded_application.applicationName, activityName + ": vThrotScrWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            // Log.d(threaded_application.applicationName, activityName + ": vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         double height = screenHeight;

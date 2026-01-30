@@ -212,24 +212,24 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         spinner.setSelection(prefGamePadTypeIndex);
 
         LinearLayout dpad = findViewById(R.id.gamepad_dpad);
-        TableLayout btns = findViewById(R.id.gamepad_buttons);
-        RelativeLayout optn = findViewById(R.id.gamepad_test_optional_group);
+        TableLayout buttons = findViewById(R.id.gamepad_buttons);
+        RelativeLayout options = findViewById(R.id.gamepad_test_optional_group);
         TableLayout extra = findViewById(R.id.gamepad_buttons_extra);
         RelativeLayout status = findViewById(R.id.gamepad_test_complete_group);
         View helpText = findViewById(R.id.gamepad_test_help);
         View helpTextKeyboard = findViewById(R.id.gamepad_test_keyboard_help);
         if (!prefGamePadType.equals("Keyboard")) {
             dpad.setVisibility(LinearLayout.VISIBLE);
-            btns.setVisibility(TableLayout.VISIBLE);
-            optn.setVisibility(RelativeLayout.VISIBLE);
+            buttons.setVisibility(TableLayout.VISIBLE);
+            options.setVisibility(RelativeLayout.VISIBLE);
             extra.setVisibility(TableLayout.VISIBLE);
             status.setVisibility(View.VISIBLE);
             helpText.setVisibility(View.VISIBLE);
             helpTextKeyboard.setVisibility(View.GONE);
         } else {
             dpad.setVisibility(LinearLayout.GONE);
-            btns.setVisibility(TableLayout.GONE);
-            optn.setVisibility(RelativeLayout.GONE);
+            buttons.setVisibility(TableLayout.GONE);
+            options.setVisibility(RelativeLayout.GONE);
             extra.setVisibility(TableLayout.GONE);
             status.setVisibility(TableLayout.GONE);
             helpText.setVisibility(View.GONE);
@@ -417,8 +417,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean dispatchKeyEvent(KeyEvent event) {
 
         boolean isExternal = false;
-        InputDevice idev = getDevice(event.getDeviceId());
-        if( idev.toString().contains("Location: external")) isExternal = true;
+        InputDevice iDev = getDevice(event.getDeviceId());
+        if( iDev.toString().contains("Location: external")) isExternal = true;
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
             if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
@@ -618,7 +618,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -810,14 +810,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
-    }
-
-    private void disconnect() {
-        this.finish();
-    }
-
-    private void shutdown() {
-        this.finish();
     }
 
     @Override

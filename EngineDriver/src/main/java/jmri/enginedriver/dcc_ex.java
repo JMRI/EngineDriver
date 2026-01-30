@@ -133,11 +133,11 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     //    Button hideSendsButton;
     Button clearCommandsButton;
 
-    private LinearLayout dexcProgrammingCommonCvsLayout;
-    private LinearLayout dexcProgrammingAddressLayout;
-    private LinearLayout dexcProgrammingCvLayout;
-    //    private final LinearLayout[] dexcDccexTracklayout = {null, null, null, null, null, null, null, null};
-    private LinearLayout dexcDccexTrackLinearLayout;
+    private LinearLayout dccexProgrammingCommonCvsLayout;
+    private LinearLayout dccexProgrammingAddressLayout;
+    private LinearLayout dccexProgrammingCvLayout;
+    //    private final LinearLayout[] dexcDccexTrackLayout = {null, null, null, null, null, null, null, null};
+    private LinearLayout dceexDccexTrackLinearLayout;
     Spinner dccexCommonCvsSpinner;
     Spinner dccexCommonCommandsSpinner;
 
@@ -619,12 +619,12 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
     private void showHideButtons() {
         if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
-            dexcProgrammingCommonCvsLayout.setVisibility(VISIBLE);
+            dccexProgrammingCommonCvsLayout.setVisibility(VISIBLE);
             dccexCommonCvsSpinner.setVisibility(VISIBLE);
 
-            dexcProgrammingAddressLayout.setVisibility(VISIBLE);
-            dexcProgrammingCvLayout.setVisibility(VISIBLE);
-            dexcDccexTrackLinearLayout.setVisibility(GONE);
+            dccexProgrammingAddressLayout.setVisibility(VISIBLE);
+            dccexProgrammingCvLayout.setVisibility(VISIBLE);
+            dceexDccexTrackLinearLayout.setVisibility(GONE);
             dccexWriteInfoLayout.setVisibility(VISIBLE);
 
             sendCommandButton.setEnabled(false);
@@ -636,13 +636,13 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty()) && (!dccexAddress.isEmpty())));
             }
         } else {
-            dexcProgrammingCommonCvsLayout.setVisibility(GONE);
+            dccexProgrammingCommonCvsLayout.setVisibility(GONE);
             dccexCommonCvsSpinner.setVisibility(GONE);
 
-            dexcProgrammingAddressLayout.setVisibility(GONE);
-            dexcProgrammingCvLayout.setVisibility(GONE);
+            dccexProgrammingAddressLayout.setVisibility(GONE);
+            dccexProgrammingCvLayout.setVisibility(GONE);
             dccexWriteInfoLayout.setVisibility(GONE);
-            dexcDccexTrackLinearLayout.setVisibility(VISIBLE);
+            dceexDccexTrackLinearLayout.setVisibility(VISIBLE);
 
             for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
                 dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
@@ -920,10 +920,10 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         DccexDefaultFunctionsButtonListener dccexDefaultFunctionsButtonListener = new DccexDefaultFunctionsButtonListener(this);
         default_functions_button.setOnClickListener(dccexDefaultFunctionsButtonListener);
 
-        dexcProgrammingCommonCvsLayout = findViewById(R.id.dexc_programmingCommonCvsLayout);
-        dexcProgrammingAddressLayout = findViewById(R.id.dexc_programmingAddressLayout);
-        dexcProgrammingCvLayout = findViewById(R.id.dexc_programmingCvLayout);
-        dexcDccexTrackLinearLayout = findViewById(R.id.dexc_DccexTrackLinearLayout);
+        dccexProgrammingCommonCvsLayout = findViewById(R.id.dccex_programmingCommonCvsLayout);
+        dccexProgrammingAddressLayout = findViewById(R.id.dccex_programmingAddressLayout);
+        dccexProgrammingCvLayout = findViewById(R.id.dccex_programmingCvLayout);
+        dceexDccexTrackLinearLayout = findViewById(R.id.dccex_DccexTrackLinearLayout);
 
         dccexTrackTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntryValues);
 //        final List<String> dccTrackTypeValuesList = new ArrayList<>(Arrays.asList(dccExTrackTypeEntryValuesArray));
@@ -989,7 +989,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             ArrayAdapter<?> track_type_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExTrackTypeEntries, android.R.layout.simple_spinner_item);
             track_type_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dccexTrackTypeSpinner[i].setAdapter(track_type_spinner_adapter);
-            dccexTrackTypeSpinner[i].setOnItemSelectedListener(new TrackTypeCommonCvsSpinnerListenerr(dccexTrackTypeSpinner[i], i));
+            dccexTrackTypeSpinner[i].setOnItemSelectedListener(new TrackTypeCommonCvsSpinnerListener(dccexTrackTypeSpinner[i], i));
             dccexTrackTypeSpinner[i].setSelection(dccexTrackTypeIndex[i]);
 
             SetTrackPowerButtonListener  buttonListener = new SetTrackPowerButtonListener(i);
@@ -1180,7 +1180,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);
@@ -1312,11 +1312,11 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         }
     }
 
-    public class TrackTypeCommonCvsSpinnerListenerr implements AdapterView.OnItemSelectedListener {
+    public class TrackTypeCommonCvsSpinnerListener implements AdapterView.OnItemSelectedListener {
         final Spinner mySpinner;
         final int myIndex;
 
-        TrackTypeCommonCvsSpinnerListenerr(Spinner spinner, int index) {
+        TrackTypeCommonCvsSpinnerListener(Spinner spinner, int index) {
             mySpinner = spinner;
             myIndex = index;
         }
@@ -1489,12 +1489,12 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         } catch (Exception ignored) {
         }
 
-        int intialValue = 0;
+        int initialValue = 0;
         try {
-            intialValue = Integer.parseInt(etDccexCvValue.getText().toString());
+            initialValue = Integer.parseInt(etDccexCvValue.getText().toString());
         } catch (Exception ignored) {
         }
-        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(intialValue, initialCv, mainapp.getSelectedTheme(false));
+        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(initialValue, initialCv, mainapp.getSelectedTheme(false));
         cvBitCalculatorDialogFragment.setOnConfirmListener(this); // Set the listener
         cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "cvBitCalculatorDialogFragment");
     }

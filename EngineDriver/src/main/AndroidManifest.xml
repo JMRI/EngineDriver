@@ -235,7 +235,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".device_sounds_settings"
+            android:name=".DeviceSoundsSettings"
             android:alwaysRetainTaskState="true"
             android:windowSoftInputMode="adjustNothing"
             android:label="@string/app_name_device_sounds_settings"
