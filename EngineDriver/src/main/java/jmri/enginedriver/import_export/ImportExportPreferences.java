@@ -924,6 +924,8 @@ public class ImportExportPreferences {
     public void loadThrottlesEnginesListFromFile(threaded_application mainapp, Context context) {
         Log.d(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Reading throttles engines list from file");
 
+        if (mainapp.consists == null) return;  // not fully initialised yet
+
         File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
         if (throttles_engines_list_file.exists()) {
             try {
