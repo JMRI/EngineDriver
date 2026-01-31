@@ -479,13 +479,13 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 //        }
 //        witSendsStr = witSendsStr + "</p>";
 
-        StringBuilder witSendsStrBldr = new StringBuilder();
-        witSendsStrBldr.append("<p>");
+        StringBuilder witSendsStringBuilder = new StringBuilder();
+        witSendsStringBuilder.append("<p>");
         for (int i=witSendsListHtml.size()-1; i>=0; i--) {
-            witSendsStrBldr.append(witSendsListHtml.get(i));
+            witSendsStringBuilder.append(witSendsListHtml.get(i));
         }
-        witSendsStrBldr.append("</p>");
-        witSendsStr = witSendsStrBldr.toString();
+        witSendsStringBuilder.append("</p>");
+        witSendsStr = witSendsStringBuilder.toString();
 
     }
 
@@ -748,7 +748,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

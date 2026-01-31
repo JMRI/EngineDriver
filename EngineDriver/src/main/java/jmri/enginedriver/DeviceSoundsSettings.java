@@ -57,12 +57,11 @@ import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class device_sounds_settings extends AppCompatActivity implements OnGestureListener {
-    static final String activityName = "device_sounds_settings";
+public class DeviceSoundsSettings extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "DeviceSoundsSettings";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu DSSMenu;
-//    private GestureDetector myGesture;
 
     String[] valuesList;
 
@@ -90,11 +89,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     private Toolbar toolbar;
     /** @noinspection FieldCanBeLocal*/
     private LinearLayout statusLine;
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return myGesture.onTouchEvent(event);
-//    }
 
     /** @noinspection SameParameterValue, SameParameterValue , SameParameterValue */
     @SuppressLint("ApplySharedPref")
@@ -258,9 +252,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
             return;
         }
 
-        result = RESULT_CANCELED;
-
-        Bundle extras = getIntent().getExtras();
+        result = RESULT_OK;
 
         mainapp.applyTheme(this);
 
@@ -410,7 +402,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(device_sounds_settings.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(DeviceSoundsSettings.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -418,7 +410,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -613,14 +605,6 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
         return false;
     }
 
-//    private void disconnect() {
-//        this.finish();
-//    }
-//
-//    private void shutdown() {
-//        this.finish();
-//    }
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base));
@@ -641,7 +625,7 @@ public class device_sounds_settings extends AppCompatActivity implements OnGestu
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

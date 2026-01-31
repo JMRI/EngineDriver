@@ -52,7 +52,7 @@ public class AutoServerIpConnectDialogFragmentCompat extends PreferenceDialogFra
             if (parts.length >= 2) {
                 ip = parts[0];
                 port = parts[1];
-                if ( (parts.length == 3) && (!parts[3].isEmpty()) ) { // don't care what is there
+                if ( (parts.length == 3) && (!parts[2].isEmpty()) ) { // don't care what is there
                     isDccEx = true;
                 }
             }

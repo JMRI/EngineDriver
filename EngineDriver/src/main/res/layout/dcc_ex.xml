@@ -226,7 +226,7 @@
                 tools:ignore="PxUsage" />
 
             <LinearLayout
-                android:id="@+id/dexc_programmingAddressLayout"
+                android:id="@+id/dccex_programmingAddressLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
@@ -290,7 +290,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/dexc_programmingCvLayout"
+                android:id="@+id/dccex_programmingCvLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
@@ -384,7 +384,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/dexc_programmingCommonCvsLayout"
+                android:id="@+id/dccex_programmingCommonCvsLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
@@ -434,7 +434,7 @@
 
 
             <LinearLayout
-                android:id="@+id/dexc_DccexTrackLinearLayout"
+                android:id="@+id/dccex_DccexTrackLinearLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="240sp"
                 android:layout_margin="0sp"

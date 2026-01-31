@@ -259,29 +259,29 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
-                case message_type.WIT_CON_RECONNECT:
-                    break;
+
                 case message_type.INITIAL_WEB_WEBPAGE:
                     initStatics();
                     urlRestore(true);
                     break;
+
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
                     break;
+
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
                 case message_type.SHUTDOWN:
                     shutdown();
                     break;
+
                 case message_type.DISCONNECT:
                     disconnect();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
-//                    endThisActivity();
-                    break;
-
+                case message_type.WIT_CON_RECONNECT:
                 default:
                     break;
 
@@ -386,7 +386,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 return handleLoadingErrorRetries();
             }
 
-            // above form of shouldOverrideUrlloading is deprecated so support the new form if available
+            // above form of shouldOverrideUrlLoading is deprecated so support the new form if available
             @androidx.annotation.RequiresApi(24)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
@@ -415,7 +415,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             urlRestore(true);
         }
 
-        //longpress webview to reload
+        //longPress webview to reload
         webView.setOnLongClickListener(new WebView.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -480,14 +480,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         setActivityTitle();
 
-//        if (closeButton != null) {
-//            if (mainapp.webMenuSelected) {
-//                closeButton.setVisibility(View.VISIBLE);
-//            } else {
-//                closeButton.setVisibility(View.GONE);
-//            }
-//        }
-
         if (mainapp.isForcingFinish()) {    //expedite
             this.finish();
             return;
@@ -499,9 +491,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
         resumeWebView();
         CookieManager cookieManager = CookieManager.getInstance();
-//        if (Build.VERSION.SDK_INT < 21) {
-//            CookieSyncManager.createInstance(this);     //create this here so onPause/onResume for webViews can control it
-//        }
         cookieManager.setAcceptCookie(true);
 
         // enable swipe/fling detection if enabled in Prefs
@@ -518,7 +507,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             ov.removeOnGestureListener(this);
             ov.setEventsInterceptionEnabled(false);
         }
-    } // end onresume()
+    } // end onResume()
 
     @Override
     public void onPause() {
@@ -527,9 +516,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         threaded_application.activityPaused(activityName);
 
         pauseWebView();
-//        if (Build.VERSION.SDK_INT < 21) {
-//            CookieSyncManager.getInstance().stopSync();
-//        }
         if (webView != null) {
             webView.saveState(webBundle);           // save locally for use if finishing
         }
@@ -590,13 +576,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         webView.saveState(bundle);
         state.putBundle("webViewState", bundle);
     }
-
-//    public class close_button_listener implements View.OnClickListener {
-//        public void onClick(View v) {
-//            navigateAway();
-//            mainapp.buttonVibration();
-//        }
-//    }
 
     private void pauseWebView() {
         if (webView != null) {
@@ -775,7 +754,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             threaded_application.activityInTransition(activityName);
             savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
             mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
-//            startActivityForResult(in, 0);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
@@ -851,7 +829,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice idev = getDevice(event.getDeviceId());
+//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

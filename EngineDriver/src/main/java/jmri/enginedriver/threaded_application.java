@@ -3139,7 +3139,7 @@ public class threaded_application extends Application {
 //                    }
 //                }
 //                if (gamePadDeviceIdsTested[whichGamePad]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
-//                    start_gamepad_test_activity(whichGamePad);
+//                    startGamepadTestActivity(whichGamePad);
 //                }
             }
         }
@@ -3204,8 +3204,8 @@ public class threaded_application extends Application {
         String eventDeviceName = dev.getName();
         boolean isExternal = false;
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-        InputDevice idev = getDevice(event.getDeviceId());
-        if (idev != null && idev.toString().contains("Location: external")) {
+        InputDevice iDev = getDevice(event.getDeviceId());
+        if (iDev != null && iDev.toString().contains("Location: external")) {
             isExternal = true;
         }
         if (!isExternal) {

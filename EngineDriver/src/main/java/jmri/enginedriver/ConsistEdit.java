@@ -58,6 +58,7 @@ import java.util.Objects;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.activity_outcome_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
@@ -75,8 +76,6 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     private String CONSIST_EDIT_LABEL_LEAD = "LEAD";
     private String CONSIST_EDIT_LABEL_TRAIL = "TRAIL";
 
-    static public final int RESULT_CON_EDIT = RESULT_FIRST_USER;
-
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu CEMenu;
     private ArrayList<HashMap<String, String>> consistList;
@@ -86,6 +85,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     private Spinner consistSpinner;
     private Spinner consistTrailSpinner;
     private Consist consist;
+
     private int result = RESULT_OK;
 
     private int whichThrottle;
@@ -154,7 +154,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             }
         }
         consistListAdapter.notifyDataSetChanged();
-        result = RESULT_CON_EDIT;
+        result = activity_outcome_type.RESULT_CON_EDIT;
     }
 
 
