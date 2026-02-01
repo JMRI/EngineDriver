@@ -23,6 +23,18 @@
   <defs
      id="defs4">
     <linearGradient
+       id="linearGradient1"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0.90295362"
+         id="stop1" />
+      <stop
+         style="stop-color:#ff0000;stop-opacity:0;"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
        id="linearGradient4155"
        inkscape:swatch="solid">
       <stop
@@ -93,6 +105,16 @@
          offset="1"
          id="stop8252-9" />
     </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1"
+       id="radialGradient2"
+       cx="625.63055"
+       cy="93.059601"
+       fx="625.63055"
+       fy="93.059601"
+       r="235.625"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -153,7 +175,7 @@
          inkscape:export-ydpi="14.4"
          transform="rotate(45)" />
       <rect
-         style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:16.25;stroke-miterlimit:4;stroke-dasharray:none"
+         style="fill:url(#radialGradient2);fill-opacity:1;stroke:none;stroke-width:16.25;stroke-miterlimit:4;stroke-dasharray:none"
          id="rect5645"
          width="471.25"
          height="471.25"

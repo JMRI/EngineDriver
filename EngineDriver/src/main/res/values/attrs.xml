@@ -50,6 +50,7 @@
     <attr name="ed_esu_mc2_knob_on_button" format="reference" />
     <attr name="ed_esu_mc2_knob_off_button" format="reference" />
     <attr name="ed_estop_button" format="reference" />
+    <attr name="ed_estop_active_button" format="reference" />
     <attr name="ed_search_button" format="reference" />
     <attr name="ed_timer_button" format="reference" />
     <attr name="ed_power_green_button" format="reference" />

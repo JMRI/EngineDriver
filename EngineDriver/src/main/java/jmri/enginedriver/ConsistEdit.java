@@ -77,7 +77,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     private String CONSIST_EDIT_LABEL_TRAIL = "TRAIL";
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu CEMenu;
+    private Menu overflowMenu;
     private ArrayList<HashMap<String, String>> consistList;
     private SimpleAdapter consistListAdapter;
     private ArrayList<ConLoco> consistObjList;
@@ -179,9 +179,18 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                         String comA = response_str.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateActionViewButton(CEMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
+                    break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
                     break;
 
                 case message_type.REOPEN_THROTTLE:
@@ -382,18 +391,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if (CEMenu != null) {
-            mainapp.displayEStop(CEMenu);
-        }
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        if (CEMenu != null) {
-            mainapp.displayFlashlightMenuButton(CEMenu);
-            mainapp.setFlashlightActionViewButton(CEMenu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(CEMenu);
-            mainapp.setPowerStateActionViewButton(CEMenu, findViewById(R.id.powerLayoutButton));
-        }
+        refreshOverflowMenu();
     }
 
     /**
@@ -421,43 +422,34 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.consist_edit_menu, menu);
-        CEMenu = menu;
-        mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(CEMenu);
-        mainapp.setFlashlightActionViewButton(CEMenu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        adjustToolbarSize(overflowMenu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, CEMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(CEMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }

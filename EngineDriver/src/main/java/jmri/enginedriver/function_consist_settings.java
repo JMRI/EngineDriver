@@ -74,7 +74,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     private static final ArrayList<Integer> aFnc = new ArrayList<>();
     private static final ArrayList<String> aLocos = new ArrayList<>();
     private static final ArrayList<String> aLatching = new ArrayList<>();
-    private Menu FMenu;
+    private Menu overflowMenu;
 //    private EditText et;
 
     private static final String[] LOCOS = {"lead", "lead and trail", "all","trail"};
@@ -190,13 +190,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if (FMenu != null) {
-            mainapp.displayEStop(FMenu);
-            mainapp.displayFlashlightMenuButton(FMenu);
-            mainapp.setFlashlightActionViewButton(FMenu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(FMenu);
-            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));
-        }
+     
+        refreshOverflowMenu();
     }
 
     @SuppressLint("MissingSuperCall")
@@ -224,43 +219,34 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.function_consist_settings_menu, menu);
-        FMenu = menu;
-        mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        adjustToolbarSize(overflowMenu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, FMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(FMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
@@ -286,11 +272,20 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
                 }
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.FUNCTION_CONSIST_SETTINGS)

@@ -70,7 +70,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     static final String activityName = "dcc_ex";
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu menu;
+    private Menu overflowMenu;
     private Toolbar toolbar;
     private int result = RESULT_OK;
 
@@ -275,18 +275,28 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 case message_type.DISCONNECT:
                     disconnect();
                     break;
+
                 case message_type.RESPONSE:    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
                     if (s.length() >= 3) {
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
                         }
                         if ("PXX".equals(com1)) {  // individual track power response
                             refreshDccexTracksView();
                         }
                     }
+                    break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
@@ -682,9 +692,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
         showHideButtons();
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-        }
+        refreshOverflowMenu();
     }
 
     public void refreshDccexCommandsView() {
@@ -709,10 +717,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         }
         showHideButtons();
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-        }
-    }
+        refreshOverflowMenu();
+    } // end refreshDccexTracksView()
 
     void displayCommands(String msg, boolean inbound) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
@@ -1080,14 +1086,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         activateJoinedButton(mainapp.dccexJoined);
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-            mainapp.displayFlashlightMenuButton(menu);
-            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(menu);
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-        //update power state
+        refreshOverflowMenu();
+
         mainapp.dccexScreenIsOpen = true;
 
         refreshDccexView();
@@ -1111,33 +1111,24 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu myMenu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.dcc_ex_menu, myMenu);
-        menu = myMenu;
-        mainapp.displayEStop(myMenu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        inflater.inflate(R.menu.dcc_ex_menu, menu);
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
     }
 
-    void endThisActivity() {
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        adjustToolbarSize(overflowMenu);
+    }
+
+        void endThisActivity() {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         mainapp.dccexScreenIsOpen = false;
@@ -1193,17 +1184,17 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, menu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(menu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }

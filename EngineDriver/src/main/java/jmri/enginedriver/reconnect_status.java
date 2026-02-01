@@ -58,7 +58,6 @@ public class reconnect_status extends AppCompatActivity {
     private String prog = "";
     private boolean backOk = true;
     private boolean retryFirst = false;
-//    private Menu RCMenu;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
@@ -285,7 +284,7 @@ public class reconnect_status extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.reconnect_status_menu, menu);
-//        RCMenu = menu;
+
         return super.onCreateOptionsMenu(menu);
     }
 

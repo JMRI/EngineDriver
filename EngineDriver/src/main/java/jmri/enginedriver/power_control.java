@@ -55,7 +55,7 @@ public class power_control extends AppCompatActivity {
     private Drawable powerOnAndOffDrawable;
     private Drawable powerOffDrawable;
     private Drawable powerUnknownDrawable;
-    private Menu menu;
+    private Menu overflowMenu;
     private Toolbar toolbar;
     private int result = RESULT_OK;
 
@@ -85,6 +85,15 @@ public class power_control extends AppCompatActivity {
                     if ( (response_str.length() == 5) && ("PXX".equals(response_str.substring(0, 3))) ) {  // individual track power response
                         refreshDccexTracksView();
                     }
+                    break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
                     break;
 
                 case message_type.REOPEN_THROTTLE:
@@ -216,9 +225,7 @@ public class power_control extends AppCompatActivity {
             }
         }
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-        }
+        refreshOverflowMenu();
 
 //        b.setBackgroundDrawable(currentImage);
         b.setBackground(currentImage);
@@ -373,12 +380,7 @@ public class power_control extends AppCompatActivity {
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-            mainapp.displayFlashlightMenuButton(menu);
-            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        }
-        //update power state
+        refreshOverflowMenu();
         refresh_power_control_view();
         refreshDccexTracksView();
     }
@@ -399,33 +401,36 @@ public class power_control extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu myMenu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.power_menu, myMenu);
-        menu = myMenu;
-        mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-
-        adjustToolbarSize(menu);
-
+        inflater.inflate(R.menu.power_menu, menu);
+        overflowMenu = menu;
+        refreshOverflowMenu();
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
+
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton), false);
+        adjustToolbarSize(overflowMenu);
+    }
+
+        @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, menu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(menu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }

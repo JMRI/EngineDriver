@@ -264,7 +264,7 @@ public class comm_handler extends Handler {
             break;
          }
 
-         case message_type.DISCONNECT:{
+         case message_type.DISCONNECT: {
             Log.d(threaded_application.applicationName, activityName + ": handleMessage(): DISCONNECT");
 
             commThread.sendQuit();

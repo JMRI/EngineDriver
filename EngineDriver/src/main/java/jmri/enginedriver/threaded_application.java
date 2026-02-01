@@ -44,6 +44,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -99,6 +100,7 @@ import java.util.regex.Pattern;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.auto_import_export_option_type;
+import jmri.enginedriver.type.dccex_emergency_stop_state_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.notification_type;
@@ -248,6 +250,7 @@ public class threaded_application extends Application {
     public String [] dccexTrackId = {"", "", "", "", "", "", "", ""};
     public final static int DCCEX_MAX_TRACKS = 8;
     public boolean dccexJoined = false;
+    public int dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
 //    public boolean dccexRosterFullyReceived = false;
     public boolean dccexRosterRequested = false;
@@ -1299,6 +1302,7 @@ public class threaded_application extends Application {
         mainapp.isDCCEX = prefUseDccexProtocol.equals("Yes") || mainapp.isDCCEX;   // force it if the preference is set
 
         DccexVersion = "";
+        dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
         DCCEXlistsRequested = -1;
         dccexRosterRequested = false;
@@ -1400,17 +1404,20 @@ public class threaded_application extends Application {
     }
 
     public void displayPowerStateMenuButton(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.powerLayoutButton);
+        if (menuItem == null) return;
+
         if (prefs.getBoolean("prefShowLayoutPowerButton", false) && (power_state != null)) {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
-            menu.findItem(R.id.powerLayoutButton).setVisible(true);
+            menuItem.setVisible(true);
         } else {
-            menu.findItem(R.id.powerLayoutButton).setVisible(false);
+            menuItem.setVisible(false);
         }
     }
 
-    public void powerControlNotAllowedDialog(Menu pMenu) {
+    public void powerControlNotAllowedDialog(Menu menu) {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setTitle(getApplicationContext().getResources().getString(R.string.powerWillNotWorkTitle));
@@ -1419,7 +1426,7 @@ public class threaded_application extends Application {
         b.setNegativeButton("OK", null);
         AlertDialog alert = b.create();
         alert.show();
-        displayPowerStateMenuButton(pMenu);
+        displayPowerStateMenuButton(menu);
     }
 
     /**
@@ -1647,7 +1654,47 @@ public class threaded_application extends Application {
         return (to_state_names != null);
     }
 
-    public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+    // used for the menu items that appear on almost all activities
+    public void refreshCommonOverflowMenu(Menu menu, ViewGroup emergencyStopButtonView, ViewGroup flashlightButtonView, ViewGroup powerLayoutButton) {
+        refreshCommonOverflowMenu(menu, emergencyStopButtonView, flashlightButtonView,  powerLayoutButton, true);
+    }
+    public void refreshCommonOverflowMenu(Menu menu, ViewGroup emergencyStopButtonView, ViewGroup flashlightButtonView, ViewGroup powerLayoutButton, boolean includePower) {
+        if (menu == null) return;
+
+        boolean refreshRequired = false;
+
+        if (emergencyStopButtonView != null) {
+            displayEmergencyStopActionViewButton(menu);
+            setEmergencyStopStateActionViewButton(menu, emergencyStopButtonView);
+        }
+
+        displayFlashlightMenuButton(menu);
+        if (flashlightButtonView == null) {
+            refreshRequired = true;
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(() -> {
+                alert_activities(message_type.REFRESH_OVERFLOW_MENU, "");  //send response to running activities
+            }, 100);
+        } else {
+            setFlashlightActionViewButton(menu, flashlightButtonView);
+        }
+
+        if (!includePower) return;
+
+        displayPowerStateMenuButton(menu);
+        if (powerLayoutButton == null) {
+            if (!refreshRequired) { // don't bother if we already requested it for the flashlight
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    alert_activities(message_type.REFRESH_OVERFLOW_MENU, "");  //send response to running activities
+                }, 100);
+            }
+        } else {
+            setPowerStateActionViewButton(menu, powerLayoutButton);
+        }
+    }
+
+        public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
         if (!prefs.getBoolean("prefShowLayoutPowerButton", false)) return;
 
         if ( (menu == null) ||  (menuItemViewGroup  == null)) {
@@ -1657,24 +1704,13 @@ public class threaded_application extends Application {
         }
 
         TypedValue outValue = new TypedValue();
+        TypedArray power_button_state_attr_ids = getResources().obtainTypedArray(R.array.power_button_state_attr_ids);
 
-        if (power_state == null) {
-            theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-        } else if (power_state.equals("2")) {
-            if (!mainapp.isDCCEX) {
-                theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-            } else {
-                theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-            }
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-        } else if (power_state.equals("1")) {
-            theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
-        } else {
-            theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
-        }
+        int powerState = (power_state != null) ? Integer.parseInt(power_state) : 2;  // default to unknown
+        if ( (mainapp.isDCCEX) && (powerState == 2) ) powerState = 3; // mixed - part on, part off
+
+        theme.resolveAttribute(power_button_state_attr_ids.getResourceId(powerState,0), outValue, true);
+        power_button_state_attr_ids.recycle();
 
         ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
 
@@ -1682,12 +1718,11 @@ public class threaded_application extends Application {
         image.setImageResource(outValue.resourceId);
     }
 
-    public void displayEStop(Menu menu) {
-        MenuItem mi = menu.findItem(R.id.EmerStop);
+    public void displayEmergencyStopActionViewButton(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.emergency_stop_button);
         if (mi == null) return;
 
         if (prefs.getBoolean("prefShowEmergencyStopButton", false)) {
-//            TypedValue outValue = new TypedValue();
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1695,7 +1730,23 @@ public class threaded_application extends Application {
         } else {
             mi.setVisible(false);
         }
+    }
 
+    public void setEmergencyStopStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+        if (!prefs.getBoolean("prefShowEmergencyStopButton", false)) return;
+
+        if ( (menu == null) ||  (menuItemViewGroup  == null)) return; // the menu or button is not available yet.
+
+        TypedValue outValue = new TypedValue();
+        TypedArray estop_button_state_attr_ids = getResources().obtainTypedArray(R.array.estop_button_state_attr_ids);
+
+        theme.resolveAttribute(estop_button_state_attr_ids.getResourceId(dccexEmergencyStopState,0), outValue, true);
+        estop_button_state_attr_ids.recycle();
+
+        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
+
+        if (image == null) return;
+        image.setImageResource(outValue.resourceId);
     }
 
     public void sendEStopMsg() {

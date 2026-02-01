@@ -369,7 +369,7 @@ public class throttle extends AppCompatActivity implements
     private static boolean clearHistory = false;    // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;          // desired first url when clearing history
     private static String currentUrl = null;
-    private Menu TMenu;
+    private Menu overflowMenu;
     static int REP_DELAY = 25;
     protected int prefSpeedButtonsSpeedStep = 4;
     protected int prefVolumeSpeedButtonsSpeedStep = 1;
@@ -756,8 +756,8 @@ public class throttle extends AppCompatActivity implements
                             getApplicationContext().getResources().getString(R.string.app_name),
                             getApplicationContext().getResources().getString(R.string.app_name_throttle),
                             "");
-                    if (TMenu != null) {
-                        mainapp.setKidsMenuOptions(TMenu, true, 0);
+                    if (overflowMenu != null) {
+                        mainapp.setKidsMenuOptions(overflowMenu, true, 0);
                     }
                     mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 }
@@ -778,8 +778,8 @@ public class throttle extends AppCompatActivity implements
                             getApplicationContext().getResources().getString(R.string.app_name),
                             getApplicationContext().getResources().getString(R.string.app_name_throttle),
                             "");
-                    if (TMenu != null) {
-                        mainapp.setKidsMenuOptions(TMenu, true, 0);
+                    if (overflowMenu != null) {
+                        mainapp.setKidsMenuOptions(overflowMenu, true, 0);
                     }
                     mainapp.hideSoftKeyboard(this.getCurrentFocus());
                 }
@@ -801,8 +801,8 @@ public class throttle extends AppCompatActivity implements
                         getApplicationContext().getResources().getString(R.string.app_name_throttle_kids_enabled),
                         getApplicationContext().getResources().getString(R.string.prefKidsTimerTitle),
                         "");
-                if (TMenu != null) {
-                    mainapp.setKidsMenuOptions(TMenu, false, 0);
+                if (overflowMenu != null) {
+                    mainapp.setKidsMenuOptions(overflowMenu, false, 0);
                 }
 //                }
                 mainapp.hideSoftKeyboard(this.getCurrentFocus());
@@ -1031,11 +1031,21 @@ public class throttle extends AppCompatActivity implements
                         setLabels();
                 }
                 break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
+
                 case message_type.REQUEST_REFRESH_THROTTLE:
-//                    refreshMenu();
                     setLabels();
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): REQUEST_REFRESH_THROTTLE");
                     break;
+
                 case message_type.REFRESH_FUNCTIONS:
                     setAllFunctionLabelsAndListeners();
                     for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
@@ -2643,7 +2653,7 @@ public class throttle extends AppCompatActivity implements
                         mainapp.gamePadDeviceIdsTested[i] = 0;
                     }
                     mainapp.gamepadFullReset();
-                    mainapp.setGamepadTestMenuOption(TMenu, mainapp.gamepadCount);
+                    mainapp.setGamepadTestMenuOption(overflowMenu, mainapp.gamepadCount);
                     setGamepadIndicator();
                     tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET);
                     break;
@@ -3152,7 +3162,7 @@ public class throttle extends AppCompatActivity implements
                     mainapp.gamePadDeviceNames[mainapp.gamepadCount - 1] = eventDeviceName;
                     whichGamePadDeviceId = mainapp.gamepadCount - 1;
 
-                    mainapp.setGamepadTestMenuOption(TMenu, mainapp.gamepadCount);
+                    mainapp.setGamepadTestMenuOption(overflowMenu, mainapp.gamepadCount);
 
                     startGamepadTestActivity(mainapp.gamepadCount - 1);
 
@@ -4462,14 +4472,15 @@ public class throttle extends AppCompatActivity implements
      * @param menu the menu upon which the action should be shown
      */
     private void displayEsuMc2KnobMenuButton(Menu menu) {
-        MenuItem mi = menu.findItem(R.id.esu_mc2_knob_button);
-        if (mi == null) return;
+        MenuItem menuItem = menu.findItem(R.id.esu_mc2_knob_button);
+        if (menuItem == null) return;
+        if (!IS_ESU_MCII) return;
 
         if (prefs.getBoolean("prefEsuMc2KnobButtonDisplay", false)) {
             mainapp.actionBarIconCountThrottle++;
-            mi.setVisible(true);
+            menuItem.setVisible(true);
         } else {
-            mi.setVisible(false);
+            menuItem.setVisible(false);
         }
         mainapp.setEsuMc2KnobButton(menu, findViewById(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
 
@@ -5533,13 +5544,15 @@ public class throttle extends AppCompatActivity implements
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        mainapp.applyTheme(this);
+
         mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() & onResume() completes
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mainapp.throttleSwitchAllowed = true;
-                mainapp.displayThrottleSwitchMenuButton(TMenu);
+                mainapp.displayThrottleSwitchMenuButton(overflowMenu);
             }
         }, 6000);
 
@@ -6121,7 +6134,7 @@ public class throttle extends AppCompatActivity implements
             return;
         }
 
-        if (TMenu != null) {
+        if (overflowMenu != null) {
             boolean anyConsist = false;
 
             TypedArray edit_consist_menu_ids = getResources().obtainTypedArray(R.array.edit_consist_menu_ids);
@@ -6133,26 +6146,26 @@ public class throttle extends AppCompatActivity implements
                 }
                 boolean isMulti = con.isMulti();
                 anyConsist |= isMulti;
-                TMenu.findItem(edit_consist_menu_ids.getResourceId(throttleIndex,0)).setVisible(isMulti);
-                TMenu.findItem(edit_consist_menu_ids.getResourceId(throttleIndex,0)).setVisible(isMulti);
+                overflowMenu.findItem(edit_consist_menu_ids.getResourceId(throttleIndex,0)).setVisible(isMulti);
+                overflowMenu.findItem(edit_consist_menu_ids.getResourceId(throttleIndex,0)).setVisible(isMulti);
             }
             edit_consist_menu_ids.recycle();
 
-            TMenu.findItem(R.id.edit_consists_menu).setVisible(anyConsist);
+            overflowMenu.findItem(R.id.edit_consists_menu).setVisible(anyConsist);
 
             boolean isSpecial = (mainapp.prefAlwaysUseDefaultFunctionLabels)
                     && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL));
-//            TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
-            TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(true);
+//            overflowMenu.findItem(R.id.function_consist_settings_mnu).setVisible(isSpecial || mainapp.isDCCEX);
+            overflowMenu.findItem(R.id.function_consist_settings_mnu).setVisible(true);
             if (!isSpecial) {
                 if (mainapp.isDCCEX) {
-                    TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
+                    overflowMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.dccExFunctionSettings);
                 } else {
-                    TMenu.findItem(R.id.function_consist_settings_mnu).setVisible(mainapp.prefOverrideWiThrottlesFunctionLatching);
-                    TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionLatchingSettings);
+                    overflowMenu.findItem(R.id.function_consist_settings_mnu).setVisible(mainapp.prefOverrideWiThrottlesFunctionLatching);
+                    overflowMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionLatchingSettings);
                 }
             } else {
-                TMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionConsistSettings);
+                overflowMenu.findItem(R.id.function_consist_settings_mnu).setTitle(R.string.functionConsistSettings);
             }
         }
     }
@@ -6499,41 +6512,49 @@ public class throttle extends AppCompatActivity implements
             setDisplayedSpeed(throttleIndex, sbs[throttleIndex].getProgress());  // update numeric speeds since units might have changed
         }
 
-        refreshMenu();
+        refreshOverflowMenu();
 
         vThrottleScreenWrap.invalidate();
         // Log.d(threaded_application.applicationName, activityName + ": setLabels(): end");
     }
 
-    private void refreshMenu() {
-        //adjust several items in the menu
-        if (TMenu != null) {
-            mainapp.actionBarIconCountThrottle = 0;
-            mainapp.displayEStop(TMenu);
-            mainapp.setPowerStateActionViewButton(TMenu, findViewById(R.id.powerLayoutButton));
-            mainapp.displayPowerStateMenuButton(TMenu);
-            mainapp.setPowerMenuOption(TMenu);
-            mainapp.setDCCEXMenuOption(TMenu);
-            mainapp.setWithrottleCvProgrammerMenuOption(TMenu);
-            showHideConsistMenus();
-            mainapp.setWebMenuOption(TMenu);
-            mainapp.setRoutesMenuOption(TMenu);
-            mainapp.setTurnoutsMenuOption(TMenu);
-            mainapp.setGamepadTestMenuOption(TMenu, mainapp.gamepadCount);
-            mainapp.setKidsMenuOptions(TMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), mainapp.gamepadCount);
-            mainapp.setFlashlightActionViewButton(TMenu, findViewById(R.id.flashlight_button));
-            mainapp.displayFlashlightMenuButton(TMenu);
-            mainapp.displayTimerMenuButton(TMenu, kidsTimerRunning);
-            mainapp.displayThrottleSwitchMenuButton(TMenu);
-            mainapp.displayWebViewMenuButton(TMenu);
-            displayEsuMc2KnobMenuButton(TMenu);
-            mainapp.displayDeviceSoundsThrottleButton(TMenu);
-            mainapp.displayDccExButton(TMenu);
-            mainapp.displayTurnoutsButton(TMenu);
-            mainapp.displayRoutesButton(TMenu);
-            mainapp.displayWebButton(TMenu);
-//            mainapp.displayMenuSeparator(TMenu, this, mainapp.actionBarIconCountThrottle);
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.actionBarIconCountThrottle = 0;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+
+        if (IS_ESU_MCII) {
+            displayEsuMc2KnobMenuButton(overflowMenu);
         }
+
+        mainapp.displayDccExButton(overflowMenu);
+        mainapp.setDCCEXMenuOption(overflowMenu);
+        mainapp.setWithrottleCvProgrammerMenuOption(overflowMenu);
+
+        showHideConsistMenus();
+
+        mainapp.setGamepadTestMenuOption(overflowMenu, mainapp.gamepadCount);
+        mainapp.setKidsMenuOptions(overflowMenu, prefKidsTimer.equals(PREF_KIDS_TIMER_NONE), mainapp.gamepadCount);
+
+        mainapp.displayTimerMenuButton(overflowMenu, kidsTimerRunning);
+        mainapp.displayThrottleSwitchMenuButton(overflowMenu);
+        displayEsuMc2KnobMenuButton(overflowMenu);
+
+        mainapp.displayDeviceSoundsThrottleButton(overflowMenu);
+
+        mainapp.setTurnoutsMenuOption(overflowMenu);
+        mainapp.displayTurnoutsButton(overflowMenu);
+
+        mainapp.setRoutesMenuOption(overflowMenu);
+        mainapp.displayRoutesButton(overflowMenu);
+
+        mainapp.setWebMenuOption(overflowMenu);
+        mainapp.displayWebButton(overflowMenu);
+        mainapp.displayWebViewMenuButton(overflowMenu);
+
+        adjustToolbarSize(overflowMenu);
     }
 
     @Override
@@ -6655,38 +6676,9 @@ public class throttle extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.throttle_menu, menu);
-        TMenu = menu;
-        mainapp.actionBarIconCountThrottle = 0;
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.displayTimerMenuButton(menu, kidsTimerRunning);
-        mainapp.setPowerMenuOption(menu);
-        mainapp.setDCCEXMenuOption(menu);
-        mainapp.setWithrottleCvProgrammerMenuOption(menu);
-        showHideConsistMenus();
-        mainapp.displayPowerStateMenuButton(menu);
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayThrottleSwitchMenuButton(menu);
-        mainapp.displayWebViewMenuButton(menu);
-        if (IS_ESU_MCII) {
-            displayEsuMc2KnobMenuButton(menu);
-        }
-        mainapp.displayDeviceSoundsThrottleButton(menu);
-        mainapp.displayDccExButton(menu);
-        mainapp.displayTurnoutsButton(menu);
-        mainapp.displayWebButton(menu);
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -6809,7 +6801,7 @@ public class throttle extends AppCompatActivity implements
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
-        } else if (item.getItemId() == R.id.EmerStop) {
+        } else if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             speedUpdate(0);  // update all throttles
             applySpeedRelatedOptions();  // update all throttles
@@ -6822,7 +6814,7 @@ public class throttle extends AppCompatActivity implements
 
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(TMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
@@ -6855,7 +6847,7 @@ public class throttle extends AppCompatActivity implements
 
         } else if (item.getItemId() == R.id.gamepad_test_reset) {
             mainapp.gamepadFullReset();
-            mainapp.setGamepadTestMenuOption(TMenu, mainapp.gamepadCount);
+            mainapp.setGamepadTestMenuOption(overflowMenu, mainapp.gamepadCount);
             setGamepadIndicator();
             tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET);
             return true;
@@ -6888,7 +6880,7 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, TMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
 
@@ -6902,7 +6894,7 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.esu_mc2_knob_button) {
-            toggleEsuMc2Knob(this, TMenu);
+            toggleEsuMc2Knob(this, overflowMenu);
             return true;
 
         } else if ((item.getItemId() == R.id.device_sounds_button) || (item.getItemId() == R.id.device_sounds_menu)) {

@@ -3198,6 +3198,16 @@
         <item>@id/EditLightsConsist5_menu</item>
     </array>
 
+    <array name="power_button_state_attr_ids">
+        <item>@attr/ed_power_red_button</item> <!-- 0 off -->
+        <item>@attr/ed_power_green_button</item> <!-- 1 on -->
+        <item>@attr/ed_power_yellow_button</item> <!-- 2 unknown -->
+        <item>@attr/ed_power_green_red_button</item> <!-- 3 DCC-EX part on, part off -->
+    </array>
 
+    <array name="estop_button_state_attr_ids">
+        <item>@attr/ed_estop_button</item> <!-- estop pause inactive -->
+        <item>@attr/ed_estop_active_button</item> <!-- estop pause active -->
+    </array>
 
 </resources>

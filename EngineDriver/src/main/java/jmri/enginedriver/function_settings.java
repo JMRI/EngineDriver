@@ -77,7 +77,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     private static boolean settingsCurrent = false;
     private static final ArrayList<String> aLbl = new ArrayList<>();
     private static final ArrayList<Integer> aFnc = new ArrayList<>();
-    private Menu FMenu;
+    private Menu overflowMenu;
     private EditText et;
     private EditText etForRoster;
     private String prefNumberOfDefaultFunctionLabels = threaded_application.MAX_FUNCTIONS_TEXT;
@@ -130,7 +130,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Button b = findViewById(R.id.fb_copy_labels_from_roster);
-        if (mainapp.function_labels == null || mainapp.function_labels[0] == null || mainapp.function_labels[0].size() == 0) {
+        if (mainapp.function_labels == null || mainapp.function_labels[0] == null || mainapp.function_labels[0].isEmpty()) {
             b.setEnabled(false);  //disable button if no roster
         } else {
             //Set the button callback.
@@ -219,7 +219,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
         screenNameLine = findViewById(R.id.screen_name_line);
         toolbar = findViewById(R.id.toolbar);
-        statusLine = (LinearLayout) findViewById(R.id.status_line);
+        statusLine = findViewById(R.id.status_line);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
@@ -250,13 +250,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             return;
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if (FMenu != null) {
-            mainapp.displayEStop(FMenu);
-            mainapp.displayFlashlightMenuButton(FMenu);
-            mainapp.setFlashlightActionViewButton(FMenu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(FMenu);
-            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));
-        }
+        
+        refreshOverflowMenu();
     }
 
     @SuppressLint("MissingSuperCall")
@@ -282,43 +277,34 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.function_settings_menu, menu);
-        FMenu = menu;
-        mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        adjustToolbarSize(overflowMenu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, FMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(FMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
@@ -344,11 +330,20 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(FMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     break;
                 }
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.FUNCTION_SETTINGS)
@@ -396,7 +391,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         for (int i = 1; i < t.getChildCount(); i++) {
             ViewGroup r = (ViewGroup) t.getChildAt(i);
             //move to next non-blank array entry if it exists
-            while (ndx < aFnc.size() && aLbl.get(ndx).length() == 0)
+            while (ndx < aFnc.size() && aLbl.get(ndx).isEmpty())
                 ndx++;
             if (ndx < aFnc.size()) {
                 ((EditText) r.getChildAt(0)).setText(aLbl.get(ndx));
@@ -447,7 +442,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             label = label.replace("\n", " ");  //remove newlines
             label = label.replace(":", " ");   //   and colons, as they confuse the save format
             String sfunc = ((EditText) r.getChildAt(1)).getText().toString();
-            if (label.length() > 0 && sfunc.length() > 0) {
+            if (!label.isEmpty() && !sfunc.isEmpty()) {
                 //verify function is valid number between 0 and 31
                 int func;
                 try {
@@ -481,7 +476,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         int ndx = 0;
         for (Integer func : mainapp.function_labels[0].keySet()) {
             String label = mainapp.function_labels[0].get(func);
-            if (label.length() > 0 && func >= 0 && func < MAX_FUNCTIONS) {
+            if (!label.isEmpty() && func >= 0 && func < MAX_FUNCTIONS) {
                 if (aFnc.size() <= ndx) {
                     aLbl.add(label);
                     aFnc.add(func);
@@ -514,7 +509,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         public void onClick(View v) {
 //            SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
             String label = "";
-            int func = 0;
+            int func;
 
             for (int i = 0; i < MAX_FUNCTIONS; i++) {
                 if (i==0) label = getResources().getString(R.string.functionButton00DefaultValue);
@@ -577,7 +572,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             mainapp.function_labels_default.clear();
             for (int i = 0; i < aFnc.size(); i++) {
                 String label = aLbl.get(i);
-                if (label.length() > 0) {
+                if (!label.isEmpty()) {
                     Integer fnc = aFnc.get(i);
                     String locos = mainapp.function_consist_locos.get(i);
                     String latching = mainapp.function_consist_latching.get(i);
@@ -591,7 +586,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             errMsg = except.getMessage();
             Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
-        if (errMsg.length() != 0)
+        if (!errMsg.isEmpty())
             mainapp.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
             mainapp.safeToast("Settings Saved.", Toast.LENGTH_SHORT);

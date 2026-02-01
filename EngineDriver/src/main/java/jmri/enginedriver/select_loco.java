@@ -166,7 +166,7 @@ public class select_loco extends AppCompatActivity {
 
     private SharedPreferences prefs;
     private String defaultAddressLength;
-    private Menu SMenu;
+    private Menu overflowMenu;
     private Toolbar toolbar;
 
     protected final int layoutViewId = R.layout.select_loco;
@@ -589,11 +589,8 @@ public class select_loco extends AppCompatActivity {
             }
         }
 
-        if (SMenu != null) {
-            mainapp.displayEStop(SMenu);
-        }
-
-    }
+        refreshOverflowMenu();
+    } // end setLabels()
 
     void adjustCurrentLocosListTextViewWidth() {
         TextView textView = findViewById(R.id.current_locos_text);
@@ -626,7 +623,7 @@ public class select_loco extends AppCompatActivity {
                         String comA = response_str.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateActionViewButton(SMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
                         }
                     }
                     if (!response_str.isEmpty()) {
@@ -648,15 +645,27 @@ public class select_loco extends AppCompatActivity {
                     if (!selectLocoRendered)         // call setLabels() if the select loco textViews had not rendered the last time it was called
                         setLabels();
                     break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): WIT_CON_RETRY");
                     witRetry(msg.obj.toString());
                     break;
+
                 case message_type.ROSTER_UPDATE:
                     Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): ROSTER_UPDATE");
                     setLabels();
                     showMethod(prefSelectLocoMethod);
                     break;
+
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.SELECT_LOCO)
                         reopenThrottlePage();
@@ -666,6 +675,7 @@ public class select_loco extends AppCompatActivity {
                     rosterListAdapter.notifyDataSetChanged();
                     setLabels();
                     break;
+
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
@@ -2246,12 +2256,7 @@ public class select_loco extends AppCompatActivity {
 
         prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", getResources().getBoolean(R.bool.prefSelectLocoByRadioButtonsDefaultValue));
 
-        if (SMenu != null) {
-            mainapp.displayFlashlightMenuButton(SMenu);
-            mainapp.setFlashlightActionViewButton(SMenu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(SMenu);
-            mainapp.setPowerStateActionViewButton(SMenu, findViewById(R.id.powerLayoutButton));
-        }
+        refreshOverflowMenu();
         Log.d(threaded_application.applicationName, activityName + ": onResume(): end");
     }
 
@@ -2283,50 +2288,44 @@ public class select_loco extends AppCompatActivity {
 //        Log.d(threaded_application.applicationName, activityName + ": onCreateOptionsMenu()");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.select_loco_menu, menu);
-        SMenu = menu;
-        mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-
-        MenuItem mi = menu.findItem(R.id.advancedConsistButton);
-        mi.setVisible((!mainapp.isDCCEX)
-                && (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))));
-
-        adjustToolbarSize(menu);
+        overflowMenu = menu;
+        
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
     }
+
+
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+
+        MenuItem menuItem = overflowMenu.findItem(R.id.advancedConsistButton);
+        menuItem.setVisible((!mainapp.isDCCEX)
+                && (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))));
+
+        adjustToolbarSize(overflowMenu);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected():");
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, SMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
 
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(SMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
