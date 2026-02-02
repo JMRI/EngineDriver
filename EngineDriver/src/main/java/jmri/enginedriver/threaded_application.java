@@ -263,6 +263,8 @@ public class threaded_application extends Application {
     public int dccexPreviousCommandIndex = -1;
     public ArrayList<String> dccexPreviousCommandList = new ArrayList<>();
 
+    public boolean prefDccexEmergencyStopPauseResume = false;
+
     public boolean [] [] throttleFunctionIsLatchingDCCEX = {null, null, null, null, null, null};
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
 
@@ -1655,34 +1657,38 @@ public class threaded_application extends Application {
     }
 
     // used for the menu items that appear on almost all activities
-    public void refreshCommonOverflowMenu(Menu menu, ViewGroup emergencyStopButtonView, ViewGroup flashlightButtonView, ViewGroup powerLayoutButton) {
-        refreshCommonOverflowMenu(menu, emergencyStopButtonView, flashlightButtonView,  powerLayoutButton, true);
+    public void refreshCommonOverflowMenu(Menu menu) {
+        refreshCommonOverflowMenu(menu, true);
     }
-    public void refreshCommonOverflowMenu(Menu menu, ViewGroup emergencyStopButtonView, ViewGroup flashlightButtonView, ViewGroup powerLayoutButton, boolean includePower) {
+    public void refreshCommonOverflowMenu(Menu menu, boolean includePower) {
         if (menu == null) return;
+
+        MenuItem emergencyStopButtonMenuItem = menu.findItem(R.id.emergency_stop_button);
+        MenuItem flashlightButtonMenuItem = menu.findItem(R.id.flashlight_button);
+        MenuItem powerLayoutButtonMenuItem = menu.findItem(R.id.powerLayoutButton);
 
         boolean refreshRequired = false;
 
-        if (emergencyStopButtonView != null) {
+        if (emergencyStopButtonMenuItem != null) {
             displayEmergencyStopActionViewButton(menu);
-            setEmergencyStopStateActionViewButton(menu, emergencyStopButtonView);
+            setEmergencyStopStateActionViewButton(menu, emergencyStopButtonMenuItem);
         }
 
         displayFlashlightMenuButton(menu);
-        if (flashlightButtonView == null) {
+        if (flashlightButtonMenuItem == null) {
             refreshRequired = true;
             final Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(() -> {
                 alert_activities(message_type.REFRESH_OVERFLOW_MENU, "");  //send response to running activities
             }, 100);
         } else {
-            setFlashlightActionViewButton(menu, flashlightButtonView);
+            setFlashlightActionViewButton(menu, flashlightButtonMenuItem);
         }
 
         if (!includePower) return;
 
         displayPowerStateMenuButton(menu);
-        if (powerLayoutButton == null) {
+        if (powerLayoutButtonMenuItem == null) {
             if (!refreshRequired) { // don't bother if we already requested it for the flashlight
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(() -> {
@@ -1690,14 +1696,14 @@ public class threaded_application extends Application {
                 }, 100);
             }
         } else {
-            setPowerStateActionViewButton(menu, powerLayoutButton);
+            setPowerStateActionViewButton(menu, powerLayoutButtonMenuItem);
         }
     }
 
-        public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+    public void setPowerStateActionViewButton(Menu menu, MenuItem menuItem) {
         if (!prefs.getBoolean("prefShowLayoutPowerButton", false)) return;
 
-        if ( (menu == null) ||  (menuItemViewGroup  == null)) {
+        if ( (menu == null) ||  (menuItem  == null)) {
 //            // the menu or button is not available yet. Force an update request to the get it to update ASAP
 //            sendMsgDelay(comm_msg_handler, 100, message_type.POWER_STATE_REQUEST);
             return;
@@ -1712,10 +1718,7 @@ public class threaded_application extends Application {
         theme.resolveAttribute(power_button_state_attr_ids.getResourceId(powerState,0), outValue, true);
         power_button_state_attr_ids.recycle();
 
-        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
-
-        if (image == null) return;
-        image.setImageResource(outValue.resourceId);
+        setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
     public void displayEmergencyStopActionViewButton(Menu menu) {
@@ -1732,10 +1735,10 @@ public class threaded_application extends Application {
         }
     }
 
-    public void setEmergencyStopStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+    public void setEmergencyStopStateActionViewButton(Menu menu, MenuItem menuItem) {
         if (!prefs.getBoolean("prefShowEmergencyStopButton", false)) return;
 
-        if ( (menu == null) ||  (menuItemViewGroup  == null)) return; // the menu or button is not available yet.
+        if ( (menu == null) ||  (menuItem  == null)) return; // the menu or button is not available yet.
 
         TypedValue outValue = new TypedValue();
         TypedArray estop_button_state_attr_ids = getResources().obtainTypedArray(R.array.estop_button_state_attr_ids);
@@ -1743,18 +1746,23 @@ public class threaded_application extends Application {
         theme.resolveAttribute(estop_button_state_attr_ids.getResourceId(dccexEmergencyStopState,0), outValue, true);
         estop_button_state_attr_ids.recycle();
 
-        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
-
-        if (image == null) return;
-        image.setImageResource(outValue.resourceId);
+        setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
     public void sendEStopMsg() {
-        for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
-            if (consists != null && consists[i] != null && consists[i].isActive()) {
-                sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
-                EStopActivated = true;
-                threaded_application.extendedLogging(activityName + ":  sendEStopMsg(): EStop sent to server for throttle " + i);
+        if ( (mainapp.isDCCEX) && (prefDccexEmergencyStopPauseResume) ) {
+            if (mainapp.dccexEmergencyStopState == dccex_emergency_stop_state_type.RESUMED) {
+                sendMsg(comm_msg_handler, message_type.DCCEX_ESTOP_PAUSE, "");
+            } else {
+                sendMsg(comm_msg_handler, message_type.DCCEX_ESTOP_RESUME, "");
+            }
+        } else {
+            for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
+                if (consists != null && consists[i] != null && consists[i].isActive()) {
+                    sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
+                    EStopActivated = true;
+                    threaded_application.extendedLogging(activityName + ":  sendEStopMsg(): EStop sent to server for throttle " + i);
+                }
             }
         }
     }
@@ -2146,7 +2154,7 @@ public class threaded_application extends Application {
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
     }
 
-    public void setFlashlightActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+    public void setFlashlightActionViewButton(Menu menu, MenuItem menuItem) {
         if (menu == null) return;
 
         TypedValue outValue = new TypedValue();
@@ -2158,14 +2166,16 @@ public class threaded_application extends Application {
             menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
         }
 
-        if (menuItemViewGroup  == null) return;
-        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
-
-        if (image == null) return;
-        image.setImageResource(outValue.resourceId);
+//        View view = menuItem.getActionView();
+//        if (view == null) return;
+//        ViewGroup button = view.findViewById(menuItem.getItemId());
+//        if (button == null) return;
+//        ImageView image = (ImageView) button.getChildAt(0);
+//        image.setImageResource(outValue.resourceId);
+        setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
-    public void setEsuMc2KnobButton(Menu menu, ViewGroup menuItemViewGroup, boolean isEsuMc2KnobEnabled) {
+    public void setEsuMc2KnobButton(Menu menu, MenuItem menuItem, boolean isEsuMc2KnobEnabled) {
         if (menu == null) return;
 
         TypedValue outValue = new TypedValue();
@@ -2174,12 +2184,17 @@ public class threaded_application extends Application {
         } else {
             theme.resolveAttribute(R.attr.ed_esu_mc2_knob_off_button, outValue, true);
         }
+        setActionBarButtonImage(menuItem, outValue.resourceId);
+    }
 
-        if (menuItemViewGroup  == null) return;
-        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
-
-        if (image == null) return;
-        image.setImageResource(outValue.resourceId);
+    // only works on menu items with - app:actionLayout="@layout/..."
+    void setActionBarButtonImage(MenuItem menuItem, int resourceId) {
+        View view = menuItem.getActionView();
+        if (view == null) return;
+        ViewGroup button = view.findViewById(menuItem.getItemId());
+        if (button == null) return;
+        ImageView image = (ImageView) button.getChildAt(0);
+        image.setImageResource(resourceId);
     }
 
     /**
@@ -2355,14 +2370,14 @@ public class threaded_application extends Application {
         return flashlight.isFlashlightAvailable(getApplicationContext());
     }
 
-    public void toggleFlashlightActionView(Activity activity, Menu menu, ViewGroup menuItemViewGroup) {
+    public void toggleFlashlightActionView(Activity activity, Menu menu, MenuItem menuItem) {
         if (flashState) {
             flashlight.setFlashlightOff();
             flashState = false;
         } else {
             flashState = flashlight.setFlashlightOn(mainapp, activity);
         }
-        setFlashlightActionViewButton(menu, menuItemViewGroup);
+        setFlashlightActionViewButton(menu, menuItem);
     }
 
     public int Numeralise(String value) {

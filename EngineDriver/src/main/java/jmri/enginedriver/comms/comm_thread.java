@@ -371,6 +371,7 @@ public class comm_thread extends Thread {
                     sendRequestRoutes();
                     sendRequestTracks();
                 }
+                sendDccexRequestEmergencyStopState();
                 mainapp.DCCEXlistsRequested = 0;  // don't ask again
             } else {
                 wifiSend("<#>");
@@ -446,6 +447,12 @@ public class comm_thread extends Thread {
         if (mainapp.isDCCEX) { // only relevant to DCC-EX
             wifiSend("<JR " + addr.substring(1) + ">");
         }
+    }
+
+    protected static void sendDccexRequestEmergencyStopState() {
+        if (!mainapp.isDCCEX) return; // only relevant to DCC-EX
+
+        wifiSend("<!Q>");
     }
 
 
@@ -720,10 +727,12 @@ public class comm_thread extends Thread {
         }
     }
 
-    protected static void joinTracks() {
-        joinTracks(true);
+    protected static void sendDccexJoinTracks() {
+        sendDccexJoinTracks(true);
     }
-    protected static void joinTracks(boolean join) {
+    protected static void sendDccexJoinTracks(boolean join) {
+        if (!mainapp.isDCCEX) return;
+
         if (join) {
             wifiSend("<1 JOIN>");
         } else {
@@ -731,6 +740,16 @@ public class comm_thread extends Thread {
             wifiSend("<1 PROG>");
         }
     }
+
+    protected static void sendDccexEmergencyStopPauseResume() {
+        sendDccexEmergencyStopPauseResume(true);
+    }
+    protected static void sendDccexEmergencyStopPauseResume(boolean pause) {
+        if (!mainapp.isDCCEX) return;
+
+        wifiSend("<!" + (pause ? "P" : "R" )+ ">");
+    }
+
 
     protected void sendTurnout(String cmd) {
 //        Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): cmd=" + cmd);
@@ -844,13 +863,6 @@ public class comm_thread extends Thread {
             String msgTxt = String.format("<%d %s>", pState, trackLetter);
             wifiSend(msgTxt);
 //            Log.d(threaded_application.applicationName, activityName + ": sendPower(): DCC-EX: " + msgTxt);
-        }
-    }
-
-    @SuppressLint("DefaultLocale")
-    protected static void sendJoinDCCEX() {
-        if (mainapp.isDCCEX) { // DCC-EX
-            wifiSend("<1 JOIN>");
         }
     }
 
@@ -1813,7 +1825,7 @@ public class comm_thread extends Thread {
 
 //                    sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX, 0);
                         sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX);
-                        sendJoinDCCEX();
+                        sendDccexJoinTracks(true);
                         mainapp.alert_activities(message_type.REQUEST_REFRESH_THROTTLE, "");
 
 //                    } else {

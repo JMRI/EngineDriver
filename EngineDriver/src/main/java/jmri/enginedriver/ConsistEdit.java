@@ -179,14 +179,14 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                         String comA = response_str.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
                     break;
 
                 case message_type.ESTOP_PAUSED:
                 case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
 
                 case message_type.REFRESH_OVERFLOW_MENU:
@@ -432,7 +432,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     private void refreshOverflowMenu() {
         if (overflowMenu == null) return;
 
-        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
         adjustToolbarSize(overflowMenu);
     }
 
@@ -444,7 +444,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {

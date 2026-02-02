@@ -229,7 +229,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     private void refreshOverflowMenu() {
         if (overflowMenu == null) return;
 
-        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
         adjustToolbarSize(overflowMenu);
     }
 
@@ -241,7 +241,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
@@ -272,7 +272,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
                     break;
@@ -280,7 +280,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
                 case message_type.ESTOP_PAUSED:
                 case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
 
                 case message_type.REFRESH_OVERFLOW_MENU:

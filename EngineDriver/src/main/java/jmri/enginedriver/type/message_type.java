@@ -116,5 +116,7 @@ public interface message_type {
     int ESTOP_PAUSED = 93;
     int ESTOP_RESUMED = 94;
     int REFRESH_OVERFLOW_MENU = 95;
+    int DCCEX_ESTOP_PAUSE = 96;
+    int DCCEX_ESTOP_RESUME = 97;
 
 }

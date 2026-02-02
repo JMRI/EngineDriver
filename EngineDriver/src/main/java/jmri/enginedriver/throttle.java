@@ -1034,7 +1034,7 @@ public class throttle extends AppCompatActivity implements
 
                 case message_type.ESTOP_PAUSED:
                 case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
 
                 case message_type.REFRESH_OVERFLOW_MENU:
@@ -1450,11 +1450,13 @@ public class throttle extends AppCompatActivity implements
                             case acceleratorometer_action_type.E_STOP:
                                 GamepadFeedbackSound(false);
                                 mainapp.sendEStopMsg();
-                                speedUpdate(0);  // update all throttles
-                                applySpeedRelatedOptions();  // update all throttles
-                                if (IS_ESU_MCII) {
-                                    Log.d(threaded_application.applicationName, activityName + ": setupSensor(): ESU_MCII: Move knob request for EStop");
-                                    setEsuThrottleKnobPosition(whichVolume, 0);
+                                if ( (!mainapp.isDCCEX) || (!mainapp.prefDccexEmergencyStopPauseResume) ) {
+                                    speedUpdate(0);  // update all throttles
+                                    applySpeedRelatedOptions();  // update all throttles
+                                    if (IS_ESU_MCII) {
+                                        Log.d(threaded_application.applicationName, activityName + ": setupSensor(): ESU_MCII: Move knob request for EStop");
+                                        setEsuThrottleKnobPosition(whichVolume, 0);
+                                    }
                                 }
                         }
                     }
@@ -1719,6 +1721,10 @@ public class throttle extends AppCompatActivity implements
                 tmpInt = threaded_application.getIntPrefValue(prefs, "prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue));
                 mainapp.esuMc2BrakeLevels[2] = tmpInt>=0 ? tmpInt : 10000;
             }
+        }
+        if (mainapp.isDCCEX) {
+            mainapp.prefDccexEmergencyStopPauseResume = prefs.getBoolean("prefDccexEmergencyStopPauseResume",
+                    getResources().getBoolean(R.bool.prefDccexEmergencyStopPauseResumeDefaultValue));
         }
 
         mainapp.prefAppIconAction = prefs.getString("prefAppIconAction", getResources().getString(R.string.prefAppIconActionDefaultValue));
@@ -4482,7 +4488,7 @@ public class throttle extends AppCompatActivity implements
         } else {
             menuItem.setVisible(false);
         }
-        mainapp.setEsuMc2KnobButton(menu, findViewById(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
+        mainapp.setEsuMc2KnobButton(menu, menu.findItem(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
 
     }
 
@@ -4509,7 +4515,7 @@ public class throttle extends AppCompatActivity implements
      */
     public void toggleEsuMc2Knob(Activity activity, Menu menu) {
         isEsuMc2KnobEnabled = !isEsuMc2KnobEnabled;
-        mainapp.setEsuMc2KnobButton(menu, findViewById(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
+        mainapp.setEsuMc2KnobButton(menu, menu.findItem(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
     }
 
 
@@ -6523,7 +6529,7 @@ public class throttle extends AppCompatActivity implements
 
         mainapp.actionBarIconCountThrottle = 0;
 
-        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
 
         if (IS_ESU_MCII) {
             displayEsuMc2KnobMenuButton(overflowMenu);
@@ -6803,11 +6809,13 @@ public class throttle extends AppCompatActivity implements
 
         } else if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
-            speedUpdate(0);  // update all throttles
-            applySpeedRelatedOptions();  // update all throttles
-            if (IS_ESU_MCII && !isSemiRealisticThrottle) {
-                Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected(): ESU_MCII: Move knob request for EStop");
-                setEsuThrottleKnobPosition(whichVolume, 0);
+            if ( (!mainapp.isDCCEX) || (!mainapp.prefDccexEmergencyStopPauseResume) ) {
+                speedUpdate(0);  // update all throttles
+                applySpeedRelatedOptions();  // update all throttles
+                if (IS_ESU_MCII && !isSemiRealisticThrottle) {
+                    Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected(): ESU_MCII: Move knob request for EStop");
+                    setEsuThrottleKnobPosition(whichVolume, 0);
+                }
             }
             mainapp.buttonVibration();
             return true;
@@ -6880,7 +6888,7 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
 

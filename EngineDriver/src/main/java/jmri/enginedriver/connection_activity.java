@@ -1062,7 +1062,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         if (overflowMenu == null) return;
 
         mainapp.displayFlashlightMenuButton(overflowMenu);
-        mainapp.setFlashlightActionViewButton(overflowMenu, findViewById(R.id.flashlight_button));
+        mainapp.setFlashlightActionViewButton(overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
         overflowMenu.findItem(R.id.intro_button).setVisible(!mainapp.prefHideInstructionalToasts);
         overflowMenu.findItem(R.id.settings_button).setVisible(!mainapp.prefHideInstructionalToasts);
 
@@ -1092,7 +1092,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //            getConnectionsList();
 //            return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.logviewer_menu) {

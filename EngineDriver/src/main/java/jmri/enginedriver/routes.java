@@ -324,7 +324,7 @@ public class routes extends AppCompatActivity
 //                        }
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
                 }
@@ -332,7 +332,7 @@ public class routes extends AppCompatActivity
 
                 case message_type.ESTOP_PAUSED:
                 case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, findViewById(R.id.emergency_stop_button));
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
 
                 case message_type.REFRESH_OVERFLOW_MENU:
@@ -779,7 +779,7 @@ public class routes extends AppCompatActivity
 
         mainapp.actionBarIconCountRoutes = 0;
 
-        mainapp.refreshCommonOverflowMenu(overflowMenu, findViewById(R.id.emergency_stop_button), findViewById(R.id.flashlight_button), findViewById(R.id.powerLayoutButton));
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
 
 //        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughRoutes");
         mainapp.setDCCEXMenuOption(overflowMenu);
@@ -913,7 +913,7 @@ public class routes extends AppCompatActivity
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, overflowMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else {
