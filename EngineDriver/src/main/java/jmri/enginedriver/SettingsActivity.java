@@ -115,7 +115,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
     private LinearLayout statusLine;
-    private Menu SAMenu;
+    private Menu overflowMenu;
 
     private String exportedPreferencesFileName = "exported_preferences.ed";
 //    private boolean overwriteFile = false;
@@ -285,14 +285,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
 
-        if (SAMenu != null) {
-            mainapp.displayEStop(SAMenu);
-            mainapp.displayFlashlightMenuButton(SAMenu);
-            mainapp.setFlashlightActionViewButton(SAMenu, findViewById(R.id.flashlight_button));
-
-            mainapp.displayPowerStateMenuButton(SAMenu);
-            mainapp.setPowerStateActionViewButton(SAMenu, findViewById(R.id.powerLayoutButton));
-        }
+        refreshOverflowMenu();
 
 //        mainapp.applyTheme(this,true);
 
@@ -678,9 +671,18 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         String comA = response_str.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateActionViewButton(SAMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
+                    break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
                     break;
 
                 case message_type.IMPORT_SERVER_MANUAL_SUCCESS:
@@ -914,23 +916,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         Log.d(threaded_application.applicationName, activityName + ": onCreateOptionsMenu()");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings_menu, menu);
-        SAMenu = menu;
-        mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        overflowMenu = menu;
+
+        refreshOverflowMenu();
 
         MenuItem searchItem = menu.findItem(R.id.search_button);
         SearchView searchView = (SearchView) searchItem.getActionView();
@@ -985,25 +973,31 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             }
         }
 
-        adjustToolbarSize(menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
+    // excludes search
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+        adjustToolbarSize(overflowMenu);
+    }
+
+        @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, SAMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(SAMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }

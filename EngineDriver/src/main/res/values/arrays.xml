@@ -3198,6 +3198,107 @@
         <item>@id/EditLightsConsist5_menu</item>
     </array>
 
+    <array name="power_button_state_attr_ids">
+        <item>@attr/ed_power_red_button</item> <!-- 0 off -->
+        <item>@attr/ed_power_green_button</item> <!-- 1 on -->
+        <item>@attr/ed_power_yellow_button</item> <!-- 2 unknown -->
+        <item>@attr/ed_power_green_red_button</item> <!-- 3 DCC-EX part on, part off -->
+    </array>
+
+    <array name="estop_button_state_attr_ids">
+        <item>@attr/ed_estop_button</item> <!-- estop pause inactive -->
+        <item>@attr/ed_estop_active_button</item> <!-- estop pause active -->
+    </array>
+
+    <!-- Track power page -->
+    <array name="dccex_power_control_track_type_layout_ids">
+        <item>@id/dccex_power_control_track_type_layout_0</item>
+        <item>@id/dccex_power_control_track_type_layout_1</item>
+        <item>@id/dccex_power_control_track_type_layout_2</item>
+        <item>@id/dccex_power_control_track_type_layout_3</item>
+        <item>@id/dccex_power_control_track_type_layout_4</item>
+        <item>@id/dccex_power_control_track_type_layout_5</item>
+        <item>@id/dccex_power_control_track_type_layout_6</item>
+        <item>@id/dccex_power_control_track_type_layout_7</item>
+    </array>
+
+    <array name="dccex_power_control_track_power_button_ids">
+        <item>@id/dccex_power_control_track_power_button_0</item>
+        <item>@id/dccex_power_control_track_power_button_1</item>
+        <item>@id/dccex_power_control_track_power_button_2</item>
+        <item>@id/dccex_power_control_track_power_button_3</item>
+        <item>@id/dccex_power_control_track_power_button_4</item>
+        <item>@id/dccex_power_control_track_power_button_5</item>
+        <item>@id/dccex_power_control_track_power_button_6</item>
+        <item>@id/dccex_power_control_track_power_button_7</item>
+    </array>
+
+    <array name="dccex_power_control_track_type_ids">
+        <item>@id/dccex_power_control_track_type_0</item>
+        <item>@id/dccex_power_control_track_type_1</item>
+        <item>@id/dccex_power_control_track_type_2</item>
+        <item>@id/dccex_power_control_track_type_3</item>
+        <item>@id/dccex_power_control_track_type_4</item>
+        <item>@id/dccex_power_control_track_type_5</item>
+        <item>@id/dccex_power_control_track_type_6</item>
+        <item>@id/dccex_power_control_track_type_7</item>
+    </array>
+
+    <array name="dccex_power_control_track_type_id_ids">
+        <item>@id/dccex_power_control_track_type_id_0</item>
+        <item>@id/dccex_power_control_track_type_id_1</item>
+        <item>@id/dccex_power_control_track_type_id_2</item>
+        <item>@id/dccex_power_control_track_type_id_3</item>
+        <item>@id/dccex_power_control_track_type_id_4</item>
+        <item>@id/dccex_power_control_track_type_id_5</item>
+        <item>@id/dccex_power_control_track_type_id_6</item>
+        <item>@id/dccex_power_control_track_type_id_7</item>
+    </array>
+
+    <!-- DCC-EX page-->
+    <array name="dccex_track_type_layout_ids">
+        <item>@id/dccex_track_type_layout_0</item>
+        <item>@id/dccex_track_type_layout_1</item>
+        <item>@id/dccex_track_type_layout_2</item>
+        <item>@id/dccex_track_type_layout_3</item>
+        <item>@id/dccex_track_type_layout_4</item>
+        <item>@id/dccex_track_type_layout_5</item>
+        <item>@id/dccex_track_type_layout_6</item>
+        <item>@id/dccex_track_type_layout_7</item>
+    </array>
+
+    <array name="dccex_track_power_button_ids">
+        <item>@id/dccex_track_power_button_0</item>
+        <item>@id/dccex_track_power_button_1</item>
+        <item>@id/dccex_track_power_button_2</item>
+        <item>@id/dccex_track_power_button_3</item>
+        <item>@id/dccex_track_power_button_4</item>
+        <item>@id/dccex_track_power_button_5</item>
+        <item>@id/dccex_track_power_button_6</item>
+        <item>@id/dccex_track_power_button_7</item>
+    </array>
+
+    <array name="dccex_track_type_ids">
+        <item>@id/dccex_track_type_0</item>
+        <item>@id/dccex_track_type_1</item>
+        <item>@id/dccex_track_type_2</item>
+        <item>@id/dccex_track_type_3</item>
+        <item>@id/dccex_track_type_4</item>
+        <item>@id/dccex_track_type_5</item>
+        <item>@id/dccex_track_type_6</item>
+        <item>@id/dccex_track_type_7</item>
+    </array>
+
+    <array name="dccex_track_id_ids">
+        <item>@id/dccex_track_id_0</item>
+        <item>@id/dccex_track_id_1</item>
+        <item>@id/dccex_track_id_2</item>
+        <item>@id/dccex_track_id_3</item>
+        <item>@id/dccex_track_id_4</item>
+        <item>@id/dccex_track_id_5</item>
+        <item>@id/dccex_track_id_6</item>
+        <item>@id/dccex_track_id_7</item>
+    </array>
 
 
 </resources>

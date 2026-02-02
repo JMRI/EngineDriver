@@ -264,7 +264,7 @@ public class comm_handler extends Handler {
             break;
          }
 
-         case message_type.DISCONNECT:{
+         case message_type.DISCONNECT: {
             Log.d(threaded_application.applicationName, activityName + ": handleMessage(): DISCONNECT");
 
             commThread.sendQuit();
@@ -355,16 +355,26 @@ public class comm_handler extends Handler {
          }
 
          case message_type.DCCEX_JOIN_TRACKS: { // DCC-EX only
-            comm_thread.joinTracks();
+            comm_thread.sendDccexJoinTracks();
             break;
          }
 
          case message_type.DCCEX_UNJOIN_TRACKS: { // DCC-EX only
-            comm_thread.joinTracks(false);
+            comm_thread.sendDccexJoinTracks(false);
             break;
          }
 
-         case message_type.WRITE_TRACK_POWER: { // DCC-EX only
+          case message_type.DCCEX_ESTOP_PAUSE: { // DCC-EX only
+              comm_thread.sendDccexEmergencyStopPauseResume();
+              break;
+          }
+
+          case message_type.DCCEX_ESTOP_RESUME: { // DCC-EX only
+              comm_thread.sendDccexEmergencyStopPauseResume(false);
+              break;
+          }
+
+          case message_type.WRITE_TRACK_POWER: { // DCC-EX only
             String [] args = msg.obj.toString().split(" ");
             comm_thread.sendTrackPower(args[0], msg.arg1);
             break;

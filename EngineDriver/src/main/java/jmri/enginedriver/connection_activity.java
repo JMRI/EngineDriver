@@ -119,7 +119,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     //pointer back to application
     private threaded_application mainapp;
-    private Menu CMenu;
+    private Menu overflowMenu;
     //The IP address and port that are used to connect.
     private String connected_hostip;
     private String connected_hostname;
@@ -485,6 +485,10 @@ public class connection_activity extends AppCompatActivity implements Permission
                     start_throttle_activity();
                     break;
 
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
+
                 case message_type.REOPEN_THROTTLE:
                     //ignore
                     break;
@@ -499,6 +503,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     mainapp.connectedHostName = "";
                     shutdown();
                     break;
+
                 case message_type.DISCONNECT:
                     writeSharedPreferencesToFile();
                     mainapp.connectedHostName = "";
@@ -739,6 +744,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        mainapp.applyTheme(this);
+
         threaded_application.currentActivity = activity_id_type.CONNECTION;
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
@@ -778,10 +785,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
         setConnectionProtocolOption();
 
-        if (CMenu != null) {
-            mainapp.displayFlashlightMenuButton(CMenu);
-            mainapp.setFlashlightActionViewButton(CMenu, findViewById(R.id.flashlight_button));
-        }
+        refreshOverflowMenu();
     }  //end of onResume
 
     @Override
@@ -818,7 +822,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         } else {
             isRestarting = false;
         }
-        CMenu = null;
+        overflowMenu = null;
         connectionsListSwipeDetector = null;
         prefs = null;
         discovery_list_adapter = null;
@@ -1047,18 +1051,25 @@ public class connection_activity extends AppCompatActivity implements Permission
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.connection_menu, menu);
-        CMenu = menu;
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        menu.findItem(R.id.intro_button).setVisible(!mainapp.prefHideInstructionalToasts);
-        menu.findItem(R.id.settings_button).setVisible(!mainapp.prefHideInstructionalToasts);
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
     }
 
-    @SuppressLint("NonConstantResourceId")
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.displayFlashlightMenuButton(overflowMenu);
+        mainapp.setFlashlightActionViewButton(overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
+        overflowMenu.findItem(R.id.intro_button).setVisible(!mainapp.prefHideInstructionalToasts);
+        overflowMenu.findItem(R.id.settings_button).setVisible(!mainapp.prefHideInstructionalToasts);
+
+        adjustToolbarSize(overflowMenu);
+    }
+
+        @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         mainapp.exitDoubleBackButtonInitiated = 0;
@@ -1081,7 +1092,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //            getConnectionsList();
 //            return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, CMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.logviewer_menu) {

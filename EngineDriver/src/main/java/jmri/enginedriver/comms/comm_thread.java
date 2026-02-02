@@ -68,6 +68,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.consist_function_rule_style_type;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.type.dccex_emergency_stop_state_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.source_type;
@@ -370,6 +371,7 @@ public class comm_thread extends Thread {
                     sendRequestRoutes();
                     sendRequestTracks();
                 }
+                sendDccexRequestEmergencyStopState();
                 mainapp.DCCEXlistsRequested = 0;  // don't ask again
             } else {
                 wifiSend("<#>");
@@ -445,6 +447,12 @@ public class comm_thread extends Thread {
         if (mainapp.isDCCEX) { // only relevant to DCC-EX
             wifiSend("<JR " + addr.substring(1) + ">");
         }
+    }
+
+    protected static void sendDccexRequestEmergencyStopState() {
+        if (!mainapp.isDCCEX) return; // only relevant to DCC-EX
+
+        wifiSend("<!Q>");
     }
 
 
@@ -719,10 +727,12 @@ public class comm_thread extends Thread {
         }
     }
 
-    protected static void joinTracks() {
-        joinTracks(true);
+    protected static void sendDccexJoinTracks() {
+        sendDccexJoinTracks(true);
     }
-    protected static void joinTracks(boolean join) {
+    protected static void sendDccexJoinTracks(boolean join) {
+        if (!mainapp.isDCCEX) return;
+
         if (join) {
             wifiSend("<1 JOIN>");
         } else {
@@ -730,6 +740,16 @@ public class comm_thread extends Thread {
             wifiSend("<1 PROG>");
         }
     }
+
+    protected static void sendDccexEmergencyStopPauseResume() {
+        sendDccexEmergencyStopPauseResume(true);
+    }
+    protected static void sendDccexEmergencyStopPauseResume(boolean pause) {
+        if (!mainapp.isDCCEX) return;
+
+        wifiSend("<!" + (pause ? "P" : "R" )+ ">");
+    }
+
 
     protected void sendTurnout(String cmd) {
 //        Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): cmd=" + cmd);
@@ -843,13 +863,6 @@ public class comm_thread extends Thread {
             String msgTxt = String.format("<%d %s>", pState, trackLetter);
             wifiSend(msgTxt);
 //            Log.d(threaded_application.applicationName, activityName + ": sendPower(): DCC-EX: " + msgTxt);
-        }
-    }
-
-    @SuppressLint("DefaultLocale")
-    protected static void sendJoinDCCEX() {
-        if (mainapp.isDCCEX) { // DCC-EX
-            wifiSend("<1 JOIN>");
         }
     }
 
@@ -1518,6 +1531,11 @@ public class comm_thread extends Thread {
                             mainapp.vibrate(new long[]{1000, 500, 1000, 500});
                             mainapp.safeToast(args[1], Toast.LENGTH_LONG); // copy to UI as toast message
                             break;
+
+                        case '!':
+                            processDccexEmergencyStopResponse(args);
+                            skipAlert = true;
+                            break;
                     }
 
                 } else { // ignore responses that don't start with "<"
@@ -1534,7 +1552,20 @@ public class comm_thread extends Thread {
 
     /* ***********************************  *********************************** */
 
-    private static  void processDccexPowerResponse ( String [] args) { // <p0|1 [A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX]>
+    private static  void processDccexEmergencyStopResponse ( String [] args) { // <p0|1[PAUSED|RESUME]>
+        String cmd = args[0].substring(1);
+        if (cmd.equals("PAUSED")) {
+            mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.PAUSED;
+            mainapp.alert_activities(message_type.ESTOP_PAUSED, "");  //send response to running activities
+        }  else if (cmd.equals("RESUMED")) {
+            mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
+            mainapp.alert_activities(message_type.ESTOP_RESUMED, "");  //send response to running activities
+        }
+    }
+
+    /* ***********************************  *********************************** */
+
+    private static  void processDccexPowerResponse ( String [] args) { // <p![A|B|C|D|E|F|G|H|MAIN|PROG|DC|DCX]>
         String oldState = mainapp.power_state;
         String responseStr;
         if ( (args.length==1)   // <p0|1>
@@ -1794,7 +1825,7 @@ public class comm_thread extends Thread {
 
 //                    sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX, 0);
                         sendAcquireLoco(addrStr, requestLocoIdForWhichThrottleDCCEX);
-                        sendJoinDCCEX();
+                        sendDccexJoinTracks(true);
                         mainapp.alert_activities(message_type.REQUEST_REFRESH_THROTTLE, "");
 
 //                    } else {
@@ -2697,7 +2728,22 @@ public class comm_thread extends Thread {
                             if (!str.isEmpty()) {
                                 heart.restartInboundInterval();
                                 clearInboundTimeout();
-                                processWifiResponse(str);
+                                if (!mainapp.isDCCEX) {
+                                    processWifiResponse(str);
+                                } else {
+                                    String [] cmds = str.split("><");
+                                    if (cmds.length == 1) { // multiple concatenated commands
+                                        processWifiResponse(str);
+                                    } else {
+                                        for (int i=0; i< cmds.length; i++) {
+                                            if (i == 0) {
+                                                processWifiResponse(cmds[i] + ">");
+                                            } else {
+                                                processWifiResponse("<" + cmds[i]);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     } catch (SocketTimeoutException e) {

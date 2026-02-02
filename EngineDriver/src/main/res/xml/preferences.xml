@@ -2299,6 +2299,13 @@
                     android:title="@string/prefDccexConnectionOptionTitle" />
 
                 <CheckBoxPreference
+                    android:defaultValue="@bool/prefDccexEmergencyStopPauseResumeDefaultValue"
+                    android:key="prefDccexEmergencyStopPauseResume"
+                    android:layout="@layout/checkbox_icon_right"
+                    android:summary="@string/prefDccexEmergencyStopPauseResumeSummary"
+                    android:title="@string/prefDccexEmergencyStopPauseResumeTitle" />
+
+                <CheckBoxPreference
                     android:defaultValue="@bool/prefDccexSequenceItemRequestsDefaultValue"
                     android:key="prefDccexSequenceItemRequests"
                     android:layout="@layout/checkbox_no_icon"

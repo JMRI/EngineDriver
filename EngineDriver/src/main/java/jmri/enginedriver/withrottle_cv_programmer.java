@@ -61,7 +61,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     static final String activityName = "withrottle_cv_programmer";
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu menu;
+    private Menu overflowMenu;
     protected SharedPreferences prefs;
     private int result = RESULT_OK;
 
@@ -172,9 +172,18 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
+                    break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
@@ -431,10 +440,8 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         showHideButtons();
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-        }
-    }
+        refreshOverflowMenu();
+    } // end refreshWitView()
 
     public void refreshWitCommandsView() {
 //        witResponsesLabel.setText(Html.fromHtml(witResponsesStr));
@@ -648,16 +655,9 @@ public class withrottle_cv_programmer extends AppCompatActivity {
         etWitCv.setText(mainapp.witCv);
         etWitCvValue.setText(mainapp.witCvValue);
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-            mainapp.displayFlashlightMenuButton(menu);
-            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(menu);
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-        //update power state
-        mainapp.witScreenIsOpen = true;
+        refreshOverflowMenu();
 
+        mainapp.witScreenIsOpen = true;
         refreshWitView();
     }
 
@@ -679,32 +679,23 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu myMenu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.withrottle_cv_programmer_menu, myMenu);
-        menu = myMenu;
-        mainapp.displayEStop(myMenu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        inflater.inflate(R.menu.withrottle_cv_programmer_menu, menu);
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+        adjustToolbarSize(overflowMenu);
+    }
+    
     void endThisActivity() {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
@@ -761,17 +752,17 @@ public class withrottle_cv_programmer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, menu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(menu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }

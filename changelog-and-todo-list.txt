@@ -1,14 +1,19 @@
 **Version 2.42.218
- * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
- * Bug fix for the 'additional' gamepad and volume indicators. This can't have worked properly for a long time.
- * Linting
- * Removed references to the ESU MobileControl II
- * Added localisation files for English (Singapore) and English (India). Same as UK/Australia/NZ
- * Added preference to 'Swap' the throw/close labels for all DCC-EX turnouts
- * More Google Translations
- * Full removal of the deprecated use of startActivityForResult().  Moved to the new Activity Result APIs.
- * Rename of some of the original variables to remove the confusing abbreviations.
- * Typos in field and method names
+ * New Features
+    * Added localisation files for English (Singapore) and English (India). Same as UK/Australia/NZ
+    * Added preference to 'Swap' the throw/close labels for all DCC-EX turnouts
+    * Initial, rudimentary support for the DCC-EX EStop Pause/Resume
+ * Bug fixes
+    * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
+    * Bug fix for the 'additional' gamepad and volume indicators. This can't have worked properly for a long time.
+ * Other
+    * Linting
+    * Removed references to the ESU MobileControl II
+    * More Google Translations
+    * Full removal of the deprecated use of startActivityForResult().  Moved to the new Activity Result APIs.
+    * Rename of some of the original variables to remove the confusing abbreviations.
+    * Typos in field and method names
+    * Significant cleanup of the display of the Overflow Menu and Action Bar items
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
@@ -1013,6 +1018,9 @@
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.
  *   TODO: add the English (Singapore) and English (India) to the localisation preference.
+* general/global
+ *   TODO: Improve the wy it deals with multiple DCC-EX commands on single line.  Will only work now if there is no gap.
+ *   TODO: support EStop Pause/Resume
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web

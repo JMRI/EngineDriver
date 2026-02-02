@@ -44,6 +44,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -99,6 +100,7 @@ import java.util.regex.Pattern;
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.auto_import_export_option_type;
+import jmri.enginedriver.type.dccex_emergency_stop_state_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.notification_type;
@@ -248,6 +250,7 @@ public class threaded_application extends Application {
     public String [] dccexTrackId = {"", "", "", "", "", "", "", ""};
     public final static int DCCEX_MAX_TRACKS = 8;
     public boolean dccexJoined = false;
+    public int dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
 //    public boolean dccexRosterFullyReceived = false;
     public boolean dccexRosterRequested = false;
@@ -259,6 +262,8 @@ public class threaded_application extends Application {
 
     public int dccexPreviousCommandIndex = -1;
     public ArrayList<String> dccexPreviousCommandList = new ArrayList<>();
+
+    public boolean prefDccexEmergencyStopPauseResume = false;
 
     public boolean [] [] throttleFunctionIsLatchingDCCEX = {null, null, null, null, null, null};
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
@@ -1299,6 +1304,7 @@ public class threaded_application extends Application {
         mainapp.isDCCEX = prefUseDccexProtocol.equals("Yes") || mainapp.isDCCEX;   // force it if the preference is set
 
         DccexVersion = "";
+        dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
         DCCEXlistsRequested = -1;
         dccexRosterRequested = false;
@@ -1400,17 +1406,20 @@ public class threaded_application extends Application {
     }
 
     public void displayPowerStateMenuButton(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.powerLayoutButton);
+        if (menuItem == null) return;
+
         if (prefs.getBoolean("prefShowLayoutPowerButton", false) && (power_state != null)) {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
-            menu.findItem(R.id.powerLayoutButton).setVisible(true);
+            menuItem.setVisible(true);
         } else {
-            menu.findItem(R.id.powerLayoutButton).setVisible(false);
+            menuItem.setVisible(false);
         }
     }
 
-    public void powerControlNotAllowedDialog(Menu pMenu) {
+    public void powerControlNotAllowedDialog(Menu menu) {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setIcon(android.R.drawable.ic_dialog_alert);
         b.setTitle(getApplicationContext().getResources().getString(R.string.powerWillNotWorkTitle));
@@ -1419,7 +1428,7 @@ public class threaded_application extends Application {
         b.setNegativeButton("OK", null);
         AlertDialog alert = b.create();
         alert.show();
-        displayPowerStateMenuButton(pMenu);
+        displayPowerStateMenuButton(menu);
     }
 
     /**
@@ -1647,47 +1656,76 @@ public class threaded_application extends Application {
         return (to_state_names != null);
     }
 
-    public void setPowerStateActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+    // used for the menu items that appear on almost all activities
+    public void refreshCommonOverflowMenu(Menu menu) {
+        refreshCommonOverflowMenu(menu, true);
+    }
+    public void refreshCommonOverflowMenu(Menu menu, boolean includePower) {
+        if (menu == null) return;
+
+        MenuItem emergencyStopButtonMenuItem = menu.findItem(R.id.emergency_stop_button);
+        MenuItem flashlightButtonMenuItem = menu.findItem(R.id.flashlight_button);
+        MenuItem powerLayoutButtonMenuItem = menu.findItem(R.id.powerLayoutButton);
+
+        boolean refreshRequired = false;
+
+        if (emergencyStopButtonMenuItem != null) {
+            displayEmergencyStopActionViewButton(menu);
+            setEmergencyStopStateActionViewButton(menu, emergencyStopButtonMenuItem);
+        }
+
+        displayFlashlightMenuButton(menu);
+        if (flashlightButtonMenuItem == null) {
+            refreshRequired = true;
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(() -> {
+                alert_activities(message_type.REFRESH_OVERFLOW_MENU, "");  //send response to running activities
+            }, 100);
+        } else {
+            setFlashlightActionViewButton(menu, flashlightButtonMenuItem);
+        }
+
+        if (!includePower) return;
+
+        displayPowerStateMenuButton(menu);
+        if (powerLayoutButtonMenuItem == null) {
+            if (!refreshRequired) { // don't bother if we already requested it for the flashlight
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    alert_activities(message_type.REFRESH_OVERFLOW_MENU, "");  //send response to running activities
+                }, 100);
+            }
+        } else {
+            setPowerStateActionViewButton(menu, powerLayoutButtonMenuItem);
+        }
+    }
+
+    public void setPowerStateActionViewButton(Menu menu, MenuItem menuItem) {
         if (!prefs.getBoolean("prefShowLayoutPowerButton", false)) return;
 
-        if ( (menu == null) ||  (menuItemViewGroup  == null)) {
+        if ( (menu == null) ||  (menuItem  == null)) {
 //            // the menu or button is not available yet. Force an update request to the get it to update ASAP
 //            sendMsgDelay(comm_msg_handler, 100, message_type.POWER_STATE_REQUEST);
             return;
         }
 
         TypedValue outValue = new TypedValue();
+        TypedArray power_button_state_attr_ids = getResources().obtainTypedArray(R.array.power_button_state_attr_ids);
 
-        if (power_state == null) {
-            theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-        } else if (power_state.equals("2")) {
-            if (!mainapp.isDCCEX) {
-                theme.resolveAttribute(R.attr.ed_power_yellow_button, outValue, true);
-            } else {
-                theme.resolveAttribute(R.attr.ed_power_green_red_button, outValue, true);
-            }
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is UnKnown");
-        } else if (power_state.equals("1")) {
-            theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is ON");
-        } else {
-            theme.resolveAttribute(R.attr.ed_power_red_button, outValue, true);
-            menu.findItem(R.id.powerLayoutButton).setTitle("Layout Power is Off");
-        }
+        int powerState = (power_state != null) ? Integer.parseInt(power_state) : 2;  // default to unknown
+        if ( (mainapp.isDCCEX) && (powerState == 2) ) powerState = 3; // mixed - part on, part off
 
-        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
+        theme.resolveAttribute(power_button_state_attr_ids.getResourceId(powerState,0), outValue, true);
+        power_button_state_attr_ids.recycle();
 
-        if (image == null) return;
-        image.setImageResource(outValue.resourceId);
+        setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
-    public void displayEStop(Menu menu) {
-        MenuItem mi = menu.findItem(R.id.EmerStop);
+    public void displayEmergencyStopActionViewButton(Menu menu) {
+        MenuItem mi = menu.findItem(R.id.emergency_stop_button);
         if (mi == null) return;
 
         if (prefs.getBoolean("prefShowEmergencyStopButton", false)) {
-//            TypedValue outValue = new TypedValue();
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1695,15 +1733,36 @@ public class threaded_application extends Application {
         } else {
             mi.setVisible(false);
         }
+    }
 
+    public void setEmergencyStopStateActionViewButton(Menu menu, MenuItem menuItem) {
+        if (!prefs.getBoolean("prefShowEmergencyStopButton", false)) return;
+
+        if ( (menu == null) ||  (menuItem  == null)) return; // the menu or button is not available yet.
+
+        TypedValue outValue = new TypedValue();
+        TypedArray estop_button_state_attr_ids = getResources().obtainTypedArray(R.array.estop_button_state_attr_ids);
+
+        theme.resolveAttribute(estop_button_state_attr_ids.getResourceId(dccexEmergencyStopState,0), outValue, true);
+        estop_button_state_attr_ids.recycle();
+
+        setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
     public void sendEStopMsg() {
-        for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
-            if (consists != null && consists[i] != null && consists[i].isActive()) {
-                sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
-                EStopActivated = true;
-                threaded_application.extendedLogging(activityName + ":  sendEStopMsg(): EStop sent to server for throttle " + i);
+        if ( (mainapp.isDCCEX) && (prefDccexEmergencyStopPauseResume) ) {
+            if (mainapp.dccexEmergencyStopState == dccex_emergency_stop_state_type.RESUMED) {
+                sendMsg(comm_msg_handler, message_type.DCCEX_ESTOP_PAUSE, "");
+            } else {
+                sendMsg(comm_msg_handler, message_type.DCCEX_ESTOP_RESUME, "");
+            }
+        } else {
+            for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
+                if (consists != null && consists[i] != null && consists[i].isActive()) {
+                    sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
+                    EStopActivated = true;
+                    threaded_application.extendedLogging(activityName + ":  sendEStopMsg(): EStop sent to server for throttle " + i);
+                }
             }
         }
     }
@@ -2095,7 +2154,7 @@ public class threaded_application extends Application {
         super.attachBaseContext(LocaleHelper.onAttach(base, languageCountry));
     }
 
-    public void setFlashlightActionViewButton(Menu menu, ViewGroup menuItemViewGroup) {
+    public void setFlashlightActionViewButton(Menu menu, MenuItem menuItem) {
         if (menu == null) return;
 
         TypedValue outValue = new TypedValue();
@@ -2107,14 +2166,16 @@ public class threaded_application extends Application {
             menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
         }
 
-        if (menuItemViewGroup  == null) return;
-        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
-
-        if (image == null) return;
-        image.setImageResource(outValue.resourceId);
+//        View view = menuItem.getActionView();
+//        if (view == null) return;
+//        ViewGroup button = view.findViewById(menuItem.getItemId());
+//        if (button == null) return;
+//        ImageView image = (ImageView) button.getChildAt(0);
+//        image.setImageResource(outValue.resourceId);
+        setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
-    public void setEsuMc2KnobButton(Menu menu, ViewGroup menuItemViewGroup, boolean isEsuMc2KnobEnabled) {
+    public void setEsuMc2KnobButton(Menu menu, MenuItem menuItem, boolean isEsuMc2KnobEnabled) {
         if (menu == null) return;
 
         TypedValue outValue = new TypedValue();
@@ -2123,12 +2184,17 @@ public class threaded_application extends Application {
         } else {
             theme.resolveAttribute(R.attr.ed_esu_mc2_knob_off_button, outValue, true);
         }
+        setActionBarButtonImage(menuItem, outValue.resourceId);
+    }
 
-        if (menuItemViewGroup  == null) return;
-        ImageView image = (ImageView) menuItemViewGroup.getChildAt(0);
-
-        if (image == null) return;
-        image.setImageResource(outValue.resourceId);
+    // only works on menu items with - app:actionLayout="@layout/..."
+    void setActionBarButtonImage(MenuItem menuItem, int resourceId) {
+        View view = menuItem.getActionView();
+        if (view == null) return;
+        ViewGroup button = view.findViewById(menuItem.getItemId());
+        if (button == null) return;
+        ImageView image = (ImageView) button.getChildAt(0);
+        image.setImageResource(resourceId);
     }
 
     /**
@@ -2304,14 +2370,14 @@ public class threaded_application extends Application {
         return flashlight.isFlashlightAvailable(getApplicationContext());
     }
 
-    public void toggleFlashlightActionView(Activity activity, Menu menu, ViewGroup menuItemViewGroup) {
+    public void toggleFlashlightActionView(Activity activity, Menu menu, MenuItem menuItem) {
         if (flashState) {
             flashlight.setFlashlightOff();
             flashState = false;
         } else {
             flashState = flashlight.setFlashlightOn(mainapp, activity);
         }
-        setFlashlightActionViewButton(menu, menuItemViewGroup);
+        setFlashlightActionViewButton(menu, menuItem);
     }
 
     public int Numeralise(String value) {

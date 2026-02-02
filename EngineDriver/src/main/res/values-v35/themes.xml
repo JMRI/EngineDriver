@@ -98,6 +98,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/original_toolbar_button_estop_active</item>
         <item name="ed_search_button">@drawable/original_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
@@ -303,6 +304,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/outline_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/outline_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/outline_toolbar_button_estop_active</item>
         <item name="ed_search_button">@drawable/outline_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/outline_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/outline_power_green</item>
@@ -507,6 +509,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/outline_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/outline_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/outline_toolbar_button_estop_active</item>
         <item name="ed_search_button">@drawable/outline_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/outline_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/outline_power_green</item>
@@ -707,6 +710,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/ultra_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/ultra_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/ultra_toolbar_button_estop_active</item>
         <item name="ed_search_button">@drawable/ultra_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/ultra_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/ultra_power_green</item>
@@ -916,6 +920,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/original_toolbar_button_estop_active</item>
         <item name="ed_search_button">@drawable/original_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
@@ -1120,6 +1125,7 @@
         <item name="ed_esu_mc2_knob_off_button">@drawable/neon_toolbar_button_esu_mc2_knob_off
         </item>
         <item name="ed_estop_button">@drawable/neon_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/neon_toolbar_button_estop_active</item>
         <item name="ed_search_button">@drawable/neon_toolbar_button_search</item>
         <item name="ed_timer_button">@drawable/neon_toolbar_button_timer</item>
         <item name="ed_power_green_button">@drawable/neon_toolbar_power_green</item>

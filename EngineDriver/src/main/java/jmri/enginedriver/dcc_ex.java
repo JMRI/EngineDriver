@@ -24,6 +24,7 @@ import static android.view.View.VISIBLE;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,7 +71,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     static final String activityName = "dcc_ex";
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu menu;
+    private Menu overflowMenu;
     private Toolbar toolbar;
     private int result = RESULT_OK;
 
@@ -275,18 +276,28 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 case message_type.DISCONNECT:
                     disconnect();
                     break;
+
                 case message_type.RESPONSE:    //handle messages from WiThrottle server
                     String s = msg.obj.toString();
                     if (s.length() >= 3) {
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                         if ("PXX".equals(com1)) {  // individual track power response
                             refreshDccexTracksView();
                         }
                     }
+                    break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
@@ -682,9 +693,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
         showHideButtons();
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-        }
+        refreshOverflowMenu();
     }
 
     public void refreshDccexCommandsView() {
@@ -709,10 +718,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         }
         showHideButtons();
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-        }
-    }
+        refreshOverflowMenu();
+    } // end refreshDccexTracksView()
 
     void displayCommands(String msg, boolean inbound) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
@@ -926,66 +933,22 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dceexDccexTrackLinearLayout = findViewById(R.id.dccex_DccexTrackLinearLayout);
 
         dccexTrackTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntryValues);
-//        final List<String> dccTrackTypeValuesList = new ArrayList<>(Arrays.asList(dccExTrackTypeEntryValuesArray));
         dccexTrackTypeEntriesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntries); // display version
         if (vn <= 04.002068) {  /// need to change the NONE to OFF in track manager
             dccexTrackTypeEntriesArray[0] = "OFF";
         }
-//        final List<String> dccTrackTypeEntriesList = new ArrayList<>(Arrays.asList(dccExTrackTypeEntriesArray));
+
+        TypedArray dccex_track_type_layout_ids = getResources().obtainTypedArray(R.array.dccex_track_type_layout_ids);
+        TypedArray dccex_track_power_button_ids = getResources().obtainTypedArray(R.array.dccex_track_power_button_ids);
+        TypedArray dccex_track_type_ids = getResources().obtainTypedArray(R.array.dccex_track_type_ids);
+        TypedArray dccex_track_id_ids = getResources().obtainTypedArray(R.array.dccex_track_id_ids);
 
         for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
-            switch (i) {
-                case 1:
-                    dccexTrackTypeLayout[1] = findViewById(R.id.dexc_DccexTrack1layout);
-                    dccexTrackPowerButton[1] = findViewById(R.id.dccex_power_control_button_1);
-                    dccexTrackTypeSpinner[1] = findViewById(R.id.dexc_track_type_1_list);
-                    dccexTrackTypeIdEditText[1] = findViewById(R.id.dexc_track_1_value);
-                    break;
-                case 2:
-                    dccexTrackTypeLayout[2] = findViewById(R.id.dexc_DccexTrack2layout);
-                    dccexTrackPowerButton[2] = findViewById(R.id.dccex_power_control_button_2);
-                    dccexTrackTypeSpinner[2] = findViewById(R.id.dexc_track_type_2_list);
-                    dccexTrackTypeIdEditText[2] = findViewById(R.id.dexc_track_2_value);
-                    break;
-                case 3:
-                    dccexTrackTypeLayout[3] = findViewById(R.id.dexc_DccexTrack3layout);
-                    dccexTrackPowerButton[3] = findViewById(R.id.dccex_power_control_button_3);
-                    dccexTrackTypeSpinner[3] = findViewById(R.id.dexc_track_type_3_list);
-                    dccexTrackTypeIdEditText[3] = findViewById(R.id.dexc_track_3_value);
-                    break;
-                case 4:
-                    dccexTrackTypeLayout[4] = findViewById(R.id.dexc_DccexTrack4layout);
-                    dccexTrackPowerButton[4] = findViewById(R.id.dccex_power_control_button_4);
-                    dccexTrackTypeSpinner[4] = findViewById(R.id.dexc_track_type_4_list);
-                    dccexTrackTypeIdEditText[4] = findViewById(R.id.dexc_track_4_value);
-                    break;
-                case 5:
-                    dccexTrackTypeLayout[5] = findViewById(R.id.dexc_DccexTrack5layout);
-                    dccexTrackPowerButton[5] = findViewById(R.id.dccex_power_control_button_5);
-                    dccexTrackTypeSpinner[5] = findViewById(R.id.dexc_track_type_5_list);
-                    dccexTrackTypeIdEditText[5] = findViewById(R.id.dexc_track_5_value);
-                    break;
-                case 6:
-                    dccexTrackTypeLayout[6] = findViewById(R.id.dexc_DccexTrack6layout);
-                    dccexTrackPowerButton[6] = findViewById(R.id.dccex_power_control_button_6);
-                    dccexTrackTypeSpinner[6] = findViewById(R.id.dexc_track_type_6_list);
-                    dccexTrackTypeIdEditText[6] = findViewById(R.id.dexc_track_6_value);
-                    break;
-                case 7:
-                    dccexTrackTypeLayout[7] = findViewById(R.id.dexc_DccexTrack7layout);
-                    dccexTrackPowerButton[7] = findViewById(R.id.dccex_power_control_button_7);
-                    dccexTrackTypeSpinner[7] = findViewById(R.id.dexc_track_type_7_list);
-                    dccexTrackTypeIdEditText[7] = findViewById(R.id.dexc_track_7_value);
-                    break;
+            dccexTrackTypeLayout[i] = findViewById(dccex_track_type_layout_ids.getResourceId(i,0));
+            dccexTrackPowerButton[i] = findViewById(dccex_track_power_button_ids.getResourceId(i,0));
+            dccexTrackTypeSpinner[i] = findViewById(dccex_track_type_ids.getResourceId(i,0));
+            dccexTrackTypeIdEditText[i] = findViewById(dccex_track_id_ids.getResourceId(i,0));
 
-                case 0:
-                default:
-                    dccexTrackTypeLayout[0] = findViewById(R.id.dexc_DccexTrack0layout);
-                    dccexTrackPowerButton[0] = findViewById(R.id.dccex_power_control_button_0);
-                    dccexTrackTypeSpinner[0] = findViewById(R.id.dexc_track_type_0_list);
-                    dccexTrackTypeIdEditText[0] = findViewById(R.id.dexc_track_0_value);
-                    break;
-            }
             ArrayAdapter<?> track_type_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExTrackTypeEntries, android.R.layout.simple_spinner_item);
             track_type_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             dccexTrackTypeSpinner[i].setAdapter(track_type_spinner_adapter);
@@ -995,6 +958,11 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             SetTrackPowerButtonListener  buttonListener = new SetTrackPowerButtonListener(i);
             dccexTrackPowerButton[i].setOnClickListener(buttonListener);
         }
+
+        dccex_track_type_layout_ids.recycle();
+        dccex_track_power_button_ids.recycle();
+        dccex_track_type_ids.recycle();
+        dccex_track_id_ids.recycle();
 
         writeTracksButton = findViewById(R.id.dexc_DccexWriteTracksButton);
         WriteTracksButtonListener writeTracksButtonListener = new WriteTracksButtonListener();
@@ -1080,14 +1048,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         activateJoinedButton(mainapp.dccexJoined);
 
-        if (menu != null) {
-            mainapp.displayEStop(menu);
-            mainapp.displayFlashlightMenuButton(menu);
-            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(menu);
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-        //update power state
+        refreshOverflowMenu();
+
         mainapp.dccexScreenIsOpen = true;
 
         refreshDccexView();
@@ -1111,33 +1073,24 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu myMenu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.dcc_ex_menu, myMenu);
-        menu = myMenu;
-        mainapp.displayEStop(myMenu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        inflater.inflate(R.menu.dcc_ex_menu, menu);
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
     }
 
-    void endThisActivity() {
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+        adjustToolbarSize(overflowMenu);
+    }
+
+        void endThisActivity() {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         mainapp.dccexScreenIsOpen = false;
@@ -1193,17 +1146,17 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, menu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(menu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }

@@ -84,7 +84,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     static final String activityName = "gamepad_test";
 
     private threaded_application mainapp;  // hold pointer to mainapp
-    private Menu GPTMenu;
+    private Menu overflowMenu;
 
 //    private GestureDetector myGesture;
 
@@ -647,13 +647,9 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         threaded_application.currentActivity = activity_id_type.GAMEPAD_TEST;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        if (GPTMenu != null) {
-            mainapp.displayEStop(GPTMenu);
-            mainapp.displayFlashlightMenuButton(GPTMenu);
-            mainapp.setFlashlightActionViewButton(GPTMenu, findViewById(R.id.flashlight_button));
-            mainapp.displayPowerStateMenuButton(GPTMenu);
-            mainapp.setPowerStateActionViewButton(GPTMenu, findViewById(R.id.powerLayoutButton));
-        }
+        
+        refreshOverflowMenu();
+        
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -690,43 +686,34 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.gamepad_test, menu);
-        GPTMenu = menu;
-        mainapp.displayEStop(menu);
-        mainapp.displayFlashlightMenuButton(menu);
-        mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
+        overflowMenu = menu;
 
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return  super.onCreateOptionsMenu(menu);
+    }
+    
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+        adjustToolbarSize(overflowMenu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle all of the possible menu actions.
-        if (item.getItemId() == R.id.EmerStop) {
+        if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, GPTMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(GPTMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
@@ -752,11 +739,20 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(GPTMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
                     break;
                 }
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.GAMEPAD_TEST)

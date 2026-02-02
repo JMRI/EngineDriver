@@ -95,7 +95,7 @@ public class routes extends AppCompatActivity
     private Spinner locationSpinner;
 
     //    private GestureDetector myGesture;
-    private Menu activityMenu;
+    private Menu overflowMenu;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
@@ -289,9 +289,7 @@ public class routes extends AppCompatActivity
                 routeEntry.setText(getString(R.string.disabled));
         }
 
-        if (activityMenu != null) {
-            mainapp.displayEStop(activityMenu);
-        }
+        refreshOverflowMenu();
 
         return txtLen;
     }
@@ -312,6 +310,7 @@ public class routes extends AppCompatActivity
                 case message_type.ROUTE_LIST_CHANGED:
                     refresh_route_view();
                     break;
+
                 case message_type.RESPONSE: {
                     String response_str = msg.obj.toString();
 
@@ -325,14 +324,25 @@ public class routes extends AppCompatActivity
 //                        }
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
                 }
                 break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
+
                 case message_type.WIT_CON_RETRY:
                     witRetry(msg.obj.toString());
                     break;
+
                 case message_type.TIME_CHANGED:
                     setActivityTitle();
                     break;
@@ -394,7 +404,7 @@ public class routes extends AppCompatActivity
     }
 
     private void getLocoForDccExAutomationHandoff(String routeOrAutomationId) {
-        String automationLoco = "";
+        String automationLoco;
         String whichLoco = mainapp.getConsist(mainapp.whichThrottleLastTouch).getLeadAddr();
         String routeType = "";
         int routeId = Integer.parseInt(routeOrAutomationId);
@@ -689,20 +699,7 @@ public class routes extends AppCompatActivity
         ListView lv = findViewById(R.id.routes_list);
         lv.setSelectionFromTop(mainapp.routes_list_position, 0);
 
-        if (activityMenu != null) {
-            mainapp.displayEStop(activityMenu);
-            mainapp.displayDccExButton(activityMenu);
-            mainapp.displayThrottleButton(activityMenu);
-            mainapp.displayWebButton(activityMenu);
-            mainapp.displayTurnoutsButton(activityMenu);
-
-            mainapp.displayPowerStateMenuButton(activityMenu);
-            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
-
-//            mainapp.displayThrottleMenuButton(activityMenu, "prefSwipeThroughRoutes");
-            mainapp.displayFlashlightMenuButton(activityMenu);
-            mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
-        }
+        refreshOverflowMenu();
         setActivityTitle();
 
         updateRouteEntry(); // enable/disable button
@@ -768,53 +765,34 @@ public class routes extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         threaded_application.extendedLogging(activityName + ": onCreateOptionsMenu");
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.routes_menu, menu);
-        activityMenu = menu;
-        mainapp.actionBarIconCountRoutes = 0;
-        mainapp.displayEStop(menu);
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughRoutes");
-        mainapp.setPowerMenuOption(menu);
-        mainapp.setDCCEXMenuOption(menu);
-        mainapp.displayDccExButton(menu);
-        mainapp.displayThrottleButton(menu);
-        mainapp.displayWebButton(menu);
-        mainapp.displayTurnoutsButton(menu);
-        mainapp.setWithrottleCvProgrammerMenuOption(menu);
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-        mainapp.setWebMenuOption(menu);
-        mainapp.setTurnoutsMenuOption(menu);
+        overflowMenu = menu;
 
-        mainapp.displayFlashlightMenuButton(menu);
-        if (findViewById(R.id.flashlight_button) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-                }
-            }, 100);
-        } else {
-            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        }
-
-//        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountRoutes);
-
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.actionBarIconCountRoutes = 0;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+
+//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughRoutes");
+        mainapp.setDCCEXMenuOption(overflowMenu);
+        mainapp.displayDccExButton(overflowMenu);
+        mainapp.displayThrottleButton(overflowMenu);
+        mainapp.displayWebButton(overflowMenu);
+        mainapp.displayTurnoutsButton(overflowMenu);
+        mainapp.setWithrottleCvProgrammerMenuOption(overflowMenu);
+
+        mainapp.setWebMenuOption(overflowMenu);
+        mainapp.setTurnoutsMenuOption(overflowMenu);
+
+        adjustToolbarSize(overflowMenu);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -922,20 +900,20 @@ public class routes extends AppCompatActivity
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
-        } else if (item.getItemId() == R.id.EmerStop) {
+        } else if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(activityMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, activityMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         } else {

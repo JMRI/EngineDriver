@@ -103,7 +103,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private Spinner locationSpinner;
 
     //    private GestureDetector myGesture;
-    private Menu activityMenu;
+    private Menu overflowMenu;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
@@ -221,7 +221,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         turnoutsFullList.add(hm);
 
                         //if location is new, add to list
-                        if (del.length() > 0 && hasUserName) {
+                        if (!del.isEmpty() && hasUserName) {
                             int delim = username.indexOf(del);
                             if (delim >= 0) {
                                 String loc = username.substring(0, delim);
@@ -342,11 +342,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             trnPrefix.setEnabled(false);
         }
 
-        if (activityMenu != null) {
-            mainapp.displayEStop(activityMenu);
-            mainapp.displayPowerStateMenuButton(activityMenu);
-//            mainapp.displayThrottleMenuButton(activityMenu, "prefSwipeThroughTurnouts");
-        }
+        refreshOverflowMenu();
 
         return txtLen;
     }
@@ -379,9 +375,18 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         }
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
 
                 case message_type.REOPEN_THROTTLE:
@@ -889,18 +894,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        if (activityMenu != null) {
-            mainapp.displayEStop(activityMenu);
-            mainapp.displayDccExButton(activityMenu);
-            mainapp.displayThrottleButton(activityMenu);
-            mainapp.displayRoutesButton(activityMenu);
-            mainapp.displayWebButton(activityMenu);
-            mainapp.displayPowerStateMenuButton(activityMenu);
-            mainapp.setPowerStateActionViewButton(activityMenu, findViewById(R.id.powerLayoutButton));
-//            mainapp.displayThrottleMenuButton(activityMenu, "prefSwipeThroughRoutes");
-            mainapp.displayFlashlightMenuButton(activityMenu);
-            mainapp.setFlashlightActionViewButton(activityMenu, findViewById(R.id.flashlight_button));
-        }
+        refreshOverflowMenu();
         setActivityTitle();
     }
 
@@ -944,52 +938,32 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.turnouts_menu, menu);
-        activityMenu = menu;
-        mainapp.actionBarIconCountTurnouts = 0;
-        mainapp.displayEStop(menu);
-        mainapp.displayPowerStateMenuButton(menu);
-//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughTurnouts");
+        overflowMenu = menu;
 
-        mainapp.setPowerMenuOption(menu);
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-
-        mainapp.setDCCEXMenuOption(menu);
-        mainapp.displayDccExButton(menu);
-        mainapp.displayThrottleButton(menu);
-        mainapp.displayRoutesButton(menu);
-        mainapp.displayWebButton(menu);
-        mainapp.setWithrottleCvProgrammerMenuOption(menu);
-        mainapp.setWebMenuOption(menu);
-        mainapp.setRoutesMenuOption(menu);
-
-        mainapp.displayFlashlightMenuButton(menu);
-        if (findViewById(R.id.flashlight_button) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-                }
-            }, 100);
-        } else {
-            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        }
-
-//        mainapp.displayMenuSeparator(menu, this, mainapp.actionBarIconCountTurnouts);
-
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return  super.onCreateOptionsMenu(menu);
+    }
+
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.actionBarIconCountTurnouts = 0;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+
+//        mainapp.displayThrottleMenuButton(overflowMenu, "prefSwipeThroughTurnouts");
+
+        mainapp.setDCCEXMenuOption(overflowMenu);
+        mainapp.displayDccExButton(overflowMenu);
+        mainapp.displayThrottleButton(overflowMenu);
+        mainapp.displayRoutesButton(overflowMenu);
+        mainapp.displayWebButton(overflowMenu);
+        mainapp.setWithrottleCvProgrammerMenuOption(overflowMenu);
+        mainapp.setWebMenuOption(overflowMenu);
+        mainapp.setRoutesMenuOption(overflowMenu);
+
+        adjustToolbarSize(overflowMenu);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -1088,20 +1062,20 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             startActivity(logviewer);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
-        } else if (item.getItemId() == R.id.EmerStop) {
+        } else if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(activityMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
             mainapp.buttonVibration();
             return true;
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, activityMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
         }

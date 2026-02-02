@@ -459,7 +459,7 @@
                         android:padding="0sp">
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack0layout"
+                            android:id="@+id/dccex_track_type_layout_0"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -480,7 +480,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_0"
+                                android:id="@+id/dccex_track_power_button_0"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -493,7 +493,7 @@
                                 android:src="?attr/ed_power_yellow_button" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_0_list"
+                                android:id="@+id/dccex_track_type_0"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".65"
@@ -505,7 +505,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_0_value"
+                                android:id="@+id/dccex_track_id_0"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -526,7 +526,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack1layout"
+                            android:id="@+id/dccex_track_type_layout_1"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -547,7 +547,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_1"
+                                android:id="@+id/dccex_track_power_button_1"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -560,7 +560,7 @@
                                 android:src="?attr/ed_power_yellow_button" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_1_list"
+                                android:id="@+id/dccex_track_type_1"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".65"
@@ -572,7 +572,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_1_value"
+                                android:id="@+id/dccex_track_id_1"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -593,7 +593,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack2layout"
+                            android:id="@+id/dccex_track_type_layout_2"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -614,7 +614,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_2"
+                                android:id="@+id/dccex_track_power_button_2"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -627,7 +627,7 @@
                                 android:src="?attr/ed_power_yellow_button" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_2_list"
+                                android:id="@+id/dccex_track_type_2"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".65"
@@ -639,7 +639,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_2_value"
+                                android:id="@+id/dccex_track_id_2"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -660,7 +660,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack3layout"
+                            android:id="@+id/dccex_track_type_layout_3"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -681,7 +681,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_3"
+                                android:id="@+id/dccex_track_power_button_3"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -694,7 +694,7 @@
                                 android:src="?attr/ed_power_yellow_button" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_3_list"
+                                android:id="@+id/dccex_track_type_3"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".63"
@@ -706,7 +706,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_3_value"
+                                android:id="@+id/dccex_track_id_3"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -727,7 +727,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack4layout"
+                            android:id="@+id/dccex_track_type_layout_4"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -748,7 +748,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_4"
+                                android:id="@+id/dccex_track_power_button_4"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -761,7 +761,7 @@
                                 android:src="?attr/ed_power_yellow_button" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_4_list"
+                                android:id="@+id/dccex_track_type_4"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".65"
@@ -773,7 +773,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_4_value"
+                                android:id="@+id/dccex_track_id_4"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -794,7 +794,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack5layout"
+                            android:id="@+id/dccex_track_type_layout_5"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -815,7 +815,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_5"
+                                android:id="@+id/dccex_track_power_button_5"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -828,7 +828,7 @@
                                 android:src="?attr/ed_power_yellow_button" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_5_list"
+                                android:id="@+id/dccex_track_type_5"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".65"
@@ -840,7 +840,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_5_value"
+                                android:id="@+id/dccex_track_id_5"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -861,7 +861,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack6layout"
+                            android:id="@+id/dccex_track_type_layout_6"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -882,7 +882,7 @@
                                 tools:ignore="HardcodedText" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_6"
+                                android:id="@+id/dccex_track_power_button_6"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -895,7 +895,7 @@
                                 android:src="?attr/ed_power_yellow_button" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_6_list"
+                                android:id="@+id/dccex_track_type_6"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".65"
@@ -907,7 +907,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_6_value"
+                                android:id="@+id/dccex_track_id_6"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -928,7 +928,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dexc_DccexTrack7layout"
+                            android:id="@+id/dccex_track_type_layout_7"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0sp"
@@ -949,7 +949,7 @@
                                 tools:ignore="HardcodedText,TooManyViews" />
 
                             <Button
-                                android:id="@+id/dccex_power_control_button_7"
+                                android:id="@+id/dccex_track_power_button_7"
                                 android:layout_width="38dp"
                                 android:layout_height="38dp"
                                 android:layout_gravity="center"
@@ -963,7 +963,7 @@
                                 tools:ignore="TooManyViews" />
 
                             <Spinner
-                                android:id="@+id/dexc_track_type_7_list"
+                                android:id="@+id/dccex_track_type_7"
                                 android:layout_width="0sp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight=".65"
@@ -975,7 +975,7 @@
                                 tools:ignore="RtlHardcoded" />
 
                             <EditText
-                                android:id="@+id/dexc_track_7_value"
+                                android:id="@+id/dccex_track_id_7"
                                 style="?attr/edit_label_style"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"

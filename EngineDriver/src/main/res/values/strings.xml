@@ -1565,6 +1565,9 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Swap Turnouts Throw/Close</string>
     <string name="prefDccexSwapThrowCloseSummary">Swap the throw/close labels for all DCC-EX turnouts. Reconnection required</string>
 
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Use Emergency Stop Pause/Resume</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Use the DCC-EX Emergency Stop Pause/Resume feature instead of a simple Emergency Stop</string>
+
     <string name="prefDccexTitle">Use native DCC-EX commands</string>
     <string name="prefDccexSummary">Use native DCC-EX &lt;&gt; commands instead of WiThrottle for all connections. For \'Auto\', name must contain \"DCCEX\" or \"DCC-EX\" or use port 2560\nNote: Will not take effect until you restart Engine Driver and connect to a server.</string>
 

@@ -49,7 +49,7 @@
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 
-    <item android:id="@+id/EmerStop"
+    <item android:id="@+id/emergency_stop_button"
         app:actionLayout="@layout/toolbar_button_estop"
         android:title="@string/EStop"
         android:visible="false"

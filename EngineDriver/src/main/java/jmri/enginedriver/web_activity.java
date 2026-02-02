@@ -71,7 +71,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     private String noUrl = "file:///android_asset/blank_page.html";
     private static boolean clearHistory = false;        // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;            // first url loaded that isn't noUrl
-    private Menu WMenu;
+    private Menu overflowMenu;
     private static boolean savedWebMenuSelected;
     private int urlRestoreStep = 0;
     private static Bundle webBundle = new Bundle();
@@ -244,12 +244,21 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                         String com1 = s.substring(0, 3);
                         //update power icon
                         if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(WMenu, findViewById(R.id.powerLayoutButton));
+                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                         }
                     }
 
                     break;
                 }
+
+                case message_type.ESTOP_PAUSED:
+                case message_type.ESTOP_RESUMED:
+                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.WEB)
@@ -486,9 +495,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
 
         mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED);    // request time update
-        if (WMenu != null) {
-            mainapp.displayEStop(WMenu);
-        }
+
         resumeWebView();
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
@@ -507,6 +514,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             ov.removeOnGestureListener(this);
             ov.setEventsInterceptionEnabled(false);
         }
+        
+        refreshOverflowMenu();
+        
     } // end onResume()
 
     @Override
@@ -605,52 +615,33 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.web_menu, menu);
-        WMenu = menu;
-        mainapp.displayEStop(menu);
+        overflowMenu = menu;
 
-        mainapp.displayPowerStateMenuButton(menu);
-        mainapp.displayThrottleButton(menu);
-        mainapp.displayTurnoutsButton(menu);
-        mainapp.displayRoutesButton(menu);
-//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughWeb");
-        mainapp.setPowerMenuOption(menu);
-        if (findViewById(R.id.powerLayoutButton) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-                }
-            }, 100);
-        } else {
-            mainapp.setPowerStateActionViewButton(menu, findViewById(R.id.powerLayoutButton));
-        }
-
-        mainapp.displayFlashlightMenuButton(menu);
-        if (findViewById(R.id.flashlight_button) == null) {
-            final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-                }
-            }, 100);
-        } else {
-            mainapp.setFlashlightActionViewButton(menu, findViewById(R.id.flashlight_button));
-        }
-
-        mainapp.setRoutesMenuOption(menu);
-        mainapp.setTurnoutsMenuOption(menu);
-        mainapp.displayThrottleButton(menu);
-        mainapp.displayTurnoutsButton(menu);
-        mainapp.displayRoutesButton(menu);
-        mainapp.setPowerMenuOption(menu);
-
-        adjustToolbarSize(menu);
+        refreshOverflowMenu();
 
         return  super.onCreateOptionsMenu(menu);
     }
 
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+
+        mainapp.displayThrottleButton(overflowMenu);
+        mainapp.displayTurnoutsButton(overflowMenu);
+        mainapp.displayRoutesButton(overflowMenu);
+//        mainapp.displayThrottleMenuButton(menu, "prefSwipeThroughWeb");
+
+        mainapp.setRoutesMenuOption(overflowMenu);
+        mainapp.setTurnoutsMenuOption(overflowMenu);
+        mainapp.displayThrottleButton(overflowMenu);
+        mainapp.displayTurnoutsButton(overflowMenu);
+        mainapp.displayRoutesButton(overflowMenu);
+        mainapp.setPowerMenuOption(overflowMenu);
+
+        adjustToolbarSize(overflowMenu);
+    }
+    
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -693,7 +684,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
-        } else if (item.getItemId() == R.id.EmerStop) {
+        } else if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
             return true;
@@ -709,13 +700,13 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {
-            mainapp.toggleFlashlightActionView(this, WMenu, findViewById(R.id.flashlight_button));
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
             mainapp.buttonVibration();
             return true;
 
         } else if (item.getItemId() == R.id.powerLayoutButton) {
             if (!mainapp.isPowerControlAllowed()) {
-                mainapp.powerControlNotAllowedDialog(WMenu);
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
             } else {
                 mainapp.powerStateMenuButton();
             }
