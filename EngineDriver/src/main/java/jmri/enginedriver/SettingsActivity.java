@@ -1866,6 +1866,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 DialogFragment dialogFragment = AutoServerIpConnectDialogFragmentCompat.newInstance(preference.getKey());
                 dialogFragment.setTargetFragment(this, 0);
                 dialogFragment.show(getFragmentManager(), null); // Tag can be null or a custom string
+            } else if (preference.getKey().equals("prefNumThrottles")) {
+                parentActivity.showThrottleNumberPreferenceDialog(getPreferenceScreen());
             } else {
                 // Let the default implementation handle all other preferences
                 super.onDisplayPreferenceDialog(preference);
