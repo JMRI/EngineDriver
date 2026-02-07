@@ -20,7 +20,7 @@ package jmri.enginedriver.type;
 public interface message_type {
     //Constant values for Message types:  from->to parms (action)
     int NONE = -1;
-    int ERROR = 0;
+//    int ERROR = 0;              // not used
     int CONNECT = 1;            // ca(select)->ta ipaddr, port (sends CONNECTED if no error)
     int DISCONNECT = 2;         // sl(exit)->ta  -- (send Q, turns off heartbeat, ends read timer)
     int REQ_LOCO_ADDR = 3;      // sl(acquire) -> ta engineaddr, size (sends Tengineaddr to WiT)

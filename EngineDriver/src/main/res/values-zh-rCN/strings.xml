@@ -1165,9 +1165,9 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefDccexPreferencesSummary">使用EX-CommandStation的选项</string>
 
     <string name="useProtocolDCCEX">要使用什么协议？</string>
-    <string name="useProtocolDCCEXplusAutoHint">使用的协议？\n<small><small>（"自动"模式会查找"DCCEX"、"DCC-EX"或端口2560）</small></small></string>
+    <string name="useProtocolDccexPlusAutoHint">使用的协议？\n<small><small>（"自动"模式会查找"DCCEX"、"DCC-EX"或端口2560）</small></small></string>
 
-    <string name="DccexConnectionOptionTitle">显示协议选项</string>
+    <string name="dccexConnectionOptionTitle">显示协议选项</string>
     <string name="prefActionBarShowDccExButtonSummary">在操作栏显示访问DCC-EX屏幕的按钮。\n（仅适用于原生DCC-EX连接。）</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX按钮？</string>
 
@@ -1193,24 +1193,24 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="idngo_label">请求 Loco ID</string>
     <string name="idngo_button">请求机车ID</string>
 
-    <string name="DCCEXrouteSet">设置</string>
-    <string name="DCCEXrouteHandoff">切换</string>
+    <string name="dccexRouteSet">设置</string>
+    <string name="dccexRouteHandoff">切换</string>
 
-    <string name="DCCEXturnoutClosed">闭合</string>
-    <string name="DCCEXturnoutThrown">转辙</string>
-    <string name="DCCEXturnoutUnknown">未知</string>
-    <string name="DCCEXturnoutInconsistent">不一致</string>
+    <string name="dccexTurnoutClosed">闭合</string>
+    <string name="dccexTurnoutThrown">转辙</string>
+    <string name="dccexTurnoutUnknown">未知</string>
+    <string name="dccexTurnoutInconsistent">不一致</string>
 
-    <string name="DCCEXactionTypeLabel">操作</string>
-    <string name="DccexWriteAddressLabel">DCC Address</string>
-    <string name="DccexWriteCvValueLabel">值</string>
-    <string name="DccexWriteAddressButtonLabel">写入</string>
-    <string name="DccexReadAddressButtonLabel">读取</string>
-    <string name="DccexSendCommandButtonLabel">发送</string>
-    <string name="DccexPreviousCommandButtonLabel">上一个</string>
-    <string name="DccexNextCommandButtonLabel">下一个</string>
-    <string name="DccexSendCommandLabel">DCC-EX CMD <small>\\n(excluir \\\'&lt;\\\' y \\\'&gt;\\\')</small></string>
-    <string name="DccexClearCommands">清除</string>
+    <string name="dccexActionTypeLabel">操作</string>
+    <string name="dccexWriteAddressLabel">DCC Address</string>
+    <string name="dccexWriteCvValueLabel">值</string>
+    <string name="dccexWriteAddressButtonLabel">写入</string>
+    <string name="dccexReadAddressButtonLabel">读取</string>
+    <string name="dccexSendCommandButtonLabel">发送</string>
+    <string name="dccexPreviousCommandButtonLabel">上一个</string>
+    <string name="dccexNextCommandButtonLabel">下一个</string>
+    <string name="dccexSendCommandLabel">DCC-EX CMD <small>\\n(excluir \\\'&lt;\\\' y \\\'&gt;\\\')</small></string>
+    <string name="dccexClearCommands">清除</string>
 
     <string name="advancedConsistToolRemoveButtonLabel">移除</string>
     <string name="advancedConsistToolButtonLabel">高级组成</string>
@@ -1219,24 +1219,24 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="witPomWarning">注意：- 某些DCC系统可能不支持此功能。- 禁止更改机车地址 - CV 1、17、18以及CV 29的第5位。请谨慎使用。</string>
     <string name="witPomMaxValueWarning">值\'%1$s\'超过最大支持值（\'%2$s\'）</string>
 
-    <string name="DccexCommonCvsLabel">NMRA CV参数</string>
-    <string name="DccexCommonCommandsLabel" >常用命令</string>
+    <string name="dccexCommonCvsLabel">NMRA CV参数</string>
+    <string name="dccexCommonCommandsLabel" >常用命令</string>
 
-    <string name="DCCEXsetTrackButtonLabel">设置</string>
-    <string name="DCCEXJoinTrackButtonLabel">加入</string>
+    <string name="dccexSetTrackButtonLabel">设置</string>
+    <string name="dccexJoinTrackButtonLabel">加入</string>
 
-    <string name="DccexSucceeded">操作成功</string>
-    <string name="DccexFailed">操作失败</string>
+    <string name="dccexSucceeded">操作成功</string>
+    <string name="dccexFailed">操作失败</string>
 
-    <string name="DCCEXbuttonCvProgrammerProgTrack">CV编程轨</string>
-    <string name="DCCEXbuttonCvProgrammerPoM">在主轨执行CV编程</string>
-    <string name="DCCEXbuttonTrackManager">轨道管理器</string>
-    <string name="DCCEXbuttonDefaultFunctions">默认功能</string>
-    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - 编程轨道（服务模式）</string>
-    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - 主轨道编程（操作模式）</string>
-    <string name="DCCEXheadingTrackManager">DCC-EX - 轨道/区域管理器</string>
+    <string name="dccexButtonCvProgrammerProgTrack">CV编程轨</string>
+    <string name="dccexButtonCvProgrammerPoM">在主轨执行CV编程</string>
+    <string name="dccexButtonTrackManager">轨道管理器</string>
+    <string name="dccexButtonDefaultFunctions">默认功能</string>
+    <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX - 编程轨道（服务模式）</string>
+    <string name="dccexHeadingCvProgrammerPoM">DCC-EX - 主轨道编程（操作模式）</string>
+    <string name="dccexHeadingTrackManager">DCC-EX - 轨道/区域管理器</string>
 
-    <string name="DCCEXrequestLocoIdFailed">请求机车ID失败</string>
+    <string name="dccexRequestLocoIdFailed">请求机车ID失败</string>
 
     <string name="cv29SpeedSteps14">速度步长：14</string>
     <string name="cv29SpeedSteps28">速度步长：28/128</string>
@@ -1274,7 +1274,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefAutoServerNamedConnectTitle">自动连接到指定服务器</string>
     <string name="dccexInCv19Consist">机车属于 CV19 列车编组：%s</string>
     <string name="dccexNotInCv19Consist">机车不在 CV19 列车编组中。</string>
-    <string name="DccexCvBitCalculatorButtonLabel">比特</string>
+    <string name="dccexCvBitCalculatorButtonLabel">比特</string>
     <string name="cvBitCalculatorTitle">CV值（十进制）</string>
     <string name="cvBitCalculatorCvValueLabel">CV值（十进制）</string>
     <string name="cvBitCalculatorCvBitsLabel">比特：</string>

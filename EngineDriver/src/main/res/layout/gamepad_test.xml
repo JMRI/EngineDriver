@@ -325,7 +325,7 @@
                             tools:ignore="RtlHardcoded" />
 
                         <TextView
-                            android:id="@+id/gamepad_test_keyfunction_label"
+                            android:id="@+id/gamepad_test_key_function_label"
                             style="?attr/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -334,7 +334,7 @@
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/gamepad_test_keyfunction"
+                            android:id="@+id/gamepad_test_key_function"
                             style="@style/floating_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

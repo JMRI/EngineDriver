@@ -138,7 +138,7 @@
                     android:layout_weight=".1"
                     android:gravity="end"
                     android:padding="4sp"
-                    android:text="@string/DccexWriteCvLabel"
+                    android:text="@string/dccexWriteCvLabel"
                     android:textAlignment="viewEnd" />
 
                 <EditText
@@ -170,7 +170,7 @@
                     android:layout_weight=".2"
                     android:gravity="end"
                     android:padding="4sp"
-                    android:text="@string/DccexWriteCvValueLabel"
+                    android:text="@string/dccexWriteCvValueLabel"
                     android:textAlignment="viewEnd" />
 
                 <EditText
@@ -202,7 +202,7 @@
                     android:layout_weight=".25"
                     android:padding="6sp"
                     android:maxWidth="30sp"
-                    android:text="@string/DccexWriteAddressButtonLabel"
+                    android:text="@string/dccexWriteAddressButtonLabel"
                     android:drawableStart="?attr/ed_write_glyph"
                     tools:ignore="RtlSymmetry,VisualLintButtonSize" />
 
@@ -228,7 +228,7 @@
                     android:layout_weight=".2"
                     android:gravity="end"
                     android:padding="2sp"
-                    android:text="@string/DccexCommonCvsLabel"
+                    android:text="@string/dccexCommonCvsLabel"
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp" />
@@ -359,7 +359,7 @@
                 style="?attr/ed_normal_button_condensed_style"
                 android:layout_width="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="@string/DccexClearCommands"
+                android:text="@string/dccexClearCommands"
                 android:drawableStart="?attr/ed_clear_list_glyph"
                 android:padding="0dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />

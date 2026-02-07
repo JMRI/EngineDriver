@@ -102,6 +102,7 @@ public class comm_thread extends Thread {
     public comm_thread(threaded_application myApp, SharedPreferences myPrefs) {
         super("comm_thread");
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         mainapp = myApp;
         prefs = myPrefs;
 
@@ -338,9 +339,9 @@ public class comm_thread extends Thread {
 //            dlMetadataTask.stop();
 
         // make sure flashlight is switched off at shutdown
-        if (mainapp.flashlight != null) {
-            mainapp.flashlight.setFlashlightOff();
-            mainapp.flashlight.teardown();
+        if (threaded_application.flashlight != null) {
+            threaded_application.flashlight.setFlashlightOff();
+            threaded_application.flashlight.teardown();
         }
         mainapp.flashState = false;
         Log.d(threaded_application.applicationName, activityName + ": Shutdown(): end");
@@ -392,7 +393,7 @@ public class comm_thread extends Thread {
         if (as.length > 1) {
             address = as[0];
             rosterName = "E" + as[1];
-        } else { //if no rostername, just use address for both
+        } else { //if no rosterName, just use address for both
             address = addr;
             rosterName = addr;
         }
@@ -1267,7 +1268,7 @@ public class comm_thread extends Thread {
                             String lead = mainapp.consists[whichThrottle].getLeadAddr();
                             if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist
                                 processRosterFunctionString("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
-                                mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
+                                mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionLabels(true);
                             }
                         }
                         // save them in recents regardless
@@ -1577,7 +1578,7 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             switch (responseStr.charAt(2)) {
                                 case 'T': // turnouts
-                                    processDccexTurnouts(args);
+                                    processdccexTurnouts(args);
                                     break;
                                 case 'A': // automations/routes  <jA [id0 id1 id2 ..]> or <jA id X|type |"desc">
                                     processDccexRoutes(args);
@@ -1964,6 +1965,7 @@ public class comm_thread extends Thread {
                     }
                 }
 
+                //noinspection AssignmentToForLoopParameter
                 throttleIndex = whichThrottle; // skip ahead
             }
         }
@@ -2018,7 +2020,7 @@ public class comm_thread extends Thread {
                 }
 
             }  else {// else {} did not succeed
-                mainapp.safeToast(R.string.DCCEXrequestLocoIdFailed, LENGTH_SHORT);
+                mainapp.safeToast(R.string.dccexRequestLocoIdFailed, LENGTH_SHORT);
             }
 
         } else {
@@ -2145,6 +2147,7 @@ public class comm_thread extends Thread {
                                     mainapp.addLocoToRecents(con.getLoco(addr_str), threaded_application.parseFunctionLabels(responseStrBuilder.toString()));  //DCC-EX
                                 }
 
+                                //noinspection AssignmentToForLoopParameter
                                 throttleIndex = whichThrottle; // skip ahead
                             }
                         }
@@ -2211,7 +2214,7 @@ public class comm_thread extends Thread {
         }
     }
 
-    private static void processDccexTurnouts(String [] args) {
+    private static void processdccexTurnouts(String [] args) {
 
         if (args!=null)  {
             if ( (args.length == 1)  // no Turnouts <jT>
@@ -2256,17 +2259,17 @@ public class comm_thread extends Thread {
                         closeCode ="4";
                     }
                     processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutClosed) + "}|{" + closeCode + "]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutThrown) + "}|{" + throwCode + "]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutUnknown) + "}|{1]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXturnoutInconsistent) + "}|{8");
+                            + mainapp.getResources().getString(R.string.dccexTurnoutClosed) + "}|{" + closeCode + "]\\["
+                            + mainapp.getResources().getString(R.string.dccexTurnoutThrown) + "}|{" + throwCode + "]\\["
+                            + mainapp.getResources().getString(R.string.dccexTurnoutUnknown) + "}|{1]\\["
+                            + mainapp.getResources().getString(R.string.dccexTurnoutInconsistent) + "}|{8");
                     processTurnoutList(mainapp.dccexTurnoutString);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_REFRESH_THROTTLE, "");
                     mainapp.dccexTurnoutString = "";
                     mainapp.DCCEXlistsRequested++;
 
                     int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
-                    Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts complete. Count: " + count);
+                    Log.d(threaded_application.applicationName, activityName + ": processdccexTurnouts(): Turnouts complete. Count: " + count);
                     mainapp.dccexTurnoutsBeingProcessed = false;
 
                     mainapp.dccexTurnoutsFullyReceived = true;
@@ -2277,7 +2280,7 @@ public class comm_thread extends Thread {
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
 
-                Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts list received.");
+                Log.d(threaded_application.applicationName, activityName + ": processdccexTurnouts(): Turnouts list received.");
                 if (!mainapp.dccexTurnoutsBeingProcessed) {
                     mainapp.dccexTurnoutsBeingProcessed = true;
                     if (mainapp.dccexTurnoutString.isEmpty()) {
@@ -2293,12 +2296,12 @@ public class comm_thread extends Thread {
                         }
 
                         int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
-                        Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts list received. Count: " + count);
+                        Log.d(threaded_application.applicationName, activityName + ": processdccexTurnouts(): Turnouts list received. Count: " + count);
                     }
                 }
             }
         }
-    } // end processDccexTurnouts()
+    } // end processdccexTurnouts()
 
     private static String getTurnoutsString(boolean noTurnouts) {
         StringBuilder turnoutsStringBuilder = new StringBuilder();
@@ -2349,8 +2352,8 @@ public class comm_thread extends Thread {
                     mainapp.dccexRouteString = getRoutesString(noRoutes);
 
                     processRouteTitles("PRT]\\[Routes}|{Route]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXrouteSet)+"}|{2]\\["
-                            + mainapp.getResources().getString(R.string.DCCEXrouteHandoff) + "}|{4");
+                            + mainapp.getResources().getString(R.string.dccexRouteSet)+"}|{2]\\["
+                            + mainapp.getResources().getString(R.string.dccexRouteHandoff) + "}|{4");
                     processRouteList(mainapp.dccexRouteString);
                     mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQUEST_REFRESH_THROTTLE, "");
                     mainapp.dccexRouteString = "";
@@ -2367,8 +2370,8 @@ public class comm_thread extends Thread {
                                 mainapp.routeDccexLabels[i] = mainapp.dccexRouteLabels[i];
                             } else {
                                 mainapp.routeDccexLabels[i] =  mainapp.dccexRouteTypes[i].equals("R")
-                                        ? mainapp.getResources().getString(R.string.DCCEXrouteSet)
-                                        : mainapp.getResources().getString(R.string.DCCEXrouteHandoff);
+                                        ? mainapp.getResources().getString(R.string.dccexRouteSet)
+                                        : mainapp.getResources().getString(R.string.dccexRouteHandoff);
                             }
                         }
                     }
@@ -2642,8 +2645,8 @@ public class comm_thread extends Thread {
                     mainapp.routeDccexStates[i - 1] = -1;
                 } else {
                     mainapp.routeDccexLabels[i - 1] = tv[2].equals("4")
-                            ? mainapp.getResources().getString(R.string.DCCEXrouteHandoff)    // automation
-                            : mainapp.getResources().getString(R.string.DCCEXrouteSet); // assume "2" = Route
+                            ? mainapp.getResources().getString(R.string.dccexRouteHandoff)    // automation
+                            : mainapp.getResources().getString(R.string.dccexRouteSet); // assume "2" = Route
                     mainapp.routeDccexStates[i - 1] = 0;
                 }
             }  //end if i>0

@@ -111,7 +111,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RelativeOverlap,RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <Button
@@ -405,7 +405,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RelativeOverlap,RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <Button
@@ -695,7 +695,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RelativeOverlap,RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <Button

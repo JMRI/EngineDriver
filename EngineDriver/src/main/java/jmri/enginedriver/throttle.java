@@ -5564,6 +5564,7 @@ public class throttle extends AppCompatActivity implements
             }
         }, 6000);
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.THROTTLE;
         if (mainapp.isForcingFinish()) { // expedite
             mainapp.appIsFinishing = true;

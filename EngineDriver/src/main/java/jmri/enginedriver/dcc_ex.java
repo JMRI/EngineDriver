@@ -200,9 +200,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                     String response_str = msg.obj.toString();
                     if ((!response_str.isEmpty()) && !(response_str.charAt(0) == '-')) {  //refresh address
                         dccexAddress = response_str;
-                        dccexInfoStr = getApplicationContext().getResources().getString(R.string.DccexSucceeded);
+                        dccexInfoStr = getApplicationContext().getResources().getString(R.string.dccexSucceeded);
                     } else {
-                        dccexInfoStr = getApplicationContext().getResources().getString(R.string.DccexFailed);
+                        dccexInfoStr = getApplicationContext().getResources().getString(R.string.dccexFailed);
                     }
                     refreshDccexView();
                     break;
@@ -223,11 +223,11 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                         String[] cvArgs = cvResponseStr.split("(\\|)");
                         if ((cvArgs[0].equals(dccexCv)) && !(cvArgs[1].charAt(0) == '-')) { // response matches what we got back
                             dccexCvValue = cvArgs[1];
-                            dccexInfoStr = getApplicationContext().getResources().getString(R.string.DccexSucceeded);
+                            dccexInfoStr = getApplicationContext().getResources().getString(R.string.dccexSucceeded);
                             checkCv29(dccexCv, dccexCvValue);
                         } else {
                             resetTextField(WHICH_CV_VALUE);
-                            dccexInfoStr = getApplicationContext().getResources().getString(R.string.DccexFailed);
+                            dccexInfoStr = getApplicationContext().getResources().getString(R.string.dccexFailed);
                         }
                         refreshDccexView();
                     }
@@ -246,11 +246,11 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                     break;
 
                 case message_type.WRITE_DECODER_SUCCESS:
-                    dccexInfoStr = getApplicationContext().getResources().getString(R.string.DccexSucceeded);
+                    dccexInfoStr = getApplicationContext().getResources().getString(R.string.dccexSucceeded);
                     refreshDccexView();
                     break;
                 case message_type.WRITE_DECODER_FAIL:
-                    dccexInfoStr = getApplicationContext().getResources().getString(R.string.DccexFailed);
+                    dccexInfoStr = getApplicationContext().getResources().getString(R.string.dccexFailed);
                     refreshDccexView();
                     break;
                 case message_type.RECEIVED_TRACKS:
@@ -677,15 +677,15 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             readAddressButton.setVisibility(VISIBLE);
             writeAddressButton.setVisibility(VISIBLE);
             readCvButton.setVisibility(VISIBLE);
-            dccexHeadingLabel.setText(R.string.DCCEXheadingCvProgrammerProgTrack);
+            dccexHeadingLabel.setText(R.string.dccexHeadingCvProgrammerProgTrack);
         } else {
             readAddressButton.setVisibility(GONE);
             writeAddressButton.setVisibility(GONE);
             readCvButton.setVisibility(GONE);
             if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
-                dccexHeadingLabel.setText(R.string.DCCEXheadingCvProgrammerPoM);
+                dccexHeadingLabel.setText(R.string.dccexHeadingCvProgrammerPoM);
             } else {
-                dccexHeadingLabel.setText(R.string.DCCEXheadingTrackManager);
+                dccexHeadingLabel.setText(R.string.dccexHeadingTrackManager);
             }
         }
 
@@ -1040,6 +1040,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.DCC_EX;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();

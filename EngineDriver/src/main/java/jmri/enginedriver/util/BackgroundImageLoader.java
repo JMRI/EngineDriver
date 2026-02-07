@@ -2,7 +2,6 @@ package jmri.enginedriver.util;
 
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.util.Log;
 import android.widget.ImageView;
 

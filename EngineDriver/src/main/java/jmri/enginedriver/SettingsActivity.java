@@ -189,7 +189,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         FragmentManager fragmentManager = getSupportFragmentManager();
                 if (savedInstanceState == null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    Fragment settingsFragment = new SettingsFragment().newInstance("Advanced Setting");
+            SettingsFragment settingsFragment = SettingsFragment.newInstance("Advanced Setting");
             fragmentTransaction.add(R.id.settings_preferences_frame, settingsFragment);
             fragmentTransaction.commit();
         }
@@ -271,6 +271,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.SETTINGS;
 
 //        try {
@@ -717,6 +718,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         }
     }
 
+    @SuppressWarnings("ChainOfInstanceofChecks")
     public void updatePreference(Preference preference) {
         if (preference == null) return;
 
@@ -855,7 +857,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //
 //    }
 
-    protected void loadImagefromGallery() {
+    protected void loadImageFromGallery() {
         try {
             // Create intent to Open Image applications like Gallery, Google Photos
             Intent intent = new Intent(Intent.ACTION_PICK,
@@ -863,7 +865,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             galleryLauncher.launch(intent);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": loadImagefromGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            Log.d(threaded_application.applicationName, activityName + ": loadImageFromGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
@@ -1263,10 +1265,9 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         boolean supportsWebView = false;
 
         int index = getThrottleScreenTypeArrayIndex(sharedPreferences);
+        if (index < 0) return false; //bail if no matches
+
         int[] supportWebView = this.getResources().getIntArray(R.array.prefThrottleScreenTypeSupportsWebView);
-
-        if (index < 0) return supportsWebView; //bail if no matches
-
         if (supportWebView[index] == 0) {
             supportsWebView = true;
         }
@@ -1643,6 +1644,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             if (parentActivity != null)
                 parentActivity.mainapp.removeNotification(parentActivity.getIntent());
 
+            //noinspection AssignmentToStaticFieldFromInstanceMethod
             threaded_application.currentActivity = activity_id_type.SETTINGS;
 
             getPreferenceScreen().getSharedPreferences()
@@ -2324,6 +2326,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             super.onResume();
             threaded_application.activityResumed(activityName);
 
+            //noinspection AssignmentToStaticFieldFromInstanceMethod
             threaded_application.currentActivity = activity_id_type.SETTINGS;
 
             getPreferenceScreen().getSharedPreferences()
@@ -2365,7 +2368,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         @Override
         public boolean onPreferenceTreeClick(Preference preference) {
             if (preference.getKey().equals("prefBackgroundImageFileNameImagePicker")) {
-                parentActivity.loadImagefromGallery();
+                parentActivity.loadImageFromGallery();
                 return true;
             } else {
                 super.onPreferenceTreeClick(preference);

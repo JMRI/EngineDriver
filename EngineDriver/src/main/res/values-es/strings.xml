@@ -1097,7 +1097,7 @@
     <string name="prefDccexEmergencyStopPauseResumeSummary">Utilice la función de pausa/reanudación de parada de emergencia del DCC-EX en lugar de una simple parada de emergencia.</string>
     <string name="prefDccexTitle">Use comandos nativos de DCC-EX</string>
     <string name="useProtocolDCCEX">¿Protocolo a utilizar?</string>
-    <string name="useProtocolDCCEXplusAutoHint">¿Protocolo a utilizar?\n<small><small>(\'Auto\' busca \"DCCEX\", \"DCC-EX\" o el puerto 2560)</small></small></string>
+    <string name="useProtocolDccexPlusAutoHint">¿Protocolo a utilizar?\n<small><small>(\'Auto\' busca \"DCCEX\", \"DCC-EX\" o el puerto 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Usando el protocolo DCC-EX. Desactivar \"Use los comandos DCC-EX nativos\" Preferencia para usar el protocolo Witrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostrar opción para cambiar entre los protocolos Withrottle y DCC-EX en la pantalla de conexión.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Solicitudes de artículos secuenciadas</string>
@@ -1105,38 +1105,38 @@
     <string name="prefDccexConnectionOptionTitle">Opción de protocolo Mostrar</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostrar el botón en la barra de acción para acceder a la pantalla DCC-EX. (Solo para conexiones nativas de DCC-EX).</string>
     <string name="prefActionBarShowDccExButtonTitle">¿Botón DCC-EX?</string>
-    <string name="DCCEXactionTypeLabel">Acción</string>
-    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(excluir \'&lt;\' y \'&gt;\')</small></small></string>
-    <string name="DccexClearCommands">Claro</string>
+    <string name="dccexActionTypeLabel">Acción</string>
+    <string name="dccexSendCommandLabel">DCC-EX Cmd\n<small><small>(excluir \'&lt;\' y \'&gt;\')</small></small></string>
+    <string name="dccexClearCommands">Claro</string>
 
-    <string name="DccexCvBitCalculatorButtonLabel">Pedazos</string>
+    <string name="dccexCvBitCalculatorButtonLabel">Pedazos</string>
     <string name="cvBitCalculatorTitle">Calculadora de bits CV</string>
     <string name="cvBitCalculatorCvValueLabel">Valor CV (decimal)</string>
     <string name="cvBitCalculatorCvBitsLabel">Pedazos:</string>
 
-    <string name="DccexConnectionOptionTitle">Protocolo de conexión</string>
-    <string name="DccexFailed" tools:ignore="Typos">Accion: Fallida</string>
-    <string name="DccexNextCommandButtonLabel">Próximo</string>
-    <string name="DccexPreviousCommandButtonLabel">Previo</string>
-    <string name="DccexReadAddressButtonLabel">Leer</string>
-    <string name="DCCEXrouteHandoff">Manos libres</string>
-    <string name="DCCEXrouteSet">Colocar</string>
-    <string name="DccexSendCommandButtonLabel">Enviar</string>
+    <string name="dccexConnectionOptionTitle">Protocolo de conexión</string>
+    <string name="dccexFailed" tools:ignore="Typos">Accion: Fallida</string>
+    <string name="dccexNextCommandButtonLabel">Próximo</string>
+    <string name="dccexPreviousCommandButtonLabel">Previo</string>
+    <string name="dccexReadAddressButtonLabel">Leer</string>
+    <string name="dccexRouteHandoff">Manos libres</string>
+    <string name="dccexRouteSet">Colocar</string>
+    <string name="dccexSendCommandButtonLabel">Enviar</string>
     <string name="witActionTypeLabel">Acción</string>
     <string name="witWriteAddressLabel">Dirección DCC</string>
     <string name="witPomWarning">Notas: - Esto no funcionará en algunos sistemas DCC. - Se evita el cambio de dirección de locomotora - CV 1, 17 y 2. 18 y bit 5 de CV 29.\n\nUtilizar con precaución.</string>
     <string name="witPomMaxValueWarning">El valor \'%1$s\' excede el máximo admitido (\'%2$s\')</string>
-    <string name="DccexCommonCvsLabel">NMRA CVs</string>
-    <string name="DccexCommonCommandsLabel">CMD comunes</string>
-    <string name="DCCEXsetTrackButtonLabel">Colocar</string>
-    <string name="DccexSucceeded">Acción tuvo éxito</string>
-    <string name="DCCEXturnoutClosed">Cerrado</string>
-    <string name="DCCEXturnoutInconsistent">Inconsistente</string>
-    <string name="DCCEXturnoutThrown">Lanzado</string>
-    <string name="DCCEXturnoutUnknown">Desconocido</string>
-    <string name="DccexWriteAddressButtonLabel">Escribe</string>
-    <string name="DccexWriteAddressLabel">Dirección DCC</string>
-    <string name="DccexWriteCvValueLabel">Valor</string>
+    <string name="dccexCommonCvsLabel">NMRA CVs</string>
+    <string name="dccexCommonCommandsLabel">CMD comunes</string>
+    <string name="dccexSetTrackButtonLabel">Colocar</string>
+    <string name="dccexSucceeded">Acción tuvo éxito</string>
+    <string name="dccexTurnoutClosed">Cerrado</string>
+    <string name="dccexTurnoutInconsistent">Inconsistente</string>
+    <string name="dccexTurnoutThrown">Lanzado</string>
+    <string name="dccexTurnoutUnknown">Desconocido</string>
+    <string name="dccexWriteAddressButtonLabel">Escribe</string>
+    <string name="dccexWriteAddressLabel">Dirección DCC</string>
+    <string name="dccexWriteCvValueLabel">Valor</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorar acciones de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccione esto si tiene problemas con el DPAD que produce códigos clave y eventos de joystick</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necesita permisos Read_media_Images para cargar imágenes de fondo.\n\nEngine Driver funcionará sin él.</string>
@@ -1152,12 +1152,12 @@
     <string name="cv29AnalogueConversionOn">Conversión analógica: ENCENDIDO</string>
     <string name="cv29DirectionForward">Dirección normal: adelante</string>
     <string name="cv29DirectionReverse">Dirección normal: inversa</string>
-    <string name="DCCEXbuttonTrackManager">Gerente de seguimiento</string>
-    <string name="DCCEXbuttonDefaultFunctions">Fns predeterminado</string>
-    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Pista de programación (modo de servicio)</string>
-    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programación en Principal (Modo de Operación)</string>
-    <string name="DCCEXheadingTrackManager">DCC-EX - Gerente de pista/distrito</string>
-    <string name="DCCEXrequestLocoIdFailed">Solicitar ID de locomotora fallida</string>
+    <string name="dccexButtonTrackManager">Gerente de seguimiento</string>
+    <string name="dccexButtonDefaultFunctions">Fns predeterminado</string>
+    <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX - Pista de programación (modo de servicio)</string>
+    <string name="dccexHeadingCvProgrammerPoM">DCC-EX - Programación en Principal (Modo de Operación)</string>
+    <string name="dccexHeadingTrackManager">DCC-EX - Gerente de pista/distrito</string>
+    <string name="dccexRequestLocoIdFailed">Solicitar ID de locomotora fallida</string>
     <string name="cv29SpeedSteps14">Pasos de velocidad: 14</string>
     <string name="cv29SpeedSteps28">Pasos de velocidad: 28/128</string>
     <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Tamaño de dirección: 2 bits (0-127)</string>
@@ -1169,7 +1169,7 @@
     <string name="order">Clasificar</string>
     <string name="prefTurnoutsShowThrowCloseButtonsTitle">¿Mostrar siempre Lanzar/Cerrar?</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Muestre siempre los botones Lanzar y Cerrar para Desvíos, nunca el botón Alternar.</string>
-    <string name="DCCEXJoinTrackButtonLabel">Unirse</string>
+    <string name="dccexJoinTrackButtonLabel">Unirse</string>
 
     <string name="air_reservoir">Depósito de aire</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Tipo de freno decodificador</string>

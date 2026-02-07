@@ -3642,6 +3642,7 @@ public class threaded_application extends Application {
             }
         }
     }
+    @SuppressWarnings("ChainOfInstanceofChecks")
     @SuppressLint("ApplySharedPref")
     private void renameAPreferenceToNewFormat(String oldName, String newName) {
         if (prefs.contains(oldName)) {

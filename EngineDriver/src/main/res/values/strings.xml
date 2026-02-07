@@ -222,7 +222,7 @@
     <string name="rosterEntryImageSelectButtonText">New image</string>
     <string name="rosterEntryImageRemoveButtonText">Remove</string>
     <string name="rosterEntryImageHelpText">Locally stored images only.  If your server has an image for the loco, it will overwrite this selection.</string>
-    <string name="rosterEntryImageServerImageHelpText">Your server has an image for the loco. You can\'t change the local image as it will be automatically overwitten by the one on the server.</string>
+    <string name="rosterEntryImageServerImageHelpText">Your server has an image for the loco. You can\'t change the local image as it will be automatically overwritten by the one on the server.</string>
     <string name="rosterEntryImageSaveButtonText">Save</string>
 
 
@@ -1578,7 +1578,7 @@
     <string name="prefAlwaysUseFunctionsFromServerSummary">When disabled, use EngineDriver default labels for locos selected by address (not Roster), ignoring server default labels.</string>
 
     <string name="useProtocolDCCEX">Protocol to use?</string>
-    <string name="useProtocolDCCEXplusAutoHint">Protocol to use?\n<small><small>(\'Auto\' looks for \"DCCEX\", \"DCC-EX\" or port 2560)</small></small></string>
+    <string name="useProtocolDccexPlusAutoHint">Protocol to use?\n<small><small>(\'Auto\' looks for \"DCCEX\", \"DCC-EX\" or port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
 
     <string name="prefDccexSequenceItemRequestsTitle">Sequenced item requests</string>
@@ -1586,7 +1586,7 @@
 
     <string name="prefDccexConnectionOptionTitle">Show protocol option</string>
     <string name="prefDccexConnectionOptionSummary">Show option to switch between WiThrottle and DCC-EX protocols in the Connection Screen.</string>
-    <string name="DccexConnectionOptionTitle">Connection Protocol</string>
+    <string name="dccexConnectionOptionTitle">Connection Protocol</string>
 
     <string name="prefActionBarShowDccExButtonSummary">Show button in action bar to access the DCC-EX screen.\n(For native DCC-EX connections only.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX button?</string>
@@ -1625,28 +1625,28 @@
     <string name="directionIndicatorForward" translatable="false">▲ </string>  <!-- DO NOT TRANSLATE -->
     <string name="directionIndicatorReverse" translatable="false">▼ </string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="DCCEXrouteSet">Set</string>
-    <string name="DCCEXrouteHandoff">HandOff</string>
+    <string name="dccexRouteSet">Set</string>
+    <string name="dccexRouteHandoff">HandOff</string>
 
-    <string name="DCCEXturnoutClosed">Closed</string>
-    <string name="DCCEXturnoutThrown">Thrown</string>
-    <string name="DCCEXturnoutUnknown">Unknown</string>
-    <string name="DCCEXturnoutInconsistent">Inconsistent</string>
+    <string name="dccexTurnoutClosed">Closed</string>
+    <string name="dccexTurnoutThrown">Thrown</string>
+    <string name="dccexTurnoutUnknown">Unknown</string>
+    <string name="dccexTurnoutInconsistent">Inconsistent</string>
 
-    <string name="DCCEXactionTypeLabel">Action</string>
-    <string name="DccexWriteAddressLabel">DCC Address</string>
-    <string name="DccexWriteCvLabel" translatable="false">CV</string>
-    <string name="DccexWriteCvValueLabel">Value</string>
-    <string name="DccexWriteAddressButtonLabel">Write</string>
-    <string name="DccexReadAddressButtonLabel">Read</string>
-    <string name="DccexSendCommandButtonLabel">Send</string>
-    <string name="DccexPreviousCommandButtonLabel">Prior</string>
-    <string name="DccexNextCommandButtonLabel">Next</string>
-    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' &amp; \'&gt;\')</small></small></string>
+    <string name="dccexActionTypeLabel">Action</string>
+    <string name="dccexWriteAddressLabel">DCC Address</string>
+    <string name="dccexWriteCvLabel" translatable="false">CV</string>
+    <string name="dccexWriteCvValueLabel">Value</string>
+    <string name="dccexWriteAddressButtonLabel">Write</string>
+    <string name="dccexReadAddressButtonLabel">Read</string>
+    <string name="dccexSendCommandButtonLabel">Send</string>
+    <string name="dccexPreviousCommandButtonLabel">Prior</string>
+    <string name="dccexNextCommandButtonLabel">Next</string>
+    <string name="dccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclude \'&lt;\' &amp; \'&gt;\')</small></small></string>
     <!--    <string name="DccexHideSends">Hide Sends</string>-->
-    <string name="DccexClearCommands">Clear</string>
+    <string name="dccexClearCommands">Clear</string>
 
-    <string name="DccexCvBitCalculatorButtonLabel">Bits</string>
+    <string name="dccexCvBitCalculatorButtonLabel">Bits</string>
     <string name="cvBitCalculatorTitle">CV Bit Calculator</string>
     <string name="cvBitCalculatorCvValueLabel">CV Value (decimal)</string>
     <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
@@ -1677,28 +1677,28 @@
     <string name="witPomWarning">Notes: - This will not work on some DCC systems. - Loco Address change is prevented - CVs 1, 17 &amp; 18 and bit 5 of CV 29.           Use with Caution.</string>
     <string name="witPomMaxValueWarning">Value \'%1$s\' exceeds max supported (\'%2$s\')</string>
 
-    <string name="DccexCommonCvsLabel">NMRA CVs</string>
-    <string name="DccexCommonCommandsLabel">Common CMDs</string>
+    <string name="dccexCommonCvsLabel">NMRA CVs</string>
+    <string name="dccexCommonCommandsLabel">Common CMDs</string>
 
-    <string name="DCCEXsetTrackButtonLabel">Set</string>
-    <string name="DCCEXJoinTrackButtonLabel">Join</string>
+    <string name="dccexSetTrackButtonLabel">Set</string>
+    <string name="dccexJoinTrackButtonLabel">Join</string>
 
-    <string name="DccexSucceeded">Action Succeeded</string>
-    <string name="DccexFailed">Action Failed</string>
+    <string name="dccexSucceeded">Action Succeeded</string>
+    <string name="dccexFailed">Action Failed</string>
     <string name="dccexInCv19Consist">Loco is in a CV19 Consist: %s</string>
     <string name="dccexNotInCv19Consist">Loco is NOT in a CV19 Consist</string>
 
-    <string name="DCCEXbuttonCvProgrammerProgTrack">CVs PROG</string>
-    <string name="DCCEXbuttonCvProgrammerPoM">CVs PoM</string>
-    <string name="DCCEXbuttonTrackManager">Track Mgr</string>
-    <string name="DCCEXbuttonDefaultFunctions">Default Fns</string>
-    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>
-    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programming on Main (Operation mode)</string>
-    <string name="DCCEXheadingTrackManager">DCC-EX - Track/District Manager</string>
+    <string name="dccexButtonCvProgrammerProgTrack">CVs PROG</string>
+    <string name="dccexButtonCvProgrammerPoM">CVs PoM</string>
+    <string name="dccexButtonTrackManager">Track Mgr</string>
+    <string name="dccexButtonDefaultFunctions">Default Fns</string>
+    <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>
+    <string name="dccexHeadingCvProgrammerPoM">DCC-EX - Programming on Main (Operation mode)</string>
+    <string name="dccexHeadingTrackManager">DCC-EX - Track/District Manager</string>
 
     <string name="witButtonCvProgrammerPoM" translatable="false">CVs PoM</string>
 
-    <string name="DCCEXrequestLocoIdFailed">Request Loco Id Failed</string>
+    <string name="dccexRequestLocoIdFailed">Request Loco Id Failed</string>
 
 
     <string name="cv29SpeedSteps14">Speed Steps: 14</string>

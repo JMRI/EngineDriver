@@ -429,6 +429,7 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
         threaded_application.activityPaused(activityName);
     }
 
+    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
     @Override
     public void onResume() {
         super.onResume();

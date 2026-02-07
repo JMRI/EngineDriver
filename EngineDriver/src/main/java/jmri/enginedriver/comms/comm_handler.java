@@ -199,7 +199,7 @@ public class comm_handler extends Handler {
          }
 
          //Dispatch one or all locos on the specified throttle.  addr is in msg (""==all), arg1 holds whichThrottle.
-         // generally acts like a release,but sends the WiThrollte 'd' command instead
+         // generally acts like a release,but sends the WiThrottle 'd' command instead
          case message_type.DISPATCH: {
             String addr = msg.obj.toString();
             final int whichThrottle = msg.arg1;
@@ -302,7 +302,7 @@ public class comm_handler extends Handler {
          }
 
          //Set up an engine to control. The address of the engine is given in msg.obj and whichThrottle is in arg1
-         //Optional rostername if present is separated from the address by the proper delimiter
+         //Optional rosterName if present is separated from the address by the proper delimiter
          case message_type.REQ_LOCO_ADDR: {
 //                        int delays = 0;
             final String addr = msg.obj.toString();

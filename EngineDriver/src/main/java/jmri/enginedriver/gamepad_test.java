@@ -557,7 +557,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         tvGamepadAllKeyCodes = findViewById(R.id.gamepad_test_all_keycodes);
 
         tvGamepadKeyCode = findViewById(R.id.gamepad_test_keycode);
-        tvGamepadKeyFunction = findViewById(R.id.gamepad_test_keyfunction);
+        tvGamepadKeyFunction = findViewById(R.id.gamepad_test_key_function);
         tvGamepadComplete = findViewById(R.id.gamepad_test_complete);
 
         tvGamepadKeyCode.setText("");
@@ -645,6 +645,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.GAMEPAD_TEST;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         

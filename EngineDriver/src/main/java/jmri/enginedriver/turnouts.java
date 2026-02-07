@@ -876,6 +876,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.TURNOUTS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -1123,8 +1124,17 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
         currentSelectTurnoutMethod = whichMethod;
         switch (whichMethod) {
-            default:
-            case WHICH_METHOD_ADDRESS: {
+            case WHICH_METHOD_ROSTER: {
+                llAddress.setVisibility(View.GONE);
+                llRoster.setVisibility(View.VISIBLE);
+                llRecent.setVisibility(View.GONE);
+
+                rbAddress.setChecked(false);
+                rbRoster.setChecked(true);
+                break;
+            }
+            case WHICH_METHOD_ADDRESS:
+            default: {
                 llAddress.setVisibility(View.VISIBLE);
                 llRoster.setVisibility(View.GONE);
                 llRecent.setVisibility(View.VISIBLE);
@@ -1133,15 +1143,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 rbRoster.setChecked(false);
 
                 loadRecentTurnoutsList();
-                break;
-            }
-            case WHICH_METHOD_ROSTER: {
-                llAddress.setVisibility(View.GONE);
-                llRoster.setVisibility(View.VISIBLE);
-                llRecent.setVisibility(View.GONE);
-
-                rbAddress.setChecked(false);
-                rbRoster.setChecked(true);
                 break;
             }
         }

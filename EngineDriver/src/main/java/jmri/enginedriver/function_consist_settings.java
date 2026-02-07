@@ -184,6 +184,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.FUNCTION_CONSIST_SETTINGS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -531,16 +532,16 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         } else {
 //            switch (requestCode) {
 //                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
 //                    saveSettingsImpl();
 //                    break;
 //                case PermissionsHelper.READ_FUNCTION_SETTINGS:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
+//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
 //                    initSettingsImpl();
 //                    break;
 //                default:
             // do nothing
-            Log.d(threaded_application.applicationName, activityName + ": navigateTohandler(): Unrecognised permissions request code: " + requestCode);
+            Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }

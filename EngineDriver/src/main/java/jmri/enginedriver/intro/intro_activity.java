@@ -383,6 +383,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     @Override
     public void onResume() {
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.INTRO;
         super.onResume();
         threaded_application.activityResumed(activityName);

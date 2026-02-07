@@ -77,33 +77,33 @@
 
 
 
-    <string name="DccexClearCommands">Effacer</string>
+    <string name="dccexClearCommands">Effacer</string>
 
-    <string name="DccexCommonCvsLabel">CV du NMRA</string>
+    <string name="dccexCommonCvsLabel">CV du NMRA</string>
 
-    <string name="DccexFailed">Action échouée</string>
+    <string name="dccexFailed">Action échouée</string>
     <string name="dccExFunctionSettings">DCC-EX - Réglages des fonctions</string>
 
 
 
 
 
-    <string name="DccexPreviousCommandButtonLabel">Précédent</string>
+    <string name="dccexPreviousCommandButtonLabel">Précédent</string>
 
-    <string name="DCCEXrequestLocoIdFailed">Acquisition du \'Loco ID\' a échoué</string>
+    <string name="dccexRequestLocoIdFailed">Acquisition du \'Loco ID\' a échoué</string>
 
-    <string name="DCCEXrouteSet">Assigner</string>
+    <string name="dccexRouteSet">Assigner</string>
 
-    <string name="DCCEXsetTrackButtonLabel">Assigner</string>
-    <string name="DccexSucceeded">Action réussie</string>
-    <string name="DCCEXturnoutClosed">Normal</string>
-    <string name="DCCEXturnoutInconsistent">Inconnu</string>
-    <string name="DCCEXturnoutThrown">Normal</string>
-    <string name="DCCEXturnoutUnknown">Transition</string>
-    <string name="DccexWriteAddressButtonLabel">Écrire</string>
+    <string name="dccexSetTrackButtonLabel">Assigner</string>
+    <string name="dccexSucceeded">Action réussie</string>
+    <string name="dccexTurnoutClosed">Normal</string>
+    <string name="dccexTurnoutInconsistent">Inconnu</string>
+    <string name="dccexTurnoutThrown">Normal</string>
+    <string name="dccexTurnoutUnknown">Transition</string>
+    <string name="dccexWriteAddressButtonLabel">Écrire</string>
 
-    <string name="DCCEXJoinTrackButtonLabel">Joindre</string>
-    <string name="DccexSendCommandLabel">Cmd DCC-EX\n<small>(exclure \'&lt;\' and \'&gt;\')</small></string>
+    <string name="dccexJoinTrackButtonLabel">Joindre</string>
+    <string name="dccexSendCommandLabel">Cmd DCC-EX\n<small>(exclure \'&lt;\' and \'&gt;\')</small></string>
 
 
     <string name="deviceSoundsMenu">Sons de locomotive via le téléphone</string>
@@ -1094,7 +1094,7 @@
     <string name="turnoutsSelectionTypeRoster">%1$s défini</string>
 
     <string name="useProtocolDCCEX">Protocole à utiliser?</string>
-    <string name="useProtocolDCCEXplusAutoHint">Protocole à utiliser?\n<small><small>(\'Auto\' recherchera soit \"DCCEX\", \"DCC-EX\" ou port 2560)</small></small></string>
+    <string name="useProtocolDccexPlusAutoHint">Protocole à utiliser?\n<small><small>(\'Auto\' recherchera soit \"DCCEX\", \"DCC-EX\" ou port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilisation du protocole DCC-EX.  Décocher \"Utilisation des commands DCC-EX natives\" dans les préférences afin d\'utiliser le protocole WiThrottle.</string>
     <string name="web">Web</string>
 

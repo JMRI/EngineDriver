@@ -815,7 +815,7 @@ public class select_loco extends AppCompatActivity {
                     if (lead.equals(sAddr)) {                        // only process if for lead engine in consist
                         processRosterFunctionString("RF29}|{1234(L)"
                                 + importExportPreferences.recentLocoFunctionsList.get(position), whichThrottle);  //prepend some stuff to match old-style
-                        mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
+                        mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionLabels(true);
                     }
                 }
             }
@@ -1532,7 +1532,7 @@ public class select_loco extends AppCompatActivity {
                         if (lead.equals(addrStr)) {                        //*** temp - only process if for lead engine in consist
                             LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels("RF29}|{1234(L)]\\[" + functions);  //prepend some stuff to match old-style
                             mainapp.function_labels[whichThrottle] = functionLabelsMap;
-//                            mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionlabels(true);
+//                            mainapp.consists[whichThrottle].getLoco(lead).setIsServerSuppliedFunctionLabels(true);
                         }
                     } else {
                         mainapp.function_labels[whichThrottle] = new LinkedHashMap<>(mainapp.function_labels_default);
@@ -2240,6 +2240,7 @@ public class select_loco extends AppCompatActivity {
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.SELECT_LOCO;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();

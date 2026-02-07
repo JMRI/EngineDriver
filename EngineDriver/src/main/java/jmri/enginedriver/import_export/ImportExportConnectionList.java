@@ -124,7 +124,7 @@ public class ImportExportConnectionList {
                                     hm.put("port", Integer.toString(port));
                                     hm.put("ssid", ssid_str);
                                     hm.put("service_type", service_type);
-                                    if (!connections_list.contains(hm)) {    // suppress dups
+                                    if (!connections_list.contains(hm)) {    // suppress duplicates
                                         connections_list.add(hm);
                                     }
                                 }
