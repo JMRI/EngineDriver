@@ -1098,6 +1098,13 @@
             android:title="@string/prefSpeedButtonsRepeatTitle" />
 
         <CheckBoxPreference
+            android:defaultValue="@bool/prefStopOnPhoneCallDefaultValue"
+            android:key="prefStopOnPhoneCall"
+            android:layout="@layout/checkbox_no_icon"
+            android:summary="@string/prefStopOnPhoneCallSummary"
+            android:title="@string/prefStopOnPhoneCallTitle" />
+
+        <CheckBoxPreference
             android:defaultValue="@bool/prefSpeedButtonsSpeedStepDecrementDefaultValue"
             android:key="prefSpeedButtonsSpeedStepDecrement"
             android:layout="@layout/checkbox_no_icon"
@@ -1121,18 +1128,18 @@
             android:title="@string/prefStopButtonLongPressDelayTitle" />
 
         <CheckBoxPreference
-            android:defaultValue="@bool/prefStopOnPhoneCallDefaultValue"
-            android:key="prefStopOnPhoneCall"
-            android:layout="@layout/checkbox_no_icon"
-            android:summary="@string/prefStopOnPhoneCallSummary"
-            android:title="@string/prefStopOnPhoneCallTitle" />
-
-        <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnBackgroundDefaultValue"
             android:key="prefStopOnBackground"
             android:layout="@layout/checkbox_no_icon"
             android:summary="@string/prefStopOnBackgroundSummary"
             android:title="@string/prefStopOnBackgroundTitle" />
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefDccexEmergencyStopPauseResumeDefaultValue"
+            android:key="prefDccexEmergencyStopPauseResume"
+            android:layout="@layout/checkbox_icon_right"
+            android:summary="@string/prefDccexEmergencyStopPauseResumeSummary"
+            android:title="@string/prefDccexEmergencyStopPauseResumeTitle" />
 
         <CheckBoxPreference
             android:layout_width="wrap_content"
@@ -2197,7 +2204,7 @@
             android:title="@string/prefAutoServerIpConnectTitle" />
 
         <EditTextPreference
-            android:dialogLayout="@layout/auto_server_connect_dialog"
+            android:dialogLayout="@layout/auto_server_named_connect_dialog"
             android:key="prefAutoServerNamedConnect"
             android:layout="@layout/checkbox_no_icon"
             android:summary="@string/prefAutoServerNamedConnectSummary"
@@ -2297,13 +2304,6 @@
                     android:layout="@layout/checkbox_no_icon"
                     android:summary="@string/prefDccexConnectionOptionSummary"
                     android:title="@string/prefDccexConnectionOptionTitle" />
-
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefDccexEmergencyStopPauseResumeDefaultValue"
-                    android:key="prefDccexEmergencyStopPauseResume"
-                    android:layout="@layout/checkbox_icon_right"
-                    android:summary="@string/prefDccexEmergencyStopPauseResumeSummary"
-                    android:title="@string/prefDccexEmergencyStopPauseResumeTitle" />
 
                 <CheckBoxPreference
                     android:defaultValue="@bool/prefDccexSequenceItemRequestsDefaultValue"

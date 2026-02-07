@@ -1101,6 +1101,7 @@
     <string name="prefGamePadDoublePressStopSummary">Choisissez l action suite appui sur bouton STOP</string>
     <string name="prefDccexSummary">Pour toutes les connexions, utilisez les commandes natives DCC-EX plutot que la WiThrottle. PS: cela ne prendra effet qu apres redemarrage Engine Driver et connexion à un serveur.</string>
     <string name="prefDccexSwapThrowCloseSummary">Inverser les étiquettes d\'ouverture/fermeture de tous les aiguillages DCC-EX. Reconnexion requise.</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Utilisez la fonction d\'arrêt d\'urgence Pause/Reprise du DCC-EX au lieu d\'un simple arrêt d\'urgence.</string>
     <string name="prefDccexTitle">Utilisez les commandes natives DCC-EX</string>
     <string name="useProtocolDCCEX">Protocole a utiliser?</string>
     <string name="prefPauseAlternateButtonSummary">Bouton pause alternatif</string>
@@ -1273,7 +1274,9 @@
 
     <string name="prefAutoServerIpConnectTitle">Connexion automatique à l\'adresse du serveur</string>
     <string name="advancedConsistToolTitle">Outil de composition avancé (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">Dans l\'outil de composition de la station de commande</string>
     <string name="advancedConsistToolConsistAddressLabel">Adresse de composition</string>
+    <string name="advancedConsistToolLeadLocoLabel">Adresse de Lead Loco</string>
     <string name="advancedConsistToolLocoAddressLabel">Adresse Loco</string>
     <string name="advancedConsistToolLocoFacingLabel">Faire face à l\'avant ?</string>
     <string name="advancedConsistToolAddButtonLabel">Ajouter</string>
@@ -1295,5 +1298,6 @@
     <string name="prefActionBarShowWebButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran Web</string>
     <string name="prefActionBarShowWebButtonTitle">Bouton Web ?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Aiguillages à manœuvrer (ouverture/fermeture)</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utiliser l\'arrêt d\'urgence, la pause et la reprise</string>
 
 </resources>

@@ -2688,8 +2688,6 @@
 
         <!-- Status Row Preferences -->
         <!-- <item>prefCategoryThrottleStatusRow</item> -->
-        <item>prefShowEmergencyStopButton</item>
-        <!-- <item>prefShowLayoutPowerButton</item> -->
         <item>prefFlashlightButtonDisplay</item>
         <item>prefClockDisplayType</item>
         <item>prefWebViewButton</item>
@@ -2698,10 +2696,12 @@
         <!-- Action Bar Preferences -->
         <item>prefActionBarShowServerDescription</item>
         <item>prefAppIconAction</item>
-        <item>prefActionBarShowDccExButton</item>
+<!--        <item>prefActionBarShowDccExButton</item>-->
         <item>prefActionBarShowThrottleButton</item>
         <item>prefActionBarShowTurnoutsButton</item>
         <item>prefActionBarShowRoutesButton</item>
+        <item>prefActionBarShowWebButton</item>
+        <item>prefActionBarShowAdvancedConsistButton</item>
 
         <!-- Throttle Control Preferences -->
         <item>prefMaximumThrottle</item>
@@ -2709,6 +2709,8 @@
         <item>prefSpeedButtonsRepeat</item>
         <item>prefDirChangeWhileMoving</item>
         <item>prefStopOnDirectionChange</item>
+        <item>prefStopButtonLongPressDelay</item>
+        <item>prefDccexEmergencyStopPauseResume</item>
         <item>prefSpeedButtonsSpeedStepDecrement</item>
         <item>prefLimitSpeedButtonPreferences</item>  <!-- PreferenceScreen -->
         <item>consist_follow_preferences</item>  <!-- PreferenceScreen -->

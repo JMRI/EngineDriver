@@ -2,8 +2,10 @@
  * New Features
     * Added localisation files for English (Singapore) and English (India). Same as UK/Australia/NZ
     * Added preference to 'Swap' the throw/close labels for all DCC-EX turnouts
-    * Initial, rudimentary support for the DCC-EX EStop Pause/Resume
+    * Rudimentary support for the DCC-EX EStop Pause/Resume
+    * Support the DCC-EX In-Command-Station Consists/MUs.  The CV19 dialog is now dual use.
  * Bug fixes
+    * Bug fix for the DCC-EX handoff dialog. Would not trigger unless you had previously moved a loco.
     * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
     * Bug fix for the 'additional' gamepad and volume indicators. This can't have worked properly for a long time.
  * Other
@@ -14,6 +16,7 @@
     * Rename of some of the original variables to remove the confusing abbreviations.
     * Typos in field and method names
     * Significant cleanup of the display of the Overflow Menu and Action Bar items
+    * added some additional checking for the commands that are likely to be truncated
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
@@ -1017,10 +1020,9 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: move some actions from onCreate() or onResume() to onStart() in some activities to simplify and remove some repeated calls.
- *   TODO: add the English (Singapore) and English (India) to the localisation preference.
+ *   TODO: It may be possible to get rid of v21/v35 styles/themes files.
 * general/global
- *   TODO: Improve the wy it deals with multiple DCC-EX commands on single line.  Will only work now if there is no gap.
- *   TODO: support EStop Pause/Resume
+ *   TODO: Improve the way it deals with multiple DCC-EX commands on single line. Really needs to be read char by char.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
@@ -1086,6 +1088,7 @@
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
  *   TODO: add a 'back' button to allow users to continuing adding to the consist without returning to the throttle screen
+ *   TODO: DCC-EX modify the CV19 page to also support DCC-EX in-command-station consists.
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from

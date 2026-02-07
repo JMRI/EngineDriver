@@ -30,6 +30,8 @@
     <attr name="ed_dialog_positive_button_style" format="reference" />
     <attr name="ed_dialog_negative_button_style" format="reference" />
 
+    <attr name="ed_dialog_secondary_background_color" format="reference" />
+
     <attr name="ed_thumb" format="reference" />
     <attr name="ed_vertical_thumb" format="reference" />
 
@@ -65,6 +67,7 @@
     <attr name="ed_web_view_button" format="reference" />
     <attr name="ed_in_device_sounds_button" format="reference" />
     <attr name="ed_cv19_consist_button" format="reference" />
+    <attr name="ed_dccex_consist_button" format="reference" />
     <attr name="ed_dcc_ex_button" format="reference" />
     <attr name="ed_background_highlight" format="reference" />
     <attr name="ed_background_highlight_secondary" format="reference" />

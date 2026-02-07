@@ -467,7 +467,7 @@
     <string name="prefStopOnPhoneCallTitle">Stop on Phone Call?</string>
     <string name="prefStopOnPhoneCallSummary">Stop loco(s) when a phone call is answered or placed</string>
     <string name="prefStopOnBackgroundTitle">EStop on Background?</string>
-    <string name="prefStopOnBackgroundSummary">EStop all locos on all throttles when Engine Driver is pushed to background</string>
+    <string name="prefStopOnBackgroundSummary">Emergency Stop all locos on all throttles when Engine Driver is pushed to background</string>
 
     <string name="prefUseDispatchCommandTitle">Dispatch instead of Release</string>
     <string name="prefUseDispatchCommandSummary">Use the WiThrottle \'d\'ispatch command instead of the \'r\'elease command when releasing a loco</string>
@@ -590,7 +590,7 @@
     <string name="prefVerticalStopButtonMarginDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefStopButtonEStopOnLongPressTitle">EStop On Stop Long Press</string>
-    <string name="prefStopButtonEStopOnLongPressSummary">EStop all locos on the current throttle on a long press of the Stop button</string>
+    <string name="prefStopButtonEStopOnLongPressSummary">Emergency Stop all locos on the current throttle on a long press of the \'Stop\' button</string>
     <string name="prefStopButtonLongPressDelayTitle">Stop button Long Press Delay</string>
     <string name="prefStopButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the Stop buttons, to initiate EStop</string>
     <string name="prefStopButtonLongPressDelayDefaultValue" translatable="false">1500</string>  <!-- DO NOT TRANSLATE -->
@@ -1313,7 +1313,7 @@
 
     <string name="introWelcomeTitle">Welcome to \nEngine Driver</string>
     <string name="introWelcomeSummary">This app can connect to a JMRI, MRC, DigiTrax, WifiTrax, IoTT Stick or DCC-EX WiThrottle server, or DCC-EX native server, to control your DCC locos and devices.
-        It can also read/write CVs and control DC locos on an DCC-EX EX-CommandStation.
+        It can also read/write CVs and control DC locos on a DCC-EX EX-CommandStation.
         \nThe following pages will guide you through initial setup.</string>
 
     <!--    <string name="introAndroid11Title">Android 11 Changes</string>-->
@@ -1565,7 +1565,7 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Swap Turnouts Throw/Close</string>
     <string name="prefDccexSwapThrowCloseSummary">Swap the throw/close labels for all DCC-EX turnouts. Reconnection required</string>
 
-    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Use Emergency Stop Pause/Resume</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Use EStop Pause/Resume</string>
     <string name="prefDccexEmergencyStopPauseResumeSummary">Use the DCC-EX Emergency Stop Pause/Resume feature instead of a simple Emergency Stop</string>
 
     <string name="prefDccexTitle">Use native DCC-EX commands</string>
@@ -1663,7 +1663,9 @@
     <string name="prefAutoServerIpConnectTitle">Auto-connect to server address</string>
 
     <string name="advancedConsistToolTitle">Advanced Consist Tool (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">In Command Station Consist Tool</string>
     <string name="advancedConsistToolConsistAddressLabel">Consist Address</string>
+    <string name="advancedConsistToolLeadLocoLabel">Lead Loco Address</string>
     <string name="advancedConsistToolLocoAddressLabel">Loco Address</string>
     <string name="advancedConsistToolLocoFacingLabel">Face forward?</string>
     <string name="advancedConsistToolAddButtonLabel">Add</string>

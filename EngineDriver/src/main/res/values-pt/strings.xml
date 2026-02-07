@@ -1042,6 +1042,7 @@
     <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \'Stop\'</string>
     <string name="prefDccexSummary">Use os comandos nativos do DCC-EX em vez de Withrottle para todas as conexões. \nNota: Não entrará em vigor até reiniciar o driver do motor e se conectar a um servidor.</string>
     <string name="prefDccexSwapThrowCloseSummary">Troque as etiquetas de acionamento/fechamento de todos os desvios DCC-EX. Reconexão necessária.</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Utilize a função de pausa/retomada de parada de emergência DCC-EX em vez de uma parada de emergência simples.</string>
     <string name="prefDccexTitle">Use comandos nativos do DCC-EX</string>
     <string name="useProtocolDCCEX">Protocolo a ser usado?</string>
     <string name="useProtocolDCCEXplusAutoHint">Protocolo a ser usado?\n<small><small>(\'Auto\' procura por \"DCCEX\", \"DCC-EX\" ou porta 2560)</small></small></string>
@@ -1207,7 +1208,9 @@
 
     <string name="prefAutoServerIpConnectTitle">Conexão automática ao endereço do servidor</string>
     <string name="advancedConsistToolTitle">Ferramenta de Consisteção Avançada (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">Na ferramenta de composição da estação de comando</string>
     <string name="advancedConsistToolConsistAddressLabel">Consiste em endereço</string>
+    <string name="advancedConsistToolLeadLocoLabel">Endereço do Loco Principal</string>
     <string name="advancedConsistToolLocoAddressLabel">Endereço Loco</string>
     <string name="advancedConsistToolLocoFacingLabel">Virar-se para a frente?</string>
     <string name="advancedConsistToolAddButtonLabel">Adicionar</string>
@@ -1230,4 +1233,5 @@
     <string name="prefActionBarShowWebButtonSummary">Exibir botão na barra de ações para alternar para a tela da Web.</string>
     <string name="prefActionBarShowWebButtonTitle">Botão da Web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Trocar desvios, acionar/fechar</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar Parada de Emergência, Pausa/Retomada</string>
 </resources>

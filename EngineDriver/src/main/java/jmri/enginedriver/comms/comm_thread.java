@@ -50,6 +50,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
@@ -750,6 +751,11 @@ public class comm_thread extends Thread {
         wifiSend("<!" + (pause ? "P" : "R" )+ ">");
     }
 
+    protected static void sendDccexRequestInCommandStationConsistList() {
+        if (!mainapp.isDCCEX) return;
+        wifiSend("<^>");
+        if (mainapp.dccexInCommandStationConsists != null) mainapp.dccexInCommandStationConsists.clear();
+    }
 
     protected void sendTurnout(String cmd) {
 //        Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): cmd=" + cmd);
@@ -1086,6 +1092,97 @@ public class comm_thread extends Thread {
     }
 
     @SuppressLint("DefaultLocale")
+    public static void sendDccexCommandStationConsistAddLoco(String [] args) {
+        if (!mainapp.isDCCEX) return; // DCC-EX only
+        if (args.length!=3) return;
+
+        String consistIdString = args[0];
+        String locoIdString = args[1];
+
+        boolean foundConsist = false;
+
+        String msgTxt = "";
+
+        // see if there is already a consist
+        if ( (mainapp.dccexInCommandStationConsists != null) && (!mainapp.dccexInCommandStationConsists.isEmpty()) ) {
+            for (ArrayList<HashMap<String, String>> arrayList : mainapp.dccexInCommandStationConsists) {
+                StringBuilder consistString = new StringBuilder();
+                for (HashMap<String, String> map : arrayList) {
+                    // Check if the HashMap contains the key and if its value matches
+                    if (map.containsKey("loco_id")) {
+                        String foundLocoIdString = map.get("loco_id");
+                        if (foundLocoIdString == null) break;
+                        if (foundLocoIdString.equals(consistIdString)) {
+                            foundConsist = true;
+                        }
+                        if (!foundLocoIdString.equals(locoIdString)) {
+                            String foundLocoFacing = map.get("loco_facing");
+                            consistString.append(" ").append( (foundLocoFacing!=null) && (foundLocoFacing.equals("1")) ? "-" : "");
+                            consistString.append(foundLocoIdString);
+                        }
+                    }
+                }
+                if (foundConsist) {
+                    consistString.append(" ");
+                    consistString.append( (args[2] != null) && (args[2].equals("1")) ? "-" : "");
+                    consistString.append(args[1]);
+                    msgTxt = consistString.toString();
+                    wifiSend(String.format("<^%s>", msgTxt));  /// will already have a leading space
+                    break;
+                }
+            }
+        }
+        if (!foundConsist) { // new consist
+            msgTxt = String.format("<^ %s %s>", args[0], (args[2].equals("1") ? "-" : "") + args[1]);  //consist address + loco to remove
+            wifiSend(msgTxt);
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
+    public static void sendDccexCommandStationConsistRemoveLoco(String [] args) {
+        if (!mainapp.isDCCEX) return; // DCC-EX only
+        if (args.length!=2) return;
+
+        String consistIdString = args[0];
+        String locoIdString = args[1];
+
+        String consistStringString = "";
+        boolean foundConsist = false;
+        boolean foundLocoInConsist = false;
+
+        String msgTxt = "";
+
+        // see if there is already a consist
+        if ( (mainapp.dccexInCommandStationConsists != null) && (!mainapp.dccexInCommandStationConsists.isEmpty()) ) {
+            for (ArrayList<HashMap<String, String>> arrayList : mainapp.dccexInCommandStationConsists) {
+                StringBuilder consistString = new StringBuilder();
+                for (HashMap<String, String> map : arrayList) {
+                    // Check if the HashMap contains the key and if its value matches
+                    if (map.containsKey("loco_id")) {
+                        String foundLocoIdString = map.get("loco_id");
+                        if (foundLocoIdString == null) break;
+                        if (foundLocoIdString.equals(consistIdString)) {
+                            foundConsist = true;
+                        }
+                        if (foundLocoIdString.equals(locoIdString)) {
+                            foundLocoInConsist = true;
+                        } else {
+                            String foundLocoFacing = map.get("loco_facing");
+                            consistString.append(" ").append( (foundLocoFacing!=null) && (foundLocoFacing.equals("1")) ? "-" : "");
+                            consistString.append(foundLocoIdString);
+                        }
+                    }
+                }
+                if ( (foundConsist) && (foundLocoInConsist) ) {
+                    msgTxt = consistString.toString();
+                    wifiSend(String.format("<^%s>", msgTxt));  /// will already have a leading space
+                    break;
+                }
+            }
+        }
+    }
+
+    @SuppressLint("DefaultLocale")
     public static void sendAdvancedConsistRemoveConsist(String [] args) {
         if (!mainapp.isDCCEX) { // WiThrottle only
             if (args.length==1) {
@@ -1389,14 +1486,14 @@ public class comm_thread extends Thread {
 
                     switch (responseStr.charAt(1)) {
                         case 'i': // Command Station Information
-                            String old_vn = mainapp.getDccexVersion();
+                            String old_vn = mainapp.getDccexVersionString();
                             String [] vn1 = args[1].split("-");
                             String [] vn2 = vn1[1].split("\\.");
                             String vn = "4.";
                             try {
                                 vn = String.format("%02d.", Integer.parseInt(vn2[0]));
                             } catch (Exception e) {
-                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.getDccexVersion() + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + mainapp.getDccexVersionString() + ", ignoring");
                             }
                             if (vn2.length>=2) {
                                 try { vn = vn +String.format("%03d",Integer.parseInt(vn2[1]));
@@ -1424,11 +1521,11 @@ public class comm_thread extends Thread {
                                     vn = vn +String.format("%03d", Integer.parseInt(pn));
                                 }
                             }
-                            mainapp.DccexVersion = vn;
-                            if (!mainapp.getDccexVersion().equals(old_vn)) { //only if changed
+                            mainapp.dccexVersionString = vn;
+                            if (!mainapp.getDccexVersionString().equals(old_vn)) { //only if changed
                                 mainapp.sendMsg(mainapp.connection_msg_handler, message_type.CONNECTED);
                             } else {
-                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.getDccexVersion() + ", ignoring");
+                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.getDccexVersionString() + ", ignoring");
                             }
 
                             mainapp.withrottle_version = 4.0;  // fudge it
@@ -1451,12 +1548,13 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             break;
 
-                        case 'l':
-                            processDccexLocos(args);
+                        case 'l': // <l cab reg speedByte functMap>
+                            boolean [] verify = {false, true, true, true, true};
+                            if (verifyParametersAreNumeric(args, verify)) processDccexLocos(args);
                             skipAlert = true;
                             break;
 
-                        case 'r':
+                        case 'r': //<r cab> or <r cab LOCOID> or <r cab CONSIST>
                             if (args.length<=2) { // response from a request for a loco id (the Drive away feature, and also the Address read)
                                 processDccexRequestLocoIdResponse(args);
                             } else {
@@ -1475,13 +1573,13 @@ public class comm_thread extends Thread {
                             skipAlert = true;
                             break;
 
-                        case 'j': //roster, turnouts / routes lists
+                        case 'j': //roster, turnouts / routes lists / automations
                             skipAlert = true;
                             switch (responseStr.charAt(2)) {
                                 case 'T': // turnouts
                                     processDccexTurnouts(args);
                                     break;
-                                case 'A': // automations/routes
+                                case 'A': // automations/routes  <jA [id0 id1 id2 ..]> or <jA id X|type |"desc">
                                     processDccexRoutes(args);
                                     mainapp.alert_activities(message_type.ROUTE_LIST_CHANGED, "");
                                     break;
@@ -1536,6 +1634,11 @@ public class comm_thread extends Thread {
                             processDccexEmergencyStopResponse(args);
                             skipAlert = true;
                             break;
+
+                        case '^':
+                            processDccexInCommandStationConsistResponse(args);
+                            skipAlert = true;
+                            break;
                     }
 
                 } else { // ignore responses that don't start with "<"
@@ -1549,6 +1652,74 @@ public class comm_thread extends Thread {
             mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
         }
     }  //end of processWifiResponse
+
+    static boolean verifyParametersAreNumeric(String [] args, boolean [] numericParameters) {
+        for (int i=0; i<numericParameters.length; i++) {
+            if (args.length<=i) {
+                if (numericParameters[i]) {
+                    try {
+                        Integer.parseInt(args[i]);
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            } // accept it may be short
+        }
+        return true;
+    }
+
+    /* ***********************************  *********************************** */
+
+    private static void processDccexInCommandStationConsistResponse( String [] args) { // <^ [loco]|[-loco] [loco]|[-loco] ...>
+        if (mainapp.dccexInCommandStationConsists == null) {
+            mainapp.dccexInCommandStationConsists = new ArrayList<>();
+        }
+        try {
+            ArrayList<HashMap<String, String>> consistArrayList = new ArrayList<>();
+
+            for (int i = 1; i < args.length - 1; i++) {
+                if (args[i].isEmpty()) break;
+
+                int locoId = Integer.parseInt(args[i]);
+                boolean locoReversed = false;
+                if (locoId <= 0) {
+                    locoId = locoId * -1;
+                    locoReversed = true;
+                }
+                String locoIdString = Integer.toString(locoId);
+
+                if ( (i==1) && (!mainapp.dccexInCommandStationConsists.isEmpty()) ) { //see if the consist is already in the list and remove it
+                    for (ArrayList<HashMap<String, String>> arrayList : mainapp.dccexInCommandStationConsists) {
+                        boolean found = false;
+                        for (HashMap<String, String> map : arrayList) {
+                            // Check if the HashMap contains the key and if its value matches
+                            if (map.containsKey("loco_id") && map.get("loco_id").equals(locoIdString)) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found) {
+                            mainapp.dccexInCommandStationConsists.remove(arrayList);
+                            break;
+                        }
+                    }
+                }
+
+                HashMap<String, String> locoHashMap = new HashMap<>();
+                locoHashMap.put("loco_id", locoIdString);
+                locoHashMap.put("loco_facing", locoReversed ? "1" : "0");
+
+                consistArrayList.add(locoHashMap);
+
+                if (!mainapp.doFinish) {
+                    mainapp.alert_activities(message_type.DCCEX_RECEIVED_CONSIST_ENTRY, "");
+                }
+            }
+            if (!consistArrayList.isEmpty())
+                mainapp.dccexInCommandStationConsists.add(consistArrayList);
+        } catch (Exception ignore) {
+        }
+    }
 
     /* ***********************************  *********************************** */
 
@@ -1743,10 +1914,14 @@ public class comm_thread extends Thread {
         }
 
         String addressStr = args[1];
-        if (Integer.parseInt(args[1]) <= 127) {
-            addressStr = "S" + addressStr;
-        } else {
-            addressStr = "L" + addressStr;
+        try {
+            if (Integer.parseInt(args[1]) <= 127) {
+                addressStr = "S" + addressStr;
+            } else {
+                addressStr = "L" + addressStr;
+            }
+        } catch (Exception e) {
+            return;
         }
         long timeSinceLastCommand;
 
@@ -2581,6 +2756,7 @@ public class comm_thread extends Thread {
         InetAddress host_address;
         Socket clientSocket = null;
         BufferedReader inputBR = null;
+        static final int BUFFER_SIZE = 8192;
         PrintWriter outputPW = null;
         private volatile boolean endRead = false;           //signals rcvr to terminate
         private volatile boolean socketGood = false;        //indicates socket condition
@@ -2648,7 +2824,7 @@ public class comm_thread extends Thread {
             //rcvr
             if (socketOk) {
                 try {
-                    inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    inputBR = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()), BUFFER_SIZE);
                 } catch (IOException except) {
                     mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorInputStream, except.getMessage()), LENGTH_SHORT);
                     socketOk = false;
@@ -2726,6 +2902,7 @@ public class comm_thread extends Thread {
                     try {
                         if ((str = inputBR.readLine()) != null) {
                             if (!str.isEmpty()) {
+                                threaded_application.extendedLogging(activityName + ": <<-- " + str);
                                 heart.restartInboundInterval();
                                 clearInboundTimeout();
                                 if (!mainapp.isDCCEX) {
@@ -2736,10 +2913,14 @@ public class comm_thread extends Thread {
                                         processWifiResponse(str);
                                     } else {
                                         for (int i=0; i< cmds.length; i++) {
-                                            if (i == 0) {
+                                            if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                                                processWifiResponse(cmds[i]);
+                                            } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
                                                 processWifiResponse(cmds[i] + ">");
-                                            } else {
+                                            } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
                                                 processWifiResponse("<" + cmds[i]);
+                                            } else {
+                                                processWifiResponse("<" + cmds[i] + ">");
                                             }
                                         }
                                     }

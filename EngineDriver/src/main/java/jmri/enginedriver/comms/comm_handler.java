@@ -418,6 +418,25 @@ public class comm_handler extends Handler {
             break;
          }
 
+          case message_type.DCCEX_REQUEST_CONSIST_LIST: { // DCC-EX only
+            comm_thread.sendDccexRequestInCommandStationConsistList();
+            break;
+         }
+
+          case message_type.WRITE_DCCEX_COMMAND_STATION_CONSIST_ADD: { // DCC-EX only
+            String [] args = msg.obj.toString().split(" ");
+            comm_thread.sendDccexCommandStationConsistAddLoco(args);
+            comm_thread.sendDccexRequestInCommandStationConsistList();
+            break;
+         }
+
+          case message_type.WRITE_DCCEX_COMMAND_STATION_CONSIST_REMOVE: { // DCC-EX only
+            String [] args = msg.obj.toString().split(" ");
+            comm_thread.sendDccexCommandStationConsistRemoveLoco(args);
+            comm_thread.sendDccexRequestInCommandStationConsistList();
+            break;
+         }
+
          case message_type.READ_DCCEX_LOCO_ADDRESS: { // DCC-EX only
             comm_thread.sendDccexGetLocoAddress();
             break;
@@ -427,6 +446,7 @@ public class comm_handler extends Handler {
             comm_thread.sendDccexGetConsistAddress();
             break;
          }
+
          case message_type.RECEIVED_CONSIST_ADDRESS: {
             if (!mainapp.doFinish) {
                mainapp.alert_activities(message_type.RECEIVED_CONSIST_ADDRESS, msg.obj.toString());

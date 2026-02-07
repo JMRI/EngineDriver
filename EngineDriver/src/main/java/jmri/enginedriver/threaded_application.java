@@ -237,7 +237,7 @@ public class threaded_application extends Application {
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
     public String prefUseDccexProtocol = "Auto";
     public boolean prefAlwaysUseFunctionsFromServer = false;
-    public String DccexVersion = "";
+    public String dccexVersionString = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
     public boolean dccexScreenIsOpen = false;
@@ -286,6 +286,7 @@ public class threaded_application extends Application {
     public String [] dccexRouteLabels;  // used to process the route list
     public boolean [] dccexRouteDetailsReceived;  // used to process the route list
     public boolean dccexRouteStatesReceived = false;
+    public ArrayList<ArrayList<HashMap<String, String>>> dccexInCommandStationConsists;  // used to process the In Command Station consist list
 
     // only used to track the state of the numeric keys of an attached keyboard for DCCEX (0-9)
     public int[] numericKeyIsPressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
@@ -304,6 +305,7 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler dcc_ex_msg_handler;
+    public volatile Handler advancedConsistToolMesssgeHandler;
     public volatile Handler withrottle_cv_programmer_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
     public volatile Handler settings_msg_handler;
@@ -1303,7 +1305,7 @@ public class threaded_application extends Application {
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         mainapp.isDCCEX = prefUseDccexProtocol.equals("Yes") || mainapp.isDCCEX;   // force it if the preference is set
 
-        DccexVersion = "";
+        dccexVersionString = "";
         dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
         DCCEXlistsRequested = -1;
@@ -1816,6 +1818,10 @@ public class threaded_application extends Application {
         } catch (Exception ignored) {
         }
         try {
+            sendMsg(advancedConsistToolMesssgeHandler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
             sendMsg(withrottle_cv_programmer_msg_handler, msgType, msgBody);
         } catch (Exception ignored) {
         }
@@ -2165,13 +2171,6 @@ public class threaded_application extends Application {
             theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
             menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
         }
-
-//        View view = menuItem.getActionView();
-//        if (view == null) return;
-//        ViewGroup button = view.findViewById(menuItem.getItemId());
-//        if (button == null) return;
-//        ImageView image = (ImageView) button.getChildAt(0);
-//        image.setImageResource(outValue.resourceId);
         setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
@@ -2188,7 +2187,7 @@ public class threaded_application extends Application {
     }
 
     // only works on menu items with - app:actionLayout="@layout/..."
-    void setActionBarButtonImage(MenuItem menuItem, int resourceId) {
+    public void setActionBarButtonImage(MenuItem menuItem, int resourceId) {
         View view = menuItem.getActionView();
         if (view == null) return;
         ViewGroup button = view.findViewById(menuItem.getItemId());
@@ -2946,13 +2945,13 @@ public class threaded_application extends Application {
         return withrottle_version;
     }
 
-    public String getDccexVersion() {
-        return DccexVersion;
+    public String getDccexVersionString() {
+        return dccexVersionString;
     }
     public float getDccexVersionNumeric() {
         float versionNumber = 4;
         try {
-            versionNumber = Float.parseFloat(DccexVersion);
+            versionNumber = Float.parseFloat(dccexVersionString);
         } catch (Exception ignored) { } // invalid version
         return versionNumber;
     }

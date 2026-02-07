@@ -417,19 +417,14 @@ public class routes extends AppCompatActivity
         if (!routeType.equals("A")) { // route
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, "2" + routeOrAutomationId);
         } else { // automation
-            try {
-                automationLoco = whichLoco.substring(1);
+            automationLoco = whichLoco.isEmpty() ? "" : whichLoco.substring(1);
 
-                boolean prefDccexAutomationsAsk = prefs.getBoolean("prefDccexAutomationsAsk", getResources().getBoolean(R.bool.prefDccexAutomationsAskDefaultValue));
-                if (prefDccexAutomationsAsk) {
-                    showDccexAutomationDialog(routeOrAutomationId, automationLoco);
-                } else {
-                    if (!automationLoco.isEmpty()) {
-                        int automationLocoNo = Integer.parseInt(automationLoco);
-                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, "2" + routeOrAutomationId, automationLocoNo);
-                    }
-                }
-            } catch (Exception ignored) { // probably no loco selected
+            boolean prefDccexAutomationsAsk = prefs.getBoolean("prefDccexAutomationsAsk", getResources().getBoolean(R.bool.prefDccexAutomationsAskDefaultValue));
+            if ( (prefDccexAutomationsAsk) || (automationLoco.isEmpty()) ) {
+                showDccexAutomationDialog(routeOrAutomationId, automationLoco);
+            } else {
+                int automationLocoNo = Integer.parseInt(automationLoco);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, "2" + routeOrAutomationId, automationLocoNo);
             }
         }
     }

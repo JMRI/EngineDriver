@@ -1451,6 +1451,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         priorPrefConsistFollowRuleStyle = prefConsistFollowRuleStyle;
     }
 
+    private void showHideDccexPreferences(PreferenceScreen prefScreen) {
+        boolean enable = ((mainapp.isDCCEX) || (mainapp.connectedHostName.isEmpty()));
+        enableDisablePreference(prefScreen, "prefDccexEmergencyStopPauseResume", enable);
+    }
+
     private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {
         Log.d(threaded_application.applicationName, activityName + ": showHideThrottleSwitchPreferences()");
         boolean enable = prefThrottleSwitchButtonDisplay;
@@ -1475,6 +1480,10 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         enableDisablePreference(prefScreen, "prefSpeedButtonsRepeat", enable);
         enableDisablePreference(prefScreen, "prefSpeedButtonsSpeedStepDecrement", enable);
         enableDisablePreference(prefScreen, "prefDirChangeWhileMoving", enable);
+
+        enable = prefs.getBoolean("prefDirChangeWhileMoving",
+                getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+
         enableDisablePreference(prefScreen, "prefStopOnDirectionChange", enable);
 
         enable = prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
@@ -1704,6 +1713,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                         break;
                     case "prefHeartbeatResponseFactor":
                         parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 50, 90, getResources().getString(R.string.prefHeartbeatResponseFactorDefaultValue));
+                        break;
+                    case "prefDirChangeWhileMoving":
+                        boolean enable = prefs.getBoolean("prefDirChangeWhileMoving",
+                                getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+                        parentActivity.enableDisablePreference(getPreferenceScreen(), "prefStopOnDirectionChange", enable);
                         break;
                     case "prefDeviceSounds0":
                         mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
@@ -1971,6 +1985,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 //                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefEsuMc2", false);
 //                }
                 parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
+                parentActivity.showHideDccexPreferences(getPreferenceScreen());
 
                 parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
 
@@ -2293,6 +2308,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
             parentActivity.showHideSemiRealisticThrottlePreferences(getPreferenceScreen());
             parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
+            parentActivity.showHideDccexPreferences(getPreferenceScreen());
         }
 
         @Override

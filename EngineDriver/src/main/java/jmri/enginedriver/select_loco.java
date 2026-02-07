@@ -2302,8 +2302,21 @@ public class select_loco extends AppCompatActivity {
         mainapp.refreshCommonOverflowMenu(overflowMenu);
 
         MenuItem menuItem = overflowMenu.findItem(R.id.advancedConsistButton);
-        menuItem.setVisible((!mainapp.isDCCEX)
-                && (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))));
+//        menuItem.setVisible((!mainapp.isDCCEX)
+//                && (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))));
+        if (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))) {
+            menuItem.setVisible(true);
+            TypedValue outValue = new TypedValue();
+            if (mainapp.isDCCEX) {
+                mainapp.theme.resolveAttribute(R.attr.ed_dccex_consist_button, outValue, true);
+                if (mainapp.getDccexVersionNumeric() <= 5.005057) menuItem.setVisible(false);
+            } else {
+                mainapp.theme.resolveAttribute(R.attr.ed_cv19_consist_button, outValue, true);
+            }
+            mainapp.setActionBarButtonImage(menuItem, outValue.resourceId);
+        } else {
+            menuItem.setVisible(false);
+        }
 
         adjustToolbarSize(overflowMenu);
     }

@@ -581,7 +581,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         vn = 4;
         try {
-            vn = Float.parseFloat(mainapp.getDccexVersion());
+            vn = Float.parseFloat(mainapp.getDccexVersionString());
         } catch (Exception ignored) { } // invalid version
 
         witProgrammingCommonCvsLayout = findViewById(R.id.wit_programmingCommonCvsLayout);

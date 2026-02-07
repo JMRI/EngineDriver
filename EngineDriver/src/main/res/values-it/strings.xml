@@ -1034,6 +1034,7 @@
     <string name="prefGamePadDoublePressStopSummary">Scegli l\'azione quando si preme qualsiasi pulsante che è configurato come \'Stop\'</string>
     <string name="prefDccexSummary">Utilizzare i comandi DCC-EX nativi invece di Withrottle per tutte le connessioni. \nNOTA: non avrà effetto fino a quando non riavvia il driver del motore e si connette a un server.</string>
     <string name="prefDccexSwapThrowCloseSummary">Scambiare le etichette di lancio/chiusura per tutti gli scambi DCC-EX. È necessario ricollegarli.</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Utilizzare la funzione di arresto di emergenza DCC-EX Pausa/Ripresa invece di un semplice arresto di emergenza</string>
     <string name="prefDccexTitle">Usa i comandi DCC-Ex nativi</string>
     <string name="useProtocolDCCEX">Protocollo da utilizzare?</string>
     <string name="useProtocolDCCEXplusAutoHint">Protocollo da utilizzare?\n<small><small>(\'Auto\' cerca \"DCCEX\", \"DCC-EX\" o porta 2560)</small></small></string>
@@ -1202,7 +1203,9 @@
 
     <string name="prefAutoServerIpConnectTitle">Connessione automatica all\'indirizzo del server</string>
     <string name="advancedConsistToolTitle">Strumento di consistenza avanzato (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">Nella stazione di comando Consist Tool</string>
     <string name="advancedConsistToolConsistAddressLabel">Indirizzo consistente</string>
+    <string name="advancedConsistToolLeadLocoLabel">Indirizzo della locomotiva principale</string>
     <string name="advancedConsistToolLocoAddressLabel">Indirizzo Loco</string>
     <string name="advancedConsistToolLocoFacingLabel">Guardare avanti?</string>
     <string name="advancedConsistToolAddButtonLabel">Aggiungere</string>
@@ -1224,5 +1227,6 @@
     <string name="prefActionBarShowWebButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Web</string>
     <string name="prefActionBarShowWebButtonTitle">Pulsante Web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Scambio scambi Lancia/Chiudi</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utilizzo di arresto di emergenza, pausa/ripresa</string>
 
 </resources>

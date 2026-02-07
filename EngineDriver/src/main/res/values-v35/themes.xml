@@ -35,6 +35,8 @@
         <item name="ed_primaryLineColor">@color/grey</item>
         <item name="ed_secondaryLineColor">@color/grey</item>
 
+        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
         <item name="edit_label_style">@style/edit_label_style</item>
@@ -114,6 +116,7 @@
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds
         </item>
         <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/original_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">
@@ -243,6 +246,8 @@
         <item name="ed_primaryLineColor">@color/grey</item>
         <item name="ed_secondaryLineColor">@color/darkGrey</item>
 
+        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
@@ -320,6 +325,7 @@
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds
         </item>
         <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/outline_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">
@@ -447,6 +453,8 @@
         <item name="ed_primaryLineColor">@color/grey</item>
         <item name="ed_secondaryLineColor">@color/darkGrey</item>
 
+        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
@@ -525,6 +533,7 @@
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds
         </item>
         <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/outline_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">
@@ -649,6 +658,8 @@
         <item name="ed_primaryLineColor">@color/grey</item>
         <item name="ed_secondaryLineColor">@color/darkGrey</item>
 
+        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
@@ -726,6 +737,7 @@
         <item name="ed_in_device_sounds_button">@drawable/ultra_toolbar_button_in_device_sounds
         </item>
         <item name="ed_cv19_consist_button">@drawable/ultra_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/ultra_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/ultra_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">
@@ -854,7 +866,9 @@
         <item name="android:actionMenuTextColor">@color/primary_colorful</item>
 
         <item name="ed_primaryLineColor">@color/grey</item>
-        <item name="ed_secondaryLineColor">@color/darkGrey</item>
+        <item name="ed_secondaryLineColor">@color/dialogSecondaryBackground_colorful</item>
+
+        <item name="ed_dialog_secondary_background_color">@color/dialogSecondaryBackground_colorful</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_colorful</item>
@@ -936,6 +950,7 @@
         <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds
         </item>
         <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/original_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/colorful_background_highlight</item>
         <item name="ed_background_highlight_secondary">
@@ -1060,6 +1075,8 @@
         <item name="ed_primaryLineColor">@color/neon_blue</item>
         <item name="ed_secondaryLineColor">@color/neon_blue_very_dark</item>
 
+        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
@@ -1141,6 +1158,7 @@
         <item name="ed_in_device_sounds_button">@drawable/neon_toolbar_button_in_device_sounds
         </item>
         <item name="ed_cv19_consist_button">@drawable/neon_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/neon_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/neon_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/neon_background_highlight</item>
         <item name="ed_background_highlight_secondary">

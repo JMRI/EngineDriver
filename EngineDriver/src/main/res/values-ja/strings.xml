@@ -469,6 +469,7 @@
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation の設定</string>
     <string name="prefDccexSummary">すべての接続に wiThrottle の代わりにネイティブ DCC-EX コマンドを使用します。注: この機能は、エンジン ドライバーを再起動してサーバーに接続するまで有効になりません。</string>
     <string name="prefDccexSwapThrowCloseSummary">すべてのDCC-EX分岐器の投射/閉方向ラベルを交換します。再接続が必要です。</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">単純な緊急停止の代わりにDCC-EX緊急停止一時停止/再開機能を使用する</string>
     <string name="prefDccexTitle">ネイティブ DCC-EX コマンドを使用する</string>
     <string name="prefDecreaseLocoNumberHeightSummary">ロコの番号、速度、方向ボタンには小さいボタンを使用します。</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsSummary">関数ラベルのない名簿エントリにはエンジン ドライバーのデフォルト関数を使用する</string>
@@ -1273,7 +1274,9 @@
 
     <string name="prefAutoServerIpConnectTitle">サーバーアドレスに自動接続</string>
     <string name="advancedConsistToolTitle">高度な構成ツール (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">コマンドステーション構成ツール</string>
     <string name="advancedConsistToolConsistAddressLabel">構成アドレス</string>
+    <string name="advancedConsistToolLeadLocoLabel">リードロコアドレス</string>
     <string name="advancedConsistToolLocoAddressLabel">ロコアドレス</string>
     <string name="advancedConsistToolLocoFacingLabel">前を向いて？</string>
     <string name="advancedConsistToolAddButtonLabel">追加</string>
@@ -1296,5 +1299,6 @@
     <string name="prefActionBarShowWebButtonSummary">アクションバーにWeb画面に切り替えるボタンを表示する</string>
     <string name="prefActionBarShowWebButtonTitle">ウェブボタン？</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - ターンアウトのスロー/クローズの切り替え</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 緊急停止の一時停止/再開を使用する</string>
 
 </resources>

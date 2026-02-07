@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/advanced_consist_tool_dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="6dp"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/advancedConsistToolTitle"
         android:textSize="16sp"
@@ -21,17 +22,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="6dp"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/advanced_consist_tool_consist_address_label"
+            style="?attr/edit_label_style"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:text="@string/advancedConsistToolConsistAddressLabel"/>
+            android:text="@string/advancedConsistToolConsistAddressLabel" />
 
         <EditText
             android:id="@+id/advanced_consist_tool_consist_address_input"
-            android:layout_width="50dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="30dp"
@@ -47,21 +50,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="6dp"
         android:orientation="horizontal">
 
         <TextView
+            style="?attr/edit_label_style"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="@string/advancedConsistToolLocoAddressLabel"/>
 
         <EditText
             android:id="@+id/advanced_consist_tool_loco_address_input"
-            android:layout_width="50dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="30dp"
-            android:autofillHints="1-9999"
+            android:autofillHints="1-10239"
             android:digits="0123456789"
             android:inputType="number"
             android:maxLength="5"
@@ -74,10 +78,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="6dp"
         android:orientation="horizontal">
 
         <TextView
+            style="?attr/edit_label_style"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="@string/advancedConsistToolLocoFacingLabel"/>
@@ -93,7 +98,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:gravity="end"
         android:orientation="horizontal">
 
@@ -102,8 +107,10 @@
             style="?attr/ed_dialog_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
             android:drawableStart="?attr/ed_cross_glyph"
             android:drawablePadding="5dp"
+            android:minWidth="0dp"
             android:text="@string/close_button"
             tools:ignore="RtlHardcoded" />
 
@@ -113,19 +120,44 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/advanced_consist_tool_add_button"
-            style="?attr/ed_dialog_button_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/advancedConsistToolAddButtonLabel" />
-
-        <Button
             android:id="@+id/advanced_consist_tool_remove_button"
             style="?attr/ed_dialog_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:minWidth="0dp"
             android:text="@string/advancedConsistToolRemoveButtonLabel" />
 
+        <Button
+            android:id="@+id/advanced_consist_tool_add_button"
+            style="?attr/ed_dialog_button_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:minWidth="0dp"
+            android:text="@string/advancedConsistToolAddButtonLabel" />
+
+
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/advanced_consist_tool_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="6sp"
+        android:background="?attr/ed_dialog_secondary_background_color" >
+
+        <TextView
+            android:id="@+id/advanced_consist_tool_consist_list"
+            style="?attr/floating_text_style"
+            android:background="@color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4sp"
+            android:padding="4dp"
+            android:text=""
+            android:textSize="16sp" />
+
+    </ScrollView>
 
 </LinearLayout>

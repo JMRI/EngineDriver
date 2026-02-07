@@ -1103,6 +1103,7 @@
     <string name="prefGamePadDoublePressStopTitle">Acció de parada de doble premsa</string>
     <string name="prefDccexSummary">Utilitzeu les ordres natives DCC-EX en lloc de WithRottle per a totes les connexions. \nNota: no tindrà efecte fins que reinicieu el controlador del motor i connecteu-vos a un servidor.</string>
     <string name="prefDccexSwapThrowCloseSummary">Intercanvieu les etiquetes de llançament/tancament per a tots els desviaments DCC-EX. Cal reconnexió.</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Feu servir la funció de pausa/reprenguda de l\'aturada d\'emergència del DCC-EX en lloc d\'una simple aturada d\'emergència.</string>
     <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
     <string name="useProtocolDCCEX">Protocol a utilitzar?</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé (%1$s)</string>
@@ -1265,7 +1266,9 @@
 
     <string name="prefAutoServerIpConnectTitle">Connexió automàtica a l\'adreça del servidor</string>
     <string name="advancedConsistToolTitle">Eina de coherència avançada (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">Eina Consistent a l\'estació de comandament</string>
     <string name="advancedConsistToolConsistAddressLabel">Adreça consistent</string>
+    <string name="advancedConsistToolLeadLocoLabel">Adreça principal de la locomotora</string>
     <string name="advancedConsistToolLocoAddressLabel">Adreça de la locomotora</string>
     <string name="advancedConsistToolLocoFacingLabel">Mirar cap endavant?</string>
     <string name="advancedConsistToolAddButtonLabel">Afegeix</string>
@@ -1287,5 +1290,6 @@
     <string name="prefActionBarShowWebButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla web</string>
     <string name="prefActionBarShowWebButtonTitle">Botó web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Intercanvi de desviaments Llançar/Tancament</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Ús de la pausa/reprenguda d\'aturada d\'emergència</string>
 
 </resources>

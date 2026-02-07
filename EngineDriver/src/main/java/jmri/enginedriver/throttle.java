@@ -3538,6 +3538,8 @@ public class throttle extends AppCompatActivity implements
                 whichGamePadIsEventFrom = externalGamepadWhichGamePadIsEventFrom;
             }
 
+            if (whichGamePadIsEventFrom < 0) acceptEvent = false;
+
             if (acceptEvent) {
                 float xAxis;
                 float yAxis;

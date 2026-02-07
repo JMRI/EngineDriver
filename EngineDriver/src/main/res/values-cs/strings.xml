@@ -1192,6 +1192,7 @@
     <string name="prefGamePadDoublePressStopTitle">Dvojitá stisknutí STOP AKCE</string>
     <string name="prefDccexSummary">Pro všechna připojení použijte nativní příkazy DCC-EX namísto Withrottle. \nPOZNÁMKA: Nebude účinnost, dokud restartujete ovladač motoru a připojíte se k serveru.</string>
     <string name="prefDccexSwapThrowCloseSummary">Vyměňte štítky pro vhození/zavírání u všech výhybek DCC-EX. Je nutné přepojení.</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Použijte funkci nouzového zastavení/pozastavení/obnovení DCC-EX namísto jednoduchého nouzového zastavení</string>
     <string name="prefDccexTitle">Použijte nativní příkazy DCC-EX</string>
     <string name="useProtocolDCCEX">Protokol použít?</string>
     <string name="useProtocolDCCEXplusAutoHint">Protokol, který chcete použít?\n<small><small>(\'Auto\' hledá \"DCCEX\", \"DCC-EX\" nebo port 2560)</small></small></string>
@@ -1350,7 +1351,9 @@
 
     <string name="prefAutoServerIpConnectTitle">Automatické připojení k adrese serveru</string>
     <string name="advancedConsistToolTitle">Pokročilý nástroj pro sestavení (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">Nástroj pro sestavení velitelské stanice</string>
     <string name="advancedConsistToolConsistAddressLabel">Adresa se skládá</string>
+    <string name="advancedConsistToolLeadLocoLabel">Adresa hlavní lokomotivy</string>
     <string name="advancedConsistToolLocoAddressLabel">Adresa lokomotivy</string>
     <string name="advancedConsistToolLocoFacingLabel">Tváří vpřed?</string>
     <string name="advancedConsistToolAddButtonLabel">Přidat</string>
@@ -1372,5 +1375,6 @@
     <string name="prefActionBarShowWebButtonSummary">Zobrazit tlačítko v panelu akcí pro přepnutí na webovou obrazovku</string>
     <string name="prefActionBarShowWebButtonTitle">Webové tlačítko?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Výměna výhybek - Vyhození/Zavření</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Použití nouzového zastavení, pozastavení/obnovení</string>
 
 </resources>
