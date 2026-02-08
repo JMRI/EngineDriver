@@ -1329,7 +1329,11 @@ public class comm_thread extends Thread {
                         mainapp.setServerType(responseStr.substring(2)); //store the type
                     } else if (responseStr.charAt(1) == 't') { //server description string "HtMy Server Details go here"
                         mainapp.setServerDescription(responseStr.substring(2)); //store the description
+
                     } else if (responseStr.charAt(1) == 'M') { //alert message sent from server to throttle
+
+                        if (!acceptMessageOrAlert(responseStr.substring(2)))  { skipAlert = true; break;}
+
                         if (prefs.getBoolean("prefBeepOnAlertToasts", mainapp.getResources().getBoolean(R.bool.prefBeepOnAlertToastsDefaultValue))) {
                             mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
                         }
@@ -1345,6 +1349,13 @@ public class comm_thread extends Thread {
                         }
 
                     } else if (responseStr.charAt(1) == 'm') { //info message sent from server to throttle
+                        if ( (responseStr.length() > 8) && (responseStr.substring(2,7).equals("ESTOP")) ) {
+                            processDccexEmergencyStopResponse(responseStr.substring(8));
+                            skipAlert = true;
+                            break;
+                        }
+                        if (!acceptMessageOrAlert(responseStr.substring(2)))  { skipAlert = true; break;}
+
                         mainapp.safeToast(responseStr.substring(2), Toast.LENGTH_LONG); // copy to UI as toast message
                     }
                     break;
@@ -1626,9 +1637,12 @@ public class comm_thread extends Thread {
                             break;
 
                         case 'm': // alert / info message sent from server to throttle
+                            String message = args[1].substring(1,args[1].length()-1);
+                            if (!acceptMessageOrAlert(message)) { skipAlert = true; break;}
+
                             mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
                             mainapp.vibrate(new long[]{1000, 500, 1000, 500});
-                            mainapp.safeToast(args[1], Toast.LENGTH_LONG); // copy to UI as toast message
+                            mainapp.safeToast(message, Toast.LENGTH_LONG); // copy to UI as toast message
                             break;
 
                         case '!':
@@ -1653,6 +1667,23 @@ public class comm_thread extends Thread {
             mainapp.alert_activities(message_type.RESPONSE, responseStr);  //send response to running activities
         }
     }  //end of processWifiResponse
+
+        static boolean acceptMessageOrAlert(String incommingMessage) {
+        boolean acceptMessage = true;
+        String[] messagesToIgnore;
+        if (mainapp.isDCCEX) {
+            messagesToIgnore = mainapp.getResources().getStringArray(R.array.dccex_alert_messages_to_ignore);
+        } else {
+            messagesToIgnore = mainapp.getResources().getStringArray(R.array.withrottle_alert_messages_to_ignore);
+        }
+        for (String message : messagesToIgnore) {
+            if (incommingMessage.equals(message)) {
+                acceptMessage = false;
+                break;
+            }
+        }
+        return acceptMessage;
+    }
 
     static boolean verifyParametersAreNumeric(String [] args, boolean [] numericParameters) {
         for (int i=0; i<numericParameters.length; i++) {
@@ -1724,8 +1755,11 @@ public class comm_thread extends Thread {
 
     /* ***********************************  *********************************** */
 
-    private static  void processDccexEmergencyStopResponse ( String [] args) { // <p0|1[PAUSED|RESUME]>
-        String cmd = args[0].substring(1);
+        private static  void processDccexEmergencyStopResponse ( String [] args) { // <p0|1[PAUSED|RESUME]>
+            String cmd = args[0].substring(1);
+            processDccexEmergencyStopResponse(cmd);
+        }
+    private static  void processDccexEmergencyStopResponse ( String cmd) { // <p0|1[PAUSED|RESUME]>
         if (cmd.equals("PAUSED")) {
             mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.PAUSED;
             mainapp.alert_activities(message_type.ESTOP_PAUSED, "");  //send response to running activities
@@ -1733,6 +1767,7 @@ public class comm_thread extends Thread {
             mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
             mainapp.alert_activities(message_type.ESTOP_RESUMED, "");  //send response to running activities
         }
+        mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
     }
 
     /* ***********************************  *********************************** */

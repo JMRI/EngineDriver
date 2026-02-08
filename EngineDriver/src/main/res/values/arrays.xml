@@ -16,6 +16,25 @@
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <array  name="withrottle_alert_messages_to_ignore">
+        <item>Connecting..</item>
+        <item>Connected</item>
+        <item>ESTOP PAUSED</item>
+        <item>ESTOP RESUMED</item>
+    </array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <array  name="dccex_alert_messages_to_ignore">
+        <item>ESTOP PAUSED</item>
+        <item>ESTOP RESUMED</item>
+    </array>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <string-array name="address_size" translatable="false">
         <item>Short</item>
         <item>Long</item>
