@@ -62,6 +62,9 @@
     <string name="gamepad1_test">游戏手柄/USB 1测试</string>
     <string name="gamepad2_test">游戏手柄/USB 2测试</string>
     <string name="gamepad3_test">游戏手柄/USB 3测试</string>
+    <string name="gamepad4_test">游戏手柄/USB 4测试</string>
+    <string name="gamepad5_test">游戏手柄/USB 5测试</string>
+    <string name="gamepad6_test">游戏手柄/USB 6测试</string>
 
     <string name="notificationInBackgroundTitle">EngineDriver 后台通知</string>
     <string name="notificationInBackgroundText">Android 系统可能会随时终止程序，恕不另行通知。点击重新打开</string>

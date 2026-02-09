@@ -224,6 +224,10 @@
     <string name="gamepad1_test">ゲームパッド 1 のテスト</string>
     <string name="gamepad2_test">ゲームパッド 2 テスト</string>
     <string name="gamepad3_test">ゲームパッド 3 テスト</string>
+    <string name="gamepad4_test">ゲームパッド 4 テスト</string>
+    <string name="gamepad5_test">ゲームパッド 5 テスト</string>
+    <string name="gamepad6_test">ゲームパッド 6 テスト</string>
+
     <string name="gamepadTestAllKeyCodesLabel">すべてのコード:\s\s</string>
     <string name="gamepadTestButtonLabelButtonA">A[横断]</string>
     <string name="gamepadTestButtonLabelButtonB">B[@]</string>

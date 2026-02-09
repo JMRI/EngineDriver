@@ -70,6 +70,9 @@
     <string name="gamepad1_test">Gamepad\/USB 1 Test</string>
     <string name="gamepad2_test">Gamepad\/USB 2 Test</string>
     <string name="gamepad3_test">Gamepad\/USB 3 Test</string>
+    <string name="gamepad4_test">Gamepad\/USB 4 Test</string>
+    <string name="gamepad5_test">Gamepad\/USB 5 Test</string>
+    <string name="gamepad6_test">Gamepad\/USB 6 Test</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver in Background</string>
     <string name="notificationInBackgroundText">☠️Android may kill it at any time without warning. Tap to reopen</string>

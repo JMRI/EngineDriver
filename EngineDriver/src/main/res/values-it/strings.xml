@@ -47,6 +47,9 @@
     <string name="gamepad1_test">Test Gamepad 1</string>
     <string name="gamepad2_test">Test Gamepad 2</string>
     <string name="gamepad3_test">Test Gamepad 3</string>
+    <string name="gamepad4_test">Test Gamepad 4</string>
+    <string name="gamepad5_test">Test Gamepad 5</string>
+    <string name="gamepad6_test">Test Gamepad 6</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver in background</string>
     <string name="notificationInBackgroundText">☠️Android potrebbe interromperlo in qualsiasi momento senza preavviso. Tocca per riaprire</string>

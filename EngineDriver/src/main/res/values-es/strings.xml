@@ -47,6 +47,9 @@
     <string name="gamepad1_test">Prueba 1 de gamepad</string>
     <string name="gamepad2_test">Prueba 2 de gamepad</string>
     <string name="gamepad3_test">Prueba 3 de gamepad</string>
+    <string name="gamepad4_test">Prueba 4 de gamepad</string>
+    <string name="gamepad5_test">Prueba 5 de gamepad</string>
+    <string name="gamepad6_test">Prueba 6 de gamepad</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver en segundo plano</string>
     <string name="notificationInBackgroundText">☠️Android puede cerrarlo en cualquier momento sin previo aviso. Toca para volver a abrir.</string>

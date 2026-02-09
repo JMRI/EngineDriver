@@ -49,6 +49,9 @@
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
+    <string name="gamepad4_test">Gamepad 4 Test</string>
+    <string name="gamepad5_test">Gamepad 5 Test</string>
+    <string name="gamepad6_test">Gamepad 6 Test</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver im Hintergrund</string>
     <string name="notificationInBackgroundText">☠️Android kann es jederzeit ohne Warnung beenden. Tippen Sie hier, um es erneut zu öffnen</string>

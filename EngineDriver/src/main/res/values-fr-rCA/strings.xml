@@ -212,8 +212,11 @@
     <string name="gamepad1_test">Vérification de la manette de jeu 1</string>
     <string name="gamepad2_test">Vérification de la manette de jeu 2</string>
     <string name="gamepad3_test">Vérification de la manette de jeu 3</string>
-    <string name="gamepadTestAllKeyCodesLabel">Tous les codes:\s\s</string>
+    <string name="gamepad4_test">Vérification de la manette de jeu 4</string>
+    <string name="gamepad5_test">Vérification de la manette de jeu 5</string>
+    <string name="gamepad6_test">Vérification de la manette de jeu 6</string>
 
+    <string name="gamepadTestAllKeyCodesLabel">Tous les codes:\s\s</string>
 
     <string name="gamepadTestButtonLabelButtonEnter">Sélectionner | Entrer</string>
     <string name="gamepadTestButtonLabelButtonLeftShoulder">Gâchette haute de gauche</string>

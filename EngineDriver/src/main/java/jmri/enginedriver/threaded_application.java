@@ -1468,12 +1468,11 @@ public class threaded_application extends Application {
 
         if (menu != null) {
             boolean any = false;
-            for (int i = 1; i <= 3; i++) {
-                MenuItem item = switch (i) {
-                    case 2 -> menu.findItem(R.id.gamepad_test_mnu2);
-                    case 3 -> menu.findItem(R.id.gamepad_test_mnu3);
-                    default -> menu.findItem(R.id.gamepad_test_mnu1);
-                };
+
+            TypedArray gamepad_test_menu_resource_ids = getResources().obtainTypedArray(R.array.gamepad_test_menu_resource_ids);
+
+            for (int i = 1; i <= 6; i++) {
+                MenuItem item = menu.findItem(gamepad_test_menu_resource_ids.getResourceId(i-1,0));
 
                 result = i <= gamepadCount;
 
@@ -1486,6 +1485,8 @@ public class threaded_application extends Application {
                     }
                 }
             }
+            gamepad_test_menu_resource_ids.recycle();
+
             if (any) {
                 menu.findItem(R.id.gamepad_test_menu).setVisible(true);
                 menu.findItem(R.id.gamepad_test_reset).setVisible(true);

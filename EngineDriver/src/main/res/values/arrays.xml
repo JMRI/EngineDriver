@@ -2908,6 +2908,16 @@
         <item>@id/button_target_stop_0</item>
     </array>
 
+
+    <array name="beep_ids">
+        <item>@raw/beep_1</item>
+        <item>@raw/beep_1a</item>
+        <item>@raw/beep_2</item>
+        <item>@raw/beep_2a</item>
+        <item>@raw/beep_ack</item>
+        <item>@raw/beep_nak</item>
+    </array>
+
 <!--D -->
 
     <array name="device_sounds_bell_resource_ids">
@@ -2979,6 +2989,15 @@
         <item>@id/gamepad_indicator_3</item>
         <item>@id/gamepad_indicator_4</item>
         <item>@id/gamepad_indicator_5</item>
+    </array>
+
+    <array name="gamepad_test_menu_resource_ids">
+        <item>@id/gamepad_test_mnu1</item>
+        <item>@id/gamepad_test_mnu2</item>
+        <item>@id/gamepad_test_mnu3</item>
+        <item>@id/gamepad_test_mnu4</item>
+        <item>@id/gamepad_test_mnu5</item>
+        <item>@id/gamepad_test_mnu6</item>
     </array>
 
 <!-- L -->
@@ -3161,7 +3180,7 @@
         <item>@id/throttle_5_set_speed</item>
     </array>
 
-<!-- W -->
+<!-- V -->
 
     <array name="volume_indicator_resource_ids">
         <item>@id/volume_indicator_0</item>
@@ -3172,14 +3191,6 @@
         <item>@id/volume_indicator_5</item>
     </array>
 
-    <array name="beep_ids">
-        <item>@raw/beep_1</item>
-        <item>@raw/beep_1a</item>
-        <item>@raw/beep_2</item>
-        <item>@raw/beep_2a</item>
-        <item>@raw/beep_ack</item>
-        <item>@raw/beep_nak</item>
-    </array>
 
     <array name="gamepad_test_button_resource_ids">
         <item /> <!-- not used-->

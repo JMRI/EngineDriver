@@ -51,6 +51,9 @@
     <string name="gamepad1_test">Test gamepadu 1</string>
     <string name="gamepad2_test">Test gamepadu 2</string>
     <string name="gamepad3_test">Test gamepadu 3</string>
+    <string name="gamepad4_test">Test gamepadu 4</string>
+    <string name="gamepad5_test">Test gamepadu 5</string>
+    <string name="gamepad6_test">Test gamepadu 6</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver na pozadí</string>
     <string name="notificationInBackgroundText">☠️Android jej může kdykoli bez varování zabít. Klepnutím znovu otevřete</string>

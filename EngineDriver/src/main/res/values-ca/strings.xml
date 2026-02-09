@@ -46,6 +46,9 @@
     <string name="gamepad1_test">Prova 1 de gamepad</string>
     <string name="gamepad2_test">Prova 2 de gamepad</string>
     <string name="gamepad3_test">Prova 3 de gamepad</string>
+    <string name="gamepad4_test">Prova 4 de gamepad</string>
+    <string name="gamepad5_test">Prova 5 de gamepad</string>
+    <string name="gamepad6_test">Prova 6 de gamepad</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver en segon pla</string>
     <string name="notificationInBackgroundText">☠️Android pot matar-lo en qualsevol moment sense previ avís. Toca per tornar a obrir</string>

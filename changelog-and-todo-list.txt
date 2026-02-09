@@ -4,6 +4,7 @@
     * Added preference to 'Swap' the throw/close labels for all DCC-EX turnouts.
     * Rudimentary support for the new DCC-EX EStop Pause/Resume.
     * Support the DCC-EX In-Command-Station Consists/MUs.  The CV19 dialog is now dual use.
+    * Added the missing menu items for Gamepads 4-6
  * Bug fixes
     * Bug fix for the DCC-EX handoff dialog. Would not trigger unless you had previously moved a loco.
     * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
@@ -16,7 +17,8 @@
     * Rename of some of the original variables to remove the confusing abbreviations.
     * Typos in field and method names
     * Significant cleanup of the display of the Overflow Menu and Action Bar items
-    * added some additional checking for the commands that are likely to be truncated
+    * Added some additional checking for the commands that are likely to be truncated
+    * Altered the gamepad test page so that it only responds to the chosen gamepad
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)

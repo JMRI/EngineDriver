@@ -110,7 +110,7 @@ public class KeyboardEventHandler {
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 keyboardNotifierInterface.keyboardEventNotificationHandler(
                         gamepad_or_keyboard_event_type.ESTOP, 0, repeatCnt,
-                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                        whichThrottle,   isActive, whichGamePadIsEventFrom);
                 resetKeyboardString();
             }
         } else if ((keyCode == KEYCODE_X) || (keyCode == KEYCODE_MOVE_HOME)) {  // Stop

@@ -95,6 +95,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private SharedPreferences prefs;
 
     private String whichGamepadNo = " "; //text version of the arr index of the gamepad we are testing.  Sent in and out
+    private int whichGamepad = -1;
+    private boolean onlyTestCurrent = false;
 
     private String prefGamePadType = "None";
     private int prefGamePadTypeIndex = 0;
@@ -331,6 +333,16 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         threaded_application.extendedLogging(activityName + ": dispatchGenericMotionEvent(): " + event.getAction());
         if ((!prefGamePadType.equals("None")) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
+
+            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId());
+            if ( (onlyTestCurrent) && (whichGamePadIsEventFrom != whichGamepad) ) {
+                if (whichGamepad >= 0) {
+                    return (true); // from another gamepad.  ignore it
+                } else {
+                    return super.dispatchGenericMotionEvent(event);
+                }
+            }
+
             int action;
 
             float xAxis;
@@ -422,6 +434,15 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         if (isExternal) { // if has come from the phone itself, don't try to process it here
             if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
+
+                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId());
+                if ( (onlyTestCurrent) && (whichGamePadIsEventFrom != whichGamepad) ) {
+                    if (whichGamepad >= 0) {
+                        return (true); // from another gamepad.  ignore it
+                    } else {
+                        return super.dispatchKeyEvent(event);
+                    }
+                }
 
                 int action = event.getAction();
                 int keyCode = event.getKeyCode();
@@ -524,6 +545,12 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             whichGamepadNo = extras.getString("whichGamepadNo");
+            onlyTestCurrent = extras.getBoolean("onlyTestCurrent", false);
+            try {
+                whichGamepad = Integer.parseInt(whichGamepadNo);
+            } catch (NumberFormatException ignore) {
+                whichGamepad = -1;
+            }
         }
 
         mainapp.applyTheme(this);
@@ -834,4 +861,22 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             }
         }
     }
+
+    public int findWhichGamePadEventIsFrom(int eventDeviceId) {
+        int whichGamePad = -2;  // default to the event not from a gamepad
+
+        if (eventDeviceId >= 0) { // event is from a gamepad (or at least not from a screen touch)
+            whichGamePad = -1;  // gamepad
+
+            for (int i = 0; i < mainapp.gamePadDeviceIds.length; i++) {
+                if (eventDeviceId == mainapp.gamePadDeviceIds[i]) {
+                    whichGamePad = i;
+                    break;
+                }
+            }
+        }
+
+        return whichGamePad;
+    }
+
 }

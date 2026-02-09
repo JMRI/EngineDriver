@@ -2621,6 +2621,7 @@ public class throttle extends AppCompatActivity implements
             try {
                 Intent intent = new Intent().setClass(this, gamepad_test.class);
                 intent.putExtra("whichGamepadNo", Integer.toString(gamepadNo));
+                intent.putExtra("onlyTestCurrent", true);
                 tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST);
                 gamepadTestActivityLauncher.launch(intent);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -6873,6 +6874,18 @@ public class throttle extends AppCompatActivity implements
 
         } else if (item.getItemId() == R.id.gamepad_test_mnu3) {
             startGamepadTestActivity(2);
+            return true;
+
+        } else if (item.getItemId() == R.id.gamepad_test_mnu4) {
+            startGamepadTestActivity(3);
+            return true;
+
+        } else if (item.getItemId() == R.id.gamepad_test_mnu5) {
+            startGamepadTestActivity(4);
+            return true;
+
+        } else if (item.getItemId() == R.id.gamepad_test_mnu6) {
+            startGamepadTestActivity(5);
             return true;
 
         } else if (item.getItemId() == R.id.timer_mnu) {

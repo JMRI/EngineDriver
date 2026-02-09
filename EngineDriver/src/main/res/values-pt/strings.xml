@@ -45,6 +45,9 @@
     <string name="gamepad1_test">Teste Gamepad 1</string>
     <string name="gamepad2_test">Teste Gamepad 2</string>
     <string name="gamepad3_test">Teste Gamepad 3</string>
+    <string name="gamepad4_test">Teste Gamepad 4</string>
+    <string name="gamepad5_test">Teste Gamepad 5</string>
+    <string name="gamepad6_test">Teste Gamepad 6</string>
 
     <string name="notificationInBackgroundTitle">EngineDriver em segundo plano</string>
     <string name="notificationInBackgroundText">☠️O Android pode desativá-lo a qualquer momento, sem aviso prévio. Toque para reabrir</string>
