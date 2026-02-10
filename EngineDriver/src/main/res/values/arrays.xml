@@ -2145,11 +2145,13 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Programming Track (Service mode)</item>
         <item>Program on Main (Operation mode)</item>
+        <item>Command Line</item>
         <item>Track/District Manager</item>
     </string-array>
     <string-array name="dccExActionTypeEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>PROG</item>
         <item>MAIN</item>
+        <item>COMMAND</item>
         <item>TRACK</item>
     </string-array>
 

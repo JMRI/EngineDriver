@@ -432,6 +432,7 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>プログラミングトラック（サービスモード）</item>
         <item>メインプログラム（動作モード）</item>
+        <item>コマンドライン</item>
         <item>トラック/地区マネージャー</item>
     </string-array>
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->

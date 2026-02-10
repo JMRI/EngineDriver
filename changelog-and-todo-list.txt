@@ -6,7 +6,9 @@
     * Support the new DCC-EX In-Command-Station Consists/MUs.  The CV19 dialog is now dual use.
     * Added the missing menu items for gamepads 4-6.
     * Added support for turnouts/points from an attached keyboard U=Toggle I=Throw O=Close. Must be followed by three digits.
+    * Added option (in the drop down) to just show the Command Line on the DCC-EX page. (For small screens)
  * Bug fixes
+    * Bug fix for the auto-connect to address and port for DCC-EX.
     * Bug fix for the DCC-EX handoff dialog. Would not trigger unless you had previously moved a loco.
     * Bug fix for the showing and hiding of the number of throttles preference in some situations.  Caused by the renaming of the preferences.
     * Bug fix for the 'additional' gamepad and volume indicators. This can't have worked properly for a long time.

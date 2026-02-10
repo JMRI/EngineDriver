@@ -308,6 +308,7 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Pista de programació (mode de servei)</item>
         <item>Programa al principal (mode de funcionament)</item>
+        <item>Línia d\'ordres</item>
         <item>Gerent de pista/districte</item>
     </string-array>
 

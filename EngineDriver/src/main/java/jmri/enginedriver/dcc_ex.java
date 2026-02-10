@@ -119,7 +119,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
     private static final int PROGRAMMING_TRACK = 0;
     //    private static final int PROGRAMMING_ON_MAIN = 1;
-    private static final int TRACK_MANAGER = 2;
+    private static final int COMMAND_LINE = 2;
+    private static final int TRACK_MANAGER = 3;
 
     Button readAddressButton;
     Button writeAddressButton;
@@ -630,11 +631,14 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
     private void showHideButtons() {
         if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
-            dccexProgrammingCommonCvsLayout.setVisibility(VISIBLE);
-            dccexCommonCvsSpinner.setVisibility(VISIBLE);
+            int enable = (mainapp.dccexActionTypeIndex != COMMAND_LINE) ? VISIBLE : GONE;
 
-            dccexProgrammingAddressLayout.setVisibility(VISIBLE);
-            dccexProgrammingCvLayout.setVisibility(VISIBLE);
+            dccexProgrammingCommonCvsLayout.setVisibility(enable);
+            dccexCommonCvsSpinner.setVisibility(enable);
+
+            dccexProgrammingAddressLayout.setVisibility(enable);
+            dccexProgrammingCvLayout.setVisibility(enable);
+
             dceexDccexTrackLinearLayout.setVisibility(GONE);
             dccexWriteInfoLayout.setVisibility(VISIBLE);
 
@@ -889,9 +893,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         vn = mainapp.getDccexVersionNumeric();
 
         if (vn <= 04.002007) {  // need to remove the track manager option
-            dccexActionTypeEntryValuesArray = new String[2];
-            dccexActionTypeEntriesArray = new String[2];
-            for (int i = 0; i < 2; i++) {
+            dccexActionTypeEntryValuesArray = new String[3];
+            dccexActionTypeEntriesArray = new String[3];
+            for (int i = 0; i < 3; i++) {
                 dccexActionTypeEntryValuesArray[i] = this.getResources().getStringArray(R.array.dccExActionTypeEntryValues)[i];
                 dccexActionTypeEntriesArray[i] = this.getResources().getStringArray(R.array.dccExActionTypeEntries)[i];
             }
@@ -920,7 +924,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccexCvProgrammerPomButton.setOnClickListener(dccExNavigationButtonListener);
 
         dccexTrackManagerButton = findViewById(R.id.dccex_track_manager_button);
-        dccExNavigationButtonListener = new DccExNavigationButtonListener(2);
+        dccExNavigationButtonListener = new DccExNavigationButtonListener(3);
         dccexTrackManagerButton.setOnClickListener(dccExNavigationButtonListener);
 
         ImageButton default_functions_button = findViewById(R.id.dccex_default_functions_button);
@@ -1381,7 +1385,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     void setSelectedButton(int index) {
         dccexCvProgrammerProgTrackButton.setSelected(index==0);
         dccexCvProgrammerPomButton.setSelected(index==1);
-        dccexTrackManagerButton.setSelected(index==2);
+        dccexTrackManagerButton.setSelected(index==3);
     }
 
     public class DccExNavigationButtonListener implements View.OnClickListener {

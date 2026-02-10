@@ -483,6 +483,7 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Rail de programmation (mode service)</item>
         <item>Programmation sur voie principale (mode opération)</item>
+        <item>Ligne de commande</item>
         <item>Distric manager</item>
     </string-array>
 

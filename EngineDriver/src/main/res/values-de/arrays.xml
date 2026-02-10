@@ -309,6 +309,7 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Programmiergleismodus (Service-Modus)</item>
         <item>Programmierung Hauptgleismodus (POM)</item>
+        <item>Befehlszeile</item>
         <item>Spur-/TrackManager</item>
     </string-array>
 

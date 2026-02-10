@@ -468,6 +468,7 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>编程轨道（编程模式）</item>
         <item>主轨道 （运行模式）</item>
+        <item>命令行</item>
         <item>轨道/区块管理</item>
     </string-array>
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->

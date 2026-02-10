@@ -443,6 +443,7 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Voie de programmation (Mode service)</item>
         <item>Programmation sur la voie principale (Mode opération)</item>
+        <item>Ligne de commande</item>
         <item>Gestionnaire de voie/district</item>
     </string-array>
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
