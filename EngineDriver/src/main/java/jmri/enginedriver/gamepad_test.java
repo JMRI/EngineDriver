@@ -95,6 +95,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private SharedPreferences prefs;
 
     private String whichGamepadNo = " "; //text version of the arr index of the gamepad we are testing.  Sent in and out
+    private int whichGamepad = -1;
+    private boolean onlyTestCurrent = false;
 
     private String prefGamePadType = "None";
     private int prefGamePadTypeIndex = 0;
@@ -131,11 +133,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     private TextView tvGamepadAllKeyCodes;
 
     private String allKeyCodes = "";
-
-//    private static final String GAMEPAD_TEST_PASS = "1";
-//    private static final String GAMEPAD_TEST_FAIL = "2";
-//    private static final String GAMEPAD_TEST_SKIPPED = "3";
-//    private static final String GAMEPAD_TEST_RESET = "9";
 
     private int decreaseButtonCount = 0;
 
@@ -331,6 +328,17 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     public boolean dispatchGenericMotionEvent(android.view.MotionEvent event) {
         threaded_application.extendedLogging(activityName + ": dispatchGenericMotionEvent(): " + event.getAction());
         if ((!prefGamePadType.equals("None")) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
+
+            String deviceDescriptor = event.getDevice().getDescriptor();
+            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(deviceDescriptor);
+            if ( (onlyTestCurrent) && (whichGamePadIsEventFrom != whichGamepad) ) {
+                if (whichGamepad >= 0) {
+                    return (true); // from another gamepad.  ignore it
+                } else {
+                    return super.dispatchGenericMotionEvent(event);
+                }
+            }
+
             int action;
 
             float xAxis;
@@ -423,6 +431,16 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         if (isExternal) { // if has come from the phone itself, don't try to process it here
             if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
 
+                String deviceDescriptor = event.getDevice().getDescriptor();
+                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(deviceDescriptor);
+                if ( (onlyTestCurrent) && (whichGamePadIsEventFrom != whichGamepad) ) {
+                    if (whichGamepad >= 0) {
+                        return (true); // from another gamepad.  ignore it
+                    } else {
+                        return super.dispatchKeyEvent(event);
+                    }
+                }
+
                 int action = event.getAction();
                 int keyCode = event.getKeyCode();
                 int repeatCnt = event.getRepeatCount();
@@ -502,6 +520,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     }
     private class skip_button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            result = RESULT_OK;
             endThisActivity(gamepad_test_type.SKIPPED);
             mainapp.buttonVibration();
         }
@@ -524,6 +543,12 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             whichGamepadNo = extras.getString("whichGamepadNo");
+            onlyTestCurrent = extras.getBoolean("onlyTestCurrent", false);
+            try {
+                whichGamepad = Integer.parseInt(whichGamepadNo);
+            } catch (NumberFormatException ignore) {
+                whichGamepad = -1;
+            }
         }
 
         mainapp.applyTheme(this);
@@ -557,7 +582,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         tvGamepadAllKeyCodes = findViewById(R.id.gamepad_test_all_keycodes);
 
         tvGamepadKeyCode = findViewById(R.id.gamepad_test_keycode);
-        tvGamepadKeyFunction = findViewById(R.id.gamepad_test_keyfunction);
+        tvGamepadKeyFunction = findViewById(R.id.gamepad_test_key_function);
         tvGamepadComplete = findViewById(R.id.gamepad_test_complete);
 
         tvGamepadKeyCode.setText("");
@@ -645,6 +670,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.GAMEPAD_TEST;
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         
@@ -833,4 +859,22 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             }
         }
     }
+
+    public int findWhichGamePadEventIsFrom(String eventDeviceDescriptor) {
+        int whichGamePad = -2;  // default to the event not from a gamepad
+
+        if (!eventDeviceDescriptor.isEmpty()) { // event is from a gamepad (or at least not from a screen touch)
+            whichGamePad = -1;  // gamepad
+
+            for (int i = 0; i < mainapp.gamePadDeviceDescriptors.length; i++) {
+                if (eventDeviceDescriptor.equals(mainapp.gamePadDeviceDescriptors[i])) {
+                    whichGamePad = i;
+                    break;
+                }
+            }
+        }
+
+        return whichGamePad;
+    }
+
 }

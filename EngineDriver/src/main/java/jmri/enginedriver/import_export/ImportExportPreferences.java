@@ -206,6 +206,7 @@ public class ImportExportPreferences {
         Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): ImportExportPreferences: Saving preferences to file - Finished");
     }
 
+    @SuppressWarnings("ChainOfInstanceofChecks")
     @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
     public boolean loadSharedPreferencesFromFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
         Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Loading saved preferences from file");

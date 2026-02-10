@@ -57,7 +57,7 @@
                         style="?attr/ed_small_button_condensed_text_style"
                         android:layout_width="fill_parent"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/DCCEXbuttonCvProgrammerProgTrack"
+                        android:contentDescription="@string/dccexButtonCvProgrammerProgTrack"
                         android:src="?attr/ed_dccex_glyph_cv_programmer_prog_track" />
 
                     <TextView
@@ -69,7 +69,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_marginEnd="2dp"
                         android:layout_gravity="center"
-                        android:text="@string/DCCEXbuttonCvProgrammerProgTrack"
+                        android:text="@string/dccexButtonCvProgrammerProgTrack"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
 
@@ -92,7 +92,7 @@
                         style="?attr/ed_small_button_condensed_text_style"
                         android:layout_width="fill_parent"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/DCCEXbuttonCvProgrammerPoM"
+                        android:contentDescription="@string/dccexButtonCvProgrammerPoM"
                         android:src="?attr/ed_dccex_glyph_cv_programmer_pom"/>
 
                     <TextView
@@ -104,7 +104,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_marginEnd="2dp"
                         android:layout_gravity="center"
-                        android:text="@string/DCCEXbuttonCvProgrammerPoM"
+                        android:text="@string/dccexButtonCvProgrammerPoM"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
 
@@ -127,7 +127,7 @@
                         style="?attr/ed_small_button_condensed_text_style"
                         android:layout_width="fill_parent"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/DCCEXbuttonTrackManager"
+                        android:contentDescription="@string/dccexButtonTrackManager"
                         android:src="?attr/ed_dccex_glyph_track_manager"/>
 
                     <TextView
@@ -139,7 +139,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_marginEnd="2dp"
                         android:layout_gravity="center"
-                        android:text="@string/DCCEXbuttonTrackManager"
+                        android:text="@string/dccexButtonTrackManager"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
 
@@ -162,7 +162,7 @@
                         style="?attr/ed_small_button_condensed_text_style"
                         android:layout_width="fill_parent"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/DCCEXbuttonDefaultFunctions"
+                        android:contentDescription="@string/dccexButtonDefaultFunctions"
                         android:src="?attr/ed_dccex_glyph_function_defaults"/>
 
                     <TextView
@@ -174,7 +174,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_marginEnd="2dp"
                         android:layout_gravity="center"
-                        android:text="@string/DCCEXbuttonDefaultFunctions"
+                        android:text="@string/dccexButtonDefaultFunctions"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
 
@@ -198,7 +198,7 @@
                     android:gravity="end"
                     android:padding="0sp"
                     android:paddingTop="1sp"
-                    android:text="@string/DCCEXactionTypeLabel"
+                    android:text="@string/dccexActionTypeLabel"
                     android:textAlignment="viewEnd"
                     android:textSize="12sp" />
 
@@ -241,7 +241,7 @@
                     android:layout_weight=".4"
                     android:gravity="end"
                     android:padding="4sp"
-                    android:text="@string/DccexWriteAddressLabel"
+                    android:text="@string/dccexWriteAddressLabel"
                     android:textAlignment="viewEnd" />
 
                 <EditText
@@ -273,7 +273,7 @@
                     android:layout_weight=".2"
                     android:padding="0dp"
                     android:drawableStart="?attr/ed_read_glyph"
-                    android:text="@string/DccexReadAddressButtonLabel"
+                    android:text="@string/dccexReadAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
 
                 <Button
@@ -284,7 +284,7 @@
                     android:layout_weight=".2"
                     android:padding="0dp"
                     android:drawableStart="?attr/ed_write_glyph"
-                    android:text="@string/DccexWriteAddressButtonLabel"
+                    android:text="@string/dccexWriteAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
@@ -305,7 +305,7 @@
                     android:layout_weight=".1"
                     android:gravity="end"
                     android:padding="4sp"
-                    android:text="@string/DccexWriteCvLabel"
+                    android:text="@string/dccexWriteCvLabel"
                     android:textAlignment="viewEnd" />
 
                 <EditText
@@ -335,7 +335,7 @@
                     android:layout_weight=".15"
                     android:gravity="end"
                     android:padding="4sp"
-                    android:text="@string/DccexWriteCvValueLabel"
+                    android:text="@string/dccexWriteCvValueLabel"
                     android:textAlignment="viewEnd" />
 
                 <EditText
@@ -367,7 +367,7 @@
                     android:layout_weight=".2"
                     android:padding="0dp"
                     android:drawableStart="?attr/ed_read_glyph"
-                    android:text="@string/DccexReadAddressButtonLabel"
+                    android:text="@string/dccexReadAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
 
                 <Button
@@ -378,7 +378,7 @@
                     android:layout_weight=".2"
                     android:padding="0dp"
                     android:drawableStart="?attr/ed_write_glyph"
-                    android:text="@string/DccexWriteAddressButtonLabel"
+                    android:text="@string/dccexWriteAddressButtonLabel"
                     tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
@@ -401,7 +401,7 @@
                     android:layout_weight=".2"
                     android:gravity="end"
                     android:padding="2sp"
-                    android:text="@string/DccexCommonCvsLabel"
+                    android:text="@string/dccexCommonCvsLabel"
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp" />
@@ -428,7 +428,7 @@
                     android:layout_height="26dp"
                     android:layout_weight=".10"
                     android:padding="2sp"
-                    android:text="@string/DccexCvBitCalculatorButtonLabel" />
+                    android:text="@string/dccexCvBitCalculatorButtonLabel" />
 
             </LinearLayout>
 
@@ -1018,7 +1018,7 @@
                         android:autoSizeMinTextSize="8sp"
                         android:autoSizeStepGranularity="1sp"
                         android:padding="0dp"
-                        android:text="@string/DCCEXsetTrackButtonLabel"
+                        android:text="@string/dccexSetTrackButtonLabel"
                         tools:ignore="UnusedAttribute" />
 
                     <Button
@@ -1031,7 +1031,7 @@
                         android:autoSizeStepGranularity="1sp"
                         android:layout_marginTop="10dp"
                         android:padding="0sp"
-                        android:text="@string/DCCEXJoinTrackButtonLabel"
+                        android:text="@string/dccexJoinTrackButtonLabel"
                         tools:ignore="UnusedAttribute" />
 
                 </LinearLayout>
@@ -1063,7 +1063,7 @@
                     android:gravity="end"
                     android:paddingRight="4dp"
                     android:paddingLeft="0dp"
-                    android:text="@string/DccexSendCommandLabel"
+                    android:text="@string/dccexSendCommandLabel"
                     android:textAlignment="viewEnd" />
 
                 <EditText
@@ -1092,7 +1092,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".2"
                     android:padding="4sp"
-                    android:text="@string/DccexSendCommandButtonLabel" />
+                    android:text="@string/dccexSendCommandButtonLabel" />
 
                 <TableLayout
                     android:id="@+id/dexc_commandsExtraButtonsLayout"
@@ -1113,7 +1113,7 @@
                             android:layout_height="26dp"
                             android:layout_weight=".5"
                             android:padding="2sp"
-                            android:text="@string/DccexPreviousCommandButtonLabel" />
+                            android:text="@string/dccexPreviousCommandButtonLabel" />
                     </TableRow>
 
                     <TableRow android:gravity="center_horizontal">
@@ -1125,7 +1125,7 @@
                             android:layout_height="22dp"
                             android:layout_weight=".5"
                             android:padding="2sp"
-                            android:text="@string/DccexNextCommandButtonLabel" />
+                            android:text="@string/dccexNextCommandButtonLabel" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
@@ -1148,7 +1148,7 @@
                     android:layout_weight=".3"
                     android:gravity="end"
                     android:padding="2sp"
-                    android:text="@string/DccexCommonCommandsLabel"
+                    android:text="@string/dccexCommonCommandsLabel"
                     android:textAlignment="viewEnd"
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp" />
@@ -1276,7 +1276,7 @@
                 style="?attr/ed_normal_button_condensed_style"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
-                android:text="@string/DccexClearCommands"
+                android:text="@string/dccexClearCommands"
                 android:drawableStart="?attr/ed_clear_list_glyph"
                 android:padding="0dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />

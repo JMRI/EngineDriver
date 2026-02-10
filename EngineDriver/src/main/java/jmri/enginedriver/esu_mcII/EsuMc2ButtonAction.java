@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import jmri.enginedriver.throttle;
-
 public enum EsuMc2ButtonAction {
     NO_ACTION("(no function)"),
     ALL_STOP("All Stop"),

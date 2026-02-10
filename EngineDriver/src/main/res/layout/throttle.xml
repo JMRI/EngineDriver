@@ -110,7 +110,7 @@
                                     android:text="@string/loco"
                                     android:translationZ="90dp"
                                     tools:ignore="RelativeOverlap,RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -374,7 +374,7 @@
                                     android:text="@string/loco"
                                     android:translationZ="90dp"
                                     tools:ignore="RelativeOverlap,RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -645,7 +645,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RelativeOverlap,RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout

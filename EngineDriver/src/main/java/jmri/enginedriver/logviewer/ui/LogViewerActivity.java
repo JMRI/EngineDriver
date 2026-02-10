@@ -191,6 +191,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.LOG_VIEWER;
         if (mainapp.isForcingFinish()) {        //expedite
             this.finish();

@@ -19,6 +19,7 @@
     <color name="black_half_trans">#88000000</color>
     <color name="black">#ff000000</color>
     <color name="darkGrey">#252525</color>
+    <color name="midGrey">#2F2F2F</color>
     <color name="grey">#ff888888</color>
     <color name="lightGrey">#a6a6a6</color>
 
@@ -199,6 +200,7 @@
 
     <color name="windowBackground_colorful">#fffaf6</color>
     <color name="dialogBackground_colorful">#f5971d</color>
+    <color name="dialogSecondaryBackground_colorful">#E98713</color>
 
     <color name="windowBackgroundGradiantLight_colorful">#FFFFFF</color>
     <color name="windowBackgroundGradiantMid_colorful">#FDECD5</color>

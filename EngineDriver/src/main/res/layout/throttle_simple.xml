@@ -115,7 +115,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -377,7 +377,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -638,7 +638,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -900,7 +900,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -1161,7 +1161,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -1422,7 +1422,7 @@
                                     android:translationZ="90dp"
                                     android:text="@string/loco"
                                     tools:ignore="RtlHardcoded"
-                                    tools:targetApi="lollipop" />
+                                     />
                             </RelativeLayout>
 
                             <RelativeLayout

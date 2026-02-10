@@ -74,6 +74,7 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.util.dccexAutomation;
@@ -417,19 +418,14 @@ public class routes extends AppCompatActivity
         if (!routeType.equals("A")) { // route
             mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, "2" + routeOrAutomationId);
         } else { // automation
-            try {
-                automationLoco = whichLoco.substring(1);
+            automationLoco = whichLoco.isEmpty() ? "" : whichLoco.substring(1);
 
-                boolean prefDccexAutomationsAsk = prefs.getBoolean("prefDccexAutomationsAsk", getResources().getBoolean(R.bool.prefDccexAutomationsAskDefaultValue));
-                if (prefDccexAutomationsAsk) {
-                    showDccexAutomationDialog(routeOrAutomationId, automationLoco);
-                } else {
-                    if (!automationLoco.isEmpty()) {
-                        int automationLocoNo = Integer.parseInt(automationLoco);
-                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, "2" + routeOrAutomationId, automationLocoNo);
-                    }
-                }
-            } catch (Exception ignored) { // probably no loco selected
+            boolean prefDccexAutomationsAsk = prefs.getBoolean("prefDccexAutomationsAsk", getResources().getBoolean(R.bool.prefDccexAutomationsAskDefaultValue));
+            if ( (prefDccexAutomationsAsk) || (automationLoco.isEmpty()) ) {
+                showDccexAutomationDialog(routeOrAutomationId, automationLoco);
+            } else {
+                int automationLocoNo = Integer.parseInt(automationLoco);
+                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, "2" + routeOrAutomationId, automationLocoNo);
             }
         }
     }
@@ -573,8 +569,8 @@ public class routes extends AppCompatActivity
 //        };
 //        routes_lv.setOnTouchListener(gestureListener);
 
-        EditText rte = findViewById(R.id.route_entry);
-        rte.addTextChangedListener(new TextWatcher() {
+        InterceptEditText routeEntryEditText = findViewById(R.id.route_entry);
+        routeEntryEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateRouteEntry();
             }
@@ -585,7 +581,8 @@ public class routes extends AppCompatActivity
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-        rte.setOnEditorActionListener(new OnEditorActionListener() {
+        routeEntryEditText.setMainApp(mainapp);
+        routeEntryEditText.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
@@ -688,6 +685,7 @@ public class routes extends AppCompatActivity
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.ROUTES;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();
@@ -748,10 +746,10 @@ public class routes extends AppCompatActivity
         mainapp.routes_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
         //make sure the soft keyboard is closed
-        EditText rte = findViewById(R.id.route_entry);
+        EditText routeEntryEditText = findViewById(R.id.route_entry);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null && rte != null) {
-            mainapp.hideSoftKeyboard(rte, activityName,false);
+        if (imm != null && routeEntryEditText != null) {
+            mainapp.hideSoftKeyboard(routeEntryEditText, activityName,false);
         }
     }
 

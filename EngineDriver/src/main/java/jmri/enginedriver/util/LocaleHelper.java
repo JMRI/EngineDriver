@@ -79,7 +79,6 @@ public class LocaleHelper {
     }
 
     @SuppressLint("AppBundleLocaleChanges")
-    @androidx.annotation.RequiresApi(17)
     private static Context updateResources(Context context, String language) {
 
         String [] languageAndCountry = language.split("_");

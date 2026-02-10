@@ -244,6 +244,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.FUNCTION_SETTINGS;
         if (mainapp.isForcingFinish()) {     //expedite
             this.finish();

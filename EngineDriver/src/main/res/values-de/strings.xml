@@ -49,6 +49,9 @@
     <string name="gamepad1_test">Gamepad 1 Test</string>
     <string name="gamepad2_test">Gamepad 2 Test</string>
     <string name="gamepad3_test">Gamepad 3 Test</string>
+    <string name="gamepad4_test">Gamepad 4 Test</string>
+    <string name="gamepad5_test">Gamepad 5 Test</string>
+    <string name="gamepad6_test">Gamepad 6 Test</string>
 
     <string name="notificationInBackgroundTitle">Engine Driver im Hintergrund</string>
     <string name="notificationInBackgroundText">☠️Android kann es jederzeit ohne Warnung beenden. Tippen Sie hier, um es erneut zu öffnen</string>
@@ -1057,9 +1060,10 @@
     <string name="prefGamePadDoublePressStopSummary">Wählen Sie die Aktion, wenn Sie eine Taste drücken, die als \"Stopp\" konfiguriert ist</string>
     <string name="prefDccexSummary">Verwenden Sie die nativen DCC-EX-Befehle anstatt für alle Verbindungen. \nHINWEIS: Wir wirken erst wirksam, wenn Sie den Engine -Treiber neu starten und eine Verbindung zu einem Server herstellen.</string>
     <string name="prefDccexSwapThrowCloseSummary">Tauschen Sie die Stell-/Schließmarkierungen an allen DCC-EX-Weichen. Wiederanschluss erforderlich.</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Verwenden Sie die DCC-EX-Notstopp-Pause/Fortsetzen-Funktion anstelle eines einfachen Notstopps.</string>
     <string name="prefDccexTitle">Verwenden Sie native DCC-EX-Befehle</string>
     <string name="useProtocolDCCEX">Zu verwendendes Protokoll?</string>
-    <string name="useProtocolDCCEXplusAutoHint">Zu verwendendes Protokoll?\n<small><small>(\'Auto\' sucht nach \"DCCEX\", \"DCC-EX\" oder Port 2560)</small></small></string>
+    <string name="useProtocolDccexPlusAutoHint">Zu verwendendes Protokoll?\n<small><small>(\'Auto\' sucht nach \"DCCEX\", \"DCC-EX\" oder Port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls. Deaktivieren Sie \"Verwenden Sie native DCC-EX-Befehle\", um das WithRottle-Protokoll zu verwenden.</string>
     <string name="prefDccexConnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Sequenzierte Artikelanfragen</string>
@@ -1067,38 +1071,38 @@
     <string name="prefDccexConnectionOptionTitle">Protokolloption anzeigen</string>
     <string name="prefActionBarShowDccExButtonSummary">Sehen Sie die Schaltfläche in Aktionsleiste an, um auf den DCC-EX-Bildschirm zuzugreifen. (Nur für native DCC-EX-Verbindungen.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX-Taste?</string>
-    <string name="DCCEXactionTypeLabel">Aktion</string>
-    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(ausschließen \'&lt;\' und \'&gt;\')</small></small></string>
-    <string name="DccexClearCommands">Leeren</string>
+    <string name="dccexActionTypeLabel">Aktion</string>
+    <string name="dccexSendCommandLabel">DCC-EX Cmd\n<small><small>(ausschließen \'&lt;\' und \'&gt;\')</small></small></string>
+    <string name="dccexClearCommands">Leeren</string>
 
-    <string name="DccexCvBitCalculatorButtonLabel">Bits</string>
+    <string name="dccexCvBitCalculatorButtonLabel">Bits</string>
     <string name="cvBitCalculatorTitle">CV-Bit-Rechner</string>
     <string name="cvBitCalculatorCvValueLabel">CV-Wert (dezimal)</string>
     <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
 
-    <string name="DccexConnectionOptionTitle">Verbindungsprotokoll</string>
-    <string name="DccexFailed">Aktion: fehlgeschlagen</string>
-    <string name="DccexNextCommandButtonLabel">Nächste</string>
-    <string name="DccexPreviousCommandButtonLabel">Frühere</string>
-    <string name="DccexReadAddressButtonLabel">Lesen</string>
-    <string name="DCCEXrouteHandoff">Weiterleiten</string>
-    <string name="DCCEXrouteSet">Satz</string>
-    <string name="DccexSendCommandButtonLabel">Senden</string>
+    <string name="dccexConnectionOptionTitle">Verbindungsprotokoll</string>
+    <string name="dccexFailed">Aktion: fehlgeschlagen</string>
+    <string name="dccexNextCommandButtonLabel">Nächste</string>
+    <string name="dccexPreviousCommandButtonLabel">Frühere</string>
+    <string name="dccexReadAddressButtonLabel">Lesen</string>
+    <string name="dccexRouteHandoff">Weiterleiten</string>
+    <string name="dccexRouteSet">Satz</string>
+    <string name="dccexSendCommandButtonLabel">Senden</string>
     <string name="witActionTypeLabel">Aktion</string>
     <string name="witWriteAddressLabel">DCC-Adresse</string>
     <string name="witPomWarning">Hinweise: - Dies funktioniert auf einigen DCC-Systemen nicht. - Änderung der Lokadresse wird verhindert – CVs 1, 17 &amp; 18 und Bit 5 von CV 29. \n\nMit Vorsicht verwenden.</string>
     <string name="witPomMaxValueWarning">Der Wert „%1$s“ überschreitet den maximal unterstützten Wert (‚%2$s‘).</string>
-    <string name="DccexCommonCvsLabel">NMRA CVs</string>
-    <string name="DccexCommonCommandsLabel">Wichtige CMDs</string>
-    <string name="DCCEXsetTrackButtonLabel">Set</string>
-    <string name="DccexSucceeded">Aktion erfolgreich</string>
-    <string name="DCCEXturnoutClosed">Geradeaus</string>
-    <string name="DCCEXturnoutInconsistent">Inkonsistent</string>
-    <string name="DCCEXturnoutThrown">Abbiegend</string>
-    <string name="DCCEXturnoutUnknown">Unbekannt</string>
-    <string name="DccexWriteAddressButtonLabel">Schreiben</string>
-    <string name="DccexWriteAddressLabel">DCC Adresse</string>
-    <string name="DccexWriteCvValueLabel">Wert</string>
+    <string name="dccexCommonCvsLabel">NMRA CVs</string>
+    <string name="dccexCommonCommandsLabel">Wichtige CMDs</string>
+    <string name="dccexSetTrackButtonLabel">Set</string>
+    <string name="dccexSucceeded">Aktion erfolgreich</string>
+    <string name="dccexTurnoutClosed">Geradeaus</string>
+    <string name="dccexTurnoutInconsistent">Inkonsistent</string>
+    <string name="dccexTurnoutThrown">Abbiegend</string>
+    <string name="dccexTurnoutUnknown">Unbekannt</string>
+    <string name="dccexWriteAddressButtonLabel">Schreiben</string>
+    <string name="dccexWriteAddressLabel">DCC Adresse</string>
+    <string name="dccexWriteCvValueLabel">Wert</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorieren Sie Joystick -Handlungen</string>
     <string name="prefGamePadIgnoreJoystickSummary">Wählen Sie dies aus, wenn Sie Probleme mit dem DPAD haben, der sowohl Schlüsselcodes als auch Joystick -Ereignisse erstellt</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver benötigt Read_Media_images -Berechtigungen, um Hintergrundbilder zu laden.\n\nEngine Driver funktioniert auch ohne.</string>
@@ -1115,12 +1119,12 @@
     <string name="cv29AnalogueConversionOn">Analogkonvertierung: EIN</string>
     <string name="cv29DirectionForward">Normale Richtung: Vorwärts</string>
     <string name="cv29DirectionReverse">Normale Richtung: Rückwärts</string>
-    <string name="DCCEXbuttonTrackManager">Track Mngr</string>
-    <string name="DCCEXbuttonDefaultFunctions">Standard FNs</string>
-    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX – Programmiergleis (Servicemodus)</string>
-    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX – Programmierung Hauptgleis (Betriebsmodus)</string>
-    <string name="DCCEXheadingTrackManager">DCC-EX – Spur-/TrackManager</string>
-    <string name="DCCEXrequestLocoIdFailed">Anforderung der Lok-ID fehlgeschlagen</string>
+    <string name="dccexButtonTrackManager">Track Mngr</string>
+    <string name="dccexButtonDefaultFunctions">Standard FNs</string>
+    <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX – Programmiergleis (Servicemodus)</string>
+    <string name="dccexHeadingCvProgrammerPoM">DCC-EX – Programmierung Hauptgleis (Betriebsmodus)</string>
+    <string name="dccexHeadingTrackManager">DCC-EX – Spur-/TrackManager</string>
+    <string name="dccexRequestLocoIdFailed">Anforderung der Lok-ID fehlgeschlagen</string>
     <string name="cv29SpeedSteps14">Geschwindigkeitsstufen: 14</string>
     <string name="cv29SpeedSteps28">Geschwindigkeitsstufen: 28/128</string>
     <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Adressgröße: 2 Bit (0-127)</string>
@@ -1132,7 +1136,7 @@
     <string name="order">Sortieren</string>
     <string name="prefTurnoutsShowThrowCloseButtonsTitle">Immer Abbiegen/Geradeaus anzeigen?</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Zeigen Sie für Weichen immer die Schaltflächen „Abbiegen“ und „Geradeaus“ an, niemals die Schaltfläche „Schalten“.</string>
-    <string name="DCCEXJoinTrackButtonLabel">Join</string>
+    <string name="dccexJoinTrackButtonLabel">Join</string>
 
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Decoder-Bremstyp</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Ative as funções de freio no decodificador</string>
@@ -1214,7 +1218,9 @@
 
     <string name="prefAutoServerIpConnectTitle">Automatische Verbindung zur Serveradresse</string>
     <string name="advancedConsistToolTitle">Erweitertes Consist-Tool (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">In Command Station Consist Tool</string>
     <string name="advancedConsistToolConsistAddressLabel">Adresse</string>
+    <string name="advancedConsistToolLeadLocoLabel">Adresse der führenden Lokomotive</string>
     <string name="advancedConsistToolLocoAddressLabel">Loco Adresse</string>
     <string name="advancedConsistToolLocoFacingLabel">Blickrichtung nach vorn?</string>
     <string name="advancedConsistToolAddButtonLabel">Hinzufügen</string>
@@ -1236,5 +1242,6 @@
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um den Bildschirm „Erweiterte Konsistenz (CV19)“ zu öffnen</string>
     <string name="prefActionBarShowWebButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zur Webansicht zu wechseln</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX – Weichen stellen/schließen</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX – Not-Aus-Pause/Fortsetzen verwenden</string>
 
 </resources>

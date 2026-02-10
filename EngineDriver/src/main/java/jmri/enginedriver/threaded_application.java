@@ -101,6 +101,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.dccex_emergency_stop_state_type;
+import jmri.enginedriver.type.gamepad_status_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.notification_type;
@@ -237,7 +238,7 @@ public class threaded_application extends Application {
     public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
     public String prefUseDccexProtocol = "Auto";
     public boolean prefAlwaysUseFunctionsFromServer = false;
-    public String DccexVersion = "";
+    public String dccexVersionString = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
     public boolean dccexScreenIsOpen = false;
@@ -286,6 +287,7 @@ public class threaded_application extends Application {
     public String [] dccexRouteLabels;  // used to process the route list
     public boolean [] dccexRouteDetailsReceived;  // used to process the route list
     public boolean dccexRouteStatesReceived = false;
+    public ArrayList<ArrayList<HashMap<String, String>>> dccexInCommandStationConsists;  // used to process the In Command Station consist list
 
     // only used to track the state of the numeric keys of an attached keyboard for DCCEX (0-9)
     public int[] numericKeyIsPressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
@@ -304,6 +306,7 @@ public class threaded_application extends Application {
     public volatile Handler consist_lights_edit_msg_handler;
     public volatile Handler power_control_msg_handler;
     public volatile Handler dcc_ex_msg_handler;
+    public volatile Handler advancedConsistToolMesssgeHandler;
     public volatile Handler withrottle_cv_programmer_msg_handler;
     public volatile Handler reconnect_status_msg_handler;
     public volatile Handler settings_msg_handler;
@@ -489,10 +492,10 @@ public class threaded_application extends Application {
     public static final String WHICH_GAMEPAD_MODE_NONE = "None";
     public String prefGamePadType = WHICH_GAMEPAD_MODE_NONE;
     public boolean prefGamepadOnlyOneGamepad = true;
-    public int[] gamePadIdsAssignedToThrottles = {0, 0, 0, 0, 0, 0}; // which device id if assigned to each of the throttles
+    public String[] gamePadDescriptorsAssignedToThrottles = {"", "", "", "", "", "", ""}; // which device have we seen - Names
     public int[] gamePadThrottleAssignment = {-1, -1, -1, -1, -1, -1};
     public boolean usingMultiplePads = false;
-    public int[] gamePadDeviceIds = {0, 0, 0, 0, 0, 0, 0}; // which device ids have we seen
+    public String[] gamePadDeviceDescriptors = {"", "", "", "", "", "", ""}; // which device have we seen - Names
     public String[] gamePadDeviceNames = {"", "", "", "", "", "", ""}; // which device have we seen - Names
     public int[] gamePadDeviceIdsTested = {-1, -1, -1, -1, -1, -1, -1}; // which device ids have we tested  -1 = not tested 0 = test started 1 = test passed 2 = test failed
     public int gamepadCount = 0;
@@ -500,9 +503,6 @@ public class threaded_application extends Application {
     public float[] gamePadLastyAxis = {0, 0, 0, 0, 0, 0, 0};
     public float[] gamePadLastxAxis2 = {0, 0, 0, 0, 0, 0, 0};
     public float[] gamePadLastyAxis2 = {0, 0, 0, 0, 0, 0, 0};
-
-    public static final int GAMEPAD_GOOD = 1;
-//    public static final int GAMEPAD_BAD = 2;
 
     public boolean prefGamePadIgnoreJoystick = false;
     public int prefGamePadFeedbackVolume = 100;
@@ -1303,7 +1303,7 @@ public class threaded_application extends Application {
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         mainapp.isDCCEX = prefUseDccexProtocol.equals("Yes") || mainapp.isDCCEX;   // force it if the preference is set
 
-        DccexVersion = "";
+        dccexVersionString = "";
         dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
         DCCEXlistsRequested = -1;
@@ -1466,12 +1466,11 @@ public class threaded_application extends Application {
 
         if (menu != null) {
             boolean any = false;
-            for (int i = 1; i <= 3; i++) {
-                MenuItem item = switch (i) {
-                    case 2 -> menu.findItem(R.id.gamepad_test_mnu2);
-                    case 3 -> menu.findItem(R.id.gamepad_test_mnu3);
-                    default -> menu.findItem(R.id.gamepad_test_mnu1);
-                };
+
+            TypedArray gamepad_test_menu_resource_ids = getResources().obtainTypedArray(R.array.gamepad_test_menu_resource_ids);
+
+            for (int i = 1; i <= 6; i++) {
+                MenuItem item = menu.findItem(gamepad_test_menu_resource_ids.getResourceId(i-1,0));
 
                 result = i <= gamepadCount;
 
@@ -1484,6 +1483,8 @@ public class threaded_application extends Application {
                     }
                 }
             }
+            gamepad_test_menu_resource_ids.recycle();
+
             if (any) {
                 menu.findItem(R.id.gamepad_test_menu).setVisible(true);
                 menu.findItem(R.id.gamepad_test_reset).setVisible(true);
@@ -1813,6 +1814,10 @@ public class threaded_application extends Application {
         }
         try {
             sendMsg(dcc_ex_msg_handler, msgType, msgBody);
+        } catch (Exception ignored) {
+        }
+        try {
+            sendMsg(advancedConsistToolMesssgeHandler, msgType, msgBody);
         } catch (Exception ignored) {
         }
         try {
@@ -2165,13 +2170,6 @@ public class threaded_application extends Application {
             theme.resolveAttribute(R.attr.ed_flashlight_off_button, outValue, true);
             menu.findItem(R.id.flashlight_button).setTitle(R.string.flashlightStateOff);
         }
-
-//        View view = menuItem.getActionView();
-//        if (view == null) return;
-//        ViewGroup button = view.findViewById(menuItem.getItemId());
-//        if (button == null) return;
-//        ImageView image = (ImageView) button.getChildAt(0);
-//        image.setImageResource(outValue.resourceId);
         setActionBarButtonImage(menuItem, outValue.resourceId);
     }
 
@@ -2188,7 +2186,7 @@ public class threaded_application extends Application {
     }
 
     // only works on menu items with - app:actionLayout="@layout/..."
-    void setActionBarButtonImage(MenuItem menuItem, int resourceId) {
+    public void setActionBarButtonImage(MenuItem menuItem, int resourceId) {
         View view = menuItem.getActionView();
         if (view == null) return;
         ViewGroup button = view.findViewById(menuItem.getItemId());
@@ -2946,13 +2944,13 @@ public class threaded_application extends Application {
         return withrottle_version;
     }
 
-    public String getDccexVersion() {
-        return DccexVersion;
+    public String getDccexVersionString() {
+        return dccexVersionString;
     }
     public float getDccexVersionNumeric() {
         float versionNumber = 4;
         try {
-            versionNumber = Float.parseFloat(DccexVersion);
+            versionNumber = Float.parseFloat(dccexVersionString);
         } catch (Exception ignored) { } // invalid version
         return versionNumber;
     }
@@ -3117,7 +3115,7 @@ public class threaded_application extends Application {
     public int getGamePadIndexFromThrottleNo(int whichThrottle) {
         int whichGamepad = -1;
         for (int i = 0; i < prefNumThrottles; i++) {
-            if (gamePadIdsAssignedToThrottles[whichThrottle] == gamePadDeviceIds[i]) {
+            if (gamePadDescriptorsAssignedToThrottles[whichThrottle].equals(gamePadDeviceDescriptors[i])) {
                 whichGamepad = i;
                 break;
             }
@@ -3126,38 +3124,40 @@ public class threaded_application extends Application {
     }
 
     // work out a) if we need to look for multiple gamepads b) workout which gamepad we received the key event from
-    public int findWhichGamePadEventIsFrom(int eventDeviceId, String eventDeviceName, int eventKeyCode) {
+    public int findWhichGamePadEventIsFrom(String eventDeviceDescriptor, String eventDeviceName, int eventKeyCode) {
+//    public int findWhichGamePadEventIsFrom(int eventDeviceId, String eventDeviceName, int eventKeyCode) {
         int whichGamePad = -2;  // default to the event not from a gamepad
         int whichGamePadDeviceId = -1;
         int j;
 
-        if (eventDeviceId >= 0) { // event is from a gamepad (or at least not from a screen touch)
+        if (!eventDeviceDescriptor.isEmpty()) { // event is from a gamepad (or at least not from a screen touch)
+//        if (eventDeviceId >= 0) { // event is from a gamepad (or at least not from a screen touch)
             whichGamePad = -1;  // gamepad
 
             int reassigningGamepad = -1;
             int i;
 
-            // set for only one but the device id has changed - probably turned off then on
-            if ( (gamepadCount==1) && (prefGamepadOnlyOneGamepad) && (gamePadDeviceIds[0] != eventDeviceId) ) {
+            // set for only one but the descrptor has changed - probably turned off then on
+            if ( (gamepadCount==1) && (prefGamepadOnlyOneGamepad) && (!gamePadDeviceDescriptors[0].equals(eventDeviceDescriptor)) ) {
                 for (int k = 0; k < prefNumThrottles; k++) {
-                    if (gamePadIdsAssignedToThrottles[k] == gamePadDeviceIds[0]) {
-                        gamePadIdsAssignedToThrottles[k] = eventDeviceId;
+                    if (gamePadDescriptorsAssignedToThrottles[k].equals(gamePadDeviceDescriptors[0])) {
+                        gamePadDescriptorsAssignedToThrottles[k] = eventDeviceDescriptor;
                         break;
                     }
                 }
-                gamePadDeviceIds[0] = eventDeviceId;
+                gamePadDeviceDescriptors[0] = eventDeviceDescriptor;
                 gamePadDeviceNames[0] = eventDeviceName;
-//                gamePadDeviceIdsTested[0]=GAMEPAD_BAD;
+//                gamePadDeviceIdsTested[0]= gamepad_status_type.BAD;
             }
 
             // find out if this gamepad is already assigned
             for (i = 0; i < prefNumThrottles; i++) {
-                if (gamePadIdsAssignedToThrottles[i] == eventDeviceId) {
+                if (gamePadDescriptorsAssignedToThrottles[i].equals(eventDeviceDescriptor)) {
                     if (getConsist(i).isActive()) { //found the throttle and it is active
                         whichGamePad = i;
                     } else { // currently assigned to this throttle, but the throttle is not active
                         whichGamePad = i;
-                        gamePadIdsAssignedToThrottles[i] = 0;
+                        gamePadDescriptorsAssignedToThrottles[i] = "";
                         reassigningGamepad = gamePadThrottleAssignment[i];
                         gamePadThrottleAssignment[i] = -1;
 //                        setGamepadIndicator(); // need to clear the indicator
@@ -3169,22 +3169,22 @@ public class threaded_application extends Application {
             if (whichGamePad == -1) { //didn't find it OR is known, but unassigned
 
                 for (j = 0; j < gamepadCount; j++) {
-                    if (gamePadDeviceIds[j] == eventDeviceId) { // known, but unassigned
+                    if (gamePadDeviceDescriptors[j].equals(eventDeviceDescriptor)) { // known, but unassigned
                         whichGamePadDeviceId = j;
                         break;
                     }
                 }
                 if (whichGamePadDeviceId == -1) { // previously unseen gamepad
                     gamepadCount++;
-                    gamePadDeviceIds[gamepadCount - 1] = eventDeviceId;
+                    gamePadDeviceDescriptors[gamepadCount - 1] = eventDeviceDescriptor;
                     gamePadDeviceNames[gamepadCount - 1] = eventDeviceName;
 //                    whichGamePadDeviceId = gamepadCount - 1;
                 }
 
                 for (i = 0; i < prefNumThrottles; i++) {
-                    if (gamePadIdsAssignedToThrottles[i] == 0) {  // throttle is not assigned a gamepad
+                    if (gamePadDescriptorsAssignedToThrottles[i].isEmpty()) {  // throttle is not assigned a gamepad
                         if (getConsist(i).isActive()) { // found next active throttle
-                            gamePadIdsAssignedToThrottles[i] = eventDeviceId;
+                            gamePadDescriptorsAssignedToThrottles[i] = eventDeviceDescriptor;
 //                            if (reassigningGamepad == -1) { // not a reassignment
 //                                gamePadThrottleAssignment[i] = GAMEPAD_INDICATOR[whichGamePadDeviceId];
 //                            } else { // reassigning
@@ -3204,7 +3204,7 @@ public class threaded_application extends Application {
 //                        break;
 //                    }
 //                }
-//                if (gamePadDeviceIdsTested[whichGamePad]==GAMEPAD_BAD){  // gamepad is known but failed the test last time
+//                if (gamePadDeviceIdsTested[whichGamePad]==gamepad_status_type.BAD){  // gamepad is known but failed the test last time
 //                    startGamepadTestActivity(whichGamePad);
 //                }
             }
@@ -3232,7 +3232,8 @@ public class threaded_application extends Application {
         if ((!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             int action;
-            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), 0); // dummy eventKeyCode
+            String deviceDescriptor = event.getDevice().getDescriptor();
+            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(deviceDescriptor, event.getDevice().getName(), 0); // dummy eventKeyCode
 
             float xAxis;
             xAxis = Math.round(event.getAxisValue(MotionEvent.AXIS_X) * 10.0f) / 10.0f;
@@ -3264,6 +3265,8 @@ public class threaded_application extends Application {
     // used to support the gamepad only   DPAD and key events
     public boolean implDispatchKeyEvent(KeyEvent event) {
         InputDevice dev = event.getDevice();
+        String deviceDescriptor = dev.getDescriptor();
+
         if (dev == null) { // unclear why, but some phones/tables don't seem to return a device for the internal keyboard
             return false;
         }
@@ -3275,8 +3278,8 @@ public class threaded_application extends Application {
             isExternal = true;
         }
         if (!isExternal) {
-            for (String gamePadDeviceName : gamePadDeviceNames) {
-                if (eventDeviceName.equals(gamePadDeviceName)) {
+            for (String gamePadDeviceDescriptor : gamePadDeviceDescriptors) {
+                if (gamePadDeviceDescriptor.equals(deviceDescriptor)) {
                     isExternal = true;
                     break;
                 }
@@ -3293,9 +3296,11 @@ public class threaded_application extends Application {
                 int keyCode = event.getKeyCode();
                 int repeatCnt = event.getRepeatCount();
 //                int whichThrottle;
-                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), event.getKeyCode());
+
+                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(deviceDescriptor, event.getDevice().getName(), event.getKeyCode());
+//                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId(), event.getDevice().getName(), event.getKeyCode());
                 if ((whichGamePadIsEventFrom > -1) && (whichGamePadIsEventFrom < gamePadDeviceIdsTested.length)) { // the event came from a gamepad
-                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)] != threaded_application.GAMEPAD_GOOD) { //if not, testing for this gamepad is not complete or has failed
+                    if (gamePadDeviceIdsTested[getGamePadIndexFromThrottleNo(whichGamePadIsEventFrom)] != gamepad_status_type.GOOD) { //if not, testing for this gamepad is not complete or has failed
                         acceptEvent = false;
                     }
                 } else {
@@ -3363,11 +3368,11 @@ public class threaded_application extends Application {
         usingMultiplePads = false;
         gamepadCount = 0;
         for (int i=0; i<MAX_GAMEPADS; i++) {
-            gamePadIdsAssignedToThrottles[i] = 0;
+            gamePadDescriptorsAssignedToThrottles[i] = "";
             gamePadThrottleAssignment[i] = -1;
-            gamePadDeviceIds[i] = 0;
+            gamePadDeviceDescriptors[i] = "";
             gamePadDeviceNames[i] = "";
-            gamePadDeviceIdsTested[i] = -1;
+            gamePadDeviceIdsTested[i] = gamepad_status_type.UNKNOWN;
             gamePadLastxAxis[i] = 0;
             gamePadLastyAxis[i] = 0;
             gamePadLastxAxis2[i] = 0;
@@ -3643,6 +3648,7 @@ public class threaded_application extends Application {
             }
         }
     }
+    @SuppressWarnings("ChainOfInstanceofChecks")
     @SuppressLint("ApplySharedPref")
     private void renameAPreferenceToNewFormat(String oldName, String newName) {
         if (prefs.contains(oldName)) {

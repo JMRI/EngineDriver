@@ -705,22 +705,21 @@ public class connection_activity extends AppCompatActivity implements Permission
             String ip = "";
             String port = "";
             boolean isDccEx = false;
-            if (!prefAutoServerIpConnect.isEmpty()) {
-                String[] parts = prefAutoServerIpConnect.split(":");
-                if (parts.length >= 2) {
-                    ip = parts[0];
-                    port = parts[1];
-                    if ( (parts.length == 3) && (!parts[2].isEmpty()) ) { // don't care what is there
-                        isDccEx = true;
-                    }
+
+            String[] parts = prefAutoServerIpConnect.split(":");
+            if (parts.length >= 2) {
+                ip = parts[0];
+                port = parts[1];
+                if ( (parts.length == 3) && (!parts[2].isEmpty()) ) { // don't care what is there
+                    isDccEx = true;
                 }
-                if ((!ip.isEmpty()) && (!port.isEmpty())) {
-                    connected_hostname = (isDccEx ? "DCC-EX " : "") + ip;
-                    connected_hostip = ip;
-                    connected_port = Integer.parseInt(port);
-                    checkIfDccexServerName(connected_hostname, connected_port);
-                    connect();
-                }
+            }
+            if ((!ip.isEmpty()) && (!port.isEmpty())) {
+                connected_hostname = (isDccEx ? "DCC-EX " : "") + ip;
+                connected_hostip = ip;
+                connected_port = Integer.parseInt(port);
+                checkIfDccexServerName(connected_hostname, connected_port);
+                connect();
             }
         }
 
@@ -732,6 +731,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         super.onStart();
         mainapp.exitConfirmed = false;
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
                 getResources().getBoolean(R.bool.prefExtendedLoggingDefaultValue));
         startLogging();
@@ -746,6 +746,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         mainapp.applyTheme(this);
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.CONNECTION;
         if (this.isFinishing()) {        //if finishing, expedite it
             return;
@@ -838,6 +839,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         this.finish();
     }
 
+    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
     private void calculateDisplayMetrics() {
         threaded_application.extendedLogging(activityName + ": calculateDisplayMetrics()");
         DisplayMetrics dm = new DisplayMetrics();
@@ -1383,7 +1385,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.NO)) ) {
                 dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
             } else { // if (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
-                dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEXplusAutoHint);
+                dccexConnectionOptionLabel.setText(R.string.useProtocolDccexPlusAutoHint);
             }
         }
 
@@ -1404,7 +1406,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEX);
         } else { // if (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
             dccexConnectionOptionSpinner.setSelection(2);
-            dccexConnectionOptionLabel.setText(R.string.useProtocolDCCEXplusAutoHint);
+            dccexConnectionOptionLabel.setText(R.string.useProtocolDccexPlusAutoHint);
         }
 
         TextView DCCEXheading =  findViewById(R.id.cons_DccexConnectionOption_heading);
@@ -1470,9 +1472,11 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
     // start logging if the transient preference is set
+    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
+    @SuppressLint("ApplySharedPref")
     private void startLogging() {
-        mainapp.prefLogOnNextStartup = prefs.getBoolean("prefLogOnNextStartup",false);
-        if (mainapp.prefLogOnNextStartup) {
+        threaded_application.prefLogOnNextStartup = prefs.getBoolean("prefLogOnNextStartup",false);
+        if (threaded_application.prefLogOnNextStartup) {
             prefs.edit().putBoolean("prefLogOnNextStartup", false).commit(); /// reset it
             File logFile = new File(mainapp.getApplicationContext().getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + ".txt");
             try {
@@ -1480,9 +1484,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                 mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
                 mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
                 mainapp.logSaveFilename = logFile.toString();
-                Log.d(mainapp.applicationName, "Logging started to: " + logFile);
-                Log.d(mainapp.applicationName, mainapp.getAboutInfo());
-                Log.d(mainapp.applicationName, mainapp.getAboutInfo(false));
+                Log.d(threaded_application.applicationName, "Logging started to: " + logFile);
+                Log.d(threaded_application.applicationName, mainapp.getAboutInfo());
+                Log.d(threaded_application.applicationName, mainapp.getAboutInfo(false));
                 mainapp.logAllPreference();
             } catch ( IOException e ) {
                 e.printStackTrace();

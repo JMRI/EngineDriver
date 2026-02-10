@@ -20,7 +20,7 @@ package jmri.enginedriver.type;
 public interface message_type {
     //Constant values for Message types:  from->to parms (action)
     int NONE = -1;
-    int ERROR = 0;
+//    int ERROR = 0;              // not used
     int CONNECT = 1;            // ca(select)->ta ipaddr, port (sends CONNECTED if no error)
     int DISCONNECT = 2;         // sl(exit)->ta  -- (send Q, turns off heartbeat, ends read timer)
     int REQ_LOCO_ADDR = 3;      // sl(acquire) -> ta engineaddr, size (sends Tengineaddr to WiT)
@@ -118,5 +118,9 @@ public interface message_type {
     int REFRESH_OVERFLOW_MENU = 95;
     int DCCEX_ESTOP_PAUSE = 96;
     int DCCEX_ESTOP_RESUME = 97;
+    int WRITE_DCCEX_COMMAND_STATION_CONSIST_ADD = 98;
+    int WRITE_DCCEX_COMMAND_STATION_CONSIST_REMOVE = 99;
+    int DCCEX_REQUEST_CONSIST_LIST = 100;
+    int DCCEX_RECEIVED_CONSIST_ENTRY = 101;
 
 }

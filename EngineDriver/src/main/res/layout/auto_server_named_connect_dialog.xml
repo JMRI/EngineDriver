@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:maxWidth="600dp"
     android:orientation="vertical"
     android:padding="6dp">
 
@@ -38,9 +39,11 @@
 
           <Button
               android:id="@+id/auto_server_connect_clear"
+              style="?attr/ed_dialog_button_style"
               android:layout_width="wrap_content"
+              android:layout_marginStart="0dp"
               android:layout_height="wrap_content"
-              android:text="@string/DccexClearCommands"/>
+              android:text="@string/dccexClearCommands"/>
 
           <Space
             android:layout_width="0dp"
@@ -49,6 +52,7 @@
 
         <Button
             android:id="@+id/auto_server_connect_current_server"
+            style="?attr/ed_dialog_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/autoServerConnectCurrentServerButtonLabel"/>

@@ -18,6 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver.type;
 
 public interface gamepad_test_type {
+    int NOT_STARTED = 0;
     int PASS = 1;
     int FAIL = 2;
     int SKIPPED = 3;

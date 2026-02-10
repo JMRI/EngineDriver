@@ -192,7 +192,7 @@
             style="?android:attr/listSeparatorTextViewStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/DccexConnectionOptionTitle"
+            android:text="@string/dccexConnectionOptionTitle"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />

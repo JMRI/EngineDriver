@@ -219,6 +219,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     /**
      * Called when the activity is first created.
      */
+    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {

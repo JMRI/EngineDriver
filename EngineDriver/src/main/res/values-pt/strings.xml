@@ -45,6 +45,9 @@
     <string name="gamepad1_test">Teste Gamepad 1</string>
     <string name="gamepad2_test">Teste Gamepad 2</string>
     <string name="gamepad3_test">Teste Gamepad 3</string>
+    <string name="gamepad4_test">Teste Gamepad 4</string>
+    <string name="gamepad5_test">Teste Gamepad 5</string>
+    <string name="gamepad6_test">Teste Gamepad 6</string>
 
     <string name="notificationInBackgroundTitle">EngineDriver em segundo plano</string>
     <string name="notificationInBackgroundText">☠️O Android pode desativá-lo a qualquer momento, sem aviso prévio. Toque para reabrir</string>
@@ -1042,9 +1045,10 @@
     <string name="prefGamePadDoublePressStopSummary">Escolha a ação ao pressionar qualquer botão que configurado como \'Stop\'</string>
     <string name="prefDccexSummary">Use os comandos nativos do DCC-EX em vez de Withrottle para todas as conexões. \nNota: Não entrará em vigor até reiniciar o driver do motor e se conectar a um servidor.</string>
     <string name="prefDccexSwapThrowCloseSummary">Troque as etiquetas de acionamento/fechamento de todos os desvios DCC-EX. Reconexão necessária.</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Utilize a função de pausa/retomada de parada de emergência DCC-EX em vez de uma parada de emergência simples.</string>
     <string name="prefDccexTitle">Use comandos nativos do DCC-EX</string>
     <string name="useProtocolDCCEX">Protocolo a ser usado?</string>
-    <string name="useProtocolDCCEXplusAutoHint">Protocolo a ser usado?\n<small><small>(\'Auto\' procura por \"DCCEX\", \"DCC-EX\" ou porta 2560)</small></small></string>
+    <string name="useProtocolDccexPlusAutoHint">Protocolo a ser usado?\n<small><small>(\'Auto\' procura por \"DCCEX\", \"DCC-EX\" ou porta 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Usando o protocolo DCC-EX. Desmarcar \"Use comandos nativos DCC-EX\" Preferência para usar o protocolo Withrottle.</string>
     <string name="prefDccexConnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Solicitações de itens sequenciados</string>
@@ -1052,38 +1056,38 @@
     <string name="prefDccexConnectionOptionTitle">Mostrar opção de protocolo</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostrar botão na barra de ação para acessar a tela DCC-EX. (Somente para conexões nativas do DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botão dcc-ex?</string>
-    <string name="DCCEXactionTypeLabel">Ação</string>
-    <string name="DccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclui \'&lt;\' e \'&gt;\')</small></small></string>
-    <string name="DccexClearCommands">Claro</string>
+    <string name="dccexActionTypeLabel">Ação</string>
+    <string name="dccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclui \'&lt;\' e \'&gt;\')</small></small></string>
+    <string name="dccexClearCommands">Claro</string>
 
-    <string name="DccexCvBitCalculatorButtonLabel">Pedaços</string>
+    <string name="dccexCvBitCalculatorButtonLabel">Pedaços</string>
     <string name="cvBitCalculatorTitle">Calculadora de bits CV</string>
     <string name="cvBitCalculatorCvValueLabel">Valor CV (decimal)</string>
     <string name="cvBitCalculatorCvBitsLabel">Pedaços:</string>
 
-    <string name="DccexConnectionOptionTitle">Protocolo de conexão</string>
-    <string name="DccexFailed">Ação: falhou</string>
-    <string name="DccexNextCommandButtonLabel">Próximo</string>
-    <string name="DccexPreviousCommandButtonLabel">Prévio</string>
-    <string name="DccexReadAddressButtonLabel">Ler</string>
-    <string name="DCCEXrouteHandoff">Não interferir</string>
-    <string name="DCCEXrouteSet">Definir</string>
-    <string name="DccexSendCommandButtonLabel">Mandar</string>
+    <string name="dccexConnectionOptionTitle">Protocolo de conexão</string>
+    <string name="dccexFailed">Ação: falhou</string>
+    <string name="dccexNextCommandButtonLabel">Próximo</string>
+    <string name="dccexPreviousCommandButtonLabel">Prévio</string>
+    <string name="dccexReadAddressButtonLabel">Ler</string>
+    <string name="dccexRouteHandoff">Não interferir</string>
+    <string name="dccexRouteSet">Definir</string>
+    <string name="dccexSendCommandButtonLabel">Mandar</string>
     <string name="witActionTypeLabel">Ação</string>
     <string name="witWriteAddressLabel">Endereço DCC</string>
     <string name="witPomWarning">Observações: - Isso não funcionará em alguns sistemas DCC. - A alteração do endereço do Loco é evitada - CVs 1, 17 &amp; 18 e bit 5 do CV 29.\n\nUse com cuidado.</string>
     <string name="witPomMaxValueWarning">O valor \'%1$s\' excede o máximo suportado (\'%2$s\')</string>
-    <string name="DccexCommonCvsLabel">NMRA CVs</string>
-    <string name="DccexCommonCommandsLabel">TMC comuns</string>
-    <string name="DCCEXsetTrackButtonLabel">Definir</string>
-    <string name="DccexSucceeded">A ação foi bem -sucedida</string>
-    <string name="DCCEXturnoutClosed">Fechadas</string>
-    <string name="DCCEXturnoutInconsistent">Inconsistente</string>
-    <string name="DCCEXturnoutThrown">Jogado</string>
-    <string name="DCCEXturnoutUnknown">Desconhecido</string>
-    <string name="DccexWriteAddressButtonLabel">Escreva</string>
-    <string name="DccexWriteAddressLabel">Endereço DCC</string>
-    <string name="DccexWriteCvValueLabel">Valor</string>
+    <string name="dccexCommonCvsLabel">NMRA CVs</string>
+    <string name="dccexCommonCommandsLabel">TMC comuns</string>
+    <string name="dccexSetTrackButtonLabel">Definir</string>
+    <string name="dccexSucceeded">A ação foi bem -sucedida</string>
+    <string name="dccexTurnoutClosed">Fechadas</string>
+    <string name="dccexTurnoutInconsistent">Inconsistente</string>
+    <string name="dccexTurnoutThrown">Jogado</string>
+    <string name="dccexTurnoutUnknown">Desconhecido</string>
+    <string name="dccexWriteAddressButtonLabel">Escreva</string>
+    <string name="dccexWriteAddressLabel">Endereço DCC</string>
+    <string name="dccexWriteCvValueLabel">Valor</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignore as ações do joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Selecione isso se tiver problemas com o DPAD produzindo códigos -chave e eventos de joystick</string>
     <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver precisa de permissões READ_MEDIA_IMAGES para carregar imagens em segundo plano.\n\nO EngineDriver funcionará sem ele.</string>
@@ -1099,12 +1103,12 @@
     <string name="cv29AnalogueConversionOn">Conversão Analógica: LIGADA</string>
     <string name="cv29DirectionForward">Direção normal: frente</string>
     <string name="cv29DirectionReverse">Direção normal: reversa</string>
-    <string name="DCCEXbuttonTrackManager">Gerente de rastreamento</string>
-    <string name="DCCEXbuttonDefaultFunctions">Fns padrão</string>
-    <string name="DCCEXheadingCvProgrammerProgTrack">DCC-EX - Pista de Programação (modo Serviço)</string>
-    <string name="DCCEXheadingCvProgrammerPoM">DCC-EX - Programação em Principal (modo de operação)</string>
-    <string name="DCCEXheadingTrackManager">DCC-EX - Gerente de Trilha/Distrito</string>
-    <string name="DCCEXrequestLocoIdFailed">Falha na solicitação de ID Loco</string>
+    <string name="dccexButtonTrackManager">Gerente de rastreamento</string>
+    <string name="dccexButtonDefaultFunctions">Fns padrão</string>
+    <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX - Pista de Programação (modo Serviço)</string>
+    <string name="dccexHeadingCvProgrammerPoM">DCC-EX - Programação em Principal (modo de operação)</string>
+    <string name="dccexHeadingTrackManager">DCC-EX - Gerente de Trilha/Distrito</string>
+    <string name="dccexRequestLocoIdFailed">Falha na solicitação de ID Loco</string>
     <string name="cv29SpeedSteps14">Etapas de velocidade: 14</string>
     <string name="cv29SpeedSteps28">Etapas de velocidade: 28/128</string>
     <string name="cv29AddressSize2bit" tools:ignore="TypographyDashes">Tamanho do endereço: 2 bits (0-127)</string>
@@ -1116,7 +1120,7 @@
     <string name="order">Organizar</string>
     <string name="prefTurnoutsShowThrowCloseButtonsTitle">Sempre mostrar Lançar/Fechar?</string>
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Sempre mostre os botões Lançar e Fechar para Turnouts, nunca o botão Alternar.</string>
-    <string name="DCCEXJoinTrackButtonLabel">Juntar</string>
+    <string name="dccexJoinTrackButtonLabel">Juntar</string>
     <string name="prefDoubleBackButtonToExitTitle">Botão Voltar duplo para sair?</string>
     <string name="prefDoubleBackButtonToExitSummary">Pressionar o botão \'Voltar\' do Android duas vezes em 3 segundos na tela \'Acelerador\' ou \'Conexão\' sairá do Engine Driver</string>
     <string name="prefHeartbeatResponseFactorTitle">Fator de resposta de batimento cardíaco</string>
@@ -1207,7 +1211,9 @@
 
     <string name="prefAutoServerIpConnectTitle">Conexão automática ao endereço do servidor</string>
     <string name="advancedConsistToolTitle">Ferramenta de Consisteção Avançada (CV19)</string>
+    <string name="advancedConsistToolDccexTitle">Na ferramenta de composição da estação de comando</string>
     <string name="advancedConsistToolConsistAddressLabel">Consiste em endereço</string>
+    <string name="advancedConsistToolLeadLocoLabel">Endereço do Loco Principal</string>
     <string name="advancedConsistToolLocoAddressLabel">Endereço Loco</string>
     <string name="advancedConsistToolLocoFacingLabel">Virar-se para a frente?</string>
     <string name="advancedConsistToolAddButtonLabel">Adicionar</string>
@@ -1230,4 +1236,5 @@
     <string name="prefActionBarShowWebButtonSummary">Exibir botão na barra de ações para alternar para a tela da Web.</string>
     <string name="prefActionBarShowWebButtonTitle">Botão da Web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Trocar desvios, acionar/fechar</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar Parada de Emergência, Pausa/Retomada</string>
 </resources>

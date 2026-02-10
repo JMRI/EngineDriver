@@ -37,6 +37,7 @@ import static android.view.KeyEvent.KEYCODE_F10;
 import static android.view.KeyEvent.KEYCODE_F11;
 import static android.view.KeyEvent.KEYCODE_G;
 import static android.view.KeyEvent.KEYCODE_H;
+import static android.view.KeyEvent.KEYCODE_I;
 import static android.view.KeyEvent.KEYCODE_L;
 import static android.view.KeyEvent.KEYCODE_LEFT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_M;
@@ -48,6 +49,7 @@ import static android.view.KeyEvent.KEYCODE_MOVE_HOME;
 import static android.view.KeyEvent.KEYCODE_N;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_ADD;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_SUBTRACT;
+import static android.view.KeyEvent.KEYCODE_O;
 import static android.view.KeyEvent.KEYCODE_P;
 import static android.view.KeyEvent.KEYCODE_PAGE_DOWN;
 import static android.view.KeyEvent.KEYCODE_PAGE_UP;
@@ -57,6 +59,7 @@ import static android.view.KeyEvent.KEYCODE_RIGHT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_S;
 import static android.view.KeyEvent.KEYCODE_SEMICOLON;
 import static android.view.KeyEvent.KEYCODE_T;
+import static android.view.KeyEvent.KEYCODE_U;
 import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_MUTE;
@@ -77,7 +80,8 @@ public class KeyboardEventHandler {
     private final KeyboardNotifierInterface keyboardNotifierInterface;
 
     String keyboardString = "";
-    int tempKeyboardThrottle = -1;
+    int tempGamepadOrKeyboardThrottle = -1;
+    int tempKeyboardTurnout = -1;
     int keyboardStopCount = 0;
     int MAX_SCREEN_THROTTLES = 1;
 
@@ -90,19 +94,19 @@ public class KeyboardEventHandler {
     public void handleKeyboardEvent(int keyCode, int action,
                                     boolean isShiftPressed, int repeatCnt, int originalWhichThrottle,
                                     boolean isActive,
-                                    int keyboardThrottle,
+                                    int gamepadOrKeyboardThrottle,
                                     boolean isKeyboardThrottleActive,
                                     boolean isSemiRealisticThrottle,
                                     int whichGamePadIsEventFrom) {
 
         Log.d(threaded_application.applicationName, activityName + ": handleKeyboardEvent() action: " + action);
         int whichThrottle = originalWhichThrottle;
-        if ((keyboardThrottle >= 0) && (keyboardThrottle != originalWhichThrottle)) {
-            whichThrottle = keyboardThrottle;
+        if ((gamepadOrKeyboardThrottle >= 0) && (gamepadOrKeyboardThrottle != originalWhichThrottle)) {
+            whichThrottle = gamepadOrKeyboardThrottle;
             isActive = isKeyboardThrottleActive;
         }
-        if ((tempKeyboardThrottle >= 0) && (tempKeyboardThrottle != originalWhichThrottle)) {
-            whichThrottle = tempKeyboardThrottle;
+        if ((tempGamepadOrKeyboardThrottle >= 0) && (tempGamepadOrKeyboardThrottle != originalWhichThrottle)) {
+            whichThrottle = tempGamepadOrKeyboardThrottle;
         }
 
         if ((keyCode == KEYCODE_Z) || (keyCode == KEYCODE_MOVE_END)) {  // E Stop
@@ -110,7 +114,7 @@ public class KeyboardEventHandler {
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 keyboardNotifierInterface.keyboardEventNotificationHandler(
                         gamepad_or_keyboard_event_type.ESTOP, 0, repeatCnt,
-                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                        whichThrottle,   isActive, whichGamePadIsEventFrom);
                 resetKeyboardString();
             }
         } else if ((keyCode == KEYCODE_X) || (keyCode == KEYCODE_MOVE_HOME)) {  // Stop
@@ -314,7 +318,22 @@ public class KeyboardEventHandler {
         } else if (keyCode == KEYCODE_T) {  // Start of a throttle specification
             if (action == ACTION_DOWN) {
                 keyboardString = "T";
-                tempKeyboardThrottle = -1;  //reset it
+                tempGamepadOrKeyboardThrottle = -1;  //reset it
+            }
+        } else if (keyCode == KEYCODE_U) {  // Start of a turnout/point specification
+            if (action == ACTION_DOWN) {
+                keyboardString = "U";
+                tempKeyboardTurnout = -1;  //reset it
+            }
+        } else if (keyCode == KEYCODE_I) {  // Start of a turnout/point specification
+            if (action == ACTION_DOWN) {
+                keyboardString = "I";
+                tempKeyboardTurnout = -1;  //reset it
+            }
+        } else if (keyCode == KEYCODE_O) {  // Start of a turnout/point specification
+            if (action == ACTION_DOWN) {
+                keyboardString = "O";
+                tempKeyboardTurnout = -1;  //reset it
             }
         } else if (((keyCode >= KEYCODE_0) && (keyCode <= KEYCODE_9))
                 || ((keyCode >= KEYCODE_F1) && (keyCode <= KEYCODE_F10))) {  // Start of a Function, Speed, or Throttle command
@@ -385,15 +404,65 @@ public class KeyboardEventHandler {
                         resetKeyboardString();
                     }
                 }
+
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'U')) {  // Toggle Turnout/Point
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                    if (keyboardString.length() == 4) {  // have a three digit turnout address now
+                        tempKeyboardTurnout = Integer.parseInt(keyboardString.substring(1, 4));
+
+                        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                gamepad_or_keyboard_event_type.TURNOUT_TOGGLE, tempKeyboardTurnout, repeatCnt,
+                                whichThrottle, isActive, whichGamePadIsEventFrom);
+                    }
+                }
+                if (action == ACTION_UP) {
+                    if (keyboardString.length() == 4) {  // have a three digit turnout address now
+                        resetKeyboardString();
+                    }
+                }
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'I')) {  // Throw Turnout/Point
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                    if (keyboardString.length() == 4) {  // have a three digit turnout address now
+                        tempKeyboardTurnout = Integer.parseInt(keyboardString.substring(1, 4));
+
+                        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                gamepad_or_keyboard_event_type.TURNOUT_THROW, tempKeyboardTurnout, repeatCnt,
+                                whichThrottle, isActive, whichGamePadIsEventFrom);
+                    }
+                }
+                if (action == ACTION_UP) {
+                    if (keyboardString.length() == 4) {  // have a three digit turnout address now
+                        resetKeyboardString();
+                    }
+                }
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'O')) {  // CLOSE Turnout/Point
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                    if (keyboardString.length() == 4) {  // have a three digit turnout address now
+                        tempKeyboardTurnout = Integer.parseInt(keyboardString.substring(1, 4));
+
+                        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                gamepad_or_keyboard_event_type.TURNOUT_CLOSE, tempKeyboardTurnout, repeatCnt,
+                                whichThrottle, isActive, whichGamePadIsEventFrom);
+                    }
+                }
+                if (action == ACTION_UP) {
+                    if (keyboardString.length() == 4) {  // have a three digit turnout address now
+                        resetKeyboardString();
+                    }
+                }
+
             } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'T')) {    // specify Throttle number
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
                 }
                 if (action == ACTION_DOWN) {
                     if (keyboardString.length() == 2) {  // have a complete Throttle number
-                        tempKeyboardThrottle = Integer.parseInt(keyboardString.substring(1, 2));
-                        if (tempKeyboardThrottle > MAX_SCREEN_THROTTLES) {
-                            tempKeyboardThrottle = -1;
+                        tempGamepadOrKeyboardThrottle = Integer.parseInt(keyboardString.substring(1, 2));
+                        if (tempGamepadOrKeyboardThrottle > MAX_SCREEN_THROTTLES) {
+                            tempGamepadOrKeyboardThrottle = -1;
                         }
                     }
                 } else {
@@ -434,7 +503,7 @@ public class KeyboardEventHandler {
     void resetKeyboardString() {
         Log.d(threaded_application.applicationName, activityName + ": resetKeyboardString()");
         keyboardString = "";
-        tempKeyboardThrottle = -1;  //reset it
+        tempGamepadOrKeyboardThrottle = -1;  //reset it
     }
 
 }

@@ -117,7 +117,7 @@
                                         android:paddingRight="0dp"
                                         android:translationZ="90dp"
                                         android:text="@string/loco"
-                                        tools:targetApi="lollipop" />
+                                         />
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -263,7 +263,7 @@
                             android:baselineAligned="false"
                             android:layoutDirection="rtl"
                             android:orientation="horizontal"
-                            tools:targetApi="jelly_bean_mr1">
+                            >
 
                             <LinearLayout
                                 android:layout_width="140dp"

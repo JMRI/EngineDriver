@@ -40,13 +40,13 @@ public class RosterEntry {
     protected String _iconFilePath = "";
 
     static private String _defaultOwner = "";
-    final static int MAXFNNUM = 31;
+    final static int MAXIMUM_FUNCTION_NUMBER = 31;
 
     private String resourcesURL = "";
     private String rosterURL = "";
 
-    public int getMAXFNNUM() {
-        return MAXFNNUM;
+    public int getMAXIMUM_FUNCTION_NUMBER() {
+        return MAXIMUM_FUNCTION_NUMBER;
     }
 
     protected String[] functionLabels;
@@ -349,8 +349,8 @@ public class RosterEntry {
      * @param fn function number, starting with 0
      */
     public void setFunctionLabel(int fn, String label) {
-        if (functionLabels == null) functionLabels = new String[getMAXFNNUM() + 1]; // counts zero
-        if (fn >= 0 && fn <= getMAXFNNUM()) {
+        if (functionLabels == null) functionLabels = new String[getMAXIMUM_FUNCTION_NUMBER() + 1]; // counts zero
+        if (fn >= 0 && fn <= getMAXIMUM_FUNCTION_NUMBER()) {
             functionLabels[fn] = label;
         } else {
             Log.w("Engine_Driver", "RosterEntry: Fn " + fn + " out of range, not added for '" + getId() + "'");
@@ -365,7 +365,7 @@ public class RosterEntry {
      */
     public String getFunctionLabel(int fn) {
         if (functionLabels == null) return null;
-        if (fn < 0 || fn > getMAXFNNUM()) {
+        if (fn < 0 || fn > getMAXIMUM_FUNCTION_NUMBER()) {
             return null;
         }
 //            throw new IllegalArgumentException("number out of range: " + fn);
@@ -373,8 +373,8 @@ public class RosterEntry {
     }
 
     public void setFunctionImage(int fn, String s) {
-        if (functionImages == null) functionImages = new String[getMAXFNNUM() + 1]; // counts zero
-        if (fn >= 0 && fn <= getMAXFNNUM()) {
+        if (functionImages == null) functionImages = new String[getMAXIMUM_FUNCTION_NUMBER() + 1]; // counts zero
+        if (fn >= 0 && fn <= getMAXIMUM_FUNCTION_NUMBER()) {
             functionImages[fn] = s;
         }
     }
@@ -387,8 +387,8 @@ public class RosterEntry {
 
     public void setFunctionSelectedImage(int fn, String s) {
         if (functionSelectedImages == null)
-            functionSelectedImages = new String[getMAXFNNUM() + 1]; // counts zero
-        if (fn >= 0 && fn <= getMAXFNNUM()) {
+            functionSelectedImages = new String[getMAXIMUM_FUNCTION_NUMBER() + 1]; // counts zero
+        if (fn >= 0 && fn <= getMAXIMUM_FUNCTION_NUMBER()) {
             functionSelectedImages[fn] = s;
         }
     }
@@ -406,10 +406,10 @@ public class RosterEntry {
      */
     public void setFunctionLockable(int fn, boolean lockable) {
         if (functionLockables == null) {
-            functionLockables = new boolean[getMAXFNNUM() + 1]; // counts zero
+            functionLockables = new boolean[getMAXIMUM_FUNCTION_NUMBER() + 1]; // counts zero
             Arrays.fill(functionLockables, true);
         }
-        if (fn >= 0 && fn <= getMAXFNNUM()) {
+        if (fn >= 0 && fn <= getMAXIMUM_FUNCTION_NUMBER()) {
             functionLockables[fn] = lockable;
         }
     }
@@ -422,7 +422,7 @@ public class RosterEntry {
      */
     public boolean getFunctionLockable(int fn) {
         if (functionLockables == null) return true;
-        if (fn < 0 || fn > getMAXFNNUM())
+        if (fn < 0 || fn > getMAXIMUM_FUNCTION_NUMBER())
             return true;
         return functionLockables[fn];
     }
@@ -461,17 +461,17 @@ public class RosterEntry {
 //        if (!_decoderModel.equals("")) res += "Decoder Model: " + _decoderModel + "\n";
 //        if (!_decoderComment.equals(""))
 //            res += "Decoder Comment: " + _decoderComment.replace("<?p?>", "\n");  //clean up odd returns
-        if (!_dccAddress.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + _dccAddress + "\n";
-        if (!_roadName.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoRoadName) + " " + _roadName + "\n";
-        if (!_roadNumber.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoRoadNumber) + " " +_roadNumber + "\n";
-        if (!_owner.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoOwner) + " " +_owner + "\n";
-        if (!_model.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoModel) + " " +_model + "\n";
-        if (!_mfg.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoManufacturer) + " " +_mfg + "\n";
-        if (!_comment.equals(""))
+        if (!_dccAddress.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + _dccAddress + "\n";
+        if (!_roadName.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoRoadName) + " " + _roadName + "\n";
+        if (!_roadNumber.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoRoadNumber) + " " +_roadNumber + "\n";
+        if (!_owner.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoOwner) + " " +_owner + "\n";
+        if (!_model.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoModel) + " " +_model + "\n";
+        if (!_mfg.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoManufacturer) + " " +_mfg + "\n";
+        if (!_comment.isEmpty())
             res += context.getResources().getString(R.string.rosterDecoderInfoComment) + " " +_comment.replace("<?p?>", "\n") + "\n";  //clean up odd return encoding;
-        if (!_decoderFamily.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoDecoderFamily) + " " +_decoderFamily + "\n";
-        if (!_decoderModel.equals("")) res += context.getResources().getString(R.string.rosterDecoderInfoDecoderModel) + " " +_decoderModel + "\n";
-        if (!_decoderComment.equals(""))
+        if (!_decoderFamily.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoDecoderFamily) + " " +_decoderFamily + "\n";
+        if (!_decoderModel.isEmpty()) res += context.getResources().getString(R.string.rosterDecoderInfoDecoderModel) + " " +_decoderModel + "\n";
+        if (!_decoderComment.isEmpty())
             res += context.getResources().getString(R.string.rosterDecoderInfoDecoderComment) + " " +_decoderComment.replace("<?p?>", "\n");  //clean up odd returns
         return res;
     }

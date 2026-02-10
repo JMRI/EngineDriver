@@ -189,6 +189,18 @@
                         android:id="@+id/gamepad_test_mnu3"
                         android:title="@string/gamepad3_test"
                         android:visible="false" />
+                    <item
+                        android:id="@+id/gamepad_test_mnu4"
+                        android:title="@string/gamepad4_test"
+                        android:visible="false" />
+                    <item
+                        android:id="@+id/gamepad_test_mnu5"
+                        android:title="@string/gamepad5_test"
+                        android:visible="false" />
+                    <item
+                        android:id="@+id/gamepad_test_mnu6"
+                        android:title="@string/gamepad6_test"
+                        android:visible="false" />
                 </menu>
             </item>
 

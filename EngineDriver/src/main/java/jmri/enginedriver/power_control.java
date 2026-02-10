@@ -338,6 +338,7 @@ public class power_control extends AppCompatActivity {
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
 
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.POWER_CONTROL;
         if (mainapp.isForcingFinish()) { //expedite
             this.finish();

@@ -153,7 +153,7 @@ public class Loco {
     public boolean getIsServerSuppliedFunctionLabels() {
         return this.isServerSuppliedFunctionLabels;
     }
-    public void setIsServerSuppliedFunctionlabels(boolean isFromRoster) {
+    public void setIsServerSuppliedFunctionLabels(boolean isFromRoster) {
         this.isServerSuppliedFunctionLabels = isFromRoster;
     }
 
@@ -226,7 +226,7 @@ public class Loco {
 **/
      public Integer getFunctionNumberFromLabel(String lab) {
         Integer functionNumber = -1;
-        if (!lab.equals("")) {
+        if (!lab.isEmpty()) {
              if (functionLabels != null) {
                  for (int i = 0; i <= functionLabelsMaxKey; i++) {
                      if (functionLabels.get(i) != null) {
@@ -256,6 +256,7 @@ public class Loco {
 //            if (searchLabel.toLowerCase().contains(prefConsistFollowStrings.get(i).toLowerCase())) {
                 if (prefConsistFollowStrings.get(i).toLowerCase().contains(searchLabel.toLowerCase())) {
                     matchingRule = i;
+                    //noinspection AssignmentToForLoopParameter
                     i = 999;
                     break;
                 }

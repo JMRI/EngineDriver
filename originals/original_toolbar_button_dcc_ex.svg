@@ -7,7 +7,7 @@
    viewBox="0 0 607.0866 607.08659"
    id="svg2"
    version="1.1"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
    sodipodi:docname="original_toolbar_button_dcc_ex.svg"
    inkscape:export-filename="..\EngineDriver\src\main\res\drawable\dcc_ex_button_icon.png"
    inkscape:export-xdpi="5.5862069"
@@ -235,6 +235,57 @@
          offset="1"
          id="stop8252" />
     </linearGradient>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask3">
+      <g
+         id="g4"
+         transform="matrix(1.7449705,-1.7449705,1.7449705,1.7449705,-831.70385,271.19496)">
+        <rect
+           id="rect4"
+           fill="#ffffff"
+           rx="22.910282"
+           height="171.28969"
+           width="171.28969"
+           y="368.82196"
+           x="340.76816"
+           style="stroke-width:0.405226" />
+      </g>
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask2">
+      <g
+         id="g3"
+         transform="matrix(1.7449705,-1.7449705,1.7449705,1.7449705,-831.70385,271.19496)">
+        <rect
+           id="rect3"
+           fill="#ffffff"
+           rx="22.910282"
+           height="171.28969"
+           width="171.28969"
+           y="368.82196"
+           x="340.76816"
+           style="stroke-width:0.405226" />
+      </g>
+    </mask>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask1">
+      <g
+         id="g2"
+         transform="matrix(1.7449705,-1.7449705,1.7449705,1.7449705,-831.70385,271.19496)">
+        <rect
+           id="rect1"
+           fill="#ffffff"
+           rx="22.910282"
+           height="171.28969"
+           width="171.28969"
+           y="368.82196"
+           x="340.76816"
+           style="stroke-width:0.405226" />
+      </g>
+    </mask>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -245,7 +296,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.70710678"
      inkscape:cx="188.79751"
-     inkscape:cy="282.84271"
+     inkscape:cy="283.54982"
      inkscape:document-units="px"
      inkscape:current-layer="g4165"
      showgrid="false"
@@ -254,10 +305,10 @@
      fit-margin-right="1"
      fit-margin-bottom="1"
      units="mm"
-     inkscape:window-width="1600"
-     inkscape:window-height="829"
-     inkscape:window-x="1912"
-     inkscape:window-y="177"
+     inkscape:window-width="1920"
+     inkscape:window-height="1094"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="0"
      inkscape:showpageshadow="0"
@@ -381,48 +432,44 @@
          id="path31"
          style="fill:#000000" />
       <g
-         id="g5370"
-         transform="matrix(0.28653779,0.28653779,-0.28653779,0.28653779,314.87223,160.67977)"
-         style="fill:none">
+         id="g6">
         <rect
            id="rect2"
            stroke-linejoin="round"
            stroke-miterlimit="16"
-           stroke-width="14.3637"
+           stroke-width="5.82054"
            stroke="#00353D"
            fill="#ffffff"
-           transform="rotate(-45)"
-           rx="63.718899"
-           height="437.06601"
-           width="437.06601"
-           y="506.54724"
-           x="57.163441"
+           rx="25.820532"
+           height="177.11035"
+           width="177.11035"
+           y="365.94571"
+           x="338.03632"
            style="stroke:#00353d;stroke-opacity:0.956863" />
-        <g
-           transform="translate(1.8796397,-2.1336634)"
-           id="g15"
-           mask="url(#mask0-5-8)">
-          <path
-             style="fill:url(#paint0_linear-3)"
-             id="path7"
-             fill="url(#paint0_linear)"
-             d="m 558.03,10.9856 c 7.305,6.359 311.428,260.2244 19.227,487.4164 l 94.853,87.162 49.99,11.536 61.722,-42.127 C 1014.79,279.491 624.481,0.449243 615.806,-4.43481 Z" />
-          <path
-             id="path9"
-             stroke-width="10.2598"
-             stroke="#00353d"
-             d="m 579.281,51.6391 91.645,-38.7324 33.869,26.0143 -101.607,42.7791 16.603,28.3269 111.567,-45.0917 30.549,29.4829 -130.163,47.4038 13.282,29.483 146.765,-45.67 25.235,34.108 -158.054,45.092 2.656,39.888 186.611,-39.888 40.51,57.809 -223.136,26.592 -21.915,47.404 262.981,-19.077 v 71.684 l -284.896,-3.469 -23.908,41.045 284.233,48.56 -44.495,83.246 -279.583,-83.246" />
-          <path
-             id="path11"
-             stroke-width="20.5195"
-             stroke="#ffffff"
-             d="M 570.647,491.57 C 862.849,264.379 565.999,11.7512 558.694,5.39221 M 616.47,-10.0282 c 8.675,4.88406 398.99,283.9262 168.016,559.4082 L 736.2,597.1" />
-          <path
-             id="path13"
-             stroke-width="10.2598"
-             stroke="#00353d"
-             d="M 570.647,491.57 C 862.849,264.379 565.999,11.7512 558.694,5.39221 M 616.47,-10.0282 c 8.675,4.88406 398.99,283.9262 168.016,559.4082 l -44.441,45.157" />
-        </g>
+        <path
+           id="path9"
+           stroke-width="10.2598"
+           stroke="#00353d"
+           d="m 579.281,51.6391 91.645,-38.7324 33.869,26.0143 -101.607,42.7791 16.603,28.3269 111.567,-45.0917 30.549,29.4829 -130.163,47.4038 13.282,29.483 146.765,-45.67 25.235,34.108 -158.054,45.092 2.656,39.888 186.611,-39.888 40.51,57.809 -223.136,26.592 -21.915,47.404 262.981,-19.077 v 71.684 l -284.896,-3.469 -23.908,41.045 284.233,48.56 -44.495,83.246 -279.583,-83.246"
+           transform="matrix(0.28653779,0.28653779,-0.28653779,0.28653779,316.02219,160.60698)"
+           style="fill:none"
+           mask="url(#mask3)" />
+        <path
+           id="path11"
+           stroke-width="20.5195"
+           stroke="#ffffff"
+           d="M 570.647,491.57 C 862.849,264.379 565.999,11.7512 558.694,5.39221 M 616.47,-10.0282 c 8.675,4.88406 398.99,283.9262 168.016,559.4082 L 736.2,597.1"
+           transform="matrix(0.28653779,0.28653779,-0.28653779,0.28653779,316.02219,160.60698)"
+           style="fill:none"
+           mask="url(#mask2)" />
+        <path
+           id="path13"
+           stroke-width="10.2598"
+           stroke="#00353d"
+           d="M 570.647,491.57 C 862.849,264.379 565.999,11.7512 558.694,5.39221 M 616.47,-10.0282 c 8.675,4.88406 398.99,283.9262 168.016,559.4082 l -44.441,45.157"
+           transform="matrix(0.28653779,0.28653779,-0.28653779,0.28653779,316.02219,160.60698)"
+           style="fill:none"
+           mask="url(#mask1)" />
       </g>
     </g>
   </g>
