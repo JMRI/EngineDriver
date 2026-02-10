@@ -3741,6 +3741,8 @@ public class throttle extends AppCompatActivity implements
                 }
 
                 if (acceptEvent) {
+                    gamepadOrKeyboardThrottle = -1;
+
                     if ((mainapp.usingMultiplePads) && (whichGamePadIsEventFrom >= -1)) { // we have multiple gamepads AND the preference is set to make use of them AND the event came for a gamepad
                         if (whichGamePadIsEventFrom >= 0) {
                             whichThrottle = whichGamePadIsEventFrom;

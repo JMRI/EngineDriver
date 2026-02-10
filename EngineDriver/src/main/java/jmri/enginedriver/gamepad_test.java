@@ -134,11 +134,6 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
     private String allKeyCodes = "";
 
-//    private static final String GAMEPAD_TEST_PASS = "1";
-//    private static final String GAMEPAD_TEST_FAIL = "2";
-//    private static final String GAMEPAD_TEST_SKIPPED = "3";
-//    private static final String GAMEPAD_TEST_RESET = "9";
-
     private int decreaseButtonCount = 0;
 
     Tts tts;

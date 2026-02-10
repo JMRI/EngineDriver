@@ -23,6 +23,7 @@
     * Altered the gamepad test page so that it only responds to the chosen gamepad.
     * Switched to using the more reliable deviceDescriptor instead of deviceId for the gamepads and keyboards.
     * Removed more redundant API checks.
+    * Removed redundant v21/v35 styles/themes files.
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)
@@ -1027,7 +1028,6 @@
  *   TODO: split RESPONSE message into multiples, and remove string parsing from other activities
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: move some actions from onCreate() or onResume() to onStart() in activities to simplify and remove some repeated calls.
- *   TODO: It may be possible to get rid of v21/v35 styles/themes files.
 * general/global
  *   TODO: Improve the way it deals with multiple DCC-EX commands on single line. Really needs to be read char by char.
  * intro
