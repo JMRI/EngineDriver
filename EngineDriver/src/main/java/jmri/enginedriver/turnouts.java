@@ -83,6 +83,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
@@ -158,8 +159,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
     private VelocityTracker mVelocityTracker;
 
-    private EditText trn;
-//    private TextView trnStatic;
+    private InterceptEditText turnoutEntryEditText;
 
     public void refreshTurnoutsView() {
         //specify logic for sort comparison (by username/id)
@@ -310,36 +310,35 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         Button butTog = findViewById(R.id.turnout_toggle);
         Button butClose = findViewById(R.id.turnout_close);
         Button butThrow = findViewById(R.id.turnout_throw);
-//        EditText trn = findViewById(R.id.turnout_entry);
-        TextView trnPrefix = findViewById(R.id.turnout_prefix);
-        String turnout = trn.getText().toString().trim();
+        TextView turnoutEntryPrefix = findViewById(R.id.turnout_prefix);
+        String turnout = turnoutEntryEditText.getText().toString().trim();
         int txtLen = turnout.length();
         if (mainapp.isTurnoutControlAllowed()) {
-            trn.setEnabled(true);
+            turnoutEntryEditText.setEnabled(true);
             // don't allow buttons if nothing entered
             if (txtLen > 0) {
                 butThrow.setEnabled(true);
                 butClose.setEnabled(true);
                 butTog.setEnabled(true);
                 //show hardware system prefix if numeric entry
-                trnPrefix.setEnabled(Character.isDigit(turnout.charAt(0)));
+                turnoutEntryPrefix.setEnabled(Character.isDigit(turnout.charAt(0)));
             } else {
                 butThrow.setEnabled(false);
                 butClose.setEnabled(false);
                 butTog.setEnabled(false);
-                trnPrefix.setEnabled(false);
+                turnoutEntryPrefix.setEnabled(false);
             }
         } else {
-            trn.setEnabled(false);
+            turnoutEntryEditText.setEnabled(false);
             butThrow.setEnabled(false);
             butClose.setEnabled(false);
             butTog.setEnabled(false);
             //set text to "Disabled", but only do this once to avoid getting stuck in this callback
             //NOTE: field is max 8 chars, and might be translated shorter or longer, so pad and truncate
             String disabledText = substring(getString(R.string.disabled) + "        ", 0, 8);
-            if (!trn.getText().toString().equals(disabledText))
-                trn.setText(disabledText);
-            trnPrefix.setEnabled(false);
+            if (!turnoutEntryEditText.getText().toString().equals(disabledText))
+                turnoutEntryEditText.setText(disabledText);
+            turnoutEntryPrefix.setEnabled(false);
         }
 
         refreshOverflowMenu();
@@ -446,7 +445,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         public void onClick(View v) {
 //            EditText entryView = findViewById(R.id.turnout_entry);
-            String entryText = trn.getText().toString().trim();
+            String entryText = turnoutEntryEditText.getText().toString().trim();
             if (!entryText.isEmpty()) {
                 //if text starts with a digit, check number and prefix with hardware_system and "T"
                 //otherwise send the text as is
@@ -647,20 +646,26 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         // -------------------------------------------------------------------
 
-        trn = findViewById(R.id.turnout_entry);
-        trn.addTextChangedListener(new TextWatcher() {
+        turnoutEntryEditText = findViewById(R.id.turnout_entry);
+        turnoutEntryEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateTurnoutEntry();
             }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        turnoutEntryEditText.setMainApp(mainapp);
+        turnoutEntryEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String deviceDescriptor = event.getDevice().getDescriptor();
+                return false;
             }
         });
 
-//        trn.setOnEditorActionListener(new OnEditorActionListener() {
+//        turnoutEntryEditText.setOnEditorActionListener(new OnEditorActionListener() {
 //            @Override
 //            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 //                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
@@ -860,10 +865,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mainapp.turnouts_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
         //make sure the soft keyboard is closed
-//        EditText trn = findViewById(R.id.turnout_entry);
+//        EditText turnoutEntryEditText = findViewById(R.id.turnout_entry);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null && trn != null) {
-            mainapp.hideSoftKeyboard(trn, activityName, false);
+        if (imm != null && turnoutEntryEditText != null) {
+            mainapp.hideSoftKeyboard(turnoutEntryEditText, activityName, false);
         }
     }
 
@@ -1648,7 +1653,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-//        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
             return (true);

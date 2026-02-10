@@ -34,7 +34,7 @@ public class GamepadEventHandler {
     private static final String GAMEPAD_FUNCTION_PREFIX = "Function ";
 
     String keyboardString = "";
-    int tempKeyboardThrottle = -1;
+    int tempGamepadOrKeyboardThrottle = -1;
     int keyboardStopCount = 0;
     int MAX_SCREEN_THROTTLES = 1;
     private int whichLastGamepadButtonPressed = -1;

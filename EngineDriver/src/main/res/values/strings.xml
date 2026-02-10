@@ -897,9 +897,16 @@
 \nMust be \'T\' followed by one digit
 \nThe following command will sent to the specified throttle regardless of the currently selected gamepad throttle.
 \n
+\nU000 - U999 = Toggle Turnout\/Point
+\nMust be \'U\' followed by three digits
+\nI000 - I999 = Throw Turnout\/Point
+\nMust be \'I\' followed by three digits
+\nO000 - O999 = Close Turnout\/Point
+\nMust be \'O\' followed by three digits
+\n
 \nAll other keyCodes are ignored
 \n
-\nFailure to follow the \'F\', \'S\' or \'L\' with the correct number of digits will ignore the command</string>
+\nFailure to follow the \'F\', \'S\', \'L\', \'U\', \'I\' or \'O\' with the correct number of digits will ignore the command</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">Test Incomplete</string>
     <string name="gamepadTestComplete">Test Complete</string>

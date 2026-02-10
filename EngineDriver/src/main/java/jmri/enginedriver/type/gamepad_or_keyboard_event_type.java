@@ -50,4 +50,8 @@ public interface gamepad_or_keyboard_event_type {
     int FUNCTION_FORCED_LATCH_START  = 30;
     int FUNCTION_FORCED_LATCH_END    = 31;
     int SPEED                        = 32;
+
+    int TURNOUT_THROW                = 33;
+    int TURNOUT_CLOSE                = 34;
+    int TURNOUT_TOGGLE               = 35;
 }

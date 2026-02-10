@@ -1761,13 +1761,18 @@ public class comm_thread extends Thread {
         }
     private static  void processDccexEmergencyStopResponse ( String cmd) { // <p0|1[PAUSED|RESUME]>
         if (cmd.equals("PAUSED")) {
-            mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.PAUSED;
-            mainapp.alert_activities(message_type.ESTOP_PAUSED, "");  //send response to running activities
+            if (mainapp.dccexEmergencyStopState != dccex_emergency_stop_state_type.PAUSED) {
+                mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.PAUSED;
+                mainapp.alert_activities(message_type.ESTOP_PAUSED, "");  //send response to running activities
+                mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
+            } // if no change don't bother doing anything
         }  else if (cmd.equals("RESUMED")) {
-            mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
-            mainapp.alert_activities(message_type.ESTOP_RESUMED, "");  //send response to running activities
+            if (mainapp.dccexEmergencyStopState != dccex_emergency_stop_state_type.RESUMED) {
+                mainapp.dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
+                mainapp.alert_activities(message_type.ESTOP_RESUMED, "");  //send response to running activities
+                mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
+            } // if no change don't bother doing anything
         }
-        mainapp.playTone(ToneGenerator.TONE_PROP_ACK);
     }
 
     /* ***********************************  *********************************** */

@@ -45,7 +45,7 @@
                     android:orientation="horizontal"
                     android:padding="4dp" >
 
-                    <EditText
+                    <jmri.enginedriver.util.InterceptEditText
                         android:id="@+id/route_entry"
                         android:inputType="text"
                         android:layout_width="120sp"

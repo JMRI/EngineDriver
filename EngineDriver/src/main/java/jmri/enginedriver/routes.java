@@ -74,6 +74,7 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.util.dccexAutomation;
@@ -568,8 +569,8 @@ public class routes extends AppCompatActivity
 //        };
 //        routes_lv.setOnTouchListener(gestureListener);
 
-        EditText rte = findViewById(R.id.route_entry);
-        rte.addTextChangedListener(new TextWatcher() {
+        InterceptEditText routeEntryEditText = findViewById(R.id.route_entry);
+        routeEntryEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 updateRouteEntry();
             }
@@ -580,7 +581,8 @@ public class routes extends AppCompatActivity
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-        rte.setOnEditorActionListener(new OnEditorActionListener() {
+        routeEntryEditText.setMainApp(mainapp);
+        routeEntryEditText.setOnEditorActionListener(new OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
@@ -744,10 +746,10 @@ public class routes extends AppCompatActivity
         mainapp.routes_list_position = (lv == null ? 0 : lv.getFirstVisiblePosition());
 
         //make sure the soft keyboard is closed
-        EditText rte = findViewById(R.id.route_entry);
+        EditText routeEntryEditText = findViewById(R.id.route_entry);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null && rte != null) {
-            mainapp.hideSoftKeyboard(rte, activityName,false);
+        if (imm != null && routeEntryEditText != null) {
+            mainapp.hideSoftKeyboard(routeEntryEditText, activityName,false);
         }
     }
 

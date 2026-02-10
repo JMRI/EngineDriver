@@ -334,7 +334,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         threaded_application.extendedLogging(activityName + ": dispatchGenericMotionEvent(): " + event.getAction());
         if ((!prefGamePadType.equals("None")) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
-            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId());
+            String deviceDescriptor = event.getDevice().getDescriptor();
+            int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(deviceDescriptor);
             if ( (onlyTestCurrent) && (whichGamePadIsEventFrom != whichGamepad) ) {
                 if (whichGamepad >= 0) {
                     return (true); // from another gamepad.  ignore it
@@ -435,7 +436,8 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         if (isExternal) { // if has come from the phone itself, don't try to process it here
             if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
 
-                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(event.getDeviceId());
+                String deviceDescriptor = event.getDevice().getDescriptor();
+                int whichGamePadIsEventFrom = findWhichGamePadEventIsFrom(deviceDescriptor);
                 if ( (onlyTestCurrent) && (whichGamePadIsEventFrom != whichGamepad) ) {
                     if (whichGamepad >= 0) {
                         return (true); // from another gamepad.  ignore it
@@ -523,6 +525,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
     }
     private class skip_button_listener implements View.OnClickListener {
         public void onClick(View v) {
+            result = RESULT_OK;
             endThisActivity(gamepad_test_type.SKIPPED);
             mainapp.buttonVibration();
         }
@@ -862,14 +865,14 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
         }
     }
 
-    public int findWhichGamePadEventIsFrom(int eventDeviceId) {
+    public int findWhichGamePadEventIsFrom(String eventDeviceDescriptor) {
         int whichGamePad = -2;  // default to the event not from a gamepad
 
-        if (eventDeviceId >= 0) { // event is from a gamepad (or at least not from a screen touch)
+        if (!eventDeviceDescriptor.isEmpty()) { // event is from a gamepad (or at least not from a screen touch)
             whichGamePad = -1;  // gamepad
 
-            for (int i = 0; i < mainapp.gamePadDeviceIds.length; i++) {
-                if (eventDeviceId == mainapp.gamePadDeviceIds[i]) {
+            for (int i = 0; i < mainapp.gamePadDeviceDescriptors.length; i++) {
+                if (eventDeviceDescriptor.equals(mainapp.gamePadDeviceDescriptors[i])) {
                     whichGamePad = i;
                     break;
                 }

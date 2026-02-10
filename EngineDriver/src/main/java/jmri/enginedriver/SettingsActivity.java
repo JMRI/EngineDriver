@@ -1453,7 +1453,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     }
 
     private void showHideDccexPreferences(PreferenceScreen prefScreen) {
-        boolean enable = ((mainapp.isDCCEX) || (mainapp.connectedHostName.isEmpty()));
+        boolean enable = ( ((mainapp.isDCCEX) && (mainapp.getDccexVersionNumeric() >= 5.005058))
+                || (mainapp.connectedHostName.isEmpty()));
         enableDisablePreference(prefScreen, "prefDccexEmergencyStopPauseResume", enable);
     }
 
