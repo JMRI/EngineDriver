@@ -178,6 +178,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
     ImageButton dccexCvProgrammerProgTrackButton;
     ImageButton dccexCvProgrammerPomButton;
+    ImageButton dccexCommandLineButton;
     ImageButton dccexTrackManagerButton;
 
     float vn = 4; // DCC-EC Version number
@@ -923,6 +924,10 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccExNavigationButtonListener = new DccExNavigationButtonListener(1);
         dccexCvProgrammerPomButton.setOnClickListener(dccExNavigationButtonListener);
 
+        dccexCommandLineButton = findViewById(R.id.dccex_command_line_button);
+        dccExNavigationButtonListener = new DccExNavigationButtonListener(2);
+        dccexCommandLineButton.setOnClickListener(dccExNavigationButtonListener);
+
         dccexTrackManagerButton = findViewById(R.id.dccex_track_manager_button);
         dccExNavigationButtonListener = new DccExNavigationButtonListener(3);
         dccexTrackManagerButton.setOnClickListener(dccExNavigationButtonListener);
@@ -1385,6 +1390,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     void setSelectedButton(int index) {
         dccexCvProgrammerProgTrackButton.setSelected(index==0);
         dccexCvProgrammerPomButton.setSelected(index==1);
+        dccexCommandLineButton.setSelected(index==2);
         dccexTrackManagerButton.setSelected(index==3);
     }
 

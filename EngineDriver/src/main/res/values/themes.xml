@@ -159,6 +159,7 @@
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
         <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_light</item>
         <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_light</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
@@ -345,6 +346,7 @@
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
         <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_light</item>
         <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_light</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
@@ -520,6 +522,7 @@
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
         <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_dark</item>
         <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_dark</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
@@ -701,6 +704,7 @@
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
         <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_dark</item>
         <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_dark</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
@@ -885,6 +889,7 @@
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
         <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_light</item>
         <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_light</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
@@ -1072,6 +1077,7 @@
         <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
         <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_dark</item>
         <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_dark</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>

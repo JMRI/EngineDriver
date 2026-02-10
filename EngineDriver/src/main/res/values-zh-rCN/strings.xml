@@ -1233,6 +1233,7 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <string name="dccexButtonCvProgrammerProgTrack">CV编程轨</string>
     <string name="dccexButtonCvProgrammerPoM">在主轨执行CV编程</string>
+    <string name="dccexButtonCommandLine">命令行</string>
     <string name="dccexButtonTrackManager">轨道管理器</string>
     <string name="dccexButtonDefaultFunctions">默认功能</string>
     <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX - 编程轨道（服务模式）</string>
