@@ -84,9 +84,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     private EditText etDccexWriteAddressValue;
 
     private String dccexSendCommandValue = "";
-    private EditText etDccexSendCommandValue;
+    private EditText dccexSendCommandValueEditText;
 
-    private LinearLayout dccexWriteInfoLayout;
+    private LinearLayout dccexDccexWriteInfoLayout;
     private TextView dccexWriteInfoLabel;
     private String dccexInfoStr = "";
 
@@ -118,7 +118,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 //    private boolean dccexHideSends = false;
 
     private static final int PROGRAMMING_TRACK = 0;
-    //    private static final int PROGRAMMING_ON_MAIN = 1;
+    private static final int PROGRAMMING_ON_MAIN = 1;
     private static final int COMMAND_LINE = 2;
     private static final int TRACK_MANAGER = 3;
 
@@ -139,8 +139,11 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     private LinearLayout dccexProgrammingAddressLayout;
     private LinearLayout dccexProgrammingCvLayout;
     //    private final LinearLayout[] dexcDccexTrackLayout = {null, null, null, null, null, null, null, null};
-    private LinearLayout dceexDccexTrackLinearLayout;
+    private LinearLayout dccexDccexTracksLayout;
     Spinner dccexCommonCvsSpinner;
+
+    private LinearLayout dccexDccexCommandLineLayout;
+    private LinearLayout dccexDccexCommonCommandsLayout;
     Spinner dccexCommonCommandsSpinner;
 
     private final int[] dccexTrackTypeIndex = {1, 2, 1, 1, 1, 1, 1, 1};
@@ -420,7 +423,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     public class SendCommandButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             dccexInfoStr = "";
-            String cmdStr = etDccexSendCommandValue.getText().toString();
+            String cmdStr = dccexSendCommandValueEditText.getText().toString();
             if ((!cmdStr.isEmpty()) && (cmdStr.charAt(0) != '<')) {
                 mainapp.buttonVibration();
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DCCEX_SEND_COMMAND, "<" + cmdStr + ">");
@@ -445,7 +448,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     public class PreviousCommandButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             dccexInfoStr = "";
-//            String cmdStr = etDccexSendCommandValue.getText().toString();
+//            String cmdStr = dccexSendCommandValueEditText.getText().toString();
             if (mainapp.dccexPreviousCommandIndex > 0) {
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(mainapp.dccexPreviousCommandIndex - 1);
                 mainapp.dccexPreviousCommandIndex--;
@@ -453,7 +456,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(mainapp.dccexPreviousCommandList.size() - 1);
                 mainapp.dccexPreviousCommandIndex = mainapp.dccexPreviousCommandList.size() - 1;
             }
-            etDccexSendCommandValue.setText(dccexSendCommandValue);
+            dccexSendCommandValueEditText.setText(dccexSendCommandValue);
 
             refreshDccexView();
             mainapp.hideSoftKeyboard(v);
@@ -463,7 +466,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     public class NextCommandButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             dccexInfoStr = "";
-//            String cmdStr = etDccexSendCommandValue.getText().toString();
+//            String cmdStr = dccexSendCommandValueEditText.getText().toString();
             if (mainapp.dccexPreviousCommandIndex < mainapp.dccexPreviousCommandList.size() - 1) {
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(mainapp.dccexPreviousCommandIndex + 1);
                 mainapp.dccexPreviousCommandIndex++;
@@ -471,7 +474,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(0);
                 mainapp.dccexPreviousCommandIndex = 0;
             }
-            etDccexSendCommandValue.setText(dccexSendCommandValue);
+            dccexSendCommandValueEditText.setText(dccexSendCommandValue);
 
             refreshDccexView();
             mainapp.hideSoftKeyboard(v);
@@ -610,7 +613,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 break;
             case WHICH_COMMAND:
                 dccexSendCommandValue = "";
-                etDccexSendCommandValue.setText("");
+                dccexSendCommandValueEditText.setText("");
         }
     }
 
@@ -626,48 +629,78 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexCvValue = etDccexCvValue.getText().toString();
                 break;
             case WHICH_COMMAND:
-                dccexSendCommandValue = etDccexSendCommandValue.getText().toString();
+                dccexSendCommandValue = dccexSendCommandValueEditText.getText().toString();
         }
     }
 
     private void showHideButtons() {
-        if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
-            int enable = (mainapp.dccexActionTypeIndex != COMMAND_LINE) ? VISIBLE : GONE;
+        switch(mainapp.dccexActionTypeIndex) {
+            case PROGRAMMING_TRACK :
+            case PROGRAMMING_ON_MAIN: {
+                dccexProgrammingCommonCvsLayout.setVisibility(VISIBLE);
+                dccexCommonCvsSpinner.setVisibility(VISIBLE);
 
-            dccexProgrammingCommonCvsLayout.setVisibility(enable);
-            dccexCommonCvsSpinner.setVisibility(enable);
+                dccexProgrammingAddressLayout.setVisibility(VISIBLE);
+                dccexProgrammingCvLayout.setVisibility(VISIBLE);
 
-            dccexProgrammingAddressLayout.setVisibility(enable);
-            dccexProgrammingCvLayout.setVisibility(enable);
+                dccexDccexTracksLayout.setVisibility(GONE);
 
-            dceexDccexTrackLinearLayout.setVisibility(GONE);
-            dccexWriteInfoLayout.setVisibility(VISIBLE);
+                dccexDccexCommandLineLayout.setVisibility(GONE);
+                dccexDccexCommonCommandsLayout.setVisibility(GONE);
 
-            sendCommandButton.setEnabled(false);
-            writeAddressButton.setEnabled(!dccexAddress.isEmpty());
-            readCvButton.setEnabled(!dccexCv.isEmpty());
-            if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
-                writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty())));
-            } else {
-                writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty()) && (!dccexAddress.isEmpty())));
+                dccexDccexWriteInfoLayout.setVisibility(VISIBLE);
+
+                writeAddressButton.setEnabled(!dccexAddress.isEmpty());
+                readCvButton.setEnabled(!dccexCv.isEmpty());
+                if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
+                    writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty())));
+                } else {
+                    writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty()) && (!dccexAddress.isEmpty())));
+                }
+                break;
             }
-        } else {
-            dccexProgrammingCommonCvsLayout.setVisibility(GONE);
-            dccexCommonCvsSpinner.setVisibility(GONE);
+            case COMMAND_LINE: {
+                dccexProgrammingCommonCvsLayout.setVisibility(GONE);
+                dccexCommonCvsSpinner.setVisibility(GONE);
 
-            dccexProgrammingAddressLayout.setVisibility(GONE);
-            dccexProgrammingCvLayout.setVisibility(GONE);
-            dccexWriteInfoLayout.setVisibility(GONE);
-            dceexDccexTrackLinearLayout.setVisibility(VISIBLE);
+                dccexProgrammingAddressLayout.setVisibility(GONE);
+                dccexProgrammingCvLayout.setVisibility(GONE);
 
-            for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
-                dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
+                dccexDccexTracksLayout.setVisibility(GONE);
+
+                dccexDccexCommandLineLayout.setVisibility(VISIBLE);
+                dccexDccexCommonCommandsLayout.setVisibility(VISIBLE);
+                
+                dccexDccexWriteInfoLayout.setVisibility(VISIBLE);
+
+                sendCommandButton.setEnabled(!dccexSendCommandValue.isEmpty());
+                break;
             }
-            joinTracksButton.setEnabled(hasProgTrack);
+            case TRACK_MANAGER:
+            default: {
+                dccexProgrammingCommonCvsLayout.setVisibility(GONE);
+                dccexCommonCvsSpinner.setVisibility(GONE);
+
+                dccexProgrammingAddressLayout.setVisibility(GONE);
+                dccexProgrammingCvLayout.setVisibility(GONE);
+
+                dccexDccexTracksLayout.setVisibility(VISIBLE);
+
+                dccexDccexCommandLineLayout.setVisibility(GONE);
+                dccexDccexCommonCommandsLayout.setVisibility(GONE);
+
+                dccexDccexWriteInfoLayout.setVisibility(GONE);
+
+                for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
+                    dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
+                }
+                joinTracksButton.setEnabled(hasProgTrack);
+            }
+            sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
+            previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
+            nextCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
+            break;
         }
-        sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
-        previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
-        nextCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
     }
 
     public void refreshDccexView() {
@@ -676,7 +709,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccexWriteInfoLabel.setText(dccexInfoStr);
         etDccexCv.setText(dccexCv);
         etDccexCvValue.setText(dccexCvValue);
-//        etDccexSendCommandValue.setText(dccexSendCommandValue);
+//        dccexSendCommandValueEditText.setText(dccexSendCommandValue);
 
         if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
             readAddressButton.setVisibility(VISIBLE);
@@ -831,29 +864,29 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        sendCommandButton = findViewById(R.id.dexc_DccexSendCommandButton);
+        sendCommandButton = findViewById(R.id.dccex_dccex_send_command_button);
         SendCommandButtonListener sendCommandButtonListener = new SendCommandButtonListener();
         sendCommandButton.setOnClickListener(sendCommandButtonListener);
 
-        etDccexSendCommandValue = findViewById(R.id.dexc_DccexSendCommandValue);
-        etDccexSendCommandValue.setInputType(TYPE_TEXT_FLAG_AUTO_CORRECT);
-        etDccexSendCommandValue.setText("");
-        etDccexSendCommandValue.addTextChangedListener(new TextWatcher() {
+        dccexSendCommandValueEditText = findViewById(R.id.dccex_dccex_send_command_edit_text);
+        dccexSendCommandValueEditText.setInputType(TYPE_TEXT_FLAG_AUTO_CORRECT);
+        dccexSendCommandValueEditText.setText("");
+        dccexSendCommandValueEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_COMMAND); showHideButtons(); }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
-        dccexWriteInfoLayout = findViewById(R.id.dexc_DccexWriteInfoLayout);
+        dccexDccexWriteInfoLayout = findViewById(R.id.dccex_dccex_write_info_layout);
         dccexWriteInfoLabel = findViewById(R.id.dexc_DccexWriteInfoLabel);
         dccexWriteInfoLabel.setText("");
 
         dccexHeadingLabel = findViewById(R.id.dccex_HeadingLabel);
 
-        previousCommandButton = findViewById(R.id.dexc_DccexPreviousCommandButton);
+        previousCommandButton = findViewById(R.id.dccex_dccex_previous_command_button);
         PreviousCommandButtonListener previousCommandButtonListener = new PreviousCommandButtonListener();
         previousCommandButton.setOnClickListener(previousCommandButtonListener);
 
-        nextCommandButton = findViewById(R.id.dexc_DccexNextCommandButton);
+        nextCommandButton = findViewById(R.id.dccex_dccex_next_command_button);
         NextCommandButtonListener nextCommandButtonListener = new NextCommandButtonListener();
         nextCommandButton.setOnClickListener(nextCommandButtonListener);
 
@@ -884,7 +917,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccexCommonCommandsHasParametersArray = this.getResources().getIntArray(R.array.dccExCommonCommandsHasParameters);
 
         dccCmdIndex = 0;
-        dccexCommonCommandsSpinner = findViewById(R.id.dexc_common_commands_list);
+        dccexCommonCommandsSpinner = findViewById(R.id.dccex_dccex_common_commands_list);
         spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExCommonCommandsEntries, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dccexCommonCommandsSpinner.setAdapter(spinner_adapter);
@@ -936,10 +969,13 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         DccexDefaultFunctionsButtonListener dccexDefaultFunctionsButtonListener = new DccexDefaultFunctionsButtonListener(this);
         default_functions_button.setOnClickListener(dccexDefaultFunctionsButtonListener);
 
-        dccexProgrammingCommonCvsLayout = findViewById(R.id.dccex_programmingCommonCvsLayout);
-        dccexProgrammingAddressLayout = findViewById(R.id.dccex_programmingAddressLayout);
-        dccexProgrammingCvLayout = findViewById(R.id.dccex_programmingCvLayout);
-        dceexDccexTrackLinearLayout = findViewById(R.id.dccex_DccexTrackLinearLayout);
+        dccexProgrammingCommonCvsLayout = findViewById(R.id.dccex_dccex_programming_common_cvs_layout);
+        dccexProgrammingAddressLayout = findViewById(R.id.dccex_dccex_programming_address_layout);
+        dccexProgrammingCvLayout = findViewById(R.id.dccex_dccex_programming_cv_layout);
+        dccexDccexTracksLayout = findViewById(R.id.dccex_dccex_tracks_layout);
+        
+        dccexDccexCommandLineLayout = findViewById(R.id.dccex_dccex_command_line_layout);
+        dccexDccexCommonCommandsLayout = findViewById(R.id.dccex_dccex_common_commands_layout);
 
         dccexTrackTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntryValues);
         dccexTrackTypeEntriesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntries); // display version
@@ -1219,9 +1255,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexSendCommandValue = dccexCommonCommandsEntryValuesArray[dccCmdIndex];
                 if (dccexCommonCommandsHasParametersArray[dccCmdIndex] > 0)
                     dccexSendCommandValue = dccexSendCommandValue + " ";
-                etDccexSendCommandValue.setText(dccexSendCommandValue);
-                etDccexSendCommandValue.requestFocus();
-                etDccexSendCommandValue.setSelection(dccexSendCommandValue.length());
+                dccexSendCommandValueEditText.setText(dccexSendCommandValue);
+                dccexSendCommandValueEditText.requestFocus();
+                dccexSendCommandValueEditText.setSelection(dccexSendCommandValue.length());
             }
             dccCmdIndex = 0;
             dccexCommonCommandsSpinner.setSelection(dccCmdIndex);

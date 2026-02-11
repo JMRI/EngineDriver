@@ -256,7 +256,7 @@
                 tools:ignore="PxUsage" />
 
             <LinearLayout
-                android:id="@+id/dccex_programmingAddressLayout"
+                android:id="@+id/dccex_dccex_programming_address_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
@@ -320,7 +320,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/dccex_programmingCvLayout"
+                android:id="@+id/dccex_dccex_programming_cv_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
@@ -378,8 +378,8 @@
                     android:layout_weight=".15"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:nextFocusRight="@id/dexc_DccexSendCommandValue"
-                    android:nextFocusDown="@id/dexc_DccexSendCommandValue"
+                    android:nextFocusRight="@id/dccex_dccex_send_command_edit_text"
+                    android:nextFocusDown="@id/dccex_dccex_send_command_edit_text"
                     android:paddingRight="8sp"
                     android:shadowColor="#FFFFFFFF"
                     android:shadowDx="1"
@@ -414,7 +414,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/dccex_programmingCommonCvsLayout"
+                android:id="@+id/dccex_dccex_programming_common_cvs_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
@@ -464,7 +464,7 @@
 
 
             <LinearLayout
-                android:id="@+id/dccex_DccexTrackLinearLayout"
+                android:id="@+id/dccex_dccex_tracks_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="240sp"
                 android:layout_margin="0sp"
@@ -475,7 +475,7 @@
                 tools:ignore="NestedWeights">
 
                 <ScrollView
-                    android:id="@+id/dexc_DccexTrackScrollView"
+                    android:id="@+id/dccex_dccex_tracks_scroll_view"
                     android:layout_width="0sp"
                     android:layout_height="fill_parent"
                     android:layout_weight=".83"
@@ -1068,16 +1068,17 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="2px"
-                android:layout_marginTop="6sp"
-                android:orientation="vertical"
-                android:padding="0dp"
-                android:background="?attr/ed_primaryLineColor"
-                tools:ignore="PxUsage"/>
+<!--            <LinearLayout-->
+<!--                android:layout_width="fill_parent"-->
+<!--                android:layout_height="2px"-->
+<!--                android:layout_marginTop="6sp"-->
+<!--                android:orientation="vertical"-->
+<!--                android:padding="0dp"-->
+<!--                android:background="?attr/ed_primaryLineColor"-->
+<!--                tools:ignore="PxUsage"/>-->
 
             <LinearLayout
+                android:id="@+id/dccex_dccex_command_line_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
@@ -1097,7 +1098,7 @@
                     android:textAlignment="viewEnd" />
 
                 <EditText
-                    android:id="@+id/dexc_DccexSendCommandValue"
+                    android:id="@+id/dccex_dccex_send_command_edit_text"
                     style="?attr/edit_label_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -1116,7 +1117,7 @@
                     tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
 
                 <Button
-                    android:id="@+id/dexc_DccexSendCommandButton"
+                    android:id="@+id/dccex_dccex_send_command_button"
                     style="?attr/ed_small_button_style"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -1125,7 +1126,7 @@
                     android:text="@string/dccexSendCommandButtonLabel" />
 
                 <TableLayout
-                    android:id="@+id/dexc_commandsExtraButtonsLayout"
+                    android:id="@+id/dccex_commands_extra_buttons_layout"
                     android:layout_width="0sp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -1137,7 +1138,7 @@
                     <TableRow android:gravity="center_horizontal">
 
                         <Button
-                            android:id="@+id/dexc_DccexPreviousCommandButton"
+                            android:id="@+id/dccex_dccex_previous_command_button"
                             style="?attr/ed_small_button_style"
                             android:layout_width="fill_parent"
                             android:layout_height="26dp"
@@ -1149,7 +1150,7 @@
                     <TableRow android:gravity="center_horizontal">
 
                         <Button
-                            android:id="@+id/dexc_DccexNextCommandButton"
+                            android:id="@+id/dccex_dccex_next_command_button"
                             style="?attr/ed_small_button_style"
                             android:layout_width="fill_parent"
                             android:layout_height="22dp"
@@ -1161,7 +1162,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/dexc_CommonCommandsLayout"
+                android:id="@+id/dccex_dccex_common_commands_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
@@ -1184,7 +1185,7 @@
                     android:textSize="12sp" />
 
                 <Spinner
-                    android:id="@+id/dexc_common_commands_list"
+                    android:id="@+id/dccex_dccex_common_commands_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
@@ -1202,7 +1203,7 @@
 
 
             <LinearLayout
-                android:id="@+id/dexc_DccexWriteInfoLayout"
+                android:id="@+id/dccex_dccex_write_info_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0sp"

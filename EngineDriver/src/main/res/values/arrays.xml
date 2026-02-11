@@ -2090,6 +2090,8 @@
         <item>ETHERNET {ON|OFF}</item>
         <item>WiThrottle {ON|OFF}</item>
         <item>Show free RAM</item>
+        <item>Show Consists/MUs</item>
+        <item>Query EStop</item>
     </string-array>
     <string-array name="dccExCommonCommandsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item />
@@ -2114,6 +2116,8 @@
         <item>D ETHERNET</item>
         <item>D WIT</item>
         <item>D RAM</item>
+        <item>^</item>
+        <item>!Q</item>
     </string-array>
     <integer-array name="dccExCommonCommandsHasParameters" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
@@ -2138,6 +2142,8 @@
         <item>1</item>  // D ETHERNET
         <item>1</item>  // D WIT
         <item>1</item>  // D RAM
+        <item>0</item>  // ^
+        <item>0</item>  // !Q
     </integer-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
