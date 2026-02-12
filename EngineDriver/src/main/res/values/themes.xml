@@ -164,6 +164,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
@@ -353,6 +354,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
@@ -531,6 +533,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
@@ -715,6 +718,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
@@ -902,6 +906,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
@@ -1092,6 +1097,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>

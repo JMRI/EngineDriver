@@ -138,6 +138,7 @@
     <attr name="ed_dccex_glyph_command_line" format="reference" />
 
     <attr name="ed_connect_glyph" format="reference" />
+    <attr name="ed_send_glyph" format="reference" />
     <attr name="ed_acquire_loco_glyph" format="reference" />
     <attr name="ed_reset_glyph" format="reference" />
     <attr name="ed_save_glyph" format="reference" />
