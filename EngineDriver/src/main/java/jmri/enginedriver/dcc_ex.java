@@ -127,8 +127,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     Button readCvButton;
     Button writeCvButton;
     Button sendCommandButton;
-    Button previousCommandButton;
-    Button nextCommandButton;
+    ImageButton previousCommandButton;
+    ImageButton nextCommandButton;
     Button writeTracksButton;
     Button joinTracksButton;
     boolean hasProgTrack = false;  // used to check if the Join button should be shown
@@ -143,7 +143,6 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     Spinner dccexCommonCvsSpinner;
 
     private LinearLayout dccexDccexCommandLineLayout;
-    private LinearLayout dccexDccexCommonCommandsLayout;
     Spinner dccexCommonCommandsSpinner;
 
     private final int[] dccexTrackTypeIndex = {1, 2, 1, 1, 1, 1, 1, 1};
@@ -571,7 +570,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 //        public void onClick(View v) {
 //            dccexHideSends = !dccexHideSends;
 //
-//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) findViewById(R.id.dexc_DccexResponsesAndSendsLayout).getLayoutParams();
+//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) findViewById(R.id.dccex_dccex_responses_and_sends_layout).getLayoutParams();
 //            LinearLayout.LayoutParams responsesParams = (LinearLayout.LayoutParams) DccexResponsesScrollView.getLayoutParams();
 //            LinearLayout.LayoutParams sendsParams = (LinearLayout.LayoutParams) DccexSendsScrollView.getLayoutParams();
 //            int h = params.height;
@@ -646,7 +645,6 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexDccexTracksLayout.setVisibility(GONE);
 
                 dccexDccexCommandLineLayout.setVisibility(GONE);
-                dccexDccexCommonCommandsLayout.setVisibility(GONE);
 
                 dccexDccexWriteInfoLayout.setVisibility(VISIBLE);
 
@@ -669,11 +667,12 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexDccexTracksLayout.setVisibility(GONE);
 
                 dccexDccexCommandLineLayout.setVisibility(VISIBLE);
-                dccexDccexCommonCommandsLayout.setVisibility(VISIBLE);
                 
                 dccexDccexWriteInfoLayout.setVisibility(VISIBLE);
 
-                sendCommandButton.setEnabled(!dccexSendCommandValue.isEmpty());
+                sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
+                previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
+                nextCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
                 break;
             }
             case TRACK_MANAGER:
@@ -687,7 +686,6 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexDccexTracksLayout.setVisibility(VISIBLE);
 
                 dccexDccexCommandLineLayout.setVisibility(GONE);
-                dccexDccexCommonCommandsLayout.setVisibility(GONE);
 
                 dccexDccexWriteInfoLayout.setVisibility(GONE);
 
@@ -696,9 +694,6 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 }
                 joinTracksButton.setEnabled(hasProgTrack);
             }
-            sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
-            previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
-            nextCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
             break;
         }
     }
@@ -824,15 +819,15 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         //put pointer to this activity's handler in main app's shared variable (If needed)
         mainapp.dcc_ex_msg_handler = new DccExMessageHandler(Looper.getMainLooper());
 
-        readAddressButton = findViewById(R.id.dexc_DccexReadAddressButton);
+        readAddressButton = findViewById(R.id.dccex_dccex_read_address_button);
         ReadAddressButtonListener readAddressButtonListener = new ReadAddressButtonListener();
         readAddressButton.setOnClickListener(readAddressButtonListener);
 
-        writeAddressButton = findViewById(R.id.dexc_DccexWriteAddressButton);
+        writeAddressButton = findViewById(R.id.dccex_dccex_write_address_button);
         WriteAddressButtonListener writeAddressButtonListener = new WriteAddressButtonListener();
         writeAddressButton.setOnClickListener(writeAddressButtonListener);
 
-        etDccexWriteAddressValue = findViewById(R.id.dexc_DccexWriteAddressValue);
+        etDccexWriteAddressValue = findViewById(R.id.dccex_dccex_write_address_value_edit_text);
         etDccexWriteAddressValue.setText("");
         etDccexWriteAddressValue.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_ADDRESS); showHideButtons(); }
@@ -840,15 +835,15 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        readCvButton = findViewById(R.id.dexc_DccexReadCvButton);
+        readCvButton = findViewById(R.id.dccex_dccex_read_cv_button);
         ReadCvButtonListener readCvButtonListener = new ReadCvButtonListener();
         readCvButton.setOnClickListener(readCvButtonListener);
 
-        writeCvButton = findViewById(R.id.dexc_DccexWriteCvButton);
+        writeCvButton = findViewById(R.id.dccex_dccex_write_cv_button);
         WriteCvButtonListener writeCvButtonListener = new WriteCvButtonListener();
         writeCvButton.setOnClickListener(writeCvButtonListener);
 
-        etDccexCv = findViewById(R.id.dexc_DccexCv);
+        etDccexCv = findViewById(R.id.dccex_dccex_cv_edit_text);
         etDccexCv.setText("");
         etDccexCv.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_CV); showHideButtons(); }
@@ -856,7 +851,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        etDccexCvValue = findViewById(R.id.dexc_DccexCvValue);
+        etDccexCvValue = findViewById(R.id.dccex_dccex_cv_value_edit_text);
         etDccexCvValue.setText("");
         etDccexCvValue.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); showHideButtons(); }
@@ -877,7 +872,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
         dccexDccexWriteInfoLayout = findViewById(R.id.dccex_dccex_write_info_layout);
-        dccexWriteInfoLabel = findViewById(R.id.dexc_DccexWriteInfoLabel);
+        dccexWriteInfoLabel = findViewById(R.id.dccex_dccex_write_info_label);
         dccexWriteInfoLabel.setText("");
 
         dccexHeadingLabel = findViewById(R.id.dccex_HeadingLabel);
@@ -890,9 +885,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         NextCommandButtonListener nextCommandButtonListener = new NextCommandButtonListener();
         nextCommandButton.setOnClickListener(nextCommandButtonListener);
 
-        dccexResponsesLabel = findViewById(R.id.dexc_DccexResponsesLabel);
+        dccexResponsesLabel = findViewById(R.id.dccex_dccex_responses_label);
         dccexResponsesLabel.setText("");
-        dccexSendsLabel = findViewById(R.id.dexc_DccexSendsLabel);
+        dccexSendsLabel = findViewById(R.id.dccex_dccex_sends_label);
         dccexSendsLabel.setText("");
 
         Button closeButton = findViewById(R.id.dcc_ex_button_close);
@@ -903,7 +898,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccCvsEntriesArray = this.getResources().getStringArray(R.array.dccCvsEntries); // display version
 
         dccCvsIndex = 0;
-        dccexCommonCvsSpinner = findViewById(R.id.dexc_dcc_cv_list);
+        dccexCommonCvsSpinner = findViewById(R.id.dccex_dccex_dcc_cv_list);
         ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccCvsEntries, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dccexCommonCvsSpinner.setAdapter(spinner_adapter);
@@ -941,7 +936,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 //        final List<String> dccActionTypeEntriesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntriesArray));
 
 //        mainapp.dccexActionTypeIndex = PROGRAMMING_TRACK;
-        dccActionTypeSpinner = findViewById(R.id.dexc_action_type_list);
+        dccActionTypeSpinner = findViewById(R.id.dccex_dccex_action_type_list);
 //        ArrayAdapter<?> dccActionTypeSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.dccExActionTypeEntries, android.R.layout.simple_spinner_item);
         ArrayAdapter<?> dccActionTypeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dccexActionTypeEntriesArray);
         dccActionTypeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -975,7 +970,6 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccexDccexTracksLayout = findViewById(R.id.dccex_dccex_tracks_layout);
         
         dccexDccexCommandLineLayout = findViewById(R.id.dccex_dccex_command_line_layout);
-        dccexDccexCommonCommandsLayout = findViewById(R.id.dccex_dccex_common_commands_layout);
 
         dccexTrackTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntryValues);
         dccexTrackTypeEntriesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntries); // display version
@@ -1009,16 +1003,16 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccex_track_type_ids.recycle();
         dccex_track_id_ids.recycle();
 
-        writeTracksButton = findViewById(R.id.dexc_DccexWriteTracksButton);
+        writeTracksButton = findViewById(R.id.dccex_dccex_write_tracks_button);
         WriteTracksButtonListener writeTracksButtonListener = new WriteTracksButtonListener();
         writeTracksButton.setOnClickListener(writeTracksButtonListener);
 
-        joinTracksButton = findViewById(R.id.dexc_DccexJoinTracksButton);
+        joinTracksButton = findViewById(R.id.dccex_dccex_join_tracks_button);
         JoinTracksButtonListener joinTracksButtonListener = new JoinTracksButtonListener();
         joinTracksButton.setOnClickListener(joinTracksButtonListener);
 
-//        ScrollView dccexResponsesScrollView = findViewById(R.id.dexc_DccexResponsesScrollView);
-//        ScrollView dccexSendsScrollView = findViewById(R.id.dexc_DccexSendsScrollView);
+//        ScrollView dccexResponsesScrollView = findViewById(R.id.dccex_dccex_responses_scroll_view);
+//        ScrollView dccexSendsScrollView = findViewById(R.id.dccex_dccex_sends_scroll_view);
 
         clearCommandsButton = findViewById(R.id.dcc_ex_clearCommandsButton);
         ClearCommandsButtonListener clearCommandsButtonListener = new ClearCommandsButtonListener();
@@ -1030,7 +1024,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
 
 
-        openCvCalculatorDialogButton = findViewById(R.id.dexc_cvBitCalculatorButton); // Get the button from your layout
+        openCvCalculatorDialogButton = findViewById(R.id.dccex_dccex_cv_bit_calculator_button); // Get the button from your layout
         openCvCalculatorDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1284,7 +1278,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            Spinner spinner = findViewById(R.id.dexc_action_type_list);
+            Spinner spinner = findViewById(R.id.dccex_dccex_action_type_list);
             mainapp.dccexActionTypeIndex = spinner.getSelectedItemPosition();
             resetTextField(WHICH_CV);
             resetTextField(WHICH_CV_VALUE);
