@@ -517,6 +517,7 @@
     <string-array name="dccExActionTypeEntries">  <!-- display version -->
         <item>Programovací stopa (režim služeb)</item>
         <item>Program na hlavní (režim provozu)</item>
+        <item>Příkazový řádek</item>
         <item>Track/District Manager</item>
     </string-array>
 

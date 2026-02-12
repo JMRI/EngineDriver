@@ -1700,6 +1700,7 @@
 
     <string name="dccexButtonCvProgrammerProgTrack">CVs PROG</string>
     <string name="dccexButtonCvProgrammerPoM">CVs PoM</string>
+    <string name="dccexButtonCommandLine">Cmd Line</string>
     <string name="dccexButtonTrackManager">Track Mgr</string>
     <string name="dccexButtonDefaultFunctions">Default Fns</string>
     <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>

@@ -80,6 +80,7 @@
     <string name="dccesp_settings">DCC ESP 設定</string>
     <string name="dccexActionTypeLabel">アクション</string>
     <string name="dccexButtonDefaultFunctions">デフォルトのFns</string>
+    <string name="dccexButtonCommandLine">コマンドライン</string>
     <string name="dccexButtonTrackManager">トラックマネージャー</string>
     <string name="dccexClearCommands">クリア</string>
 

@@ -84,9 +84,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     private EditText etDccexWriteAddressValue;
 
     private String dccexSendCommandValue = "";
-    private EditText etDccexSendCommandValue;
+    private EditText dccexSendCommandValueEditText;
 
-    private LinearLayout dccexWriteInfoLayout;
+    private LinearLayout dccexDccexWriteInfoLayout;
     private TextView dccexWriteInfoLabel;
     private String dccexInfoStr = "";
 
@@ -118,16 +118,17 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 //    private boolean dccexHideSends = false;
 
     private static final int PROGRAMMING_TRACK = 0;
-    //    private static final int PROGRAMMING_ON_MAIN = 1;
-    private static final int TRACK_MANAGER = 2;
+    private static final int PROGRAMMING_ON_MAIN = 1;
+    private static final int COMMAND_LINE = 2;
+    private static final int TRACK_MANAGER = 3;
 
     Button readAddressButton;
     Button writeAddressButton;
     Button readCvButton;
     Button writeCvButton;
     Button sendCommandButton;
-    Button previousCommandButton;
-    Button nextCommandButton;
+    ImageButton previousCommandButton;
+    ImageButton nextCommandButton;
     Button writeTracksButton;
     Button joinTracksButton;
     boolean hasProgTrack = false;  // used to check if the Join button should be shown
@@ -138,8 +139,10 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     private LinearLayout dccexProgrammingAddressLayout;
     private LinearLayout dccexProgrammingCvLayout;
     //    private final LinearLayout[] dexcDccexTrackLayout = {null, null, null, null, null, null, null, null};
-    private LinearLayout dceexDccexTrackLinearLayout;
+    private LinearLayout dccexDccexTracksLayout;
     Spinner dccexCommonCvsSpinner;
+
+    private LinearLayout dccexDccexCommandLineLayout;
     Spinner dccexCommonCommandsSpinner;
 
     private final int[] dccexTrackTypeIndex = {1, 2, 1, 1, 1, 1, 1, 1};
@@ -177,6 +180,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
     ImageButton dccexCvProgrammerProgTrackButton;
     ImageButton dccexCvProgrammerPomButton;
+    ImageButton dccexCommandLineButton;
     ImageButton dccexTrackManagerButton;
 
     float vn = 4; // DCC-EC Version number
@@ -418,7 +422,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     public class SendCommandButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             dccexInfoStr = "";
-            String cmdStr = etDccexSendCommandValue.getText().toString();
+            String cmdStr = dccexSendCommandValueEditText.getText().toString();
             if ((!cmdStr.isEmpty()) && (cmdStr.charAt(0) != '<')) {
                 mainapp.buttonVibration();
                 mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DCCEX_SEND_COMMAND, "<" + cmdStr + ">");
@@ -443,7 +447,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     public class PreviousCommandButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             dccexInfoStr = "";
-//            String cmdStr = etDccexSendCommandValue.getText().toString();
+//            String cmdStr = dccexSendCommandValueEditText.getText().toString();
             if (mainapp.dccexPreviousCommandIndex > 0) {
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(mainapp.dccexPreviousCommandIndex - 1);
                 mainapp.dccexPreviousCommandIndex--;
@@ -451,7 +455,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(mainapp.dccexPreviousCommandList.size() - 1);
                 mainapp.dccexPreviousCommandIndex = mainapp.dccexPreviousCommandList.size() - 1;
             }
-            etDccexSendCommandValue.setText(dccexSendCommandValue);
+            dccexSendCommandValueEditText.setText(dccexSendCommandValue);
 
             refreshDccexView();
             mainapp.hideSoftKeyboard(v);
@@ -461,7 +465,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     public class NextCommandButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             dccexInfoStr = "";
-//            String cmdStr = etDccexSendCommandValue.getText().toString();
+//            String cmdStr = dccexSendCommandValueEditText.getText().toString();
             if (mainapp.dccexPreviousCommandIndex < mainapp.dccexPreviousCommandList.size() - 1) {
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(mainapp.dccexPreviousCommandIndex + 1);
                 mainapp.dccexPreviousCommandIndex++;
@@ -469,7 +473,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexSendCommandValue = mainapp.dccexPreviousCommandList.get(0);
                 mainapp.dccexPreviousCommandIndex = 0;
             }
-            etDccexSendCommandValue.setText(dccexSendCommandValue);
+            dccexSendCommandValueEditText.setText(dccexSendCommandValue);
 
             refreshDccexView();
             mainapp.hideSoftKeyboard(v);
@@ -566,7 +570,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 //        public void onClick(View v) {
 //            dccexHideSends = !dccexHideSends;
 //
-//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) findViewById(R.id.dexc_DccexResponsesAndSendsLayout).getLayoutParams();
+//            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) findViewById(R.id.dccex_dccex_responses_and_sends_layout).getLayoutParams();
 //            LinearLayout.LayoutParams responsesParams = (LinearLayout.LayoutParams) DccexResponsesScrollView.getLayoutParams();
 //            LinearLayout.LayoutParams sendsParams = (LinearLayout.LayoutParams) DccexSendsScrollView.getLayoutParams();
 //            int h = params.height;
@@ -608,7 +612,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 break;
             case WHICH_COMMAND:
                 dccexSendCommandValue = "";
-                etDccexSendCommandValue.setText("");
+                dccexSendCommandValueEditText.setText("");
         }
     }
 
@@ -624,45 +628,74 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexCvValue = etDccexCvValue.getText().toString();
                 break;
             case WHICH_COMMAND:
-                dccexSendCommandValue = etDccexSendCommandValue.getText().toString();
+                dccexSendCommandValue = dccexSendCommandValueEditText.getText().toString();
         }
     }
 
     private void showHideButtons() {
-        if (mainapp.dccexActionTypeIndex != TRACK_MANAGER) {
-            dccexProgrammingCommonCvsLayout.setVisibility(VISIBLE);
-            dccexCommonCvsSpinner.setVisibility(VISIBLE);
+        switch(mainapp.dccexActionTypeIndex) {
+            case PROGRAMMING_TRACK :
+            case PROGRAMMING_ON_MAIN: {
+                dccexProgrammingCommonCvsLayout.setVisibility(VISIBLE);
+                dccexCommonCvsSpinner.setVisibility(VISIBLE);
 
-            dccexProgrammingAddressLayout.setVisibility(VISIBLE);
-            dccexProgrammingCvLayout.setVisibility(VISIBLE);
-            dceexDccexTrackLinearLayout.setVisibility(GONE);
-            dccexWriteInfoLayout.setVisibility(VISIBLE);
+                dccexProgrammingAddressLayout.setVisibility(VISIBLE);
+                dccexProgrammingCvLayout.setVisibility(VISIBLE);
 
-            sendCommandButton.setEnabled(false);
-            writeAddressButton.setEnabled(!dccexAddress.isEmpty());
-            readCvButton.setEnabled(!dccexCv.isEmpty());
-            if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
-                writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty())));
-            } else {
-                writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty()) && (!dccexAddress.isEmpty())));
+                dccexDccexTracksLayout.setVisibility(GONE);
+
+                dccexDccexCommandLineLayout.setVisibility(GONE);
+
+                dccexDccexWriteInfoLayout.setVisibility(VISIBLE);
+
+                writeAddressButton.setEnabled(!dccexAddress.isEmpty());
+                readCvButton.setEnabled(!dccexCv.isEmpty());
+                if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
+                    writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty())));
+                } else {
+                    writeCvButton.setEnabled(((!dccexCv.isEmpty()) && (!dccexCvValue.isEmpty()) && (!dccexAddress.isEmpty())));
+                }
+                break;
             }
-        } else {
-            dccexProgrammingCommonCvsLayout.setVisibility(GONE);
-            dccexCommonCvsSpinner.setVisibility(GONE);
+            case COMMAND_LINE: {
+                dccexProgrammingCommonCvsLayout.setVisibility(GONE);
+                dccexCommonCvsSpinner.setVisibility(GONE);
 
-            dccexProgrammingAddressLayout.setVisibility(GONE);
-            dccexProgrammingCvLayout.setVisibility(GONE);
-            dccexWriteInfoLayout.setVisibility(GONE);
-            dceexDccexTrackLinearLayout.setVisibility(VISIBLE);
+                dccexProgrammingAddressLayout.setVisibility(GONE);
+                dccexProgrammingCvLayout.setVisibility(GONE);
 
-            for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
-                dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
+                dccexDccexTracksLayout.setVisibility(GONE);
+
+                dccexDccexCommandLineLayout.setVisibility(VISIBLE);
+                
+                dccexDccexWriteInfoLayout.setVisibility(VISIBLE);
+
+                sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
+                previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
+                nextCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
+                break;
             }
-            joinTracksButton.setEnabled(hasProgTrack);
+            case TRACK_MANAGER:
+            default: {
+                dccexProgrammingCommonCvsLayout.setVisibility(GONE);
+                dccexCommonCvsSpinner.setVisibility(GONE);
+
+                dccexProgrammingAddressLayout.setVisibility(GONE);
+                dccexProgrammingCvLayout.setVisibility(GONE);
+
+                dccexDccexTracksLayout.setVisibility(VISIBLE);
+
+                dccexDccexCommandLineLayout.setVisibility(GONE);
+
+                dccexDccexWriteInfoLayout.setVisibility(GONE);
+
+                for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
+                    dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
+                }
+                joinTracksButton.setEnabled(hasProgTrack);
+            }
+            break;
         }
-        sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
-        previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
-        nextCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
     }
 
     public void refreshDccexView() {
@@ -671,7 +704,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccexWriteInfoLabel.setText(dccexInfoStr);
         etDccexCv.setText(dccexCv);
         etDccexCvValue.setText(dccexCvValue);
-//        etDccexSendCommandValue.setText(dccexSendCommandValue);
+//        dccexSendCommandValueEditText.setText(dccexSendCommandValue);
 
         if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
             readAddressButton.setVisibility(VISIBLE);
@@ -786,15 +819,15 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         //put pointer to this activity's handler in main app's shared variable (If needed)
         mainapp.dcc_ex_msg_handler = new DccExMessageHandler(Looper.getMainLooper());
 
-        readAddressButton = findViewById(R.id.dexc_DccexReadAddressButton);
+        readAddressButton = findViewById(R.id.dccex_dccex_read_address_button);
         ReadAddressButtonListener readAddressButtonListener = new ReadAddressButtonListener();
         readAddressButton.setOnClickListener(readAddressButtonListener);
 
-        writeAddressButton = findViewById(R.id.dexc_DccexWriteAddressButton);
+        writeAddressButton = findViewById(R.id.dccex_dccex_write_address_button);
         WriteAddressButtonListener writeAddressButtonListener = new WriteAddressButtonListener();
         writeAddressButton.setOnClickListener(writeAddressButtonListener);
 
-        etDccexWriteAddressValue = findViewById(R.id.dexc_DccexWriteAddressValue);
+        etDccexWriteAddressValue = findViewById(R.id.dccex_dccex_write_address_value_edit_text);
         etDccexWriteAddressValue.setText("");
         etDccexWriteAddressValue.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_ADDRESS); showHideButtons(); }
@@ -802,15 +835,15 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        readCvButton = findViewById(R.id.dexc_DccexReadCvButton);
+        readCvButton = findViewById(R.id.dccex_dccex_read_cv_button);
         ReadCvButtonListener readCvButtonListener = new ReadCvButtonListener();
         readCvButton.setOnClickListener(readCvButtonListener);
 
-        writeCvButton = findViewById(R.id.dexc_DccexWriteCvButton);
+        writeCvButton = findViewById(R.id.dccex_dccex_write_cv_button);
         WriteCvButtonListener writeCvButtonListener = new WriteCvButtonListener();
         writeCvButton.setOnClickListener(writeCvButtonListener);
 
-        etDccexCv = findViewById(R.id.dexc_DccexCv);
+        etDccexCv = findViewById(R.id.dccex_dccex_cv_edit_text);
         etDccexCv.setText("");
         etDccexCv.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_CV); showHideButtons(); }
@@ -818,7 +851,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        etDccexCvValue = findViewById(R.id.dexc_DccexCvValue);
+        etDccexCvValue = findViewById(R.id.dccex_dccex_cv_value_edit_text);
         etDccexCvValue.setText("");
         etDccexCvValue.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); showHideButtons(); }
@@ -826,35 +859,35 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
-        sendCommandButton = findViewById(R.id.dexc_DccexSendCommandButton);
+        sendCommandButton = findViewById(R.id.dccex_dccex_send_command_button);
         SendCommandButtonListener sendCommandButtonListener = new SendCommandButtonListener();
         sendCommandButton.setOnClickListener(sendCommandButtonListener);
 
-        etDccexSendCommandValue = findViewById(R.id.dexc_DccexSendCommandValue);
-        etDccexSendCommandValue.setInputType(TYPE_TEXT_FLAG_AUTO_CORRECT);
-        etDccexSendCommandValue.setText("");
-        etDccexSendCommandValue.addTextChangedListener(new TextWatcher() {
+        dccexSendCommandValueEditText = findViewById(R.id.dccex_dccex_send_command_edit_text);
+        dccexSendCommandValueEditText.setInputType(TYPE_TEXT_FLAG_AUTO_CORRECT);
+        dccexSendCommandValueEditText.setText("");
+        dccexSendCommandValueEditText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) { readTextField(WHICH_COMMAND); showHideButtons(); }
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
-        dccexWriteInfoLayout = findViewById(R.id.dexc_DccexWriteInfoLayout);
-        dccexWriteInfoLabel = findViewById(R.id.dexc_DccexWriteInfoLabel);
+        dccexDccexWriteInfoLayout = findViewById(R.id.dccex_dccex_write_info_layout);
+        dccexWriteInfoLabel = findViewById(R.id.dccex_dccex_write_info_label);
         dccexWriteInfoLabel.setText("");
 
         dccexHeadingLabel = findViewById(R.id.dccex_HeadingLabel);
 
-        previousCommandButton = findViewById(R.id.dexc_DccexPreviousCommandButton);
+        previousCommandButton = findViewById(R.id.dccex_dccex_previous_command_button);
         PreviousCommandButtonListener previousCommandButtonListener = new PreviousCommandButtonListener();
         previousCommandButton.setOnClickListener(previousCommandButtonListener);
 
-        nextCommandButton = findViewById(R.id.dexc_DccexNextCommandButton);
+        nextCommandButton = findViewById(R.id.dccex_dccex_next_command_button);
         NextCommandButtonListener nextCommandButtonListener = new NextCommandButtonListener();
         nextCommandButton.setOnClickListener(nextCommandButtonListener);
 
-        dccexResponsesLabel = findViewById(R.id.dexc_DccexResponsesLabel);
+        dccexResponsesLabel = findViewById(R.id.dccex_dccex_responses_label);
         dccexResponsesLabel.setText("");
-        dccexSendsLabel = findViewById(R.id.dexc_DccexSendsLabel);
+        dccexSendsLabel = findViewById(R.id.dccex_dccex_sends_label);
         dccexSendsLabel.setText("");
 
         Button closeButton = findViewById(R.id.dcc_ex_button_close);
@@ -865,7 +898,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccCvsEntriesArray = this.getResources().getStringArray(R.array.dccCvsEntries); // display version
 
         dccCvsIndex = 0;
-        dccexCommonCvsSpinner = findViewById(R.id.dexc_dcc_cv_list);
+        dccexCommonCvsSpinner = findViewById(R.id.dccex_dccex_dcc_cv_list);
         ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccCvsEntries, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dccexCommonCvsSpinner.setAdapter(spinner_adapter);
@@ -879,7 +912,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccexCommonCommandsHasParametersArray = this.getResources().getIntArray(R.array.dccExCommonCommandsHasParameters);
 
         dccCmdIndex = 0;
-        dccexCommonCommandsSpinner = findViewById(R.id.dexc_common_commands_list);
+        dccexCommonCommandsSpinner = findViewById(R.id.dccex_dccex_common_commands_list);
         spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExCommonCommandsEntries, android.R.layout.simple_spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dccexCommonCommandsSpinner.setAdapter(spinner_adapter);
@@ -889,9 +922,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         vn = mainapp.getDccexVersionNumeric();
 
         if (vn <= 04.002007) {  // need to remove the track manager option
-            dccexActionTypeEntryValuesArray = new String[2];
-            dccexActionTypeEntriesArray = new String[2];
-            for (int i = 0; i < 2; i++) {
+            dccexActionTypeEntryValuesArray = new String[3];
+            dccexActionTypeEntriesArray = new String[3];
+            for (int i = 0; i < 3; i++) {
                 dccexActionTypeEntryValuesArray[i] = this.getResources().getStringArray(R.array.dccExActionTypeEntryValues)[i];
                 dccexActionTypeEntriesArray[i] = this.getResources().getStringArray(R.array.dccExActionTypeEntries)[i];
             }
@@ -903,7 +936,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 //        final List<String> dccActionTypeEntriesList = new ArrayList<>(Arrays.asList(dccexActionTypeEntriesArray));
 
 //        mainapp.dccexActionTypeIndex = PROGRAMMING_TRACK;
-        dccActionTypeSpinner = findViewById(R.id.dexc_action_type_list);
+        dccActionTypeSpinner = findViewById(R.id.dccex_dccex_action_type_list);
 //        ArrayAdapter<?> dccActionTypeSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.dccExActionTypeEntries, android.R.layout.simple_spinner_item);
         ArrayAdapter<?> dccActionTypeSpinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dccexActionTypeEntriesArray);
         dccActionTypeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -919,18 +952,24 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccExNavigationButtonListener = new DccExNavigationButtonListener(1);
         dccexCvProgrammerPomButton.setOnClickListener(dccExNavigationButtonListener);
 
-        dccexTrackManagerButton = findViewById(R.id.dccex_track_manager_button);
+        dccexCommandLineButton = findViewById(R.id.dccex_command_line_button);
         dccExNavigationButtonListener = new DccExNavigationButtonListener(2);
+        dccexCommandLineButton.setOnClickListener(dccExNavigationButtonListener);
+
+        dccexTrackManagerButton = findViewById(R.id.dccex_track_manager_button);
+        dccExNavigationButtonListener = new DccExNavigationButtonListener(3);
         dccexTrackManagerButton.setOnClickListener(dccExNavigationButtonListener);
 
         ImageButton default_functions_button = findViewById(R.id.dccex_default_functions_button);
         DccexDefaultFunctionsButtonListener dccexDefaultFunctionsButtonListener = new DccexDefaultFunctionsButtonListener(this);
         default_functions_button.setOnClickListener(dccexDefaultFunctionsButtonListener);
 
-        dccexProgrammingCommonCvsLayout = findViewById(R.id.dccex_programmingCommonCvsLayout);
-        dccexProgrammingAddressLayout = findViewById(R.id.dccex_programmingAddressLayout);
-        dccexProgrammingCvLayout = findViewById(R.id.dccex_programmingCvLayout);
-        dceexDccexTrackLinearLayout = findViewById(R.id.dccex_DccexTrackLinearLayout);
+        dccexProgrammingCommonCvsLayout = findViewById(R.id.dccex_dccex_programming_common_cvs_layout);
+        dccexProgrammingAddressLayout = findViewById(R.id.dccex_dccex_programming_address_layout);
+        dccexProgrammingCvLayout = findViewById(R.id.dccex_dccex_programming_cv_layout);
+        dccexDccexTracksLayout = findViewById(R.id.dccex_dccex_tracks_layout);
+        
+        dccexDccexCommandLineLayout = findViewById(R.id.dccex_dccex_command_line_layout);
 
         dccexTrackTypeEntryValuesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntryValues);
         dccexTrackTypeEntriesArray = this.getResources().getStringArray(R.array.dccExTrackTypeEntries); // display version
@@ -964,16 +1003,16 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         dccex_track_type_ids.recycle();
         dccex_track_id_ids.recycle();
 
-        writeTracksButton = findViewById(R.id.dexc_DccexWriteTracksButton);
+        writeTracksButton = findViewById(R.id.dccex_dccex_write_tracks_button);
         WriteTracksButtonListener writeTracksButtonListener = new WriteTracksButtonListener();
         writeTracksButton.setOnClickListener(writeTracksButtonListener);
 
-        joinTracksButton = findViewById(R.id.dexc_DccexJoinTracksButton);
+        joinTracksButton = findViewById(R.id.dccex_dccex_join_tracks_button);
         JoinTracksButtonListener joinTracksButtonListener = new JoinTracksButtonListener();
         joinTracksButton.setOnClickListener(joinTracksButtonListener);
 
-//        ScrollView dccexResponsesScrollView = findViewById(R.id.dexc_DccexResponsesScrollView);
-//        ScrollView dccexSendsScrollView = findViewById(R.id.dexc_DccexSendsScrollView);
+//        ScrollView dccexResponsesScrollView = findViewById(R.id.dccex_dccex_responses_scroll_view);
+//        ScrollView dccexSendsScrollView = findViewById(R.id.dccex_dccex_sends_scroll_view);
 
         clearCommandsButton = findViewById(R.id.dcc_ex_clearCommandsButton);
         ClearCommandsButtonListener clearCommandsButtonListener = new ClearCommandsButtonListener();
@@ -985,7 +1024,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
 
 
-        openCvCalculatorDialogButton = findViewById(R.id.dexc_cvBitCalculatorButton); // Get the button from your layout
+        openCvCalculatorDialogButton = findViewById(R.id.dccex_dccex_cv_bit_calculator_button); // Get the button from your layout
         openCvCalculatorDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1210,9 +1249,9 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                 dccexSendCommandValue = dccexCommonCommandsEntryValuesArray[dccCmdIndex];
                 if (dccexCommonCommandsHasParametersArray[dccCmdIndex] > 0)
                     dccexSendCommandValue = dccexSendCommandValue + " ";
-                etDccexSendCommandValue.setText(dccexSendCommandValue);
-                etDccexSendCommandValue.requestFocus();
-                etDccexSendCommandValue.setSelection(dccexSendCommandValue.length());
+                dccexSendCommandValueEditText.setText(dccexSendCommandValue);
+                dccexSendCommandValueEditText.requestFocus();
+                dccexSendCommandValueEditText.setSelection(dccexSendCommandValue.length());
             }
             dccCmdIndex = 0;
             dccexCommonCommandsSpinner.setSelection(dccCmdIndex);
@@ -1239,7 +1278,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            Spinner spinner = findViewById(R.id.dexc_action_type_list);
+            Spinner spinner = findViewById(R.id.dccex_dccex_action_type_list);
             mainapp.dccexActionTypeIndex = spinner.getSelectedItemPosition();
             resetTextField(WHICH_CV);
             resetTextField(WHICH_CV_VALUE);
@@ -1381,7 +1420,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     void setSelectedButton(int index) {
         dccexCvProgrammerProgTrackButton.setSelected(index==0);
         dccexCvProgrammerPomButton.setSelected(index==1);
-        dccexTrackManagerButton.setSelected(index==2);
+        dccexCommandLineButton.setSelected(index==2);
+        dccexTrackManagerButton.setSelected(index==3);
     }
 
     public class DccExNavigationButtonListener implements View.OnClickListener {

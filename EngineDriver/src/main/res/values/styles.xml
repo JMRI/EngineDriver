@@ -406,6 +406,8 @@
     <item name="android:windowTitleStyle">@style/dialogTitle_black</item>
     <item name="android:buttonBarStyle">@style/dialogButtonBar_black</item>
     <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
+    <item name="ed_next_glyph">@drawable/next_glyph_states_dark</item>
+    <item name="ed_previous_glyph">@drawable/previous_glyph_states_dark</item>
   </style>
 
   <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog.Alert">
@@ -1417,6 +1419,8 @@
     <item name="buttonBarNeutralButtonStyle">@style/alertDialogButtonStyle_colorful</item>
 
     <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
+      <item name="ed_next_glyph">@drawable/next_glyph_states_dark</item>
+      <item name="ed_previous_glyph">@drawable/previous_glyph_states_dark</item>
   </style>
 
   <style name="actionBarStyle_colorful" parent="@android:style/Widget.Holo.Light.ActionBar">
