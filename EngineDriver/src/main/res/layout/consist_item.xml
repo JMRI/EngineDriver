@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/con_loco_name"
-        style="?attr/list_item_style"
+        style="?attr/list_item_condensed_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -51,7 +51,7 @@
 
     <TextView
         android:id="@+id/con_loco_facing"
-        style="?attr/list_item_style"
+        style="?attr/list_item_condensed_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

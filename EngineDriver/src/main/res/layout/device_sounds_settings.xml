@@ -13,7 +13,24 @@
     <include layout="@layout/toolbar_status_line"
         tools:ignore="DuplicateIncludedIds" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/backgroundImgView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:ignore="ContentDescription">
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+                <LinearLayout
         android:id="@+id/logviewer_screen"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
@@ -38,7 +55,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="?attr/ed_background_highlight_secondary"
+                android:background="?attr/ed_background_highlight_tertiary"
                 android:orientation="vertical">
 
                 <TextView
@@ -66,7 +83,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="?attr/ed_background_highlight_secondary"
+                android:background="?attr/ed_background_highlight_tertiary"
                 android:orientation="vertical">
 
                 <TextView
@@ -103,16 +120,17 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:background="?attr/ed_background_highlight_tertiary" >
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsMomentum_label"
-                        style="?attr/floating_text_style"
+                        style="?attr/floating_text_condensed_style"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
+                        android:layout_weight="1"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsMomentumSummary"
                         />
@@ -120,9 +138,8 @@
                     <EditText
                         android:id="@+id/dss_DeviceSoundsMomentum"
                         style="?attr/edit_label_style"
-                        android:layout_width="0dp"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".3"
                         android:inputType="number"
                         android:maxLength="4"
                         android:shadowColor="#FFFFFFFF"
@@ -138,100 +155,96 @@
 
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:background="?attr/ed_background_highlight_tertiary" >
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsMomentumOverride_label"
-                        style="?attr/floating_text_style"
+                        style="?attr/floating_text_condensed_style"
                         android:layout_width="0dp"
-                        android:layout_weight=".7"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsMomentumOverrideSummary" />
 
                     <Spinner
                         android:id="@+id/dss_DeviceSoundsMomentumOverride"
-                        android:layout_width="0dp"
-                        android:layout_weight=".3"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="none"
-                        android:paddingLeft="20dp"
                         android:paddingRight="20dp"
+                        android:paddingLeft="0dp"
+                        android:ellipsize="none"
                         android:entries="@array/prefYesNoEntries"
-                        android:entryValues="@array/prefYesNoEntryValues"
-                        android:padding="0dp"/>
+                        android:entryValues="@array/prefYesNoEntryValues" />
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:orientation="horizontal">
+                    android:background="?attr/ed_background_highlight_tertiary">
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsLocoVolume_label"
-                        style="?attr/floating_text_style"
+                        style="?attr/floating_text_condensed_style"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
+                        android:layout_weight="1"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsLocoVolumeSummary"
                         />
 
                     <Spinner
                         android:id="@+id/dss_DeviceSoundsLocoVolume"
-                        android:layout_width="0dp"
-                        android:layout_weight=".3"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="none"
-                        android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:text="100"
+                        android:paddingLeft="0dp"
+                        android:ellipsize="none"
                         tools:ignore="RtlHardcoded, HardcodedText" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:background="?attr/ed_background_highlight_tertiary" >
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsBellVolume_label"
-                        style="?attr/floating_text_style"
+                        style="?attr/floating_text_condensed_style"
                         android:layout_width="0dp"
-                        android:layout_weight=".7"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsBellVolumeSummary"
                         />
 
                     <Spinner
                         android:id="@+id/dss_DeviceSoundsBellVolume"
-                        android:layout_width="0dp"
-                        android:layout_weight=".3"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
                         android:ellipsize="none"
-                        android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:text="100"
+                        android:paddingLeft="0dp"
                         tools:ignore="RtlHardcoded, HardcodedText" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:background="?attr/ed_background_highlight_tertiary" >
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsHornVolume_label"
-                        style="?attr/floating_text_style"
+                        style="?attr/floating_text_condensed_style"
                         android:layout_width="0dp"
-                        android:layout_weight=".7"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsHornVolumeSummary"
@@ -239,42 +252,39 @@
 
                     <Spinner
                         android:id="@+id/dss_DeviceSoundsHornVolume"
-                        android:layout_width="0dp"
-                        android:layout_weight=".3"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="none"
-                        android:paddingLeft="20dp"
                         android:paddingRight="20dp"
-                        android:text="100"
+                        android:paddingLeft="0dp"
+                        android:ellipsize="none"
                         tools:ignore="RtlHardcoded, HardcodedText" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:background="?attr/ed_background_highlight_tertiary" >
 
                     <TextView
                         android:id="@+id/dss_DeviceSoundsBellIsMomentary_label"
-                        style="?attr/floating_text_style"
+                        style="?attr/floating_text_condensed_style"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
+                        android:layout_weight="1"
                         android:padding="8sp"
                         android:text="@string/prefDeviceSoundsBellIsMomentarySummary" />
 
                     <Spinner
                         android:id="@+id/dss_DeviceSoundsBellIsMomentary"
-                        android:layout_width="0dp"
-                        android:layout_weight=".3"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="none"
-                        android:paddingLeft="20dp"
                         android:paddingRight="20dp"
+                        android:paddingLeft="0dp"
+                        android:ellipsize="none"
                         android:entries="@array/prefYesNoEntries"
-                        android:entryValues="@array/prefYesNoEntryValues"
-                        android:padding="0dp"/>
+                        android:entryValues="@array/prefYesNoEntryValues"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -305,5 +315,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

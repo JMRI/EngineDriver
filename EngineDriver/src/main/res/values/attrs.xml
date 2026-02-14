@@ -7,6 +7,7 @@
     <attr name="edit_label_condensed_text_style" format="reference" />
     <attr name="edit_func_style" format="reference" />
     <attr name="list_item_style" format="reference" />
+    <attr name="list_item_condensed_style" format="reference" />
     <attr name="list_id_style" format="reference" />
     <attr name="list_extras_style" format="reference" />
     <attr name="EDListView" format="reference" />
@@ -71,6 +72,7 @@
     <attr name="ed_dcc_ex_button" format="reference" />
     <attr name="ed_background_highlight" format="reference" />
     <attr name="ed_background_highlight_secondary" format="reference" />
+    <attr name="ed_background_highlight_tertiary" format="reference" />
 
     <attr name="ed_advanced_preferences" format="reference" />
 

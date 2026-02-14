@@ -267,7 +267,9 @@
     <color name="background_highlight_black">#994E4E4E</color>
     <color name="background_highlight_colorful">#33FFA600</color>
     <color name="background_highlight_secondary_black">#75363636</color>
-    <color name="background_highlight_secondary_colorful">#12FFA600</color>
+    <color name="background_highlight_secondary_colorful">#12FFA650</color>
+    <color name="background_highlight_tertiary_black">#7F363636</color>
+    <color name="background_highlight_tertiary_colorful">#37FFA650</color>
 
     <color name="spinner_background_colorful">#f2b465</color>
     <color name="spinner_divider_colorful">@color/solidBlack</color>
@@ -334,5 +336,6 @@
 
     <color name="background_highlight_neon">@color/neon_blue_very_dark</color>
     <color name="background_highlight_secondary_neon">@color/neon_blue_ultra_dark</color>
+    <color name="background_highlight_tertiary_neon">#A7000020</color>
 
 </resources>

@@ -60,6 +60,7 @@ import jmri.enginedriver.type.activity_outcome_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
@@ -371,7 +372,20 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                     "");
         }
 
-    }  // end onCreate
+    }  // end onCreate()
+
+    // ************************************************************************************************************* //
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        super.onStart();
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
+        }
+    } // end onStart()
 
     @Override
     public void onPause() {

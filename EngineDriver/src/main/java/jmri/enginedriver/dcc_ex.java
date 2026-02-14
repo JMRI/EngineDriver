@@ -24,6 +24,7 @@ import static android.view.View.VISIBLE;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -64,6 +65,7 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.cvBitCalculator;
 
@@ -74,6 +76,8 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     private Menu overflowMenu;
     private Toolbar toolbar;
     private int result = RESULT_OK;
+
+    private SharedPreferences prefs;
 
     private String dccexCv = "";
     private String dccexCvValue = "";
@@ -813,6 +817,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         }
 
         mainapp.applyTheme(this);
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         setContentView(R.layout.dcc_ex);
 
@@ -1066,6 +1071,17 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
     } // end onCreate
 
     // ************************************************************************************************************* //
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        super.onStart();
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
+        }
+    } // end onStart()
 
     @Override
     public void onPause() {

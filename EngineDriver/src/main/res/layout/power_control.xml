@@ -10,11 +10,28 @@
     <include layout="@layout/toolbar" />
     <include layout="@layout/toolbar_status_line" />
 
-    <TextView
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/backgroundImgView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:ignore="ContentDescription">
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
         style="?android:attr/listSeparatorTextViewStyle"
         android:text="@string/power_control_label" />
 
-    <RelativeLayout
+            <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -489,5 +506,7 @@
             android:drawableStart="?attr/ed_cross_glyph"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
+    </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
