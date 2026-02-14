@@ -99,6 +99,7 @@ import jmri.enginedriver.type.restart_reason_type;
 //import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.toolbar_button_size_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
@@ -723,7 +724,9 @@ public class connection_activity extends AppCompatActivity implements Permission
             }
         }
 
-    } //end onCreate
+    } //end onCreate()
+
+    // ************************************************************************************************************* //
 
     @Override
     public void onStart() {
@@ -735,7 +738,12 @@ public class connection_activity extends AppCompatActivity implements Permission
         threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
                 getResources().getBoolean(R.bool.prefExtendedLoggingDefaultValue));
         startLogging();
-    }
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
+        }
+    } // end onStart()
 
     @Override
     public void onResume() {

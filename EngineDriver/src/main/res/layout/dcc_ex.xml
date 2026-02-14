@@ -12,1325 +12,1346 @@
     <include layout="@layout/toolbar_status_line"
         tools:ignore="DuplicateIncludedIds" />
 
-    <TextView
-        android:id="@+id/dccex_HeadingLabel"
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:text="@string/app_name_dcc_ex"
-        android:visibility="gone"/>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="0dp"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/backgroundImgView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:ignore="ContentDescription">
+        </ImageView>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".94"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/select_loco_method_buttons_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:layout_marginTop="5dp"
-                android:weightSum="1"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight=".2"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/dccex_cv_programmer_prog_track_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/dccexButtonCvProgrammerProgTrack"
-                        android:src="?attr/ed_dccex_glyph_cv_programmer_prog_track" />
-
-                    <TextView
-                        style="?attr/floating_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_gravity="center"
-                        android:text="@string/dccexButtonCvProgrammerProgTrack"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight=".2"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/dccex_cv_programmer_pom_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/dccexButtonCvProgrammerPoM"
-                        android:src="?attr/ed_dccex_glyph_cv_programmer_pom"/>
-
-                    <TextView
-                        style="?attr/floating_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_gravity="center"
-                        android:text="@string/dccexButtonCvProgrammerPoM"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight=".2"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/dccex_command_line_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/dccexButtonCommandLine"
-                        android:src="?attr/ed_dccex_glyph_command_line"/>
-
-                    <TextView
-                        style="?attr/floating_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_gravity="center"
-                        android:text="@string/dccexButtonCommandLine"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight=".2"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/dccex_track_manager_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/dccexButtonTrackManager"
-                        android:src="?attr/ed_dccex_glyph_track_manager"/>
-
-                    <TextView
-                        style="?attr/floating_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_gravity="center"
-                        android:text="@string/dccexButtonTrackManager"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight=".2"
-                    android:layout_height="wrap_content"
-                    android:padding="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/dccex_default_functions_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/dccexButtonDefaultFunctions"
-                        android:src="?attr/ed_dccex_glyph_function_defaults"/>
-
-                    <TextView
-                        style="?attr/floating_text_style"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_gravity="center"
-                        android:text="@string/dccexButtonDefaultFunctions"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/dccex_HeadingLabel"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:text="@string/app_name_dcc_ex"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0sp"
-                android:background="?attr/ed_background_highlight"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    style="?attr/floating_text_style"
-                    android:layout_width="0sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".15"
-                    android:gravity="end"
-                    android:padding="0sp"
-                    android:paddingTop="1sp"
-                    android:text="@string/dccexActionTypeLabel"
-                    android:textAlignment="viewEnd"
-                    android:textSize="12sp" />
-
-                <Spinner
-                    android:id="@+id/dccex_dccex_action_type_list"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".85"
-                    android:ellipsize="none"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="20dp"
-                    android:paddingBottom="2dp"
-                    android:text=""
-                    tools:ignore="RtlHardcoded" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="2px"
-                android:layout_marginTop="8sp"
-                android:padding="0dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="?attr/ed_primaryLineColor"
-                tools:ignore="PxUsage" />
-
-            <LinearLayout
-                android:id="@+id/dccex_dccex_programming_address_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8sp"
-                android:background="#00000000"
-                android:orientation="horizontal"
+                android:padding="0dp"
                 android:weightSum="1">
 
-                <TextView
-                    style="?attr/floating_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".4"
-                    android:gravity="end"
-                    android:padding="4sp"
-                    android:text="@string/dccexWriteAddressLabel"
-                    android:textAlignment="viewEnd" />
-
-                <EditText
-                    android:id="@+id/dccex_dccex_write_address_value_edit_text"
-                    style="?attr/edit_label_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8sp"
-                    android:layout_marginRight="8sp"
-                    android:layout_weight=".155"
-                    android:inputType="number"
-                    android:maxLength="5"
-                    android:nextFocusRight="@id/dccex_dccex_cv_edit_text"
-                    android:nextFocusDown="@id/dccex_dccex_cv_edit_text"
-                    android:paddingRight="8sp"
-                    android:shadowColor="#FFFFFFFF"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="0.3"
-                    android:singleLine="true"
-                    android:text=""
-                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
-
-                <Button
-                    android:id="@+id/dccex_dccex_read_address_button"
-                    style="?attr/ed_small_button_condensed_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".2"
-                    android:padding="0dp"
-                    android:drawableStart="?attr/ed_read_glyph"
-                    android:text="@string/dccexReadAddressButtonLabel"
-                    tools:ignore="RtlSymmetry" />
-
-                <Button
-                    android:id="@+id/dccex_dccex_write_address_button"
-                    style="?attr/ed_small_button_condensed_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".2"
-                    android:padding="0dp"
-                    android:drawableStart="?attr/ed_write_glyph"
-                    android:text="@string/dccexWriteAddressButtonLabel"
-                    tools:ignore="RtlSymmetry" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/dccex_dccex_programming_cv_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8sp"
-                android:background="#00000000"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    style="?attr/floating_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".1"
-                    android:gravity="end"
-                    android:padding="4sp"
-                    android:text="@string/dccexWriteCvLabel"
-                    android:textAlignment="viewEnd" />
-
-                <EditText
-                    android:id="@+id/dccex_dccex_cv_edit_text"
-                    style="?attr/edit_label_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8sp"
-                    android:layout_marginRight="8sp"
-                    android:layout_weight=".15"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:nextFocusRight="@id/dccex_dccex_cv_value_edit_text"
-                    android:nextFocusDown="@id/dccex_dccex_cv_value_edit_text"
-                    android:shadowColor="#FFFFFFFF"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="0.3"
-                    android:singleLine="true"
-                    android:text=""
-                    tools:ignore="Autofill,LabelFor" />
-
-                <TextView
-                    style="?attr/floating_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".15"
-                    android:gravity="end"
-                    android:padding="4sp"
-                    android:text="@string/dccexWriteCvValueLabel"
-                    android:textAlignment="viewEnd" />
-
-                <EditText
-                    android:id="@+id/dccex_dccex_cv_value_edit_text"
-                    style="?attr/edit_label_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8sp"
-                    android:layout_marginRight="8sp"
-                    android:layout_weight=".15"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:nextFocusRight="@id/dccex_dccex_send_command_edit_text"
-                    android:nextFocusDown="@id/dccex_dccex_send_command_edit_text"
-                    android:paddingRight="8sp"
-                    android:shadowColor="#FFFFFFFF"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:shadowRadius="0.3"
-                    android:singleLine="true"
-                    android:text=""
-                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
-
-                <Button
-                    android:id="@+id/dccex_dccex_read_cv_button"
-                    style="?attr/ed_small_button_condensed_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".2"
-                    android:padding="0dp"
-                    android:drawableStart="?attr/ed_read_glyph"
-                    android:text="@string/dccexReadAddressButtonLabel"
-                    tools:ignore="RtlSymmetry" />
-
-                <Button
-                    android:id="@+id/dccex_dccex_write_cv_button"
-                    style="?attr/ed_small_button_condensed_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".2"
-                    android:padding="0dp"
-                    android:drawableStart="?attr/ed_write_glyph"
-                    android:text="@string/dccexWriteAddressButtonLabel"
-                    tools:ignore="RtlSymmetry" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/dccex_dccex_programming_common_cvs_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20sp"
-                android:layout_marginTop="2sp"
-                android:background="?attr/ed_background_highlight_secondary"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <TextView
-                    style="?attr/floating_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2sp"
-                    android:layout_weight=".2"
-                    android:gravity="end"
-                    android:padding="2sp"
-                    android:text="@string/dccexCommonCvsLabel"
-                    android:textAlignment="viewEnd"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="12sp" />
-
-                <Spinner
-                    android:id="@+id/dccex_dccex_dcc_cv_list"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight=".7"
-                    android:ellipsize="none"
-                    android:paddingLeft="0dp"
-                    android:paddingTop="0dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="2dp"
-                    android:text=""
-                    tools:ignore="RtlHardcoded" />
-
-                <Button
-                    android:id="@+id/dccex_dccex_cv_bit_calculator_button"
-                    style="?attr/ed_small_button_condensed_text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="26dp"
-                    android:layout_weight=".10"
-                    android:padding="2sp"
-                    android:text="@string/dccexCvBitCalculatorButtonLabel" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/dccex_dccex_tracks_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="240sp"
-                android:layout_margin="0sp"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:padding="5sp"
-                android:weightSum="1"
-                tools:ignore="NestedWeights">
-
-                <ScrollView
-                    android:id="@+id/dccex_dccex_tracks_scroll_view"
-                    android:layout_width="0sp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight=".83"
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".94"
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/select_loco_method_buttons_layout"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="0sp"
-                        android:orientation="vertical"
-                        android:padding="0sp">
+                        android:baselineAligned="false"
+                        android:layout_marginTop="5dp"
+                        android:weightSum="1"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_0"
-                            android:layout_width="fill_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight=".2"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
+                            android:padding="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/dccex_cv_programmer_prog_track_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="fill_parent"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/dccexButtonCvProgrammerProgTrack"
+                                android:src="?attr/ed_dccex_glyph_cv_programmer_prog_track" />
 
                             <TextView
                                 style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="A"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_0"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginEnd="2dp"
                                 android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_0"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".65"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_0"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+                                android:text="@string/dccexButtonCvProgrammerProgTrack"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_1"
-                            android:layout_width="fill_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight=".2"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
+                            android:padding="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/dccex_cv_programmer_pom_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="fill_parent"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/dccexButtonCvProgrammerPoM"
+                                android:src="?attr/ed_dccex_glyph_cv_programmer_pom"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="B"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_1"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginEnd="2dp"
                                 android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_1"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".65"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_1"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+                                android:text="@string/dccexButtonCvProgrammerPoM"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_2"
-                            android:layout_width="fill_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight=".2"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
+                            android:padding="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/dccex_command_line_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="fill_parent"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/dccexButtonCommandLine"
+                                android:src="?attr/ed_dccex_glyph_command_line"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="C"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_2"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginEnd="2dp"
                                 android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_2"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".65"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_2"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+                                android:text="@string/dccexButtonCommandLine"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_3"
-                            android:layout_width="fill_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight=".2"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
+                            android:padding="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/dccex_track_manager_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="fill_parent"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/dccexButtonTrackManager"
+                                android:src="?attr/ed_dccex_glyph_track_manager"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="D"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_3"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginEnd="2dp"
                                 android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_3"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".63"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_3"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+                                android:text="@string/dccexButtonTrackManager"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_4"
-                            android:layout_width="fill_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight=".2"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
+                            android:padding="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/dccex_default_functions_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="fill_parent"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/dccexButtonDefaultFunctions"
+                                android:src="?attr/ed_dccex_glyph_function_defaults"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="E"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_4"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginEnd="2dp"
                                 android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_4"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".65"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_4"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_5"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
-
-                            <TextView
-                                style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="F"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_5"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_5"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".65"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_5"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_6"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
-
-                            <TextView
-                                style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="G"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_6"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_6"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".65"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_6"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/dccex_track_type_layout_7"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0sp"
-                            android:background="#00000000"
-                            android:orientation="horizontal"
-                            android:paddingTop="6dp"
-                            android:paddingBottom="6dp"
-                            android:weightSum="1">
-
-                            <TextView
-                                style="?attr/floating_text_style"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".05"
-                                android:padding="1sp"
-                                android:text="H"
-                                android:textSize="14sp"
-                                tools:ignore="HardcodedText,TooManyViews" />
-
-                            <Button
-                                android:id="@+id/dccex_track_power_button_7"
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:layout_gravity="center"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:paddingLeft="10dp"
-                                android:paddingStart="10dp"
-                                android:paddingRight="10dp"
-                                android:paddingEnd="10dp"
-                                android:src="?attr/ed_power_yellow_button"
-                                tools:ignore="TooManyViews" />
-
-                            <Spinner
-                                android:id="@+id/dccex_track_type_7"
-                                android:layout_width="0sp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight=".65"
-                                android:ellipsize="none"
-                                android:paddingLeft="0dp"
-                                android:paddingRight="0dp"
-                                android:paddingBottom="2dp"
-                                android:text=""
-                                tools:ignore="RtlHardcoded" />
-
-                            <EditText
-                                android:id="@+id/dccex_track_id_7"
-                                style="?attr/edit_label_style"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="8sp"
-                                android:layout_marginRight="8sp"
-                                android:layout_weight=".2"
-                                android:inputType="number"
-                                android:maxLength="5"
-                                android:paddingRight="8sp"
-                                android:shadowColor="#FFFFFFFF"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="0.3"
-                                android:singleLine="true"
-                                android:text=""
-                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+                                android:text="@string/dccexButtonDefaultFunctions"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
-                </ScrollView>
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:background="?attr/ed_background_highlight"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".17"
-                    android:layout_marginTop="8sp"
-                    android:background="#00000000"
-                    android:orientation="vertical"
-                    android:layout_gravity="center_vertical"
-                    android:weightSum="1">
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="0sp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".15"
+                            android:gravity="end"
+                            android:padding="0sp"
+                            android:paddingTop="1sp"
+                            android:text="@string/dccexActionTypeLabel"
+                            android:textAlignment="viewEnd"
+                            android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/dccex_dccex_write_tracks_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="40sp"
-                        android:autoSizeMaxTextSize="18sp"
-                        android:autoSizeMinTextSize="8sp"
-                        android:autoSizeStepGranularity="1sp"
+                        <Spinner
+                            android:id="@+id/dccex_dccex_action_type_list"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".85"
+                            android:ellipsize="none"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="20dp"
+                            android:paddingBottom="2dp"
+                            android:text=""
+                            tools:ignore="RtlHardcoded" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="2px"
+                        android:layout_marginTop="8sp"
                         android:padding="0dp"
-                        android:text="@string/dccexSetTrackButtonLabel"
-                        tools:ignore="UnusedAttribute" />
+                        android:orientation="vertical"
+                        android:background="?attr/ed_primaryLineColor"
+                        tools:ignore="PxUsage" />
 
-                    <Button
-                        android:id="@+id/dccex_dccex_join_tracks_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="match_parent"
-                        android:layout_height="32sp"
-                        android:autoSizeMaxTextSize="18sp"
-                        android:autoSizeMinTextSize="8sp"
-                        android:autoSizeStepGranularity="1sp"
-                        android:layout_marginTop="10dp"
-                        android:padding="0sp"
-                        android:text="@string/dccexJoinTrackButtonLabel"
-                        tools:ignore="UnusedAttribute" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/dccex_dccex_command_line_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8sp"
-                android:background="#00000000"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8sp"
-                    android:background="#00000000"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <TextView
-                        style="?attr/floating_text_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".3"
-                        android:gravity="end"
-                        android:paddingRight="4dp"
-                        android:paddingLeft="0dp"
-                        android:text="@string/dccexSendCommandLabel"
-                        android:textAlignment="viewEnd" />
-
-                    <EditText
-                        android:id="@+id/dccex_dccex_send_command_edit_text"
-                        style="?attr/edit_label_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8sp"
-                        android:layout_marginRight="8sp"
-                        android:layout_weight=".5"
-                        android:inputType="text"
-                        android:maxLength="30"
-                        android:paddingRight="8sp"
-                        android:shadowColor="#FFFFFFFF"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="0.3"
-                        android:singleLine="true"
-                        android:text=""
-                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
-
-                    <Button
-                        android:id="@+id/dccex_dccex_send_command_button"
-                        style="?attr/ed_small_button_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:padding="4sp"
-                        android:text="@string/dccexSendCommandButtonLabel" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/dccex_commands_extra_buttons_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="2dp" >
-
-                    <TextView
-                        style="?attr/floating_text_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="2sp"
-                        android:layout_marginStart="20dp"
-                        android:padding="2dp"
-                        android:text="@string/dccexCommonCommandsLabel"
-                        android:textColor="?android:attr/textColorSecondary"
-                        android:textSize="12sp" />
-
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <ImageButton
-                        android:id="@+id/dccex_dccex_previous_command_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="2sp"
-                        android:layout_gravity="center"
-                        android:src="?attr/ed_previous_glyph"
-                        android:contentDescription="@string/dccexPreviousCommandButtonLabel" />
-
-                    <ImageButton
-                        android:id="@+id/dccex_dccex_next_command_button"
-                        style="?attr/ed_small_button_condensed_text_style"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:padding="2sp"
-                        android:src="?attr/ed_next_glyph"
-                        android:contentDescription="@string/dccexNextCommandButtonLabel" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/dccex_dccex_common_commands_layout"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginTop="2dp"
-                    android:background="?attr/ed_background_highlight_secondary"
-                    android:orientation="horizontal" >
-
-                    <Spinner
-                        android:id="@+id/dccex_dccex_common_commands_list"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginRight="0dp"
-                        android:ellipsize="none"
-                        android:paddingLeft="0dp"
-                        android:paddingTop="0dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="2dp"
-                        android:text=""
-                        tools:ignore="RtlHardcoded" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/dccex_dccex_write_info_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0sp"
-                android:background="#00000000"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="2px"
-                    android:layout_marginTop="6sp"
-                    android:orientation="vertical"
-                    android:padding="0dp"
-                    android:background="?attr/ed_primaryLineColor"
-                    tools:ignore="PxUsage" />
-
-                <TextView
-                    android:id="@+id/dccex_dccex_write_info_label"
-                    style="?attr/floating_text_condensed_style"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="1sp"
-                    android:layout_marginBottom="1sp"
-                    android:padding="2sp"
-                    android:text=""
-                    android:textAlignment="viewEnd"
-                    android:textColor="?android:attr/textColorSecondary" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="2px"
-                android:orientation="vertical"
-                android:paddingTop="2dp"
-                android:layout_marginTop="6sp"
-                android:padding="0dp"
-                android:background="?attr/ed_primaryLineColor"
-                tools:ignore="PxUsage" />
-
-            <LinearLayout
-                android:id="@+id/dccex_dccex_responses_and_sends_layout"
-                android:layout_width="fill_parent"
-                android:layout_height="0sp"
-                android:layout_marginTop="0sp"
-                android:layout_weight=".4"
-                android:background="#00000000"
-                android:orientation="vertical"
-                android:weightSum="1"
-                tools:ignore="NestedWeights">
-
-                <ScrollView
-                    android:id="@+id/dccex_dccex_responses_scroll_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".7"
-                    tools:ignore="NestedWeights">
-
-                    <TextView
-                        android:id="@+id/dccex_dccex_responses_label"
-                        style="?attr/floating_text_style"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/dccex_dccex_programming_address_layout"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8sp"
-                        android:text=""
-                        android:textSize="12sp" />
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
-                </ScrollView>
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".4"
+                            android:gravity="end"
+                            android:padding="4sp"
+                            android:text="@string/dccexWriteAddressLabel"
+                            android:textAlignment="viewEnd" />
 
-                <ScrollView
-                    android:id="@+id/dccex_dccex_sends_scroll_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight=".3">
+                        <EditText
+                            android:id="@+id/dccex_dccex_write_address_value_edit_text"
+                            style="?attr/edit_label_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8sp"
+                            android:layout_marginRight="8sp"
+                            android:layout_weight=".155"
+                            android:inputType="number"
+                            android:maxLength="5"
+                            android:nextFocusRight="@id/dccex_dccex_cv_edit_text"
+                            android:nextFocusDown="@id/dccex_dccex_cv_edit_text"
+                            android:paddingRight="8sp"
+                            android:shadowColor="#FFFFFFFF"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="0.3"
+                            android:singleLine="true"
+                            android:text=""
+                            tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
 
-                    <TextView
-                        android:id="@+id/dccex_dccex_sends_label"
-                        style="?attr/floating_text_style"
-                        android:layout_width="match_parent"
+                        <Button
+                            android:id="@+id/dccex_dccex_read_address_button"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".2"
+                            android:padding="0dp"
+                            android:drawableStart="?attr/ed_read_glyph"
+                            android:text="@string/dccexReadAddressButtonLabel"
+                            tools:ignore="RtlSymmetry" />
+
+                        <Button
+                            android:id="@+id/dccex_dccex_write_address_button"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".2"
+                            android:padding="0dp"
+                            android:drawableStart="?attr/ed_write_glyph"
+                            android:text="@string/dccexWriteAddressButtonLabel"
+                            tools:ignore="RtlSymmetry" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dccex_dccex_programming_cv_layout"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8sp"
-                        android:text=""
-                        android:textSize="12sp" />
+                        android:background="#00000000"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
-                </ScrollView>
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".1"
+                            android:gravity="end"
+                            android:padding="4sp"
+                            android:text="@string/dccexWriteCvLabel"
+                            android:textAlignment="viewEnd" />
+
+                        <EditText
+                            android:id="@+id/dccex_dccex_cv_edit_text"
+                            style="?attr/edit_label_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8sp"
+                            android:layout_marginRight="8sp"
+                            android:layout_weight=".15"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:nextFocusRight="@id/dccex_dccex_cv_value_edit_text"
+                            android:nextFocusDown="@id/dccex_dccex_cv_value_edit_text"
+                            android:shadowColor="#FFFFFFFF"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="0.3"
+                            android:singleLine="true"
+                            android:text=""
+                            tools:ignore="Autofill,LabelFor" />
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".15"
+                            android:gravity="end"
+                            android:padding="4sp"
+                            android:text="@string/dccexWriteCvValueLabel"
+                            android:textAlignment="viewEnd" />
+
+                        <EditText
+                            android:id="@+id/dccex_dccex_cv_value_edit_text"
+                            style="?attr/edit_label_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8sp"
+                            android:layout_marginRight="8sp"
+                            android:layout_weight=".15"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:nextFocusRight="@id/dccex_dccex_send_command_edit_text"
+                            android:nextFocusDown="@id/dccex_dccex_send_command_edit_text"
+                            android:paddingRight="8sp"
+                            android:shadowColor="#FFFFFFFF"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="0.3"
+                            android:singleLine="true"
+                            android:text=""
+                            tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                        <Button
+                            android:id="@+id/dccex_dccex_read_cv_button"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".2"
+                            android:padding="0dp"
+                            android:drawableStart="?attr/ed_read_glyph"
+                            android:text="@string/dccexReadAddressButtonLabel"
+                            tools:ignore="RtlSymmetry" />
+
+                        <Button
+                            android:id="@+id/dccex_dccex_write_cv_button"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".2"
+                            android:padding="0dp"
+                            android:drawableStart="?attr/ed_write_glyph"
+                            android:text="@string/dccexWriteAddressButtonLabel"
+                            tools:ignore="RtlSymmetry" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dccex_dccex_programming_common_cvs_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:layout_marginTop="2sp"
+                        android:background="?attr/ed_background_highlight_tertiary"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="?attr/floating_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2sp"
+                            android:layout_weight=".2"
+                            android:gravity="end"
+                            android:padding="2sp"
+                            android:text="@string/dccexCommonCvsLabel"
+                            android:textAlignment="viewEnd"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="12sp" />
+
+                        <Spinner
+                            android:id="@+id/dccex_dccex_dcc_cv_list"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_weight=".7"
+                            android:ellipsize="none"
+                            android:paddingLeft="0dp"
+                            android:paddingTop="0dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="2dp"
+                            android:layout_marginEnd="5dp"
+                            android:text=""
+                            tools:ignore="RtlHardcoded" />
+
+                        <Button
+                            android:id="@+id/dccex_dccex_cv_bit_calculator_button"
+                            style="?attr/ed_small_button_condensed_text_style"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight=".10"
+                            android:padding="2sp"
+                            android:text="@string/dccexCvBitCalculatorButtonLabel" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/dccex_dccex_tracks_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="240sp"
+                        android:layout_margin="0sp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:padding="5sp"
+                        android:weightSum="1"
+                        tools:ignore="NestedWeights">
+
+                        <ScrollView
+                            android:id="@+id/dccex_dccex_tracks_scroll_view"
+                            android:layout_width="0sp"
+                            android:layout_height="fill_parent"
+                            android:layout_weight=".83"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="0sp"
+                                android:orientation="vertical"
+                                android:padding="0sp">
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_0"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="A"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_0"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_0"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".65"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_0"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_1"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="B"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_1"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_1"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".65"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_1"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_2"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="C"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_2"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_2"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".65"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_2"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_3"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="D"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_3"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_3"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".63"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_3"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_4"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="E"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_4"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_4"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".65"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_4"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_5"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="F"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_5"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_5"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".65"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_5"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_6"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="G"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_6"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_6"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".65"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_6"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/dccex_track_type_layout_7"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="0sp"
+                                    android:background="#00000000"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="6dp"
+                                    android:paddingBottom="6dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        style="?attr/floating_text_style"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".05"
+                                        android:padding="1sp"
+                                        android:text="H"
+                                        android:textSize="14sp"
+                                        tools:ignore="HardcodedText,TooManyViews" />
+
+                                    <Button
+                                        android:id="@+id/dccex_track_power_button_7"
+                                        android:layout_width="38dp"
+                                        android:layout_height="38dp"
+                                        android:layout_gravity="center"
+                                        android:paddingTop="5dp"
+                                        android:paddingBottom="5dp"
+                                        android:paddingLeft="10dp"
+                                        android:paddingStart="10dp"
+                                        android:paddingRight="10dp"
+                                        android:paddingEnd="10dp"
+                                        android:src="?attr/ed_power_yellow_button"
+                                        tools:ignore="TooManyViews" />
+
+                                    <Spinner
+                                        android:id="@+id/dccex_track_type_7"
+                                        android:layout_width="0sp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight=".65"
+                                        android:ellipsize="none"
+                                        android:paddingLeft="0dp"
+                                        android:paddingRight="0dp"
+                                        android:paddingBottom="2dp"
+                                        android:text=""
+                                        tools:ignore="RtlHardcoded" />
+
+                                    <EditText
+                                        android:id="@+id/dccex_track_id_7"
+                                        style="?attr/edit_label_style"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginEnd="8sp"
+                                        android:layout_marginRight="8sp"
+                                        android:layout_weight=".2"
+                                        android:inputType="number"
+                                        android:maxLength="5"
+                                        android:paddingRight="8sp"
+                                        android:shadowColor="#FFFFFFFF"
+                                        android:shadowDx="1"
+                                        android:shadowDy="1"
+                                        android:shadowRadius="0.3"
+                                        android:singleLine="true"
+                                        android:text=""
+                                        tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </ScrollView>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".17"
+                            android:layout_marginTop="8sp"
+                            android:background="#00000000"
+                            android:orientation="vertical"
+                            android:layout_gravity="center_vertical"
+                            android:weightSum="1">
+
+                            <Button
+                                android:id="@+id/dccex_dccex_write_tracks_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="match_parent"
+                                android:layout_height="40sp"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="8sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:padding="0dp"
+                                android:text="@string/dccexSetTrackButtonLabel"
+                                tools:ignore="UnusedAttribute" />
+
+                            <Button
+                                android:id="@+id/dccex_dccex_join_tracks_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="match_parent"
+                                android:layout_height="32sp"
+                                android:autoSizeMaxTextSize="18sp"
+                                android:autoSizeMinTextSize="8sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:layout_marginTop="10dp"
+                                android:padding="0sp"
+                                android:text="@string/dccexJoinTrackButtonLabel"
+                                tools:ignore="UnusedAttribute" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dccex_dccex_command_line_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8sp"
+                        android:background="#00000000"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8sp"
+                            android:background="#00000000"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="?attr/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight = "0"
+                                android:gravity="end"
+                                android:paddingRight="4dp"
+                                android:paddingLeft="0dp"
+                                android:text="@string/dccexSendCommandLabel"
+                                android:textAlignment="viewEnd" />
+
+                            <EditText
+                                android:id="@+id/dccex_dccex_send_command_edit_text"
+                                style="?attr/edit_label_style"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8sp"
+                                android:layout_marginRight="8sp"
+                                android:layout_weight = "1"
+                                android:inputType="text"
+                                android:maxLength="30"
+                                android:paddingRight="8sp"
+                                android:shadowColor="#FFFFFFFF"
+                                android:shadowDx="1"
+                                android:shadowDy="1"
+                                android:shadowRadius="0.3"
+                                android:singleLine="true"
+                                android:text=""
+                                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
+
+                            <Button
+                                android:id="@+id/dccex_dccex_send_command_button"
+                                style="?attr/ed_small_button_style"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:padding="4sp"
+                                android:layout_weight = "0"
+                                android:drawableStart="?attr/ed_send_glyph"
+                                android:drawablePadding="8dp"
+                                android:text="@string/dccexSendCommandButtonLabel" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dccex_commands_extra_buttons_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp" >
+
+                            <TextView
+                                style="?attr/floating_text_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="24dp"
+                                android:layout_marginBottom="2sp"
+                                android:layout_marginStart="20dp"
+                                android:padding="0dp"
+                                android:text="@string/dccexCommonCommandsLabel"
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="12sp" />
+
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <ImageButton
+                                android:id="@+id/dccex_dccex_previous_command_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="46dp"
+                                android:layout_height="36dp"
+                                android:layout_marginTop="4dp"
+                                android:padding="2sp"
+                                android:layout_gravity="center"
+                                android:src="?attr/ed_previous_glyph"
+                                android:contentDescription="@string/dccexPreviousCommandButtonLabel" />
+
+                            <ImageButton
+                                android:id="@+id/dccex_dccex_next_command_button"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="46dp"
+                                android:layout_height="36dp"
+                                android:layout_marginTop="4dp"
+                                android:padding="2sp"
+                                android:layout_gravity="center"
+                                android:src="?attr/ed_next_glyph"
+                                android:contentDescription="@string/dccexNextCommandButtonLabel" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dccex_dccex_common_commands_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="2dp"
+                            android:background="?attr/ed_background_highlight_tertiary"
+                            android:orientation="horizontal" >
+
+                            <Spinner
+                                android:id="@+id/dccex_dccex_common_commands_list"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginRight="0dp"
+                                android:ellipsize="none"
+                                android:paddingLeft="0dp"
+                                android:paddingTop="0dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="2dp"
+                                android:text=""
+                                tools:ignore="RtlHardcoded" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dccex_dccex_write_info_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0sp"
+                        android:background="#00000000"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="2px"
+                            android:layout_marginTop="6sp"
+                            android:orientation="vertical"
+                            android:padding="0dp"
+                            android:background="?attr/ed_primaryLineColor"
+                            tools:ignore="PxUsage" />
+
+                        <TextView
+                            android:id="@+id/dccex_dccex_write_info_label"
+                            style="?attr/floating_text_condensed_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="1sp"
+                            android:layout_marginBottom="1sp"
+                            android:padding="2sp"
+                            android:text=""
+                            android:textAlignment="viewEnd"
+                            android:textColor="?android:attr/textColorSecondary" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="2px"
+                        android:orientation="vertical"
+                        android:paddingTop="2dp"
+                        android:layout_marginTop="6sp"
+                        android:padding="0dp"
+                        android:background="?attr/ed_primaryLineColor"
+                        tools:ignore="PxUsage" />
+
+                    <LinearLayout
+                        android:id="@+id/dccex_dccex_responses_and_sends_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="0sp"
+                        android:layout_marginTop="0sp"
+                        android:layout_weight=".4"
+                        android:background="#00000000"
+                        android:orientation="vertical"
+                        android:weightSum="1"
+                        tools:ignore="NestedWeights">
+
+                        <ScrollView
+                            android:id="@+id/dccex_dccex_responses_scroll_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".7"
+                            tools:ignore="NestedWeights">
+
+                            <TextView
+                                android:id="@+id/dccex_dccex_responses_label"
+                                style="?attr/floating_text_style"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8sp"
+                                android:text=""
+                                android:textSize="12sp" />
+
+                        </ScrollView>
+
+                        <ScrollView
+                            android:id="@+id/dccex_dccex_sends_scroll_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".3">
+
+                            <TextView
+                                android:id="@+id/dccex_dccex_sends_label"
+                                style="?attr/floating_text_style"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8sp"
+                                android:text=""
+                                android:textSize="12sp" />
+
+                        </ScrollView>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/dcc_ex_bottom_button_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="0sp"
+                    android:layout_weight=".06"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp" >
+
+                    <Button
+                        android:id="@+id/dcc_ex_clearCommandsButton"
+                        style="?attr/ed_normal_button_condensed_style"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/dccexClearCommands"
+                        android:drawableStart="?attr/ed_clear_list_glyph"
+                        android:padding="0dp"
+                        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+                    <Button
+                        android:id="@+id/dcc_ex_button_close"
+                        style="?attr/ed_normal_button_condensed_style"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:paddingLeft="8dp"
+                        android:paddingStart="8dp"
+                        android:text="@string/logviewerClose"
+                        android:drawableStart="?attr/ed_cross_glyph"
+                        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+                    <!--            <Button-->
+                    <!--                android:id="@+id/dcces_DccexHideSendsButton"-->
+                    <!--                style="?attr/ed_normal_button_style"-->
+                    <!--                android:layout_gravity="left"-->
+                    <!--                android:text="@string/DccexHideSends"-->
+                    <!--                tools:ignore="RtlHardcoded"-->
+                    <!--                android:layout_alignParentEnd="true"-->
+                    <!--                android:layout_alignParentRight="true" />-->
+
+                </RelativeLayout>
             </LinearLayout>
-
         </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/dcc_ex_bottom_button_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_margin="0sp"
-            android:layout_weight=".06"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp" >
-
-            <Button
-                android:id="@+id/dcc_ex_clearCommandsButton"
-                style="?attr/ed_normal_button_condensed_style"
-                android:layout_height="40dp"
-                android:layout_centerHorizontal="true"
-                android:text="@string/dccexClearCommands"
-                android:drawableStart="?attr/ed_clear_list_glyph"
-                android:padding="0dp"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-            <Button
-                android:id="@+id/dcc_ex_button_close"
-                style="?attr/ed_normal_button_condensed_style"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:paddingLeft="8dp"
-                android:paddingStart="8dp"
-                android:text="@string/logviewerClose"
-                android:drawableStart="?attr/ed_cross_glyph"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-
-
-            <!--            <Button-->
-            <!--                android:id="@+id/dexc_DccexHideSendsButton"-->
-            <!--                style="?attr/ed_normal_button_style"-->
-            <!--                android:layout_gravity="left"-->
-            <!--                android:text="@string/DccexHideSends"-->
-            <!--                tools:ignore="RtlHardcoded"-->
-            <!--                android:layout_alignParentEnd="true"-->
-            <!--                android:layout_alignParentRight="true" />-->
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -57,7 +57,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -83,6 +82,7 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
@@ -852,6 +852,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
             prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+        }
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
         }
     }
 

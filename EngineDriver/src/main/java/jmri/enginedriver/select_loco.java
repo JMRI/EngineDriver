@@ -106,6 +106,7 @@ import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.select_loco_method_type;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.SwipeDetector;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.address_type;
@@ -2082,6 +2083,17 @@ public class select_loco extends AppCompatActivity {
         }
         Log.d(threaded_application.applicationName, activityName + ": onCreate() end");
     } //end OnCreate
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        super.onStart();
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
+        }
+    }
 
     private final Runnable showMethodTask = new Runnable() {
         public void run() {

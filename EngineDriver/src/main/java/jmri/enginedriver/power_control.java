@@ -20,6 +20,7 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -46,12 +47,15 @@ import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.LocaleHelper;
 
 public class power_control extends AppCompatActivity {
     static final String activityName = "power_control";
 
     private threaded_application mainapp;  // hold pointer to mainapp
+    private SharedPreferences prefs;
+
     private Drawable powerOnDrawable;  //hold background graphics for power button
     private Drawable powerOnAndOffDrawable;
     private Drawable powerOffDrawable;
@@ -244,6 +248,7 @@ public class power_control extends AppCompatActivity {
         }
 
         mainapp.applyTheme(this);
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         setContentView(R.layout.power_control);
 
@@ -325,6 +330,17 @@ public class power_control extends AppCompatActivity {
         }
 
     } // end onCreate
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
+        }
+    }
 
     @Override
     public void onPause() {

@@ -27,275 +27,294 @@
             <include layout="@layout/toolbar" />
             <include layout="@layout/toolbar_status_line" />
 
-            <TextView
-                android:id="@+id/turnouts_selection_type_heading"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:text="@string/turnoutsSelectionTypeHeading"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-            <RadioGroup
-                android:id="@+id/select_turnout_method_radio_group"
-                android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical" >
 
-                <RadioButton
-                    android:id="@+id/select_turnout_method_address_button"
-                    style="?attr/EDRadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center"
-                    android:text="@string/turnoutsSelectionTypeAddress"
-                    android:textSize="18sp"
-                    tools:ignore="RtlHardcoded" />
+                <ImageView
+                    android:id="@+id/backgroundImgView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    tools:ignore="ContentDescription">
+                </ImageView>
 
-                <RadioButton
-                    android:id="@+id/select_turnout_method_roster_button"
-                    style="?attr/EDRadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
-                    android:text="@string/turnoutsSelectionTypeRoster"
-                    android:textSize="18sp"
-                    tools:ignore="RtlHardcoded" />
-                <!--
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/turnouts_selection_type_heading"
+                        style="?android:attr/listSeparatorTextViewStyle"
+                        android:text="@string/turnoutsSelectionTypeHeading"
+                        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+                    <RadioGroup
+                        android:id="@+id/select_turnout_method_radio_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
                         <RadioButton
-                            android:id="@+id/select_turnout_method_recent_button"
-                            style="?attr/floating_text_style"
+                            android:id="@+id/select_turnout_method_address_button"
+                            style="?attr/EDRadioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_gravity="center"
+                            android:text="@string/turnoutsSelectionTypeAddress"
+                            android:textSize="18sp"
+                            tools:ignore="RtlHardcoded" />
+
+                        <RadioButton
+                            android:id="@+id/select_turnout_method_roster_button"
+                            style="?attr/EDRadioButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="@string/turnoutsSelectionTypeRecent"
-                            android:textSize="18sp" />
-                -->
-            </RadioGroup>
+                            android:layout_gravity="center"
+                            android:text="@string/turnoutsSelectionTypeRoster"
+                            android:textSize="18sp"
+                            tools:ignore="RtlHardcoded" />
+                        <!--
+                                <RadioButton
+                                    android:id="@+id/select_turnout_method_recent_button"
+                                    style="?attr/floating_text_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="@string/turnoutsSelectionTypeRecent"
+                                    android:textSize="18sp" />
+                        -->
+                    </RadioGroup>
 
-            <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
+                    <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
 
-            <LinearLayout
-                android:id="@+id/enter_turnout_address_group"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp" >
-
-                <TextView
-                    android:id="@+id/turnouts_direct_entry_label"
-                    style="?android:attr/listSeparatorTextViewStyle"
-                    android:text="@string/turnouts_direct_entry_label"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="4dp"
-                    android:weightSum="1">
-                    <TextView
-                        android:id="@+id/turnout_prefix"
-                        style="?attr/floating_text_style"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:id="@+id/enter_turnout_address_group"
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.04"
-                        android:text="" />
-                    <jmri.enginedriver.util.InterceptEditText
-                        android:id="@+id/turnout_entry"
-                        android:layout_width="0dp"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="2dp" >
+
+                        <TextView
+                            android:id="@+id/turnouts_direct_entry_label"
+                            style="?android:attr/listSeparatorTextViewStyle"
+                            android:text="@string/turnouts_direct_entry_label"
+                            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="4dp"
+                            android:weightSum="1">
+                            <TextView
+                                android:id="@+id/turnout_prefix"
+                                style="?attr/floating_text_style"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.04"
+                                android:text="" />
+                            <jmri.enginedriver.util.InterceptEditText
+                                android:id="@+id/turnout_entry"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.21"
+                                android:hint="@string/turnouts_turnout"
+                                android:inputType="textCapCharacters"
+                                android:digits="ABCDEFGHIJKLMNOPQRSTUVWZ1234567890"
+                                android:imeOptions="actionDone"
+                                android:maxLength="8"
+                                android:singleLine="true"
+                                tools:ignore="Autofill" />
+                            <TextView
+                                android:id="@+id/turnout_entry_static"
+                                style="?attr/floating_text_style"
+                                android:layout_weight="0.21"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/turnouts_turnout"
+                                android:visibility="gone"/>
+                            <Button
+                                android:id="@+id/turnout_throw"
+                                style="?attr/ed_normal_button_style"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.25"
+                                android:layout_gravity="center"
+                                android:textAlignment="center"
+                                android:padding="0dp"
+                                android:text="@string/throw_button" />
+                            <Button
+                                android:id="@+id/turnout_close"
+                                style="?attr/ed_normal_button_style"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.25"
+                                android:layout_gravity="center"
+                                android:textAlignment="center"
+                                android:padding="0dp"
+                                android:text="@string/close_button" />
+                            <Button
+                                android:id="@+id/turnout_toggle"
+                                style="?attr/ed_normal_button_style"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.25"
+                                android:layout_gravity="center"
+                                android:textAlignment="center"
+                                android:padding="0dp"
+                                android:text="@string/toggle_button" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
+
+                    <LinearLayout
+                        android:id="@+id/turnouts_from_roster_group"
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.21"
-                        android:hint="@string/turnouts_turnout"
-                        android:inputType="textCapCharacters"
-                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWZ1234567890"
-                        android:imeOptions="actionDone"
-                        android:maxLength="8"
-                        android:singleLine="true"
-                        tools:ignore="Autofill" />
-                    <TextView
-                        android:id="@+id/turnout_entry_static"
-                        style="?attr/floating_text_style"
-                        android:layout_weight="0.21"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/turnouts_turnout"
-                        android:visibility="gone"/>
-                    <Button
-                        android:id="@+id/turnout_throw"
-                        style="?attr/ed_normal_button_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:layout_gravity="center"
-                        android:textAlignment="center"
-                        android:padding="0dp"
-                        android:text="@string/throw_button" />
-                    <Button
-                        android:id="@+id/turnout_close"
-                        style="?attr/ed_normal_button_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:layout_gravity="center"
-                        android:textAlignment="center"
-                        android:padding="0dp"
-                        android:text="@string/close_button" />
-                    <Button
-                        android:id="@+id/turnout_toggle"
-                        style="?attr/ed_normal_button_style"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.25"
-                        android:layout_gravity="center"
-                        android:textAlignment="center"
-                        android:padding="0dp"
-                        android:text="@string/toggle_button" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
-
-            <LinearLayout
-                android:id="@+id/turnouts_from_roster_group"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/turnouts_location_label"
-                    style="?android:attr/listSeparatorTextViewStyle"
-                    android:text="@string/turnouts_location_label"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="4dp" >
-                    <Spinner
-                        android:id="@+id/turnouts_location"
-                        android:layout_width="0dip"
-                        android:layout_height="49dp"
-                        android:layout_weight="1.0"
-                        android:singleLine="true" />
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingRight="4dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="0dp"
-                    tools:ignore="RtlHardcoded">
-
-                    <TextView
-                        android:id="@+id/turnouts_list_label"
-                        style="?android:attr/listSeparatorTextViewStyle"
-                        android:layout_height="24sp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toLeftOf="@+id/turnouts_sort"
-                        android:layout_marginRight="4dp"
+                        android:paddingBottom="2dp"
                         android:paddingTop="2dp"
-                        android:text="@string/turnouts_list_label"
-                        tools:ignore="RtlHardcoded,RtlSymmetry" />
+                        android:visibility="gone">
 
-                    <Button
-                        android:id="@+id/turnouts_sort"
-                        style="?attr/ed_small_button_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="22sp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:padding="0dp"
-                        android:text="@string/order"
-                        android:drawableStart="?attr/ed_sort_glyph"
-                        tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
+                        <TextView
+                            android:id="@+id/turnouts_location_label"
+                            style="?android:attr/listSeparatorTextViewStyle"
+                            android:text="@string/turnouts_location_label"
+                            tools:ignore="RtlHardcoded,RtlSymmetry" />
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="4dp" >
+                            <Spinner
+                                android:id="@+id/turnouts_location"
+                                android:layout_width="0dip"
+                                android:layout_height="49dp"
+                                android:layout_weight="1.0"
+                                android:singleLine="true" />
 
-                </RelativeLayout>
+                        </LinearLayout>
 
-                <ListView
-                    android:id="@+id/turnouts_list"
-                    style="?attr/EDListView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingRight="4dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:paddingLeft="0dp"
+                            tools:ignore="RtlHardcoded">
+
+                            <TextView
+                                android:id="@+id/turnouts_list_label"
+                                style="?android:attr/listSeparatorTextViewStyle"
+                                android:layout_height="24sp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_toLeftOf="@+id/turnouts_sort"
+                                android:layout_marginRight="4dp"
+                                android:paddingTop="2dp"
+                                android:text="@string/turnouts_list_label"
+                                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+                            <Button
+                                android:id="@+id/turnouts_sort"
+                                style="?attr/ed_small_button_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="22sp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:padding="0dp"
+                                android:text="@string/order"
+                                android:drawableStart="?attr/ed_sort_glyph"
+                                tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
+
+                        </RelativeLayout>
+
+                        <ListView
+                            android:id="@+id/turnouts_list"
+                            style="?attr/EDListView"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content" />
 
 
-            </LinearLayout>
+                    </LinearLayout>
 
-            <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
-            <LinearLayout
-                android:id="@+id/turnouts_recent_group"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="2dp"
-                android:paddingTop="2dp" >
+                    <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   -->
+                    <LinearLayout
+                        android:id="@+id/turnouts_recent_group"
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="2dp" >
 
-                <RelativeLayout
-                    android:id="@+id/turnouts_recent_list_header_group"
-                    android:layout_width="fill_parent"
-                    android:layout_height="45dp"
-                    android:paddingBottom="2dp"
-                    android:paddingTop="2dp">
+                        <RelativeLayout
+                            android:id="@+id/turnouts_recent_list_header_group"
+                            android:layout_width="fill_parent"
+                            android:layout_height="45dp"
+                            android:paddingBottom="2dp"
+                            android:paddingTop="2dp">
 
-                    <TextView
-                        android:id="@+id/turnouts_recent_list_label"
-                        style="?android:attr/listSeparatorTextViewStyle"
-                        android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/turnouts_recent_list_label"
+                                style="?android:attr/listSeparatorTextViewStyle"
+                                android:layout_width="wrap_content"
 
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignTop="@+id/clear_turnouts_list_button"
-                        android:layout_toLeftOf="@+id/clear_turnouts_list_button"
-                        android:text="@string/turnoutsRecentHeading"
-                        tools:ignore="RtlHardcoded" />
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignTop="@+id/clear_turnouts_list_button"
+                                android:layout_toLeftOf="@+id/clear_turnouts_list_button"
+                                android:text="@string/turnoutsRecentHeading"
+                                tools:ignore="RtlHardcoded" />
 
-                    <Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent" />
+                            <Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent" />
 
-                    <Button
-                        android:id="@+id/clear_turnouts_list_button"
-                        style="?attr/ed_small_button_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="22sp"
-                        android:layout_toLeftOf="@id/turnouts_recent_sort"
-                        android:layout_alignParentTop="true"
-                        android:text="@string/clearLocoList"
-                        android:drawableStart="?attr/ed_clear_list_glyph"
-                        android:padding="0dp"
-                        tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
+                            <Button
+                                android:id="@+id/clear_turnouts_list_button"
+                                style="?attr/ed_small_button_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="22sp"
+                                android:layout_toLeftOf="@id/turnouts_recent_sort"
+                                android:layout_alignParentTop="true"
+                                android:text="@string/clearLocoList"
+                                android:drawableStart="?attr/ed_clear_list_glyph"
+                                android:padding="0dp"
+                                tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
-                    <Button
-                        android:id="@+id/turnouts_recent_sort"
-                        style="?attr/ed_small_button_style"
-                        android:layout_width="wrap_content"
-                        android:layout_height="22sp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:padding="0dp"
-                        android:text="@string/order"
-                        android:drawableStart="?attr/ed_sort_glyph"
-                        tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
+                            <Button
+                                android:id="@+id/turnouts_recent_sort"
+                                style="?attr/ed_small_button_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="22sp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:padding="0dp"
+                                android:text="@string/order"
+                                android:drawableStart="?attr/ed_sort_glyph"
+                                tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
-                </RelativeLayout>
+                        </RelativeLayout>
 
-                <ListView
-                    android:id="@+id/turnouts_recent_list"
-                    style="?attr/EDListView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true">
-                </ListView>
+                        <ListView
+                            android:id="@+id/turnouts_recent_list"
+                            style="?attr/EDListView"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true">
+                        </ListView>
 
-            </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </android.gesture.GestureOverlayView>
 

@@ -6027,9 +6027,10 @@ public class throttle extends AppCompatActivity implements
 
         queryAllSpeedsAndDirectionsWiT();
 
-//        loadBackgroundImage();
-        BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
-        backgroundImageLoader.loadBackgroundImage();
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
+        }
 
         if (!mainapp.webServerNameHasBeenChecked) {
             mainapp.getServerNameFromWebServer();

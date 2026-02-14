@@ -67,6 +67,7 @@
 
         <item name="edit_func_style">@style/edit_func_style</item>
         <item name="list_item_style">@style/list_item_style</item>
+        <item name="list_item_condensed_style">@style/list_item_condensed_style</item>
         <item name="list_id_style">@style/list_id_style</item>
         <item name="list_extras_style">@style/list_extras_style</item>
         <item name="EDListView">@style/EDListView</item>
@@ -129,6 +130,7 @@
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
+        <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
         <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
 
@@ -164,6 +166,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
@@ -252,6 +255,7 @@
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_black</item>
+        <item name="list_item_condensed_style">@style/list_item_condensed_style_black</item>
         <item name="list_id_style">@style/list_id_style_black</item>
         <item name="list_extras_style">@style/list_extras_style_black</item>
         <item name="EDListView">@style/EDListView_black</item>
@@ -317,6 +321,7 @@
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
+        <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
         <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
         <item name="ed_icon">@drawable/icon_vector_outline</item>
@@ -353,6 +358,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
@@ -431,6 +437,7 @@
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
+        <item name="list_item_condensed_style">@style/list_item_condensed_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
         <item name="list_extras_style">@style/list_extras_style_outline</item>
         <item name="EDListView">@style/EDListView_black</item>
@@ -495,6 +502,7 @@
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
+        <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
         <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
         <item name="ed_icon">@drawable/icon_vector_outline</item>
@@ -531,6 +539,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
@@ -614,6 +623,7 @@
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_outline</item>
+        <item name="list_item_condensed_style">@style/list_item_condensed_style_outline</item>
         <item name="list_id_style">@style/list_id_style_outline</item>
         <item name="list_extras_style">@style/list_extras_style_outline</item>
         <item name="EDListView">@style/EDListView_black</item>
@@ -679,6 +689,7 @@
         <item name="ed_dcc_ex_button">@drawable/ultra_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
+        <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
         <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
         <item name="ed_icon">@drawable/icon_vector_ultra</item>
@@ -715,6 +726,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
@@ -803,6 +815,7 @@
         <item name="android:spinnerItemStyle">@style/spinner_item_colorful</item>
         <item name="edit_func_style">@style/edit_func_style_colorful</item>
         <item name="list_item_style">@style/list_item_style_colorful</item>
+        <item name="list_item_condensed_style">@style/list_item_condensed_style_colorful</item>
         <item name="list_id_style">@style/list_id_style_colorful</item>
         <item name="list_extras_style">@style/list_extras_style_colorful</item>
         <item name="EDListView">@style/EDListView_colorful</item>
@@ -871,6 +884,7 @@
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/colorful_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/colorful_background_highlight_secondary</item>
+        <item name="ed_background_highlight_tertiary">@drawable/colorful_background_highlight_tertiary</item>
 
         <item name="ed_advanced_preferences">@drawable/black_advanced_preferences</item>
         <item name="ed_icon">@drawable/icon_vector</item>
@@ -902,6 +916,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
@@ -987,6 +1002,7 @@
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
         <item name="edit_func_style">@style/edit_func_style_black</item>
         <item name="list_item_style">@style/list_item_style_neon</item>
+        <item name="list_item_condensed_style">@style/list_item_condensed_style_neon</item>
         <item name="list_id_style">@style/list_id_style_neon</item>
         <item name="list_extras_style">@style/list_extras_style_neon</item>
         <item name="EDListView">@style/EDListView_neon</item>
@@ -1056,6 +1072,7 @@
         <item name="ed_dcc_ex_button">@drawable/neon_toolbar_button_dcc_ex</item>
         <item name="ed_background_highlight">@drawable/neon_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/neon_background_highlight_secondary</item>
+        <item name="ed_background_highlight_tertiary">@drawable/neon_background_highlight_tertiary</item>
 
         <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
         <item name="ed_icon">@drawable/icon_vector</item>
@@ -1092,6 +1109,7 @@
         <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
 
         <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
         <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
         <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
         <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>

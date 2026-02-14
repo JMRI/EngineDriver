@@ -74,6 +74,7 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
@@ -672,6 +673,11 @@ public class routes extends AppCompatActivity
                 && (prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE) == restart_reason_type.APP_PUSHED_TO_BACKGROUND) ) {
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
             prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+        }
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
         }
     }
 

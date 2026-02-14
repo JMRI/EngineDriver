@@ -259,6 +259,9 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">1</item>
   </style>
+    <style name="list_item_condensed_style" parent="list_item_style">
+        <item name="fontFamily">sans-serif-condensed</item>
+    </style>
   <style name="list_id_style" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
@@ -665,6 +668,9 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">1</item>
   </style>
+    <style name="list_item_condensed_style_black" parent="list_item_style_black">
+        <item name="fontFamily">sans-serif-condensed</item>
+    </style>
   <style name="list_id_style_black" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
@@ -847,6 +853,9 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">1</item>
   </style>
+    <style name="list_item_condensed_style_outline" parent="list_item_style_outline">
+        <item name="fontFamily">sans-serif-condensed</item>
+    </style>
   <style name="list_id_style_outline" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
@@ -1015,6 +1024,9 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">1</item>
   </style>
+    <style name="list_item_condensed_style_ultra" parent="list_item_style_ultra">
+        <item name="fontFamily">sans-serif-condensed</item>
+    </style>
   <style name="list_id_style_ultra" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>
@@ -1351,6 +1363,9 @@
     <item name="android:shadowRadius">1</item>
     <item name="android:background">@color/transparent</item>
   </style>
+    <style name="list_item_condensed_style_colorful" parent="list_item_style_colorful">
+        <item name="fontFamily">sans-serif-condensed</item>
+    </style>
 
   <style name="list_id_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
@@ -1665,6 +1680,9 @@
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">1</item>
   </style>
+    <style name="list_item_condensed_style_neon" parent="list_item_style_neon">
+        <item name="fontFamily">sans-serif-condensed</item>
+    </style>
   <style name="list_id_style_neon" parent="@android:style/Widget.TextView">
     <item name="android:textSize">12sp</item>
     <item name="android:textStyle">italic</item>

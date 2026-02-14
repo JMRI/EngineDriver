@@ -53,6 +53,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -422,6 +423,19 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
         }
 
     } // end onCreate
+
+    // ************************************************************************************************************* //
+
+    @Override
+    public void onStart() {
+        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        super.onStart();
+
+        if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
+            BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
+            backgroundImageLoader.loadBackgroundImage();
+        }
+    } // end onStart()
 
     @Override
     public void onPause() {

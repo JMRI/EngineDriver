@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/consist_item_label"
-        style="?attr/list_item_style"
+        style="?attr/list_item_condensed_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="12dp"
