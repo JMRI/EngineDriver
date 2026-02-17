@@ -636,7 +636,6 @@ public class connection_activity extends AppCompatActivity implements Permission
         discoveredServersHeading = findViewById(R.id.discoveredServersHeading);
 //        discoveredServersWarning = findViewById(R.id.discoveredServersWarning);
 
-        set_labels();
         calculateDisplayMetrics();
 
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
@@ -776,6 +775,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         getWifiInfo();
 //        getPhoneInfo();
+        set_labels();
 
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         //start up server discovery listener
