@@ -45,6 +45,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -63,8 +64,11 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.InputDevice;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -76,6 +80,7 @@ import android.webkit.CookieManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -229,6 +234,7 @@ public class threaded_application extends Application {
     public String client_ssid = "UNKNOWN";    //string of the connected SSID
     public String client_type = "UNKNOWN"; //network type, usually WIFI or MOBILE
     public boolean clientLocationServiceEnabled = false;
+    public boolean connectionWarningsShown = false;
 
     public int whichThrottleLastTouch = 0; // needed in TA so that it can be used in the DCC-EX code
 
@@ -3669,6 +3675,81 @@ public class threaded_application extends Application {
             Log.d(threaded_application.applicationName, "PreferenceList: Renamed Key: " + oldName + " To: " + newName);
 
             prefs.edit().remove(oldName).apply();
+        }
+    }
+
+    // Source - https://stackoverflow.com/a/40168175
+    // Modified from post by mgcaguioa
+    // Retrieved 2026-02-17, License - CC BY-SA 3.0
+    public static void showCustomToast(final Activity activity, String title, String message, int length, int yOffsetSixthOfScreen) {
+        if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
+
+        int durationMs = (length==Toast.LENGTH_SHORT) ? 3000 : 6000;
+
+        // inflate your xml layout
+        LayoutInflater inflater = activity.getLayoutInflater();
+        final View layout = inflater.inflate(R.layout.custom_toast, null);
+
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        int yOffset = height * yOffsetSixthOfScreen / 6;
+
+
+        // set the custom display
+        if (!title.isEmpty()) {
+            ((TextView) layout.findViewById(R.id.title)).setText(title);
+        } else {
+            ((TextView) layout.findViewById(R.id.title)).setVisibility(View.GONE);
+        }
+        ((TextView) layout.findViewById(R.id.message)).setText(message);
+
+        // initialize your popupWindow and use your custom layout as the view
+        final PopupWindow toastPopupWindow = new PopupWindow(layout,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        toastPopupWindow.setWidth(width-40);
+        toastPopupWindow.setFocusable(true);
+
+        // handle toastPopupWindow click event
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toastPopupWindow.dismiss();
+            }
+        });
+
+        // Use post to ensure the Activity's window is ready and we have a window token
+        final View decorView = activity.getWindow().getDecorView();
+        if (decorView != null) {
+            decorView.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (!activity.isFinishing() && !activity.isDestroyed()) {
+                        try {
+                            // Use decorView as the parent to provide the window token
+                            toastPopupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, yOffset);
+
+                            // dismiss the popup window after specified period
+                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                                public void run() {
+                                    try {
+                                        if (toastPopupWindow.isShowing()) {
+                                            toastPopupWindow.dismiss();
+                                        }
+                                    } catch (Exception ignored) {
+                                    }
+                                }
+                            }, durationMs);
+                        } catch (Exception e) {
+                            Log.e(threaded_application.applicationName, activityName + ": showCustomToast(): Error showing custom toast: " + e.getMessage());
+                        }
+                    }
+                }
+            });
         }
     }
 

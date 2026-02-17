@@ -164,7 +164,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     String [] dccexConnectionOptionEntriesArray;
     String [] dccexConnectionOptionEntryValuesArray;
     TextView discoveredServersHeading;
-    TextView discoveredServersWarning;
+//    TextView discoveredServersWarning;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
@@ -530,6 +530,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         mainapp.connectedHostip = "";
         mainapp.connectedPort = 0;
         mainapp.logged_host_ip = null;
+        mainapp.connectionWarningsShown = false;
 
         mainapp.roster_entries = null;
         mainapp.consist_entries = null;
@@ -633,9 +634,8 @@ public class connection_activity extends AppCompatActivity implements Permission
         connect_button.setOnClickListener(click_listener);
 
         discoveredServersHeading = findViewById(R.id.discoveredServersHeading);
-        discoveredServersWarning = findViewById(R.id.discoveredServersWarning);
+//        discoveredServersWarning = findViewById(R.id.discoveredServersWarning);
 
-        set_labels();
         calculateDisplayMetrics();
 
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
@@ -775,6 +775,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         getWifiInfo();
 //        getPhoneInfo();
+        set_labels();
 
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         //start up server discovery listener
@@ -887,27 +888,31 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         String ssid = mainapp.client_ssid;
         StringBuilder warningTextBuilder = new StringBuilder();
-        if ( (ssid.equals("UNKNOWN")) || (ssid.equals("<unknown ssid>")) || (ssid.equals("Can't access SSID")) ) {
+        if ( (!mainapp.connectionWarningsShown)
+         && ( (ssid.equals("UNKNOWN")) || (ssid.equals("<unknown ssid>")) || (ssid.equals("Can't access SSID")) ) ) {
+            mainapp.connectionWarningsShown = true;
+
             if (mainapp.client_type.equals("MOBILE")) {
                 ssid = getString(R.string.statusThreadedAppNotconnectedToWifi);
             } else {
                 ssid = getString(R.string.statusThreadedAppNoLocationService);
                 if (!mainapp.clientLocationServiceEnabled) {
                     warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoveryNoLocationService));
-                    warningTextBuilder.append("  ");
+                    warningTextBuilder.append("\n  ");
                 }
                 PermissionsHelper phi = PermissionsHelper.getInstance();
                 if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
                     warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoveryAccessFineLocationNotGranted));
-                    warningTextBuilder.append("  ");
+                    warningTextBuilder.append("\n  ");
                 }
                 warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoverySsidUnavailable));
-                discoveredServersWarning.setText(warningTextBuilder.toString());
+//                discoveredServersWarning.setText(warningTextBuilder.toString());
             }
-            mainapp.safeToast(warningTextBuilder.toString(), Toast.LENGTH_LONG);
+//            mainapp.safeToast(warningTextBuilder.toString(), Toast.LENGTH_LONG);
+            threaded_application.showCustomToast(this, "", warningTextBuilder.toString(), Toast.LENGTH_LONG, 2);
 //            discoveredServersWarning.setVisibility(VISIBLE);
-        } else {
-            discoveredServersWarning.setVisibility(GONE);
+//        } else {
+//            discoveredServersWarning.setVisibility(GONE);
         }
 
         discoveredServersHeading.setText(String.format(getString(R.string.discovered_services), ssid));
