@@ -27,6 +27,7 @@
     * Switched to using the more reliable deviceDescriptor instead of deviceId for the gamepads and keyboards.
     * Removed more redundant API checks.
     * Removed redundant v21/v35 styles/themes files.
+    * Moved to a custom toast (popupWindow) message for the connection warnings. The normal toasts are too short and don't stay on screen long enough.
 **Version 2.42.216
  * Code improvement or required changes
     * Full move to Android X libraries.  Lowest supported version is now 5.0 (API 21)

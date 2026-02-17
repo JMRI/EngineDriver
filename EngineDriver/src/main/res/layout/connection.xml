@@ -117,17 +117,17 @@
                 android:layout_marginBottom="2dp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-            <TextView
-                android:id="@+id/discoveredServersWarning"
-                style="?attr/floating_text_style"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="?android:attr/textColorSecondary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/statusThreadedAppServerDiscoveryNotPossible"
-                android:padding="3dp"
-                android:textSize="12sp"
-                android:visibility="gone"/>
+<!--            <TextView-->
+<!--                android:id="@+id/discoveredServersWarning"-->
+<!--                style="?attr/floating_text_style"-->
+<!--                android:fontFamily="sans-serif-condensed"-->
+<!--                android:textColor="?android:attr/textColorSecondary"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/statusThreadedAppServerDiscoveryNotPossible"-->
+<!--                android:padding="3dp"-->
+<!--                android:textSize="12sp"-->
+<!--                android:visibility="gone"/>-->
 
             <LinearLayout
                 android:layout_width="fill_parent"
