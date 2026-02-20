@@ -5,7 +5,6 @@
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
     android:orientation="vertical"
-    android:weightSum="10"
     android:fitsSystemWindows="true" >
 
     <include layout="@layout/toolbar_screen_name_line" />
@@ -39,13 +38,12 @@
                 style="?attr/EDListView"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="8.8" />
+                android:layout_weight="1"
+                android:layout_marginBottom="10dp" />
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_weight="1"
+                android:layout_height="70dp"
                 android:gravity="bottom"
                 android:paddingLeft="6dp"
                 android:paddingRight="6dp" >

@@ -1,4 +1,6 @@
 **Version 2.42.220
+ * Bug fixes
+    * Bug fix for the Consist Edit and Consist Light Edit screens on early versions of Android
 **Version 2.42.218
  * New Features
     * Added localisation files for English (Singapore) and English (India). Same as UK/Australia/NZ.
