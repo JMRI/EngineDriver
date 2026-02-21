@@ -1208,6 +1208,11 @@ public class comm_thread extends Thread {
         //send response to debug log for review
         Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): " + (mainapp.isDCCEX ? "DCC-EX" : "") + "<--:" + responseStr);
 
+        if (mainapp.reconnect_status_msg_handler != null) {
+            // The reconnect screen must be active, so notify it so that it can be killed, then process the response as normal
+            mainapp.sendMsg(mainapp.reconnect_status_msg_handler, message_type.WIT_CON_RECONNECT);
+        }
+
         boolean skipAlert = false;          //set to true if the Activities do not need to be Alerted
 
         if (!mainapp.isDCCEX) { // WiThrottle Protocol. not DCC-EX Native Protocol
