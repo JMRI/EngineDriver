@@ -6159,12 +6159,12 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void showHideConsistMenus() {
-        if ((mainapp.consists == null) && (!mainapp.isDCCEX)) {
-            Log.d(threaded_application.applicationName, activityName + ": showHideConsistMenu(): consists[] is null and not DCC-EX");
+        if (mainapp.consists == null) {
+            Log.d(threaded_application.applicationName, activityName + ": showHideConsistMenu(): consists[] is null");
             return;
         }
 
-        if ( (overflowMenu != null) && (mainapp.consists!=null) ) {
+        if (overflowMenu != null) {
             boolean anyConsist = false;
 
             TypedArray edit_consist_menu_ids = getResources().obtainTypedArray(R.array.edit_consist_menu_ids);
