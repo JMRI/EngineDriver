@@ -6164,7 +6164,7 @@ public class throttle extends AppCompatActivity implements
             return;
         }
 
-        if (overflowMenu != null) {
+        if ( (overflowMenu != null) && (mainapp.consists!=null) ) {
             boolean anyConsist = false;
 
             TypedArray edit_consist_menu_ids = getResources().obtainTypedArray(R.array.edit_consist_menu_ids);
