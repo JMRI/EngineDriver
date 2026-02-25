@@ -387,7 +387,7 @@ public class comm_thread extends Thread {
          msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96 */
 //    static void sendAcquireLoco(String addr, int whichThrottle, int interval) {
     static void sendAcquireLoco(String addr, int whichThrottle) {
-        String rosterName;
+        String rosterName = "";
         String address;
         String[] as = threaded_application.splitByString(addr, "<;>");
         if (as.length > 1) {
@@ -396,6 +396,10 @@ public class comm_thread extends Thread {
         } else { //if no rosterName, just use address for both
             address = addr;
             rosterName = addr;
+        }
+        if (rosterName.trim().isEmpty()) { //if blank rosterName, just use address for both
+            rosterName = addr;
+            Log.d(threaded_application.applicationName, activityName + ": sendAquireLoco(): acquireLoco: addr:'" + addr + "' - blank rosterName should not have occured");
         }
 
         String msgTxt;
