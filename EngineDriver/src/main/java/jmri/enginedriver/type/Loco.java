@@ -140,6 +140,8 @@ public class Loco {
         return this.rosterName;
     }
     public void setRosterName(String rosterName) {
+        if (rosterName == null) return;
+        if (rosterName.trim().isEmpty()) return;  // don't accept ' ' (space or spaces) as a name
         this.rosterName = rosterName;
     }
 
