@@ -1,6 +1,7 @@
 **Version 2.42.220
  * Bug fixes
     * Bug fix for the Consist Edit and Consist Light Edit screens on early versions of Android
+    * Don't send blank rosterName to WiThrottle (caused reconnect loop)
  * Other
     * Improve comms to the reconnect screen.  Previously, many messages would not have been considered a successful reconnect
 **Version 2.42.218
