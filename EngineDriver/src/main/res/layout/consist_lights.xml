@@ -25,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:orientation="vertical">
 
             <TextView
@@ -41,23 +41,22 @@
                 android:layout_weight="1"
                 android:layout_marginBottom="10dp" />
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="70dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:paddingLeft="6dp"
-                android:paddingRight="6dp" >
+                android:paddingRight="6dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/consistLights_help"
                     style="?attr/floating_text_condensed_style"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginTop="0dp"
-                    android:layout_toLeftOf="@id/consist_lights_edit_button_close"
                     android:text="@string/consistLights_help"
                     android:textSize="13sp"
                     tools:ignore="NestedWeights,RtlHardcoded" />
@@ -67,15 +66,13 @@
                     style="?attr/ed_normal_button_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="top"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="0dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:gravity="center_horizontal|center_vertical"
                     android:text="@string/logviewerClose"
+                    android:drawableStart="?attr/ed_cross_glyph"
                     tools:ignore="RtlHardcoded" />
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

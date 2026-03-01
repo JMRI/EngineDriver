@@ -367,8 +367,8 @@
   <style name="EDListView_black" parent="@android:style/Widget.ListView">
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:textSize">12sp</item>
-    <item name="android:background">#ff000000</item>
-    <item name="android:windowBackground">@color/solidBlack</item>
+    <item name="android:background">@color/transparent</item>
+    <item name="android:windowBackground">@color/transparent</item>
     <item name="android:divider">@color/divider</item>
     <item name="android:dividerHeight">1dp</item>
     <item name="android:cacheColorHint">@android:color/transparent</item>
@@ -1534,7 +1534,7 @@
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:textSize">12sp</item>
     <item name="android:background">@color/transparent</item>
-    <item name="android:windowBackground">@color/solidBlack</item>
+    <item name="android:windowBackground">@color/transparent</item>
     <item name="android:divider">@color/divider_neon</item>
     <item name="android:dividerHeight">1dp</item>
     <item name="android:cacheColorHint">@android:color/transparent</item>
