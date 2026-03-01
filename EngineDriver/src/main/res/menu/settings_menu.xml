@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/search_button"
-        android:icon="@drawable/search_glyph_dark"
+        android:icon="@drawable/preferences_search_glyph_dark"
         android:title="@string/FilterRosterListFilterByLabel"
         android:visible="true"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
