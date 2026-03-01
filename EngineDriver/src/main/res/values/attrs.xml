@@ -70,6 +70,10 @@
     <attr name="ed_cv19_consist_button" format="reference" />
     <attr name="ed_dccex_consist_button" format="reference" />
     <attr name="ed_dcc_ex_button" format="reference" />
+
+    <attr name="ed_background_popup" format="reference" />
+    <attr name="popup_floating_text_style" format="reference" />
+
     <attr name="ed_background_highlight" format="reference" />
     <attr name="ed_background_highlight_secondary" format="reference" />
     <attr name="ed_background_highlight_tertiary" format="reference" />

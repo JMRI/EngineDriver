@@ -271,6 +271,9 @@
     <color name="background_highlight_tertiary_black">#7F363636</color>
     <color name="background_highlight_tertiary_colorful">#37FFA650</color>
 
+    <color name="background_popup_black">#a7a7a7</color>
+    <color name="background_popup_colorful">#f9e9da</color>
+
     <color name="spinner_background_colorful">#f2b465</color>
     <color name="spinner_divider_colorful">@color/solidBlack</color>
 

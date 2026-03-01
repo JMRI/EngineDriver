@@ -3753,6 +3753,7 @@ public class threaded_application extends Application {
     // Source - https://stackoverflow.com/a/40168175
     // Modified from post by mgcaguioa
     // Retrieved 2026-02-17, License - CC BY-SA 3.0
+    // title is not used
     public static void showCustomToast(final Activity activity, String title, String message, int length, int yOffsetSixthOfScreen) {
         if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
 

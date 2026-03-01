@@ -54,6 +54,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
         <item name="floating_text_condensed_style">@style/floating_text_condensed_style</item>
+        <item name="popup_floating_text_style">@style/popup_floating_text_style</item>
         <item name="edit_label_style">@style/edit_label_style</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style</item>
@@ -128,6 +129,7 @@
         <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>
         <item name="ed_dccex_consist_button">@drawable/original_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
+        <item name="ed_background_popup">@drawable/black_background_popup</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
@@ -247,6 +249,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
         <item name="floating_text_condensed_style">@style/floating_text_condensed_style_black</item>
+        <item name="popup_floating_text_style">@style/popup_floating_text_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_black</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
@@ -319,6 +322,7 @@
         <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
         <item name="ed_dccex_consist_button">@drawable/outline_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
+        <item name="ed_background_popup">@drawable/black_background_popup</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
@@ -429,6 +433,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="floating_text_condensed_style">@style/floating_text_condensed_style_outline</item>
+        <item name="popup_floating_text_style">@style/popup_floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
@@ -500,6 +505,7 @@
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
         <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
         <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>
+        <item name="ed_background_popup">@drawable/black_background_popup</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
@@ -615,6 +621,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="floating_text_condensed_style">@style/floating_text_condensed_style_outline</item>
+        <item name="popup_floating_text_style">@style/popup_floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_ultra</item>
@@ -687,6 +694,7 @@
         <item name="ed_cv19_consist_button">@drawable/ultra_toolbar_button_cv19_consist</item>
         <item name="ed_dccex_consist_button">@drawable/ultra_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/ultra_toolbar_button_dcc_ex</item>
+        <item name="ed_background_popup">@drawable/black_background_popup</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
@@ -808,6 +816,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_colorful</item>
         <item name="floating_text_condensed_style">@style/floating_text_condensed_style_colorful</item>
+        <item name="popup_floating_text_style">@style/popup_floating_text_style_colorful</item>
         <item name="edit_label_style">@style/edit_label_style_colorful</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_colorful</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style_colorful</item>
@@ -882,6 +891,7 @@
         <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>
         <item name="ed_dccex_consist_button">@drawable/original_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
+        <item name="ed_background_popup">@drawable/colorful_background_popup</item>
         <item name="ed_background_highlight">@drawable/colorful_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/colorful_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/colorful_background_highlight_tertiary</item>
@@ -994,6 +1004,7 @@
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
         <item name="floating_text_condensed_style">@style/floating_text_condensed_style_outline</item>
+        <item name="popup_floating_text_style">@style/popup_floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
         <item name="android:dropDownListViewStyle">@style/spinner_style_neon</item>
@@ -1070,6 +1081,7 @@
         <item name="ed_cv19_consist_button">@drawable/neon_toolbar_button_cv19_consist</item>
         <item name="ed_dccex_consist_button">@drawable/neon_toolbar_button_dccex_consist</item>
         <item name="ed_dcc_ex_button">@drawable/neon_toolbar_button_dcc_ex</item>
+        <item name="ed_background_popup">@drawable/black_background_popup</item>
         <item name="ed_background_highlight">@drawable/neon_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/neon_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/neon_background_highlight_tertiary</item>

@@ -10,28 +10,38 @@ Retrieved 2026-02-17, License - CC BY-SA 3.0
     android:id="@+id/toast_layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/ed_background_highlight"
+    android:background="@color/transparent"
+    android:backgroundTint="@color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:elevation="0dp"
     android:orientation="vertical"
-    android:elevation="10dp"
-    android:padding="0dp" >
+    android:padding="0dp">
 
+    <!--    not used -->
     <TextView
         android:id="@+id/title"
-        style="?attr/floating_text_style"
+        style="?attr/popup_floating_text_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:layout_marginBottom="10dp"
+        android:background="?attr/ed_background_popup"
+        android:elevation="10dp"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="10dp"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/message"
-        style="?attr/floating_text_style"
+        style="?attr/popup_floating_text_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/ed_background_highlight_tertiary"
+        android:layout_margin="15dp"
+        android:background="?attr/ed_background_popup"
+        android:elevation="10dp"
         android:gravity="center"
         android:padding="10dp" />
 

@@ -1128,7 +1128,7 @@
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  *   TODO: add immersive mode to get extra screen space
  * preferences:
- *   TODO: fix the searchView button icon.
+ *
  * children's timer:
  *   TODO: Alternate version.  Allow the selection of locos, but only from the filtered roster.  Unlimited time. Routes and Points would be available.
  * log_viewer:

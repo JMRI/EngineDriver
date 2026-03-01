@@ -242,6 +242,13 @@
   <style name="floating_text_condensed_style" parent="floating_text_style">
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
+  <style name="popup_floating_text_style" parent="floating_text_style">
+    <item name="android:textColor">@color/solidBlack</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
 
   <style name="radio_button_style" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
     <item name="android:textColor">@color/solidWhite</item>
@@ -633,6 +640,13 @@
   <style name="floating_text_condensed_style_black" parent="floating_text_style_black">
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
+  <style name="popup_floating_text_style_black" parent="floating_text_style">
+    <item name="android:textColor">@color/solidBlack</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
 
   <style name="radio_button_style_black" parent="radio_button_style">
     <item name="android:textColor">@color/solidWhite</item>
@@ -829,6 +843,13 @@
   </style>
   <style name="floating_text_condensed_style_outline" parent="floating_text_style_outline">
     <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+  <style name="popup_floating_text_style_outline" parent="floating_text_style">
+    <item name="android:textColor">@color/solidBlack</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">4</item>
   </style>
 
   <style name="radio_button_style_outline" parent="Base.Widget.AppCompat.CompoundButton.RadioButton">
@@ -1287,6 +1308,13 @@
   </style>
   <style name="floating_text_condensed_style_colorful" parent="floating_text_style_colorful">
     <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+  <style name="popup_floating_text_style_colorful" parent="floating_text_style">
+    <item name="android:textColor">@color/solidBlack</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">4</item>
   </style>
 
   <style name="radio_button_style_colorful" parent="radio_button_style">
