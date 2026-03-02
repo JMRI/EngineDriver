@@ -1063,12 +1063,12 @@
  *   TODO: why don't manual MRC Turnout updates update the list?
  * connection
  *   TODO: provide for adding/editing names of recent connections
- *   TODO: set limit on reconnect attempts?
- *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: add "Check for Updates" link to first menu and to About page.
  *   TODO: Add DCC-EX to "Auto-connect to first server?"
  *   TODO: Why does the first connection attempt fail sometimes
  * disconnect/reconnect
+ *   TODO: set limit on reconnect attempts?
+ *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: On reconnect, consider dropping all locos from the throttles and reacquiring them (like reloading saved locos)
  * at connection or close connection / exit app
  *   TODO: add option to save and automatically load locos on connection to be server specific
@@ -1099,7 +1099,7 @@
  * Gamepads (throttle):
  *   TODO: move code to a separate class. This is now partly done.
  *   TODO: support Routes on keyboards.
- *   TODO: work out how to fully support the gamepads on the Throttle and Routes pages.  Android reports a different id for the device.
+ *   TODO: work out how to fully support the gamepads on the Turnouts and Routes pages.  Android reports a different id for the device.
  *   TODO: add the ability to support custom gamepad configs
  *   TODO: add the ability for the keyboard type to send custom commands.  e.g. everything between quotes(") is send to the CS unaltered.
  * In Phone Loco Sounds (throttle):

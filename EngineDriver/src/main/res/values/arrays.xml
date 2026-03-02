@@ -2750,7 +2750,7 @@
         <item>default_function_preferences</item>  <!-- PreferenceScreen -->
         <item>prefHideFunctionButtonsOfNonSelectedThrottle</item>
         <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item>
-        <item>prefBackgroundImageGroup</item> <!-- PreferenceScreen -->
+<!--        <item>prefBackgroundImageGroup</item>--> <!-- PreferenceScreen -->
         <item>prefCategoryHapticFeedbackScreen</item> <!-- PreferenceScreen -->
 
         <!-- Status Row Preferences -->
@@ -2769,6 +2769,7 @@
         <item>prefActionBarShowRoutesButton</item>
         <item>prefActionBarShowWebButton</item>
         <item>prefActionBarShowAdvancedConsistButton</item>
+<!--        <item>prefDeviceSoundsButton</item>-->
 
         <!-- Throttle Control Preferences -->
         <item>prefMaximumThrottle</item>
@@ -2791,17 +2792,22 @@
         <!-- Select Loco Preferences -->
         <item>prefUseDispatchCommand</item>
         <item>prefShowDispatchButton</item>
-        <item>prefStopOnRelease</item>
-        <item>prefDropOnAcquire</item>
+<!--        <item>prefStopOnRelease</item>-->
+        <item>prefSelectLocoByRadioButtons</item>
+        <item>prefSortOrderRoster</item>
+        <item>prefLocoSelectHideIplsButton</item>
+        <item>prefRosterOwnersFilterShowOption</item>
+<!--        <item>prefDropOnAcquire</item>-->
         <item>prefSelectLocoWhileMoving</item>
-        <item>prefThrottlesLocos</item>
+<!--        <item>prefThrottlesLocos</item>-->
         <item>prefDefaultAddressLength</item>
         <item>prefRosterRecentLocos</item>
         <item>prefRosterRecentLocoNames</item>
         <item>prefMaximumRecentLocos</item>
         <item>prefConsistLightsLongClick</item>
         <item>prefRosterFilter</item>
-        <item>prefCategorySelectLoco</item> <!-- Category -->
+        <item>prefAlwaysUseFunctionsFromServer</item>
+<!--        <item>prefCategorySelectLoco</item> -->  <!-- Category -->
 
         <!-- In Phone Sound Preferences -->
 <!--        <item>prefDeviceSoundsMomentum</item>-->
@@ -2810,9 +2816,7 @@
 <!--        <item>prefDeviceSoundsBellVolume</item>-->
 <!--        <item>prefDeviceSoundsHornVolume</item>-->
 <!--        <item>prefDeviceSoundsBellIsMomentary</item>-->
-        <item>prefDeviceSoundsButton</item>
         <item>prefDeviceSoundsAdditionalPreferences</item>
-        <item>prefAlwaysUseFunctionsFromServer</item>
 
         <!-- Connect Preferences -->
         <item>prefFeedbackWhenGoingToBackground</item>
