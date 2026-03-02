@@ -42,6 +42,7 @@
                 android:fadingEdge="horizontal"
                 android:singleLine="false"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textStyle="italic" />
 
             <LinearLayout

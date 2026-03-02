@@ -776,8 +776,9 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <style name="app_theme_colorful" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="preferenceTheme">@style/app_theme_preferences</item>
+    <style name="app_theme_colorful" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="preferenceTheme">@style/app_theme_colorful_preferences</item>
         <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
         <item name="android:windowLightStatusBar">true</item>
 
@@ -1208,7 +1209,6 @@
 
 
     <style name="app_theme_colorful_preferences"  parent="@style/app_theme_colorful">
-        <item name="android:background">@color/transparent</item>
 
         <item name="android:divider">@drawable/colorful_divider</item>
         <item name="android:listDivider">@drawable/colorful_divider</item>
