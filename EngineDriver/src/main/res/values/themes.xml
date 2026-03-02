@@ -588,7 +588,7 @@
 
     <!-- appears as 'dark' theme -->
     <style name="app_theme_ultra" parent="Theme.AppCompat.NoActionBar">
-        <item name="preferenceTheme">@style/app_theme_black_preferences</item>
+        <item name="preferenceTheme">@style/app_theme_ultra_preferences</item>
 
         <item name="android:windowBackground">@color/solidBlack</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
@@ -779,6 +779,7 @@
     <style name="app_theme_colorful" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_preferences</item>
         <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <item name="android:windowBackground">@drawable/colorful_window_background</item>
         <item name="android:windowTitleStyle">@style/app_title_colorful</item>
@@ -971,7 +972,7 @@
 
     <!-- appears as 'Neon Blue' theme -->
     <style name="app_theme_neon" parent="Theme.AppCompat.NoActionBar">
-        <item name="preferenceTheme">@style/app_theme_black_preferences</item>
+        <item name="preferenceTheme">@style/app_theme_neon_preferences</item>
 
         <item name="android:windowBackground">@drawable/neon_app_background</item>
         <item name="android:windowTitleStyle">@style/app_title_black</item>
@@ -1204,15 +1205,47 @@
         <item name="preferenceCategoryBackgroundColor">@color/solidWhite</item>
     </style>
 
+    <style name="app_theme_ultra_preferences" parent="@style/app_theme_ultra">
 
-<!--    <style name="app_theme_colorful_preferences"  parent="@style/app_theme">-->
-<!--        <item name="android:background">@color/windowBackground_colorful</item>-->
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
 
-<!--        <item name="android:divider">@drawable/colorful_divider</item>-->
-<!--        <item name="android:listDivider">@drawable/colorful_divider</item>-->
+        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>
 
-<!--        <item name="preferenceCategoryBackgroundColor">@color/heading_colorful</item>-->
-<!--    </style>-->
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+
+        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <item name="preferenceCategoryBackgroundColor">@color/solidWhite</item>
+    </style>
+
+
+    <style name="app_theme_colorful_preferences"  parent="@style/app_theme_colorful">
+        <item name="android:background">@color/transparent</item>
+
+        <item name="android:divider">@drawable/colorful_divider</item>
+        <item name="android:listDivider">@drawable/colorful_divider</item>
+
+        <item name="preferenceCategoryBackgroundColor">@color/heading_colorful</item>
+    </style>
+
+
+    <style name="app_theme_neon_preferences" parent="@style/app_theme_neon">
+        <item name="android:windowBackground">@drawable/neon_app_background</item>
+
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>
+
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+
+        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <item name="preferenceCategoryBackgroundColor">@color/solidWhite</item>
+    </style>
 
 </resources>
     

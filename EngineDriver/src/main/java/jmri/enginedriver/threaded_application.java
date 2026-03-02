@@ -2019,10 +2019,14 @@ public class threaded_application extends Application {
             };
         } else {
             return switch (prefTheme) {
-                case "Black", "Outline", "Ultra", "Neon", "Colorful" ->
+                case "Black", "Outline" ->
                         R.style.app_theme_black_preferences;
-//                case "Colorful ->
-//                    R.style.app_theme_colorful;
+                case "Ultra" ->
+                        R.style.app_theme_ultra_preferences;
+                case "Neon" ->
+                        R.style.app_theme_neon_preferences;
+                case "Colorful" ->
+                        R.style.app_theme_colorful_preferences;
                 default -> R.style.app_theme_preferences;
             };
         }
