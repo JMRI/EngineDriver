@@ -1,6 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="@dimen/headingCornerRadius_ultra" />
-    <stroke android:width="0px" android:color="@color/black" />
+    <stroke android:width="0px" android:color="@color/transparent" />
     <gradient
         android:centerX="60%"
         android:startColor="@color/buttonCommonFillGradiantVeryLight_ultra"
@@ -8,7 +8,5 @@
         android:endColor="@color/transparent"
         android:type="linear"
         />
-    <corners android:radius="1dp" />
+    <corners android:radius="@dimen/headingCornerRadius_ultra" />
 </shape>
-
-<!--        android:endColor="@color/buttonCommonFillGradiantCenter_ultra"-->

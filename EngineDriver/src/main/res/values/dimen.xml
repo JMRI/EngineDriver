@@ -27,6 +27,7 @@
     <dimen name="spinnerBackgroundCornerRadius_original">3dp</dimen>
 
     <!-- Black theme -->
+    <dimen name="headingCornerRadius_black">4dp</dimen>
 
     <dimen name="buttonDisabledStroke_black">1dip</dimen>
     <dimen name="buttonSelectedStroke_black">1dip</dimen>
@@ -85,7 +86,7 @@
 
     <!-- Ultra Black theme -->
 
-    <dimen name="headingCornerRadius_ultra">1dp</dimen>
+    <dimen name="headingCornerRadius_ultra">4dp</dimen>
 
     <dimen name="buttonDisabledStroke_ultra">1px</dimen>
     <dimen name="buttonSelectedStroke_ultra">1px</dimen>
@@ -123,6 +124,8 @@
     <dimen name="spinnerBackgroundCornerRadius_ultra">3dp</dimen>
 
     <!-- Colorful theme -->
+
+    <dimen name="headingCornerRadius_colorful">4dp</dimen>
 
     <dimen name="buttonDisabledStroke_colorful">1dip</dimen>
     <dimen name="buttonSelectedStroke_colorful">1dip</dimen>
@@ -167,7 +170,7 @@
 
     <!-- Neon Blue theme -->
 
-    <dimen name="headingCornerRadius_neon">1dp</dimen>
+    <dimen name="headingCornerRadius_neon">4dp</dimen>
 
     <dimen name="buttonDisabledStroke_neon">1px</dimen>
     <dimen name="buttonSelectedStroke_neon">1px</dimen>

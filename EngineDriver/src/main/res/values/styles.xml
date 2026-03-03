@@ -211,9 +211,10 @@
     <item name="android:shadowDx">2</item>
     <item name="android:shadowDy">2</item>
     <item name="android:shadowRadius">4</item>
-    <item name="android:padding">2dp</item>
-    <item name="android:paddingLeft">6dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
     <item name="android:paddingStart">6dp</item>
+    <item name="android:paddingEnd">4dp</item>
   </style>
   <style name="large_heading_style" parent="@android:style/Widget.TextView">
     <item name="fontFamily">sans-serif-condensed</item>
@@ -341,16 +342,18 @@
   </style>
   <style name="small_heading_style_black" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#FF000000</item>
-    <item name="android:background">#FFFFFFFF</item>
+<!--    <item name="android:background">#FFFFFFFF</item>-->
+    <item name="android:background">@drawable/black_small_heading_style_background</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">#00000000</item>
     <item name="android:shadowDx">0</item>
     <item name="android:shadowDy">0</item>
     <item name="android:shadowRadius">0</item>
-    <item name="android:padding">2dp</item>
-    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
     <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingEnd">4dp</item>
   </style>
 
   <style name="large_heading_style_black" parent="@android:style/Widget.TextView">
@@ -903,16 +906,17 @@
   <style name="small_heading_style_ultra" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#ffffff</item>
     <!--    <item name="android:background">#5b5b5b</item>-->
-    <item name="android:background">@drawable/ultra_small_heading_style</item>
+    <item name="android:background">@drawable/ultra_small_heading_style_background</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">@color/black</item>
     <item name="android:shadowDx">1</item>
     <item name="android:shadowDy">1</item>
     <item name="android:shadowRadius">3</item>
-    <item name="android:padding">2dp</item>
-    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
     <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingEnd">4dp</item>
   </style>
 
   <style name="large_button_style_ultra" parent="@android:style/Widget.Button">
@@ -1130,16 +1134,17 @@
   <style name="small_heading_style_colorful" parent="@android:style/Widget.TextView">
     <item name="android:textColor">@color/primary_colorful</item>
     <!--    <item name="android:background">@color/heading_colorful</item>-->
-    <item name="android:background">@drawable/colorful_small_heading_style</item>
+    <item name="android:background">@drawable/colorful_small_heading_style_background</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">@color/shadow_colorful</item>
     <item name="android:shadowDx">0</item>
     <item name="android:shadowDy">0</item>
     <item name="android:shadowRadius">0</item>
-    <item name="android:padding">2dp</item>
-    <item name="android:paddingLeft">4dp</item>
-    <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingStart">5dp</item>
+    <item name="android:paddingEnd">4dp</item>
   </style>
 
   <style name="large_button_style_colorful" parent="@android:style/Widget.Button">
@@ -1546,16 +1551,17 @@
   <style name="small_heading_style_neon" parent="@android:style/Widget.TextView">
     <item name="android:textColor">#ffffff</item>
     <!--    <item name="android:background">#5b5b5b</item>-->
-    <item name="android:background">@drawable/neon_small_heading_style</item>
+    <item name="android:background">@drawable/neon_small_heading_style_background</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:shadowColor">@color/black</item>
     <item name="android:shadowDx">1</item>
     <item name="android:shadowDy">1</item>
     <item name="android:shadowRadius">3</item>
-    <item name="android:padding">2dp</item>
-    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
     <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingEnd">4dp</item>
   </style>
 
   <style name="EDListView_neon" parent="@android:style/Widget.ListView">

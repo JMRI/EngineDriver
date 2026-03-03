@@ -1,0 +1,24 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:top="0dp" android:left="1dp"
+        android:right="1dp" android:bottom="0dp" >
+
+        <shape>
+            <corners
+                android:topLeftRadius="@dimen/headingCornerRadius_colorful"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="@dimen/headingCornerRadius_colorful"
+                android:bottomRightRadius="0dp" />
+            <stroke android:width="0px" android:color="@color/transparent" />
+            <gradient
+                android:centerX="75%"
+                android:startColor="@color/buttonFillGradiantDark_colorful"
+                android:centerColor="@color/buttonFillGradiantLight_colorful"
+                android:endColor="@color/transparent"
+                android:type="linear"
+                />
+
+        </shape>
+    </item>
+</layer-list>
