@@ -2,9 +2,11 @@
 
     <item
         android:top="0dp" android:left="1dp"
-        android:right="1dp" android:bottom="0dp" >
+        android:right="1dp" android:bottom="0dp"
+        android:color="@color/transparent" >
 
         <shape>
+
             <corners
                 android:topLeftRadius="@dimen/headingCornerRadius_colorful"
                 android:topRightRadius="0dp"
@@ -15,7 +17,7 @@
                 android:centerX="75%"
                 android:startColor="@color/buttonFillGradiantDark_colorful"
                 android:centerColor="@color/buttonFillGradiantLight_colorful"
-                android:endColor="@color/transparent"
+                android:endColor="@color/windowBackground_colorful"
                 android:type="linear"
                 />
 

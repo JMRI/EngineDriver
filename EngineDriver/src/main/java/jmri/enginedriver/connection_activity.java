@@ -165,7 +165,6 @@ public class connection_activity extends AppCompatActivity implements Permission
     String [] dccexConnectionOptionEntriesArray;
     String [] dccexConnectionOptionEntryValuesArray;
     TextView discoveredServersHeading;
-//    TextView discoveredServersWarning;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
@@ -665,8 +664,6 @@ public class connection_activity extends AppCompatActivity implements Permission
         connect_button.setOnClickListener(click_listener);
 
         discoveredServersHeading = findViewById(R.id.discoveredServersHeading);
-//        discoveredServersWarning = findViewById(R.id.discoveredServersWarning);
-
         calculateDisplayMetrics();
 
         if (prefs.getBoolean("prefForcedRestart", false)) { // if forced restart from the preferences
@@ -946,13 +943,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                     warningTextBuilder.append("\n  ");
                 }
                 warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoverySsidUnavailable));
-//                discoveredServersWarning.setText(warningTextBuilder.toString());
             }
 //            mainapp.safeToast(warningTextBuilder.toString(), Toast.LENGTH_LONG);
             threaded_application.showCustomToast(this, "", warningTextBuilder.toString(), Toast.LENGTH_LONG, 2);
-//            discoveredServersWarning.setVisibility(VISIBLE);
-//        } else {
-//            discoveredServersWarning.setVisibility(GONE);
         }
 
         discoveredServersHeading.setText(String.format(getString(R.string.discovered_services), ssid));
