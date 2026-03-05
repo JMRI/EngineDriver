@@ -32,7 +32,7 @@
         android:layout_marginTop="6dip"
         android:layout_marginBottom="6dip"
         android:layout_weight="1"
-        android:background="?attr/preferenceCategoryBackgroundColor">
+        android:background="@color/transparent">
 
         <LinearLayout
             android:layout_width="wrap_content"
