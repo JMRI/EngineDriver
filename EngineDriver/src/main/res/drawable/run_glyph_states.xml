@@ -3,10 +3,10 @@
 
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/save_glyph_disabled" />
+        android:drawable="@drawable/run_glyph_disabled" />
 
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/save_glyph_light" />
+        android:drawable="@drawable/run_glyph" />
 
 </selector>

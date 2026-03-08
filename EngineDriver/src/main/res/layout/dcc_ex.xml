@@ -1066,6 +1066,8 @@
                                 android:autoSizeMinTextSize="8sp"
                                 android:autoSizeStepGranularity="1sp"
                                 android:padding="0dp"
+                                android:drawableStart="?attr/ed_run_glyph"
+                                android:drawablePadding="8dp"
                                 android:text="@string/dccexSetTrackButtonLabel"
                                 tools:ignore="UnusedAttribute" />
 
@@ -1073,12 +1075,14 @@
                                 android:id="@+id/dccex_dccex_join_tracks_button"
                                 style="?attr/ed_small_button_condensed_text_style"
                                 android:layout_width="match_parent"
-                                android:layout_height="32sp"
+                                android:layout_height="40sp"
                                 android:autoSizeMaxTextSize="18sp"
                                 android:autoSizeMinTextSize="8sp"
                                 android:autoSizeStepGranularity="1sp"
                                 android:layout_marginTop="10dp"
                                 android:padding="0sp"
+                                android:drawableStart="?attr/ed_join_glyph"
+                                android:drawablePadding="8dp"
                                 android:text="@string/dccexJoinTrackButtonLabel"
                                 tools:ignore="UnusedAttribute" />
 
