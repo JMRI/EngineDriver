@@ -421,6 +421,8 @@
     <item name="ed_cross_glyph">@drawable/cross_glyph</item>
     <item name="ed_next_glyph">@drawable/next_glyph_states</item>
     <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
+
+    <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
   </style>
 
   <style name="alertDialogStyle_black" parent="@style/Theme.AppCompat.Dialog.Alert">
@@ -440,6 +442,8 @@
 
     <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
       <item name="android:dialogCornerRadius" tools:ignore="NewApi">10dp</item>
+
+    <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
   </style>
 
     <style name="alertDialogButtonStyle_black" parent="Widget.AppCompat.Button">
@@ -1443,10 +1447,13 @@
     <item name="android:layout_marginStart">20dp</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_width">wrap_content</item>
+
+    <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
   </style>
   <style name="alertDialogPositiveButtonStyle_colorful" parent="alertDialogButtonStyle_colorful">
     <item name="android:textColor">@color/primary_colorful</item>
     <item name="android:textStyle">bold</item>
+    <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
   </style>
 
   <style name="dialogStyle_colorful" parent="@style/Theme.AppCompat.Light.Dialog">
@@ -1465,6 +1472,8 @@
     <item name="buttonBarPositiveButtonStyle">@style/alertDialogPositiveButtonStyle_colorful</item>
     <item name="buttonBarNegativeButtonStyle">@style/alertDialogButtonStyle_colorful</item>
     <item name="buttonBarNeutralButtonStyle">@style/alertDialogButtonStyle_colorful</item>
+
+    <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
 
     <item name="ed_cross_glyph">@drawable/cross_glyph</item>
       <item name="ed_next_glyph">@drawable/next_glyph_states</item>
