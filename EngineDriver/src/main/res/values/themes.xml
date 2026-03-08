@@ -26,7 +26,7 @@
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- Original Theme-->
+    <!-- Main app theme. Appears as 'Original' Theme-->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme" parent="Theme.AppCompat.NoActionBar">
@@ -141,61 +141,63 @@
         <item name="ed_dccex_button_track_manager">@drawable/original_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/original_dccex_button_function_defaults</item>
 
-        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_light</item>
-        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_light</item>
-        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_light</item>
-        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_light</item>
-        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo</item>
 
-        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
-        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_light</item>
-        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_light</item>
-        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_light</item>
-        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_light</item>
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
 
-        <item name="ed_download_glyph">@drawable/download_glyph_states_light</item>
-        <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
-        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
-        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
-        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
-        <item name="ed_next_glyph">@drawable/next_glyph_states_light</item>
-        <item name="ed_previous_glyph">@drawable/previous_glyph_states_light</item>
+        <item name="ed_download_glyph">@drawable/download_glyph_states</item>
+        <item name="ed_sort_glyph">@drawable/sort_glyph</item>
+        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph</item>
+        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph</item>
+        <item name="ed_next_glyph">@drawable/next_glyph_states</item>
+        <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
 
-        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light</item>
-        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
-        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_light</item>
-        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_light</item>
-        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
+        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer</item>
+        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track</item>
+        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults</item>
+        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line</item>
 
-        <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
-        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
-        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
-        <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
-        <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
-        <item name="ed_share_glyph">@drawable/share_glyph_light</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
-        <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
-        <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
-        <item name="ed_wizard_glyph">@drawable/wizard_glyph_dark</item>
+        <item name="ed_connect_glyph">@drawable/connect_glyph_states</item>
+        <item name="ed_run_glyph">@drawable/run_glyph_states</item>
+        <item name="ed_join_glyph">@drawable/join_glyph_states</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states</item>
+        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states</item>
+        <item name="ed_reset_glyph">@drawable/reset_glyph_states</item>
+        <item name="ed_save_glyph">@drawable/save_glyph_states</item>
+        <item name="ed_share_glyph">@drawable/share_glyph</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states</item>
+        <item name="ed_preferences_glyph">@drawable/preferences_menu_glyph</item>
+        <item name="ed_menu_glyph">@drawable/menu_glyph</item>
+        <item name="ed_wizard_glyph">@drawable/wizard_glyph</item>
         <item name="ed_blank_glyph">@drawable/blank_glyph</item>
-        <item name="ed_pom_glyph">@drawable/pom_glyph_dark</item>
-        <item name="ed_timer_glyph">@drawable/timer_glyph_dark</item>
-        <item name="ed_web_glyph">@drawable/web_glyph_dark</item>
-        <item name="ed_dccex_glyph">@drawable/dccex_glyph_dark</item>
-        <item name="ed_gamepad_glyph">@drawable/gamepad_glyph_dark</item>
-        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph_dark</item>
-        <item name="ed_functions_glyph">@drawable/functions_glyph_dark</item>
-        <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
-        <item name="ed_throttle_glyph">@drawable/throttle_glyph_dark</item>
-        <item name="ed_turnouts_glyph">@drawable/turnouts_glyph_dark</item>
-        <item name="ed_routes_glyph">@drawable/routes_glyph_dark</item>
-        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph_dark</item>
-        <item name="ed_reconnect_glyph">@drawable/connect_glyph_dark</item>
-        <item name="ed_about_glyph">@drawable/about_glyph_dark</item>
-        <item name="ed_history_glyph">@drawable/history_glyph_dark</item>
-        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
-        <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
+        <item name="ed_pom_glyph">@drawable/pom_glyph</item>
+        <item name="ed_timer_glyph">@drawable/timer_menu_glyph</item>
+        <item name="ed_web_glyph">@drawable/web_menu_glyph</item>
+        <item name="ed_dccex_glyph">@drawable/dccex_logo_menu_glyph</item>
+        <item name="ed_gamepad_glyph">@drawable/gamepad_menu_glyph</item>
+        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph</item>
+        <item name="ed_functions_glyph">@drawable/functions_glyph</item>
+        <item name="ed_exit_glyph">@drawable/exit_menu_glyph</item>
+        <item name="ed_throttle_glyph">@drawable/throttle_menu_glyph</item>
+        <item name="ed_turnouts_glyph">@drawable/turnouts_menu_glyph</item>
+        <item name="ed_routes_glyph">@drawable/routes_menu_glyph</item>
+        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph</item>
+        <item name="ed_reconnect_glyph">@drawable/connect_menu_glyph</item>
+        <item name="ed_about_glyph">@drawable/about_menu_glyph</item>
+        <item name="ed_history_glyph">@drawable/log_menu_glyph</item>
+        <item name="ed_power_glyph">@drawable/power_menu_glyph</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states</item>
 
         <item name="ed_icon">@drawable/icon_vector</item>
 
@@ -203,12 +205,18 @@
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
 
-
         <item name="EDRadioButton">@style/EDRadioButton</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton</item>
+
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
     </style>
 
-    <!-- appears as 'high contrast' theme' -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'black' theme. Appears as 'high contrast' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <style name="app_theme_black" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_black_preferences</item>
 
@@ -335,61 +343,63 @@
         <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
 
-        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_light</item>
-        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_light</item>
-        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_light</item>
-        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_light</item>
-        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo</item>
 
-        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
-        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_light</item>
-        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_light</item>
-        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_light</item>
-        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_light</item>
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
 
-        <item name="ed_download_glyph">@drawable/download_glyph_states_light</item>
-        <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
-        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
-        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
-        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
-        <item name="ed_next_glyph">@drawable/next_glyph_states_light</item>
-        <item name="ed_previous_glyph">@drawable/previous_glyph_states_light</item>
+        <item name="ed_download_glyph">@drawable/download_glyph_states</item>
+        <item name="ed_sort_glyph">@drawable/sort_glyph</item>
+        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph</item>
+        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph</item>
+        <item name="ed_next_glyph">@drawable/next_glyph_states</item>
+        <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
 
-        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light</item>
-        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
-        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_light</item>
-        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_light</item>
-        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
+        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer</item>
+        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track</item>
+        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults</item>
+        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line</item>
 
-        <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
-        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
-        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
-        <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
-        <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
-        <item name="ed_share_glyph">@drawable/share_glyph_light</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
-        <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
-        <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
-        <item name="ed_wizard_glyph">@drawable/wizard_glyph_dark</item>
+        <item name="ed_connect_glyph">@drawable/connect_glyph_states</item>
+        <item name="ed_run_glyph">@drawable/run_glyph_states</item>
+        <item name="ed_join_glyph">@drawable/join_glyph_states</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states</item>
+        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states</item>
+        <item name="ed_reset_glyph">@drawable/reset_glyph_states</item>
+        <item name="ed_save_glyph">@drawable/save_glyph_states</item>
+        <item name="ed_share_glyph">@drawable/share_glyph</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states</item>
+        <item name="ed_preferences_glyph">@drawable/preferences_menu_glyph</item>
+        <item name="ed_menu_glyph">@drawable/menu_glyph</item>
+        <item name="ed_wizard_glyph">@drawable/wizard_glyph</item>
         <item name="ed_blank_glyph">@drawable/blank_glyph</item>
-        <item name="ed_pom_glyph">@drawable/pom_glyph_dark</item>
-        <item name="ed_timer_glyph">@drawable/timer_glyph_dark</item>
-        <item name="ed_web_glyph">@drawable/web_glyph_dark</item>
-        <item name="ed_dccex_glyph">@drawable/dccex_glyph_dark</item>
-        <item name="ed_gamepad_glyph">@drawable/gamepad_glyph_dark</item>
-        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph_dark</item>
-        <item name="ed_functions_glyph">@drawable/functions_glyph_dark</item>
-        <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
-        <item name="ed_throttle_glyph">@drawable/throttle_glyph_dark</item>
-        <item name="ed_turnouts_glyph">@drawable/turnouts_glyph_dark</item>
-        <item name="ed_routes_glyph">@drawable/routes_glyph_dark</item>
-        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph_dark</item>
-        <item name="ed_reconnect_glyph">@drawable/connect_glyph_dark</item>
-        <item name="ed_about_glyph">@drawable/about_glyph_dark</item>
-        <item name="ed_history_glyph">@drawable/history_glyph_dark</item>
-        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
-        <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
+        <item name="ed_pom_glyph">@drawable/pom_glyph</item>
+        <item name="ed_timer_glyph">@drawable/timer_menu_glyph</item>
+        <item name="ed_web_glyph">@drawable/web_menu_glyph</item>
+        <item name="ed_dccex_glyph">@drawable/dccex_logo_menu_glyph</item>
+        <item name="ed_gamepad_glyph">@drawable/gamepad_menu_glyph</item>
+        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph</item>
+        <item name="ed_functions_glyph">@drawable/functions_glyph</item>
+        <item name="ed_exit_glyph">@drawable/exit_menu_glyph</item>
+        <item name="ed_throttle_glyph">@drawable/throttle_menu_glyph</item>
+        <item name="ed_turnouts_glyph">@drawable/turnouts_menu_glyph</item>
+        <item name="ed_routes_glyph">@drawable/routes_menu_glyph</item>
+        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph</item>
+        <item name="ed_reconnect_glyph">@drawable/connect_menu_glyph</item>
+        <item name="ed_about_glyph">@drawable/about_menu_glyph</item>
+        <item name="ed_history_glyph">@drawable/log_menu_glyph</item>
+        <item name="ed_power_glyph">@drawable/power_menu_glyph</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -397,7 +407,16 @@
 
         <item name="EDRadioButton">@style/EDRadioButton_black</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
+
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
     </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'outline' theme' -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_outline" parent="Theme.AppCompat.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_black_preferences</item>
@@ -518,61 +537,63 @@
         <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
 
-        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_dark</item>
-        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_dark</item>
-        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_dark</item>
-        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_dark</item>
-        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo</item>
 
-        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
-        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_dark</item>
-        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_dark</item>
-        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_dark</item>
-        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_dark</item>
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
 
-        <item name="ed_download_glyph">@drawable/download_glyph_states_dark</item>
-        <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
-        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
-        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
-        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
-        <item name="ed_next_glyph">@drawable/next_glyph_states_dark</item>
-        <item name="ed_previous_glyph">@drawable/previous_glyph_states_dark</item>
+        <item name="ed_download_glyph">@drawable/download_glyph_states</item>
+        <item name="ed_sort_glyph">@drawable/sort_glyph</item>
+        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph</item>
+        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph</item>
+        <item name="ed_next_glyph">@drawable/next_glyph_states</item>
+        <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
 
-        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark</item>
-        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
-        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_dark</item>
-        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_dark</item>
-        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
+        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer</item>
+        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track</item>
+        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults</item>
+        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line</item>
 
-        <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
-        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
-        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
-        <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
-        <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
-        <item name="ed_share_glyph">@drawable/share_glyph_dark</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
-        <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
-        <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
-        <item name="ed_wizard_glyph">@drawable/wizard_glyph_dark</item>
+        <item name="ed_connect_glyph">@drawable/connect_glyph_states</item>
+        <item name="ed_run_glyph">@drawable/run_glyph_states</item>
+        <item name="ed_join_glyph">@drawable/join_glyph_states</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states</item>
+        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states</item>
+        <item name="ed_reset_glyph">@drawable/reset_glyph_states</item>
+        <item name="ed_save_glyph">@drawable/save_glyph_states</item>
+        <item name="ed_share_glyph">@drawable/share_glyph</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states</item>
+        <item name="ed_preferences_glyph">@drawable/preferences_menu_glyph</item>
+        <item name="ed_menu_glyph">@drawable/menu_glyph</item>
+        <item name="ed_wizard_glyph">@drawable/wizard_glyph</item>
         <item name="ed_blank_glyph">@drawable/blank_glyph</item>
-        <item name="ed_pom_glyph">@drawable/pom_glyph_dark</item>
-        <item name="ed_timer_glyph">@drawable/timer_glyph_dark</item>
-        <item name="ed_web_glyph">@drawable/web_glyph_dark</item>
-        <item name="ed_dccex_glyph">@drawable/dccex_glyph_dark</item>
-        <item name="ed_gamepad_glyph">@drawable/gamepad_glyph_dark</item>
-        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph_dark</item>
-        <item name="ed_functions_glyph">@drawable/functions_glyph_dark</item>
-        <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
-        <item name="ed_throttle_glyph">@drawable/throttle_glyph_dark</item>
-        <item name="ed_turnouts_glyph">@drawable/turnouts_glyph_dark</item>
-        <item name="ed_routes_glyph">@drawable/routes_glyph_dark</item>
-        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph_dark</item>
-        <item name="ed_reconnect_glyph">@drawable/connect_glyph_dark</item>
-        <item name="ed_about_glyph">@drawable/about_glyph_dark</item>
-        <item name="ed_history_glyph">@drawable/history_glyph_dark</item>
-        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
-        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
+        <item name="ed_pom_glyph">@drawable/pom_glyph</item>
+        <item name="ed_timer_glyph">@drawable/timer_menu_glyph</item>
+        <item name="ed_web_glyph">@drawable/web_menu_glyph</item>
+        <item name="ed_dccex_glyph">@drawable/dccex_logo_menu_glyph</item>
+        <item name="ed_gamepad_glyph">@drawable/gamepad_menu_glyph</item>
+        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph</item>
+        <item name="ed_functions_glyph">@drawable/functions_glyph</item>
+        <item name="ed_exit_glyph">@drawable/exit_menu_glyph</item>
+        <item name="ed_throttle_glyph">@drawable/throttle_menu_glyph</item>
+        <item name="ed_turnouts_glyph">@drawable/turnouts_menu_glyph</item>
+        <item name="ed_routes_glyph">@drawable/routes_menu_glyph</item>
+        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph</item>
+        <item name="ed_reconnect_glyph">@drawable/connect_menu_glyph</item>
+        <item name="ed_about_glyph">@drawable/about_menu_glyph</item>
+        <item name="ed_history_glyph">@drawable/log_menu_glyph</item>
+        <item name="ed_power_glyph">@drawable/power_menu_glyph</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states</item>
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
@@ -580,13 +601,17 @@
 
         <item name="EDRadioButton">@style/EDRadioButton_black</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
+
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'Ultra' theme. Appears as 'dark' theme -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <!-- appears as 'dark' theme -->
     <style name="app_theme_ultra" parent="Theme.AppCompat.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_ultra_preferences</item>
 
@@ -707,61 +732,63 @@
         <item name="ed_dccex_button_track_manager">@drawable/ultra_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/ultra_dccex_button_function_defaults</item>
 
-        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_dark</item>
-        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_dark</item>
-        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_dark</item>
-        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_dark</item>
-        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo</item>
 
-        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
-        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_dark</item>
-        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_dark</item>
-        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_dark</item>
-        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_dark</item>
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
 
-        <item name="ed_download_glyph">@drawable/download_glyph_states_dark</item>
-        <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
-        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
-        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
-        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
-        <item name="ed_next_glyph">@drawable/next_glyph_states_dark</item>
-        <item name="ed_previous_glyph">@drawable/previous_glyph_states_dark</item>
+        <item name="ed_download_glyph">@drawable/download_glyph_states</item>
+        <item name="ed_sort_glyph">@drawable/sort_glyph</item>
+        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph</item>
+        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph</item>
+        <item name="ed_next_glyph">@drawable/next_glyph_states</item>
+        <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
 
-        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark</item>
-        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
-        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_dark</item>
-        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_dark</item>
-        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
+        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer</item>
+        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track</item>
+        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults</item>
+        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line</item>
 
-        <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
-        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
-        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
-        <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
-        <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
-        <item name="ed_share_glyph">@drawable/share_glyph_dark</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
-        <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
-        <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
-        <item name="ed_wizard_glyph">@drawable/wizard_glyph_dark</item>
+        <item name="ed_connect_glyph">@drawable/connect_glyph_states</item>
+        <item name="ed_run_glyph">@drawable/run_glyph_states</item>
+        <item name="ed_join_glyph">@drawable/join_glyph_states</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states</item>
+        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states</item>
+        <item name="ed_reset_glyph">@drawable/reset_glyph_states</item>
+        <item name="ed_save_glyph">@drawable/save_glyph_states</item>
+        <item name="ed_share_glyph">@drawable/share_glyph</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states</item>
+        <item name="ed_preferences_glyph">@drawable/preferences_menu_glyph</item>
+        <item name="ed_menu_glyph">@drawable/menu_glyph</item>
+        <item name="ed_wizard_glyph">@drawable/wizard_glyph</item>
         <item name="ed_blank_glyph">@drawable/blank_glyph</item>
-        <item name="ed_pom_glyph">@drawable/pom_glyph_dark</item>
-        <item name="ed_timer_glyph">@drawable/timer_glyph_dark</item>
-        <item name="ed_web_glyph">@drawable/web_glyph_dark</item>
-        <item name="ed_dccex_glyph">@drawable/dccex_glyph_dark</item>
-        <item name="ed_gamepad_glyph">@drawable/gamepad_glyph_dark</item>
-        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph_dark</item>
-        <item name="ed_functions_glyph">@drawable/functions_glyph_dark</item>
-        <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
-        <item name="ed_throttle_glyph">@drawable/throttle_glyph_dark</item>
-        <item name="ed_turnouts_glyph">@drawable/turnouts_glyph_dark</item>
-        <item name="ed_routes_glyph">@drawable/routes_glyph_dark</item>
-        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph_dark</item>
-        <item name="ed_reconnect_glyph">@drawable/connect_glyph_dark</item>
-        <item name="ed_about_glyph">@drawable/about_glyph_dark</item>
-        <item name="ed_history_glyph">@drawable/history_glyph_dark</item>
-        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
-        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
+        <item name="ed_pom_glyph">@drawable/pom_glyph</item>
+        <item name="ed_timer_glyph">@drawable/timer_menu_glyph</item>
+        <item name="ed_web_glyph">@drawable/web_menu_glyph</item>
+        <item name="ed_dccex_glyph">@drawable/dccex_logo_menu_glyph</item>
+        <item name="ed_gamepad_glyph">@drawable/gamepad_menu_glyph</item>
+        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph</item>
+        <item name="ed_functions_glyph">@drawable/functions_glyph</item>
+        <item name="ed_exit_glyph">@drawable/exit_menu_glyph</item>
+        <item name="ed_throttle_glyph">@drawable/throttle_menu_glyph</item>
+        <item name="ed_turnouts_glyph">@drawable/turnouts_menu_glyph</item>
+        <item name="ed_routes_glyph">@drawable/routes_menu_glyph</item>
+        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph</item>
+        <item name="ed_reconnect_glyph">@drawable/connect_menu_glyph</item>
+        <item name="ed_about_glyph">@drawable/about_menu_glyph</item>
+        <item name="ed_history_glyph">@drawable/log_menu_glyph</item>
+        <item name="ed_power_glyph">@drawable/power_menu_glyph</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states</item>
 
 
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
@@ -770,10 +797,15 @@
 
         <item name="EDRadioButton">@style/EDRadioButton_black</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
+
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'Colorful' theme -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_colorful" parent="Theme.AppCompat.NoActionBar">
@@ -901,61 +933,63 @@
         <item name="ed_advanced_preferences">@drawable/black_advanced_preferences</item>
         <item name="ed_icon">@drawable/icon_vector</item>
 
-        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_light</item>
-        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_light</item>
-        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_light</item>
-        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_light</item>
-        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_light</item>
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo</item>
 
-        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_light</item>
-        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_light</item>
-        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_light</item>
-        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_light</item>
-        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_light</item>
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
 
-        <item name="ed_download_glyph">@drawable/download_glyph_states_light</item>
-        <item name="ed_sort_glyph">@drawable/sort_glyph_light</item>
-        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_light</item>
-        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_light</item>
-        <item name="ed_cross_glyph">@drawable/cross_glyph_light</item>
-        <item name="ed_next_glyph">@drawable/next_glyph_states_light</item>
-        <item name="ed_previous_glyph">@drawable/previous_glyph_states_light</item>
+        <item name="ed_download_glyph">@drawable/download_glyph_states</item>
+        <item name="ed_sort_glyph">@drawable/sort_glyph</item>
+        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph</item>
+        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph</item>
+        <item name="ed_next_glyph">@drawable/next_glyph_states</item>
+        <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
 
-        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_light</item>
-        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_light</item>
-        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_light</item>
-        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_light</item>
-        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_light</item>
+        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer</item>
+        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track</item>
+        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults</item>
+        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line</item>
 
-        <item name="ed_connect_glyph">@drawable/connect_glyph_states_light</item>
-        <item name="ed_send_glyph">@drawable/send_glyph_states_light</item>
-        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_light</item>
-        <item name="ed_reset_glyph">@drawable/reset_glyph_states_light</item>
-        <item name="ed_save_glyph">@drawable/save_glyph_states_light</item>
-        <item name="ed_share_glyph">@drawable/share_glyph_light</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_states_light</item>
-        <item name="ed_preferences_glyph">@drawable/preferences_glyph_light</item>
-        <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
-        <item name="ed_wizard_glyph">@drawable/wizard_glyph_light</item>
+        <item name="ed_connect_glyph">@drawable/connect_glyph_states</item>
+        <item name="ed_run_glyph">@drawable/run_glyph_states</item>
+        <item name="ed_join_glyph">@drawable/join_glyph_states</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states</item>
+        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states</item>
+        <item name="ed_reset_glyph">@drawable/reset_glyph_states</item>
+        <item name="ed_save_glyph">@drawable/save_glyph_states</item>
+        <item name="ed_share_glyph">@drawable/share_glyph</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states</item>
+        <item name="ed_preferences_glyph">@drawable/preferences_menu_glyph</item>
+        <item name="ed_menu_glyph">@drawable/menu_glyph</item>
+        <item name="ed_wizard_glyph">@drawable/wizard_glyph</item>
         <item name="ed_blank_glyph">@drawable/blank_glyph</item>
-        <item name="ed_pom_glyph">@drawable/pom_glyph_light</item>
-        <item name="ed_timer_glyph">@drawable/timer_glyph_dark</item>
-        <item name="ed_web_glyph">@drawable/web_glyph_light</item>
-        <item name="ed_dccex_glyph">@drawable/dccex_glyph_light</item>
-        <item name="ed_gamepad_glyph">@drawable/gamepad_glyph_light</item>
-        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph_light</item>
-        <item name="ed_functions_glyph">@drawable/functions_glyph_light</item>
-        <item name="ed_exit_glyph">@drawable/exit_glyph_light</item>
-        <item name="ed_throttle_glyph">@drawable/throttle_glyph_light</item>
-        <item name="ed_turnouts_glyph">@drawable/turnouts_glyph_light</item>
-        <item name="ed_routes_glyph">@drawable/routes_glyph_light</item>
-        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph_light</item>
-        <item name="ed_reconnect_glyph">@drawable/connect_glyph_light</item>
-        <item name="ed_about_glyph">@drawable/about_glyph_light</item>
-        <item name="ed_history_glyph">@drawable/history_glyph_light</item>
-        <item name="ed_power_glyph">@drawable/power_glyph_light</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_states_light</item>
-        <item name="ed_write_off_glyph">@drawable/write_glyph_states_light</item>
+        <item name="ed_pom_glyph">@drawable/pom_glyph</item>
+        <item name="ed_timer_glyph">@drawable/timer_menu_glyph</item>
+        <item name="ed_web_glyph">@drawable/web_menu_glyph</item>
+        <item name="ed_dccex_glyph">@drawable/dccex_logo_menu_glyph</item>
+        <item name="ed_gamepad_glyph">@drawable/gamepad_menu_glyph</item>
+        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph</item>
+        <item name="ed_functions_glyph">@drawable/functions_glyph</item>
+        <item name="ed_exit_glyph">@drawable/exit_menu_glyph</item>
+        <item name="ed_throttle_glyph">@drawable/throttle_menu_glyph</item>
+        <item name="ed_turnouts_glyph">@drawable/turnouts_menu_glyph</item>
+        <item name="ed_routes_glyph">@drawable/routes_menu_glyph</item>
+        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph</item>
+        <item name="ed_reconnect_glyph">@drawable/connect_menu_glyph</item>
+        <item name="ed_about_glyph">@drawable/about_menu_glyph</item>
+        <item name="ed_history_glyph">@drawable/log_menu_glyph</item>
+        <item name="ed_power_glyph">@drawable/power_menu_glyph</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/original_dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/original_dccex_button_cv_programmer_prog_track</item>
@@ -965,13 +999,17 @@
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
+
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'Neon' theme. Appears as 'Neon Blue' theme -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <!-- appears as 'Neon Blue' theme -->
     <style name="app_theme_neon" parent="Theme.AppCompat.NoActionBar">
         <item name="preferenceTheme">@style/app_theme_neon_preferences</item>
 
@@ -1096,73 +1134,83 @@
         <item name="ed_dccex_button_track_manager">@drawable/neon_dccex_button_track_manager</item>
         <item name="ed_dccex_button_function_defaults">@drawable/neon_dccex_button_function_defaults</item>
 
-        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address_dark</item>
-        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster_dark</item>
-        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco_dark</item>
-        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist_dark</item>
-        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo_dark</item>
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo</item>
 
-        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release_dark</item>
-        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch_dark</item>
-        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order_dark</item>
-        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights_dark</item>
-        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls_dark</item>
+        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
 
-        <item name="ed_download_glyph">@drawable/download_glyph_states_dark</item>
-        <item name="ed_sort_glyph">@drawable/sort_glyph_dark</item>
-        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph_dark</item>
-        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large_dark</item>
-        <item name="ed_cross_glyph">@drawable/cross_glyph_dark</item>
-        <item name="ed_next_glyph">@drawable/next_glyph_states_dark</item>
-        <item name="ed_previous_glyph">@drawable/previous_glyph_states_dark</item>
+        <item name="ed_download_glyph">@drawable/download_glyph_states</item>
+        <item name="ed_sort_glyph">@drawable/sort_glyph</item>
+        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph</item>
+        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large</item>
+        <item name="ed_cross_glyph">@drawable/cross_glyph</item>
+        <item name="ed_next_glyph">@drawable/next_glyph_states</item>
+        <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
 
-        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer_dark</item>
-        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track_dark</item>
-        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults_dark</item>
-        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager_dark</item>
-        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line_dark</item>
+        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer</item>
+        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track</item>
+        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults</item>
+        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line</item>
 
-        <item name="ed_connect_glyph">@drawable/connect_glyph_states_dark</item>
-        <item name="ed_send_glyph">@drawable/send_glyph_states_dark</item>
-        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states_dark</item>
-        <item name="ed_reset_glyph">@drawable/reset_glyph_states_dark</item>
-        <item name="ed_save_glyph">@drawable/save_glyph_states_dark</item>
-        <item name="ed_share_glyph">@drawable/share_glyph_dark</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_states_dark</item>
-        <item name="ed_preferences_glyph">@drawable/preferences_glyph_dark</item>
-        <item name="ed_menu_glyph">@drawable/menu_glyph_dark</item>
-        <item name="ed_wizard_glyph">@drawable/wizard_glyph_dark</item>
+        <item name="ed_connect_glyph">@drawable/connect_glyph_states</item>
+        <item name="ed_run_glyph">@drawable/run_glyph_states</item>
+        <item name="ed_join_glyph">@drawable/join_glyph_states</item>
+        <item name="ed_send_glyph">@drawable/send_glyph_states</item>
+        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states</item>
+        <item name="ed_reset_glyph">@drawable/reset_glyph_states</item>
+        <item name="ed_save_glyph">@drawable/save_glyph_states</item>
+        <item name="ed_share_glyph">@drawable/share_glyph</item>
+        <item name="ed_read_glyph">@drawable/read_glyph_states</item>
+        <item name="ed_preferences_glyph">@drawable/preferences_menu_glyph</item>
+        <item name="ed_menu_glyph">@drawable/menu_glyph</item>
+        <item name="ed_wizard_glyph">@drawable/wizard_glyph</item>
         <item name="ed_blank_glyph">@drawable/blank_glyph</item>
-        <item name="ed_pom_glyph">@drawable/pom_glyph_dark</item>
-        <item name="ed_timer_glyph">@drawable/timer_glyph_dark</item>
-        <item name="ed_web_glyph">@drawable/web_glyph_dark</item>
-        <item name="ed_dccex_glyph">@drawable/dccex_glyph_dark</item>
-        <item name="ed_gamepad_glyph">@drawable/gamepad_glyph_dark</item>
-        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph_dark</item>
-        <item name="ed_functions_glyph">@drawable/functions_glyph_dark</item>
-        <item name="ed_exit_glyph">@drawable/exit_glyph_dark</item>
-        <item name="ed_throttle_glyph">@drawable/throttle_glyph_dark</item>
-        <item name="ed_turnouts_glyph">@drawable/turnouts_glyph_dark</item>
-        <item name="ed_routes_glyph">@drawable/routes_glyph_dark</item>
-        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph_dark</item>
-        <item name="ed_reconnect_glyph">@drawable/connect_glyph_dark</item>
-        <item name="ed_about_glyph">@drawable/about_glyph_dark</item>
-        <item name="ed_history_glyph">@drawable/history_glyph_dark</item>
-        <item name="ed_power_glyph">@drawable/power_glyph_dark</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_states_dark</item>
-        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states_dark</item>
+        <item name="ed_pom_glyph">@drawable/pom_glyph</item>
+        <item name="ed_timer_glyph">@drawable/timer_menu_glyph</item>
+        <item name="ed_web_glyph">@drawable/web_menu_glyph</item>
+        <item name="ed_dccex_glyph">@drawable/dccex_logo_menu_glyph</item>
+        <item name="ed_gamepad_glyph">@drawable/gamepad_menu_glyph</item>
+        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph</item>
+        <item name="ed_functions_glyph">@drawable/functions_glyph</item>
+        <item name="ed_exit_glyph">@drawable/exit_menu_glyph</item>
+        <item name="ed_throttle_glyph">@drawable/throttle_menu_glyph</item>
+        <item name="ed_turnouts_glyph">@drawable/turnouts_menu_glyph</item>
+        <item name="ed_routes_glyph">@drawable/routes_menu_glyph</item>
+        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph</item>
+        <item name="ed_reconnect_glyph">@drawable/connect_menu_glyph</item>
+        <item name="ed_about_glyph">@drawable/about_menu_glyph</item>
+        <item name="ed_history_glyph">@drawable/log_menu_glyph</item>
+        <item name="ed_power_glyph">@drawable/power_menu_glyph</item>
+        <item name="ed_write_glyph">@drawable/write_glyph_states</item>
+        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states</item>
 
         <item name="ed_progressBar">@drawable/neon_progress_bar</item>
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
         <item name="ed_progressBarSelected">@color/neon_blue</item>
 
         <item name="android:radioButtonStyle">@style/EDRadioButton_neon</item>
+
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
     </style>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-               Preferences Styles
+               Preferences Themes
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'Original' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_preferences" parent="@style/app_theme">
         <item name="android:windowBackground">@drawable/original_app_background</item>
@@ -1178,6 +1226,10 @@
         <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
     </style>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'Black' / 'High Contrast' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
     <style name="app_theme_black_preferences" parent="@style/app_theme_black">
         <item name="android:divider">@drawable/divider_black</item>
         <item name="android:listDivider">@drawable/divider_black</item>
@@ -1191,6 +1243,10 @@
         <item name="colorBackgroundFloating">@color/darkGrey</item>
         <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
     </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'Ultra' / 'Dark' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_ultra_preferences" parent="@style/app_theme_ultra">
 
@@ -1207,6 +1263,9 @@
         <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
     </style>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'Colorful' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_colorful_preferences"  parent="@style/app_theme_colorful">
 
@@ -1216,6 +1275,9 @@
         <item name="preferenceCategoryBackgroundColor">@drawable/colorful_preference_heading_background</item>
     </style>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'Neon' / 'Neon Blue' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_neon_preferences" parent="@style/app_theme_neon">
         <item name="android:windowBackground">@drawable/neon_app_background</item>
