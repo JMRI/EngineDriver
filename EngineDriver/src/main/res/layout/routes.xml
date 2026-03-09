@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -134,7 +135,7 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
-                                android:drawableStart="?attr/ed_sort_glyph"
+                                app:drawableStartCompat="?attr/ed_sort_glyph"
                                 android:padding="0dp"
                                 android:text="@string/order"
                                 tools:ignore="RtlSymmetry" />

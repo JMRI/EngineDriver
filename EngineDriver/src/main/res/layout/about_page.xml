@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -41,7 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:text="@string/logviewerClose"
-            android:drawableStart="?attr/ed_cross_glyph"
+            app:drawableStartCompat="?attr/ed_cross_glyph"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     </RelativeLayout>

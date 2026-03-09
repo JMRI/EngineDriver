@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="0dp"
@@ -41,7 +42,7 @@
                 style="?attr/ed_fn_button_style"
                 android:layout_width="fill_parent"
                 android:drawablePadding="0dp"
-                android:drawableStart="@drawable/in_device_sounds_button_icon_states"
+                app:drawableStartCompat="@drawable/in_device_sounds_button_icon_states"
                 android:paddingStart="3dp"
                 android:text="@string/deviceSoundsMuteButton"
                 tools:ignore="RtlSymmetry" />
@@ -51,7 +52,7 @@
                 style="?attr/ed_fn_button_style"
                 android:layout_width="fill_parent"
                 android:drawablePadding="0dp"
-                android:drawableStart="@drawable/in_device_sounds_bell_button_icon_states"
+                app:drawableStartCompat="@drawable/in_device_sounds_bell_button_icon_states"
                 android:paddingStart="3dp"
                 android:text="@string/functionButton01DefaultValue"
                 tools:ignore="RtlSymmetry" />
@@ -61,7 +62,7 @@
                 style="?attr/ed_fn_button_style"
                 android:layout_width="fill_parent"
                 android:drawablePadding="0dp"
-                android:drawableStart="@drawable/in_device_sounds_horn_button_icon_states"
+                app:drawableStartCompat="@drawable/in_device_sounds_horn_button_icon_states"
                 android:paddingStart="3dp"
                 android:text="@string/functionButton02DefaultValue"
                 tools:ignore="RtlSymmetry" />
@@ -71,7 +72,7 @@
                 style="?attr/ed_fn_button_style"
                 android:layout_width="fill_parent"
                 android:drawablePadding="0dp"
-                android:drawableStart="@drawable/in_device_sounds_horn_button_icon_states"
+                app:drawableStartCompat="@drawable/in_device_sounds_horn_button_icon_states"
                 android:paddingStart="3dp"
                 android:text="@string/soundsButtonHornShortDefaultValue"
                 tools:ignore="RtlSymmetry" />

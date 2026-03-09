@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:maxWidth="600dp"
     android:layout_height="wrap_content"
@@ -57,7 +58,7 @@
             style="?attr/ed_dialog_button_style"
             android:text="@string/close_button"
             android:layout_marginEnd="8dp"
-            android:drawableStart="?attr/ed_cross_glyph"
+            app:drawableStartCompat="?attr/ed_cross_glyph"
             android:drawablePadding="10dp"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 

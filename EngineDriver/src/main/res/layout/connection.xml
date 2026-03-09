@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/connection_view"
     android:layout_width="fill_parent"
@@ -101,7 +102,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="@string/connect_button"
                     android:enabled="false"
-                    android:drawableStart="?attr/ed_connect_glyph"
+                    app:drawableStartCompat="?attr/ed_connect_glyph"
                     android:padding="0dp"
                     tools:ignore="RtlHardcoded,RtlSymmetry" />
 
@@ -163,7 +164,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:text="@string/clearLocoList"
-                    android:drawableStart="?attr/ed_clear_list_glyph"
+                    app:drawableStartCompat="?attr/ed_clear_list_glyph"
                     tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
 
             </RelativeLayout>

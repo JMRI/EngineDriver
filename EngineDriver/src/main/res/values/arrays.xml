@@ -2283,6 +2283,7 @@
         <item>Ultra</item>
         <item>Colorful</item>
         <item>Neon</item>
+        <item>Green</item>
     </string-array>
     <string-array name="prefThemeEntries">  <!-- display version -->
         <item>Original (Checker plate)</item>
@@ -2291,6 +2292,7 @@
         <item>Dark</item>
         <item>Colorful</item>
         <item>Neon Blue</item>
+        <item>Neon Green</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

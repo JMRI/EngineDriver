@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -115,7 +116,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_0"
@@ -165,7 +166,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_1"
@@ -215,7 +216,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_2"
@@ -265,7 +266,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_3"
@@ -315,7 +316,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_4"
@@ -365,7 +366,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_5"
@@ -415,7 +416,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_6"
@@ -465,7 +466,7 @@
                         android:layout_gravity="center"
                         android:padding="10dp"
                         android:contentDescription="@string/toggle_button"
-                        android:src="?attr/ed_power_yellow_button" />
+                        app:srcCompat="?attr/ed_power_yellow_button" />
 
                     <TextView
                         android:id="@+id/dccex_power_control_track_type_7"
@@ -503,7 +504,7 @@
             android:layout_alignParentBottom="true"
             android:text="@string/logviewerClose"
             android:padding="0dp"
-            android:drawableStart="?attr/ed_cross_glyph"
+            app:drawableStartCompat="?attr/ed_cross_glyph"
             tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     </RelativeLayout>

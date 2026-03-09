@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--    used as the additional Volume Keys + Gamepad highlight for the Select button-->
+
+
+    <item
+        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <stroke android:width="2px"
+                android:color="?attr/reusable_button_edge_light_color" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="2px" android:left="2px" android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <stroke android:width="2px"
+                android:color="?attr/reusable_button_edge_highlight_color" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="3px" android:left="3px" android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle">
+
+            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <stroke android:width="0px" android:color="?attr/reusable_button_edge_dark_color" />
+            <!-- <solid android:color="@color/buttonFill_neon" /> -->
+            <gradient
+                android:angle="135"
+                android:centerX="70%"
+                android:endColor="?attr/reusable_button_face_end_color"
+                android:centerColor="?attr/reusable_button_face_center_color"
+                android:startColor="?attr/reusable_button_face_start_color"
+                android:type="linear"
+                />
+        </shape>
+    </item>
+
+    <!-- inside border  -->
+    <item
+        android:top="@dimen/buttonActivatedInsideStrokePadding_neon" android:left="@dimen/buttonActivatedInsideStrokePadding_neon"
+        android:right="@dimen/buttonActivatedInsideStrokePadding_neon" android:bottom="@dimen/buttonActivatedInsideStrokePadding_neon">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <stroke
+                android:width="@dimen/buttonSelectedInsideStroke_neon"
+                android:color="?attr/reusable_button_active_light_rim_color" />
+            <solid android:color="@color/transparent"/>
+        </shape>
+    </item>
+
+    <!-- inside border 2 -->
+    <item
+        android:top="@dimen/buttonActivated2InsideStrokePadding_neon" android:left="@dimen/buttonActivated2InsideStrokePadding_neon"
+        android:right="@dimen/buttonActivated2InsideStrokePadding_neon" android:bottom="@dimen/buttonActivated2InsideStrokePadding_neon">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <stroke
+                android:width="@dimen/buttonSelectedInsideStroke_neon"
+                android:color="?attr/reusable_button_active_light_rim_2_color" />
+            <solid android:color="@color/transparent"/>
+        </shape>
+    </item>
+
+</layer-list>

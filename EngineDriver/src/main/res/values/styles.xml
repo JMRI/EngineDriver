@@ -100,7 +100,7 @@
   </style>
 
   <style name="small_button_condensed_text_style" parent="small_button_style">
-    <item name="android:fontFamily">sans-serif-condensed</item>>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="fn_button_style" parent="@android:style/Widget.Button">
@@ -589,7 +589,7 @@
   </style>
 
   <style name="small_button_condensed_text_style_black" parent="small_button_style_black">
-    <item name="android:fontFamily">sans-serif-condensed</item>>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="fn_button_style_black" parent="@android:style/Widget.Button">
@@ -790,7 +790,7 @@
   </style>
 
   <style name="small_button_condensed_text_style_outline" parent="small_button_style_outline">
-    <item name="android:fontFamily">sans-serif-condensed</item>>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="small_button_hover_style" parent="small_button_style_outline">
@@ -1001,7 +1001,7 @@
   </style>
 
   <style name="small_button_condensed_text_style_ultra" parent="small_button_style_ultra">
-    <item name="android:fontFamily">sans-serif-condensed</item>>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="fn_button_style_ultra" parent="@android:style/Widget.Button">
@@ -1250,7 +1250,7 @@
   </style>
 
   <style name="small_button_condensed_text_style_colorful" parent="small_button_style_colorful">
-    <item name="android:fontFamily">sans-serif-condensed</item>>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
 
@@ -1671,7 +1671,7 @@
   </style>
 
   <style name="small_button_condensed_text_style_neon" parent="small_button_style_neon">
-    <item name="android:fontFamily">sans-serif-condensed</item>>
+    <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
   <style name="fn_button_style_neon" parent="@android:style/Widget.Button">
@@ -1752,6 +1752,262 @@
     <item name="android:popupBackground">@android:color/transparent</item>
   </style>
 
+  <!-- Reusable styles -->
+
+  <style name="small_heading_style_reusable" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">?attr/reusable_small_heading_text_color</item>
+    <item name="android:shadowColor">?attr/reusable_small_heading_text_shadow_color</item>
+    <item name="android:background">@drawable/reusable_small_heading_style_background</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">3</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
+    <item name="android:paddingStart">4dp</item>
+    <item name="android:paddingEnd">4dp</item>
+  </style>
+
+  <style name="EDListView_reusable" parent="@android:style/Widget.ListView">
+    <item name="android:textColor">?attr/reusable_list_item_text_color</item>
+      <item name="android:shadowColor">?attr/reusable_list_item_text_shadow_color</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:background">@color/transparent</item>
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:divider">?attr/reusable_divider_color</item>
+    <item name="android:dividerHeight">1dp</item>
+    <item name="android:cacheColorHint">@android:color/transparent</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
+
+  <style name="EDRadioButton_reusable" parent="radio_button_style">
+    <item name="colorControlNormal">?attr/reusable_radio_button_normal_color</item>
+    <item name="colorControlActivated">?attr/reusable_radio_button_activate_color</item>
+  </style>
+
+  <style name="large_button_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_btn_text_states</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:layout_height">60dp</item>
+    <item name="android:padding">1dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="normal_button_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_btn_text_states</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:padding">0dp</item>
+
+    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+  <style name="normal_button2_style_reusable" parent="normal_button_style_reusable">
+  </style>
+  <style name="normal_button_condensed_style_reusable" parent="normal_button_style_reusable">
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:layout_height">40dp</item>
+  </style>
+
+  <style name="loco_select_button_style_reusable" parent="normal_button_style_reusable">
+    <item name="android:textColor">@color/reusable_btn_loco_select_text_states</item>
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
+  <style name="stop_button_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_btn_text_states_stop_btn</item>
+    <item name="android:textSize">24sp</item>
+    <item name="android:padding">0dp</item>
+
+    <item name="android:background">@drawable/reusable_stop_button_states</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:layout_width">0dp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_btn_text_states</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:padding">0dp</item>
+
+    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">3dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="small_button_condensed_text_style_reusable" parent="small_button_style_reusable">
+    <item name="android:fontFamily">sans-serif-condensed</item>
+  </style>
+
+  <style name="fn_button_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:fontFamily">sans-serif-condensed</item>
+    <item name="android:textColor">@color/reusable_fn_btn_text_states</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:singleLine">false</item>
+    <item name="android:maxLines">2</item>
+    <item name="android:ellipsize">end</item>
+    <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
+    <item name="android:layout_width">60dp</item>
+    <item name="android:layout_height">48dp</item>
+    <item name="android:padding">1dp</item>
+
+    <item name="android:background">@drawable/reusable_fn_button_states</item>
+    <item name="android:layout_marginTop">1dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">3dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="list_button_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_btn_text_states</item>
+    <item name="android:textSize">22sp</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:padding">2dp</item>
+    <item name="android:layout_width">0dp</item>
+
+    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+
+    <item name="android:gravity">center_vertical|center_horizontal</item>
+  </style>
+
+  <style name="fn_scrollview_style_reusable">
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginLeft">2dp</item>
+    <item name="android:layout_marginRight">2dp</item>
+  </style>
+
+  <style name="list_item_style_reusable" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">?attr/reusable_list_item_text_color</item>
+    <item name="android:shadowColor">?attr/reusable_list_item_text_shadow_color</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
+  </style>
+
+  <style name="list_item_condensed_style_reusable" parent="list_item_style_reusable">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+
+  <style name="list_id_style_reusable" parent="@android:style/Widget.TextView">
+    <item name="android:textSize">12sp</item>
+    <item name="android:textStyle">italic</item>
+    <item name="android:textColor">?attr/reusable_list_id_text_color</item>
+    <item name="android:background">@color/transparent</item>
+  </style>
+
+  <style name="list_extras_style_reusable" parent="list_id_style_reusable">
+    <item name="android:textColor">?attr/reusable_list_extras_text_color</item>
+    <item name="android:textStyle">normal</item>
+  </style>
+
+  <style name="spinner_style_reusable" parent="Widget.AppCompat.ListView.DropDown">
+    <item name="android:background">@drawable/reusable_spinner_background</item>
+    <item name="android:divider">?attr/reusable_spinner_divider_color</item>
+    <item name="android:dividerHeight">1px</item>
+    <item name="android:scrollbars">none</item>
+    <item name="android:textSize">16sp</item>
+  </style>
+
+  <style name="ActionBarPopup_reusable" parent="Widget.AppCompat.PopupMenu">
+    <item name="android:itemBackground">@android:color/transparent</item>
+    <item name="android:actionBarItemBackground">@drawable/reusable_spinner_background</item>
+    <item name="android:background">@android:color/transparent</item>
+    <item name="android:popupBackground">@android:color/transparent</item>
+  </style>
+
+  <style name="app_title_reusable" parent="@android:style/TextAppearance.WindowTitle">
+    <item name="android:background">?attr/reusable_title_background_color</item>
+    <item name="android:textColor">?attr/reusable_title_text_color</item>
+    <item name="android:shadowColor">@color/transparent</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">0</item>
+  </style>
+
+  <style name="list_view_reusable" parent="@android:style/Widget.ListView">
+    <item name="android:textColor">?attr/reusable_list_item_text_color</item>
+    <item name="android:textSize">12sp</item>
+    <item name="android:background">@color/transparent</item>
+    <item name="android:windowBackground">@color/transparent</item>
+    <item name="android:divider">@color/divider</item>
+    <item name="android:dividerHeight">1dp</item>
+    <item name="android:cacheColorHint">@color/transparent</item>
+    <item name="android:shadowColor">@color/transparent</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
+
+  <style name="overflow_menu_button_reusable" parent="Widget.AppCompat.ActionButton.Overflow">
+    <item name="android:tint">?attr/reusable_overflow_menu_color</item>
+  </style>
+
+  <style name="floating_text_style_reusable" parent="@android:style/Widget.TextView">
+    <item name="android:textColor">?attr/reusable_floating_text_color</item>
+    <item name="android:shadowColor">?attr/reusable_floating_text_shadow_color</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
+  <style name="floating_text_condensed_style_reusable" parent="floating_text_style_reusable">
+    <item name="fontFamily">sans-serif-condensed</item>
+  </style>
+  <style name="popup_floating_text_style_reusable" parent="floating_text_style">
+    <item name="android:textColor">?attr/reusable_popup_floating_text_color</item>
+    <item name="android:shadowColor">#00000000</item>
+    <item name="android:shadowDx">0</item>
+    <item name="android:shadowDy">0</item>
+    <item name="android:shadowRadius">4</item>
+  </style>
+
+
+  <style name="edit_func_style_reusable">
+    <item name="fontFamily">sans-serif-condensed</item>
+    <item name="android:textSize">18sp</item>
+    <item name="android:singleLine">true</item>
+    <item name="android:maxLength">2</item>
+    <item name="android:inputType">number</item>
+    <item name="android:textColor">@color/primary_colorful</item>
+    <item name="android:shadowColor">@color/shadow_colorful</item>
+    <item name="android:shadowDx">1</item>
+    <item name="android:shadowDy">1</item>
+    <item name="android:shadowRadius">0.2</item>
+  </style>
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

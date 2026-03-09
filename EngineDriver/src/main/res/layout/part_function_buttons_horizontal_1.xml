@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
@@ -33,28 +34,28 @@
                     <Button
                         android:id="@+id/device_sounds_mute_1"
                         style="?attr/ed_fn_button_style"
-                        android:drawableStart="@drawable/in_device_sounds_button_icon_states"
+                        app:drawableStartCompat="@drawable/in_device_sounds_button_icon_states"
                         android:text="@string/deviceSoundsMuteButton"
                         tools:ignore="RtlHardcoded" />
 
                     <Button
                         android:id="@+id/device_sounds_bell_1"
                         style="?attr/ed_fn_button_style"
-                        android:drawableStart="@drawable/in_device_sounds_bell_button_icon_states"
+                        app:drawableStartCompat="@drawable/in_device_sounds_bell_button_icon_states"
                         android:text="@string/functionButton01DefaultValue"
                         tools:ignore="RtlHardcoded" />
 
                     <Button
                         android:id="@+id/device_sounds_horn_1"
                         style="?attr/ed_fn_button_style"
-                        android:drawableStart="@drawable/in_device_sounds_horn_button_icon_states"
+                        app:drawableStartCompat="@drawable/in_device_sounds_horn_button_icon_states"
                         android:text="@string/functionButton02DefaultValue"
                         tools:ignore="RtlHardcoded" />
 
                     <Button
                         android:id="@+id/device_sounds_horn_short_1"
                         style="?attr/ed_fn_button_style"
-                        android:drawableStart="@drawable/in_device_sounds_horn_button_icon_states"
+                        app:drawableStartCompat="@drawable/in_device_sounds_horn_button_icon_states"
                         android:text="@string/soundsButtonHornShortDefaultValue"
                         tools:ignore="RtlHardcoded" />
                 </TableRow>

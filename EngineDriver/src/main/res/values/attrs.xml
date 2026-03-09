@@ -156,4 +156,63 @@
     <attr name="ed_monochrome_glyph_button_primary_color" format="reference" />
     <attr name="ed_monochrome_glyph_category_primary_color" format="reference" />
 
+    <attr name="reusable_spinner_divider_color" format="reference" />
+    <attr name="reusable_spinner_background_color" format="reference" />
+
+    <attr name="reusable_divider_color" format="reference" />
+    <attr name="reusable_app_background_color" format="reference" />
+    <attr name="reusable_app_background_highlight_color" format="reference" />
+    <attr name="reusable_app_background_highlight_secondary_color" format="reference" />
+    <attr name="reusable_app_background_highlight_tertiary_color" format="reference" />
+
+    <attr name="reusable_radio_button_normal_color" format="reference" />
+    <attr name="reusable_radio_button_activate_color" format="reference" />
+    <attr name="reusable_title_text_color" format="reference" />
+    <attr name="reusable_title_background_color" format="reference" />
+    <attr name="reusable_small_heading_text_color" format="reference" />
+    <attr name="reusable_small_heading_text_shadow_color" format="reference" />
+    <attr name="reusable_list_item_text_color" format="reference" />
+    <attr name="reusable_list_item_text_shadow_color" format="reference" />
+    <attr name="reusable_list_id_text_color" format="reference" />
+    <attr name="reusable_list_extras_text_color" format="reference" />
+
+    <attr name="reusable_floating_text_color" format="reference" />
+    <attr name="reusable_floating_text_shadow_color" format="reference" />
+    <attr name="reusable_popup_floating_text_color" format="reference" />
+
+    <attr name="reusable_button_text_enabled_color" format="reference" />
+    <attr name="reusable_button_text_disabled_color" format="reference" />
+    <attr name="reusable_select_button_text_disabled_color" format="reference" />
+    <attr name="reusable_button_text_default_color" format="reference" />
+    <attr name="reusable_button_text_pressed_color" format="reference" />
+
+    <attr name="reusable_stop_button_text_pressed_color" format="reference" />
+    <attr name="reusable_stop_button_active_light_bar_color" format="reference" />
+
+    <attr name="reusable_button_edge_light_color" format="reference" />
+    <attr name="reusable_button_edge_highlight_color" format="reference" />
+    <attr name="reusable_button_edge_dark_color" format="reference" />
+    <attr name="reusable_button_face_start_color" format="reference" />
+    <attr name="reusable_button_face_center_color" format="reference" />
+    <attr name="reusable_button_face_end_color" format="reference" />
+
+    <attr name="reusable_button_disabled_stroke_color" format="reference" />
+    <attr name="reusable_button_disabled_fill_color" format="reference" />
+
+    <attr name="reusable_button_active_light_bar_color" format="reference" />
+    <attr name="reusable_button_active_light_rim_color" format="reference" />
+    <attr name="reusable_button_active_light_rim_2_color" format="reference" />
+
+    <attr name="reusable_button_glyph_fill_color" format="reference" />
+
+    <attr name="reusable_progress_bar_fill_75_color" format="reference" />
+    <attr name="reusable_progress_bar_fill_50_color" format="reference" />
+    <attr name="reusable_progress_bar_fill_25_color" format="reference" />
+
+    <attr name="reusable_toolbar_face_start_color" format="reference" />
+    <attr name="reusable_toolbar_face_center_color" format="reference" />
+    <attr name="reusable_toolbar_face_end_color" format="reference" />
+
+    <attr name="reusable_overflow_menu_color" format="reference" />
+
 </resources>

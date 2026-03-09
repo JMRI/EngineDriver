@@ -2015,6 +2015,7 @@ public class threaded_application extends Application {
                 case "Ultra" -> R.style.app_theme_ultra;
                 case "Colorful" -> R.style.app_theme_colorful;
                 case "Neon" -> R.style.app_theme_neon;
+                case "Green" -> R.style.app_theme_neon_green;
                 default -> R.style.app_theme;
             };
         } else {
@@ -2025,6 +2026,8 @@ public class threaded_application extends Application {
                         R.style.app_theme_ultra_preferences;
                 case "Neon" ->
                         R.style.app_theme_neon_preferences;
+                case "Green" ->
+                        R.style.app_theme_neon_green_preferences;
                 case "Colorful" ->
                         R.style.app_theme_colorful_preferences;
                 default -> R.style.app_theme_preferences;

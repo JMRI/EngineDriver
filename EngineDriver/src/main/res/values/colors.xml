@@ -27,6 +27,7 @@
     <color name="darkTint">#5A000000</color>
     <color name="solidBlack">#ff000000</color>
     <color name="solidWhite">#ffffffff</color>
+    <color name="offWhite">#DEDEDE</color>
     <color name="holoBlue">#ff33b5e5</color>
     <color name="divider">#4A4A4A</color>
 
@@ -279,12 +280,6 @@
 
     <!-- Neon colours -->
 
-    <color name="neon_yellow_very_dark">#616100</color>
-    <color name="neon_yellow_dark">#9E9E00</color>
-    <color name="neon_yellow">#FFFF00</color>
-    <color name="neon_yellow_light">#FFFF55</color>
-    <color name="neon_green">#7FFF00</color>
-    <color name="neon_green_light">#8CFB1D</color>
     <color name="neon_pink">#FB33DB</color>
     <color name="neon_pink_light">#D033FB</color>
     <color name="neon_blue_ultra_dark">#000020</color>
@@ -340,5 +335,65 @@
     <color name="background_highlight_neon">@color/neon_blue_very_dark</color>
     <color name="background_highlight_secondary_neon">@color/neon_blue_ultra_dark</color>
     <color name="background_highlight_tertiary_neon">#A7000020</color>
+
+    <!-- Neon Green colours -->
+
+    <color name="neon_yellow_very_dark">#616100</color>
+    <color name="neon_yellow_dark">#9E9E00</color>
+    <color name="neon_yellow">#FFFF00</color>
+    <color name="neon_yellow_light">#FFFF55</color>
+
+    <color name="neon_green_mega_dark">#081200</color>
+    <color name="neon_green_ultra_dark">#0E1F00</color>
+    <color name="neon_green_very_dark">#193700</color>
+    <color name="neon_green_dark">#285600</color>
+    <color name="neon_green">#4F9703</color>
+    <color name="neon_green_light">#8CFB1D</color>
+    <color name="neon_green_very_light">#BEFB7F</color>
+    <color name="neon_green_ultra_light">#E1FFBC</color>
+
+    <color name="neon_green_transparent_75">#BF4F9703</color>
+    <color name="neon_green_transparent_50">#804F9703</color>
+    <color name="neon_green_transparent_25">#404F9703</color>
+
+<!--    <color name="divider_neon_green">@color/neon_green</color>-->
+
+<!--    <color name="buttonCommonFillGradiantVeryLight_neon_green">@color/neon_blue_very_light</color>-->
+<!--    <color name="buttonCommonFillGradiantLight_neon_green">@color/neon_blue</color>-->
+<!--    <color name="buttonCommonFillGradiantCenter_neon_green">@color/neon_blue_dark</color>-->
+<!--    <color name="buttonCommonFillGradiantDark_neon_green">@color/neon_blue_very_dark</color>-->
+<!--    <color name="buttonCommonSelectedStroke_neon_green">@color/neon_blue_ultra_light</color>-->
+
+<!--    <color name="buttonStopDisabledStroke_neon_green">#FF2d2d2d</color>-->
+<!--    <color name="buttonStopDisabledFill_neon_green">#00000000</color>-->
+<!--    <color name="buttonStopSelectedFill_neon_green">#FF2d2d2d</color>-->
+<!--    <color name="buttonStopSelectedText_neon_green">@color/neon_red</color>-->
+<!--    <color name="buttonStopSelectedInsideStroke_neon_green">@color/neon_red_light</color>-->
+
+<!--    <color name="buttonText_neon_green">#d9d9d9</color>-->
+<!--    <color name="buttonLocoSelectText_neon_green">@color/neon_blue_ultra_light</color>-->
+<!--    <color name="buttonDisabledFill_neon_green">#00000000</color>-->
+<!--    <color name="buttonDisabledStroke_neon_green">#FF2d2d2d</color>-->
+<!--    <color name="buttonSelectedText_neon_green">@color/neon_yellow</color>-->
+<!--    <color name="buttonLocoDisabledText_neon_green">@color/solidWhite</color>-->
+<!--    <color name="buttonSelectedFill_neon_green">#FF2d2d2d</color>-->
+<!--    <color name="buttonSelectedInsideStroke_neon_green">@color/neon_yellow</color>-->
+<!--    <color name="buttonSelectedInsideStroke2_neon_green">#D9FFFFFF</color>-->
+<!--    <color name="buttonActivatedHoveredInsideStroke_neon_green">@color/neon_yellow_dark</color>-->
+<!--    <color name="buttonActivatedHoveredInside2Stroke_neon_green">@color/neon_yellow_very_dark</color>-->
+
+<!--    <color name="buttonFnDisabledFill_neon_green">#00000000</color>-->
+<!--    <color name="buttonFnDisabledStroke_neon_green">#FF262626</color>-->
+<!--    <color name="buttonFnSelectedText_neon_green">@color/neon_yellow</color>-->
+<!--    <color name="buttonFnSelectedFill_neon_green">#FF262626</color>-->
+<!--    <color name="buttonFnSelectedInsideStroke_neon_green">@color/neon_yellow</color>-->
+
+<!--    <color name="spinner_background_neon_green">@color/neon_blue_ultra_dark</color>-->
+<!--    <color name="spinner_divider_neon_green">@color/neon_blue</color>-->
+
+<!--    <color name="background_highlight_neon_green">@color/neon_blue_very_dark</color>-->
+<!--    <color name="background_highlight_secondary_neon_green">@color/neon_blue_ultra_dark</color>-->
+<!--    <color name="background_highlight_tertiary_neon_green">#A7000020</color>-->
+
 
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/select_loco_screen"
     android:layout_width="fill_parent"
@@ -87,7 +88,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/release"
-                                android:src="?attr/ed_select_loco_glyph_release" />
+                                app:srcCompat="?attr/ed_select_loco_glyph_release" />
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -131,7 +132,7 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="48dp"
                                     android:contentDescription="@string/editConsistButtonLabel"
-                                    android:src="?attr/ed_select_loco_glyph_consist_order" />
+                                    app:srcCompat="?attr/ed_select_loco_glyph_consist_order" />
 
                                 <TextView
                                     style="?attr/floating_text_style"
@@ -163,7 +164,7 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="48dp"
                                     android:contentDescription="@string/editConsistLightsButtonLabel"
-                                    android:src="?attr/ed_select_loco_glyph_consist_lights" />
+                                    app:srcCompat="?attr/ed_select_loco_glyph_consist_lights" />
 
                                 <TextView
                                     style="?attr/floating_text_style"
@@ -200,7 +201,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/deviceSoundsMenu"
-                                android:src="?attr/ed_select_loco_glyph_ipls" />
+                                app:srcCompat="?attr/ed_select_loco_glyph_ipls" />
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -233,7 +234,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/dispatch"
-                                android:src="?attr/ed_select_loco_glyph_dispatch" />
+                                app:srcCompat="?attr/ed_select_loco_glyph_dispatch" />
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -297,7 +298,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/LocoSelectMethodAddress"
-                                android:src="?attr/ed_select_loco_glyph_dcc_address" />
+                                app:srcCompat="?attr/ed_select_loco_glyph_dcc_address" />
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -330,7 +331,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/LocoSelectMethodAddress"
-                                android:src="?attr/ed_select_loco_glyph_roster"/>
+                                app:srcCompat="?attr/ed_select_loco_glyph_roster"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -363,7 +364,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/LocoSelectMethodAddress"
-                                android:src="?attr/ed_select_loco_glyph_recent_loco"/>
+                                app:srcCompat="?attr/ed_select_loco_glyph_recent_loco"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -396,7 +397,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/LocoSelectMethodAddress"
-                                android:src="?attr/ed_select_loco_glyph_recent_consist"/>
+                                app:srcCompat="?attr/ed_select_loco_glyph_recent_consist"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -429,7 +430,7 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="48dp"
                                 android:contentDescription="@string/LocoSelectMethodAddress"
-                                android:src="?attr/ed_select_loco_glyph_idngo"/>
+                                app:srcCompat="?attr/ed_select_loco_glyph_idngo"/>
 
                             <TextView
                                 style="?attr/floating_text_style"
@@ -722,7 +723,7 @@
                             android:layout_toRightOf="@id/address_length"
                             android:state_enabled="false"
                             android:text="@string/acquire_button"
-                            android:drawableStart="?attr/ed_acquire_loco_glyph"
+                            app:drawableStartCompat="?attr/ed_acquire_loco_glyph"
                             android:layout_marginStart="10dp"
                             android:padding="6dp"
                             tools:ignore="RtlHardcoded,RtlSymmetry" />
@@ -809,7 +810,7 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginTop="8dp"
                             android:text="@string/order"
-                            android:drawableStart="?attr/ed_sort_glyph"
+                            app:drawableStartCompat="?attr/ed_sort_glyph"
                             android:paddingLeft="4dp"
                             android:paddingStart="4dp"
                             tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
@@ -913,7 +914,7 @@
                             android:ellipsize="end"
                             android:padding="2sp"
                             android:text="@string/FilterRosterListDownloadLabel"
-                            android:drawableStart="?attr/ed_download_glyph"
+                            app:drawableStartCompat="?attr/ed_download_glyph"
                             android:paddingLeft="4dp"
                             android:paddingStart="4dp"
                             tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TooManyViews,TouchTargetSizeCheck" />
@@ -988,7 +989,7 @@
                                 android:layout_alignParentTop="true"
                                 android:layout_marginLeft="6dp"
                                 android:text="@string/order"
-                                android:drawableStart="?attr/ed_sort_glyph"
+                                app:drawableStartCompat="?attr/ed_sort_glyph"
                                 android:paddingLeft="4dp"
                                 android:paddingStart="4dp"
                                 tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
@@ -1002,7 +1003,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
                                 android:text="@string/clearLocoList"
-                                android:drawableStart="?attr/ed_clear_list_glyph"
+                                app:drawableStartCompat="?attr/ed_clear_list_glyph"
                                 android:paddingLeft="4dp"
                                 android:paddingStart="4dp"
                                 tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />
@@ -1060,7 +1061,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_marginLeft="6dp"
                             android:text="@string/order"
-                            android:drawableStart="?attr/ed_sort_glyph"
+                            app:drawableStartCompat="?attr/ed_sort_glyph"
                             android:paddingLeft="4dp"
                             android:paddingStart="4dp"
                             tools:ignore="RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck"  />
@@ -1074,7 +1075,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
                             android:text="@string/clearLocoList"
-                            android:drawableStart="?attr/ed_clear_list_glyph"
+                            app:drawableStartCompat="?attr/ed_clear_list_glyph"
                             android:paddingLeft="4dp"
                             android:paddingStart="4dp"
                             tools:ignore="RelativeOverlap,RtlHardcoded,RtlSymmetry,TextSizeCheck,TouchTargetSizeCheck" />

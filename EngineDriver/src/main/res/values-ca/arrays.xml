@@ -195,6 +195,7 @@
         <item>Fosc</item>
         <item>De colors</item>
         <item>Blau Neó</item>
+        <item>Neon Green</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Cap (utilitza només \'v\',\'1\')</item>
@@ -296,7 +297,7 @@
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
         <item>Locomotora capdavantera</item>
-        <item>>Locomotora capdavantera + resta de Locomotores</item>
+        <item>Locomotora capdavantera + resta de Locomotores</item>
         <item>Totes les Locomotores</item>
         <item>Resta de Locomotores</item>
     </string-array>

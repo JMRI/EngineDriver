@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/throttle_screen_wrapper"
     android:layout_width="fill_parent"
@@ -428,7 +429,7 @@
                 style="?attr/ed_normal_button_condensed_style"
                 android:layout_height="40dp"
                 android:text="@string/gamepadTestReset"
-                android:drawableStart="?attr/ed_reset_glyph"
+                app:drawableStartCompat="?attr/ed_reset_glyph"
                 android:padding="0dp"
                 tools:ignore="RtlHardcoded" />
 
@@ -440,7 +441,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:padding="0dp"
-                android:drawableStart="?attr/ed_cross_glyph"
+                app:drawableStartCompat="?attr/ed_cross_glyph"
                 tools:ignore="RtlHardcoded,RtlSymmetry,ButtonOrder" />
 
             <Button

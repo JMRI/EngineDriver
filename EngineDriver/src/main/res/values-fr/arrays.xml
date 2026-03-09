@@ -163,6 +163,7 @@
         <item>Thème foncé</item>
         <item>Thème en couleurs</item>
         <item>Bleu Electrique</item>
+        <item>Neon Green</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntries">
