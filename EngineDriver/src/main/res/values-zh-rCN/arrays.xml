@@ -147,8 +147,8 @@
         <item>暗色</item>
         <item>彩色</item>
         <item>霓虹蓝</item>
-        <item>Neon Green</item>
-        <item>Muted</item>
+        <item>荧光绿</item>
+        <item>静音</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>无（仅使用“v”、“1”）</item>

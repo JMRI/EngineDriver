@@ -156,8 +156,8 @@
         <item>暗い</item>
         <item>カラフル</item>
         <item>ネオンブルー</item>
-        <item>Neon Green</item>
-        <item>Muted</item>
+        <item>ネオングリーン</item>
+        <item>ミュート</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>なし (「v」、「1」のみを使用)</item>
