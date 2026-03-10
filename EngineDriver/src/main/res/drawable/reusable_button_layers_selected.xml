@@ -6,7 +6,31 @@
         android:top="0px" android:left="0px"
         android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <corners android:radius="?attr/reusable_button_corner_radius" />
+            <stroke
+                android:width="2px"
+                android:color="?attr/reusable_button_edge_dark_color" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="3px" android:left="3px"
+        android:right="1px" android:bottom="1px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="?attr/reusable_button_corner_radius" />
+            <stroke
+                android:width="2px"
+                android:color="?attr/reusable_button_edge_light_color" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="3px" android:left="3px"
+        android:right="0px" android:bottom="0px">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
                 android:width="2px"
                 android:color="?attr/reusable_button_edge_highlight_color" />
@@ -15,23 +39,10 @@
     </item>
 
     <item
-        android:top="0px" android:left="0px"
-        android:right="1px" android:bottom="1px">
+        android:top="2px" android:left="2px"
+        android:right="3px" android:bottom="3px">
         <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_neon" />
-            <stroke
-                android:width="2px"
-                android:color="?attr/reusable_button_edge_light_color" />
-            <solid android:color="@color/transparent" />
-        </shape>
-    </item>
-
-
-    <item
-        android:top="0px" android:left="0px"
-        android:right="2px" android:bottom="2px">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
                 android:width="0px"
                 android:color="?attr/reusable_button_edge_dark_color" />
@@ -50,7 +61,7 @@
 <!--    <item-->
 <!--        android:top="@dimen/buttonSelectedInsideStrokePadding_neon" android:left="@dimen/buttonSelectedInsideStrokePadding_neon" android:right="@dimen/buttonSelectedInsideStrokePadding_neon" android:bottom="@dimen/buttonSelectedInsideStrokePadding_neon">-->
 <!--        <shape android:shape="rectangle"  >-->
-<!--            <corners android:radius="@dimen/buttonCornerRadius_neon" />-->
+<!--            <corners android:radius="?attr/reusable_button_corner_radius" />-->
 <!--            <stroke android:width="@dimen/buttonSelectedInsideStroke_neon" android:color="@color/buttonSelectedInsideStroke_neon" />-->
 <!--            <solid android:color="@color/transparent"/>-->
 <!--        </shape>-->

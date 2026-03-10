@@ -196,6 +196,7 @@
         <item>Farben</item>
         <item>Neonblau</item>
         <item>Neon Green</item>
+        <item>Muted</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Keine (Benütze nur \'v\',\'1\')</item>

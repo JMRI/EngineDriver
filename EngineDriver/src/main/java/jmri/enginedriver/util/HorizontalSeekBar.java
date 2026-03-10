@@ -61,7 +61,9 @@ public class HorizontalSeekBar extends SeekBar {
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+//        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        int tickColor = threaded_application.getRgbColorFromThemeAttribute(context, R.attr.ed_throttle_tick_mark);
+        tickPaint.setColor(tickColor);
     }
 
     public HorizontalSeekBar(final Context context, final AttributeSet attrs) {
@@ -71,7 +73,9 @@ public class HorizontalSeekBar extends SeekBar {
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+//        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        int tickColor = threaded_application.getRgbColorFromThemeAttribute(context, R.attr.ed_throttle_tick_mark);
+        tickPaint.setColor(tickColor);
     }
 
 

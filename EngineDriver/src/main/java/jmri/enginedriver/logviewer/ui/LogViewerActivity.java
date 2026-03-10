@@ -67,7 +67,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private Button saveButton;
     private Button stopSaveButton;
     private Button shareButton;
-    private TextView saveInfoTV;
+//    private TextView saveInfoTV;
 
 //    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
 
@@ -75,6 +75,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private Toolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         if (mainapp.isForcingFinish()) {        // expedite
@@ -120,7 +121,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         StopSaveButtonListener stopSaveClickListener = new StopSaveButtonListener();
         stopSaveButton.setOnClickListener(stopSaveClickListener);
 
-        saveInfoTV = findViewById(R.id.logviewer_info);
+//        saveInfoTV = findViewById(R.id.logviewer_info);
 
         shareButton = findViewById(R.id.logviewer_button_share); // Assuming you added the button with this ID
         shareButton.setOnClickListener(new View.OnClickListener() {
@@ -189,9 +190,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @Override
     public void onResume() {
+        Log.d(threaded_application.applicationName, activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
+
+        mainapp.applyTheme(this);
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.LOG_VIEWER;
@@ -256,6 +260,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             logReaderTask.stopTask();
         }
         super.onDestroy();
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.LOG_VIEWER);
     }
 
     @Override
@@ -385,13 +391,13 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             saveButton.setVisibility(View.GONE);
             stopSaveButton.setVisibility(View.VISIBLE);
 //            shareButton.setVisibility(View.GONE);
-            saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
-            saveInfoTV.setVisibility(View.GONE);
+//            saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
+//            saveInfoTV.setVisibility(View.GONE);
         } else {
             saveButton.setVisibility(View.VISIBLE);
             stopSaveButton.setVisibility(View.GONE);
 //            shareButton.setVisibility((checkHasLogFiles()) ? View.VISIBLE : View.GONE);
-            saveInfoTV.setVisibility(View.GONE);
+//            saveInfoTV.setVisibility(View.GONE);
         }
     }
 
@@ -484,11 +490,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     msg = msg.replaceAll("<", "&lt;");
                     msg = msg.replaceAll(">", "&gt;");
                     if (!msg.contains("About: ")) {
-                        if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
-                            msg = "<span style=\"color: #404040\">" + msg;
-                        } else {
-                            msg = "<span style=\"color: #CCCCCC\">" + msg;
-                        }
+//                        if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
+//                            msg = "<span style=\"color: #404040\">" + msg;
+//                        } else {
+//                            msg = "<span style=\"color: #CCCCCC\">" + msg;
+//                        }
+                        msg = "<span>" + msg;
                     } else {
                         msg = "<br/><span>" + msg;
                     }

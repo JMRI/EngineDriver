@@ -389,6 +389,7 @@
         <item>Plnobarevné</item>
         <item>Neonově modrá</item>
         <item>Neon Green</item>
+        <item>Muted</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntries">  <!-- display version -->

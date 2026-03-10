@@ -210,6 +210,7 @@
         <item>Dei colori</item>
         <item>Blu neon</item>
         <item>Neon Green</item>
+        <item>Muted</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Niente (Usare solo \'v\',\'1\')</item>

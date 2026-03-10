@@ -148,6 +148,7 @@
         <item>彩色</item>
         <item>霓虹蓝</item>
         <item>Neon Green</item>
+        <item>Muted</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>无（仅使用“v”、“1”）</item>

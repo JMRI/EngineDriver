@@ -3,7 +3,7 @@
 
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <corners android:radius="@dimen/buttonCornerRadius_neon" />
+            <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
                 android:width="@dimen/buttonDisabledStroke_neon"
                 android:color="?attr/reusable_button_disabled_stroke_color" />

@@ -18,10 +18,10 @@
 
     <color name="black_half_trans">#88000000</color>
     <color name="black">#ff000000</color>
-    <color name="darkGrey">#252525</color>
-    <color name="midGrey">#2F2F2F</color>
+    <color name="grey_very_dark">#252525</color>
+    <color name="grey_dark">#2F2F2F</color>
     <color name="grey">#ff888888</color>
-    <color name="lightGrey">#a6a6a6</color>
+    <color name="grey_light">#a6a6a6</color>
 
     <color name="transparent">#00000000</color>
     <color name="darkTint">#5A000000</color>
@@ -278,7 +278,7 @@
     <color name="spinner_background_colorful">#f2b465</color>
     <color name="spinner_divider_colorful">@color/solidBlack</color>
 
-    <!-- Neon colours -->
+    <!-- Neon blue colours -->
 
     <color name="neon_pink">#FB33DB</color>
     <color name="neon_pink_light">#D033FB</color>
@@ -356,44 +356,39 @@
     <color name="neon_green_transparent_50">#804F9703</color>
     <color name="neon_green_transparent_25">#404F9703</color>
 
-<!--    <color name="divider_neon_green">@color/neon_green</color>-->
+    <!-- muted colours -->
 
-<!--    <color name="buttonCommonFillGradiantVeryLight_neon_green">@color/neon_blue_very_light</color>-->
-<!--    <color name="buttonCommonFillGradiantLight_neon_green">@color/neon_blue</color>-->
-<!--    <color name="buttonCommonFillGradiantCenter_neon_green">@color/neon_blue_dark</color>-->
-<!--    <color name="buttonCommonFillGradiantDark_neon_green">@color/neon_blue_very_dark</color>-->
-<!--    <color name="buttonCommonSelectedStroke_neon_green">@color/neon_blue_ultra_light</color>-->
+    <color name="muted_yellow_very_dark">#616100</color>
+    <color name="muted_yellow_dark">#93931d</color>
+    <color name="muted_yellow">#e7e759</color>
+    <color name="muted_yellow_light">#fbfb8f</color>
+    <color name="muted_yellow_bright">#FFF303</color>
 
-<!--    <color name="buttonStopDisabledStroke_neon_green">#FF2d2d2d</color>-->
-<!--    <color name="buttonStopDisabledFill_neon_green">#00000000</color>-->
-<!--    <color name="buttonStopSelectedFill_neon_green">#FF2d2d2d</color>-->
-<!--    <color name="buttonStopSelectedText_neon_green">@color/neon_red</color>-->
-<!--    <color name="buttonStopSelectedInsideStroke_neon_green">@color/neon_red_light</color>-->
+    <color name="muted_red">#A63535</color>
+    <color name="muted_red_light">#AB6666</color>
 
-<!--    <color name="buttonText_neon_green">#d9d9d9</color>-->
-<!--    <color name="buttonLocoSelectText_neon_green">@color/neon_blue_ultra_light</color>-->
-<!--    <color name="buttonDisabledFill_neon_green">#00000000</color>-->
-<!--    <color name="buttonDisabledStroke_neon_green">#FF2d2d2d</color>-->
-<!--    <color name="buttonSelectedText_neon_green">@color/neon_yellow</color>-->
-<!--    <color name="buttonLocoDisabledText_neon_green">@color/solidWhite</color>-->
-<!--    <color name="buttonSelectedFill_neon_green">#FF2d2d2d</color>-->
-<!--    <color name="buttonSelectedInsideStroke_neon_green">@color/neon_yellow</color>-->
-<!--    <color name="buttonSelectedInsideStroke2_neon_green">#D9FFFFFF</color>-->
-<!--    <color name="buttonActivatedHoveredInsideStroke_neon_green">@color/neon_yellow_dark</color>-->
-<!--    <color name="buttonActivatedHoveredInside2Stroke_neon_green">@color/neon_yellow_very_dark</color>-->
+    <color name="muted_mega_dark">#754c06</color>
+    <color name="muted_ultra_dark">#886427</color>
+    <color name="muted_very_dark">#aa8954</color>
+    <color name="muted_dark">#c1a87d</color>
+    <color name="muted">#d7c6aa</color>
+    <color name="muted_50">#80d7c6aa</color>
+    <color name="muted_light">#ede3d2</color>
+    <color name="muted_light_50">#80ede3d2</color>
+    <color name="muted_very_light">#f4eee2</color>
+    <color name="muted_ultra_light">#fbf7f0</color>
 
-<!--    <color name="buttonFnDisabledFill_neon_green">#00000000</color>-->
-<!--    <color name="buttonFnDisabledStroke_neon_green">#FF262626</color>-->
-<!--    <color name="buttonFnSelectedText_neon_green">@color/neon_yellow</color>-->
-<!--    <color name="buttonFnSelectedFill_neon_green">#FF262626</color>-->
-<!--    <color name="buttonFnSelectedInsideStroke_neon_green">@color/neon_yellow</color>-->
+    <color name="muted_sepia">#704214</color>
+    <color name="muted_sepia_dark">#472A0C</color>
 
-<!--    <color name="spinner_background_neon_green">@color/neon_blue_ultra_dark</color>-->
-<!--    <color name="spinner_divider_neon_green">@color/neon_blue</color>-->
+    <color name="muted_green_very_dark">#424237</color>
+    <color name="muted_green_dark">#7c7c68</color>
+    <color name="muted_green">#a5a58d</color>
+    <color name="muted_green_light">#b7b7a4</color>
+    <color name="muted_green_very_light">#b8b8ae</color>
 
-<!--    <color name="background_highlight_neon_green">@color/neon_blue_very_dark</color>-->
-<!--    <color name="background_highlight_secondary_neon_green">@color/neon_blue_ultra_dark</color>-->
-<!--    <color name="background_highlight_tertiary_neon_green">#A7000020</color>-->
-
+    <color name="muted_transparent_75">#BFeddcd2</color>
+    <color name="muted_transparent_50">#80eddcd2</color>
+    <color name="muted_transparent_25">#40eddcd2</color>
 
 </resources>

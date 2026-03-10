@@ -2016,6 +2016,7 @@ public class threaded_application extends Application {
                 case "Colorful" -> R.style.app_theme_colorful;
                 case "Neon" -> R.style.app_theme_neon;
                 case "Green" -> R.style.app_theme_neon_green;
+                case "Muted" -> R.style.app_theme_muted;
                 default -> R.style.app_theme;
             };
         } else {
@@ -2028,6 +2029,8 @@ public class threaded_application extends Application {
                         R.style.app_theme_neon_preferences;
                 case "Green" ->
                         R.style.app_theme_neon_green_preferences;
+                case "Muted" ->
+                        R.style.app_theme_muted_preferences;
                 case "Colorful" ->
                         R.style.app_theme_colorful_preferences;
                 default -> R.style.app_theme_preferences;
@@ -3840,5 +3843,12 @@ public class threaded_application extends Application {
         } else {
             Log.d(threaded_application.applicationName, activityName + ": onDestroy(): activityBundleMessageHandlers[" + activityIndex + "] is null. Unable to removeCallbacksAndMessages");
         }
+    }
+
+    public static int getRgbColorFromThemeAttribute(Context context, int attribute) {
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(attribute, typedValue, true);
+        int color = typedValue.data;
+        return color;
     }
 }

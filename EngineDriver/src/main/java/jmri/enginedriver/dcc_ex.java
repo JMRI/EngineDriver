@@ -244,6 +244,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
 
                 case message_type.RECEIVED_POWER_STATE_CHANGE:
                     mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
+                    refreshDccexTracksView();
                     break;
 
                 case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:

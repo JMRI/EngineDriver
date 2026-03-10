@@ -15,6 +15,13 @@
     <attr name="listSeparatorTextViewStyle" format="reference" />
     <attr name="preferenceCategoryBackgroundColor" format="reference" />
 
+    <attr name="ed_text_color_primary" format="reference" />
+    <attr name="ed_text_shadow_color_primary" format="reference" />
+    <attr name="ed_text_color_primary_inverted" format="reference" />
+    <attr name="ed_text_color_secondary" format="reference" />
+    <attr name="ed_text_color_hint" format="reference" />
+    <attr name="ed_text_color_disabled" format="reference" />
+
     <attr name="ed_large_button_style" format="reference" />
     <attr name="ed_normal_button_style" format="reference" />
     <attr name="ed_normal_button2_style" format="reference" />
@@ -93,6 +100,7 @@
     <attr name="ed_progressBar" format="reference" />
     <attr name="ed_progressBarBackground" format="reference" />
     <attr name="ed_progressBarSelected" format="reference" />
+    <attr name="ed_throttle_tick_mark" format="reference" />
 
     <attr name="ed_select_loco_glyph_dcc_address" format="reference" />
     <attr name="ed_select_loco_glyph_roster" format="reference" />
@@ -204,6 +212,8 @@
     <attr name="reusable_button_active_light_rim_2_color" format="reference" />
 
     <attr name="reusable_button_glyph_fill_color" format="reference" />
+    <attr name="reusable_preference_glyph_fill_color" format="reference" />
+    <attr name="reusable_preference_glyph_stroke_color" format="reference" />
 
     <attr name="reusable_progress_bar_fill_75_color" format="reference" />
     <attr name="reusable_progress_bar_fill_50_color" format="reference" />
@@ -214,5 +224,13 @@
     <attr name="reusable_toolbar_face_end_color" format="reference" />
 
     <attr name="reusable_overflow_menu_color" format="reference" />
+
+    <attr name="reusable_button_corner_radius" format="reference" />
+
+    <attr name="reusable_dialog_background_color" format="reference" />
+    <attr name="reusable_dialog_background_secondary_color" format="reference" />
+    <attr name="reusable_dialog_text_color" format="reference" />
+    <attr name="reusable_dialog_button_text_color" format="reference" />
+    <attr name="reusable_dialog_button_background_color" format="reference" />
 
 </resources>

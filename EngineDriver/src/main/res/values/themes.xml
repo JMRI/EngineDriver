@@ -49,7 +49,7 @@
         <item name="ed_primaryLineColor">@color/grey</item>
         <item name="ed_secondaryLineColor">@color/grey</item>
 
-        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style</item>
@@ -134,7 +134,7 @@
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
-        <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
+        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/original_dccex_button_cv_programmer_pom</item>
         <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/original_dccex_button_cv_programmer_prog_track</item>
@@ -204,6 +204,7 @@
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="EDRadioButton">@style/EDRadioButton</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton</item>
@@ -250,9 +251,9 @@
         <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_primaryLineColor">@color/grey</item>
-        <item name="ed_secondaryLineColor">@color/darkGrey</item>
+        <item name="ed_secondaryLineColor">@color/grey_very_dark</item>
 
-        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
         <item name="floating_text_style">@style/floating_text_style_black</item>
@@ -335,7 +336,7 @@
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
-        <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
+        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
         <item name="ed_icon">@drawable/icon_vector_outline</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/outline_dccex_button_cv_programmer_pom</item>
@@ -404,6 +405,7 @@
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="EDRadioButton">@style/EDRadioButton_black</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
@@ -445,9 +447,9 @@
         <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_primaryLineColor">@color/grey</item>
-        <item name="ed_secondaryLineColor">@color/darkGrey</item>
+        <item name="ed_secondaryLineColor">@color/grey_very_dark</item>
 
-        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
@@ -529,7 +531,7 @@
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
-        <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
+        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
         <item name="ed_icon">@drawable/icon_vector_outline</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/outline_dccex_button_cv_programmer_pom</item>
@@ -598,6 +600,7 @@
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="EDRadioButton">@style/EDRadioButton_black</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
@@ -639,9 +642,9 @@
         <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_primaryLineColor">@color/grey</item>
-        <item name="ed_secondaryLineColor">@color/darkGrey</item>
+        <item name="ed_secondaryLineColor">@color/grey_very_dark</item>
 
-        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
@@ -724,7 +727,7 @@
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
-        <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
+        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
         <item name="ed_icon">@drawable/icon_vector_ultra</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/ultra_dccex_button_cv_programmer_pom</item>
@@ -794,6 +797,7 @@
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="EDRadioButton">@style/EDRadioButton_black</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton_black</item>
@@ -999,6 +1003,7 @@
         <item name="ed_progressBar">@drawable/original_progress_bar</item>
 <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
 <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="ed_monochrome_glyph_menu_primary_color">@color/solidBlack</item>
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
@@ -1039,7 +1044,7 @@
         <item name="ed_primaryLineColor">@color/neon_blue</item>
         <item name="ed_secondaryLineColor">@color/neon_blue_very_dark</item>
 
-        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
         <item name="floating_text_style">@style/floating_text_style_outline</item>
@@ -1126,7 +1131,7 @@
         <item name="ed_background_highlight_secondary">@drawable/neon_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/neon_background_highlight_tertiary</item>
 
-        <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
+        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
         <item name="ed_icon">@drawable/icon_vector</item>
 
         <item name="ed_dccex_button_cv_programmer_pom">@drawable/neon_dccex_button_cv_programmer_pom</item>
@@ -1195,6 +1200,7 @@
         <item name="ed_progressBar">@drawable/neon_progress_bar</item>
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
         <item name="ed_progressBarSelected">@color/neon_blue</item>
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="android:radioButtonStyle">@style/EDRadioButton_neon</item>
 
@@ -1214,6 +1220,8 @@
 
         <item name="android:windowBackground">@drawable/reusable_app_background</item>
 
+        <item name="ed_toolbar_background">@drawable/reusable_toolbar_background</item>
+
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
@@ -1221,6 +1229,13 @@
         <item name="ed_vertical_thumb">@drawable/reusable_vertical_thumb</item>
 
         <item name="actionOverflowButtonStyle">@style/overflow_menu_button_reusable</item>
+
+        <item name="android:textColorPrimary">@color/primary_text_color_selector_reusable</item>
+        <item name="android:textColorSecondary">@color/secondary_text_color_selector_reusable</item>
+        <item name="android:textColorHint">?attr/ed_text_color_hint</item>
+
+        <item name="android:textColor">@color/primary_text_color_selector_reusable</item>
+        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_reusable</item>
 
         <item name="ed_throttle_switch_button">@drawable/reusable_toolbar_button_throttle_switch_button</item>
         <item name="ed_preferences_button">@drawable/reusable_toolbar_button_preferences</item>
@@ -1231,9 +1246,6 @@
         <item name="ed_routes_button">@drawable/reusable_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
-
-        <item name="ed_toolbar_background">@drawable/black_toolbar_background</item>
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
 
         <item name="ed_flashlight_on_button">@drawable/reusable_toolbar_flashlight_on</item>
         <item name="ed_flashlight_off_button">@drawable/reusable_toolbar_flashlight_off</item>
@@ -1248,9 +1260,10 @@
         <item name="ed_power_yellow_button">@drawable/reusable_toolbar_power_yellow</item>
         <item name="ed_power_red_button">@drawable/reusable_toolbar_power_red</item>
 
-        <item name="ed_folder_icon">@drawable/outline_folder</item>
-        <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
-        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
+        <item name="ed_folder_icon">@drawable/reusable_preference_folder_glyph</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_folder_dccex_glyph</item>
+        <item name="ed_folder_esu_icon">@drawable/reusable_preference_folder_esu_glyph</item>
+
         <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/reusable_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/reusable_toolbar_button_in_device_sounds</item>
@@ -1269,7 +1282,9 @@
         <item name="list_id_style">@style/list_id_style_reusable</item>
         <item name="list_extras_style">@style/list_extras_style_reusable</item>
         <item name="EDListView">@style/EDListView_reusable</item>
+
         <item name="EDRadioButton">@style/EDRadioButton_reusable</item>
+        <item name="android:radioButtonStyle">@style/EDRadioButton_reusable</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_reusable</item>
 
@@ -1286,8 +1301,6 @@
         <item name="ed_list_button_style">@style/list_button_style_reusable</item>
 
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_reusable</item>
-
-        <item name="android:radioButtonStyle">@style/EDRadioButton_reusable</item>
 
         <item name="ed_download_glyph">@drawable/download_glyph_states</item>
         <item name="ed_sort_glyph">@drawable/sort_glyph</item>
@@ -1347,19 +1360,43 @@
         <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
         <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
 
+        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
+
         <item name="android:divider">@drawable/reusable_divider</item>
         <item name="android:listDivider">@drawable/reusable_divider</item>
 
         <item name="android:windowTitleStyle">@style/app_title_reusable</item>
         <item name="android:titleTextStyle">@style/app_title_reusable</item>
 
-        <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
+        <item name="ed_loco_label_style">@style/loco_label_style_reusable</item>
 
         <item name="ed_progressBar">@drawable/reusable_progress_bar</item>
 
         <item name="floating_text_style">@style/floating_text_style_reusable</item>
         <item name="floating_text_condensed_style">@style/floating_text_condensed_style_reusable</item>
         <item name="popup_floating_text_style">@style/popup_floating_text_style_reusable</item>
+
+        <item name="android:dropDownListViewStyle">@style/spinner_style_reusable</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_reusable</item>
+        <item name="android:spinnerStyle">@style/spinner_reusable</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item_reusable</item>
+
+        <item name="edit_label_style">@style/edit_label_style_reusable</item>
+        <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_reusable</item>
+
+        <item name="edit_func_style">@style/edit_func_style_reusable</item>
+
+        <item name="reusable_button_corner_radius">@dimen/button_corner_radius_reusable</item>
+
+        <item name="android:dialogTheme">@style/dialog_style_reusable</item>
+        <item name="dialogTheme">@style/dialog_style_reusable</item>
+        <item name="android:alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="android:alertDialogStyle">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogStyle">@style/alert_dialog_style_reusable</item>
+        <item name="ed_dialog_button_style">@style/alert_dialog_button_style_reusable</item>
+        <item name="ed_dialog_positive_button_style">@style/alert_dialog_positive_button_style_reusable</item>
+        <item name="ed_dialog_negative_button_style">@style/alert_dialog_button_style_reusable</item>
 
     </style>
 
@@ -1396,7 +1433,7 @@
 
         <item name="reusable_button_text_default_color">@color/offWhite</item>
         <item name="reusable_button_text_enabled_color">@color/solidWhite</item>
-        <item name="reusable_button_text_disabled_color">@color/midGrey</item>
+        <item name="reusable_button_text_disabled_color">@color/grey_dark</item>
         <item name="reusable_select_button_text_disabled_color">@color/solidWhite</item>
         <item name="reusable_button_text_pressed_color">@color/neon_yellow</item>
 
@@ -1410,7 +1447,7 @@
         <item name="reusable_button_face_center_color">@color/neon_green_dark</item>
         <item name="reusable_button_face_start_color">@color/neon_green_very_dark</item>
 
-        <item name="reusable_button_disabled_stroke_color">@color/darkGrey</item>
+        <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
         <item name="reusable_button_disabled_fill_color">@color/transparent</item>
 
         <item name="reusable_button_active_light_bar_color">@color/neon_yellow</item>
@@ -1418,6 +1455,8 @@
         <item name="reusable_button_active_light_rim_2_color">@color/neon_yellow_very_dark</item>
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/solidWhite</item>
 
         <item name="reusable_progress_bar_fill_75_color">@color/neon_green_transparent_75</item>
         <item name="reusable_progress_bar_fill_50_color">@color/neon_green_transparent_50</item>
@@ -1435,50 +1474,151 @@
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
 
-        <!-- Theme elements -->
-
-        <item name="preferenceTheme">@style/app_theme_neon_green_preferences</item>
-
-        <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
-        <item name="android:dialogTheme">@style/dialogStyle_black</item>
-        <item name="dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
-        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
-        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
-        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
-        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
-        <item name="ed_dialog_secondary_background_color">@color/midGrey</item>
-
-        <item name="android:itemBackground">#ff000000</item>
-        <item name="android:textColor">@color/primary_text_color_selector_black</item>
-        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_black</item>
-
-        <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
-        <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
-        <item name="android:textColorHint">@color/tertiary_text</item>
+        <item name="ed_text_color_primary">@color/solidWhite</item>
+        <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
+        <item name="ed_text_color_secondary">@color/grey_light</item>
+        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
 
         <item name="ed_primaryLineColor">@color/neon_green</item>
         <item name="ed_secondaryLineColor">@color/neon_green_very_dark</item>
 
-        <item name="edit_label_style">@style/edit_label_style_outline</item>
-        <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
-
-        <item name="android:dropDownListViewStyle">@style/spinner_style_reusable</item>
-        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
-        <item name="android:spinnerStyle">@style/spinner</item>
-        <item name="android:spinnerItemStyle">@style/spinner_item</item>
-
-        <item name="edit_func_style">@style/edit_func_style_black</item>
-
-        <item name="ed_advanced_preferences">@drawable/original_advanced_preferences</item>
-
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
         <item name="ed_progressBarSelected">@color/neon_green</item>
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
+
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+
+        <!-- Theme elements -->
+
+        <item name="preferenceTheme">@style/app_theme_neon_green_preferences</item>
+
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
+
+        <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
+        <item name="reusable_dialog_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
+        <item name="reusable_dialog_button_background_color">@color/grey</item>
+
+        <item name="android:itemBackground">#ff000000</item>
 
     </style>
 
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'Muted' theme. -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_muted" parent="app_theme_reusable">
+
+        <!-- General theme colours -->
+
+        <item name="reusable_spinner_divider_color">@color/muted</item>
+        <item name="reusable_spinner_background_color">@color/muted_dark</item>
+
+        <item name="android:windowBackground">@drawable/muted_app_background</item>
+
+        <item name="reusable_divider_color">@color/muted_ultra_dark</item>
+        <item name="reusable_app_background_color">@color/muted_very_light</item>
+        <item name="reusable_app_background_highlight_color">@color/muted</item>
+        <item name="reusable_app_background_highlight_secondary_color">@color/muted_50</item>
+        <item name="reusable_app_background_highlight_tertiary_color">@color/muted_light_50</item>
+
+        <item name="reusable_radio_button_normal_color">@color/muted</item>
+        <item name="reusable_radio_button_activate_color">@color/muted_yellow</item>
+        <item name="reusable_title_text_color">@color/solidWhite</item>
+        <item name="reusable_title_background_color">@color/solidBlack</item>
+        <item name="reusable_small_heading_text_color">@color/solidBlack</item>
+        <item name="reusable_small_heading_text_shadow_color">@color/solidWhite</item>
+        <item name="reusable_list_item_text_color">@color/muted_sepia</item>
+        <item name="reusable_list_item_text_shadow_color">@color/transparent</item>
+        <item name="reusable_list_id_text_color">@color/offWhite</item>
+        <item name="reusable_list_extras_text_color">@color/grey</item>
+
+        <item name="reusable_floating_text_color">@color/muted_sepia</item>
+        <item name="reusable_floating_text_shadow_color">@color/solidWhite</item>
+        <item name="reusable_popup_floating_text_color">@color/solidBlack</item>
+
+        <item name="reusable_button_text_default_color">@color/muted_sepia_dark</item>
+        <item name="reusable_button_text_enabled_color">@color/muted_sepia</item>
+        <item name="reusable_button_text_disabled_color">@color/grey_light</item>
+        <item name="reusable_select_button_text_disabled_color">@color/grey_very_dark</item>
+        <item name="reusable_button_text_pressed_color">@color/muted_yellow_bright</item>
+
+        <item name="reusable_stop_button_text_pressed_color">@color/muted_red</item>
+        <item name="reusable_stop_button_active_light_bar_color">@color/muted_red_light</item>
+
+        <item name="reusable_button_edge_highlight_color">@color/muted_very_light</item>
+        <item name="reusable_button_edge_light_color">@color/muted_light</item>
+        <item name="reusable_button_edge_dark_color">@color/muted_green_very_dark</item>
+        <item name="reusable_button_face_end_color">@color/muted_green_very_light</item>
+        <item name="reusable_button_face_center_color">@color/muted_green_light</item>
+        <item name="reusable_button_face_start_color">@color/muted_green</item>
+
+        <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
+        <item name="reusable_button_disabled_fill_color">@color/transparent</item>
+
+        <item name="reusable_button_active_light_bar_color">@color/muted_yellow</item>
+        <item name="reusable_button_active_light_rim_color">@color/muted_yellow</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/muted_yellow_very_dark</item>
+
+        <item name="reusable_button_glyph_fill_color">@color/muted_sepia</item>
+        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/muted_sepia</item>
+
+        <item name="reusable_progress_bar_fill_75_color">@color/muted_transparent_75</item>
+        <item name="reusable_progress_bar_fill_50_color">@color/muted_transparent_50</item>
+        <item name="reusable_progress_bar_fill_25_color">@color/muted_transparent_25</item>
+
+        <item name="reusable_toolbar_face_end_color">@color/muted_dark</item>
+        <item name="reusable_toolbar_face_center_color">@color/muted_very_dark</item>
+        <item name="reusable_toolbar_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_overflow_menu_color">@color/solidWhite</item>
+
+        <!-- used for the glyphs in the menus, categories (preferences) and buttons. -->
+        <!-- See the 'reusable colours' for the toolbar glyph colours -->
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/muted_sepia</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/muted_sepia</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/muted_sepia</item>
+
+        <item name="ed_text_color_primary">@color/muted_sepia</item>
+        <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
+        <item name="ed_text_color_secondary">@color/grey_very_dark</item>
+        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
+
+        <item name="ed_primaryLineColor">@color/muted</item>
+        <item name="ed_secondaryLineColor">@color/muted_very_dark</item>
+
+        <item name="ed_progressBarBackground">@color/muted</item>
+        <item name="ed_progressBarSelected">@color/muted_sepia</item>
+        <item name="ed_throttle_tick_mark">@color/muted_sepia</item>
+
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+
+        <!-- Theme elements -->
+
+        <item name="reusable_button_corner_radius">@dimen/button_corner_radius_muted</item>
+
+        <item name="android:windowTitleBackgroundStyle">@style/windowTitleBackground_colorful</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+        <item name="preferenceTheme">@style/app_theme_muted_preferences</item>
+
+        <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
+
+        <item name="reusable_dialog_background_color">@color/muted_light</item>
+        <item name="ed_dialog_secondary_background_color">@color/muted</item>
+        <item name="reusable_dialog_text_color">@color/muted_sepia</item>
+        <item name="reusable_dialog_button_text_color">@color/muted_sepia</item>
+        <item name="reusable_dialog_button_background_color">@color/muted_green</item>
+
+        <item name="android:itemBackground">#ff000000</item>
+
+    </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
                    Preferences Themes
@@ -1516,7 +1656,7 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
 
-        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
         <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
     </style>
 
@@ -1535,7 +1675,7 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
 
-        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
         <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
     </style>
 
@@ -1567,9 +1707,13 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
 
-        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
         <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
     </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'Neon Green' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_neon_green_preferences" parent="@style/app_theme_neon_green">
         <item name="android:windowBackground">@drawable/reusable_app_background</item>
@@ -1582,10 +1726,29 @@
         <!--        <item name="preferenceCategoryStyle">@style/Preference.Category</item>-->
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
-
-        <item name="colorBackgroundFloating">@color/darkGrey</item>
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
         <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
     </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'muted' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_muted_preferences" parent="@style/app_theme_muted">
+        <item name="android:windowBackground">@drawable/reusable_app_background</item>
+
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>
+
+        <!--        <item name="preferenceCategoryStyle">@style/Preference.Category</item>-->
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
+        <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
+    </style>
+
 
 </resources>
     

@@ -2629,7 +2629,7 @@ public class throttle extends AppCompatActivity implements
         return isAllowed;
     }
 
-    void set_stop_button(int whichThrottle, boolean pressed) {
+    void setStopButton(int whichThrottle, boolean pressed) {
         if (pressed) {
             bStops[whichThrottle].setPressed(true);
             bStops[whichThrottle].setTypeface(null, Typeface.ITALIC);
@@ -4353,7 +4353,7 @@ public class throttle extends AppCompatActivity implements
             // Toggle press status
             isEsuMc2Stopped = !isEsuMc2Stopped;
             if (prefEsuMc2StopButtonShortPress) {
-                set_stop_button(whichVolume, true);
+                setStopButton(whichVolume, true);
                 speedUpdateAndNotify(whichVolume, 0);
             }
             esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.ON);
@@ -4405,7 +4405,7 @@ public class throttle extends AppCompatActivity implements
                     esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                     // Set all throttles to zero
                     for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
-                        set_stop_button(throttleIndex, true);
+                        setStopButton(throttleIndex, true);
                         speedUpdateAndNotify(throttleIndex, 0);
                         setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, false);
                     }
@@ -4427,7 +4427,7 @@ public class throttle extends AppCompatActivity implements
                 if (!wasLongPress) {
                     if (prefEsuMc2StopButtonShortPress) {
                         Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): SU_MCII: Revert speed value to: " + origSpeed);
-                        set_stop_button(whichVolume, false);
+                        setStopButton(whichVolume, false);
                         speedUpdateAndNotify(whichVolume, origSpeed);
                         setEnabledEsuMc2ThrottleScreenButtons(whichVolume, true);
                     } else {
@@ -4437,7 +4437,7 @@ public class throttle extends AppCompatActivity implements
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Resume control without speed revert");
                     origSpeed = 0;
                     for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
-                        set_stop_button(throttleIndex, false);
+                        setStopButton(throttleIndex, false);
                         setEnabledEsuMc2ThrottleScreenButtons(throttleIndex, true);
                     }
                     isEsuMc2AllStopped = false;
@@ -4711,7 +4711,7 @@ public class throttle extends AppCompatActivity implements
             if (prefStopButtonEStopOnLongPress)
                 setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
 
-            set_stop_button(whichThrottle, true);
+            setStopButton(whichThrottle, true);
 
             if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
                 isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
@@ -4723,7 +4723,7 @@ public class throttle extends AppCompatActivity implements
             }
 
             speedUpdateAndNotify(whichThrottle, 0);
-            set_stop_button(whichThrottle, false);
+//            setStopButton(whichThrottle, false);
         }
 
         @SuppressLint("ClickableViewAccessibility")
@@ -4746,6 +4746,8 @@ public class throttle extends AppCompatActivity implements
                 if (prefStopButtonEStopOnLongPress)
                     stopButtonLongPressHandler.removeCallbacks(run);
             }
+
+            setStopButton(whichThrottle, false);
             return true;
         }
     }
@@ -4768,7 +4770,7 @@ public class throttle extends AppCompatActivity implements
 //
 //            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
 //
-//            set_stop_button(whichThrottle, true);
+//            setStopButton(whichThrottle, true);
 //
 //            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
 //                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
@@ -4780,7 +4782,7 @@ public class throttle extends AppCompatActivity implements
 //            }
 //
 //            speedUpdateAndNotify(whichThrottle, 0);
-//            set_stop_button(whichThrottle, false);
+//            setStopButton(whichThrottle, false);
 //        }
 //
 //        @Override
@@ -4795,7 +4797,7 @@ public class throttle extends AppCompatActivity implements
 //
 //            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
 //
-//            set_stop_button(whichThrottle, true);
+//            setStopButton(whichThrottle, true);
 //
 //            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
 //                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
@@ -4813,7 +4815,7 @@ public class throttle extends AppCompatActivity implements
 //            }
 //
 //            speedUpdateAndNotify(whichThrottle, 0);
-//            set_stop_button(whichThrottle, false);
+//            setStopButton(whichThrottle, false);
 //
 //            return false;
 //        }
@@ -5324,7 +5326,7 @@ public class throttle extends AppCompatActivity implements
 //                        case function_button.STOP:
 //                            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
 //
-//                            set_stop_button(whichThrottle, true);
+//                            setStopButton(whichThrottle, true);
 //
 //                            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
 //                                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
@@ -5362,7 +5364,7 @@ public class throttle extends AppCompatActivity implements
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
 //                    if (function == function_button.STOP) {
-//                        set_stop_button(whichThrottle, false);
+//                        setStopButton(whichThrottle, false);
 //                    } else
                     if (function < direction_button.LEFT) { // only process UP event if this is a "function" button
                         isLatching = setFunctionButtonState(whichThrottle, function, false);  //special handling for when using the default function labels, and one of 'Special' function following options

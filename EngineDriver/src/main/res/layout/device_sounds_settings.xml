@@ -31,14 +31,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-                <LinearLayout
-        android:id="@+id/logviewer_screen"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible"
-        android:weightSum="10">
-
         <TextView
             android:id="@+id/dss_heading"
             style="?android:attr/listSeparatorTextViewStyle"
@@ -315,7 +307,6 @@
 
         </RelativeLayout>
 
-    </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -90,10 +90,13 @@ public class VerticalSeekBar extends SeekBar {
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+//        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        int tickColor = threaded_application.getRgbColorFromThemeAttribute(context, R.attr.ed_throttle_tick_mark);
+        tickPaint.setColor(tickColor);
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+//        textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        tickPaint.setColor(tickColor);
         textPaint.setTextSize(10);
     }
 
@@ -104,10 +107,13 @@ public class VerticalSeekBar extends SeekBar {
         tickMarksChecked = false;
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+//        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        int tickColor = threaded_application.getRgbColorFromThemeAttribute(context, R.attr.ed_throttle_tick_mark);
+        tickPaint.setColor(tickColor);
 
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+//        textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
+        tickPaint.setColor(tickColor);
         textPaint.setTextSize(32);
     }
 

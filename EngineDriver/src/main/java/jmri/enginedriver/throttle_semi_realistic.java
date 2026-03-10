@@ -1794,7 +1794,9 @@ public class throttle_semi_realistic extends throttle {
         canvas.drawRect(0, 0, xMax, yMaxBar, paint);
 
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(getResources().getColor(R.color.seekBarTickColor));
+//        textPaint.setColor(getResources().getColor(R.color.seekBarTickColor));
+        int tickColor = threaded_application.getRgbColorFromThemeAttribute(this, R.attr.ed_throttle_tick_mark);
+        textPaint.setColor(tickColor);
         textPaint.setTextSize(airIndicators[whichThrottle].getWidth());
         canvas.rotate(-90, xMax-2, yMax);
         canvas.drawText(String.format(getString(R.string.airReservoirShort), getAirValue(whichThrottle)), xMax-2, yMax, textPaint);
@@ -1847,7 +1849,9 @@ public class throttle_semi_realistic extends throttle {
         canvas.drawRect(0, 0, xMax, yMaxBar, paint);
 
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(getResources().getColor(R.color.seekBarTickColor));
+//        textPaint.setColor(getResources().getColor(R.color.seekBarTickColor));
+        int tickColor = threaded_application.getRgbColorFromThemeAttribute(this, R.attr.ed_throttle_tick_mark);
+        textPaint.setColor(tickColor);
         textPaint.setTextSize(airLineIndicators[whichThrottle].getWidth());
         canvas.rotate(-90, xMax-2, yMax);
         canvas.drawText(String.format(getString(R.string.airLineShort), getAirLineValue(whichThrottle)), xMax-2, yMax, textPaint);
