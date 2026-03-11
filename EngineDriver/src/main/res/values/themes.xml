@@ -1012,205 +1012,6 @@
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- 'Neon' theme. Appears as 'Neon Blue' theme -->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <style name="app_theme_neon" parent="Theme.AppCompat.NoActionBar">
-        <item name="preferenceTheme">@style/app_theme_neon_preferences</item>
-
-        <item name="android:windowBackground">@drawable/neon_app_background</item>
-        <item name="android:windowTitleStyle">@style/app_title_black</item>
-        <item name="android:listViewStyle">@style/EDListView_black</item>
-        <item name="android:expandableListViewStyle">@style/EDListView_black</item>
-        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_neon</item>
-        <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
-        <item name="android:titleTextStyle">@style/app_title_black</item>
-        <item name="android:dialogTheme">@style/dialogStyle_black</item>
-        <item name="dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
-        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
-
-        <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
-
-        <item name="android:itemBackground">#ff000000</item>
-        <item name="android:textColor">@color/primary_text_color_selector_black</item>
-        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_black</item>
-        <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
-        <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
-        <item name="android:textColorHint">@color/tertiary_text</item>
-
-        <item name="ed_primaryLineColor">@color/neon_blue</item>
-        <item name="ed_secondaryLineColor">@color/neon_blue_very_dark</item>
-
-        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
-
-        <item name="ed_loco_label_style">@style/loco_label_style_outline</item>
-        <item name="floating_text_style">@style/floating_text_style_outline</item>
-        <item name="floating_text_condensed_style">@style/floating_text_condensed_style_outline</item>
-        <item name="popup_floating_text_style">@style/popup_floating_text_style_outline</item>
-        <item name="edit_label_style">@style/edit_label_style_outline</item>
-        <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
-        <item name="android:dropDownListViewStyle">@style/spinner_style_neon</item>
-        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
-        <item name="android:spinnerStyle">@style/spinner</item>
-        <item name="android:spinnerItemStyle">@style/spinner_item</item>
-        <item name="edit_func_style">@style/edit_func_style_black</item>
-        <item name="list_item_style">@style/list_item_style_neon</item>
-        <item name="list_item_condensed_style">@style/list_item_condensed_style_neon</item>
-        <item name="list_id_style">@style/list_id_style_neon</item>
-        <item name="list_extras_style">@style/list_extras_style_neon</item>
-        <item name="EDListView">@style/EDListView_neon</item>
-        <item name="EDRadioButton">@style/EDRadioButton_neon</item>
-
-        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_neon</item>
-
-        <item name="ed_large_button_style">@style/large_button_style_neon</item>
-        <item name="ed_normal_button_style">@style/normal_button_style_neon</item>
-        <item name="ed_normal_button2_style">@style/normal_button2_style_neon</item>
-        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_neon</item>
-        <item name="ed_loco_select_button_style">@style/loco_select_button_style_neon</item>
-        <item name="ed_small_button_style">@style/small_button_style_neon</item>
-        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_neon</item>
-        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
-        <item name="ed_stop_button_style">@style/stop_button_style_neon</item>
-        <item name="ed_fn_button_style">@style/fn_button_style_neon</item>
-        <item name="ed_list_button_style">@style/list_button_style_neon</item>
-
-        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
-        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
-        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
-
-        <item name="android:divider">@drawable/neon_divider</item>
-        <item name="android:listDivider">@drawable/neon_divider</item>
-
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
-
-        <item name="ed_thumb">@drawable/neon_thumb</item>
-        <item name="ed_vertical_thumb">@drawable/neon_vertical_thumb</item>
-
-        <item name="ed_throttle_switch_button">@drawable/neon_toolbar_button_throttle_switch_button</item>
-        <item name="ed_preferences_button">@drawable/neon_toolbar_button_preferences</item>
-        <item name="ed_wizard_button">@drawable/neon_toolbar_button_wizard</item>
-        <item name="ed_throttle_button">@drawable/neon_toolbar_button_throttle</item>
-        <item name="ed_web_button">@drawable/neon_toolbar_button_web</item>
-        <item name="ed_turnouts_button">@drawable/neon_toolbar_button_turnouts</item>
-        <item name="ed_routes_button"  >@drawable/neon_toolbar_button_routes</item>
-        <item name="android:actionButtonStyle">@style/ActionButton</item>
-        <item name="actionButtonStyle">@style/ActionButton</item>
-
-        <item name="ed_toolbar_background">@drawable/black_toolbar_background</item>
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
-
-        <item name="ed_flashlight_on_button">@drawable/neon_toolbar_flashlight_on</item>
-        <item name="ed_flashlight_off_button">@drawable/neon_toolbar_flashlight_off</item>
-        <item name="ed_esu_mc2_knob_on_button">@drawable/neon_toolbar_button_esu_mc2_knob_on</item>
-        <item name="ed_esu_mc2_knob_off_button">@drawable/neon_toolbar_button_esu_mc2_knob_off</item>
-        <item name="ed_estop_button">@drawable/neon_toolbar_button_estop</item>
-        <item name="ed_estop_active_button">@drawable/neon_toolbar_button_estop_active</item>
-        <item name="ed_search_button">@drawable/neon_toolbar_button_search</item>
-        <item name="ed_timer_button">@drawable/neon_toolbar_button_timer</item>
-        <item name="ed_power_green_button">@drawable/neon_toolbar_power_green</item>
-        <item name="ed_power_green_red_button">@drawable/neon_toolbar_power_green_red</item>
-        <item name="ed_power_yellow_button">@drawable/neon_toolbar_power_yellow</item>
-        <item name="ed_power_red_button">@drawable/neon_toolbar_power_red</item>
-
-        <item name="ed_folder_icon">@drawable/outline_folder</item>
-        <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
-        <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
-        <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
-        <item name="ed_web_view_button">@drawable/neon_toolbar_button_web_view</item>
-        <item name="ed_in_device_sounds_button">@drawable/neon_toolbar_button_in_device_sounds</item>
-        <item name="ed_cv19_consist_button">@drawable/neon_toolbar_button_cv19_consist</item>
-        <item name="ed_dccex_consist_button">@drawable/neon_toolbar_button_dccex_consist</item>
-        <item name="ed_dcc_ex_button">@drawable/neon_toolbar_button_dcc_ex</item>
-        <item name="ed_background_popup">@drawable/black_background_popup</item>
-        <item name="ed_background_highlight">@drawable/neon_background_highlight</item>
-        <item name="ed_background_highlight_secondary">@drawable/neon_background_highlight_secondary</item>
-        <item name="ed_background_highlight_tertiary">@drawable/neon_background_highlight_tertiary</item>
-
-        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
-        <item name="ed_icon">@drawable/icon_vector</item>
-
-        <item name="ed_dccex_button_cv_programmer_pom">@drawable/neon_dccex_button_cv_programmer_pom</item>
-        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/neon_dccex_button_cv_programmer_prog_track</item>
-        <item name="ed_dccex_button_track_manager">@drawable/neon_dccex_button_track_manager</item>
-        <item name="ed_dccex_button_function_defaults">@drawable/neon_dccex_button_function_defaults</item>
-
-        <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
-        <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
-        <item name="ed_select_loco_glyph_recent_loco">@drawable/select_loco_glyph_recent_loco</item>
-        <item name="ed_select_loco_glyph_recent_consist">@drawable/select_loco_glyph_recent_consist</item>
-        <item name="ed_select_loco_glyph_idngo">@drawable/select_loco_glyph_idngo</item>
-
-        <item name="ed_select_loco_glyph_release">@drawable/select_loco_glyph_release</item>
-        <item name="ed_select_loco_glyph_dispatch">@drawable/select_loco_glyph_dispatch</item>
-        <item name="ed_select_loco_glyph_consist_order">@drawable/select_loco_glyph_consist_order</item>
-        <item name="ed_select_loco_glyph_consist_lights">@drawable/select_loco_glyph_consist_lights</item>
-        <item name="ed_select_loco_glyph_ipls">@drawable/select_loco_glyph_ipls</item>
-
-        <item name="ed_download_glyph">@drawable/download_glyph_states</item>
-        <item name="ed_sort_glyph">@drawable/sort_glyph</item>
-        <item name="ed_clear_list_glyph">@drawable/clear_list_glyph</item>
-        <item name="ed_tick_glyph_large">@drawable/tick_glyph_large</item>
-        <item name="ed_cross_glyph">@drawable/cross_glyph</item>
-        <item name="ed_next_glyph">@drawable/next_glyph_states</item>
-        <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
-
-        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/dccex_glyph_cv_programmer</item>
-        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/dccex_glyph_cv_programmer_prog_track</item>
-        <item name="ed_dccex_glyph_function_defaults">@drawable/dccex_glyph_function_defaults</item>
-        <item name="ed_dccex_glyph_track_manager">@drawable/dccex_glyph_track_manager</item>
-        <item name="ed_dccex_glyph_command_line">@drawable/dccex_glyph_command_line</item>
-
-        <item name="ed_connect_glyph">@drawable/connect_glyph_states</item>
-        <item name="ed_run_glyph">@drawable/run_glyph_states</item>
-        <item name="ed_join_glyph">@drawable/join_glyph_states</item>
-        <item name="ed_send_glyph">@drawable/send_glyph_states</item>
-        <item name="ed_acquire_loco_glyph">@drawable/acquire_loco_glyph_states</item>
-        <item name="ed_reset_glyph">@drawable/reset_glyph_states</item>
-        <item name="ed_save_glyph">@drawable/save_glyph_states</item>
-        <item name="ed_share_glyph">@drawable/share_glyph</item>
-        <item name="ed_read_glyph">@drawable/read_glyph_states</item>
-        <item name="ed_preferences_glyph">@drawable/preferences_menu_glyph</item>
-        <item name="ed_menu_glyph">@drawable/menu_glyph</item>
-        <item name="ed_wizard_glyph">@drawable/wizard_glyph</item>
-        <item name="ed_blank_glyph">@drawable/blank_glyph</item>
-        <item name="ed_pom_glyph">@drawable/pom_glyph</item>
-        <item name="ed_timer_glyph">@drawable/timer_menu_glyph</item>
-        <item name="ed_web_glyph">@drawable/web_menu_glyph</item>
-        <item name="ed_dccex_glyph">@drawable/dccex_logo_menu_glyph</item>
-        <item name="ed_gamepad_glyph">@drawable/gamepad_menu_glyph</item>
-        <item name="ed_edit_consist_glyph">@drawable/edit_consist_glyph</item>
-        <item name="ed_functions_glyph">@drawable/functions_glyph</item>
-        <item name="ed_exit_glyph">@drawable/exit_menu_glyph</item>
-        <item name="ed_throttle_glyph">@drawable/throttle_menu_glyph</item>
-        <item name="ed_turnouts_glyph">@drawable/turnouts_menu_glyph</item>
-        <item name="ed_routes_glyph">@drawable/routes_menu_glyph</item>
-        <item name="ed_device_sounds_glyph">@drawable/device_sounds_glyph</item>
-        <item name="ed_reconnect_glyph">@drawable/connect_menu_glyph</item>
-        <item name="ed_about_glyph">@drawable/about_menu_glyph</item>
-        <item name="ed_history_glyph">@drawable/log_menu_glyph</item>
-        <item name="ed_power_glyph">@drawable/power_menu_glyph</item>
-        <item name="ed_write_glyph">@drawable/write_glyph_states</item>
-        <item name="ed_write_off_glyph">@drawable/write_off_glyph_states</item>
-
-        <item name="ed_progressBar">@drawable/neon_progress_bar</item>
-        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
-        <item name="ed_progressBarSelected">@color/neon_blue</item>
-        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
-
-        <item name="android:radioButtonStyle">@style/EDRadioButton_neon</item>
-
-        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
-        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
-        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
-
-    </style>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- 'Reusable' theme.   cannot be used directly. The selectable theme must inherit from it.  -->
     <!-- These elements generally will not need to be altered. -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1402,6 +1203,147 @@
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'Neon Blue' theme. -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_neon_blue" parent="app_theme_reusable">
+
+        <!-- General theme colours -->
+
+        <item name="reusable_spinner_divider_color">@color/neon_blue</item>
+        <item name="reusable_spinner_background_color">@color/neon_blue_very_dark</item>
+
+        <item name="android:windowBackground">@drawable/neon_app_background</item>
+
+        <item name="reusable_divider_color">@color/neon_blue</item>
+        <item name="reusable_app_background_color">@color/neon_blue_mega_dark</item>
+        <item name="reusable_app_background_highlight_color">@color/neon_blue_dark</item>
+        <item name="reusable_app_background_highlight_secondary_color">@color/neon_blue_very_dark</item>
+        <item name="reusable_app_background_highlight_tertiary_color">@color/neon_blue_ultra_dark</item>
+
+        <item name="reusable_heading_small_start_color">@color/neon_blue</item>
+        <item name="reusable_heading_small_center_color">@color/neon_blue_dark</item>
+        <item name="reusable_heading_small_end_color">@color/transparent</item>
+
+        <item name="reusable_radio_button_normal_color">@color/neon_blue</item>
+        <item name="reusable_radio_button_activate_color">@color/neon_yellow</item>
+        <item name="reusable_title_text_color">@color/solidWhite</item>
+        <item name="reusable_title_background_color">@color/solidBlack</item>
+        <item name="reusable_small_heading_text_color">@color/solidWhite</item>
+        <item name="reusable_small_heading_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_list_item_text_color">@color/solidWhite</item>
+        <item name="reusable_list_item_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_list_id_text_color">@color/offWhite</item>
+        <item name="reusable_list_extras_text_color">@color/grey</item>
+
+        <item name="reusable_floating_text_color">@color/solidWhite</item>
+        <item name="reusable_floating_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_popup_floating_text_color">@color/solidBlack</item>
+
+        <item name="reusable_button_text_default_color">@color/offWhite</item>
+        <item name="reusable_button_text_enabled_color">@color/solidWhite</item>
+        <item name="reusable_button_text_disabled_color">@color/grey_dark</item>
+        <item name="reusable_select_button_text_disabled_color">@color/solidWhite</item>
+        <item name="reusable_button_text_pressed_color">@color/neon_yellow</item>
+        <item name="reusable_button_text_shadow_color">@color/transparent</item>
+
+        <item name="reusable_stop_button_text_pressed_color">@color/neon_red</item>
+        <item name="reusable_stop_button_active_light_bar_color">@color/neon_red_light</item>
+
+        <item name="reusable_button_edge_highlight_color">@color/neon_blue_very_light</item>
+        <item name="reusable_button_edge_light_color">@color/neon_blue_light</item>
+        <item name="reusable_button_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_button_face_end_color">@color/neon_blue</item>
+        <item name="reusable_button_face_center_color">@color/neon_blue_dark</item>
+        <item name="reusable_button_face_start_color">@color/neon_blue_very_dark</item>
+
+        <!-- function buttons -->
+        <item name="reusable_button_function_edge_highlight_color">@color/neon_blue_very_light</item>
+        <item name="reusable_button_function_edge_light_color">@color/neon_blue_light</item>
+        <item name="reusable_button_function_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_button_function_face_end_color">@color/neon_blue</item>
+        <item name="reusable_button_function_face_center_color">@color/neon_blue_dark</item>
+        <item name="reusable_button_function_face_start_color">@color/neon_blue_very_dark</item>
+
+        <!-- speed buttons -->
+        <item name="reusable_button_2_edge_highlight_color">@color/neon_blue_very_light</item>
+        <item name="reusable_button_2_edge_light_color">@color/neon_blue_light</item>
+        <item name="reusable_button_2_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_button_2_face_end_color">@color/neon_blue</item>
+        <item name="reusable_button_2_face_center_color">@color/neon_blue_dark</item>
+        <item name="reusable_button_2_face_start_color">@color/neon_blue_very_dark</item>
+
+        <!-- stop buttons -->
+        <item name="reusable_button_stop_edge_highlight_color">@color/neon_blue_very_light</item>
+        <item name="reusable_button_stop_edge_light_color">@color/neon_blue_light</item>
+        <item name="reusable_button_stop_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_button_stop_face_end_color">@color/neon_blue</item>
+        <item name="reusable_button_stop_face_center_color">@color/neon_blue_dark</item>
+        <item name="reusable_button_stop_face_start_color">@color/neon_blue_very_dark</item>
+
+        <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
+        <item name="reusable_button_disabled_fill_color">@color/transparent</item>
+
+        <item name="reusable_button_active_light_bar_color">@color/neon_yellow</item>
+        <item name="reusable_button_active_light_rim_color">@color/neon_yellow</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/neon_yellow_very_dark</item>
+
+        <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/solidWhite</item>
+
+        <item name="reusable_progress_bar_fill_75_color">@color/neon_blue_transparent_75</item>
+        <item name="reusable_progress_bar_fill_50_color">@color/neon_blue_transparent_50</item>
+        <item name="reusable_progress_bar_fill_25_color">@color/neon_blue_transparent_25</item>
+
+        <item name="reusable_toolbar_face_end_color">@color/neon_blue_dark</item>
+        <item name="reusable_toolbar_face_center_color">@color/neon_blue_very_dark</item>
+        <item name="reusable_toolbar_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_overflow_menu_color">@color/solidWhite</item>
+
+        <!-- used for the glyphs in the menus, categories (preferences) and buttons. -->
+        <!-- See the 'reusable colours' for the toolbar glyph colours -->
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
+        <item name="ed_text_color_primary">@color/solidWhite</item>
+        <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
+        <item name="ed_text_color_secondary">@color/grey_light</item>
+        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
+
+        <item name="ed_primaryLineColor">@color/neon_blue</item>
+        <item name="ed_secondaryLineColor">@color/neon_blue_very_dark</item>
+
+        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarSelected">@color/neon_blue</item>
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_color">@color/neon_blue</item>
+        <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
+
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+
+        <!-- Theme elements -->
+
+        <item name="preferenceTheme">@style/app_theme_neon_blue_preferences</item>
+
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
+
+        <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
+        <item name="reusable_dialog_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
+        <item name="reusable_dialog_button_background_color">@color/grey</item>
+
+        <item name="android:itemBackground">#ff000000</item>
+
+    </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- 'Neon Green' theme. -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -1540,7 +1482,6 @@
 
     </style>
 
-
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- 'Muted' theme. -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1561,7 +1502,7 @@
         <item name="reusable_app_background_highlight_tertiary_color">@color/muted_light_50</item>
 
         <item name="reusable_heading_small_start_color">@color/muted_very_dark</item>
-        <item name="reusable_heading_small_center_color">@color/muted</item>
+        <item name="reusable_heading_small_center_color">@color/muted_very_dark</item>
         <item name="reusable_heading_small_end_color">@color/transparent</item>
 
         <item name="reusable_radio_button_normal_color">@color/muted</item>
@@ -1763,21 +1704,21 @@
     <!-- Used by the 'Neon' / 'Neon Blue' theme -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <style name="app_theme_neon_preferences" parent="@style/app_theme_neon">
-        <item name="android:windowBackground">@drawable/neon_app_background</item>
+<!--    <style name="app_theme_neon_preferences" parent="@style/app_theme_neon">-->
+<!--        <item name="android:windowBackground">@drawable/neon_app_background</item>-->
 
-        <item name="android:divider">@drawable/divider_black</item>
-        <item name="android:listDivider">@drawable/divider_black</item>
+<!--        <item name="android:divider">@drawable/divider_black</item>-->
+<!--        <item name="android:listDivider">@drawable/divider_black</item>-->
 
-        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>
+<!--        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>-->
 
-<!--        <item name="preferenceCategoryStyle">@style/Preference.Category</item>-->
-        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+<!--&lt;!&ndash;        <item name="preferenceCategoryStyle">@style/Preference.Category</item>&ndash;&gt;-->
+<!--        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>-->
 
 
-        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
-        <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
-    </style>
+<!--        <item name="colorBackgroundFloating">@color/grey_very_dark</item>-->
+<!--        <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>-->
+<!--    </style>-->
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- Used by the 'Neon Green' theme -->
@@ -1803,6 +1744,25 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_muted_preferences" parent="@style/app_theme_muted">
+        <item name="android:windowBackground">@drawable/reusable_app_background</item>
+
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>
+
+        <!--        <item name="preferenceCategoryStyle">@style/Preference.Category</item>-->
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
+        <item name="preferenceCategoryBackgroundColor">@drawable/black_preference_heading_background</item>
+    </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'neon blue' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_neon_blue_preferences" parent="@style/app_theme_neon_blue">
         <item name="android:windowBackground">@drawable/reusable_app_background</item>
 
         <item name="android:divider">@drawable/divider_black</item>

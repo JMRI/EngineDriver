@@ -282,7 +282,8 @@
 
     <color name="neon_pink">#FB33DB</color>
     <color name="neon_pink_light">#D033FB</color>
-    <color name="neon_blue_ultra_dark">#000020</color>
+    <color name="neon_blue_mega_dark">#000020</color>
+    <color name="neon_blue_ultra_dark">#000010</color>
     <color name="neon_blue_very_dark">#00005E</color>
     <color name="neon_blue_dark">#0000A1</color>
     <color name="neon_blue">#0000FF</color>

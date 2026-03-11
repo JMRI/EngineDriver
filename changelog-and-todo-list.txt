@@ -9,7 +9,8 @@
        Removed a number of unnecessary broadcasts to all activities.
        Mostly isolated the incoming DCC-EX processing from the WiThrottle processing.
        DCC-EX and WiThrottle send and receive methods moved to separate classes.
-     * created a generic 'reusable' theme to make it easy to add new themes
+     * Created a generic 'reusable' theme to make it easy to add new themes
+     * Altered the 'neon blue' theme so that it uses the generic 'reusable' theme
 **Version 2.42.220
  * Bug fixes
     * Bug fix for the Consist Edit and Consist Light Edit screens on early versions of Android
@@ -1050,7 +1051,6 @@
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: move some actions from onCreate() or onResume() to onStart() in activities to simplify and remove some repeated calls.
  *   TODO: Improve the way it deals with multiple DCC-EX commands on single line. Really needs to be read char by char.
- *   TODO: Alter the 'neon blue' theme so that it uses the generic 'reusable' theme.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web

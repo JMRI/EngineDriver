@@ -152,7 +152,7 @@
                     android:id="@+id/intro_theme_muted_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/intro_theme_neon_green"
+                    android:drawableLeft="@drawable/intro_theme_muted"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
                     android:maxWidth="320dp"
