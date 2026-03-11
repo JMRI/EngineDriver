@@ -793,7 +793,7 @@
     <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
-  <style name="small_button_hover_style" parent="small_button_style_outline">
+  <style name="button_small_hover_style" parent="small_button_style_outline">
     <item name="android:textSize">14sp</item>
     <item name="android:background">@drawable/common_sticky_button_states_hover</item>
   </style>
@@ -1799,14 +1799,18 @@
     <item name="colorControlActivated">?attr/reusable_radio_button_activate_color</item>
   </style>
 
-  <style name="large_button_style_reusable" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/reusable_btn_text_states</item>
+  <style name="button_large_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_button_text_states</item>
+    <item name="android:shadowColor">?attr/reusable_button_text_shadow_color</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
     <item name="android:textSize">24sp</item>
     <item name="android:layout_height">60dp</item>
     <item name="android:padding">1dp</item>
     <item name="android:layout_width">0dp</item>
 
-    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:background">@drawable/reusable_button_normal_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1815,12 +1819,16 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
-  <style name="normal_button_style_reusable" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/reusable_btn_text_states</item>
+  <style name="button_normal_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_button_text_states</item>
+    <item name="android:shadowColor">?attr/reusable_button_text_shadow_color</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
     <item name="android:textSize">18sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:background">@drawable/reusable_button_normal_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1830,24 +1838,30 @@
     <item name="android:layout_height">fill_parent</item>
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
-  <style name="normal_button2_style_reusable" parent="normal_button_style_reusable">
+  <style name="button_2_style_reusable" parent="button_normal_style_reusable">
+    <item name="android:background">@drawable/reusable_button_2_states</item>
   </style>
-  <style name="normal_button_condensed_style_reusable" parent="normal_button_style_reusable">
+
+  <style name="button_normal_condensed_style_reusable" parent="button_normal_style_reusable">
     <item name="fontFamily">sans-serif-condensed</item>
     <item name="android:layout_height">40dp</item>
   </style>
 
-  <style name="loco_select_button_style_reusable" parent="normal_button_style_reusable">
-    <item name="android:textColor">@color/reusable_btn_loco_select_text_states</item>
+  <style name="button_loco_select_style_reusable" parent="button_normal_style_reusable">
+    <item name="android:textColor">@color/reusable_button_loco_select_text_states</item>
     <item name="fontFamily">sans-serif-condensed</item>
   </style>
 
-  <style name="stop_button_style_reusable" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/reusable_btn_text_states_stop_btn</item>
+  <style name="button_stop_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_button_stop_text_states</item>
+    <item name="android:shadowColor">?attr/reusable_button_text_shadow_color</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
     <item name="android:textSize">24sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/reusable_stop_button_states</item>
+    <item name="android:background">@drawable/reusable_button_stop_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1858,12 +1872,16 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
-  <style name="small_button_style_reusable" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/reusable_btn_text_states</item>
+  <style name="button_small_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_button_text_states</item>
+    <item name="android:shadowColor">?attr/reusable_button_text_shadow_color</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
     <item name="android:textSize">14sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:background">@drawable/reusable_button_normal_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1875,23 +1893,33 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
-  <style name="small_button_condensed_text_style_reusable" parent="small_button_style_reusable">
+  <style name="button_small_hover_style_reusable" parent="button_small_style_reusable">
+    <item name="android:textSize">14sp</item>
+    <item name="android:background">@drawable/reusable_button_normal_layers_hovered</item>
+  </style>
+
+  <style name="button_small_condensed_text_style_reusable" parent="button_small_style_reusable">
     <item name="android:fontFamily">sans-serif-condensed</item>
   </style>
 
-  <style name="fn_button_style_reusable" parent="@android:style/Widget.Button">
+  <style name="button_function_style_reusable" parent="@android:style/Widget.Button">
     <item name="android:fontFamily">sans-serif-condensed</item>
-    <item name="android:textColor">@color/reusable_fn_btn_text_states</item>
+    <item name="android:textColor">@color/reusable_button_function_text_states</item>
+    <item name="android:shadowColor">?attr/reusable_button_text_shadow_color</item>
+    <item name="android:shadowDx">2</item>
+    <item name="android:shadowDy">2</item>
+    <item name="android:shadowRadius">1</item>
     <item name="android:textSize">16sp</item>
     <item name="android:singleLine">false</item>
     <item name="android:maxLines">2</item>
     <item name="android:ellipsize">end</item>
+
     <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
     <item name="android:layout_width">60dp</item>
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">1dp</item>
 
-    <item name="android:background">@drawable/reusable_fn_button_states</item>
+    <item name="android:background">@drawable/reusable_button_fn_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1900,14 +1928,14 @@
     <item name="android:gravity">center_vertical|center_horizontal</item>
   </style>
 
-  <style name="list_button_style_reusable" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/reusable_btn_text_states</item>
+  <style name="button_list_style_reusable" parent="@android:style/Widget.Button">
+    <item name="android:textColor">@color/reusable_button_text_states</item>
     <item name="android:textSize">22sp</item>
     <item name="android:layout_height">fill_parent</item>
     <item name="android:padding">2dp</item>
     <item name="android:layout_width">0dp</item>
 
-    <item name="android:background">@drawable/reusable_sticky_button_states</item>
+    <item name="android:background">@drawable/reusable_button_normal_states</item>
     <item name="android:layout_marginTop">4dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>

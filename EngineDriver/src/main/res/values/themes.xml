@@ -82,7 +82,7 @@
         <item name="ed_loco_select_button_style">@style/loco_select_button_style</item>
         <item name="ed_small_button_style">@style/small_button_style</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style</item>
-        <item name="ed_hover_button_style">@style/small_button_hover_style</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style</item>
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
@@ -281,7 +281,7 @@
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_black</item>
         <item name="ed_small_button_style">@style/small_button_style_black</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_black</item>
-        <item name="ed_hover_button_style">@style/small_button_hover_style</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_black</item>
         <item name="ed_fn_button_style">@style/fn_button_style_black</item>
         <item name="ed_list_button_style">@style/list_button_style_black</item>
@@ -477,7 +477,7 @@
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_outline</item>
         <item name="ed_small_button_style">@style/small_button_style_outline</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_outline</item>
-        <item name="ed_hover_button_style">@style/small_button_hover_style</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_outline</item>
         <item name="ed_fn_button_style">@style/fn_button_style_outline</item>
         <item name="ed_list_button_style">@style/list_button_style_outline</item>
@@ -672,7 +672,7 @@
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_ultra</item>
         <item name="ed_small_button_style">@style/small_button_style_ultra</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_ultra</item>
-        <item name="ed_hover_button_style">@style/small_button_hover_style</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_ultra</item>
         <item name="ed_fn_button_style">@style/fn_button_style_ultra</item>
         <item name="ed_list_button_style">@style/list_button_style_ultra</item>
@@ -879,7 +879,7 @@
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_colorful</item>
         <item name="ed_small_button_style">@style/small_button_style_colorful</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_colorful</item>
-        <item name="ed_hover_button_style">@style/small_button_hover_style</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_colorful</item>
         <item name="ed_fn_button_style">@style/fn_button_style_colorful</item>
         <item name="ed_list_button_style">@style/list_button_style_colorful</item>
@@ -1073,7 +1073,7 @@
         <item name="ed_loco_select_button_style">@style/loco_select_button_style_neon</item>
         <item name="ed_small_button_style">@style/small_button_style_neon</item>
         <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_neon</item>
-        <item name="ed_hover_button_style">@style/small_button_hover_style</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
         <item name="ed_stop_button_style">@style/stop_button_style_neon</item>
         <item name="ed_fn_button_style">@style/fn_button_style_neon</item>
         <item name="ed_list_button_style">@style/list_button_style_neon</item>
@@ -1288,17 +1288,18 @@
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_reusable</item>
 
-        <item name="ed_large_button_style">@style/large_button_style_reusable</item>
-        <item name="ed_normal_button_style">@style/normal_button_style_reusable</item>
-        <item name="ed_normal_button2_style">@style/normal_button2_style_reusable</item>
-        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_reusable</item>
-        <item name="ed_loco_select_button_style">@style/loco_select_button_style_reusable</item>
-        <item name="ed_small_button_style">@style/small_button_style_reusable</item>
-        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_reusable</item>
-        <item name="ed_hover_button_style">@style/small_button_hover_style</item>
-        <item name="ed_stop_button_style">@style/stop_button_style_reusable</item>
-        <item name="ed_fn_button_style">@style/fn_button_style_reusable</item>
-        <item name="ed_list_button_style">@style/list_button_style_reusable</item>
+        <!-- buttons -->
+        <item name="ed_large_button_style">@style/button_large_style_reusable</item>
+        <item name="ed_normal_button_style">@style/button_normal_style_reusable</item>
+        <item name="ed_normal_button2_style">@style/button_2_style_reusable</item>
+        <item name="ed_normal_button_condensed_style">@style/button_normal_condensed_style_reusable</item>
+        <item name="ed_loco_select_button_style">@style/button_loco_select_style_reusable</item>
+        <item name="ed_small_button_style">@style/button_small_style_reusable</item>
+        <item name="ed_small_button_condensed_text_style">@style/button_small_condensed_text_style_reusable</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style_reusable</item>
+        <item name="ed_stop_button_style">@style/button_stop_style_reusable</item>
+        <item name="ed_fn_button_style">@style/button_function_style_reusable</item>
+        <item name="ed_list_button_style">@style/button_list_style_reusable</item>
 
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_reusable</item>
 
@@ -1416,6 +1417,11 @@
         <item name="reusable_app_background_highlight_color">@color/neon_green_dark</item>
         <item name="reusable_app_background_highlight_secondary_color">@color/neon_green_very_dark</item>
         <item name="reusable_app_background_highlight_tertiary_color">@color/neon_green_ultra_dark</item>
+
+        <item name="reusable_heading_small_start_color">@color/neon_green</item>
+        <item name="reusable_heading_small_center_color">@color/neon_green_dark</item>
+        <item name="reusable_heading_small_end_color">@color/transparent</item>
+
         <item name="reusable_radio_button_normal_color">@color/neon_green</item>
         <item name="reusable_radio_button_activate_color">@color/neon_yellow</item>
         <item name="reusable_title_text_color">@color/solidWhite</item>
@@ -1436,6 +1442,7 @@
         <item name="reusable_button_text_disabled_color">@color/grey_dark</item>
         <item name="reusable_select_button_text_disabled_color">@color/solidWhite</item>
         <item name="reusable_button_text_pressed_color">@color/neon_yellow</item>
+        <item name="reusable_button_text_shadow_color">@color/transparent</item>
 
         <item name="reusable_stop_button_text_pressed_color">@color/neon_red</item>
         <item name="reusable_stop_button_active_light_bar_color">@color/neon_red_light</item>
@@ -1446,6 +1453,30 @@
         <item name="reusable_button_face_end_color">@color/neon_green</item>
         <item name="reusable_button_face_center_color">@color/neon_green_dark</item>
         <item name="reusable_button_face_start_color">@color/neon_green_very_dark</item>
+
+        <!-- function buttons -->
+        <item name="reusable_button_function_edge_highlight_color">@color/neon_green_very_light</item>
+        <item name="reusable_button_function_edge_light_color">@color/neon_green_light</item>
+        <item name="reusable_button_function_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_button_function_face_end_color">@color/neon_green</item>
+        <item name="reusable_button_function_face_center_color">@color/neon_green_dark</item>
+        <item name="reusable_button_function_face_start_color">@color/neon_green_very_dark</item>
+
+        <!-- speed buttons -->
+        <item name="reusable_button_2_edge_highlight_color">@color/neon_green_very_light</item>
+        <item name="reusable_button_2_edge_light_color">@color/neon_green_light</item>
+        <item name="reusable_button_2_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_button_2_face_end_color">@color/neon_green</item>
+        <item name="reusable_button_2_face_center_color">@color/neon_green_dark</item>
+        <item name="reusable_button_2_face_start_color">@color/neon_green_very_dark</item>
+
+        <!-- stop buttons -->
+        <item name="reusable_button_stop_edge_highlight_color">@color/neon_green_very_light</item>
+        <item name="reusable_button_stop_edge_light_color">@color/neon_green_light</item>
+        <item name="reusable_button_stop_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_button_stop_face_end_color">@color/neon_green</item>
+        <item name="reusable_button_stop_face_center_color">@color/neon_green_dark</item>
+        <item name="reusable_button_stop_face_start_color">@color/neon_green_very_dark</item>
 
         <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
         <item name="reusable_button_disabled_fill_color">@color/transparent</item>
@@ -1486,6 +1517,10 @@
 
         <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
         <item name="ed_progressBarSelected">@color/neon_green</item>
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_color">@color/neon_green</item>
+        <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
@@ -1525,6 +1560,10 @@
         <item name="reusable_app_background_highlight_secondary_color">@color/muted_50</item>
         <item name="reusable_app_background_highlight_tertiary_color">@color/muted_light_50</item>
 
+        <item name="reusable_heading_small_start_color">@color/muted_very_dark</item>
+        <item name="reusable_heading_small_center_color">@color/muted</item>
+        <item name="reusable_heading_small_end_color">@color/transparent</item>
+
         <item name="reusable_radio_button_normal_color">@color/muted</item>
         <item name="reusable_radio_button_activate_color">@color/muted_yellow</item>
         <item name="reusable_title_text_color">@color/solidWhite</item>
@@ -1544,19 +1583,44 @@
         <item name="reusable_button_text_enabled_color">@color/muted_sepia</item>
         <item name="reusable_button_text_disabled_color">@color/grey_light</item>
         <item name="reusable_select_button_text_disabled_color">@color/grey_very_dark</item>
-        <item name="reusable_button_text_pressed_color">@color/muted_yellow_bright</item>
+        <item name="reusable_button_text_pressed_color">@color/muted_yellow_very_dark</item>
+        <item name="reusable_button_text_shadow_color">@color/muted_very_light</item>
 
         <item name="reusable_stop_button_text_pressed_color">@color/muted_red</item>
         <item name="reusable_stop_button_active_light_bar_color">@color/muted_red_light</item>
 
-        <item name="reusable_button_edge_highlight_color">@color/muted_very_light</item>
-        <item name="reusable_button_edge_light_color">@color/muted_light</item>
+        <item name="reusable_button_edge_highlight_color">@color/muted_green_very_light</item>
+        <item name="reusable_button_edge_light_color">@color/muted_green_light</item>
         <item name="reusable_button_edge_dark_color">@color/muted_green_very_dark</item>
         <item name="reusable_button_face_end_color">@color/muted_green_very_light</item>
         <item name="reusable_button_face_center_color">@color/muted_green_light</item>
         <item name="reusable_button_face_start_color">@color/muted_green</item>
 
-        <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
+        <!-- function buttons -->
+        <item name="reusable_button_function_edge_highlight_color">@color/muted_grey_very_light</item>
+        <item name="reusable_button_function_edge_light_color">@color/muted_grey_light</item>
+        <item name="reusable_button_function_edge_dark_color">@color/muted_grey_very_dark</item>
+        <item name="reusable_button_function_face_end_color">@color/muted_grey_very_light</item>
+        <item name="reusable_button_function_face_center_color">@color/muted_grey_light</item>
+        <item name="reusable_button_function_face_start_color">@color/muted_grey</item>
+
+        <!-- speed buttons -->
+        <item name="reusable_button_2_edge_highlight_color">@color/muted_blue_very_light</item>
+        <item name="reusable_button_2_edge_light_color">@color/muted_blue_light</item>
+        <item name="reusable_button_2_edge_dark_color">@color/muted_blue_very_dark</item>
+        <item name="reusable_button_2_face_end_color">@color/muted_blue_light</item>
+        <item name="reusable_button_2_face_center_color">@color/muted_blue</item>
+        <item name="reusable_button_2_face_start_color">@color/muted_blue_dark</item>
+
+        <!-- stop buttons -->
+        <item name="reusable_button_stop_edge_highlight_color">@color/muted_mauve_very_light</item>
+        <item name="reusable_button_stop_edge_light_color">@color/muted_mauve_light</item>
+        <item name="reusable_button_stop_edge_dark_color">@color/muted_mauve_very_dark</item>
+        <item name="reusable_button_stop_face_end_color">@color/muted_mauve_light</item>
+        <item name="reusable_button_stop_face_center_color">@color/muted_mauve</item>
+        <item name="reusable_button_stop_face_start_color">@color/muted_mauve_dark</item>
+
+        <item name="reusable_button_disabled_stroke_color">@color/grey</item>
         <item name="reusable_button_disabled_fill_color">@color/transparent</item>
 
         <item name="reusable_button_active_light_bar_color">@color/muted_yellow</item>
@@ -1588,13 +1652,17 @@
         <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
         <item name="ed_text_color_secondary">@color/grey_very_dark</item>
         <item name="ed_text_color_hint">@color/grey</item>
-        <item name="ed_text_color_disabled">@color/grey_dark</item>
+        <item name="ed_text_color_disabled">@color/muted</item>
 
-        <item name="ed_primaryLineColor">@color/muted</item>
-        <item name="ed_secondaryLineColor">@color/muted_very_dark</item>
+        <item name="ed_primaryLineColor">@color/muted_very_dark</item>
+        <item name="ed_secondaryLineColor">@color/muted</item>
 
-        <item name="ed_progressBarBackground">@color/muted</item>
-        <item name="ed_progressBarSelected">@color/muted_sepia</item>
+        <item name="ed_progressBarBackground">@color/muted_sepia</item>
+        <item name="ed_progressBarSelected">@color/muted</item>
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_color">@color/muted_blue_light</item>
+        <item name="reusable_thumb_stroke_color">@color/muted_blue_very_dark</item>
         <item name="ed_throttle_tick_mark">@color/muted_sepia</item>
 
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>

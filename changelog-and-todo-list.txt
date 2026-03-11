@@ -1,6 +1,6 @@
 **Version 2.42.222
  * New Features
-     * New 'Neon Green' theme
+     * New 'Neon Green' and 'Muted' themes
  * Bug fixes
      * Bug fix for muted IPLS sounds restarting when going to another screen
  * Other

@@ -358,11 +358,11 @@
 
     <!-- muted colours -->
 
-    <color name="muted_yellow_very_dark">#616100</color>
-    <color name="muted_yellow_dark">#93931d</color>
-    <color name="muted_yellow">#e7e759</color>
-    <color name="muted_yellow_light">#fbfb8f</color>
-    <color name="muted_yellow_bright">#FFF303</color>
+    <color name="muted_yellow_very_dark">#9a7400</color>
+    <color name="muted_yellow_dark">#d5a600</color>
+    <color name="muted_yellow">#ffcc01</color>
+    <color name="muted_yellow_light">#ffeb3a</color>
+<!--    <color name="muted_yellow_bright">#FFF303</color>-->
 
     <color name="muted_red">#A63535</color>
     <color name="muted_red_light">#AB6666</color>
@@ -378,6 +378,10 @@
     <color name="muted_very_light">#f4eee2</color>
     <color name="muted_ultra_light">#fbf7f0</color>
 
+    <color name="muted_transparent_75">#BFeddcd2</color>
+    <color name="muted_transparent_50">#80eddcd2</color>
+    <color name="muted_transparent_25">#40eddcd2</color>
+
     <color name="muted_sepia">#704214</color>
     <color name="muted_sepia_dark">#472A0C</color>
 
@@ -387,8 +391,29 @@
     <color name="muted_green_light">#b7b7a4</color>
     <color name="muted_green_very_light">#b8b8ae</color>
 
-    <color name="muted_transparent_75">#BFeddcd2</color>
-    <color name="muted_transparent_50">#80eddcd2</color>
-    <color name="muted_transparent_25">#40eddcd2</color>
+    <color name="muted_blue_very_dark">#3b455c</color>
+    <color name="muted_blue_dark">#7e88a1</color>
+    <color name="muted_blue">#a0aac5</color>
+    <color name="muted_blue_light">#b9c3df</color>
+    <color name="muted_blue_very_light">#c9d4f0</color>
+
+    <color name="muted_cream_very_dark">#FF4C02</color>
+    <color name="muted_cream_dark">#FF9369</color>
+    <color name="muted_cream">#FFC6B0</color>
+    <color name="muted_cream_light">#FFDCCF</color>
+    <color name="muted_cream_very_light">#FDF4F2</color>
+
+    <color name="muted_grey_very_dark">#232323</color>
+    <color name="muted_grey_dark">#838383</color>
+    <color name="muted_grey">#A9A9A9</color>
+    <color name="muted_grey_light">#D1D1D1</color>
+    <color name="muted_grey_very_light">#e6e6e6</color>
+
+    <color name="muted_mauve_very_dark">#4d3a3a</color>
+    <color name="muted_mauve_dark">#ac9696</color>
+    <color name="muted_mauve">#dfc7c7</color>
+    <color name="muted_mauve_light">#e7cfcf</color>
+    <color name="muted_mauve_very_light">#fce3e3</color>
+
 
 </resources>

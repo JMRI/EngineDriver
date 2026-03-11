@@ -173,6 +173,10 @@
     <attr name="reusable_app_background_highlight_secondary_color" format="reference" />
     <attr name="reusable_app_background_highlight_tertiary_color" format="reference" />
 
+    <attr name="reusable_heading_small_start_color" format="reference" />
+    <attr name="reusable_heading_small_center_color" format="reference" />
+    <attr name="reusable_heading_small_end_color" format="reference" />
+
     <attr name="reusable_radio_button_normal_color" format="reference" />
     <attr name="reusable_radio_button_activate_color" format="reference" />
     <attr name="reusable_title_text_color" format="reference" />
@@ -193,6 +197,7 @@
     <attr name="reusable_select_button_text_disabled_color" format="reference" />
     <attr name="reusable_button_text_default_color" format="reference" />
     <attr name="reusable_button_text_pressed_color" format="reference" />
+    <attr name="reusable_button_text_shadow_color" format="reference" />
 
     <attr name="reusable_stop_button_text_pressed_color" format="reference" />
     <attr name="reusable_stop_button_active_light_bar_color" format="reference" />
@@ -203,6 +208,30 @@
     <attr name="reusable_button_face_start_color" format="reference" />
     <attr name="reusable_button_face_center_color" format="reference" />
     <attr name="reusable_button_face_end_color" format="reference" />
+
+    <!-- function buttons -->
+    <attr name="reusable_button_function_edge_light_color" format="reference" />
+    <attr name="reusable_button_function_edge_highlight_color" format="reference" />
+    <attr name="reusable_button_function_edge_dark_color" format="reference" />
+    <attr name="reusable_button_function_face_start_color" format="reference" />
+    <attr name="reusable_button_function_face_center_color" format="reference" />
+    <attr name="reusable_button_function_face_end_color" format="reference" />
+
+    <!-- speed buttons -->
+    <attr name="reusable_button_2_edge_light_color" format="reference" />
+    <attr name="reusable_button_2_edge_highlight_color" format="reference" />
+    <attr name="reusable_button_2_edge_dark_color" format="reference" />
+    <attr name="reusable_button_2_face_start_color" format="reference" />
+    <attr name="reusable_button_2_face_center_color" format="reference" />
+    <attr name="reusable_button_2_face_end_color" format="reference" />
+
+    <!-- stop buttons -->
+    <attr name="reusable_button_stop_edge_light_color" format="reference" />
+    <attr name="reusable_button_stop_edge_highlight_color" format="reference" />
+    <attr name="reusable_button_stop_edge_dark_color" format="reference" />
+    <attr name="reusable_button_stop_face_start_color" format="reference" />
+    <attr name="reusable_button_stop_face_center_color" format="reference" />
+    <attr name="reusable_button_stop_face_end_color" format="reference" />
 
     <attr name="reusable_button_disabled_stroke_color" format="reference" />
     <attr name="reusable_button_disabled_fill_color" format="reference" />
@@ -218,6 +247,9 @@
     <attr name="reusable_progress_bar_fill_75_color" format="reference" />
     <attr name="reusable_progress_bar_fill_50_color" format="reference" />
     <attr name="reusable_progress_bar_fill_25_color" format="reference" />
+
+    <attr name="reusable_thumb_fill_color" format="reference" />
+    <attr name="reusable_thumb_stroke_color" format="reference" />
 
     <attr name="reusable_toolbar_face_start_color" format="reference" />
     <attr name="reusable_toolbar_face_center_color" format="reference" />

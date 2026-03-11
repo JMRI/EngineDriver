@@ -3,9 +3,9 @@
     <stroke android:width="0px" android:color="@color/transparent" />
     <gradient
         android:centerX="60%"
-        android:startColor="?attr/reusable_button_face_end_color"
-        android:centerColor="?attr/reusable_button_face_center_color"
-        android:endColor="@color/transparent"
+        android:startColor="?attr/reusable_heading_small_start_color"
+        android:centerColor="?attr/reusable_heading_small_center_color"
+        android:endColor="?attr/reusable_heading_small_end_color"
         android:type="linear"
         />
     <corners android:radius="@dimen/headingCornerRadius_neon" />

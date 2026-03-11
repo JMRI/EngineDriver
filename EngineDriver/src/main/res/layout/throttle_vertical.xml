@@ -203,7 +203,7 @@
                                             style="?attr/ed_normal_button_style"
                                             android:layout_width="fill_parent"
                                             android:layout_height="wrap_content"
-                                            android:enabled="false"
+                                            android:enabled="true"
                                             android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                         <TextView
@@ -230,7 +230,7 @@
                                             style="?attr/ed_normal_button_style"
                                             android:layout_width="fill_parent"
                                             android:layout_height="wrap_content"
-                                            android:enabled="false"
+                                            android:enabled="true"
                                             android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                         <TextView
@@ -316,7 +316,7 @@
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
-                                    android:enabled="false"
+                                    android:enabled="true"
                                     android:text="@string/stop" />
                             </LinearLayout>
 
@@ -471,7 +471,7 @@
                                             style="?attr/ed_normal_button_style"
                                             android:layout_width="fill_parent"
                                             android:layout_height="wrap_content"
-                                            android:enabled="false"
+                                            android:enabled="true"
                                             android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
                                         <TextView
@@ -498,7 +498,7 @@
                                             style="?attr/ed_normal_button_style"
                                             android:layout_width="fill_parent"
                                             android:layout_height="wrap_content"
-                                            android:enabled="false"
+                                            android:enabled="true"
                                             android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
                                         <TextView
@@ -598,7 +598,7 @@
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
-                                    android:enabled="false"
+                                    android:enabled="true"
                                     android:text="@string/stop" />
                             </LinearLayout>
                         </LinearLayout>

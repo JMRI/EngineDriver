@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--    used as the additional Volume Keys highlight for the Select button-->
+
+
     <item
         android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke android:width="2px"
-                android:color="?attr/reusable_button_function_edge_light_color" />
+                android:color="?attr/reusable_button_2_edge_light_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
@@ -16,7 +19,7 @@
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke android:width="2px"
-                android:color="?attr/reusable_button_function_edge_highlight_color" />
+                android:color="?attr/reusable_button_2_edge_highlight_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
@@ -26,24 +29,37 @@
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke android:width="2px"
-                android:color="?attr/reusable_button_function_edge_dark_color" />
+                android:color="?attr/reusable_button_2_edge_dark_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
         android:top="3px" android:left="3px" android:right="2px" android:bottom="2px">
-       <shape android:shape="rectangle"  >
+        <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
-            <stroke android:width="0px" android:color="?attr/reusable_button_function_edge_dark_color" />
+            <stroke android:width="0px" android:color="?attr/reusable_button_2_edge_dark_color" />
             <gradient
                 android:angle="135"
                 android:centerX="70%"
-                android:endColor="?attr/reusable_button_function_face_end_color"
-                android:centerColor="?attr/reusable_button_function_face_center_color"
-                android:startColor="?attr/reusable_button_function_face_start_color"
+                android:endColor="?attr/reusable_button_2_face_end_color"
+                android:centerColor="?attr/reusable_button_2_face_center_color"
+                android:startColor="?attr/reusable_button_2_face_start_color"
                 android:type="linear"
                 />
+        </shape>
+    </item>
+
+    <!-- inside border  -->
+    <item
+        android:top="@dimen/buttonActivatedInsideStrokePadding_neon" android:left="@dimen/buttonActivatedInsideStrokePadding_neon"
+        android:right="@dimen/buttonActivatedInsideStrokePadding_neon" android:bottom="@dimen/buttonActivatedInsideStrokePadding_neon">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="?attr/reusable_button_corner_radius" />
+            <stroke
+                android:width="@dimen/buttonSelectedInsideStroke_neon"
+                android:color="?attr/reusable_button_active_light_rim_color" />
+            <solid android:color="@color/transparent"/>
         </shape>
     </item>
 
