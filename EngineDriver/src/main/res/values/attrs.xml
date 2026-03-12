@@ -265,4 +265,93 @@
     <attr name="reusable_dialog_button_text_color" format="reference" />
     <attr name="reusable_dialog_button_background_color" format="reference" />
 
+    <!-- toolbar button individual colours -->
+
+    <attr name="reusable_toolbar_button_stop_edge_light_color" format="reference" />
+    <attr name="reusable_toolbar_button_stop_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_stop_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_stop_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_stop_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_cv19_consist_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_cv19_consist_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_cv19_consist_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_cv19_consist_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_esu_knob_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_esu_knob_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_esu_knob_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_esu_knob_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_dccex_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_dccex_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_dccex_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_dccex_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_dccex_consist_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_dccex_consist_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_dccex_consist_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_dccex_consist_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_in_device_sounds_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_in_device_sounds_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_in_device_sounds_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_in_device_sounds_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_flashlight_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_flashlight_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_flashlight_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_flashlight_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_power_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_power_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_power_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_power_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_preferences_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_preferences_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_preferences_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_preferences_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_routes_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_routes_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_routes_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_routes_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_search_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_search_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_search_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_search_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_throttle_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_throttle_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_throttle_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_throttle_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_throttle_switch_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_throttle_switch_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_throttle_switch_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_throttle_switch_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_timer_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_timer_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_timer_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_timer_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_turnouts_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_turnouts_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_turnouts_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_turnouts_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_web_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_web_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_web_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_web_face_start_color" format="reference" />
+
+    <attr name="reusable_toolbar_button_wizard_edge_highlight_color" format="reference" />
+    <attr name="reusable_toolbar_button_wizard_edge_dark_color" format="reference" />
+    <attr name="reusable_toolbar_button_wizard_face_end_color" format="reference" />
+    <attr name="reusable_toolbar_button_wizard_face_start_color" format="reference" />
+
+
 </resources>

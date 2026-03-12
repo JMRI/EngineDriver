@@ -206,4 +206,8 @@
 
     <dimen name="button_corner_radius_muted">12dp</dimen>
 
+    <!-- new_colorful theme -->
+
+    <dimen name="button_corner_radius_colorful">6dp</dimen>
+
 </resources>

@@ -293,7 +293,7 @@
                                     style="?attr/ed_stop_button_style"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
-                                    android:enabled="false"
+                                    android:enabled="true"
                                     android:text="@string/stop" />
                             </LinearLayout>
 

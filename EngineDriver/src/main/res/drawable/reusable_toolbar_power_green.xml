@@ -14,8 +14,8 @@
           android:endX="613.66"
           android:endY="303.78"
           android:type="linear">
-        <item android:offset="0" android:color="?attr/reusable_button_face_end_color"/>
-        <item android:offset="1" android:color="?attr/reusable_button_face_start_color"/>
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_power_face_end_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_power_face_start_color"/>
       </gradient>
     </aapt:attr>
     <aapt:attr name="android:strokeColor">
@@ -25,8 +25,8 @@
           android:endX="605.27"
           android:endY="303.78"
           android:type="linear">
-        <item android:offset="0" android:color="?attr/reusable_button_edge_highlight_color"/>
-        <item android:offset="1" android:color="?attr/reusable_button_edge_dark_color"/>
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_power_edge_highlight_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_power_edge_dark_color"/>
       </gradient>
     </aapt:attr>
   </path>

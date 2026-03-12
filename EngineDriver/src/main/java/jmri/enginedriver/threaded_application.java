@@ -2013,7 +2013,8 @@ public class threaded_application extends Application {
                 case "Black" -> R.style.app_theme_black;
                 case "Outline" -> R.style.app_theme_outline;
                 case "Ultra" -> R.style.app_theme_ultra;
-                case "Colorful" -> R.style.app_theme_colorful;
+//                case "Colorful" -> R.style.app_theme_colorful;
+                case "Colorful" -> R.style.app_theme_new_colorful;
 //                case "Neon" -> R.style.app_theme_neon;
                 case "Neon" -> R.style.app_theme_neon_blue;
                 case "Green" -> R.style.app_theme_neon_green;
@@ -2034,7 +2035,8 @@ public class threaded_application extends Application {
                 case "Muted" ->
                         R.style.app_theme_muted_preferences;
                 case "Colorful" ->
-                        R.style.app_theme_colorful_preferences;
+//                        R.style.app_theme_colorful_preferences;
+                        R.style.app_theme_new_colorful_preferences;
                 default -> R.style.app_theme_preferences;
             };
         }

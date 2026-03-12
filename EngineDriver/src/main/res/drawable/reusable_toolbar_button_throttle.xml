@@ -9,24 +9,24 @@
       android:strokeWidth="3.87">
     <aapt:attr name="android:fillColor">
       <gradient
-          android:startX="-6.1"
-          android:startY="303.78"
-          android:endX="613.66"
-          android:endY="303.78"
+          android:startX="36.28"
+          android:startY="34.69"
+          android:endX="456.32"
+          android:endY="451.85"
           android:type="linear">
-        <item android:offset="0" android:color="?attr/reusable_button_face_end_color"/>
-        <item android:offset="1" android:color="?attr/reusable_button_face_start_color"/>
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_throttle_face_end_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_throttle_face_start_color"/>
       </gradient>
     </aapt:attr>
     <aapt:attr name="android:strokeColor">
       <gradient
-          android:startX="2.29"
-          android:startY="303.78"
-          android:endX="605.27"
-          android:endY="303.78"
+          android:startX="36.28"
+          android:startY="34.69"
+          android:endX="400"
+          android:endY="400"
           android:type="linear">
-        <item android:offset="0" android:color="?attr/reusable_button_edge_highlight_color"/>
-        <item android:offset="1" android:color="?attr/reusable_button_edge_dark_color"/>
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_throttle_edge_highlight_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_throttle_edge_dark_color"/>
       </gradient>
     </aapt:attr>
   </path>

@@ -8,25 +8,25 @@
       android:pathData="M102.36,4.23L505.2,4.23A98.13,98.13 135,0 1,603.33 102.36L603.33,505.2A98.13,98.13 135,0 1,505.2 603.33L102.36,603.33A98.13,98.13 135,0 1,4.23 505.2L4.23,102.36A98.13,98.13 45,0 1,102.36 4.23z"
       android:strokeWidth="3.87">
     <aapt:attr name="android:fillColor">
-      <gradient 
-          android:startX="-6.1"
-          android:startY="303.78"
-          android:endX="613.66"
-          android:endY="303.78"
+      <gradient
+          android:startX="36.28"
+          android:startY="34.69"
+          android:endX="456.32"
+          android:endY="451.85"
           android:type="linear">
-        <item android:offset="0" android:color="?attr/reusable_button_face_end_color"/>
-        <item android:offset="1" android:color="?attr/reusable_button_face_start_color"/>
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_power_face_end_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_power_face_start_color"/>
       </gradient>
     </aapt:attr>
     <aapt:attr name="android:strokeColor">
-      <gradient 
-          android:startX="2.29"
-          android:startY="303.78"
-          android:endX="605.27"
-          android:endY="303.78"
+      <gradient
+          android:startX="36.28"
+          android:startY="34.69"
+          android:endX="400"
+          android:endY="400"
           android:type="linear">
-        <item android:offset="0" android:color="?attr/reusable_button_edge_highlight_color"/>
-        <item android:offset="1" android:color="?attr/reusable_button_edge_dark_color"/>
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_power_edge_highlight_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_power_edge_dark_color"/>
       </gradient>
     </aapt:attr>
   </path>

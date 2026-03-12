@@ -3,9 +3,9 @@
 
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/reusable_vertical_thumb_enabled" />
+        android:drawable="@drawable/reusable_thumb_vertical_enabled" />
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/reusable_vertical_thumb_disabled" />
+        android:drawable="@drawable/reusable_thumb_vertical_disabled" />
 
 </selector>

@@ -416,5 +416,110 @@
     <color name="muted_mauve_light">#e7cfcf</color>
     <color name="muted_mauve_very_light">#fce3e3</color>
 
+    <!-- new_colorful colours -->
+
+    <color name="colorful_grey_mega_dark">#242424</color>
+    <color name="colorful_grey_ultra_dark">#424242</color>
+    <color name="colorful_grey_very_dark">#747474</color>
+    <color name="colorful_grey_dark">#747474</color>
+    <color name="colorful_grey">#747474</color>
+    <color name="colorful_grey_light">#DBDBDB</color>
+    <color name="colorful_grey_very_light">#F4F4F4</color>
+
+    <color name="colorful_yellow_mega_dark">#492702</color>
+    <color name="colorful_yellow_ultra_dark">#814500</color>
+    <color name="colorful_yellow_very_dark">#E98713</color>
+    <color name="colorful_yellow_dark">#f5971d</color>
+    <color name="colorful_yellow">#ffad02</color>
+    <color name="colorful_yellow_light">#ffeb3a</color>
+    <color name="colorful_yellow_very_light">#FFF175</color>
+    <color name="colorful_yellow_ultra_light">#FFF7B0</color>
+
+    <color name="colorful_very_dark">#7f5206</color>
+    <color name="colorful_dark">#c59048</color>
+    <color name="colorful">#FAC075</color>
+    <color name="colorful_50">#80FAD6A7</color>
+    <color name="colorful_light">#FDECD5</color>
+    <color name="colorful_light_50">#80FDECD5</color>
+    <color name="colorful_very_light">#FFFFFF</color>
+
+    <color name="colorful_transparent_75">#BFFAD6A7</color>
+    <color name="colorful_transparent_50">#80FAD6A7</color>
+    <color name="colorful_transparent_25">#40FAD6A7</color>
+
+    <color name="colorful_red_ultra_dark">#3E0704</color>
+    <color name="colorful_red_very_dark">#5F0B06</color>
+    <color name="colorful_red_dark">#C81309</color>
+    <color name="colorful_red">#f74036</color>
+    <color name="colorful_red_light">#f77a74</color>
+    <color name="colorful_red_very_light">#f59590</color>
+    <color name="colorful_red_ultra_light">#F4B9B6</color>
+
+    <color name="colorful_tan_ultra_dark">#5B2801</color>
+    <color name="colorful_tan_very_dark">#954100</color>
+    <color name="colorful_tan_dark">#DD660A</color>
+    <color name="colorful_tan">#f5971d</color>
+    <color name="colorful_tan_light">#f2b465</color>
+    <color name="colorful_tan_very_light">#f1cea1</color>
+    <color name="colorful_tan_ultra_light">#F4E6D4</color>
+
+    <color name="colorful_tan_50">#80f5971d</color>
+    <color name="colorful_tan_light_50">#80f2b465</color>
+
+    <color name="colorful_blue_ultra_dark">#00263A</color>
+    <color name="colorful_blue_very_dark">#013C5D</color>
+    <color name="colorful_blue_dark">#026AA8</color>
+    <color name="colorful_blue">#1ca0ef</color>
+    <color name="colorful_blue_light">#71c2f2</color>
+    <color name="colorful_blue_very_light">#a1d3f1</color>
+    <color name="colorful_blue_ultra_light">#C6E3F4</color>
+
+    <color name="colorful_blue_transparent_75">#BF1ca0ef</color>
+    <color name="colorful_blue_transparent_50">#801ca0ef</color>
+    <color name="colorful_blue_transparent_25">#401ca0ef</color>
+
+    <color name="colorful_deep_blue_very_dark">#000012</color>
+    <color name="colorful_deep_blue_dark">#00004f</color>
+    <color name="colorful_deep_blue">#0000ff</color>
+    <color name="colorful_deep_blue_light">#4b27ff</color>
+    <color name="colorful_deep_blue_very_light">#a46aff</color>
+
+    <color name="colorful_mauve_dark">#8c00ff</color>
+    <color name="colorful_mauve">#f200ff</color>
+
+    <color name="colorful_cyan_ultra_dark">#062A1F</color>
+    <color name="colorful_cyan_very_dark">#0B4937</color>
+    <color name="colorful_cyan_dark">#11755A</color>
+    <color name="colorful_cyan">#3ad7ac</color>
+    <color name="colorful_cyan_light">#8edac6</color>
+    <color name="colorful_cyan_very_light">#c3d9d3</color>
+    <color name="colorful_cyan_ultra_light">#E2EFEB</color>
+
+    <color name="colorful_green_dark">#1A2E00</color>
+    <color name="colorful_green">#FF2F5100</color>
+    <color name="colorful_green_light">#FFB7FFA5</color>
+
+    <color name="colorful_daffodil_dark">#473F00</color>
+    <color name="colorful_daffodil">#9D8F02</color>
+    <color name="colorful_daffodil_light">#FFE600</color>
+
+    <color name="colorful_aqua_very_dark">#002529</color>
+    <color name="colorful_aqua_dark">#FF00343A</color>
+    <color name="colorful_aqua">#00aabc</color>
+    <color name="colorful_aqua_light">#FF00E6FF</color>
+
+    <color name="colorful_pale_pink_very_dark">#ff66c7</color>
+    <color name="colorful_pale_pink_dark">#ff66c7</color>
+    <color name="colorful_pale_pink">#ffa0dc</color>
+    <color name="colorful_pale_pink_light">#ffc3e9</color>
+
+    <color name="colorful_lime_mega_dark">#081200</color>
+    <color name="colorful_lime_ultra_dark">#0E1F00</color>
+    <color name="colorful_lime_very_dark">#193700</color>
+    <color name="colorful_lime_dark">#285600</color>
+    <color name="colorful_lime">#4F9703</color>
+    <color name="colorful_lime_light">#8CFB1D</color>
+    <color name="colorful_lime_very_light">#BEFB7F</color>
+    <color name="colorful_lime_ultra_light">#E1FFBC</color>
 
 </resources>
