@@ -185,16 +185,11 @@
     <color name="spinner_background_ultra">#131313</color>
     <color name="spinner_divider_ultra">#4A4A4A</color>
 
-    <!-- Colorful Theme -->
+    <!-- Intro Colours - copied from the old colourful theme -->
 
-    <color name="divider_colorful">#ffad02</color>
+    <color name="intro_divider">#ffad02</color>
 
-    <color name="primary_colorful">@color/solidBlack</color>
-    <color name="secondary_colorful">#747474</color>
-    <color name="tertiary_colorful">#747474</color>
-    <color name="hint_colorful">#747474</color>
-    <color name="primaryDisabled_colorful">#dac5b5</color>
-    <color name="secondaryDisabled_colorful">#dac5b5</color>
+    <color name="intro_primary_text">@color/solidBlack</color>
 
     <color name="heading_colorful">#ffad02</color>
     <color name="shadow_colorful">#d1ffffff</color>

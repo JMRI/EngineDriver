@@ -265,6 +265,8 @@
     <attr name="reusable_dialog_button_text_color" format="reference" />
     <attr name="reusable_dialog_button_background_color" format="reference" />
 
+    <attr name="reusable_preference_heading_background_color" format="reference" />
+
     <!-- toolbar button individual colours -->
 
     <attr name="reusable_toolbar_button_stop_edge_light_color" format="reference" />

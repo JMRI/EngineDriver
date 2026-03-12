@@ -210,7 +210,7 @@
         <item>Dei colori</item>
         <item>Blu neon</item>
         <item>Verde neon</item>
-        <item>Disattivato</item>
+        <item>Carta</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Niente (Usare solo \'v\',\'1\')</item>

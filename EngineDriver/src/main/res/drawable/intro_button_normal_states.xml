@@ -11,12 +11,12 @@
 
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/colorful_button_layers_selected2">
+        android:drawable="@drawable/intro_button_normal_layers_selected">
     </item>
 
     <item
         android:state_selected="true"
-        android:drawable="@drawable/colorful_button_layers_selected2">
+        android:drawable="@drawable/intro_button_normal_layers_selected">
     </item>
 
     <item
@@ -24,7 +24,7 @@
         android:state_activated="true"
         android:state_hovered="true"
         android:state_enabled="true"
-        android:drawable="@drawable/colorful_button_layers_activated_hovered2">
+        android:drawable="@drawable/intro_button_normal_layers_activated_hovered">
     </item>
 
     <item
@@ -32,7 +32,7 @@
         android:state_activated="true"
         android:state_hovered="false"
         android:state_enabled="true"
-        android:drawable="@drawable/colorful_button_layers_activated2">
+        android:drawable="@drawable/intro_button_normal_layers_activated">
     </item>
 
     <item
@@ -40,7 +40,7 @@
         android:state_activated="false"
         android:state_hovered="true"
         android:state_enabled="true"
-        android:drawable="@drawable/colorful_button_layers_hovered2">
+        android:drawable="@drawable/intro_button_normal_layers_hovered">
     </item>
 
     <item
@@ -48,7 +48,7 @@
         android:state_activated="false"
         android:state_hovered="false"
         android:state_enabled="true"
-        android:drawable="@drawable/colorful_button_layers_enabled2">
+        android:drawable="@drawable/intro_button_normal_layers_enabled">
     </item>
 
 </selector>

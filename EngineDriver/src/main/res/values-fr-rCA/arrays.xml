@@ -127,7 +127,7 @@
         <item>Thème en couleurs</item>
         <item>Bleu Néon</item>
         <item>Vert fluo</item>
-        <item>Muet</item>
+        <item>Papier</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Aucun (Utiliser seulement \'v\',\'1\')</item>

@@ -164,9 +164,7 @@
         <item>Thème en couleurs</item>
         <item>Bleu Electrique</item>
         <item>Vert fluo</item>
-        <item>Muet</item>
-        <item>Neon Blue</item>
-        <item>Neon Blue</item>
+        <item>Papier</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntries">

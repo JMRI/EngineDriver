@@ -196,7 +196,7 @@
         <item>Farben</item>
         <item>Neonblau</item>
         <item>Neongrün</item>
-        <item>Gedämpft</item>
+        <item>Papier</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Keine (Benütze nur \'v\',\'1\')</item>

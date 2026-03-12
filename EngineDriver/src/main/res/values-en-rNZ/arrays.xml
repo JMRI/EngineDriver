@@ -25,7 +25,7 @@
         <item>Colourful</item>
         <item>Neon Blue</item>
         <item>Neon Green</item>
-        <item>Muted</item>
+        <item>Paper</item>
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->

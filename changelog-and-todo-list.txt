@@ -11,7 +11,7 @@
        DCC-EX and WiThrottle send and receive methods moved to separate classes.
      * Created a generic 'reusable' theme to make it easy to add new themes
      * Altered the 'neon blue' theme so that it uses the generic 'reusable' theme
-     * Altered the 'colourful' theme so that it uses the generic 'reusable' theme
+     * Altered the 'colourful' theme so that it uses the generic 'reusable' theme. Appears as 'Paper'
 **Version 2.42.220
  * Bug fixes
     * Bug fix for the Consist Edit and Consist Light Edit screens on early versions of Android
