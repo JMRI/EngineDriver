@@ -344,9 +344,9 @@
     <color name="neon_green_very_dark">#193700</color>
     <color name="neon_green_dark">#285600</color>
     <color name="neon_green">#4F9703</color>
-    <color name="neon_green_light">#8CFB1D</color>
-    <color name="neon_green_very_light">#BEFB7F</color>
-    <color name="neon_green_ultra_light">#E1FFBC</color>
+    <color name="neon_green_light">#74bb35</color>
+    <color name="neon_green_very_light">#89d04b</color>
+    <color name="neon_green_ultra_light">#a3eb64</color>
 
     <color name="neon_green_transparent_75">#BF4F9703</color>
     <color name="neon_green_transparent_50">#804F9703</color>
@@ -380,6 +380,10 @@
 
     <color name="muted_sepia">#704214</color>
     <color name="muted_sepia_dark">#472A0C</color>
+
+    <color name="muted_sepia_transparent_75">#BF704214</color>
+    <color name="muted_sepia_transparent_50">#80704214</color>
+    <color name="muted_sepia_transparent_25">#40704214</color>
 
     <color name="muted_green_very_dark">#424237</color>
     <color name="muted_green_dark">#7c7c68</color>

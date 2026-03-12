@@ -44,7 +44,7 @@
             <item
                 android:top="2dip" android:left="2dip"
                 android:right="2dip" android:bottom="2dip"
-                android:drawable="@drawable/metal_brushed_steel_repeating" />
+                android:drawable="@drawable/wallpaper_metal_brushed_steel_repeating" />
 
         </layer-list>
     </item>
