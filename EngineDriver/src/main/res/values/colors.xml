@@ -404,6 +404,8 @@
     <color name="muted_grey">#A9A9A9</color>
     <color name="muted_grey_light">#D1D1D1</color>
     <color name="muted_grey_very_light">#e6e6e6</color>
+    <color name="muted_grey_50">#80A9A9A9</color>
+    <color name="muted_grey_light_50">#80D1D1D1</color>
 
     <color name="muted_mauve_very_dark">#4d3a3a</color>
     <color name="muted_mauve_dark">#ac9696</color>
@@ -502,6 +504,10 @@
     <color name="colorful_aqua_dark">#FF00343A</color>
     <color name="colorful_aqua">#00aabc</color>
     <color name="colorful_aqua_light">#FF00E6FF</color>
+
+    <color name="colorful_dccex_dark">#00353d</color>
+    <color name="colorful_dccex_light">#00a3b9</color>
+    <color name="colorful_dccex_very_light">#69e2f9</color>
 
     <color name="colorful_pale_pink_very_dark">#ff66c7</color>
     <color name="colorful_pale_pink_dark">#ff66c7</color>

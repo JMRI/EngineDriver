@@ -986,7 +986,7 @@
 
         <item name="edit_func_style">@style/edit_func_style_reusable</item>
 
-        <item name="reusable_button_corner_radius">@dimen/button_corner_radius_reusable</item>
+        <item name="reusable_button_corner_radius">@dimen/reusable_button_corner_radius</item>
 
         <item name="android:dialogTheme">@style/dialog_style_reusable</item>
         <item name="dialogTheme">@style/dialog_style_reusable</item>
@@ -1277,32 +1277,32 @@
         <item name="reusable_stop_button_text_pressed_color">@color/neon_red</item>
         <item name="reusable_stop_button_active_light_bar_color">@color/neon_red_light</item>
 
-        <item name="reusable_button_edge_highlight_color">@color/neon_green_very_light</item>
-        <item name="reusable_button_edge_light_color">@color/neon_green_light</item>
+        <item name="reusable_button_edge_highlight_color">@color/neon_green_light</item>
+        <item name="reusable_button_edge_light_color">@color/neon_green</item>
         <item name="reusable_button_edge_dark_color">@color/solidBlack</item>
         <item name="reusable_button_face_end_color">@color/neon_green</item>
         <item name="reusable_button_face_center_color">@color/neon_green_dark</item>
         <item name="reusable_button_face_start_color">@color/neon_green_very_dark</item>
 
         <!-- function buttons -->
-        <item name="reusable_button_function_edge_highlight_color">@color/neon_green_very_light</item>
-        <item name="reusable_button_function_edge_light_color">@color/neon_green_light</item>
+        <item name="reusable_button_function_edge_highlight_color">@color/neon_green_light</item>
+        <item name="reusable_button_function_edge_light_color">@color/neon_green</item>
         <item name="reusable_button_function_edge_dark_color">@color/solidBlack</item>
         <item name="reusable_button_function_face_end_color">@color/neon_green</item>
         <item name="reusable_button_function_face_center_color">@color/neon_green_dark</item>
         <item name="reusable_button_function_face_start_color">@color/neon_green_very_dark</item>
 
         <!-- speed buttons -->
-        <item name="reusable_button_2_edge_highlight_color">@color/neon_green_very_light</item>
-        <item name="reusable_button_2_edge_light_color">@color/neon_green_light</item>
+        <item name="reusable_button_2_edge_highlight_color">@color/neon_green_light</item>
+        <item name="reusable_button_2_edge_light_color">@color/neon_green</item>
         <item name="reusable_button_2_edge_dark_color">@color/solidBlack</item>
         <item name="reusable_button_2_face_end_color">@color/neon_green</item>
         <item name="reusable_button_2_face_center_color">@color/neon_green_dark</item>
         <item name="reusable_button_2_face_start_color">@color/neon_green_very_dark</item>
 
         <!-- stop buttons -->
-        <item name="reusable_button_stop_edge_highlight_color">@color/neon_green_very_light</item>
-        <item name="reusable_button_stop_edge_light_color">@color/neon_green_light</item>
+        <item name="reusable_button_stop_edge_highlight_color">@color/neon_green_light</item>
+        <item name="reusable_button_stop_edge_light_color">@color/neon_green</item>
         <item name="reusable_button_stop_edge_dark_color">@color/solidBlack</item>
         <item name="reusable_button_stop_face_end_color">@color/neon_green</item>
         <item name="reusable_button_stop_face_center_color">@color/neon_green_dark</item>
@@ -1345,7 +1345,7 @@
         <item name="ed_primaryLineColor">@color/neon_green</item>
         <item name="ed_secondaryLineColor">@color/neon_green_very_dark</item>
 
-        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>
+        <item name="ed_progressBarBackground">@color/neon_green</item>
         <item name="ed_progressBarSelected">@color/neon_green</item>
 
         <!-- slider colours -->
@@ -1427,7 +1427,7 @@
 
         <!-- function buttons -->
         <item name="reusable_button_function_edge_highlight_color">@color/muted_grey_very_light</item>
-        <item name="reusable_button_function_edge_light_color">@color/muted_grey_light</item>
+        <item name="reusable_button_function_edge_light_color">@color/muted_grey_light_50</item>
         <item name="reusable_button_function_edge_dark_color">@color/muted_grey_very_dark</item>
         <item name="reusable_button_function_face_end_color">@color/muted_grey_very_light</item>
         <item name="reusable_button_function_face_center_color">@color/muted_grey_light</item>
@@ -1686,9 +1686,9 @@
         <item name="reusable_toolbar_button_esu_knob_face_start_color">@color/colorful_blue</item>
 
         <item name="reusable_toolbar_button_dccex_edge_highlight_color">@color/solidWhite</item>
-             <item name="reusable_toolbar_button_dccex_edge_dark_color">@color/colorful_cyan_very_dark</item>
-              <item name="reusable_toolbar_button_dccex_face_end_color">@color/colorful_cyan</item>
-            <item name="reusable_toolbar_button_dccex_face_start_color">@color/colorful_cyan_dark</item>
+        <item name="reusable_toolbar_button_dccex_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_dccex_face_end_color">@color/colorful_dccex_very_light</item>
+        <item name="reusable_toolbar_button_dccex_face_start_color">@color/colorful_dccex_dark</item>
 
         <item name="reusable_toolbar_button_dccex_consist_edge_highlight_color">@color/solidWhite</item>
          <item name="reusable_toolbar_button_dccex_consist_edge_dark_color">@color/colorful_green_dark</item>

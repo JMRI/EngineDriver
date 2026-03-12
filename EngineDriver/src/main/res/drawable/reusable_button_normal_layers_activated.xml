@@ -5,40 +5,50 @@
 
 
     <item
-        android:top="0px" android:left="0px" android:right="0px" android:bottom="0px">
+        android:top="@dimen/reusable_button_active_stroke_top_left_light"
+        android:left="@dimen/reusable_button_active_stroke_top_left_light"
+        android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
-            <stroke android:width="2px"
+            <stroke android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_edge_light_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="2px" android:left="2px" android:right="0px" android:bottom="0px">
+        android:top="@dimen/reusable_button_active_stroke_top_left_highlight"
+        android:left="@dimen/reusable_button_active_stroke_top_left_highlight"
+        android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
-            <stroke android:width="2px"
+            <stroke android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_edge_highlight_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="3px" android:left="3px" android:right="0px" android:bottom="0px">
+        android:top="@dimen/reusable_button_active_stroke_top_left_dark"
+        android:left="@dimen/reusable_button_active_stroke_top_left_dark"
+        android:right="0px" android:bottom="0px">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
-            <stroke android:width="2px"
+            <stroke android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_edge_dark_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="3px" android:left="3px" android:right="2px" android:bottom="2px">
+        android:top="@dimen/reusable_button_active_fill_top_left"
+        android:left="@dimen/reusable_button_active_fill_top_left"
+        android:right="@dimen/reusable_button_active_fill_bottom_right"
+        android:bottom="@dimen/reusable_button_active_fill_bottom_right">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
-            <stroke android:width="0px" android:color="?attr/reusable_button_edge_dark_color" />
+            <stroke android:width="0px"
+                android:color="?attr/reusable_button_edge_dark_color" />
             <gradient
                 android:angle="135"
                 android:centerX="70%"
@@ -52,12 +62,14 @@
 
     <!-- inside border  -->
     <item
-        android:top="@dimen/buttonActivatedInsideStrokePadding_neon" android:left="@dimen/buttonActivatedInsideStrokePadding_neon"
-        android:right="@dimen/buttonActivatedInsideStrokePadding_neon" android:bottom="@dimen/buttonActivatedInsideStrokePadding_neon">
+        android:top="@dimen/reusable_button_active_inside_1_top_left"
+        android:left="@dimen/reusable_button_active_inside_1_top_left"
+        android:right="@dimen/reusable_button_active_inside_1_bottom_right"
+        android:bottom="@dimen/reusable_button_active_inside_1_bottom_right">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
-                android:width="@dimen/buttonSelectedInsideStroke_neon"
+                android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_active_light_rim_color" />
             <solid android:color="@color/transparent"/>
         </shape>

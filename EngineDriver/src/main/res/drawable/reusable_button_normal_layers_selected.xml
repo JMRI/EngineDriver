@@ -8,39 +8,45 @@
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
-                android:width="2px"
+                android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_edge_dark_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="3px" android:left="3px"
-        android:right="1px" android:bottom="1px">
+        android:top="@dimen/reusable_button_pressed_stroke_top_right_highlight"
+        android:left="@dimen/reusable_button_pressed_stroke_top_right_highlight"
+        android:right="@dimen/reusable_button_pressed_stroke_bottom_left_highlight"
+        android:bottom="@dimen/reusable_button_pressed_stroke_bottom_left_highlight">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
-                android:width="2px"
-                android:color="?attr/reusable_button_edge_light_color" />
-            <solid android:color="@color/transparent" />
-        </shape>
-    </item>
-
-    <item
-        android:top="3px" android:left="3px"
-        android:right="0px" android:bottom="0px">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="?attr/reusable_button_corner_radius" />
-            <stroke
-                android:width="2px"
+                android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_edge_highlight_color" />
             <solid android:color="@color/transparent" />
         </shape>
     </item>
 
     <item
-        android:top="2px" android:left="2px"
-        android:right="3px" android:bottom="3px">
+        android:top="@dimen/reusable_button_pressed_stroke_top_right_light"
+        android:left="@dimen/reusable_button_pressed_stroke_top_right_light"
+        android:right="@dimen/reusable_button_pressed_stroke_bottom_left_light"
+        android:bottom="@dimen/reusable_button_pressed_stroke_bottom_left_light">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="?attr/reusable_button_corner_radius" />
+            <stroke
+                android:width="@dimen/reusable_button_stroke_width"
+                android:color="?attr/reusable_button_edge_light_color" />
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+
+    <item
+        android:top="@dimen/reusable_button_pressed_fill_top_left"
+        android:left="@dimen/reusable_button_pressed_fill_top_left"
+        android:right="@dimen/reusable_button_pressed_fill_bottom_right"
+        android:bottom="@dimen/reusable_button_pressed_fill_bottom_right">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
