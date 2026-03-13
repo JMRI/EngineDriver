@@ -905,181 +905,14 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!-- Ultra Theme. Uses the base colours from the High Contrast Theme.  Mostly the buttons are different -->
+  <!-- remnant of the old Ultra Theme. -->
 
-  <style name="small_heading_style_ultra" parent="@android:style/Widget.TextView">
-    <item name="android:textColor">#ffffff</item>
-    <!--    <item name="android:background">#5b5b5b</item>-->
-    <item name="android:background">@drawable/ultra_small_heading_style_background</item>
-    <item name="android:layout_width">fill_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:shadowColor">@color/black</item>
-    <item name="android:shadowDx">1</item>
-    <item name="android:shadowDy">1</item>
-    <item name="android:shadowRadius">3</item>
-    <item name="android:paddingTop">2dp</item>
-    <item name="android:paddingBottom">2dp</item>
-    <item name="android:paddingStart">4dp</item>
-    <item name="android:paddingEnd">4dp</item>
-  </style>
-
-  <style name="large_button_style_ultra" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/outline_btn_text_states</item>
-    <item name="android:textSize">24sp</item>
-    <item name="android:layout_height">60dp</item>
-    <item name="android:padding">1dp</item>
-    <item name="android:layout_width">0dp</item>
-
-    <item name="android:background">@drawable/ultra_sticky_button_states</item>
-    <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">4dp</item>
-    <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">2dp</item>
-
-    <item name="android:gravity">center_vertical|center_horizontal</item>
-  </style>
-
-  <style name="normal_button_style_ultra" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/ultra_btn_text_states</item>
-    <item name="android:textSize">18sp</item>
-    <item name="android:padding">0dp</item>
-
-    <item name="android:background">@drawable/ultra_sticky_button_states</item>
-    <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">4dp</item>
-    <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">3dp</item>
-
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">fill_parent</item>
-    <!-- <item name="android:ellipsize">end</item> -->
-    <item name="android:gravity">center_vertical|center_horizontal</item>
-  </style>
-  <style name="normal_button2_style_ultra" parent="normal_button_style_ultra">
-  </style>
-  <style name="normal_button_condensed_style_ultra" parent="normal_button_style_ultra">
-    <item name="fontFamily">sans-serif-condensed</item>
-    <item name="android:layout_height">40dp</item>
-  </style>
-
-  <style name="loco_select_button_style_ultra" parent="normal_button_style_ultra">
-    <item name="android:textColor">@color/ultra_btn_loco_select_text_states</item>
-    <item name="fontFamily">sans-serif-condensed</item>
-  </style>
-
-  <style name="stop_button_style_ultra" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/ultra_btn_text_states_stop_btn</item>
-    <item name="android:textSize">24sp</item>
-    <item name="android:padding">0dp</item>
-
-    <item name="android:background">@drawable/ultra_stop_button_states</item>
-    <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">4dp</item>
-    <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">3dp</item>
-
-    <item name="android:layout_width">0dp</item>
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:gravity">center_vertical|center_horizontal</item>
-  </style>
-
-  <style name="small_button_style_ultra" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/ultra_btn_text_states</item>
-    <item name="android:textSize">14sp</item>
-    <item name="android:padding">0dp</item>
-
-    <item name="android:background">@drawable/ultra_sticky_button_states</item>
-    <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">3dp</item>
-    <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">3dp</item>
-
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:ellipsize">end</item>
-    <item name="android:gravity">center_vertical|center_horizontal</item>
-  </style>
-
-  <style name="small_button_condensed_text_style_ultra" parent="small_button_style_ultra">
-    <item name="android:fontFamily">sans-serif-condensed</item>
-  </style>
-
-  <style name="fn_button_style_ultra" parent="@android:style/Widget.Button">
-    <item name="android:fontFamily">sans-serif-condensed</item>
-    <item name="android:textColor">@color/ultra_fn_btn_text_states</item>
-    <item name="android:textSize">16sp</item>
-    <item name="android:singleLine">false</item>
-    <item name="android:maxLines">2</item>
-    <item name="android:ellipsize">end</item>
-    <item name="android:layout_gravity" />  <!-- this is deliberately empty.-->
-    <item name="android:layout_width">60dp</item>
-    <item name="android:layout_height">48dp</item>
-    <item name="android:padding">1dp</item>
-
-    <item name="android:background">@drawable/ultra_fn_button_states</item>
-    <item name="android:layout_marginTop">1dp</item>
-    <item name="android:layout_marginBottom">4dp</item>
-    <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">3dp</item>
-
-    <item name="android:gravity">center_vertical|center_horizontal</item>
-  </style>
-
-  <style name="list_button_style_ultra" parent="@android:style/Widget.Button">
-    <item name="android:textColor">@color/ultra_btn_text_states</item>
-    <item name="android:textSize">22sp</item>
-    <item name="android:layout_height">fill_parent</item>
-    <item name="android:padding">2dp</item>
-    <item name="android:layout_width">0dp</item>
-
-    <item name="android:background">@drawable/ultra_sticky_button_states</item>
-    <item name="android:layout_marginTop">4dp</item>
-    <item name="android:layout_marginBottom">4dp</item>
-    <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">2dp</item>
-
-    <item name="android:gravity">center_vertical|center_horizontal</item>
-  </style>
-
-  <style name="fn_scrollview_style_ultra">
-    <item name="android:layout_marginTop">4dp</item>
-    <item name="android:layout_marginLeft">2dp</item>
-    <item name="android:layout_marginRight">2dp</item>
-  </style>
-  <style name="list_item_style_ultra" parent="@android:style/Widget.TextView">
-    <item name="android:textColor">#FFFFFF</item>
-    <item name="android:shadowColor">#FF000000</item>
-    <item name="android:shadowDx">2</item>
-    <item name="android:shadowDy">2</item>
-    <item name="android:shadowRadius">1</item>
-  </style>
-    <style name="list_item_condensed_style_ultra" parent="list_item_style_ultra">
-        <item name="fontFamily">sans-serif-condensed</item>
-    </style>
-  <style name="list_id_style_ultra" parent="@android:style/Widget.TextView">
-    <item name="android:textSize">12sp</item>
-    <item name="android:textStyle">italic</item>
-    <item name="android:textColor">#DEDEDE</item>
-    <item name="android:background">@color/transparent</item>
-  </style>
-  <style name="list_extras_style_ultra" parent="list_id_style_ultra">
-    <item name="android:textColor">#5b5b5b</item>
-    <item name="android:textStyle">normal</item>
-  </style>
-
-  <style name="spinner_style_ultra" parent="Widget.AppCompat.ListView.DropDown">
+  <style name="spinner_style_black" parent="Widget.AppCompat.ListView.DropDown">
     <item name="android:background">@drawable/ultra_spinner_background</item>
     <item name="android:divider">@color/spinner_divider_ultra</item>
     <item name="android:dividerHeight">1px</item>
     <item name="android:scrollbars">none</item>
     <item name="android:textSize">16sp</item>
-  </style>
-
-  <style name="ActionBarPopup_ultra" parent="Widget.AppCompat.PopupMenu">
-    <item name="android:itemBackground">@android:color/transparent</item>
-    <item name="android:actionBarItemBackground">@drawable/ultra_spinner_background</item>
-    <item name="android:background">@android:color/transparent</item>
-    <item name="android:popupBackground">@android:color/transparent</item>
   </style>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1489,9 +1322,12 @@
     <item name="textColorAlertDialogListItem">?attr/reusable_dialog_text_color</item>
     <item name="android:textColorPrimary">?attr/reusable_dialog_text_color</item>
     <item name="android:textColor">?attr/reusable_dialog_text_color</item>
+
     <item name="android:colorAccent">?attr/reusable_dialog_text_color</item>
     <item name="colorAccent">?attr/reusable_dialog_text_color</item>
     <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
+    <item name="colorControlNormal">?attr/reusable_radio_button_normal_color</item>
+    <item name="colorControlActivated">?attr/reusable_radio_button_activate_color</item>
 
     <item name="android:windowTitleStyle">@style/dialog_title_reusable</item>
     <item name="android:buttonBarStyle">@style/dialog_button_bar_reusable</item>
