@@ -1154,6 +1154,7 @@
     <item name="android:shadowColor">?attr/reusable_list_item_text_shadow_color</item>
     <item name="android:colorAccent">?attr/reusable_list_item_text_color</item>
     <item name="colorAccent">?attr/reusable_list_item_text_color</item>
+    <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
 
     <item name="android:textSize">12sp</item>
     <item name="android:background">@color/transparent</item>
@@ -1172,6 +1173,7 @@
     <item name="android:shadowColor">?attr/reusable_list_item_text_shadow_color</item>
     <item name="android:colorAccent">?attr/reusable_list_item_text_color</item>
     <item name="colorAccent">?attr/reusable_list_item_text_color</item>
+    <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
 
     <item name="colorControlNormal">?attr/reusable_radio_button_normal_color</item>
     <item name="colorControlActivated">?attr/reusable_radio_button_activate_color</item>
@@ -1332,6 +1334,7 @@
     <item name="android:textColor">?attr/reusable_list_item_text_color</item>
     <item name="android:colorAccent">?attr/reusable_list_item_text_color</item>
     <item name="colorAccent">?attr/reusable_list_item_text_color</item>
+    <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
     <item name="android:shadowColor">?attr/reusable_list_item_text_shadow_color</item>
     <item name="android:shadowDx">2</item>
     <item name="android:shadowDy">2</item>
@@ -1488,6 +1491,7 @@
     <item name="android:textColor">?attr/reusable_dialog_text_color</item>
     <item name="android:colorAccent">?attr/reusable_dialog_text_color</item>
     <item name="colorAccent">?attr/reusable_dialog_text_color</item>
+    <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
 
     <item name="android:windowTitleStyle">@style/dialog_title_reusable</item>
     <item name="android:buttonBarStyle">@style/dialog_button_bar_reusable</item>
@@ -1507,6 +1511,7 @@
     <item name="android:textColorPrimary">?attr/reusable_dialog_text_color</item>
     <item name="android:textColor">?attr/reusable_dialog_text_color</item>
     <item name="android:colorAccent">?attr/reusable_dialog_text_color</item>
+    <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
 <!--    <item name="android:colorPrimary">?attr/reusable_dialog_text_color</item>-->
 <!--    <item name="android:colorPrimaryDark">?attr/reusable_dialog_text_color</item>-->
 
@@ -1534,6 +1539,7 @@
     <item name="android:textColor">?attr/reusable_dialog_text_color</item>
     <item name="android:colorAccent">?attr/reusable_dialog_text_color</item>
     <item name="colorAccent">?attr/reusable_dialog_text_color</item>
+    <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
 
     <item name="android:windowTitleStyle">@style/dialog_title_reusable</item>
     <item name="buttonStyle">@style/alert_dialog_button_style_reusable</item>

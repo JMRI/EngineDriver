@@ -1228,6 +1228,7 @@
         <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
         <item name="reusable_dialog_button_background_color">@color/grey</item>
 
+        <!-- not sure where this is used -->
         <item name="android:itemBackground">#ff000000</item>
 
     </style>
@@ -1368,6 +1369,7 @@
         <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
         <item name="reusable_dialog_button_background_color">@color/grey</item>
 
+        <!-- not sure where this is used -->
         <item name="android:itemBackground">#ff000000</item>
 
     </style>
@@ -1517,6 +1519,7 @@
         <item name="reusable_dialog_button_text_color">@color/muted_sepia</item>
         <item name="reusable_dialog_button_background_color">@color/muted_green</item>
 
+        <!-- not sure where this is used -->
         <item name="android:itemBackground">#ff000000</item>
 
     </style>
@@ -1545,8 +1548,8 @@
         <item name="reusable_heading_small_center_color">@color/colorful_yellow_very_dark</item>
         <item name="reusable_heading_small_end_color">@color/transparent</item>
 
-        <item name="reusable_radio_button_normal_color">@color/colorful</item>
-        <item name="reusable_radio_button_activate_color">@color/colorful_yellow</item>
+        <item name="reusable_radio_button_normal_color">@color/grey_dark</item>
+        <item name="reusable_radio_button_activate_color">@color/colorful_yellow_dark</item>
         <item name="reusable_title_text_color">@color/solidWhite</item>
         <item name="reusable_title_background_color">@color/solidBlack</item>
         <item name="reusable_small_heading_text_color">@color/solidBlack</item>
@@ -1669,7 +1672,8 @@
         <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
         <item name="reusable_dialog_button_background_color">@color/colorful_tan_light</item>
 
-        <item name="android:itemBackground">#ff000000</item>  <!-- not sure where this is used -->
+        <!-- not sure where this is used -->
+        <item name="android:itemBackground">#ff000000</item>
 
         <!-- override toolbar button individual colours -->
 
@@ -1757,6 +1761,148 @@
          <item name="reusable_toolbar_button_wizard_edge_dark_color">@color/colorful_lime_ultra_dark</item>
           <item name="reusable_toolbar_button_wizard_face_end_color">@color/colorful_cyan</item>
         <item name="reusable_toolbar_button_wizard_face_start_color">@color/colorful_lime</item>
+
+    </style>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'New ultra' theme. -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_new_ultra" parent="app_theme_reusable">
+
+        <!-- General theme colours -->
+
+        <item name="reusable_spinner_divider_color">@color/ultra_light</item>
+        <item name="reusable_spinner_background_color">@color/ultra_very_dark</item>
+
+        <item name="reusable_divider_color">@color/ultra_light</item>
+        <item name="reusable_app_background_color">@color/ultra_ultra_dark</item>
+        <item name="reusable_app_background_highlight_color">@color/ultra_dark</item>
+        <item name="reusable_app_background_highlight_secondary_color">@color/ultra</item>
+        <item name="reusable_app_background_highlight_tertiary_color">@color/ultra_light</item>
+
+        <item name="reusable_heading_small_start_color">@color/ultra_light</item>
+        <item name="reusable_heading_small_center_color">@color/ultra</item>
+        <item name="reusable_heading_small_end_color">@color/transparent</item>
+
+        <item name="reusable_radio_button_normal_color">@color/ultra_very_light</item>
+        <item name="reusable_radio_button_activate_color">@color/ultra_blue</item>
+        <item name="reusable_title_text_color">@color/solidWhite</item>
+        <item name="reusable_title_background_color">@color/solidBlack</item>
+        <item name="reusable_small_heading_text_color">@color/solidWhite</item>
+        <item name="reusable_small_heading_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_list_item_text_color">@color/solidWhite</item>
+        <item name="reusable_list_item_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_list_id_text_color">@color/offWhite</item>
+        <item name="reusable_list_extras_text_color">@color/grey</item>
+
+        <item name="reusable_floating_text_color">@color/solidWhite</item>
+        <item name="reusable_floating_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_popup_floating_text_color">@color/solidBlack</item>
+
+        <item name="reusable_button_text_default_color">@color/offWhite</item>
+        <item name="reusable_button_text_enabled_color">@color/solidWhite</item>
+        <item name="reusable_button_text_disabled_color">@color/grey_dark</item>
+        <item name="reusable_select_button_text_disabled_color">@color/solidWhite</item>
+        <item name="reusable_button_text_pressed_color">@color/ultra_blue</item>
+        <item name="reusable_button_text_shadow_color">@color/transparent</item>
+
+        <item name="reusable_stop_button_text_pressed_color">@color/ultra_red</item>
+        <item name="reusable_stop_button_active_light_bar_color">@color/ultra_red_light</item>
+
+        <item name="reusable_button_edge_highlight_color">@color/ultra_light</item>
+        <item name="reusable_button_edge_light_color">@color/ultra</item>
+        <item name="reusable_button_edge_dark_color">@color/ultra_ultra_dark</item>
+        <item name="reusable_button_face_end_color">@color/ultra_light</item>
+        <item name="reusable_button_face_center_color">@color/ultra</item>
+        <item name="reusable_button_face_start_color">@color/ultra_dark</item>
+
+        <!-- function buttons -->
+        <item name="reusable_button_function_edge_highlight_color">@color/ultra_light</item>
+        <item name="reusable_button_function_edge_light_color">@color/ultra</item>
+        <item name="reusable_button_function_edge_dark_color">@color/ultra_ultra_dark</item>
+        <item name="reusable_button_function_face_end_color">@color/ultra_light</item>
+        <item name="reusable_button_function_face_center_color">@color/ultra</item>
+        <item name="reusable_button_function_face_start_color">@color/ultra_dark</item>
+
+        <!-- speed buttons -->
+        <item name="reusable_button_2_edge_highlight_color">@color/ultra_light</item>
+        <item name="reusable_button_2_edge_light_color">@color/ultra</item>
+        <item name="reusable_button_2_edge_dark_color">@color/ultra_ultra_dark</item>
+        <item name="reusable_button_2_face_end_color">@color/ultra_light</item>
+        <item name="reusable_button_2_face_center_color">@color/ultra</item>
+        <item name="reusable_button_2_face_start_color">@color/ultra_dark</item>
+
+        <!-- stop buttons -->
+        <item name="reusable_button_stop_edge_highlight_color">@color/ultra_light</item>
+        <item name="reusable_button_stop_edge_light_color">@color/ultra</item>
+        <item name="reusable_button_stop_edge_dark_color">@color/ultra_ultra_dark</item>
+        <item name="reusable_button_stop_face_end_color">@color/ultra_light</item>
+        <item name="reusable_button_stop_face_center_color">@color/ultra</item>
+        <item name="reusable_button_stop_face_start_color">@color/ultra_dark</item>
+
+        <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
+        <item name="reusable_button_disabled_fill_color">@color/transparent</item>
+
+        <item name="reusable_button_active_light_bar_color">@color/ultra_blue</item>
+        <item name="reusable_button_active_light_rim_color">@color/ultra_yellow</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/ultra_yellow_dark</item>
+
+        <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/solidWhite</item>
+
+        <!-- used for the progress bar on the throttles -->
+        <item name="reusable_progress_bar_fill_75_color">@color/ultra_blue_transparent_75</item>
+        <item name="reusable_progress_bar_fill_50_color">@color/ultra_blue_transparent_50</item>
+        <item name="reusable_progress_bar_fill_25_color">@color/ultra_blue_transparent_25</item>
+
+        <item name="reusable_toolbar_face_end_color">@color/ultra_dark</item>
+        <item name="reusable_toolbar_face_center_color">@color/ultra_very_dark</item>
+        <item name="reusable_toolbar_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_overflow_menu_color">@color/solidWhite</item>
+
+        <!-- used for the glyphs in the menus, categories (preferences) and buttons. -->
+        <!-- See the 'reusable colours' for the toolbar glyph colours -->
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
+        <item name="ed_text_color_primary">@color/solidWhite</item>
+        <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
+        <item name="ed_text_color_secondary">@color/grey_light</item>
+        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
+
+        <item name="ed_primaryLineColor">@color/ultra_ultra_light</item>
+        <item name="ed_secondaryLineColor">@color/ultra_very_light</item>
+
+        <item name="ed_progressBarBackground">@color/ultra_dark</item>
+        <item name="ed_progressBarSelected">@color/ultra_ultra_light</item>
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_color">@color/ultra</item>
+        <item name="reusable_thumb_stroke_color">@color/ultra_blue</item>
+        <item name="ed_throttle_tick_mark">@color/ultra_ultra_light</item>
+
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+
+        <!-- Theme elements -->
+
+        <item name="preferenceTheme">@style/app_theme_new_ultra_preferences</item>
+
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
+
+        <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
+        <item name="reusable_dialog_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
+        <item name="reusable_dialog_button_background_color">@color/grey</item>
+
+        <!-- not sure where this is used -->
+        <item name="android:itemBackground">#ff000000</item>
 
     </style>
 
@@ -1894,6 +2040,30 @@
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>
 
         <item name="reusable_preference_heading_background_color">@color/colorful</item>
+    </style>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Used by the 'New Ultra' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_new_ultra_preferences" parent="@style/app_theme_neon_green">
+        <item name="android:windowBackground">@drawable/reusable_app_background</item>
+
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="android:listSeparatorTextViewStyle">@style/large_heading_style_black</item>
+
+        <!--        <item name="preferenceCategoryStyle">@style/Preference.Category</item>-->
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
+
+        <item name="android:radioButtonStyle">@style/EDRadioButton_reusable</item>
+        <item name="radioButtonStyle">@style/EDRadioButton_reusable</item>
+<!--        <item name="colorControlNormal">?attr/reusable_radio_button_normal_color</item>-->
+<!--        <item name="colorControlActivated">?attr/reusable_radio_button_activate_color</item>-->
     </style>
 
 </resources>

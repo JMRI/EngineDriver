@@ -66,6 +66,7 @@
                             android:layout_gravity="center"
                             android:text="@string/turnoutsSelectionTypeAddress"
                             android:textSize="18sp"
+                            android:checked="true"
                             tools:ignore="RtlHardcoded" />
 
                         <RadioButton

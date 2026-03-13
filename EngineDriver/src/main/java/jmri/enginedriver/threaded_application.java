@@ -2012,10 +2012,9 @@ public class threaded_application extends Application {
             return switch (prefTheme) {
                 case "Black" -> R.style.app_theme_black;
                 case "Outline" -> R.style.app_theme_outline;
-                case "Ultra" -> R.style.app_theme_ultra;
-//                case "Colorful" -> R.style.app_theme_colorful;
+//                case "Ultra" -> R.style.app_theme_ultra;
+                case "Ultra" -> R.style.app_theme_new_ultra;
                 case "Colorful" -> R.style.app_theme_new_colorful;
-//                case "Neon" -> R.style.app_theme_neon;
                 case "Neon" -> R.style.app_theme_neon_blue;
                 case "Green" -> R.style.app_theme_neon_green;
                 case "Muted" -> R.style.app_theme_muted;
@@ -2026,7 +2025,8 @@ public class threaded_application extends Application {
                 case "Black", "Outline" ->
                         R.style.app_theme_black_preferences;
                 case "Ultra" ->
-                        R.style.app_theme_ultra_preferences;
+//                        R.style.app_theme_ultra_preferences;
+                        R.style.app_theme_new_ultra_preferences;
                 case "Neon" ->
 //                        R.style.app_theme_neon_preferences;
                         R.style.app_theme_neon_blue_preferences;

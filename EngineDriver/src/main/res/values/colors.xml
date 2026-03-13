@@ -527,4 +527,30 @@
     <color name="colorful_lime_very_light">#BEFB7F</color>
     <color name="colorful_lime_ultra_light">#E1FFBC</color>
 
+    <!-- new_ultra colours -->
+
+    <color name="ultra_ultra_dark">#000000</color>
+    <color name="ultra_very_dark">#FF181818</color>
+    <color name="ultra_dark">#1D1D1D</color>
+    <color name="ultra">#FF2a2a2a</color>
+    <color name="ultra_light">#3A3A3A</color>
+    <color name="ultra_very_light">#5b5b5b</color>
+    <color name="ultra_ultra_light">#757575</color>
+
+    <color name="ultra_red_dark">#46c20000</color>
+    <color name="ultra_red">#acc20000</color>
+    <color name="ultra_red_light">#acc20000</color>
+
+    <color name="ultra_yellow_dark">#7fffa000</color>
+    <color name="ultra_yellow">#7fffea00</color>
+    <color name="ultra_yellow_light">#ffad02</color>
+
+    <color name="ultra_blue_dark">#7f0074b3</color>
+    <color name="ultra_blue">#ff00b2e1</color>
+
+    <color name="ultra_blue_transparent_75">#BF1ca0ef</color>
+    <color name="ultra_blue_transparent_50">#801ca0ef</color>
+    <color name="ultra_blue_transparent_25">#401ca0ef</color>
+
+
 </resources>
