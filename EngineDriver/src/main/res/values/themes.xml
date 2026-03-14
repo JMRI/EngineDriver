@@ -632,12 +632,12 @@
 
         <item name="actionOverflowButtonStyle">@style/overflow_menu_button_reusable</item>
 
-        <item name="android:textColorPrimary">@color/primary_text_color_selector_reusable</item>
-        <item name="android:textColorSecondary">@color/secondary_text_color_selector_reusable</item>
+        <item name="android:textColorPrimary">@color/reusable_primary_text_color_selector</item>
+        <item name="android:textColorSecondary">@color/reusable_secondary_text_color_selector_reusable</item>
         <item name="android:textColorHint">?attr/ed_text_color_hint</item>
 
-        <item name="android:textColor">@color/primary_text_color_selector_reusable</item>
-        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_reusable</item>
+        <item name="android:textColor">@color/reusable_primary_text_color_selector</item>
+        <item name="android:actionMenuTextColor">@color/reusable_primary_text_color_selector</item>
 
         <item name="ed_throttle_switch_button">@drawable/reusable_toolbar_button_throttle_switch_button</item>
         <item name="ed_preferences_button">@drawable/reusable_toolbar_button_preferences</item>
@@ -984,7 +984,7 @@
 
         <item name="reusable_button_active_light_bar_color">@color/neon_yellow</item>
         <item name="reusable_button_active_light_rim_color">@color/neon_yellow</item>
-        <item name="reusable_button_active_light_rim_2_color">@color/neon_yellow_very_dark</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/solidWhite</item>
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
         <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
@@ -1125,7 +1125,7 @@
 
         <item name="reusable_button_active_light_bar_color">@color/neon_yellow</item>
         <item name="reusable_button_active_light_rim_color">@color/neon_yellow</item>
-        <item name="reusable_button_active_light_rim_2_color">@color/neon_yellow_very_dark</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/neon_green_very_light</item>
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
         <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
@@ -1268,7 +1268,7 @@
 
         <item name="reusable_button_active_light_bar_color">@color/muted_yellow</item>
         <item name="reusable_button_active_light_rim_color">@color/muted_yellow</item>
-        <item name="reusable_button_active_light_rim_2_color">@color/muted_yellow_very_dark</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/muted_yellow_dark</item>
 
         <item name="reusable_button_glyph_fill_color">@color/muted_sepia</item>
         <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
@@ -1293,9 +1293,9 @@
 
         <item name="ed_text_color_primary">@color/muted_sepia</item>
         <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
-        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
-        <item name="ed_text_color_secondary">@color/grey_very_dark</item>
-        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_primary_inverted">@color/muted_sepia_very_light</item>
+        <item name="ed_text_color_secondary">@color/muted_sepia_dark</item>
+        <item name="ed_text_color_hint">@color/grey_dark</item>
         <item name="ed_text_color_disabled">@color/muted</item>
 
         <item name="ed_primaryLineColor">@color/muted_very_dark</item>
@@ -1421,8 +1421,8 @@
         <item name="reusable_button_disabled_fill_color">@color/transparent</item>
 
         <item name="reusable_button_active_light_bar_color">@color/colorful_yellow_very_light</item>
-        <item name="reusable_button_active_light_rim_color">@color/solidWhite</item>
-        <item name="reusable_button_active_light_rim_2_color">@color/colorful_yellow_ultra_light</item>
+        <item name="reusable_button_active_light_rim_color">@color/colorful_yellow_ultra_light</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/colorful_yellow_dark</item>
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
         <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
@@ -1661,7 +1661,7 @@
 
         <item name="reusable_button_active_light_bar_color">@color/ultra_blue</item>
         <item name="reusable_button_active_light_rim_color">@color/ultra_yellow</item>
-        <item name="reusable_button_active_light_rim_2_color">@color/ultra_yellow_dark</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/ultra_blue_light</item>
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
         <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
@@ -1816,7 +1816,8 @@
 
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>
 
-        <item name="reusable_preference_heading_background_color">@color/colorful</item>
+        <item name="reusable_preference_heading_background_color">@color/muted_dark</item>
+        <item name="colorAccent">@color/muted_sepia_dark</item>
 
     </style>
 

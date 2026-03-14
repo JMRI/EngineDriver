@@ -378,8 +378,11 @@
     <color name="muted_transparent_50">#80eddcd2</color>
     <color name="muted_transparent_25">#40eddcd2</color>
 
+    <color name="muted_sepia_very_light">#a97444</color>
+    <color name="muted_sepia_light">#865526</color>
     <color name="muted_sepia">#704214</color>
     <color name="muted_sepia_dark">#472A0C</color>
+    <color name="muted_sepia_very_dark">#402403</color>
 
     <color name="muted_sepia_transparent_75">#BF704214</color>
     <color name="muted_sepia_transparent_50">#80704214</color>
@@ -556,6 +559,7 @@
 
     <color name="ultra_blue_dark">#7f0074b3</color>
     <color name="ultra_blue">#ff00b2e1</color>
+    <color name="ultra_blue_light">#24bbfe</color>
 
     <color name="ultra_blue_transparent_75">#BF1ca0ef</color>
     <color name="ultra_blue_transparent_50">#801ca0ef</color>
