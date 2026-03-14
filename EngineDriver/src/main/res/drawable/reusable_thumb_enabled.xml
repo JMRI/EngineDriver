@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item>
+    <item
+        android:top="2dp"
+        android:left="2dp"
+        android:right="0dp"
+        android:bottom="0dp">
         <shape
             android:shape="rectangle">
             <solid android:color="@color/transparent"/>
             <stroke
-                android:width="@dimen/buttonFnStroke_outline"
+                android:width="@dimen/reusable_thumb_shadow_width"
+                android:color="?attr/reusable_thumb_shadow_color"
+                />
+            <size
+                android:width="20dp"
+                android:height="40dp" />
+            <corners android:radius="4dp" />
+
+        </shape>
+    </item>
+
+    <item
+        android:top="0dp"
+        android:left="0dp"
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape
+            android:shape="rectangle">
+            <solid android:color="?attr/reusable_thumb_fill_outer_color"/>
+            <stroke
+                android:width="@dimen/reusable_thumb_stroke_width"
                 android:color="?attr/reusable_thumb_stroke_color"
                 />
             <size
@@ -18,16 +42,16 @@
     </item>
 
     <item
-        android:top="@dimen/buttonFnSelectedInsideStrokePadding_outline"
-        android:left="@dimen/buttonFnSelectedInsideStrokePadding_outline"
-        android:right="@dimen/buttonFnSelectedInsideStrokePadding_outline"
-        android:bottom="@dimen/buttonFnSelectedInsideStrokePadding_outline">
+        android:top="3dp"
+        android:left="3dp"
+        android:right="5dp"
+        android:bottom="5dp">
 
         <shape
                 android:shape="rectangle">
-                <solid android:color="?attr/reusable_thumb_fill_color" />
+                <solid android:color="?attr/reusable_thumb_fill_inner_color" />
             <stroke
-                android:width="@dimen/buttonFnStroke_outline"
+                android:width="@dimen/reusable_thumb_stroke_width"
                 android:color="?attr/reusable_thumb_stroke_color"
                 />
             <size
@@ -38,13 +62,17 @@
         </shape>
     </item>
 
-    <item >
+    <item
+        android:top="0dp"
+        android:left="3dp"
+        android:right="5dp"
+        android:bottom="3dp">
         <rotate android:fromDegrees="90">
         <shape
             android:shape="line">
             <stroke
                 android:rotation="90"
-                android:width="@dimen/buttonFnStroke_outline"
+                android:width="@dimen/reusable_thumb_stroke_width"
                 android:color="?attr/reusable_thumb_stroke_color"
                 />
         </shape>

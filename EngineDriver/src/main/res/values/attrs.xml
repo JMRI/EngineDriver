@@ -248,8 +248,10 @@
     <attr name="reusable_progress_bar_fill_50_color" format="reference" />
     <attr name="reusable_progress_bar_fill_25_color" format="reference" />
 
-    <attr name="reusable_thumb_fill_color" format="reference" />
+    <attr name="reusable_thumb_fill_inner_color" format="reference" />
+    <attr name="reusable_thumb_fill_outer_color" format="reference" />
     <attr name="reusable_thumb_stroke_color" format="reference" />
+    <attr name="reusable_thumb_shadow_color" format="reference" />
 
     <attr name="reusable_toolbar_face_start_color" format="reference" />
     <attr name="reusable_toolbar_face_center_color" format="reference" />

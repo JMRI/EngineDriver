@@ -891,6 +891,13 @@
         <item name="reusable_toolbar_button_wizard_face_end_color">?attr/reusable_button_face_end_color</item>
         <item name="reusable_toolbar_button_wizard_face_start_color">?attr/reusable_button_face_start_color</item>
 
+        <!-- thumb default colours -->
+        <item name="reusable_thumb_fill_inner_color">@color/solidBlack</item>
+        <item name="reusable_thumb_fill_outer_color">@color/transparent</item>
+        <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
+        <item name="reusable_thumb_shadow_color">@color/transparent</item>
+
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1014,7 +1021,7 @@
         <item name="ed_progressBarSelected">@color/neon_blue</item>
 
         <!-- slider colours -->
-        <item name="reusable_thumb_fill_color">@color/neon_blue</item>
+        <item name="reusable_thumb_fill_inner_color">@color/neon_blue</item>
         <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
@@ -1155,7 +1162,7 @@
         <item name="ed_progressBarSelected">@color/neon_green</item>
 
         <!-- slider colours -->
-        <item name="reusable_thumb_fill_color">@color/neon_green</item>
+        <item name="reusable_thumb_fill_inner_color">@color/neon_green</item>
         <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
@@ -1298,8 +1305,10 @@
         <item name="ed_progressBarSelected">@color/muted</item>
 
         <!-- slider colours -->
-        <item name="reusable_thumb_fill_color">@color/muted_blue_light</item>
+        <item name="reusable_thumb_fill_inner_color">@color/muted_blue_light</item>
+        <item name="reusable_thumb_fill_outer_color">@color/muted_light</item>
         <item name="reusable_thumb_stroke_color">@color/muted_blue_very_dark</item>
+        <item name="reusable_thumb_shadow_color">@color/muted_mauve_very_dark_25</item>
         <item name="ed_throttle_tick_mark">@color/muted_sepia_dark</item>
 
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
@@ -1451,8 +1460,10 @@
         <item name="ed_progressBarSelected">@color/colorful</item>
 
         <!-- slider colours -->
-        <item name="reusable_thumb_fill_color">@color/colorful_tan</item>
+        <item name="reusable_thumb_fill_inner_color">@color/colorful_tan</item>
+        <item name="reusable_thumb_fill_outer_color">@color/colorful_tan_ultra_light</item>
         <item name="reusable_thumb_stroke_color">@color/colorful_blue_dark</item>
+        <item name="reusable_thumb_shadow_color">@color/colorful_tan_ultra_dark_25</item>
         <item name="ed_throttle_tick_mark">@color/grey_dark</item>
 
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
@@ -1687,7 +1698,7 @@
         <item name="ed_progressBarSelected">@color/ultra_ultra_light</item>
 
         <!-- slider colours -->
-        <item name="reusable_thumb_fill_color">@color/ultra</item>
+        <item name="reusable_thumb_fill_inner_color">@color/ultra</item>
         <item name="reusable_thumb_stroke_color">@color/ultra_blue</item>
         <item name="ed_throttle_tick_mark">@color/ultra_ultra_light</item>
 
@@ -1784,6 +1795,8 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>
+
+        <item name="reusable_preference_heading_background_color">@color/neon_green_ultra_light</item>
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1823,6 +1836,8 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>
+
+        <item name="reusable_preference_heading_background_color">@color/solidWhite</item>
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1865,8 +1880,6 @@
 
         <item name="android:radioButtonStyle">@style/EDRadioButton_reusable</item>
         <item name="radioButtonStyle">@style/EDRadioButton_reusable</item>
-<!--        <item name="colorControlNormal">?attr/reusable_radio_button_normal_color</item>-->
-<!--        <item name="colorControlActivated">?attr/reusable_radio_button_activate_color</item>-->
     </style>
 
 </resources>

@@ -5,7 +5,7 @@
         <shape android:shape="rectangle">
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
-                android:width="@dimen/buttonDisabledStroke_neon"
+                android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_disabled_stroke_color" />
             <solid android:color="?attr/reusable_button_disabled_fill_color" />
         </shape>

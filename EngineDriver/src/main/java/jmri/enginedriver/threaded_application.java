@@ -1431,7 +1431,8 @@ public class threaded_application extends Application {
         MenuItem menuItem = menu.findItem(R.id.powerLayoutButton);
         if (menuItem == null) return;
 
-        if (prefs.getBoolean("prefShowLayoutPowerButton", false) && (power_state != null)) {
+        if ( (prefs.getBoolean("prefShowLayoutPowerButton", false) && (power_state != null))
+            && (!mainapp.connectedHostName.isEmpty()) ) {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1760,7 +1761,8 @@ public class threaded_application extends Application {
         MenuItem mi = menu.findItem(R.id.emergency_stop_button);
         if (mi == null) return;
 
-        if (prefs.getBoolean("prefShowEmergencyStopButton", false)) {
+        if ( (prefs.getBoolean("prefShowEmergencyStopButton", false))
+        && (!mainapp.connectedHostName.isEmpty()) ) {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;

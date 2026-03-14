@@ -191,7 +191,7 @@
 
     <dimen name="buttonStopDisabledStroke_neon">1px</dimen>
     <dimen name="buttonStopSelectedStroke_neon">1px</dimen>
-    <dimen name="buttonStopSelectedInsideStroke_neon">2dp</dimen>
+<!--    <dimen name="buttonStopSelectedInsideStroke_neon">2dp</dimen>-->
     <dimen name="buttonStopSelectedInsideStrokePadding_neon">2dp</dimen>
     <dimen name="buttonStopStroke_neon">1dp</dimen>
     <dimen name="buttonStopCornerRadius_neon">3dp</dimen>
@@ -200,12 +200,12 @@
 
     <!-- Reusable theme -->
 
-    <dimen name="reusable_button_corner_radius">3dp</dimen>
+    <dimen name="reusable_button_corner_radius">4dp</dimen>
 
     <dimen name="reusable_button_stroke_width">2dp</dimen>
     <dimen name="reusable_button_active_stroke_top_left_light">0dp</dimen>
     <dimen name="reusable_button_active_stroke_top_left_highlight">1dp</dimen>
-    <dimen name="reusable_button_active_stroke_top_left_dark">4dp</dimen>
+    <dimen name="reusable_button_active_stroke_top_left_dark">3dp</dimen>
     <dimen name="reusable_button_active_fill_top_left">2dp</dimen>
     <dimen name="reusable_button_active_fill_bottom_right">2dp</dimen>
 
@@ -220,6 +220,9 @@
     <dimen name="reusable_button_pressed_stroke_bottom_left_light">1dp</dimen>
     <dimen name="reusable_button_pressed_fill_top_left">2dp</dimen>
     <dimen name="reusable_button_pressed_fill_bottom_right">2dp</dimen>
+
+    <dimen name="reusable_thumb_stroke_width">1dip</dimen>
+    <dimen name="reusable_thumb_shadow_width">5dp</dimen>
 
     <!-- Muted theme -->
 
