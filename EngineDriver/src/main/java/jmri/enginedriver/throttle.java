@@ -1987,6 +1987,8 @@ public class throttle extends AppCompatActivity implements
     // process WiT speed report
     // update speed slider if didn't just send a speed update to WiT
     void speedUpdateWiT(int whichThrottle, int speedWiT) {
+        if (whichThrottle >= mainapp.maxThrottlesCurrentScreen) return; //ignore it. Probably changed to a throttle layout that has fewer throttles.
+
         if (speedWiT < 0) speedWiT = 0;
         if (!changeTimers[whichThrottle].delayInProg) {
 //            threaded_application.extendedLogging(activityName + ": speedUpdateWiT(): set speed: " + speedWiT);
