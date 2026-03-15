@@ -230,7 +230,8 @@
     <!-- Muted theme -->
 
     <dimen name="button_corner_radius_muted">12dp</dimen>
-
+    <dimen name="reusable_button_active_stroke_top_left_light_muted">1dp</dimen>
+    <dimen name="reusable_button_active_stroke_top_left_highlight_muted">2dp</dimen>
     <!-- new_colorful theme -->
 
     <dimen name="button_corner_radius_colorful">6dp</dimen>

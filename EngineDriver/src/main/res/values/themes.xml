@@ -804,6 +804,10 @@
         <item name="preferenceCategoryBackgroundColor">@drawable/reusable_preference_heading_background</item>
         <item name="reusable_preference_heading_background_color">@color/solidWhite</item>
 
+        <!-- button dimension overrides -->
+        <item name="reusable_button_active_stroke_top_left_light_dimen">@dimen/reusable_button_active_stroke_top_left_light</item>
+        <item name="reusable_button_active_stroke_top_left_highlight_dimen">@dimen/reusable_button_active_stroke_top_left_highlight</item>
+
         <!-- toolbar button individual colours -->
 
         <item name="reusable_toolbar_button_stop_edge_highlight_color">?attr/reusable_button_edge_highlight_color</item>
@@ -1274,6 +1278,10 @@
         <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
         <item name="reusable_preference_glyph_stroke_color">@color/muted_sepia</item>
 
+        <!-- button dimension overrides -->
+        <item name="reusable_button_active_stroke_top_left_light_dimen">@dimen/reusable_button_active_stroke_top_left_light_muted</item>
+        <item name="reusable_button_active_stroke_top_left_highlight_dimen">@dimen/reusable_button_active_stroke_top_left_highlight_muted</item>
+
         <!-- used for the progress bar on the throttles -->
         <item name="reusable_progress_bar_fill_75_color">@color/muted_sepia_transparent_75</item>
         <item name="reusable_progress_bar_fill_50_color">@color/muted_sepia_transparent_50</item>
@@ -1387,7 +1395,7 @@
 
         <!-- general buttons -->
         <item name="reusable_button_edge_highlight_color">@color/colorful_tan_very_light</item>
-        <item name="reusable_button_edge_light_color">@color/colorful_tan_light</item>
+        <item name="reusable_button_edge_light_color">@color/transparent</item>
         <item name="reusable_button_edge_dark_color">@color/colorful_tan_very_dark</item>
         <item name="reusable_button_face_end_color">@color/colorful_tan_light</item>
         <item name="reusable_button_face_center_color">@color/colorful_tan</item>

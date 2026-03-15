@@ -403,6 +403,8 @@
     <color name="muted_blue_light">#b9c3df</color>
     <color name="muted_blue_very_light">#c9d4f0</color>
 
+    <color name="muted_blue_light_50">#80b9c3df</color>
+
     <color name="muted_cream_very_dark">#FF4C02</color>
     <color name="muted_cream_dark">#FF9369</color>
     <color name="muted_cream">#FFC6B0</color>
