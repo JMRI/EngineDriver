@@ -3096,14 +3096,14 @@
         <item>@id/loco_label_4</item>
         <item>@id/loco_label_5</item>
     </array>
-     <array name="loco_left_direction_indication_resource_ids">
-        <item>@id/loco_left_direction_indication_0</item>
-        <item>@id/loco_left_direction_indication_1</item>
-        <item>@id/loco_left_direction_indication_2</item>
-        <item>@id/loco_left_direction_indication_3</item>
-        <item>@id/loco_left_direction_indication_4</item>
-        <item>@id/loco_left_direction_indication_5</item>
-    </array>
+<!--     <array name="loco_left_direction_indication_resource_ids">-->
+<!--        <item>@id/loco_left_direction_indication_0</item>-->
+<!--        <item>@id/loco_left_direction_indication_1</item>-->
+<!--        <item>@id/loco_left_direction_indication_2</item>-->
+<!--        <item>@id/loco_left_direction_indication_3</item>-->
+<!--        <item>@id/loco_left_direction_indication_4</item>-->
+<!--        <item>@id/loco_left_direction_indication_5</item>-->
+<!--    </array>-->
     <array  name="loco_lower_resource_ids">
         <item>@id/loco_lower_0</item>
         <item>@id/loco_lower_1</item>
@@ -3112,14 +3112,14 @@
         <item>@id/loco_lower_4</item>
         <item>@id/loco_lower_5</item>
     </array>
-    <array name="loco_right_direction_indication_resource_ids">
-        <item>@id/loco_right_direction_indication_0</item>
-        <item>@id/loco_right_direction_indication_1</item>
-        <item>@id/loco_right_direction_indication_2</item>
-        <item>@id/loco_right_direction_indication_3</item>
-        <item>@id/loco_right_direction_indication_4</item>
-        <item>@id/loco_right_direction_indication_5</item>
-    </array>
+<!--    <array name="loco_right_direction_indication_resource_ids">-->
+<!--        <item>@id/loco_right_direction_indication_0</item>-->
+<!--        <item>@id/loco_right_direction_indication_1</item>-->
+<!--        <item>@id/loco_right_direction_indication_2</item>-->
+<!--        <item>@id/loco_right_direction_indication_3</item>-->
+<!--        <item>@id/loco_right_direction_indication_4</item>-->
+<!--        <item>@id/loco_right_direction_indication_5</item>-->
+<!--    </array>-->
     <array  name="loco_upper_resource_ids">
         <item>@id/loco_upper_0</item>
         <item>@id/loco_upper_1</item>

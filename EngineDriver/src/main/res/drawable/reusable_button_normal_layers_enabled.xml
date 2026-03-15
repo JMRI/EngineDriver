@@ -16,7 +16,8 @@
     <item
         android:top="@dimen/reusable_button_active_stroke_top_left_highlight"
         android:left="@dimen/reusable_button_active_stroke_top_left_highlight"
-        android:right="0px" android:bottom="0px">
+        android:right="@dimen/reusable_button_active_stroke_bottom_right_highlight"
+        android:bottom="@dimen/reusable_button_active_stroke_bottom_right_highlight">
         <shape android:shape="rectangle"  >
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke android:width="@dimen/reusable_button_stroke_width"
@@ -33,7 +34,7 @@
             <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_edge_dark_color" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="?attr/reusable_button_face_start_color" />
         </shape>
     </item>
 

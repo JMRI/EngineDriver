@@ -1,6 +1,6 @@
 **Version 2.42.222
  * New Features
-     * New 'Neon Green' and 'Muted' themes
+     * New 'Neon Green' and 'Muted' themes  ('Muted' appears as 'Paper' in the menu.)
  * Bug fixes
      * Bug fix for muted IPLS sounds restarting when going to another screen
  * Other
@@ -9,10 +9,10 @@
        Removed a number of unnecessary broadcasts to all activities.
        Mostly isolated the incoming DCC-EX processing from the WiThrottle processing.
        DCC-EX and WiThrottle send and receive methods moved to separate classes.
-     * Created a generic 'reusable' theme to make it easy to add new themes
-     * Altered the 'neon blue' theme so that it uses the generic 'reusable' theme
-     * Altered the 'colourful' theme so that it uses the generic 'reusable' theme. Appears as 'Paper'
-     * Altered the 'ultra' (Dark) theme so that it uses the generic 'reusable' theme.
+     * Created a generic 'reusable' theme to make it easy to add new themes.
+     * Altered the 'neon blue', 'colourful' and 'ultra' (Dark) themes so they use the generic 'reusable' theme.
+     * Removed some textViews in all the throttles (behind the fwd/rev buttons) that could never be seen.
+     * Simplified part of all the throttles in all the views (related to the fwd/rev buttons).
 **Version 2.42.220
  * Bug fixes
     * Bug fix for the Consist Edit and Consist Light Edit screens on early versions of Android

@@ -986,6 +986,7 @@ public class throttle extends AppCompatActivity implements
 
                         //ipls equivalents
                         if (((function >= 1) && function <= 2)
+                                && (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)
                                 && (!mainapp.prefDeviceSounds[whichThrottle].equals("none"))
                                 && (mainapp.prefDeviceSoundsF1F2ActivateBellHorn)) {
                             if (function == 1) {
@@ -1909,8 +1910,8 @@ public class throttle extends AppCompatActivity implements
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             bForwards[throttleIndex].setText(FullLeftText[throttleIndex]);
             bReverses[throttleIndex].setText(FullRightText[throttleIndex]);
-            tvLeftDirectionIndicators[throttleIndex].setText(dirLeftIndicationText[throttleIndex]);
-            tvRightDirectionIndicators[throttleIndex].setText(dirRightIndicationText[throttleIndex]);
+//            tvLeftDirectionIndicators[throttleIndex].setText(dirLeftIndicationText[throttleIndex]);
+//            tvRightDirectionIndicators[throttleIndex].setText(dirRightIndicationText[throttleIndex]);
         }
     }
 
@@ -5894,8 +5895,8 @@ public class throttle extends AppCompatActivity implements
         TypedArray button_select_loco_resource_ids = getResources().obtainTypedArray(R.array.button_select_loco_resource_ids);
         TypedArray loco_label_resource_ids = getResources().obtainTypedArray(R.array.loco_label_resource_ids);
 
-        TypedArray loco_left_direction_indication_resource_ids = getResources().obtainTypedArray(R.array.loco_left_direction_indication_resource_ids);
-        TypedArray loco_right_direction_indication_resource_ids = getResources().obtainTypedArray(R.array.loco_right_direction_indication_resource_ids);
+//        TypedArray loco_left_direction_indication_resource_ids = getResources().obtainTypedArray(R.array.loco_left_direction_indication_resource_ids);
+//        TypedArray loco_right_direction_indication_resource_ids = getResources().obtainTypedArray(R.array.loco_right_direction_indication_resource_ids);
 
         TypedArray button_fwd_resource_ids = getResources().obtainTypedArray(R.array.button_fwd_resource_ids);
         TypedArray button_stop_resource_ids = getResources().obtainTypedArray(R.array.button_stop_resource_ids);
@@ -5923,8 +5924,8 @@ public class throttle extends AppCompatActivity implements
 //            bSelects[throttleIndex].setOnTouchListener(sfbt);
             bSelects[throttleIndex].setOnLongClickListener(selectFunctionButtonTouchListener);  // Consist Light Edit
 
-            tvLeftDirectionIndicators[throttleIndex] = findViewById(loco_left_direction_indication_resource_ids.getResourceId(throttleIndex,0));
-            tvRightDirectionIndicators[throttleIndex] = findViewById(loco_right_direction_indication_resource_ids.getResourceId(throttleIndex,0));
+//            tvLeftDirectionIndicators[throttleIndex] = findViewById(loco_left_direction_indication_resource_ids.getResourceId(throttleIndex,0));
+//            tvRightDirectionIndicators[throttleIndex] = findViewById(loco_right_direction_indication_resource_ids.getResourceId(throttleIndex,0));
 
             // Arrow Keys
             try {
@@ -6234,8 +6235,8 @@ public class throttle extends AppCompatActivity implements
         left_speed_button_resource_ids .recycle();
         button_select_loco_resource_ids.recycle();
         loco_label_resource_ids.recycle();
-        loco_left_direction_indication_resource_ids.recycle();
-        loco_right_direction_indication_resource_ids.recycle();
+//        loco_left_direction_indication_resource_ids.recycle();
+//        loco_right_direction_indication_resource_ids.recycle();
         button_fwd_resource_ids.recycle();
         button_stop_resource_ids.recycle();
         button_rev_resource_ids.recycle();

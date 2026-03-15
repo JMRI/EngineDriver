@@ -3,9 +3,9 @@
 
     <item android:state_enabled="false">
         <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonStopCornerRadius_neon" />
+            <corners android:radius="?attr/reusable_button_corner_radius" />
             <stroke
-                android:width="@dimen/buttonStopDisabledStroke_neon"
+                android:width="@dimen/reusable_button_disabled_stroke_width"
                 android:color="?attr/reusable_button_disabled_stroke_color" />
             <solid android:color="?attr/reusable_button_disabled_fill_color" />
         </shape>

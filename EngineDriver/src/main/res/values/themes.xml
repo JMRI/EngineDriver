@@ -1263,7 +1263,7 @@
         <item name="reusable_button_stop_face_center_color">@color/muted_mauve</item>
         <item name="reusable_button_stop_face_start_color">@color/muted_mauve_dark</item>
 
-        <item name="reusable_button_disabled_stroke_color">@color/grey</item>
+        <item name="reusable_button_disabled_stroke_color">@color/grey_light</item>
         <item name="reusable_button_disabled_fill_color">@color/transparent</item>
 
         <item name="reusable_button_active_light_bar_color">@color/muted_yellow</item>
