@@ -434,17 +434,17 @@ public class throttle_original extends throttle {
 
                     if (mainapp.prefNumThrottles == 2) {
                         if (throttlesInUseCount <= 1) {
-                            activeHeight = height - llLocoIdAndSpeedViewGroups[0].getHeight();
+                            activeHeight = height - inactiveHeight;
                         } else {  // equals 2
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / 2;
+                            activeHeight = height / 2;
                         }
                     } else { // equals 3
                         if (throttlesInUseCount <= 1) {
-                            activeHeight = height - (llLocoIdAndSpeedViewGroups[0].getHeight() * 2);
+                            activeHeight = height - (inactiveHeight * 2);
                         } else if (throttlesInUseCount == 2) {
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / 2;
-                        } else {  // equals 3
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / 3;
+                            activeHeight = (height - inactiveHeight) /2;
+                        } else {  // equals 3 in use
+                            activeHeight = height / 3;
                         }
                     }
                     for (int i = 0; i < mainapp.prefNumThrottles; i++) {

@@ -4,6 +4,7 @@
  * Bug fixes
      * Bug fix for muted IPLS sounds restarting when going to another screen
      * Bug fix for the 'simple' layout not showing the correct space for the optional function button area.
+     * Bug fix for the 'original' and 'horizontal switching' layouts leaving a blank space at the bottom of the screen when three locos selected.
  * Other
      * Major changes in the way that inter-activity communication works (now uses Bundles)
        Removed a number of unnecessary and/or repetitive calls to comm_handler.
@@ -1086,7 +1087,6 @@
  *   TODO: rewrite readTimer logic, to start back up rather than creating a new one
  *   TODO: check for error on send and do something with it
  * throttle:
- *   TODO: miscalculation of available space on seceen for 'original'&'horizontal_switching'-when 3rd loco selected
  *   TODO: Add option to send a real eStop
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
  *   TODO: add random speed adjustments (to avoid monotonous sound)

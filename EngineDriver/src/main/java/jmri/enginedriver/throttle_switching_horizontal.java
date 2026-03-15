@@ -911,12 +911,12 @@ public class throttle_switching_horizontal extends throttle {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};
 
-        int height = getAvailableScreenHeight();
+        double height = getAvailableScreenHeight();
 
         if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
 
             if (mainapp.prefNumThrottles == 1) {        // just one throttle
-                throttleHeights[0] = height;
+                throttleHeights[0] = (int) height;
             } else {
                 boolean[] throttlesInUse = {false, false, false, false, false, false};
                 int throttlesInUseCount = 0;
@@ -936,17 +936,17 @@ public class throttle_switching_horizontal extends throttle {
 
                     if (mainapp.prefNumThrottles == 2) {
                         if (throttlesInUseCount <= 1) {
-                            activeHeight = height - llLocoIdAndSpeedViewGroups[0].getHeight();
+                            activeHeight = height - inactiveHeight;
                         } else {  // equals 2
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / (float) 2;
+                            activeHeight = height / 2;
                         }
                     } else { // equals 3
                         if (throttlesInUseCount <= 1) {
-                            activeHeight = height - (llLocoIdAndSpeedViewGroups[0].getHeight() * 2);
+                            activeHeight = height - (inactiveHeight * 2);
                         } else if (throttlesInUseCount == 2) {
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / (float) 2;
-                        } else {  // equals 3
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / (float) 3;
+                            activeHeight = (height - inactiveHeight) /2;
+                        } else {  // equals 3 in use
+                            activeHeight = height / 3;
                         }
                     }
                     for (int i = 0; i < mainapp.prefNumThrottles; i++) {
