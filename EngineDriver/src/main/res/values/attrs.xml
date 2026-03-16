@@ -276,6 +276,9 @@
     <attr name="reusable_toolbar_button_stop_edge_dark_color" format="reference" />
     <attr name="reusable_toolbar_button_stop_face_end_color" format="reference" />
     <attr name="reusable_toolbar_button_stop_face_start_color" format="reference" />
+    <attr name="reusable_toolbar_button_stop_hand_color" format="reference" />
+    <attr name="reusable_toolbar_button_stop_hand_active_color" format="reference" />
+    <attr name="reusable_toolbar_button_stop_spotlight_active_color" format="reference" />
 
     <attr name="reusable_toolbar_button_cv19_consist_edge_highlight_color" format="reference" />
     <attr name="reusable_toolbar_button_cv19_consist_edge_dark_color" format="reference" />

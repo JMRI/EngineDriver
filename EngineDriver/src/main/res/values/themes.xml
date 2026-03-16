@@ -270,8 +270,11 @@
 
         <item name="reusable_toolbar_button_stop_edge_highlight_color">@color/solidWhite</item>
         <item name="reusable_toolbar_button_stop_edge_dark_color">@color/solidBlack</item>
-        <item name="reusable_toolbar_button_stop_face_end_color">@color/solidWhite</item>
-        <item name="reusable_toolbar_button_stop_face_start_color">@color/grey_light</item>
+        <item name="reusable_toolbar_button_stop_face_end_color">@color/buttonStopSelectedFillGradiantDark_original</item>
+        <item name="reusable_toolbar_button_stop_face_start_color">@color/buttonStopSelectedFillGradiantCenter_original</item>
+        <item name="reusable_toolbar_button_stop_hand_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_stop_hand_active_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_stop_spotlight_active_color">@color/solidWhite</item>
 
         <item name="reusable_toolbar_button_cv19_consist_edge_highlight_color">@color/solidWhite</item>
         <item name="reusable_toolbar_button_cv19_consist_edge_dark_color">@color/colorful_green_dark</item>
@@ -948,6 +951,9 @@
         <item name="reusable_toolbar_button_stop_edge_dark_color">?attr/reusable_button_edge_dark_color</item>
         <item name="reusable_toolbar_button_stop_face_end_color">?attr/reusable_button_face_end_color</item>
         <item name="reusable_toolbar_button_stop_face_start_color">?attr/reusable_button_face_start_color</item>
+        <item name="reusable_toolbar_button_stop_hand_color">@color/red</item>
+        <item name="reusable_toolbar_button_stop_hand_active_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_stop_spotlight_active_color">@color/red</item>
 
         <item name="reusable_toolbar_button_cv19_consist_edge_highlight_color">?attr/reusable_button_edge_highlight_color</item>
         <item name="reusable_toolbar_button_cv19_consist_edge_dark_color">?attr/reusable_button_edge_dark_color</item>
@@ -1644,10 +1650,13 @@
 
         <!-- override toolbar button individual colours -->
 
-        <item name="reusable_toolbar_button_stop_edge_highlight_color">@color/solidWhite</item>
-        <item name="reusable_toolbar_button_stop_edge_dark_color">@color/solidBlack</item>
-        <item name="reusable_toolbar_button_stop_face_end_color">@color/solidWhite</item>
-        <item name="reusable_toolbar_button_stop_face_start_color">@color/grey_light</item>
+        <item name="reusable_toolbar_button_stop_edge_highlight_color">@color/colorful_red_ultra_light</item>
+        <item name="reusable_toolbar_button_stop_edge_dark_color">@color/colorful_red_ultra_dark</item>
+        <item name="reusable_toolbar_button_stop_face_end_color">@color/red</item>
+        <item name="reusable_toolbar_button_stop_face_start_color">@color/colorful_red_dark</item>
+        <item name="reusable_toolbar_button_stop_hand_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_stop_hand_active_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_stop_spotlight_active_color">@color/solidWhite</item>
 
         <item name="reusable_toolbar_button_cv19_consist_edge_highlight_color">@color/solidWhite</item>
         <item name="reusable_toolbar_button_cv19_consist_edge_dark_color">@color/colorful_green_dark</item>
