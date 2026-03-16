@@ -34,28 +34,28 @@
                     <Button
                         android:id="@+id/device_sounds_mute_1"
                         style="?attr/ed_fn_button_style"
-                        app:drawableStartCompat="@drawable/in_device_sounds_button_icon_states"
+                        app:drawableStartCompat="@drawable/glyph_button_ipls_states"
                         android:text="@string/deviceSoundsMuteButton"
                         tools:ignore="RtlHardcoded" />
 
                     <Button
                         android:id="@+id/device_sounds_bell_1"
                         style="?attr/ed_fn_button_style"
-                        app:drawableStartCompat="@drawable/in_device_sounds_bell_button_icon_states"
+                        app:drawableStartCompat="@drawable/glyph_button_ipls_bell_states"
                         android:text="@string/functionButton01DefaultValue"
                         tools:ignore="RtlHardcoded" />
 
                     <Button
                         android:id="@+id/device_sounds_horn_1"
                         style="?attr/ed_fn_button_style"
-                        app:drawableStartCompat="@drawable/in_device_sounds_horn_button_icon_states"
+                        app:drawableStartCompat="@drawable/glyph_button_ipls_horn_states"
                         android:text="@string/functionButton02DefaultValue"
                         tools:ignore="RtlHardcoded" />
 
                     <Button
                         android:id="@+id/device_sounds_horn_short_1"
                         style="?attr/ed_fn_button_style"
-                        app:drawableStartCompat="@drawable/in_device_sounds_horn_button_icon_states"
+                        app:drawableStartCompat="@drawable/glyph_button_ipls_horn_states"
                         android:text="@string/soundsButtonHornShortDefaultValue"
                         tools:ignore="RtlHardcoded" />
                 </TableRow>

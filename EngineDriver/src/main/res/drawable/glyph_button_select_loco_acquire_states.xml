@@ -3,10 +3,10 @@
 
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/read_glyph_disabled" />
+        android:drawable="@drawable/glyph_button_select_loco_acquire_disabled" />
 
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/read_glyph" />
+        android:drawable="@drawable/glyph_button_select_loco_acquire" />
 
 </selector>

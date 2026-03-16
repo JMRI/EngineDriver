@@ -3,10 +3,10 @@
 
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/in_device_sounds_button_icon_disabled" />
+        android:drawable="@drawable/glyph_button_next_disabled" />
 
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/in_device_sounds_button_icon" />
+        android:drawable="@drawable/glyph_button_next" />
 
 </selector>

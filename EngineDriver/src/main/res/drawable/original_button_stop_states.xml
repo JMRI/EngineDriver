@@ -13,7 +13,7 @@
 
    <item
        android:state_enabled="false"
-       android:drawable="@drawable/original_button_layers_disabled" />
+       android:drawable="@drawable/original_button_disabled" />
    <item
       android:state_pressed="true"
       android:state_enabled="true"

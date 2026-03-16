@@ -29,7 +29,7 @@
     <item name="android:padding">2dp</item>
     <item name="android:layout_width">0dp</item>
 
-    <item name="android:background">@drawable/original_sticky_button_states</item>
+    <item name="android:background">@drawable/original_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -43,7 +43,7 @@
   </style>
 
   <style name="stop_button_style" parent="large_button_style">
-    <item name="android:background">@drawable/original_stop_button_states</item>
+    <item name="android:background">@drawable/original_button_stop_states</item>
   </style>
 
   <style name="normal_button_style" parent="@android:style/Widget.Button">
@@ -51,7 +51,7 @@
     <item name="android:textSize">18sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/original_sticky_button_states</item>
+    <item name="android:background">@drawable/original_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -83,7 +83,7 @@
     <item name="android:textSize">14sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/original_sticky_button_states</item>
+    <item name="android:background">@drawable/original_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -115,7 +115,7 @@
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">1dp</item>
 
-    <item name="android:background">@drawable/original_sticky_button_states</item>
+    <item name="android:background">@drawable/original_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -288,7 +288,7 @@
     <item name="android:layout_width">0dp</item>
     <item name="android:layout_marginBottom">2dp</item>
     <item name="android:layout_marginTop">4dp</item>
-    <item name="android:background">@drawable/original_sticky_button_states</item>
+    <item name="android:background">@drawable/original_button_states</item>
     <item name="android:shadowColor">#88ffffff</item>
     <item name="android:shadowDx">2</item>
     <item name="android:shadowDy">2</item>
@@ -418,9 +418,9 @@
     <item name="android:textColor">@color/solidWhite</item>
     <item name="android:windowTitleStyle">@style/dialogTitle_black</item>
     <item name="android:buttonBarStyle">@style/dialogButtonBar_black</item>
-    <item name="ed_cross_glyph">@drawable/cross_glyph</item>
-    <item name="ed_next_glyph">@drawable/next_glyph_states</item>
-    <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
+    <item name="ed_cross_glyph">@drawable/glyph_button_cross</item>
+    <item name="ed_next_glyph">@drawable/glyph_button_next_states</item>
+    <item name="ed_previous_glyph">@drawable/glyph_button_previous_states</item>
 
     <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
   </style>
@@ -502,7 +502,7 @@
     <item name="android:padding">2dp</item>
     <item name="android:layout_width">0dp</item>
 
-    <item name="android:background">@drawable/round_sticky_button_states</item>
+    <item name="android:background">@drawable/round_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -520,7 +520,7 @@
     <item name="android:textSize">24sp</item>
     <item name="android:padding">2dp</item>
 
-    <item name="android:background">@drawable/round_stop_button_states</item>
+    <item name="android:background">@drawable/round_button_stop_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -540,7 +540,7 @@
     <item name="android:textSize">18sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/round_sticky_button_states</item>
+    <item name="android:background">@drawable/round_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -572,7 +572,7 @@
     <item name="android:textSize">14sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/round_sticky_button_states</item>
+    <item name="android:background">@drawable/round_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -604,7 +604,7 @@
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">1dp</item>
 
-    <item name="android:background">@drawable/round_sticky_button_states</item>
+    <item name="android:background">@drawable/round_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -624,7 +624,7 @@
     <item name="android:padding">2dp</item>
     <item name="android:layout_width">0dp</item>
 
-    <item name="android:background">@drawable/round_sticky_button_states</item>
+    <item name="android:background">@drawable/round_button_states</item>
     <item name="android:layout_marginTop">4dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -733,7 +733,7 @@
     <item name="android:textSize">24sp</item>
     <item name="android:padding">2dp</item>
 
-    <item name="android:background">@drawable/outline_stop_button_states</item>
+    <item name="android:background">@drawable/outline_button_stop_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -795,7 +795,7 @@
 
   <style name="button_small_hover_style" parent="small_button_style_outline">
     <item name="android:textSize">14sp</item>
-    <item name="android:background">@drawable/common_sticky_button_states_hover</item>
+    <item name="android:background">@drawable/common_button_hover_states</item>
   </style>
 
   <style name="fn_button_style_outline" parent="@android:style/Widget.Button">
@@ -810,7 +810,7 @@
     <item name="android:layout_height">48dp</item>
     <item name="android:padding">1dp</item>
 
-    <item name="android:background">@drawable/outline_fn_button_states</item>
+    <item name="android:background">@drawable/outline_button_fn_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1108,7 +1108,7 @@
 
   <style name="button_small_hover_style_reusable" parent="button_small_style_reusable">
     <item name="android:textSize">14sp</item>
-    <item name="android:background">@drawable/reusable_button_normal_layers_hovered</item>
+    <item name="android:background">@drawable/reusable_button_normal_hovered</item>
   </style>
 
   <style name="button_small_condensed_text_style_reusable" parent="button_small_style_reusable">
@@ -1385,9 +1385,9 @@
     <item name="buttonBarNeutralButtonStyle">@style/alert_dialog_button_style_reusable</item>
 
 <!--    <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>-->
-    <item name="ed_cross_glyph">@drawable/cross_glyph</item>
-    <item name="ed_next_glyph">@drawable/next_glyph_states</item>
-    <item name="ed_previous_glyph">@drawable/previous_glyph_states</item>
+    <item name="ed_cross_glyph">@drawable/glyph_button_cross</item>
+    <item name="ed_next_glyph">@drawable/glyph_button_next_states</item>
+    <item name="ed_previous_glyph">@drawable/glyph_button_previous_states</item>
   </style>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

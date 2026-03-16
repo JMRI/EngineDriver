@@ -3,10 +3,10 @@
 
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/run_glyph_disabled" />
+        android:drawable="@drawable/glyph_button_connect_disabled" />
 
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/run_glyph" />
+        android:drawable="@drawable/glyph_button_connect" />
 
 </selector>

@@ -246,7 +246,7 @@ public class FileReceiverActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         imageViewStatus.setVisibility(View.VISIBLE);
         // Make sure you have ic_check_circle_green or similar in res/drawable
-        imageViewStatus.setImageResource(R.drawable.tick_glyph_large);
+        imageViewStatus.setImageResource(R.drawable.glyph_tick_large);
         // Optional: Tint the image view if your drawable is a generic white icon
         // imageViewStatus.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_green_dark), android.graphics.PorterDuff.Mode.SRC_IN);
         textViewStatus.setText(message);
@@ -257,7 +257,7 @@ public class FileReceiverActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         imageViewStatus.setVisibility(View.VISIBLE);
         // Make sure you have ic_error_red or similar in res/drawable
-        imageViewStatus.setImageResource(R.drawable.cross_glyph);
+        imageViewStatus.setImageResource(R.drawable.glyph_button_cross);
         // Optional: Tint the image view
         // imageViewStatus.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_red_dark), android.graphics.PorterDuff.Mode.SRC_IN);
         textViewStatus.setText(errorMessage);

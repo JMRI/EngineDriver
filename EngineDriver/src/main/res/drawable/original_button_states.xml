@@ -21,25 +21,25 @@
       android:state_hovered="false"
       android:state_pressed="false"
       android:state_enabled="false"
-      android:drawable="@drawable/original_button_layers_disabled">
+      android:drawable="@drawable/original_button_disabled">
    </item>
 
    <item
        android:state_pressed="true"
-       android:drawable="@drawable/original_button_layers_selected">
+       android:drawable="@drawable/original_button_selected">
    </item>
 
    <item
        android:state_selected="true"
        android:state_enabled="true"
-       android:drawable="@drawable/original_button_layers_selected">
+       android:drawable="@drawable/original_button_selected">
    </item>
 
    <item
        android:state_activated="true"
        android:state_hovered="true"
        android:state_enabled="true"
-       android:drawable="@drawable/original_button_layers_activated_hovered">
+       android:drawable="@drawable/original_button_activated_hovered">
    </item>
 
    <item
@@ -47,7 +47,7 @@
        android:state_activated="true"
        android:state_hovered="false"
        android:state_enabled="true"
-       android:drawable="@drawable/original_button_layers_activated">
+       android:drawable="@drawable/original_button_activated">
    </item>
 
    <item
@@ -55,7 +55,7 @@
        android:state_activated="false"
        android:state_hovered="true"
        android:state_enabled="true"
-       android:drawable="@drawable/original_button_layers_hovered">
+       android:drawable="@drawable/original_button_hovered">
    </item>
 
    <item
@@ -63,7 +63,7 @@
        android:state_activated="false"
        android:state_hovered="false"
        android:state_enabled="true"
-       android:drawable="@drawable/original_button_layers_enabled">
+       android:drawable="@drawable/original_button_enabled">
    </item>
 
 </selector>

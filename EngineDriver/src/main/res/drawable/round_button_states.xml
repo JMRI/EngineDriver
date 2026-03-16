@@ -12,14 +12,14 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/round_button_layers_selected">
+        android:drawable="@drawable/round_button_selected">
     </item>
 
     <item
         android:state_selected="true"
         android:state_activated="false"
         android:state_enabled="true"
-        android:drawable="@drawable/round_button_layers_selected">
+        android:drawable="@drawable/round_button_selected">
     </item>
 
     <item
@@ -27,7 +27,7 @@
         android:state_activated="true"
         android:state_hovered="true"
         android:state_enabled="true"
-        android:drawable="@drawable/round_button_layers_activated_hovered">
+        android:drawable="@drawable/round_button_activated_hovered">
     </item>
 
     <item
@@ -35,7 +35,7 @@
         android:state_activated="true"
         android:state_hovered="false"
         android:state_enabled="true"
-        android:drawable="@drawable/round_button_layers_activated">
+        android:drawable="@drawable/round_button_activated">
     </item>
 
     <item
@@ -43,7 +43,7 @@
         android:state_activated="false"
         android:state_hovered="true"
         android:state_enabled="true"
-        android:drawable="@drawable/round_button_layers_hovered">
+        android:drawable="@drawable/round_button_hovered">
     </item>
 
     <item >

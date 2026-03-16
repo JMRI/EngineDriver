@@ -3,10 +3,10 @@
 
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/write_off_glyph_disabled" />
+        android:drawable="@drawable/glyph_button_previous_disabled" />
 
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/write_off_glyph" />
+        android:drawable="@drawable/glyph_button_previous" />
 
 </selector>

@@ -9,7 +9,7 @@
         </shape>
     </item>
 
-    <item android:state_pressed="true" android:state_enabled="true" android:drawable="@drawable/round_button_stop_layers_selected">
+    <item android:state_pressed="true" android:state_enabled="true" android:drawable="@drawable/round_button_stop_selected">
     </item>
 
     <item >

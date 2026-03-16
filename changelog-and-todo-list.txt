@@ -17,6 +17,7 @@
      * Removed some textViews in all the throttles (behind the fwd/rev buttons) that could never be seen.
      * Simplified part of all the throttles in all the views (related to the fwd/rev buttons).
      * Removed a number of unused drawables.
+     * Renamed most of the drawables to make the names consistent.
 **Version 2.42.220
  * Bug fixes
     * Bug fix for the Consist Edit and Consist Light Edit screens on early versions of Android

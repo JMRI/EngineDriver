@@ -13,16 +13,16 @@
 
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/reusable_button_stop_layers_selected">
+        android:drawable="@drawable/reusable_button_stop_selected">
     </item>
 
     <item
         android:state_selected="true"
-        android:drawable="@drawable/reusable_button_stop_layers_selected">
+        android:drawable="@drawable/reusable_button_stop_selected">
     </item>
 
     <item
-        android:drawable="@drawable/reusable_button_stop_layers_enabled">
+        android:drawable="@drawable/reusable_button_stop_enabled">
     </item>
 
 </selector>

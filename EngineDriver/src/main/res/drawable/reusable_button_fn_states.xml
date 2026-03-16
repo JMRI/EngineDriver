@@ -15,10 +15,10 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/reusable_button_fn_layers_selected">
+        android:drawable="@drawable/reusable_button_fn_selected">
     </item>
 
     <item
-        android:drawable="@drawable/reusable_button_fn_layers_enabled">
+        android:drawable="@drawable/reusable_button_fn_enabled">
     </item>
 </selector>

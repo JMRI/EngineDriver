@@ -13,12 +13,12 @@
 
     <item
         android:state_pressed="true"
-        android:drawable="@drawable/reusable_button_normal_layers_selected">
+        android:drawable="@drawable/reusable_button_normal_selected">
     </item>
 
     <item
         android:state_selected="true"
-        android:drawable="@drawable/reusable_button_normal_layers_selected">
+        android:drawable="@drawable/reusable_button_normal_selected">
     </item>
 
     <item
@@ -26,7 +26,7 @@
         android:state_activated="true"
         android:state_hovered="true"
         android:state_enabled="true"
-        android:drawable="@drawable/reusable_button_normal_layers_activated_hovered">
+        android:drawable="@drawable/reusable_button_normal_activated_hovered">
     </item>
 
     <item
@@ -34,7 +34,7 @@
         android:state_activated="true"
         android:state_hovered="false"
         android:state_enabled="true"
-        android:drawable="@drawable/reusable_button_normal_layers_activated">
+        android:drawable="@drawable/reusable_button_normal_activated">
     </item>
 
     <item
@@ -42,7 +42,7 @@
         android:state_activated="false"
         android:state_hovered="true"
         android:state_enabled="true"
-        android:drawable="@drawable/reusable_button_normal_layers_hovered">
+        android:drawable="@drawable/reusable_button_normal_hovered">
     </item>
 
     <item
@@ -50,7 +50,7 @@
         android:state_activated="false"
         android:state_hovered="false"
         android:state_enabled="true"
-        android:drawable="@drawable/reusable_button_normal_layers_enabled">
+        android:drawable="@drawable/reusable_button_normal_enabled">
     </item>
 
 </selector>
