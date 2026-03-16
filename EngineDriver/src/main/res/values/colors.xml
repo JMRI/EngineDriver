@@ -84,6 +84,9 @@
     <color name="spinner_background_original">#252525</color>
     <color name="spinner_divider_original">#4A4A4A</color>
 
+    <color name="original_preference_glyph_fill_color">#d4aa00</color>
+    <color name="original_preference_glyph_stroke_color">#453700</color>
+
     <!-- Black Theme -->
 
     <color name="divider_black">#4bd6d6d6</color>

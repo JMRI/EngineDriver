@@ -2738,7 +2738,7 @@
     <!-- only include top level preferences in this list.  Use the 'advancedSubPreferences' list for second level ones-->
     <string-array name="advancedPreferences" translatable="false">
         <!-- Device Preferences -->
-        <item>prefLocale</item>
+<!--        <item>prefLocale</item>-->
         <item>prefDoubleBackButtonToExit</item>
         <item>ToastsOptionsPreferences</item>
 <!--        <item>prefHideInstructionalToasts</item>-->

@@ -89,11 +89,6 @@
 
     <attr name="ed_icon" format="reference" />
 
-    <attr name="ed_dccex_button_cv_programmer_pom" format="reference" />
-    <attr name="ed_dccex_button_cv_programmer_prog_track" format="reference" />
-    <attr name="ed_dccex_button_track_manager" format="reference" />
-    <attr name="ed_dccex_button_function_defaults" format="reference" />
-
     <attr name="ed_primaryLineColor" format="reference" />
     <attr name="ed_secondaryLineColor" format="reference" />
 
@@ -246,6 +241,8 @@
     <attr name="reusable_button_glyph_fill_color" format="reference" />
     <attr name="reusable_preference_glyph_fill_color" format="reference" />
     <attr name="reusable_preference_glyph_stroke_color" format="reference" />
+    <attr name="reusable_preference_glyph_internal_glyph_fill_color" format="reference" />
+    <attr name="reusable_preference_glyph_internal_glyph_stroke_color" format="reference" />
 
     <attr name="reusable_progress_bar_fill_75_color" format="reference" />
     <attr name="reusable_progress_bar_fill_50_color" format="reference" />

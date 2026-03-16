@@ -94,52 +94,53 @@
         <item name="ed_thumb">@drawable/original_thumb</item>
         <item name="ed_vertical_thumb">@drawable/original_vertical_thumb</item>
 
-        <item name="ed_throttle_switch_button">@drawable/original_toolbar_button_throttle_switch_button</item>
-        <item name="ed_preferences_button">@drawable/original_toolbar_button_preferences</item>
-        <item name="ed_wizard_button">@drawable/original_toolbar_button_wizard</item>
-        <item name="ed_throttle_button">@drawable/original_toolbar_button_throttle</item>
-        <item name="ed_web_button">@drawable/original_toolbar_button_web</item>
-        <item name="ed_turnouts_button">@drawable/original_toolbar_button_turnouts</item>
-        <item name="ed_routes_button"  >@drawable/original_toolbar_button_routes</item>
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
+
+        <!-- toolbar -->
 
         <item name="ed_toolbar_background">@drawable/black_toolbar_background</item>
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup</item>
 
-        <item name="ed_flashlight_on_button">@drawable/original_toolbar_button_flashlight_on</item>
-        <item name="ed_flashlight_off_button">@drawable/original_toolbar_button_flashlight_off</item>
-        <item name="ed_esu_mc2_knob_on_button">@drawable/original_toolbar_button_esu_mc2_knob_on</item>
-        <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off</item>
-        <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>
-        <item name="ed_estop_active_button">@drawable/original_toolbar_button_estop_active</item>
-        <item name="ed_search_button">@drawable/original_toolbar_button_search</item>
-        <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>
-        <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>
-        <item name="ed_power_green_red_button">@drawable/original_toolbar_power_green_red</item>
-        <item name="ed_power_yellow_button">@drawable/original_toolbar_power_yellow</item>
-        <item name="ed_power_red_button">@drawable/original_toolbar_power_red</item>
+        <!--        <item name="ed_throttle_switch_button">@drawable/original_toolbar_button_throttle_switch_button</item>-->
+<!--        <item name="ed_preferences_button">@drawable/original_toolbar_button_preferences</item>-->
+<!--        <item name="ed_wizard_button">@drawable/original_toolbar_button_wizard</item>-->
+<!--        <item name="ed_throttle_button">@drawable/original_toolbar_button_throttle</item>-->
+<!--        <item name="ed_web_button">@drawable/original_toolbar_button_web</item>-->
+<!--        <item name="ed_turnouts_button">@drawable/original_toolbar_button_turnouts</item>-->
+<!--        <item name="ed_routes_button"  >@drawable/original_toolbar_button_routes</item>-->
 
-        <item name="ed_folder_icon">@drawable/original_folder</item>
-        <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>
-        <item name="ed_folder_esu_icon">@drawable/original_folder_esu</item>
-        <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
-        <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>
-        <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>
-        <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>
-        <item name="ed_dccex_consist_button">@drawable/original_toolbar_button_dccex_consist</item>
-        <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>
+<!--        <item name="ed_flashlight_on_button">@drawable/original_toolbar_button_flashlight_on</item>-->
+<!--        <item name="ed_flashlight_off_button">@drawable/original_toolbar_button_flashlight_off</item>-->
+<!--        <item name="ed_esu_mc2_knob_on_button">@drawable/original_toolbar_button_esu_mc2_knob_on</item>-->
+<!--        <item name="ed_esu_mc2_knob_off_button">@drawable/original_toolbar_button_esu_mc2_knob_off</item>-->
+<!--        <item name="ed_estop_button">@drawable/original_toolbar_button_estop</item>-->
+<!--        <item name="ed_estop_active_button">@drawable/original_toolbar_button_estop_active</item>-->
+<!--        <item name="ed_search_button">@drawable/original_toolbar_button_search</item>-->
+<!--        <item name="ed_timer_button">@drawable/original_toolbar_button_timer</item>-->
+<!--        <item name="ed_power_green_button">@drawable/original_toolbar_power_green</item>-->
+<!--        <item name="ed_power_green_red_button">@drawable/original_toolbar_power_green_red</item>-->
+<!--        <item name="ed_power_yellow_button">@drawable/original_toolbar_power_yellow</item>-->
+<!--        <item name="ed_power_red_button">@drawable/original_toolbar_power_red</item>-->
+
+<!--        <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>-->
+<!--        <item name="ed_web_view_button">@drawable/original_toolbar_button_web_view</item>-->
+<!--        <item name="ed_in_device_sounds_button">@drawable/original_toolbar_button_in_device_sounds</item>-->
+<!--        <item name="ed_cv19_consist_button">@drawable/original_toolbar_button_cv19_consist</item>-->
+<!--        <item name="ed_dccex_consist_button">@drawable/original_toolbar_button_dccex_consist</item>-->
+<!--        <item name="ed_dcc_ex_button">@drawable/original_toolbar_button_dcc_ex</item>-->
+
         <item name="ed_background_popup">@drawable/black_background_popup</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
         <item name="ed_background_highlight_tertiary">@drawable/black_background_highlight_tertiary</item>
 
-        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
+<!--        &lt;!&ndash; preferences &ndash;&gt;-->
+<!--        <item name="ed_folder_icon">@drawable/original_folder</item>-->
+<!--        <item name="ed_folder_dcc_ex_icon">@drawable/original_folder_dcc_ex</item>-->
+<!--        <item name="ed_folder_esu_icon">@drawable/original_folder_esu</item>-->
 
-        <item name="ed_dccex_button_cv_programmer_pom">@drawable/original_dccex_button_cv_programmer_pom</item>
-        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/original_dccex_button_cv_programmer_prog_track</item>
-        <item name="ed_dccex_button_track_manager">@drawable/original_dccex_button_track_manager</item>
-        <item name="ed_dccex_button_function_defaults">@drawable/original_dccex_button_function_defaults</item>
+        <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
 
         <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
         <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
@@ -209,9 +210,150 @@
         <item name="EDRadioButton">@style/EDRadioButton</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton</item>
 
+        <!-- everything following this is a partial move oft this theme  to the new reusable theme -->
+
+        <!-- used for the glyphs in the menus, categories (preferences) and buttons. -->
         <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
-        <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
+        <!-- general glyph colours -->
+        <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_fill_color">@color/original_preference_glyph_fill_color</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/original_preference_glyph_stroke_color</item>
+        <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidBlack</item>
+
+        <!-- preference folder icons -->
+        <item name="ed_folder_icon">@drawable/reusable_preference_folder_glyph</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_folder_dccex_glyph</item>
+        <item name="ed_folder_esu_icon">@drawable/reusable_preference_folder_esu_glyph</item>
+
+        <!-- general button colours -->
+        <item name="reusable_button_edge_highlight_color">@color/colorful_tan_very_light</item>
+        <item name="reusable_button_edge_light_color">@color/transparent</item>
+        <item name="reusable_button_edge_dark_color">@color/colorful_tan_very_dark</item>
+        <item name="reusable_button_face_end_color">@color/colorful_tan_light</item>
+        <item name="reusable_button_face_center_color">@color/colorful_tan</item>
+        <item name="reusable_button_face_start_color">@color/colorful_tan_very_dark</item>
+
+        <!-- toolbar buttons -->
+        <item name="ed_throttle_switch_button">@drawable/reusable_toolbar_button_throttle_switch_button</item>
+        <item name="ed_preferences_button">@drawable/reusable_toolbar_button_preferences</item>
+        <item name="ed_wizard_button">@drawable/reusable_toolbar_button_wizard</item>
+        <item name="ed_throttle_button">@drawable/reusable_toolbar_button_throttle</item>
+        <item name="ed_web_button">@drawable/reusable_toolbar_button_web</item>
+        <item name="ed_turnouts_button">@drawable/reusable_toolbar_button_turnouts</item>
+        <item name="ed_routes_button">@drawable/reusable_toolbar_button_routes</item>
+
+        <item name="ed_flashlight_on_button">@drawable/reusable_toolbar_flashlight_on</item>
+        <item name="ed_flashlight_off_button">@drawable/reusable_toolbar_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/reusable_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/reusable_toolbar_button_esu_mc2_knob_off</item>
+        <item name="ed_estop_button">@drawable/reusable_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/reusable_toolbar_button_estop_active</item>
+        <item name="ed_search_button">@drawable/reusable_toolbar_button_search</item>
+        <item name="ed_timer_button">@drawable/reusable_toolbar_button_timer</item>
+        <item name="ed_power_green_button">@drawable/reusable_toolbar_power_green</item>
+        <item name="ed_power_green_red_button">@drawable/reusable_toolbar_power_green_red</item>
+        <item name="ed_power_yellow_button">@drawable/reusable_toolbar_power_yellow</item>
+        <item name="ed_power_red_button">@drawable/reusable_toolbar_power_red</item>
+
+        <item name="ed_clock_icon">@drawable/reusable_toolbar_button_fast_clock</item>
+        <item name="ed_web_view_button">@drawable/reusable_toolbar_button_web_view</item>
+        <item name="ed_in_device_sounds_button">@drawable/reusable_toolbar_button_in_device_sounds</item>
+        <item name="ed_cv19_consist_button">@drawable/reusable_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/reusable_toolbar_button_dccex_consist</item>
+        <item name="ed_dcc_ex_button">@drawable/reusable_toolbar_button_dcc_ex</item>
+
+        <!-- override toolbar button individual colours -->
+
+        <item name="reusable_toolbar_button_stop_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_stop_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_stop_face_end_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_stop_face_start_color">@color/grey_light</item>
+
+        <item name="reusable_toolbar_button_cv19_consist_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_cv19_consist_edge_dark_color">@color/colorful_green_dark</item>
+        <item name="reusable_toolbar_button_cv19_consist_face_end_color">@color/colorful_green_dark</item>
+        <item name="reusable_toolbar_button_cv19_consist_face_start_color">@color/colorful_green</item>
+
+        <item name="reusable_toolbar_button_esu_knob_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_esu_knob_edge_dark_color">@color/colorful_blue_very_dark</item>
+        <item name="reusable_toolbar_button_esu_knob_face_end_color">@color/colorful_blue_light</item>
+        <item name="reusable_toolbar_button_esu_knob_face_start_color">@color/colorful_blue</item>
+
+        <item name="reusable_toolbar_button_dccex_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_dccex_edge_dark_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_dccex_face_end_color">@color/colorful_dccex_very_light</item>
+        <item name="reusable_toolbar_button_dccex_face_start_color">@color/colorful_dccex_dark</item>
+
+        <item name="reusable_toolbar_button_dccex_consist_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_dccex_consist_edge_dark_color">@color/colorful_green_dark</item>
+        <item name="reusable_toolbar_button_dccex_consist_face_end_color">@color/colorful_green</item>
+        <item name="reusable_toolbar_button_dccex_consist_face_start_color">@color/colorful_green_dark</item>
+
+        <item name="reusable_toolbar_button_in_device_sounds_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_in_device_sounds_edge_dark_color">@color/colorful_daffodil_dark</item>
+        <item name="reusable_toolbar_button_in_device_sounds_face_end_color">@color/colorful_daffodil_light</item>
+        <item name="reusable_toolbar_button_in_device_sounds_face_start_color">@color/colorful_daffodil</item>
+
+        <item name="reusable_toolbar_button_flashlight_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_flashlight_edge_dark_color">@color/colorful_aqua_very_dark</item>
+        <item name="reusable_toolbar_button_flashlight_face_end_color">@color/colorful_aqua</item>
+        <item name="reusable_toolbar_button_flashlight_face_start_color">@color/colorful_aqua_dark</item>
+        <item name="reusable_button_active_light_bar_color">@color/colorful_yellow_very_light</item>
+
+        <item name="reusable_toolbar_button_power_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_power_edge_dark_color">@color/grey_very_dark</item>
+        <item name="reusable_toolbar_button_power_face_end_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_power_face_start_color">@color/grey</item>
+
+        <item name="reusable_toolbar_button_preferences_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_preferences_edge_dark_color">@color/colorful_blue_very_dark</item>
+        <item name="reusable_toolbar_button_preferences_face_end_color">@color/colorful_blue</item>
+        <item name="reusable_toolbar_button_preferences_face_start_color">@color/colorful_blue_dark</item>
+
+        <item name="reusable_toolbar_button_routes_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_routes_edge_dark_color">@color/colorful_cyan_ultra_dark</item>
+        <item name="reusable_toolbar_button_routes_face_end_color">@color/colorful_blue</item>
+        <item name="reusable_toolbar_button_routes_face_start_color">@color/colorful_cyan_ultra_dark</item>
+
+        <!--        <item name="reusable_toolbar_button_search_edge_highlight_color">@color/solidWhite</item>-->
+        <!--        <item name="reusable_toolbar_button_search_edge_dark_color">@color/colorful_cyan_ultra_dark</item>-->
+        <!--        <item name="reusable_toolbar_button_search_face_end_color">@color/colorful_blue</item>-->
+        <!--        <item name="reusable_toolbar_button_search_face_start_color">@color/colorful_cyan_ultra_dark</item>-->
+
+        <item name="reusable_toolbar_button_throttle_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_throttle_edge_dark_color">@color/colorful_very_dark</item>
+        <item name="reusable_toolbar_button_throttle_face_end_color">@color/colorful_dark</item>
+        <item name="reusable_toolbar_button_throttle_face_start_color">@color/colorful_very_dark</item>
+
+        <item name="reusable_toolbar_button_throttle_switch_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_throttle_switch_edge_dark_color">@color/colorful_yellow_mega_dark</item>
+        <item name="reusable_toolbar_button_throttle_switch_face_end_color">@color/colorful_yellow_very_dark</item>
+        <item name="reusable_toolbar_button_throttle_switch_face_start_color">@color/colorful_yellow_ultra_dark</item>
+
+        <item name="reusable_toolbar_button_timer_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_timer_edge_dark_color">@color/colorful_deep_blue_very_dark</item>
+        <item name="reusable_toolbar_button_timer_face_end_color">@color/colorful_deep_blue</item>
+        <item name="reusable_toolbar_button_timer_face_start_color">@color/colorful_deep_blue_dark</item>
+
+        <item name="reusable_toolbar_button_turnouts_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_turnouts_edge_dark_color">@color/colorful_daffodil_dark</item>
+        <item name="reusable_toolbar_button_turnouts_face_end_color">@color/colorful_cyan</item>
+        <item name="reusable_toolbar_button_turnouts_face_start_color">@color/colorful_daffodil</item>
+
+        <item name="reusable_toolbar_button_web_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_web_edge_dark_color">@color/colorful_cyan_dark</item>
+        <item name="reusable_toolbar_button_web_face_end_color">@color/colorful_lime_light</item>
+        <item name="reusable_toolbar_button_web_face_start_color">@color/colorful_cyan</item>
+
+        <item name="reusable_toolbar_button_wizard_edge_highlight_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_wizard_edge_dark_color">@color/colorful_lime_ultra_dark</item>
+        <item name="reusable_toolbar_button_wizard_face_end_color">@color/colorful_cyan</item>
+        <item name="reusable_toolbar_button_wizard_face_start_color">@color/colorful_lime</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -325,7 +467,7 @@
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
         <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
-        <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
+        <item name="ed_clock_icon">@drawable/outline_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
         <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
@@ -338,11 +480,6 @@
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
         <item name="ed_icon">@drawable/icon_vector_outline</item>
-
-        <item name="ed_dccex_button_cv_programmer_pom">@drawable/outline_dccex_button_cv_programmer_pom</item>
-        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/outline_dccex_button_cv_programmer_prog_track</item>
-        <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
-        <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
 
         <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
         <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
@@ -521,7 +658,7 @@
         <item name="ed_folder_icon">@drawable/outline_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_folder_dcc_ex</item>
         <item name="ed_folder_esu_icon">@drawable/outline_folder_esu</item>
-        <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
+        <item name="ed_clock_icon">@drawable/outline_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_in_device_sounds</item>
         <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>
@@ -533,11 +670,6 @@
 
         <item name="ed_advanced_preferences">@drawable/advanced_preferences_glyph</item>
         <item name="ed_icon">@drawable/icon_vector_outline</item>
-
-        <item name="ed_dccex_button_cv_programmer_pom">@drawable/outline_dccex_button_cv_programmer_pom</item>
-        <item name="ed_dccex_button_cv_programmer_prog_track">@drawable/outline_dccex_button_cv_programmer_prog_track</item>
-        <item name="ed_dccex_button_track_manager">@drawable/outline_dccex_button_track_manager</item>
-        <item name="ed_dccex_button_function_defaults">@drawable/outline_dccex_button_function_defaults</item>
 
         <item name="ed_select_loco_glyph_dcc_address">@drawable/select_loco_glyph_dcc_address</item>
         <item name="ed_select_loco_glyph_roster">@drawable/select_loco_glyph_roster</item>
@@ -639,6 +771,7 @@
         <item name="android:textColor">@color/reusable_primary_text_color_selector</item>
         <item name="android:actionMenuTextColor">@color/reusable_primary_text_color_selector</item>
 
+        <!-- toolbar  buttons -->
         <item name="ed_throttle_switch_button">@drawable/reusable_toolbar_button_throttle_switch_button</item>
         <item name="ed_preferences_button">@drawable/reusable_toolbar_button_preferences</item>
         <item name="ed_wizard_button">@drawable/reusable_toolbar_button_wizard</item>
@@ -662,11 +795,12 @@
         <item name="ed_power_yellow_button">@drawable/reusable_toolbar_power_yellow</item>
         <item name="ed_power_red_button">@drawable/reusable_toolbar_power_red</item>
 
+        <!-- preference folder icons -->
         <item name="ed_folder_icon">@drawable/reusable_preference_folder_glyph</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_folder_dccex_glyph</item>
         <item name="ed_folder_esu_icon">@drawable/reusable_preference_folder_esu_glyph</item>
 
-        <item name="ed_clock_icon">@drawable/original_toolbar_button_fast_clock</item>
+        <item name="ed_clock_icon">@drawable/reusable_toolbar_button_fast_clock</item>
         <item name="ed_web_view_button">@drawable/reusable_toolbar_button_web_view</item>
         <item name="ed_in_device_sounds_button">@drawable/reusable_toolbar_button_in_device_sounds</item>
         <item name="ed_cv19_consist_button">@drawable/reusable_toolbar_button_cv19_consist</item>
@@ -900,6 +1034,13 @@
         <item name="reusable_thumb_fill_outer_color">@color/transparent</item>
         <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
         <item name="reusable_thumb_shadow_color">@color/transparent</item>
+
+        <!-- preference glyph default colours -->
+        <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidWhite</item>
 
 
     </style>
@@ -1219,8 +1360,8 @@
         <item name="reusable_small_heading_text_shadow_color">@color/solidWhite</item>
         <item name="reusable_list_item_text_color">@color/muted_sepia</item>
         <item name="reusable_list_item_text_shadow_color">@color/transparent</item>
-        <item name="reusable_list_id_text_color">@color/offWhite</item>
-        <item name="reusable_list_extras_text_color">@color/grey</item>
+        <item name="reusable_list_id_text_color">@color/muted_sepia_light</item>
+        <item name="reusable_list_extras_text_color">@color/muted_sepia_very_light</item>
 
         <item name="reusable_floating_text_color">@color/muted_sepia</item>
         <item name="reusable_floating_text_shadow_color">@color/solidWhite</item>
@@ -1275,8 +1416,10 @@
         <item name="reusable_button_active_light_rim_2_color">@color/muted_yellow_dark</item>
 
         <item name="reusable_button_glyph_fill_color">@color/muted_sepia</item>
-        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
-        <item name="reusable_preference_glyph_stroke_color">@color/muted_sepia</item>
+        <item name="reusable_preference_glyph_fill_color">@color/muted_yellow</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/muted_yellow_dark</item>
+        <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/muted_mega_dark</item>
 
         <!-- button dimension overrides -->
         <item name="reusable_button_active_stroke_top_left_light_dimen">@dimen/reusable_button_active_stroke_top_left_light_muted</item>
@@ -1433,8 +1576,10 @@
         <item name="reusable_button_active_light_rim_2_color">@color/colorful_yellow_dark</item>
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
-        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
-        <item name="reusable_preference_glyph_stroke_color">@color/solidBlack</item>
+        <item name="reusable_preference_glyph_fill_color">@color/colorful_yellow</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/colorful_yellow_dark</item>
+        <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/transparent</item>
+        <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidBlack</item>
 
         <!-- used for the progress bar on the throttles -->
         <item name="reusable_progress_bar_fill_75_color">@color/colorful_blue_transparent_75</item>
