@@ -4755,13 +4755,15 @@ public class throttle extends AppCompatActivity implements
                 v.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
                 mainapp.buttonVibration();
+                setStopButton(whichThrottle, true);
+
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 isStopButtonLongPress = false;
                 if (prefStopButtonEStopOnLongPress)
                     stopButtonLongPressHandler.removeCallbacks(run);
+                setStopButton(whichThrottle, false);
             }
 
-            setStopButton(whichThrottle, false);
             return true;
         }
     }

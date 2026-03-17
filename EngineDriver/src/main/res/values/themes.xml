@@ -1097,7 +1097,7 @@
         <item name="reusable_button_text_shadow_color">@color/transparent</item>
 
         <item name="reusable_stop_button_text_pressed_color">@color/neon_red</item>
-        <item name="reusable_stop_button_active_light_bar_color">@color/neon_red_light</item>
+        <item name="reusable_stop_button_active_light_bar_color">@color/red</item>
 
         <item name="reusable_button_edge_highlight_color">@color/neon_blue_very_light</item>
         <item name="reusable_button_edge_light_color">@color/neon_blue_light</item>
@@ -1238,7 +1238,7 @@
         <item name="reusable_button_text_shadow_color">@color/transparent</item>
 
         <item name="reusable_stop_button_text_pressed_color">@color/neon_red</item>
-        <item name="reusable_stop_button_active_light_bar_color">@color/neon_red_light</item>
+        <item name="reusable_stop_button_active_light_bar_color">@color/red</item>
 
         <item name="reusable_button_edge_highlight_color">@color/neon_green_light</item>
         <item name="reusable_button_edge_light_color">@color/neon_green</item>
@@ -1785,7 +1785,7 @@
         <item name="reusable_button_text_shadow_color">@color/transparent</item>
 
         <item name="reusable_stop_button_text_pressed_color">@color/ultra_red</item>
-        <item name="reusable_stop_button_active_light_bar_color">@color/ultra_red_light</item>
+        <item name="reusable_stop_button_active_light_bar_color">@color/red</item>
 
         <item name="reusable_button_edge_highlight_color">@color/ultra_light</item>
         <item name="reusable_button_edge_light_color">@color/ultra</item>
