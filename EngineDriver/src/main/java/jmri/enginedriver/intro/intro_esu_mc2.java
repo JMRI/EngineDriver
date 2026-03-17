@@ -91,7 +91,7 @@ public class intro_esu_mc2 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.intro_esu_mc2, container, false);
+        return inflater.inflate(R.layout.intro_esu_mc2_page, container, false);
     }
 
 }

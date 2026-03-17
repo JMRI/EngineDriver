@@ -240,7 +240,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.consist_lights);
+        setContentView(R.layout.consist_lights_page);
         //put pointer to this activity's handler in main app's shared variable
         if (mainapp.activityBundleMessageHandlers[activity_id_type.CONSIST_LIGHTS_EDIT] == null)
             mainapp.activityBundleMessageHandlers[activity_id_type.CONSIST_LIGHTS_EDIT] = new BundleMessageHandler(Looper.getMainLooper());

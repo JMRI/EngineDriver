@@ -3773,7 +3773,7 @@ public class threaded_application extends Application {
 
         // inflate your xml layout
         LayoutInflater inflater = activity.getLayoutInflater();
-        final View layout = inflater.inflate(R.layout.custom_toast, null);
+        final View layout = inflater.inflate(R.layout.toast_custom, null);
 
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();

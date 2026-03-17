@@ -345,7 +345,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             return;
         }
 
-        setContentView(R.layout.web_activity);
+        setContentView(R.layout.web_page);
 
         webView = findViewById(R.id.webActivityWebView);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
@@ -692,7 +692,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         } else if (item.getItemId() == R.id.settings_mnu) {
             threaded_application.activityInTransition(activityName);
-            in = new Intent().setClass(this, SettingsActivity.class);
+            in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;

@@ -109,7 +109,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.function_settings);
+        setContentView(R.layout.function_settings_page);
         orientationChange = false;
 
         if (savedInstanceState == null) {    //if not an orientation change then init settings array

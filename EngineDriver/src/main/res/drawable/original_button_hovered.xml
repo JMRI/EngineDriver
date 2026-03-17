@@ -4,62 +4,7 @@
     <!--    used as the additional Gamepad highlight for the Select button-->
 
     <item
-        android:top="0dip" android:left="0dip"
-        android:right="0dip" android:bottom="0dip">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <solid android:color="@color/buttonCommonFillGradiantUltraDark_original" />
-        </shape>
-    </item>
-
-    <item
-        android:top="0dip" android:left="0dip"
-        android:right="2dip" android:bottom="2dip">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <solid android:color="@color/buttonCommonFillGradiantVeryDark_original" />
-        </shape>
-    </item>
-
-    <item
-        android:top="0dip" android:left="0dip"
-        android:right="3dip" android:bottom="3dip">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <solid android:color="@color/buttonCommonFillGradiantDark_original" />
-        </shape>
-    </item>
-
-    <item
-        android:top="0dip" android:left="0dip"
-        android:right="4dip" android:bottom="4dip">
-        <shape android:shape="rectangle"  >
-            <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke
-                android:width="@dimen/buttonSelectedStroke_original"
-                android:color="@color/buttonCommonFillGradiantCenter_original" />
-            <solid android:color="@color/transparent" />
-        </shape>
-    </item>
-
-    <item
-        android:top="@dimen/buttonActivatedInsideStrokePaddingTopLeft_outline"
-        android:left="@dimen/buttonActivatedInsideStrokePaddingTopLeft_outline"
-        android:right="@dimen/buttonActivatedInsideStrokePaddingBottomRight_outline"
-        android:bottom="@dimen/buttonActivatedInsideStrokePaddingBottomRight_outline">
-
-        <shape android:shape="rectangle">
-            <corners android:radius="@dimen/buttonCornerRadius_original" />
-            <stroke android:width="0dip" android:color="@color/black" />
-            <gradient
-                android:angle="270"
-                android:centerX="50%"
-                android:startColor="@color/buttonCommonFillGradiantLight_original"
-                android:centerColor="@color/buttonCommonFillGradiantCenter_original"
-                android:endColor="@color/buttonCommonFillGradiantDark_original"
-                android:type="linear" />
-        </shape>
-    </item>
+        android:drawable="@drawable/original_button_enabled" />
 
     <!-- inside border 2 -->
     <item

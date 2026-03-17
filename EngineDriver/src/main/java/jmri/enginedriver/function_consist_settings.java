@@ -100,7 +100,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.function_consist_settings);
+        setContentView(R.layout.function_consist_settings_page);
         orientationChange = false;
 
         if (savedInstanceState == null) {    //if not an orientation change then init settings array

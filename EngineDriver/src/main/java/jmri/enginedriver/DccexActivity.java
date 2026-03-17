@@ -70,8 +70,8 @@ import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.cvBitCalculator;
 
-public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfirmListener {
-    static final String activityName = "dcc_ex";
+public class DccexActivity extends AppCompatActivity implements cvBitCalculator.OnConfirmListener {
+    static final String activityName = "DccexActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu overflowMenu;
@@ -878,7 +878,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
         mainapp.applyTheme(this);
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        setContentView(R.layout.dcc_ex);
+        setContentView(R.layout.dccex_page);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
         if (mainapp.activityBundleMessageHandlers[activity_id_type.DCC_EX] == null)
@@ -1110,7 +1110,7 @@ public class dcc_ex extends AppCompatActivity implements cvBitCalculator.OnConfi
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(dcc_ex.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(DccexActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };

@@ -257,7 +257,7 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.device_sounds_settings);
+        setContentView(R.layout.device_sounds_settings_page);
         //put pointer to this activity's handler in main app's shared variable
 //        myGesture = new GestureDetector(this);
 

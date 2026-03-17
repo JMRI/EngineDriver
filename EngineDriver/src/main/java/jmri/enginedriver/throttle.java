@@ -673,14 +673,14 @@ public class throttle extends AppCompatActivity implements
             }
     );
 
-    protected final ActivityResultLauncher<Intent> settingsActivityLauncher = registerForActivityResult(
+    protected final ActivityResultLauncher<Intent> preferencesActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": settingsActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                Log.d(threaded_application.applicationName, activityName + ": preferencesActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
-                    handleSettingsActivityResult(resultCode);
+                    handlePreferencesActivityResult(resultCode);
                 }
             }
     );
@@ -2853,18 +2853,18 @@ public class throttle extends AppCompatActivity implements
         loadSounds();
     }
 
-    void startSettingsActivity() {
+    void startPreferencesActivity() {
         try {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            settingsActivityLauncher.launch(intent);
+            Intent intent = new Intent(this, PreferencesActivity.class);
+            preferencesActivityLauncher.launch(intent);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startSettingsActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            Log.d(threaded_application.applicationName, activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
-    private void handleSettingsActivityResult(int resultCode) {
-        Log.d(threaded_application.applicationName, activityName + ": handleSettingsActivityResult() " );
+    private void handlePreferencesActivityResult(int resultCode) {
+        Log.d(threaded_application.applicationName, activityName + ": handlePreferencesActivityResult() " );
 
         if (resultCode == activity_outcome_type.RESULT_GAMEPAD) { // gamepad pref changed
             // update tone generator volume
@@ -3002,6 +3002,17 @@ public class throttle extends AppCompatActivity implements
         soundsEnableDisableDeviceSoundsButton(whichThrottle, newEnabledState);
 
     } // end of enableDisableButtons
+
+    public void setLimitSpeedsOrPauseButton(Button button, boolean selected) {
+        if (button == null) return;
+
+        button.setSelected(selected);
+        if (selected) {
+            button.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+        } else {
+            button.setTypeface(null, Typeface.NORMAL);
+        }
+    }
 
     // helper function to enable/disable all children for a group
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
@@ -4886,11 +4897,13 @@ public class throttle extends AppCompatActivity implements
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
         if (isLimitSpeeds[whichThrottle]) {
-            bLimitSpeeds[whichThrottle].setSelected(true);
+//            bLimitSpeeds[whichThrottle].setSelected(true);
+            setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], true);
             limitSpeedSliderScalingFactors[whichThrottle] = 100 / ((float) prefLimitSpeedPercent);
             sbs[whichThrottle].setMax(Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
         } else {
-            bLimitSpeeds[whichThrottle].setSelected(false);
+//            bLimitSpeeds[whichThrottle].setSelected(false);
+            setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], false);
             sbs[whichThrottle].setMax(maxThrottle);
         }
 
@@ -5868,7 +5881,7 @@ public class throttle extends AppCompatActivity implements
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             Log.d(threaded_application.applicationName, activityName + ": onResume(): connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-                startSettingsActivity();
+                startPreferencesActivity();
             }
         }
     } // end onResume()
@@ -6943,7 +6956,7 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if ((item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu)) {
-            in = new Intent().setClass(this, dcc_ex.class);
+            in = new Intent().setClass(this, DccexActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -6955,7 +6968,7 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.settings_mnu) {
-            startSettingsActivity();
+            startPreferencesActivity();
             return true;
 
         } else if (item.getItemId() == R.id.function_defaults_mnu) {
@@ -7916,7 +7929,8 @@ public class throttle extends AppCompatActivity implements
         switch (isPauseSpeeds[whichThrottle]) {
             case pause_speed_type.ZERO: {
                 isPauseSpeeds[whichThrottle] = pause_speed_type.START_RETURN;
-                bPauseSpeeds[whichThrottle].setSelected(false);
+//                bPauseSpeeds[whichThrottle].setSelected(false);
+                setLimitSpeedsOrPauseButton(bPauseSpeeds[whichThrottle], false);
                 if (bPauses[whichThrottle] != null) bPauses[whichThrottle].setSelected(false);
                 speed = getSpeed(whichThrottle);
                 break;
@@ -7925,7 +7939,8 @@ public class throttle extends AppCompatActivity implements
                 if (getSpeed(whichThrottle) == 0) return;
 
                 isPauseSpeeds[whichThrottle] = pause_speed_type.START_TO_ZERO;
-                bPauseSpeeds[whichThrottle].setSelected(true);
+//                bPauseSpeeds[whichThrottle].setSelected(true);
+                setLimitSpeedsOrPauseButton(bPauseSpeeds[whichThrottle], true);
                 if (bPauses[whichThrottle] != null) bPauses[whichThrottle].setSelected(true);
                 pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
                 pauseDir[whichThrottle] = getDirection(whichThrottle);
@@ -7946,7 +7961,8 @@ public class throttle extends AppCompatActivity implements
 
     void disablePauseSpeed(int whichThrottle) {
         setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
-        bPauseSpeeds[whichThrottle].setSelected(false);
+//        bPauseSpeeds[whichThrottle].setSelected(false);
+        setLimitSpeedsOrPauseButton(bPauseSpeeds[whichThrottle], false);
         if (bPauses[whichThrottle] != null) bPauses[whichThrottle].setSelected(false);
         isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
         limitedJump[whichThrottle] = false;

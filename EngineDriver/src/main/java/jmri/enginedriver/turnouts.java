@@ -616,7 +616,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        setContentView(R.layout.turnouts);
+        setContentView(R.layout.turnouts_page);
 
         if (gestureHandler == null)
             gestureHandler = new GestureHandler(Looper.getMainLooper());
@@ -1035,7 +1035,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.settings_mnu) {
-            in = new Intent().setClass(this, SettingsActivity.class);
+            in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -1089,7 +1089,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
-            in = new Intent().setClass(this, dcc_ex.class);
+            in = new Intent().setClass(this, DccexActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;

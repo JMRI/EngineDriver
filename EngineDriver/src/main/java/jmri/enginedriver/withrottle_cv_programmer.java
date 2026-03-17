@@ -527,7 +527,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.withrottle_cv_programmer);
+        setContentView(R.layout.withrottle_cv_programmer_page);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
         if (mainapp.activityBundleMessageHandlers[activity_id_type.WITHROTTLE_CV_PROGRAMMER] == null)

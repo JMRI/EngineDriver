@@ -10,7 +10,7 @@
             <stroke
                 android:width="@dimen/reusable_button_stroke_width"
                 android:color="?attr/reusable_button_2_edge_dark_color" />
-            <solid android:color="@color/transparent" />
+            <solid android:color="?attr/reusable_button_2_face_start_color" />
         </shape>
     </item>
 

@@ -171,7 +171,7 @@ public class select_loco extends AppCompatActivity {
     private Menu overflowMenu;
     private Toolbar toolbar;
 
-    protected final int layoutViewId = R.layout.select_loco;
+    protected final int layoutViewId = R.layout.select_loco_page;
 
     private String prefRosterFilter = "";
     EditText filterRosterText;
@@ -1832,7 +1832,7 @@ public class select_loco extends AppCompatActivity {
 
         // Set up a list adapter to allow adding the list of recent engines to the UI.
         recentLocosList = new ArrayList<>();
-        recentListAdapter = new RecentSimpleAdapter(this, recentLocosList, R.layout.engine_list_item,
+        recentListAdapter = new RecentSimpleAdapter(this, recentLocosList, R.layout.select_loco_engine_list_item,
                 new String[]{"engine"},
                 new int[]{R.id.engine_item_label, R.id.engine_icon_image});
         recentListView = findViewById(R.id.recentLocoListView);
@@ -1850,7 +1850,7 @@ public class select_loco extends AppCompatActivity {
         // Set up a list adapter to allow adding the list of recent consists to the UI.
         recentConsistsList = new ArrayList<>();
         recentConsistsListAdapter = new RecentConsistsSimpleAdapter(this, recentConsistsList,
-                R.layout.consists_list_item, new String[]{"consist"},
+                R.layout.consist_list_item, new String[]{"consist"},
                 new int[]{R.id.consist_item_label});
         recentConsistsListView = findViewById(R.id.consists_list);
         recentConsistsListView.setAdapter(recentConsistsListAdapter);
@@ -2456,7 +2456,7 @@ public class select_loco extends AppCompatActivity {
         String res;
         final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
         dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosterNameString);
-        dialog.setContentView(R.layout.roster_entry);
+        dialog.setContentView(R.layout.roster_entry_page);
         if (re != null) {
             res = re.toString();
         } else {
@@ -2699,7 +2699,7 @@ public class select_loco extends AppCompatActivity {
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.select_loco_engine_list_item, null, false);
 //            RelativeLayout view = (RelativeLayout) convertView;
 //            if (convertView == null) {
 //                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -2775,7 +2775,7 @@ public class select_loco extends AppCompatActivity {
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
+            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consist_list_item, null, false);
 //            RelativeLayout view = (RelativeLayout) convertView;
 //            if (convertView == null) {
 //                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

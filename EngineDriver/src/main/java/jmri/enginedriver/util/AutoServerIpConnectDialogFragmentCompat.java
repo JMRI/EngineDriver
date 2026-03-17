@@ -10,8 +10,8 @@ import android.widget.EditText;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
+import jmri.enginedriver.PreferencesActivity;
 import jmri.enginedriver.R;
-import jmri.enginedriver.SettingsActivity;
 
 public class AutoServerIpConnectDialogFragmentCompat extends PreferenceDialogFragmentCompat {
 
@@ -100,30 +100,30 @@ public class AutoServerIpConnectDialogFragmentCompat extends PreferenceDialogFra
      * @return The address of the currently connected server.
      */
     private String getConnectedHostAddress() {
-        if (getTargetFragment() instanceof SettingsActivity.SettingsFragment) {
-            SettingsActivity.SettingsFragment settingsFragment = (SettingsActivity.SettingsFragment) getTargetFragment();
+        if (getTargetFragment() instanceof PreferencesActivity.SettingsFragment) {
+            PreferencesActivity.SettingsFragment settingsFragment = (PreferencesActivity.SettingsFragment) getTargetFragment();
                 return settingsFragment.getConnectedHostAddress();
         }
         return "";
     }
     private String getConnectedHostPort() {
-        if (getTargetFragment() instanceof SettingsActivity.SettingsFragment) {
-            SettingsActivity.SettingsFragment settingsFragment = (SettingsActivity.SettingsFragment) getTargetFragment();
+        if (getTargetFragment() instanceof PreferencesActivity.SettingsFragment) {
+            PreferencesActivity.SettingsFragment settingsFragment = (PreferencesActivity.SettingsFragment) getTargetFragment();
             return settingsFragment.getConnectedHostPort();
         }
         return "";
     }
     private boolean getConnectedHostIsDccEx() {
-        if (getTargetFragment() instanceof SettingsActivity.SettingsFragment) {
-            SettingsActivity.SettingsFragment settingsFragment = (SettingsActivity.SettingsFragment) getTargetFragment();
+        if (getTargetFragment() instanceof PreferencesActivity.SettingsFragment) {
+            PreferencesActivity.SettingsFragment settingsFragment = (PreferencesActivity.SettingsFragment) getTargetFragment();
             return settingsFragment.getConnectedHostIsDccEx();
         }
         return false;
     }
 
     private int getSelectedTheme() {
-        if (getTargetFragment() instanceof SettingsActivity.SettingsFragment) {
-            SettingsActivity.SettingsFragment settingsFragment = (SettingsActivity.SettingsFragment) getTargetFragment();
+        if (getTargetFragment() instanceof PreferencesActivity.SettingsFragment) {
+            PreferencesActivity.SettingsFragment settingsFragment = (PreferencesActivity.SettingsFragment) getTargetFragment();
             return settingsFragment.mainapp.getSelectedTheme(true);
         }
         return 0;

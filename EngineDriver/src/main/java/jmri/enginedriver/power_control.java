@@ -273,7 +273,7 @@ public class power_control extends AppCompatActivity {
         mainapp.applyTheme(this);
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
-        setContentView(R.layout.power_control);
+        setContentView(R.layout.power_control_page);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
         if (mainapp.activityBundleMessageHandlers[activity_id_type.POWER_CONTROL] == null)

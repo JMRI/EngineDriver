@@ -97,7 +97,7 @@ public class intro_dccex extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.intro_dccex, container, false);
+        return inflater.inflate(R.layout.intro_dccex_page, container, false);
     }
 
 }

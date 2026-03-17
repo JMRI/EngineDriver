@@ -101,8 +101,8 @@ import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
-    static final String activityName = "SettingsActivity";
+public class PreferencesActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+    static final String activityName = "PreferencesActivity";
 
     private int result = RESULT_OK;
 
@@ -186,7 +186,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         mainapp.applyTheme(this,true);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView(R.layout.preferences_page);
         FragmentManager fragmentManager = getSupportFragmentManager();
                 if (savedInstanceState == null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -217,7 +217,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(SettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(PreferencesActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -890,7 +890,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(threaded_application.applicationName, activityName + ": onCreateOptionsMenu()");
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
+        inflater.inflate(R.menu.preferences_menu, menu);
         overflowMenu = menu;
 
         refreshOverflowMenu();
@@ -1192,7 +1192,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
 
 
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.num_throttle_dialog);
+        dialog.setContentView(R.layout.preference_dialog_num_throttle);
         Button cancelButton = dialog.findViewById(R.id.num_throttles_dialog_button_cancel);
 
         List<String> entryList=new ArrayList<>();
@@ -1585,7 +1585,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         public String[] advancedPreferences;
 
         protected String defaultName;
-        SettingsActivity parentActivity;
+        PreferencesActivity parentActivity;
 
         public static final String PAGE_ID = "page_id";
 
@@ -1605,7 +1605,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
                 setPreferencesFromResource(R.xml.preferences, rootKey);
 
             Activity a = getActivity();
-            parentActivity = (SettingsActivity) a;
+            parentActivity = (PreferencesActivity) a;
 
             setPreferencesUI();
         }
@@ -2228,7 +2228,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public static class SettingsSubScreenFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
         private static final String TAG = SettingsSubScreenFragment.class.getName();
         public static final String PAGE_ID = "page_id";
-        SettingsActivity parentActivity;
+        PreferencesActivity parentActivity;
         public String[] advancedSubPreferences;
 
         public static SettingsSubScreenFragment newInstance(String pageId) {
@@ -2249,7 +2249,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences(): of the sub screen " + rootKey);
 
             Activity a = getActivity();
-            parentActivity = (SettingsActivity) a;
+            parentActivity = (PreferencesActivity) a;
             assert parentActivity != null;
             if (parentActivity.prefs==null) {
                 parentActivity.loadSharedPreferences();

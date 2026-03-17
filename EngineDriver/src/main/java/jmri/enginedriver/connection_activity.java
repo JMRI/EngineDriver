@@ -170,10 +170,10 @@ public class connection_activity extends AppCompatActivity implements Permission
     private Toolbar toolbar;
     private LinearLayout statusLine;
 
-    protected final ActivityResultLauncher<Intent> settingsActivityLauncher = registerForActivityResult(
+    protected final ActivityResultLauncher<Intent> preferencesActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": settingsActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                Log.d(threaded_application.applicationName, activityName + ": preferencesActivityLauncher callback received. ResultCode: " + result.getResultCode());
                 // fall through to the default onActivityResult();
             }
     );
@@ -583,14 +583,14 @@ public class connection_activity extends AppCompatActivity implements Permission
 
 //        checkForLegacyFiles();
 
-        setContentView(R.layout.connection);
+        setContentView(R.layout.connection_page);
 
         boolean prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
         mainapp.haveForcedWiFiConnection = false;
 
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
         discovery_list = new ArrayList<>();
-        discovery_list_adapter = new SimpleAdapter(this, discovery_list, R.layout.connections_list_item,
+        discovery_list_adapter = new SimpleAdapter(this, discovery_list, R.layout.connection_list_item,
                 new String[]{"ip_address", "host_name", "port", "ssid", "serverType"},
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label});
         ListView discover_list = findViewById(R.id.discovery_list);
@@ -600,7 +600,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         importExportConnectionList = new ImportExportConnectionList(getApplicationContext(),prefs);
         //Set up a list adapter to allow adding the list of recent connections to the UI.
 //            connections_list = new ArrayList<>();
-        connection_list_adapter = new SimpleAdapter(this, importExportConnectionList.connections_list, R.layout.connections_list_item,
+        connection_list_adapter = new SimpleAdapter(this, importExportConnectionList.connections_list, R.layout.connection_list_item,
                 new String[]{"ip_address", "host_name", "port", "ssid", "serverType"},
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label});
         ListView conn_list = findViewById(R.id.connections_list);
@@ -672,7 +672,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
             Log.d(threaded_application.applicationName, activityName + ": onCreate(); Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
-                startSettingsActivity();
+                startPreferencesActivity();
             }
         }
 
@@ -1128,7 +1128,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.checkAskExit(this);
             return true;
         } else if ( (item.getItemId() == R.id.settings_mnu) || (item.getItemId() == R.id.settings_button) ) {
-            startSettingsActivity();
+            startPreferencesActivity();
             return true;
         } else if (item.getItemId() == R.id.about_mnu) {
             in = new Intent().setClass(this, about_page.class);
@@ -1158,13 +1158,13 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    void startSettingsActivity() {
+    void startPreferencesActivity() {
         try {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            settingsActivityLauncher.launch(intent);
+            Intent intent = new Intent(this, PreferencesActivity.class);
+            preferencesActivityLauncher.launch(intent);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startSettingsActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            Log.d(threaded_application.applicationName, activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 

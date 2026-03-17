@@ -256,7 +256,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.consist);
+        setContentView(R.layout.consist_page);
         //put pointer to this activity's handler in main app's shared variable
         if (mainapp.activityBundleMessageHandlers[activity_id_type.CONSIST_EDIT] == null)
             mainapp.activityBundleMessageHandlers[activity_id_type.CONSIST_EDIT] = new BundleMessageHandler(Looper.getMainLooper());

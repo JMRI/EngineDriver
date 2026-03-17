@@ -1377,7 +1377,7 @@
         <item name="reusable_button_text_enabled_color">@color/muted_sepia</item>
         <item name="reusable_button_text_disabled_color">@color/grey_light</item>
         <item name="reusable_select_button_text_disabled_color">@color/grey_very_dark</item>
-        <item name="reusable_button_text_pressed_color">@color/muted_yellow_very_dark</item>
+        <item name="reusable_button_text_pressed_color">@color/muted_sepia_dark</item>
         <item name="reusable_button_text_shadow_color">@color/muted_very_light</item>
 
         <item name="reusable_stop_button_text_pressed_color">@color/muted_red</item>
