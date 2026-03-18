@@ -104,6 +104,7 @@
     <attr name="ed_select_loco_glyph_idngo" format="reference" />
 
     <attr name="ed_select_loco_glyph_release" format="reference" />
+    <attr name="ed_select_loco_glyph_drop_before_acquire" format="reference" />
     <attr name="ed_select_loco_glyph_dispatch" format="reference" />
     <attr name="ed_select_loco_glyph_consist_order" format="reference" />
     <attr name="ed_select_loco_glyph_consist_lights" format="reference" />

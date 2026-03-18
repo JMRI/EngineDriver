@@ -74,7 +74,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="52dp"
+                            android:layout_width="48dp"
                             android:layout_height="wrap_content"
                             android:padding="0dp"
                             android:layout_marginTop="0dp"
@@ -106,6 +106,38 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:padding="0dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginStart="0dp"
+                            android:layout_marginEnd="6dp"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/drop_before_acquire_button1"
+                                style="?attr/ed_small_button_condensed_text_style"
+                                android:layout_width="match_parent"
+                                android:layout_height="48dp"
+                                android:contentDescription="@string/prefDropOnAcquireTitle"
+                                app:srcCompat="?attr/ed_select_loco_glyph_drop_before_acquire" />
+
+                            <TextView
+                                style="?attr/floating_text_style"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginEnd="2dp"
+                                android:layout_gravity="center"
+                                android:text="@string/prefDropOnAcquireTitle"
+                                android:textSize="8sp"
+                                tools:ignore="SmallSp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/edit_consist_layout1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -118,7 +150,7 @@
                             tools:ignore="UselessParent">
 
                             <LinearLayout
-                                android:layout_width="52dp"
+                                android:layout_width="48dp"
                                 android:layout_height="wrap_content"
                                 android:padding="0dp"
                                 android:layout_marginTop="0dp"
@@ -150,7 +182,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="52dp"
+                                android:layout_width="48dp"
                                 android:layout_height="wrap_content"
                                 android:padding="0dp"
                                 android:layout_marginTop="0dp"
@@ -185,7 +217,7 @@
 
                         <LinearLayout
                             android:id="@+id/device_sounds_button_layout1"
-                            android:layout_width="52dp"
+                            android:layout_width="48dp"
                             android:layout_height="wrap_content"
                             android:padding="0dp"
                             android:layout_marginTop="0dp"
@@ -220,7 +252,7 @@
 
                         <LinearLayout
                             android:id="@+id/dispatch_button_layout1"
-                            android:layout_width="52dp"
+                            android:layout_width="48dp"
                             android:layout_height="wrap_content"
                             android:padding="0dp"
                             android:layout_marginTop="0dp"

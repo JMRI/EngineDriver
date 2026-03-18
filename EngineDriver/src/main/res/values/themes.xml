@@ -116,6 +116,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/glyph_button_select_loco_idngo</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/glyph_button_select_loco_release</item>
+        <item name="ed_select_loco_glyph_drop_before_acquire">@drawable/glyph_button_select_loco_drop_before_acquire</item>
         <item name="ed_select_loco_glyph_dispatch">@drawable/glyph_button_select_loco_dispatch</item>
         <item name="ed_select_loco_glyph_consist_order">@drawable/glyph_button_select_loco_consist_order</item>
         <item name="ed_select_loco_glyph_consist_lights">@drawable/glyph_button_select_loco_consist_lights</item>
@@ -444,6 +445,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/glyph_button_select_loco_idngo</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/glyph_button_select_loco_release</item>
+        <item name="ed_select_loco_glyph_drop_before_acquire">@drawable/glyph_button_select_loco_drop_before_acquire</item>
         <item name="ed_select_loco_glyph_dispatch">@drawable/glyph_button_select_loco_dispatch</item>
         <item name="ed_select_loco_glyph_consist_order">@drawable/glyph_button_select_loco_consist_order</item>
         <item name="ed_select_loco_glyph_consist_lights">@drawable/glyph_button_select_loco_consist_lights</item>
@@ -742,6 +744,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/glyph_button_select_loco_idngo</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/glyph_button_select_loco_release</item>
+        <item name="ed_select_loco_glyph_drop_before_acquire">@drawable/glyph_button_select_loco_drop_before_acquire</item>
         <item name="ed_select_loco_glyph_dispatch">@drawable/glyph_button_select_loco_dispatch</item>
         <item name="ed_select_loco_glyph_consist_order">@drawable/glyph_button_select_loco_consist_order</item>
         <item name="ed_select_loco_glyph_consist_lights">@drawable/glyph_button_select_loco_consist_lights</item>
@@ -1089,6 +1092,7 @@
         <item name="ed_select_loco_glyph_idngo">@drawable/glyph_button_select_loco_idngo</item>
 
         <item name="ed_select_loco_glyph_release">@drawable/glyph_button_select_loco_release</item>
+        <item name="ed_select_loco_glyph_drop_before_acquire">@drawable/glyph_button_select_loco_drop_before_acquire</item>
         <item name="ed_select_loco_glyph_dispatch">@drawable/glyph_button_select_loco_dispatch</item>
         <item name="ed_select_loco_glyph_consist_order">@drawable/glyph_button_select_loco_consist_order</item>
         <item name="ed_select_loco_glyph_consist_lights">@drawable/glyph_button_select_loco_consist_lights</item>

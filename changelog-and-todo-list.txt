@@ -1,6 +1,7 @@
 **Version 2.42.222
  * New Features
      * New 'Neon Green' and 'Muted' themes  ('Muted' appears as 'Paper' in the menu.)
+     * Added 'Drop loco before Acquire' toggle button on the Select Loco screen.
  * Bug fixes
      * Bug fix for muted IPLS sounds restarting when going to another screen
      * Bug fix for the 'simple' layout not showing the correct space for the optional function button area.

@@ -176,6 +176,9 @@ public class select_loco extends AppCompatActivity {
     private String prefRosterFilter = "";
     EditText filterRosterText;
 
+    ImageButton dropBeforeAcquireButton1;
+    boolean prefDropOnAcquire = false;
+
     TextView dccAddressHelpText;
     RelativeLayout rosterToolbarGroupLayout;
     TextView rlRosterEmpty;
@@ -502,6 +505,8 @@ public class select_loco extends AppCompatActivity {
         releaseButton0.setVisibility(GONE);
         ImageButton releaseButton1 = findViewById(R.id.release_button1);
         releaseButton1.setVisibility(GONE);
+
+        dropBeforeAcquireButton1 = findViewById(R.id.drop_before_acquire_button1);
 
         LinearLayout [] consistOptionsLayout = new LinearLayout[2];
         consistOptionsLayout[0] = findViewById(R.id.current_locos_options_layout0);
@@ -1341,6 +1346,21 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
+    public class DropBeforeAcquireButtonListener implements View.OnClickListener {
+
+        @SuppressLint("ApplySharedPref")
+        public void onClick(View v) {
+            Log.d(threaded_application.applicationName, activityName + ": DropBeforeButtonListener(): onClick()");
+            mainapp.buttonVibration();
+
+            prefDropOnAcquire = prefs.getBoolean("prefDropOnAcquire", false);
+            prefDropOnAcquire = !prefDropOnAcquire;
+            prefs.edit().putBoolean("prefDropOnAcquire", prefDropOnAcquire).commit();
+            dropBeforeAcquireButton1.setSelected(prefDropOnAcquire);
+
+        }
+    }
+
     public class DispatchButtonListener implements View.OnClickListener {
         final int _throttle;
 
@@ -1912,6 +1932,11 @@ public class select_loco extends AppCompatActivity {
         button.setOnClickListener(new ReleaseButtonListener(whichThrottle));
         ImageButton imageButton = findViewById(R.id.release_button1);
         imageButton.setOnClickListener(new ReleaseButtonListener(whichThrottle));
+
+        dropBeforeAcquireButton1 = findViewById(R.id.drop_before_acquire_button1);
+        dropBeforeAcquireButton1.setOnClickListener(new DropBeforeAcquireButtonListener());
+        prefDropOnAcquire = prefs.getBoolean("prefDropOnAcquire", false);
+        dropBeforeAcquireButton1.setSelected(prefDropOnAcquire);
 
         EditText la = findViewById(R.id.loco_address);
         la.addTextChangedListener(new TextWatcher() {
