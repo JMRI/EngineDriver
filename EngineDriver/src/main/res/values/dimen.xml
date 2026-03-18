@@ -227,13 +227,21 @@
     <dimen name="reusable_thumb_stroke_width">1dip</dimen>
     <dimen name="reusable_thumb_shadow_width">5dp</dimen>
 
+    <dimen name="reusable_toolbar_button_outline_stroke_width">0</dimen> // default is 0=don't show
+
     <!-- Muted theme -->
 
     <dimen name="button_corner_radius_muted">12dp</dimen>
     <dimen name="reusable_button_active_stroke_top_left_light_muted">1dp</dimen>
     <dimen name="reusable_button_active_stroke_top_left_highlight_muted">2dp</dimen>
+
     <!-- new_colorful theme -->
 
     <dimen name="button_corner_radius_colorful">6dp</dimen>
+
+    <!-- outline theme -->
+
+    <dimen name="reusable_toolbar_button_outline_stroke_width_outline">20</dimen>
+
 
 </resources>

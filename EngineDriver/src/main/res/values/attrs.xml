@@ -207,6 +207,10 @@
     <attr name="reusable_button_active_stroke_top_left_light_dimen" format="reference" />
     <attr name="reusable_button_active_stroke_top_left_highlight_dimen" format="reference" />
 
+    <attr name="reusable_toolbar_button_outline_stroke_width_dimen" format="reference" />
+    <attr name="reusable_toolbar_button_outline_stroke_color" format="reference" />
+
+
     <!-- function buttons -->
     <attr name="reusable_button_function_edge_light_color" format="reference" />
     <attr name="reusable_button_function_edge_highlight_color" format="reference" />

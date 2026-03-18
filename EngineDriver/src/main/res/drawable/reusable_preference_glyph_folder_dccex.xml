@@ -1,14 +1,26 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+      android:drawable="@drawable/reusable_preference_glyph_folder_folder" />
+
+  <item
+      android:top="0dp"
+      android:left="0dp"
+      android:right="0dp"
+      android:bottom="0dp" >
+
+    <vector
     xmlns:tools="http://schemas.android.com/tools"
     android:width="171.33dp"
     android:height="171.33dp"
     android:viewportWidth="607.09"
     android:viewportHeight="607.09">
-  <path
-      android:pathData="m75.4,52.66 l188.44,0 70.27,85.52 197.58,0c34.27,0 61.85,27.59 61.85,61.85L593.54,476c0,34.27 -27.59,61.85 -61.85,61.85L75.4,537.86c-34.27,-0 -61.85,-27.59 -61.85,-61.85L13.54,114.51c0,-34.27 27.59,-61.85 61.85,-61.85z"
-      android:strokeWidth="20"
-      android:fillColor="?attr/reusable_preference_glyph_fill_color"
-      android:strokeColor="?attr/reusable_preference_glyph_stroke_color"/>
+<!--  <path-->
+<!--      android:pathData="m75.4,52.66 l188.44,0 70.27,85.52 197.58,0c34.27,0 61.85,27.59 61.85,61.85L593.54,476c0,34.27 -27.59,61.85 -61.85,61.85L75.4,537.86c-34.27,-0 -61.85,-27.59 -61.85,-61.85L13.54,114.51c0,-34.27 27.59,-61.85 61.85,-61.85z"-->
+<!--      android:strokeWidth="20"-->
+<!--      android:fillColor="?attr/reusable_preference_glyph_fill_color"-->
+<!--      android:strokeColor="?attr/reusable_preference_glyph_stroke_color"/>-->
   <path
       android:pathData="M134.69,312.18L270.4,176.47A39.5,39.5 90,0 1,326.26 176.47L461.98,312.18A39.5,39.5 0,0 1,461.98 368.04L326.26,503.76A39.5,39.5 90,0 1,270.4 503.76L134.69,368.04A39.5,39.5 0,0 1,134.69 312.18z"
       android:strokeAlpha="0.956863"
@@ -42,3 +54,5 @@
         android:strokeColor="?attr/reusable_preference_glyph_internal_glyph_stroke_color"/>
   </group>
 </vector>
+  </item>
+</layer-list>

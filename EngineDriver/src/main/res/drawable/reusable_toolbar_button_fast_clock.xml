@@ -31,4 +31,11 @@
       android:strokeWidth="1.4"
       android:fillColor="?attr/reusable_button_glyph_fill_color"
       android:strokeColor="#00000000"/>
+
+  <path
+      android:pathData="M108.54,13.54L498.54,13.54A95,95 60.16,0 1,593.54 108.54L593.54,498.54A95,95 110.95,0 1,498.54 593.54L108.54,593.54A95,95 105.45,0 1,13.54 498.54L13.54,108.54A95,95 0,0 1,108.54 13.54z"
+      android:strokeWidth="?attr/reusable_toolbar_button_outline_stroke_width_dimen"
+      android:strokeColor="?attr/reusable_toolbar_button_outline_stroke_color">
+  </path>
+
 </vector>

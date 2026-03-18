@@ -31,6 +31,7 @@
     <color name="offWhite">#DEDEDE</color>
     <color name="holoBlue">#ff33b5e5</color>
     <color name="divider">#4A4A4A</color>
+    <color name="solidYellow">#ffac00</color>
 
     <color name="holoBlue_transparent_75">#BF33B5E5</color>
     <color name="holoBlue_transparent_50">#8033B5E5</color>
