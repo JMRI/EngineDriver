@@ -73,7 +73,7 @@
             <stroke
                 android:rotation="90"
                 android:width="@dimen/reusable_thumb_stroke_width"
-                android:color="?attr/reusable_thumb_stroke_color"
+                android:color="?attr/reusable_thumb_center_bar_stroke_color"
                 />
         </shape>
         </rotate>

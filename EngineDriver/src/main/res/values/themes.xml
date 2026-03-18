@@ -91,8 +91,8 @@
         <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
         <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
 
-        <item name="ed_thumb">@drawable/original_thumb</item>
-        <item name="ed_vertical_thumb">@drawable/original_thumb_vertical</item>
+        <item name="ed_thumb">@drawable/reusable_thumb</item>
+        <item name="ed_vertical_thumb">@drawable/reusable_thumb_vertical</item>
 
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
@@ -177,7 +177,15 @@
         <item name="EDRadioButton">@style/EDRadioButton</item>
         <item name="android:radioButtonStyle">@style/EDRadioButton</item>
 
-        <!-- everything following this is a partial move oft this theme  to the new reusable theme -->
+        <!-- everything following this is a partial move of this theme  to the new reusable theme -->
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_inner_color">@color/buttonCommonFillGradiantCenter_original</item>
+        <item name="reusable_thumb_fill_outer_color">@color/solidBlack</item>
+        <item name="reusable_thumb_stroke_color">@color/holoBlue</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidBlack</item>
+        <item name="reusable_thumb_shadow_color">@color/grey_light_50</item>
+<!--        <item name="ed_throttle_tick_mark">@color/grey_light</item>-->
 
         <!-- used for the glyphs in the menus, categories (preferences) and buttons. -->
         <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
@@ -203,6 +211,10 @@
         <item name="reusable_button_face_end_color">@color/colorful_tan_light</item>
         <item name="reusable_button_face_center_color">@color/colorful_tan</item>
         <item name="reusable_button_face_start_color">@color/colorful_tan_very_dark</item>
+
+        <!-- button dimension overrides -->
+        <item name="reusable_toolbar_button_outline_stroke_width_dimen">@dimen/reusable_toolbar_button_outline_stroke_width</item>
+        <item name="reusable_toolbar_button_outline_stroke_color">@color/transparent</item>
 
         <!-- toolbar buttons -->
         <item name="ed_throttle_switch_button">@drawable/reusable_toolbar_button_throttle_switch_button</item>
@@ -405,44 +417,18 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
-        <item name="ed_thumb">@drawable/round_thumb</item>
-        <item name="ed_vertical_thumb">@drawable/round_vertical_thumb</item>
+        <item name="ed_thumb">@drawable/reusable_thumb</item>
+        <item name="ed_vertical_thumb">@drawable/reusable_thumb_vertical</item>
 
-<!--        <item name="ed_throttle_switch_button">@drawable/outline_toolbar_button_throttle_switch_button</item>-->
-<!--        <item name="ed_preferences_button">@drawable/outline_toolbar_button_preferences</item>-->
-<!--        <item name="ed_wizard_button">@drawable/outline_toolbar_button_wizard</item>-->
-<!--        <item name="ed_throttle_button">@drawable/outline_toolbar_button_throttle</item>-->
-<!--        <item name="ed_web_button">@drawable/outline_toolbar_button_web</item>-->
-<!--        <item name="ed_turnouts_button">@drawable/outline_toolbar_button_turnouts</item>-->
-<!--        <item name="ed_routes_button"  >@drawable/outline_toolbar_button_routes</item>-->
-        <item name="android:actionButtonStyle">@style/ActionButton</item>
+       <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@drawable/black_toolbar_background</item>
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
 
-<!--        <item name="ed_flashlight_on_button">@drawable/outline_toolbar_button_flashlight_on</item>-->
-<!--        <item name="ed_flashlight_off_button">@drawable/outline_toolbar_button_flashlight_off</item>-->
-<!--        <item name="ed_esu_mc2_knob_on_button">@drawable/outline_toolbar_button_esu_mc2_knob_on</item>-->
-<!--        <item name="ed_esu_mc2_knob_off_button">@drawable/outline_toolbar_button_esu_mc2_knob_off</item>-->
-<!--        <item name="ed_estop_button">@drawable/outline_toolbar_button_estop</item>-->
-<!--        <item name="ed_estop_active_button">@drawable/outline_toolbar_button_estop_active</item>-->
-<!--        <item name="ed_search_button">@drawable/outline_toolbar_button_search</item>-->
-<!--        <item name="ed_timer_button">@drawable/outline_toolbar_button_timer</item>-->
-<!--        <item name="ed_power_green_button">@drawable/outline_toolbar_button_power_green</item>-->
-<!--        <item name="ed_power_green_red_button">@drawable/outline_toolbar_button_power_green_red</item>-->
-<!--        <item name="ed_power_yellow_button">@drawable/outline_toolbar_button_power_yellow</item>-->
-<!--        <item name="ed_power_red_button">@drawable/outline_toolbar_button_power_red</item>-->
-
         <item name="ed_folder_icon">@drawable/outline_preference_glyph_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_preference_glyph_folder_dcc_ex</item>
         <item name="ed_folder_esu_icon">@drawable/outline_preference_glyph_folder_esu</item>
-<!--        <item name="ed_clock_icon">@drawable/outline_toolbar_button_fast_clock</item>-->
-<!--        <item name="ed_web_view_button">@drawable/outline_toolbar_button_web_view</item>-->
-<!--        <item name="ed_in_device_sounds_button">@drawable/outline_toolbar_button_ipls</item>-->
-<!--        <item name="ed_cv19_consist_button">@drawable/outline_toolbar_button_cv19_consist</item>-->
-<!--        <item name="ed_dccex_consist_button">@drawable/outline_toolbar_button_dccex_consist</item>-->
-<!--        <item name="ed_dcc_ex_button">@drawable/outline_toolbar_button_dcc_ex</item>-->
         <item name="ed_background_popup">@drawable/black_background_popup</item>
         <item name="ed_background_highlight">@drawable/black_background_highlight</item>
         <item name="ed_background_highlight_secondary">@drawable/black_background_highlight_secondary</item>
@@ -521,6 +507,15 @@
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
 
+        <!-- everything following this is a partial move of this theme  to the new reusable theme -->
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_inner_color">@color/holoBlue_light</item>
+        <item name="reusable_thumb_fill_outer_color">@color/solidBlack</item>
+        <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidBlack</item>
+        <item name="reusable_thumb_shadow_color">@color/transparent</item>
+        <!--        <item name="ed_throttle_tick_mark">@color/grey_light</item>-->
 
         <!-- toolbar button overrides -->
 
@@ -720,8 +715,8 @@
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
 
-        <item name="ed_thumb">@drawable/outline_thumb</item>
-        <item name="ed_vertical_thumb">@drawable/outline_thumb_vertical</item>
+        <item name="ed_thumb">@drawable/reusable_thumb</item>
+        <item name="ed_vertical_thumb">@drawable/reusable_thumb_vertical</item>
 
         <item name="android:actionButtonStyle">@style/ActionButton</item>
         <item name="actionButtonStyle">@style/ActionButton</item>
@@ -809,6 +804,16 @@
         <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
+        <!-- everything following this is a partial move of this theme  to the new reusable theme -->
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_inner_color">@color/solidBlack</item>
+        <item name="reusable_thumb_fill_outer_color">@color/solidBlack</item>
+        <item name="reusable_thumb_stroke_color">@color/holoBlue</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidWhite</item>
+        <item name="reusable_thumb_shadow_color">@color/grey_light_50</item>
+<!--        <item name="ed_throttle_tick_mark">@color/grey_light</item>-->
 
         <!-- toolbar button overrides -->
 
@@ -1230,6 +1235,7 @@
         <item name="reusable_thumb_fill_inner_color">@color/solidBlack</item>
         <item name="reusable_thumb_fill_outer_color">@color/transparent</item>
         <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidWhite</item>
         <item name="reusable_thumb_shadow_color">@color/transparent</item>
 
         <!-- preference glyph default colours -->
@@ -1238,7 +1244,6 @@
         <item name="reusable_preference_glyph_stroke_color">@color/solidWhite</item>
         <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/transparent</item>
         <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidWhite</item>
-
 
     </style>
 
@@ -1365,6 +1370,7 @@
         <!-- slider colours -->
         <item name="reusable_thumb_fill_inner_color">@color/neon_blue</item>
         <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidWhite</item>
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
@@ -1506,6 +1512,7 @@
         <!-- slider colours -->
         <item name="reusable_thumb_fill_inner_color">@color/neon_green</item>
         <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidBlack</item>
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
@@ -1656,6 +1663,7 @@
         <item name="reusable_thumb_fill_inner_color">@color/muted_blue_light</item>
         <item name="reusable_thumb_fill_outer_color">@color/muted_light</item>
         <item name="reusable_thumb_stroke_color">@color/muted_blue_very_dark</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidBlack</item>
         <item name="reusable_thumb_shadow_color">@color/muted_mauve_very_dark_25</item>
         <item name="ed_throttle_tick_mark">@color/muted_sepia_dark</item>
 
@@ -1813,6 +1821,7 @@
         <item name="reusable_thumb_fill_inner_color">@color/colorful_tan</item>
         <item name="reusable_thumb_fill_outer_color">@color/colorful_tan_ultra_light</item>
         <item name="reusable_thumb_stroke_color">@color/colorful_blue_dark</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidBlack</item>
         <item name="reusable_thumb_shadow_color">@color/colorful_tan_ultra_dark_25</item>
         <item name="ed_throttle_tick_mark">@color/grey_dark</item>
 
@@ -2053,6 +2062,7 @@
         <!-- slider colours -->
         <item name="reusable_thumb_fill_inner_color">@color/ultra</item>
         <item name="reusable_thumb_stroke_color">@color/ultra_blue</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidWhite</item>
         <item name="ed_throttle_tick_mark">@color/ultra_ultra_light</item>
 
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>

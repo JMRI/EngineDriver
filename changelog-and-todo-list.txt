@@ -14,7 +14,7 @@
        DCC-EX and WiThrottle send and receive methods moved to separate classes.
      * Created a generic 'reusable' theme to make it easy to add new themes.
      * Altered the 'neon blue', 'colourful' and 'ultra' (Dark) themes so they use the generic 'reusable' theme, so can't be moved.
-     * Partial move of the 'original', 'Outline' and 'Black' theme to use the generic 'reusable' theme.  Toolbars and preferences only. The main buttons have a different style to the 'reusable' ones.
+     * Partial move of the 'original', 'Outline' and 'Black' theme to use the generic 'reusable' theme.  Toolbars, thumbs and preferences only. The main buttons have a different style to the 'reusable' ones.
      * Removed some textViews in all the throttles (behind the fwd/rev buttons) that could never be seen.
      * Simplified part of all the throttles in all the views (related to the fwd/rev buttons).
      * Removed a number of unused drawables.

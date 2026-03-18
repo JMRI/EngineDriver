@@ -16,12 +16,15 @@
 <resources>
     <!-- Common -->
 
-    <color name="black_half_trans">#88000000</color>
+    <color name="black_50">#80000000</color>
     <color name="black">#ff000000</color>
+
     <color name="grey_very_dark">#252525</color>
     <color name="grey_dark">#2F2F2F</color>
     <color name="grey">#ff888888</color>
     <color name="grey_light">#a6a6a6</color>
+    <color name="grey_light_50">#80a6a6a6</color>
+
     <color name="red">#ff0000</color>
 
     <color name="transparent">#00000000</color>
@@ -29,7 +32,10 @@
     <color name="solidBlack">#ff000000</color>
     <color name="solidWhite">#ffffffff</color>
     <color name="offWhite">#DEDEDE</color>
+
     <color name="holoBlue">#ff33b5e5</color>
+    <color name="holoBlue_light">#ffa6e0f2</color>
+
     <color name="divider">#4A4A4A</color>
     <color name="solidYellow">#ffac00</color>
 
