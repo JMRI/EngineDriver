@@ -440,6 +440,7 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>なし</item>
         <item>DCCメイン</item>
+        <item>DCCメイン反転</item>
         <item>DCCプログラム</item>
         <item>DC</item>
         <item>DC逆極性</item>

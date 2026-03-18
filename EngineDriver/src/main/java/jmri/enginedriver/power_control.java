@@ -64,7 +64,7 @@ public class power_control extends AppCompatActivity {
     private Toolbar toolbar;
     private int result = RESULT_OK;
 
-    static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
     private final Button[] dccexTrackPowerButton = {null, null, null, null, null, null, null, null};
     private final LinearLayout[] dccexTrackTypeLayout = {null, null, null, null, null, null, null, null};
     private final TextView[] dccexTrackType = {null, null, null, null, null, null, null, null};

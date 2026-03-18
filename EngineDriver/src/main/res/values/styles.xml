@@ -895,25 +895,25 @@
     <item name="android:textStyle">normal</item>
   </style>
 
-  <style name="ActionBarPopup_outline" parent="Widget.AppCompat.PopupMenu">
-    <item name="android:itemBackground">@android:color/transparent</item>
-    <item name="android:actionBarItemBackground">@drawable/ultra_spinner_background</item>
-    <item name="android:background">@android:color/transparent</item>
-    <item name="android:popupBackground">@android:color/transparent</item>
-  </style>
+<!--  <style name="ActionBarPopup_outline" parent="Widget.AppCompat.PopupMenu">-->
+<!--    <item name="android:itemBackground">@android:color/transparent</item>-->
+<!--    <item name="android:actionBarItemBackground">@drawable/ultra_spinner_background</item>-->
+<!--    <item name="android:background">@android:color/transparent</item>-->
+<!--    <item name="android:popupBackground">@android:color/transparent</item>-->
+<!--  </style>-->
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- remnant of the old Ultra Theme. -->
 
-  <style name="spinner_style_black" parent="Widget.AppCompat.ListView.DropDown">
-    <item name="android:background">@drawable/ultra_spinner_background</item>
-    <item name="android:divider">@color/spinner_divider_ultra</item>
-    <item name="android:dividerHeight">1px</item>
-    <item name="android:scrollbars">none</item>
-    <item name="android:textSize">16sp</item>
-  </style>
+<!--  <style name="spinner_style_black" parent="Widget.AppCompat.ListView.DropDown">-->
+<!--    <item name="android:background">@drawable/ultra_spinner_background</item>-->
+<!--    <item name="android:divider">@color/spinner_divider_ultra</item>-->
+<!--    <item name="android:dividerHeight">1px</item>-->
+<!--    <item name="android:scrollbars">none</item>-->
+<!--    <item name="android:textSize">16sp</item>-->
+<!--  </style>-->
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

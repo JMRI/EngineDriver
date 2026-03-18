@@ -476,6 +476,7 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>无</item>
         <item>DCC主轨（Main)</item>
+        <item>DCC主轨（Main) 倒</item>
         <item>DCC编程轨（Prog)</item>
         <item>DC轨</item>
         <item>直流反极性</item>

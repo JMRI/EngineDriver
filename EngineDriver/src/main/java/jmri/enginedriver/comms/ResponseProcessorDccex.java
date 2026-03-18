@@ -33,8 +33,8 @@ public class ResponseProcessorDccex {
     static threaded_application mainapp;
     static comm_thread commThread;
 
-    static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
-    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, true, true, false, false, false};
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, false, true, true, false, false, false};
 
     public static void initialise(threaded_application mainapp, SharedPreferences prefs, comm_thread commThread) {
         ResponseProcessorDccex.prefs = prefs;
@@ -455,8 +455,14 @@ public class ResponseProcessorDccex {
                 int trackType = 0;
                 for (int i=0; i<TRACK_TYPES.length; i++) {
                     String trackTypeStr = args[1+trackOffset];
-                    if ( (args.length>(2+trackOffset)) && (args[1+trackOffset].equals("MAIN")) && (args[2+trackOffset].charAt(0)>='A') && (args[2+trackOffset].charAt(0)<='H') ) {
-                        trackTypeStr = "AUTO";
+                    if ( (args.length>(2+trackOffset)) && (args[1+trackOffset].equals("MAIN"))
+                            && (args[2+trackOffset].charAt(0)>='A') && (args[2+trackOffset].charAt(0)<='I') ) {
+                        if (args[2+trackOffset].charAt(0) == 'A')
+                            trackTypeStr = "AUTO";
+                        else if(args[2+trackOffset].charAt(0) == 'I')
+                            trackTypeStr = "MAIN_INV";
+                        else
+                            trackTypeStr = "MAIN";
                     }
                     if (trackTypeStr.equals(TRACK_TYPES[i])) {
                         trackType = i;
@@ -523,8 +529,13 @@ public class ResponseProcessorDccex {
         if (type.charAt(type.length() - 1) == '+') {
             type = type.substring(0, type.length() - 1);
         }
-        if ( (args.length>3) && (args[2].equals("MAIN")) && (args[3].charAt(0)>='A') && (args[3].charAt(0)<='H') ) {
-            type = "AUTO";
+        if ( (args.length>3) && (args[2].equals("MAIN")) && (args[3].charAt(0)>='A') && (args[3].charAt(0)<='I') ) {
+            if (args[3].charAt(0) == 'A')
+                type = "AUTO";
+            else if(args[3].charAt(0) == 'I')
+                type = "MAIN_INV";
+            else
+                type = "MAIN";
         }
 
 //        if (args.length>=2) {

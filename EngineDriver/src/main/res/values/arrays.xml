@@ -2206,6 +2206,7 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>NONE</item>  <!-- if less than v4.2.68 this needs to be changed to OFF -->
         <item>DCC MAIN</item>
+        <item>DCC MAIN inverted</item>
         <item>DCC PROG</item>
         <item>DC</item>
         <item>DC reversed polarity (DCX)</item>
@@ -2222,6 +2223,7 @@
         <item>5</item>
         <item>6</item>
         <item>7</item>
+        <item>8</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

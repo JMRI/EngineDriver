@@ -19,8 +19,11 @@
     <color name="black_50">#80000000</color>
     <color name="black">#ff000000</color>
 
+    <color name="grey_mega_dark">#0D0D0D</color>
+    <color name="grey_ultra_dark">#131313</color>
     <color name="grey_very_dark">#252525</color>
     <color name="grey_dark">#2F2F2F</color>
+    <color name="grey_mid_dark">#454545</color>
     <color name="grey">#ff888888</color>
     <color name="grey_light">#a6a6a6</color>
     <color name="grey_light_50">#80a6a6a6</color>

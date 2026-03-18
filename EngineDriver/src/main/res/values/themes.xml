@@ -148,7 +148,7 @@
         <item name="ed_preferences_glyph">@drawable/glyph_menu_preferences</item>
         <item name="ed_menu_glyph">@drawable/glyph_menu_overflow_menu_dark_background</item>
         <item name="ed_wizard_glyph">@drawable/glyph_menu_wizard</item>
-        <item name="ed_blank_glyph">@drawable/blank_glyph</item>
+        <item name="ed_blank_glyph">@drawable/glyph_blank</item>
         <item name="ed_pom_glyph">@drawable/glyph_menu_pom</item>
         <item name="ed_timer_glyph">@drawable/glyph_menu_timer</item>
         <item name="ed_web_glyph">@drawable/glyph_menu_web</item>
@@ -386,7 +386,7 @@
         <item name="popup_floating_text_style">@style/popup_floating_text_style_black</item>
         <item name="edit_label_style">@style/edit_label_style_black</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_black</item>
-        <item name="android:dropDownListViewStyle">@style/spinner_style_black</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style_reusable</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
         <item name="android:spinnerStyle">@style/spinner</item>
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
@@ -425,7 +425,7 @@
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@drawable/black_toolbar_background</item>
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <item name="ed_folder_icon">@drawable/outline_preference_glyph_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_preference_glyph_folder_dcc_ex</item>
@@ -477,7 +477,7 @@
         <item name="ed_preferences_glyph">@drawable/glyph_menu_preferences</item>
         <item name="ed_menu_glyph">@drawable/glyph_menu_overflow_menu_dark_background</item>
         <item name="ed_wizard_glyph">@drawable/glyph_menu_wizard</item>
-        <item name="ed_blank_glyph">@drawable/blank_glyph</item>
+        <item name="ed_blank_glyph">@drawable/glyph_blank</item>
         <item name="ed_pom_glyph">@drawable/glyph_menu_pom</item>
         <item name="ed_timer_glyph">@drawable/glyph_menu_timer</item>
         <item name="ed_web_glyph">@drawable/glyph_menu_web</item>
@@ -510,6 +510,10 @@
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
 
         <!-- everything following this is a partial move of this theme  to the new reusable theme -->
+
+        <!-- general colours -->
+        <item name="reusable_spinner_divider_color">@color/grey_mid_dark</item>
+        <item name="reusable_spinner_background_color">@color/grey_mega_dark</item>
 
         <!-- slider colours -->
         <item name="reusable_thumb_fill_inner_color">@color/holoBlue_light</item>
@@ -685,7 +689,7 @@
         <item name="popup_floating_text_style">@style/popup_floating_text_style_outline</item>
         <item name="edit_label_style">@style/edit_label_style_outline</item>
         <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_outline</item>
-        <item name="android:dropDownListViewStyle">@style/spinner_style_black</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style_reusable</item>
         <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
         <item name="android:spinnerStyle">@style/spinner</item>
         <item name="android:spinnerItemStyle">@style/spinner_item</item>
@@ -724,7 +728,7 @@
         <item name="actionButtonStyle">@style/ActionButton</item>
 
         <item name="ed_toolbar_background">@color/black</item>
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_outline</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <item name="ed_folder_icon">@drawable/outline_preference_glyph_folder</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/outline_preference_glyph_folder_dcc_ex</item>
@@ -776,7 +780,7 @@
         <item name="ed_preferences_glyph">@drawable/glyph_menu_preferences</item>
         <item name="ed_menu_glyph">@drawable/glyph_menu_overflow_menu_dark_background</item>
         <item name="ed_wizard_glyph">@drawable/glyph_menu_wizard</item>
-        <item name="ed_blank_glyph">@drawable/blank_glyph</item>
+        <item name="ed_blank_glyph">@drawable/glyph_blank</item>
         <item name="ed_pom_glyph">@drawable/glyph_menu_pom</item>
         <item name="ed_timer_glyph">@drawable/glyph_menu_timer</item>
         <item name="ed_web_glyph">@drawable/glyph_menu_web</item>
@@ -809,6 +813,10 @@
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
 
         <!-- everything following this is a partial move of this theme  to the new reusable theme -->
+
+        <!-- general colours -->
+        <item name="reusable_spinner_divider_color">@color/grey_mid_dark</item>
+        <item name="reusable_spinner_background_color">@color/grey_mega_dark</item>
 
         <!-- slider colours -->
         <item name="reusable_thumb_fill_inner_color">@color/solidBlack</item>
@@ -1065,7 +1073,7 @@
         <item name="ed_preferences_glyph">@drawable/glyph_menu_preferences</item>
         <item name="ed_menu_glyph">@drawable/glyph_menu_overflow_menu_dark_background</item>
         <item name="ed_wizard_glyph">@drawable/glyph_menu_wizard</item>
-        <item name="ed_blank_glyph">@drawable/blank_glyph</item>
+        <item name="ed_blank_glyph">@drawable/glyph_blank</item>
         <item name="ed_pom_glyph">@drawable/glyph_menu_pom</item>
         <item name="ed_timer_glyph">@drawable/glyph_menu_timer</item>
         <item name="ed_web_glyph">@drawable/glyph_menu_web</item>
@@ -1377,7 +1385,7 @@
         <item name="reusable_thumb_center_bar_stroke_color">@color/solidWhite</item>
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <!-- Theme elements -->
 
@@ -1519,7 +1527,7 @@
         <item name="reusable_thumb_center_bar_stroke_color">@color/solidBlack</item>
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <!-- Theme elements -->
 
@@ -1671,7 +1679,7 @@
         <item name="reusable_thumb_shadow_color">@color/muted_mauve_very_dark_25</item>
         <item name="ed_throttle_tick_mark">@color/muted_sepia_dark</item>
 
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <!-- Theme elements -->
 
@@ -1829,7 +1837,7 @@
         <item name="reusable_thumb_shadow_color">@color/colorful_tan_ultra_dark_25</item>
         <item name="ed_throttle_tick_mark">@color/grey_dark</item>
 
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <!-- Theme elements -->
 
@@ -2069,7 +2077,7 @@
         <item name="reusable_thumb_center_bar_stroke_color">@color/solidWhite</item>
         <item name="ed_throttle_tick_mark">@color/ultra_ultra_light</item>
 
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_black</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <!-- Theme elements -->
 

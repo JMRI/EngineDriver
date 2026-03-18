@@ -88,8 +88,8 @@ public class comm_thread extends Thread {
 
     protected static int requestLocoIdForWhichThrottleDCCEX;
 
-    static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
-    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, true, true, false, false, false};
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, false, true, true, false, false, false};
 
     public comm_thread(threaded_application myApp, SharedPreferences myPrefs) {
         super("comm_thread");

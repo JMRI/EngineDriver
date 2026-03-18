@@ -492,6 +492,7 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>Aucun</item>
         <item>DCC Main</item>
+        <item>DCC Main inversé</item>
         <item>PROGRAMME DCC</item>
         <item>DC</item>
         <item>Inversion polarité DC</item>

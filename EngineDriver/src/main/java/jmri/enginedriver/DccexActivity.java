@@ -169,13 +169,13 @@ public class DccexActivity extends AppCompatActivity implements cvBitCalculator.
 
     static final int TRACK_TYPE_OFF_NONE_INDEX = 0;
     //    static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
-    static final int TRACK_TYPE_DCC_PROG_INDEX = 2;
+    static final int TRACK_TYPE_DCC_PROG_INDEX = 3;
 //    static final int TRACK_TYPE_DC_INDEX = 3;
 //    static final int TRACK_TYPE_DCX_INDEX = 4;
 
-    static final String[] TRACK_TYPES = {"NONE", "MAIN", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
-    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, true, true, false, false, false};
-    static final boolean[] TRACK_TYPES_SELECTABLE = {true, true, true, true, true, true, false, false};
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, false, true, true, false, false, false};
+    static final boolean[] TRACK_TYPES_SELECTABLE = {true, true, true, true, true, true, true, false, false};
 
     String cv29SpeedSteps;
     String cv29AnalogueMode;
