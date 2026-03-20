@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<resources>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Common components for the three older themes -original,black,outline -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="common_app_theme_components" parent="Theme.AppCompat.NoActionBar">
+
+        <item name="ed_advanced_preferences">@drawable/glyph_preferences_advanced_preferences</item>
+
+        <item name="ed_select_loco_glyph_dcc_address">@drawable/glyph_button_select_loco_dcc_address</item>
+        <item name="ed_select_loco_glyph_roster">@drawable/glyph_button_select_loco_roster</item>
+        <item name="ed_select_loco_glyph_recent_loco">@drawable/glyph_button_select_loco_loco</item>
+        <item name="ed_select_loco_glyph_recent_consist">@drawable/glyph_button_select_loco_recent_consist</item>
+        <item name="ed_select_loco_glyph_idngo">@drawable/glyph_button_select_loco_idngo</item>
+
+        <item name="ed_select_loco_glyph_release">@drawable/glyph_button_select_loco_release</item>
+        <item name="ed_select_loco_glyph_drop_before_acquire">@drawable/glyph_button_select_loco_drop_before_acquire</item>
+        <item name="ed_select_loco_glyph_dispatch">@drawable/glyph_button_select_loco_dispatch</item>
+        <item name="ed_select_loco_glyph_consist_order">@drawable/glyph_button_select_loco_consist_order</item>
+        <item name="ed_select_loco_glyph_consist_lights">@drawable/glyph_button_select_loco_consist_lights</item>
+        <item name="ed_select_loco_glyph_ipls">@drawable/glyph_button_select_loco_ipls</item>
+
+        <item name="ed_download_glyph">@drawable/glyph_button_download_states</item>
+        <item name="ed_sort_glyph">@drawable/glyph_button_sort</item>
+        <item name="ed_clear_list_glyph">@drawable/glyph_button_clear_list</item>
+        <item name="ed_tick_glyph_large">@drawable/glyph_tick_large</item>
+        <item name="ed_cross_glyph">@drawable/glyph_button_cross</item>
+        <item name="ed_next_glyph">@drawable/glyph_button_next_states</item>
+        <item name="ed_previous_glyph">@drawable/glyph_button_previous_states</item>
+
+        <item name="ed_dccex_glyph_cv_programmer_pom">@drawable/glyph_button_dccex_cv_programmer</item>
+        <item name="ed_dccex_glyph_cv_programmer_prog_track">@drawable/glyph_button_dccex_cv_programmer_prog_track</item>
+        <item name="ed_dccex_glyph_function_defaults">@drawable/glyph_button_dccex_function_defaults</item>
+        <item name="ed_dccex_glyph_track_manager">@drawable/glyph_button_dccex_track_manager</item>
+        <item name="ed_dccex_glyph_command_line">@drawable/glyph_button_dccex_command_line</item>
+
+        <item name="ed_connect_glyph">@drawable/glyph_button_connect_states</item>
+        <item name="ed_run_glyph">@drawable/glyph_button_run_states</item>
+        <item name="ed_join_glyph">@drawable/glyph_button_join_states</item>
+        <item name="ed_send_glyph">@drawable/glyph_button_send_states</item>
+        <item name="ed_acquire_loco_glyph">@drawable/glyph_button_select_loco_acquire_states</item>
+        <item name="ed_reset_glyph">@drawable/glyph_button_reset_states</item>
+        <item name="ed_save_glyph">@drawable/glyph_button_save_states</item>
+        <item name="ed_share_glyph">@drawable/glyph_button_share</item>
+        <item name="ed_read_glyph">@drawable/glyph_button_read_states</item>
+        <item name="ed_preferences_glyph">@drawable/glyph_menu_preferences</item>
+        <item name="ed_menu_glyph">@drawable/glyph_menu_overflow_menu_dark_background</item>
+        <item name="ed_wizard_glyph">@drawable/glyph_menu_wizard</item>
+        <item name="ed_blank_glyph">@drawable/glyph_blank</item>
+        <item name="ed_pom_glyph">@drawable/glyph_menu_pom</item>
+        <item name="ed_timer_glyph">@drawable/glyph_menu_timer</item>
+        <item name="ed_web_glyph">@drawable/glyph_menu_web</item>
+        <item name="ed_dccex_glyph">@drawable/glyph_menu_dccex</item>
+        <item name="ed_gamepad_glyph">@drawable/glyph_menu_gamepad</item>
+        <item name="ed_edit_consist_glyph">@drawable/glyph_button_edit_consist</item>
+        <item name="ed_functions_glyph">@drawable/glyph_menu_functions</item>
+        <item name="ed_exit_glyph">@drawable/glyph_menu_exit</item>
+        <item name="ed_throttle_glyph">@drawable/glyph_menu_throttle</item>
+        <item name="ed_turnouts_glyph">@drawable/glyph_menu_turnouts</item>
+        <item name="ed_routes_glyph">@drawable/glyph_menu_routes</item>
+        <item name="ed_device_sounds_glyph">@drawable/glyph_menu_device_sounds</item>
+        <item name="ed_reconnect_glyph">@drawable/glyph_menu_connect</item>
+        <item name="ed_about_glyph">@drawable/glyph_menu_about</item>
+        <item name="ed_history_glyph">@drawable/glyph_menu_log</item>
+        <item name="ed_power_glyph">@drawable/glyph_menu_power</item>
+        <item name="ed_write_glyph">@drawable/glyph_button_write_states</item>
+        <item name="ed_write_off_glyph">@drawable/glyph_button_write_off_states</item>
+
+        <item name="ed_icon">@drawable/icon_vector</item>
+
+        <!-- currently only used for the custom toast -->
+        <item name="ed_background_popup">@drawable/reusable_popup_background</item>
+
+        <!-- thumb -->
+        <item name="ed_thumb">@drawable/reusable_thumb</item>
+        <item name="ed_vertical_thumb">@drawable/reusable_thumb_vertical</item>
+
+
+        <!-- dialogs -->
+        <item name="android:dialogTheme">@style/dialog_style_reusable</item>
+        <item name="dialogTheme">@style/dialog_style_reusable</item>
+        <item name="android:alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="android:alertDialogStyle">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogStyle">@style/alert_dialog_style_reusable</item>
+
+    </style>
+</resources>
