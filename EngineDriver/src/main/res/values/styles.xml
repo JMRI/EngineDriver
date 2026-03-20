@@ -1321,6 +1321,7 @@
     <item name="android:textColorAlertDialogListItem">?attr/reusable_dialog_text_color</item>
     <item name="textColorAlertDialogListItem">?attr/reusable_dialog_text_color</item>
     <item name="android:textColorPrimary">?attr/reusable_dialog_text_color</item>
+    <item name="android:textColorSecondary">?attr/reusable_dialog_text_color</item>
     <item name="android:textColor">?attr/reusable_dialog_text_color</item>
 
     <item name="android:colorAccent">?attr/reusable_dialog_text_color</item>

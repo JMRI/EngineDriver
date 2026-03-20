@@ -39,6 +39,13 @@
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
         <item name="android:actionBarStyle">@style/actionBarStyle</item>
 
+        <item name="ed_text_color_primary">@color/solidWhite</item>
+        <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
+        <item name="ed_text_color_secondary">@color/grey_light</item>
+        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
+
         <item name="android:textColor">@color/primary_text_color_selector</item>
         <item name="android:actionMenuTextColor">@color/primary_text_color_selector</item>
         <item name="android:textColorPrimary">@color/primary_text_color_selector</item>
@@ -49,6 +56,7 @@
         <item name="ed_primaryLineColor">@color/grey</item>
         <item name="ed_secondaryLineColor">@color/grey</item>
 
+        <!-- used in the DCC-EX consist dialog -->
         <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
         <item name="ed_loco_label_style">@style/loco_label_style</item>
@@ -351,6 +359,22 @@
         <item name="reusable_toolbar_button_wizard_face_end_color">@color/colorful_cyan</item>
         <item name="reusable_toolbar_button_wizard_face_start_color">@color/colorful_lime</item>
 
+        <!-- dialogs -->
+        <item name="reusable_radio_button_normal_color">@color/grey_light</item>
+        <item name="reusable_radio_button_activate_color">@color/holoBlue</item>
+
+        <item name="android:dialogTheme">@style/dialog_style_reusable</item>
+        <item name="dialogTheme">@style/dialog_style_reusable</item>
+        <item name="android:alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="android:alertDialogStyle">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogStyle">@style/alert_dialog_style_reusable</item>
+
+        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>
+        <item name="reusable_dialog_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -367,12 +391,12 @@
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_black</item>
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
         <item name="android:titleTextStyle">@style/app_title_black</item>
-        <item name="android:dialogTheme">@style/dialogStyle_black</item>
-        <item name="dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
-        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
+<!--        <item name="android:dialogTheme">@style/dialogStyle_black</item>-->
+<!--        <item name="dialogTheme">@style/dialogStyle_black</item>-->
+<!--        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>-->
+<!--        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>-->
+<!--        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>-->
+<!--        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>-->
 
 <!--        <item name="buttonStyle">@style/normal_button_style_black</item>-->
 <!--        <item name="buttonBarButtonStyle">@style/normal_button_style_black</item>-->
@@ -382,11 +406,18 @@
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
+        <item name="ed_text_color_primary">@color/solidWhite</item>
+        <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
+        <item name="ed_text_color_secondary">@color/grey_light</item>
+        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
+
         <item name="android:itemBackground">#ff000000</item>
         <item name="android:textColor">@color/primary_text_color_selector_black</item>
         <item name="android:actionMenuTextColor">@color/primary_text_color_selector_black</item>
         <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
-        <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
+        <item name="android:textColorSecondary">@color/reusable_secondary_text_color_selector</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
 
         <item name="ed_primaryLineColor">@color/grey</item>
@@ -682,6 +713,22 @@
         <item name="reusable_toolbar_button_wizard_face_end_color">@color/solidBlack</item>
         <item name="reusable_toolbar_button_wizard_face_start_color">@color/solidBlack</item>
 
+        <!-- dialogs -->
+        <item name="reusable_radio_button_normal_color">@color/grey_light</item>
+        <item name="reusable_radio_button_activate_color">@color/holoBlue</item>
+
+        <item name="android:dialogTheme">@style/dialog_style_reusable</item>
+        <item name="dialogTheme">@style/dialog_style_reusable</item>
+        <item name="android:alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="android:alertDialogStyle">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogStyle">@style/alert_dialog_style_reusable</item>
+
+        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>
+        <item name="reusable_dialog_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -700,10 +747,10 @@
         <item name="android:titleTextStyle">@style/app_title_black</item>
         <item name="android:dialogTheme">@style/dialogStyle_black</item>
         <item name="dialogTheme">@style/dialogStyle_black</item>
-        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>
-        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>
-        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>
+<!--        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>-->
+<!--        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>-->
+<!--        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>-->
+<!--        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>-->
 
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
@@ -1002,6 +1049,22 @@
         <item name="reusable_toolbar_button_wizard_face_end_color">@color/solidBlack</item>
         <item name="reusable_toolbar_button_wizard_face_start_color">@color/solidBlack</item>
 
+        <!-- dialogs -->
+        <item name="reusable_radio_button_normal_color">@color/grey_light</item>
+        <item name="reusable_radio_button_activate_color">@color/holoBlue</item>
+
+        <item name="android:dialogTheme">@style/dialog_style_reusable</item>
+        <item name="dialogTheme">@style/dialog_style_reusable</item>
+        <item name="android:alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogTheme">@style/alert_dialog_style_reusable</item>
+        <item name="android:alertDialogStyle">@style/alert_dialog_style_reusable</item>
+        <item name="alertDialogStyle">@style/alert_dialog_style_reusable</item>
+
+        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>
+        <item name="reusable_dialog_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>
+
     </style>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1026,7 +1089,7 @@
         <item name="actionOverflowButtonStyle">@style/overflow_menu_button_reusable</item>
 
         <item name="android:textColorPrimary">@color/reusable_primary_text_color_selector</item>
-        <item name="android:textColorSecondary">@color/reusable_secondary_text_color_selector_reusable</item>
+        <item name="android:textColorSecondary">@color/reusable_secondary_text_color_selector</item>
         <item name="android:textColorHint">?attr/ed_text_color_hint</item>
 
         <item name="android:textColor">@color/reusable_primary_text_color_selector</item>
@@ -2156,10 +2219,10 @@
 
         <item name="reusable_popup_background_color">@color/grey_light</item>
 
-        <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
+        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>
         <item name="reusable_dialog_text_color">@color/solidWhite</item>
-        <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
-        <item name="reusable_dialog_button_background_color">@color/grey</item>
+        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>
 
         <!-- not sure where this is used -->
         <item name="android:itemBackground">#ff000000</item>
@@ -2184,6 +2247,7 @@
 
         <item name="android:listSeparatorTextViewStyle">@style/large_heading_style</item>
 
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
@@ -2201,6 +2265,7 @@
 
         <item name="android:listSeparatorTextViewStyle">@style/preference_heading_style_reusable</item>
 
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
@@ -2308,6 +2373,7 @@
 
         <item name="android:listSeparatorTextViewStyle">@style/preference_heading_style_reusable</item>
 
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>

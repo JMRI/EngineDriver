@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="?android:attr/textColorPrimary"
+        android:textColor="?attr/ed_text_color_primary"
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
         android:paddingTop="5dp"
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorSecondary"
+        android:textColor="?attr/ed_text_color_secondary"
         android:padding="10dp" />
 
     <RadioGroup

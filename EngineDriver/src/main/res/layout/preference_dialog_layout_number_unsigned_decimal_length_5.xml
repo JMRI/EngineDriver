@@ -19,7 +19,7 @@
             android:layout_marginBottom="48dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorSecondary"
+            android:textColor="?attr/ed_text_color_secondary"
             tools:ignore="LabelFor" />
 
         <EditText
