@@ -178,7 +178,7 @@
 
         <!-- everything following this is a partial move of this theme  to the new reusable theme -->
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/grey_light</item>
 
         <item name="reusable_preference_heading_text_color">@color/solidBlack</item>
 
@@ -526,7 +526,7 @@
 
         <!-- general colours -->
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/grey_light</item>
 
         <item name="reusable_spinner_divider_color">@color/grey_mid_dark</item>
         <item name="reusable_spinner_background_color">@color/grey_mega_dark</item>
@@ -851,7 +851,7 @@
 
         <!-- general colours -->
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/grey_light</item>
 
         <item name="reusable_spinner_divider_color">@color/grey_mid_dark</item>
         <item name="reusable_spinner_background_color">@color/grey_mega_dark</item>
@@ -1454,7 +1454,7 @@
 
         <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/grey_light</item>
 
         <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
         <item name="reusable_dialog_text_color">@color/solidWhite</item>
@@ -1598,7 +1598,7 @@
 
         <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/grey_light</item>
 
         <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
         <item name="reusable_dialog_text_color">@color/solidWhite</item>
@@ -1758,7 +1758,7 @@
 
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/muted</item>
 
         <item name="reusable_dialog_background_color">@color/muted_light</item>
         <item name="ed_dialog_secondary_background_color">@color/muted</item>
@@ -1918,7 +1918,7 @@
 
         <item name="android:actionBarStyle">@style/actionBarStyle_black</item>
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/colorful_light</item>
 
         <item name="reusable_dialog_background_color">@color/colorful_light</item>
         <item name="ed_dialog_secondary_background_color">@color/colorful</item>
@@ -2154,7 +2154,7 @@
 
         <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
 
-        <item name="reusable_popup_background_color">@color/grey_mid_light</item>
+        <item name="reusable_popup_background_color">@color/grey_light</item>
 
         <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
         <item name="reusable_dialog_text_color">@color/solidWhite</item>

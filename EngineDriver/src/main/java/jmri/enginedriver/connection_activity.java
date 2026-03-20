@@ -510,6 +510,16 @@ public class connection_activity extends AppCompatActivity implements Permission
                     }
                     break;
                 }
+
+                case message_type.CONNECTION_FAILED: {
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.RESPONSE)) ) {
+
+                        String response = bundle.getString(alert_bundle_tag_type.RESPONSE);
+                        showCustomToast(response, LENGTH_LONG, 3);
+                        }
+                    break;
+                }
                 case message_type.CONNECTED: {
                     //use asynctask to save the updated connections list to the connections_list.txt file
                     importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip,
@@ -1538,5 +1548,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                 e.printStackTrace();
             }
         }
+    }
+
+    private void showCustomToast(String message, int length, int yOffsetSixthOfScreen) {
+        threaded_application.showCustomToast( this,"", message, length, yOffsetSixthOfScreen);
     }
 }

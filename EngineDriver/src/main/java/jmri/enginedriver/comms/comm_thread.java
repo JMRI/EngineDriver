@@ -708,8 +708,18 @@ public class comm_thread extends Thread {
                     Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: set timeout successful.");
                 } catch (Exception except) {
                     if (!firstConnect) {
-                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
-                                mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
+//                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
+//                                mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address, except.getMessage()), Toast.LENGTH_LONG);
+
+                        Bundle bundle = new Bundle();
+                        String message = mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
+                                mainapp.host_ip,
+                                Integer.toString(mainapp.port),
+                                mainapp.client_address,
+                                except.getMessage());
+                        bundle.putString(alert_bundle_tag_type.RESPONSE, message);
+                        mainapp.alertActivitiesWithBundle(message_type.CONNECTION_FAILED, bundle, activity_id_type.CONNECTION);
+
                     }
                     if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) { //show additional message if using mobile data
                         Log.d(threaded_application.applicationName, activityName + ": SocketWifi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");

@@ -722,13 +722,11 @@ public class throttle extends AppCompatActivity implements
 
         public MyCountDownTimer(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
-//            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_START, "", 0, 0);
             mainapp.alertActivitiesWithBundle(message_type.KIDS_TIMER_START, activity_id_type.THROTTLE);
         }
 
         @Override
         public void onFinish() {  // When timer is finished
-//            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.KIDS_TIMER_END, "", 0, 0);
             mainapp.alertActivitiesWithBundle(message_type.KIDS_TIMER_END, activity_id_type.THROTTLE);
         }
 

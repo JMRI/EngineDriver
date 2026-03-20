@@ -122,6 +122,7 @@ public interface message_type {
     int WRITE_DCCEX_COMMAND_STATION_CONSIST_REMOVE = 99;
     int DCCEX_REQUEST_CONSIST_LIST = 100;
     int DCCEX_RECEIVED_CONSIST_ENTRY = 101;
+    int CONNECTION_FAILED = 102;
 
     // split from the old RESPONSE
 
