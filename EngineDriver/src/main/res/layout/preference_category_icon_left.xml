@@ -67,8 +67,8 @@
                     android:layout_gravity="center"
                     android:fadingEdge="horizontal"
                     android:singleLine="false"
-                    android:textColor="@color/black"
-                    android:textAppearance="@style/large_heading_style_black"/>
+                    android:textAppearance="@style/preference_heading_style_reusable"
+                    android:textColor="?attr/reusable_preference_heading_text_color"/>
 
             </LinearLayout>
 

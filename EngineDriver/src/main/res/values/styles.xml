@@ -719,7 +719,7 @@
     <item name="android:padding">2dp</item>
     <item name="android:layout_width">0dp</item>
 
-    <item name="android:background">@drawable/outline_sticky_button_states_round</item>
+    <item name="android:background">@drawable/outline_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -749,7 +749,7 @@
     <item name="android:textSize">18sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/outline_sticky_button_states_round</item>
+    <item name="android:background">@drawable/outline_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -777,7 +777,7 @@
     <item name="android:textSize">14sp</item>
     <item name="android:padding">0dp</item>
 
-    <item name="android:background">@drawable/outline_sticky_button_states_round</item>
+    <item name="android:background">@drawable/outline_button_states</item>
     <item name="android:layout_marginTop">1dp</item>
     <item name="android:layout_marginBottom">3dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -826,7 +826,7 @@
     <item name="android:padding">2dp</item>
     <item name="android:layout_width">0dp</item>
 
-    <item name="android:background">@drawable/outline_sticky_button_states_round</item>
+    <item name="android:background">@drawable/outline_button_states</item>
     <item name="android:layout_marginTop">4dp</item>
     <item name="android:layout_marginBottom">4dp</item>
     <item name="android:layout_marginLeft">2dp</item>
@@ -1389,6 +1389,24 @@
     <item name="ed_next_glyph">@drawable/glyph_button_next_states</item>
     <item name="ed_previous_glyph">@drawable/glyph_button_previous_states</item>
   </style>
+
+    <style name="preference_heading_style_reusable" parent="@android:style/Widget.TextView">
+        <item name="fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">?attr/reusable_preference_heading_text_color</item>
+        <item name="android:textSize">18sp</item>
+
+        <item name="android:background">?attr/reusable_preference_heading_background_color</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:padding">4dp</item>
+
+        <item name="android:shadowColor">#00000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">0</item>
+    </style>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

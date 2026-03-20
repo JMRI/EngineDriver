@@ -248,6 +248,7 @@
     <attr name="reusable_preference_glyph_stroke_color" format="reference" />
     <attr name="reusable_preference_glyph_internal_glyph_fill_color" format="reference" />
     <attr name="reusable_preference_glyph_internal_glyph_stroke_color" format="reference" />
+    <attr name="reusable_preference_heading_text_color" format="reference" />
 
     <attr name="reusable_progress_bar_fill_75_color" format="reference" />
     <attr name="reusable_progress_bar_fill_50_color" format="reference" />
@@ -266,6 +267,10 @@
     <attr name="reusable_overflow_menu_color" format="reference" />
 
     <attr name="reusable_button_corner_radius" format="reference" />
+
+    <!-- -->
+
+    <attr name="reusable_popup_background_color" format="reference" />
 
     <attr name="reusable_dialog_background_color" format="reference" />
     <attr name="reusable_dialog_background_secondary_color" format="reference" />

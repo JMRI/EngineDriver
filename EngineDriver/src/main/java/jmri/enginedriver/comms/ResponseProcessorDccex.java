@@ -826,7 +826,9 @@ public class ResponseProcessorDccex {
                                 Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
 
 //                            mainapp.dccexRosterFullyReceived = true;
-                                mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
+                                int count = (mainapp.dccexRosterIDs == null) ? 0 : mainapp.dccexRosterIDs.length;
+                                if (count > 0 )
+                                    mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
                                 if (prefs.getBoolean("prefDccexSequenceItemRequests", false))
                                     SendProcessorDccex.sendDccexRequestTurnouts();
                             }
@@ -955,9 +957,11 @@ public class ResponseProcessorDccex {
 
     public static void processDccexTurnoutList(boolean noTurnouts) {
 
-        int turnoutCount = mainapp.dccexTurnoutIDs.length;
+        int turnoutCount = 0;
+        if (mainapp.dccexTurnoutIDs != null)
+            turnoutCount = mainapp.dccexTurnoutIDs.length;
 
-        if (!noTurnouts) {
+        if ( (!noTurnouts) && (turnoutCount>0) ) {
             //initialize app arrays
             mainapp.to_system_names = new String[turnoutCount];
             mainapp.to_user_names = new String[turnoutCount];
@@ -968,7 +972,6 @@ public class ResponseProcessorDccex {
                 mainapp.putTurnoutState(""+mainapp.dccexTurnoutIDs[i], (mainapp.dccexTurnoutStates[i].equals("T") ? "4" : "2"));
             }
         }
-
         mainapp.dccexTurnoutsProcessed = true;
     }
 
@@ -1012,21 +1015,6 @@ public class ResponseProcessorDccex {
                     }
                 }
                 if ((ready) && (!mainapp.dccexTurnoutsFullyReceived) ) {
-//                    mainapp.dccexTurnoutString = getTurnoutsString(noTurnouts);
-//
-//                    String throwCode = "4";
-//                    String closeCode = "2";
-//                    if (prefs.getBoolean("prefDccexSwapThrowClose",
-//                            mainapp.getResources().getBoolean(R.bool.prefDccexSwapThrowCloseDefaultValue))) {
-//                        throwCode = "2";
-//                        closeCode ="4";
-//                    }
-//                    processTurnoutTitles("PTT]\\[Turnouts}|{Turnout]\\["
-//                            + mainapp.getResources().getString(R.string.dccexTurnoutClosed) + "}|{" + closeCode + "]\\["
-//                            + mainapp.getResources().getString(R.string.dccexTurnoutThrown) + "}|{" + throwCode + "]\\["
-//                            + mainapp.getResources().getString(R.string.dccexTurnoutUnknown) + "}|{1]\\["
-//                            + mainapp.getResources().getString(R.string.dccexTurnoutInconsistent) + "}|{8");
-//                    processTurnoutList(mainapp.dccexTurnoutString);
 
                     processDccexTurnoutTitles();
                     processDccexTurnoutList(noTurnouts);
@@ -1040,7 +1028,8 @@ public class ResponseProcessorDccex {
                     mainapp.dccexTurnoutsBeingProcessed = false;
 
                     mainapp.dccexTurnoutsFullyReceived = true;
-                    mainapp.safeToastInstructional(R.string.turnouts_available, LENGTH_SHORT);
+                    if (count > 0)
+                        mainapp.safeToastInstructional(R.string.turnouts_available, LENGTH_SHORT);
                     if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
                         SendProcessorDccex.sendDccexRequestRoutes();
                 }
@@ -1084,27 +1073,34 @@ public class ResponseProcessorDccex {
 
     public static void processDccexRouteList() {
 
-        int routeCount = mainapp.dccexRouteIDs.length;
-        //initialize app arrays (skipping first)
-        mainapp.routeSystemNames = new String[routeCount];
-        mainapp.rt_user_names = new String[routeCount];
-        mainapp.routeStates = new String[routeCount];
-        mainapp.routeDccexLabels = new String[routeCount];
-        mainapp.routeDccexStates = new int[routeCount];
+        int routeCount = 0;
+        if (mainapp.dccexRouteIDs != null)
+            routeCount = mainapp.dccexRouteIDs.length;
 
-        for (int i = 0 ; i<routeCount; i++) {
-            mainapp.routeSystemNames[i] = "" + mainapp.dccexRouteIDs[i];
-            mainapp.rt_user_names[i] = mainapp.dccexRouteNames[i];
-            mainapp.routeStates[i] = mainapp.dccexRouteTypes[i].equals("R") ? "2" : "4";
-            mainapp.routeDccexLabels[i] = mainapp.dccexRouteTypes[i].equals("4")
-                    ? mainapp.getResources().getString(R.string.dccexRouteHandoff)    // automation
-                    : mainapp.getResources().getString(R.string.dccexRouteSet); // assume "2" = Route
-            mainapp.routeDccexStates[i] = 0;
-        }  //end for
+        if (routeCount>0) {
+            //initialize app arrays (skipping first)
+            mainapp.routeSystemNames = new String[routeCount];
+            mainapp.rt_user_names = new String[routeCount];
+            mainapp.routeStates = new String[routeCount];
+            mainapp.routeDccexLabels = new String[routeCount];
+            mainapp.routeDccexStates = new int[routeCount];
 
+            for (int i = 0; i < routeCount; i++) {
+                mainapp.routeSystemNames[i] = "" + mainapp.dccexRouteIDs[i];
+                mainapp.rt_user_names[i] = mainapp.dccexRouteNames[i];
+                mainapp.routeStates[i] = mainapp.dccexRouteTypes[i].equals("R") ? "2" : "4";
+                mainapp.routeDccexLabels[i] = mainapp.dccexRouteTypes[i].equals("4")
+                        ? mainapp.getResources().getString(R.string.dccexRouteHandoff)    // automation
+                        : mainapp.getResources().getString(R.string.dccexRouteSet); // assume "2" = Route
+                mainapp.routeDccexStates[i] = 0;
+            }  //end for
+
+            mainapp.alertActivitiesWithBundle(message_type.ROUTE_LIST_CHANGED);
+
+        } else {
+            mainapp.routeStateNames = null;
+        }
         mainapp.dccexRoutesListReceived = true;
-
-        mainapp.alertActivitiesWithBundle(message_type.ROUTE_LIST_CHANGED);
     }
 
     public static void processDccexRoutes(String [] args) {
@@ -1174,7 +1170,8 @@ public class ResponseProcessorDccex {
                     mainapp.dccexRoutesBeingProcessed = false;
 
 //                    mainapp.dccexRoutesFullyReceived = true;
-                    mainapp.safeToastInstructional(R.string.routes_available, LENGTH_SHORT);
+                    if (count > 0)
+                        mainapp.safeToastInstructional(R.string.routes_available, LENGTH_SHORT);
                     if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
                         SendProcessorDccex.sendDccexRequestTracks();
                 }

@@ -25,7 +25,10 @@
     <color name="grey_dark">#2F2F2F</color>
     <color name="grey_mid_dark">#454545</color>
     <color name="grey">#ff888888</color>
+    <color name="grey_mid_light">#a7a7a7</color>
     <color name="grey_light">#a6a6a6</color>
+    <color name="grey_very_light">#bababa</color>
+
     <color name="grey_light_50">#80a6a6a6</color>
 
     <color name="red">#ff0000</color>
@@ -109,6 +112,10 @@
     <color name="primaryDisabled_black">#4B4B4B</color>
     <color name="secondaryDisabled_black">#4B4B4B</color>
 
+    <color name="black_grey_50">#994E4E4E</color>
+    <color name="black_grey_dark_50">#75363636</color>
+    <color name="black_grey_very_dark_50">#7F363636</color>
+
     <color name="buttonFill_black">#ffd6d6d6</color>
     <color name="buttonStroke_black">#ffd6d6d6</color>
     <color name="buttonDisabledFill_black">#4bd6d6d6</color>
@@ -172,6 +179,14 @@
     <color name="buttonCommonFillGradiantVeryDark_ultra">#FF181818</color>
     <color name="buttonCommonFillGradiantUltraDark_ultra">#000000</color>
 
+    <color name="ultra_grey_ultra_dark">#000000</color>
+    <color name="ultra_grey_very_dark">#FF181818</color>
+    <color name="ultra_grey_dark">#1D1D1D</color>
+    <color name="ultra_grey">#FF2a2a2a</color>
+    <color name="ultra_grey_light">#3A3A3A</color>
+    <color name="ultra_grey_very_light">#5b5b5b</color>
+    <color name="ultra_grey_ultra_light">#757575</color>
+
     <color name="buttonCommonSelectedStroke_ultra">#404040</color>
 
     <color name="buttonStopDisabledStroke_ultra">#FF2d2d2d</color>
@@ -209,27 +224,6 @@
     <color name="shadow_colorful">#d1ffffff</color>
 
     <color name="windowBackground_colorful">#fffaf6</color>
-<!--    <color name="dialogBackground_colorful">#f5971d</color>-->
-<!--    <color name="dialogSecondaryBackground_colorful">#E98713</color>-->
-
-<!--    <color name="windowBackgroundGradiantLight_colorful">#FFFFFF</color>-->
-<!--    <color name="windowBackgroundGradiantMid_colorful">#FDECD5</color>-->
-<!--    <color name="windowBackgroundGradiantDark_colorful">#FAD6A7</color>-->
-
-<!--    <color name="buttonStopFillGradiantVeryLight_colorful">#F4B9B6</color>-->
-<!--    <color name="buttonStopFillGradiantLight_colorful">#f59590</color>-->
-<!--    <color name="buttonStopFillGradiantCenter_colorful">#f77a74</color>-->
-<!--    <color name="buttonStopFillGradiantDark_colorful">#f74036</color>-->
-<!--    <color name="buttonStopFillGradiantVeryDark_colorful">#C81309</color>-->
-<!--    <color name="buttonStopFillGradiantUltraDark_colorful">#5F0B06</color>-->
-<!--    <color name="buttonStopFillGradiantUltraUltraDark_colorful">#3E0704</color>-->
-
-<!--    <color name="buttonStopSelectedStroke_colorful">#404040</color>-->
-<!--    <color name="buttonStopDisabledStroke_colorful">#b79d88</color>-->
-<!--    <color name="buttonStopDisabledFill_colorful">#faefe7</color>-->
-<!--    <color name="buttonStopSelectedFill_colorful">#acff0000</color>-->
-<!--    <color name="buttonStopSelectedText_colorful">#ac000000</color>-->
-<!--    <color name="buttonStopSelectedInsideStroke_colorful">#fdb1ad</color>-->
 
     <color name="buttonFillGradiantVeryLight_colorful">#F4E6D4</color>
     <color name="buttonFillGradiantLight_colorful">#f1cea1</color>
@@ -239,58 +233,25 @@
     <color name="buttonFillGradiantUltraDark_colorful">#954100</color>
     <color name="buttonFillGradiantUltraUltraDark_colorful">#5B2801</color>
 
-<!--    <color name="buttonFillGradiantVeryLight2_colorful">#C6E3F4</color>-->
-<!--    <color name="buttonFillGradiantLight2_colorful">#a1d3f1</color>-->
-<!--    <color name="buttonFillGradiantCenter2_colorful">#71c2f2</color>-->
-<!--    <color name="buttonFillGradiantDark2_colorful">#1ca0ef</color>-->
-<!--    <color name="buttonFillGradiantVeryDark2_colorful">#026AA8</color>-->
-<!--    <color name="buttonFillGradiantUltraDark2_colorful">#013C5D</color>-->
-<!--    <color name="buttonFillGradiantUltraUltraDark2_colorful">#00263A</color>-->
-
     <color name="buttonSelectedStroke_colorful">#404040</color>
     <color name="buttonText_colorful">#0A0A0A</color>
     <color name="buttonTextShadow_colorful">#FFFFFFFF</color>
-<!--    <color name="buttonLocoSelectText_colorful">#ffa600</color>-->
     <color name="buttonDisabledFill_colorful">#faefe7</color>
     <color name="buttonDisabledStroke_colorful">#b79d88</color>
-<!--    <color name="buttonSelectedText_colorful">#665d4f</color>-->
-<!--    <color name="buttonSelectedFill_colorful">#ff9a00</color>-->
     <color name="buttonSelectedInsideStroke_colorful">#ccecff</color>
     <color name="buttonActivatedHoveredInsideStroke_colorful">#8c00ff</color>
     <color name="buttonActivatedHoveredInside2Stroke_colorful">#f200ff</color>
 
-<!--    <color name="buttonFnFillGradiantVeryLight_colorful">#E2EFEB</color>-->
-<!--    <color name="buttonFnFillGradiantLight_colorful">#c3d9d3</color>-->
-<!--    <color name="buttonFnFillGradiantCenter_colorful">#8edac6</color>-->
-<!--    <color name="buttonFnFillGradiantDark_colorful">#3ad7ac</color>-->
-<!--    <color name="buttonFnFillGradiantVeryDark_colorful">#11755A</color>-->
-<!--    <color name="buttonFnFillGradiantUltraDark_colorful">#0B4937</color>-->
-<!--    <color name="buttonFnFillGradiantUltraUltraDark_colorful">#062A1F</color>-->
-
-<!--    <color name="buttonFnSelectedStroke_colorful">#404040</color>-->
-<!--    <color name="buttonFnDisabledFill_colorful">#faefe7</color>-->
-<!--    <color name="buttonFnDisabledStroke_colorful">#b79d88</color>-->
     <color name="buttonFnSelectedText_colorful">#000000</color>
-<!--    <color name="buttonFnSelectedFill_colorful">#FF262626</color>-->
-<!--    <color name="buttonFnSelectedInsideStroke_colorful">#FF8C00</color>-->
 
     <color name="background_highlight_black">#994E4E4E</color>
-<!--    <color name="background_highlight_colorful">#33FFA600</color>-->
     <color name="background_highlight_secondary_black">#75363636</color>
-<!--    <color name="background_highlight_secondary_colorful">#12FFA650</color>-->
     <color name="background_highlight_tertiary_black">#7F363636</color>
-<!--    <color name="background_highlight_tertiary_colorful">#37FFA650</color>-->
 
     <color name="background_popup_black">#a7a7a7</color>
-<!--    <color name="background_popup_colorful">#f9e9da</color>-->
-
-<!--    <color name="spinner_background_colorful">#f2b465</color>-->
-<!--    <color name="spinner_divider_colorful">@color/solidBlack</color>-->
 
     <!-- Neon blue colours -->
 
-<!--    <color name="neon_pink">#FB33DB</color>-->
-<!--    <color name="neon_pink_light">#D033FB</color>-->
     <color name="neon_blue_mega_dark">#000020</color>
     <color name="neon_blue_ultra_dark">#000010</color>
     <color name="neon_blue_very_dark">#00005E</color>
