@@ -4897,12 +4897,10 @@ public class throttle extends AppCompatActivity implements
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
         if (isLimitSpeeds[whichThrottle]) {
-//            bLimitSpeeds[whichThrottle].setSelected(true);
             setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], true);
             limitSpeedSliderScalingFactors[whichThrottle] = 100 / ((float) prefLimitSpeedPercent);
             sbs[whichThrottle].setMax(Math.round(maxThrottle / limitSpeedSliderScalingFactors[whichThrottle]));
         } else {
-//            bLimitSpeeds[whichThrottle].setSelected(false);
             setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], false);
             sbs[whichThrottle].setMax(maxThrottle);
         }
@@ -7929,7 +7927,6 @@ public class throttle extends AppCompatActivity implements
         switch (isPauseSpeeds[whichThrottle]) {
             case pause_speed_type.ZERO: {
                 isPauseSpeeds[whichThrottle] = pause_speed_type.START_RETURN;
-//                bPauseSpeeds[whichThrottle].setSelected(false);
                 setLimitSpeedsOrPauseButton(bPauseSpeeds[whichThrottle], false);
                 if (bPauses[whichThrottle] != null) bPauses[whichThrottle].setSelected(false);
                 speed = getSpeed(whichThrottle);
@@ -7939,7 +7936,6 @@ public class throttle extends AppCompatActivity implements
                 if (getSpeed(whichThrottle) == 0) return;
 
                 isPauseSpeeds[whichThrottle] = pause_speed_type.START_TO_ZERO;
-//                bPauseSpeeds[whichThrottle].setSelected(true);
                 setLimitSpeedsOrPauseButton(bPauseSpeeds[whichThrottle], true);
                 if (bPauses[whichThrottle] != null) bPauses[whichThrottle].setSelected(true);
                 pauseSpeed[whichThrottle] = getSpeed(whichThrottle);
@@ -7961,7 +7957,6 @@ public class throttle extends AppCompatActivity implements
 
     void disablePauseSpeed(int whichThrottle) {
         setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
-//        bPauseSpeeds[whichThrottle].setSelected(false);
         setLimitSpeedsOrPauseButton(bPauseSpeeds[whichThrottle], false);
         if (bPauses[whichThrottle] != null) bPauses[whichThrottle].setSelected(false);
         isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;

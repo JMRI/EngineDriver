@@ -25,7 +25,7 @@
         <item name="reusable_spinner_divider_color">@color/muted</item>
         <item name="reusable_spinner_background_color">@color/muted_dark</item>
 
-        <item name="android:windowBackground">@drawable/muted_app_background</item>
+        <item name="android:windowBackground">@drawable/wallpaper_paper_repeating</item>
 
         <item name="reusable_divider_color">@color/muted_ultra_dark</item>
         <item name="reusable_app_background_color">@color/muted_very_light</item>

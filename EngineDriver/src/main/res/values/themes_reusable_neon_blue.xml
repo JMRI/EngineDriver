@@ -27,7 +27,7 @@
         <item name="reusable_spinner_divider_color">@color/neon_blue</item>
         <item name="reusable_spinner_background_color">@color/neon_blue_very_dark</item>
 
-        <item name="android:windowBackground">@drawable/neon_app_background</item>
+        <item name="android:windowBackground">@drawable/wallpaper_metal_blue_repeating</item>
 
         <item name="reusable_divider_color">@color/neon_blue</item>
         <item name="reusable_app_background_color">@color/neon_blue_mega_dark</item>

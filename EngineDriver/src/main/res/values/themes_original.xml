@@ -22,7 +22,7 @@
     <style name="app_theme" parent="common_app_theme_components">
         <item name="preferenceTheme">@style/app_theme_preferences</item>
 
-        <item name="android:windowBackground">@drawable/original_app_background</item>
+        <item name="android:windowBackground">@drawable/wallpaper_metal_tread_repeating</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
         <item name="android:listViewStyle">@style/EDListView</item>
         <item name="android:expandableListViewStyle">@style/EDListView</item>
@@ -305,7 +305,7 @@
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <style name="app_theme_preferences" parent="@style/app_theme">
-        <item name="android:windowBackground">@drawable/original_app_background</item>
+        <item name="android:windowBackground">@drawable/wallpaper_metal_tread_repeating</item>
 
         <item name="android:divider">@drawable/divider_black</item>
         <item name="android:listDivider">@drawable/divider_black</item>
