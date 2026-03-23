@@ -39,8 +39,11 @@
         <item name="reusable_radio_button_normal_color">@color/grey</item>
         <item name="reusable_radio_button_activate_color">@color/neon_green_light</item>
         <item name="reusable_title_text_color">@color/solidWhite</item>
+
         <item name="reusable_title_background_color">@color/solidBlack</item>
+        <item name="reusable_title_text_shadow_color">@color/transparent</item>
         <item name="reusable_small_heading_text_color">@color/solidWhite</item>
+
         <item name="reusable_small_heading_text_shadow_color">@color/solidBlack</item>
         <item name="reusable_list_item_text_color">@color/solidWhite</item>
         <item name="reusable_list_item_text_shadow_color">@color/solidBlack</item>
@@ -151,11 +154,15 @@
 
         <item name="reusable_dialog_background_color">@color/grey_very_dark</item>
         <item name="reusable_dialog_text_color">@color/solidWhite</item>
-        <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
-        <item name="reusable_dialog_button_background_color">@color/grey</item>
+        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>
 
         <!-- not sure where this is used -->
         <item name="android:itemBackground">#ff000000</item>
+
+        <!-- underline under Edit Text -->
+        <item name="colorControlActivated">@color/neon_green_light</item>
+        <item name="edit_text_underline_activated">@color/neon_green_light</item>
 
     </style>
 

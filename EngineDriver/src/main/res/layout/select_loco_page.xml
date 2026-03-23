@@ -509,7 +509,7 @@
                                 android:minHeight="48dp"
                                 android:text="@string/LocoSelectMethodAddress"
                                 android:textSize="18sp"
-                                style = "?attr/EDRadioButton" />
+                                style = "?attr/ed_radio_button_style" />
 
                             <RadioButton
                                 android:id="@+id/select_loco_method_roster_button"
@@ -521,7 +521,7 @@
                                 android:minHeight="38dp"
                                 android:text="@string/LocoSelectMethodRoster"
                                 android:textSize="18sp"
-                                style = "?attr/EDRadioButton"
+                                style = "?attr/ed_radio_button_style"
                                 tools:ignore="TouchTargetSizeCheck" />
 
                             <RadioButton
@@ -534,7 +534,7 @@
                                 android:minHeight="38dp"
                                 android:text="@string/LocoSelectMethodRecent"
                                 android:textSize="18sp"
-                                style = "?attr/EDRadioButton"
+                                style = "?attr/ed_radio_button_style"
                                 tools:ignore="TouchTargetSizeCheck" />
 
                             <RadioButton
@@ -547,7 +547,7 @@
                                 android:minHeight="38dp"
                                 android:text="@string/LocoSelectMethodRecentConsist"
                                 android:textSize="18sp"
-                                style = "?attr/EDRadioButton"
+                                style = "?attr/ed_radio_button_style"
                                 tools:ignore="TouchTargetSizeCheck" />
 
                             <RadioButton
@@ -560,7 +560,7 @@
                                 android:minHeight="38dp"
                                 android:text="@string/LocoSelectMethodIDNGo"
                                 android:textSize="18sp"
-                                style = "?attr/EDRadioButton"
+                                style = "?attr/ed_radio_button_style"
                                 tools:ignore="TouchTargetSizeCheck" />
                         </RadioGroup>
 
@@ -972,7 +972,7 @@
                     <!--        <jmri.enginedriver.util.TransparentListView-->
                     <ListView
                         android:id="@+id/roster_list"
-                        style="?attr/EDListView"
+                        style="?attr/ed_list_view_style"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.44"
@@ -1045,7 +1045,7 @@
 
                     <ListView
                         android:id="@+id/recentLocoListView"
-                        style="?attr/EDListView"
+                        style="?attr/ed_list_view_style"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.4"
@@ -1125,7 +1125,7 @@
 
                     <ListView
                         android:id="@+id/consists_list"
-                        style="?attr/EDListView"
+                        style="?attr/ed_list_view_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:animateLayoutChanges="true" />

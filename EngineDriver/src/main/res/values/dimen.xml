@@ -229,6 +229,10 @@
 
     <dimen name="reusable_toolbar_button_outline_stroke_width">0</dimen> // don't add dp or dip. default is 0=don't show
 
+    <!-- the three origina themes theme -->
+
+    <dimen name="button_corner_radius_original">6dp</dimen>
+
     <!-- Muted theme -->
 
     <dimen name="button_corner_radius_muted">12dp</dimen>

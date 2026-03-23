@@ -87,18 +87,80 @@
         <!-- currently only used for the custom toast -->
         <item name="ed_background_popup">@drawable/reusable_popup_background</item>
 
+<!--        <item name="reusable_divider_color">@color/grey_dark</item>-->
+
         <!-- thumb -->
+
         <item name="ed_thumb">@drawable/reusable_thumb</item>
         <item name="ed_vertical_thumb">@drawable/reusable_thumb_vertical</item>
 
+        <!-- List views -->
 
-        <!-- dialogs -->
+        <item name="reusable_list_item_text_color">@color/solidWhite</item>
+        <item name="reusable_list_item_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_list_id_text_color">@color/offWhite</item>
+        <item name="reusable_list_extras_text_color">@color/grey</item>
+
+        <!-- List / radio buttons -->
+        <item name="buttonTint">@color/reusable_radio_button_tint_states</item>
+        <item name="reusable_radio_button_normal_color">@color/grey_light</item>
+        <item name="reusable_radio_button_activate_color">@color/holoBlue</item>
+
+        <!-- headings -->
+
+        <item name="reusable_heading_small_start_color">@color/solidWhite</item>
+        <item name="reusable_heading_small_center_color">@color/solidWhite</item>
+        <item name="reusable_heading_small_end_color">@color/transparent</item>
+
+        <item name="reusable_small_heading_text_color">@color/solidBlack</item>
+        <item name="reusable_small_heading_text_shadow_color">@color/transparent</item>
+
+        <!-- Title -->
+
+        <item name="reusable_title_text_color">@color/solidWhite</item>
+        <item name="reusable_title_text_shadow_color">@color/transparent</item>
+        <item name="reusable_title_background_color">@color/solidBlack</item>
+
+        <!-- dialog colours -->
+
+        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>
+        <item name="reusable_dialog_text_color">@color/solidWhite</item>
+        <item name="reusable_dialog_button_text_color">@color/solidBlack</item>
+        <item name="reusable_dialog_button_background_color">@color/grey_light</item>
+
+        <!-- Dialog styles -->
         <item name="android:dialogTheme">@style/dialog_style_reusable</item>
         <item name="dialogTheme">@style/dialog_style_reusable</item>
         <item name="android:alertDialogTheme">@style/alert_dialog_style_reusable</item>
         <item name="alertDialogTheme">@style/alert_dialog_style_reusable</item>
         <item name="android:alertDialogStyle">@style/alert_dialog_style_reusable</item>
         <item name="alertDialogStyle">@style/alert_dialog_style_reusable</item>
+        <item name="ed_dialog_button_style">@style/alert_dialog_button_style_reusable</item>
+        <item name="ed_dialog_positive_button_style">@style/alert_dialog_positive_button_style_reusable</item>
+        <item name="ed_dialog_negative_button_style">@style/alert_dialog_button_style_reusable</item>
 
+        <!-- radio buttons -->
+        <item name="ed_radio_button_style">@style/ed_radio_button_style_reusable</item>
+        <item name="android:radioButtonStyle">@style/ed_radio_button_style_reusable</item>
+
+        <!-- spinners -->
+        <item name="reusable_spinner_divider_color">@color/ultra_light</item>
+        <item name="reusable_spinner_background_color">@color/ultra_very_dark</item>
+
+        <item name="reusable_divider_color">@color/ultra_light</item>
+
+        <!-- underline under Edit Text -->
+        <item name="colorControlActivated">@color/holoBlue</item>
+        <item name="colorControlNormal">@color/grey_light</item>
+        <item name="edit_text_underline_activated">@color/holoBlue</item>
+        <item name="edit_text_underline_normal">@color/grey_light</item>
+
+        <!-- for the original themes, these are only really used for the dialog buttons -->
+        <item name="reusable_button_edge_highlight_color">@color/grey_ultra_light</item>
+        <item name="reusable_button_edge_light_color">@color/grey_light</item>
+        <item name="reusable_button_edge_dark_color">@color/grey_dark</item>
+        <item name="reusable_button_face_end_color">@color/grey_ultra_light</item>
+        <item name="reusable_button_face_center_color">@color/grey_very_light</item>
+        <item name="reusable_button_face_start_color">@color/grey</item>
     </style>
 </resources>

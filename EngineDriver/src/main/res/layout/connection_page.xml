@@ -127,7 +127,7 @@
 
                 <ListView
                     android:id="@+id/discovery_list"
-                    style="?attr/EDListView"
+                    style="?attr/ed_list_view_style"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
@@ -178,7 +178,7 @@
 
                 <ListView
                     android:id="@+id/connections_list"
-                    style="?attr/EDListView"
+                    style="?attr/ed_list_view_style"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:footerDividersEnabled="true" />

@@ -39,9 +39,13 @@
         <item name="reusable_radio_button_normal_color">@color/ultra_very_light</item>
         <item name="reusable_radio_button_activate_color">@color/ultra_blue</item>
         <item name="reusable_title_text_color">@color/solidWhite</item>
+
         <item name="reusable_title_background_color">@color/solidBlack</item>
+        <item name="reusable_title_text_shadow_color">@color/transparent</item>
         <item name="reusable_small_heading_text_color">@color/solidWhite</item>
+
         <item name="reusable_small_heading_text_shadow_color">@color/solidBlack</item>
+
         <item name="reusable_list_item_text_color">@color/solidWhite</item>
         <item name="reusable_list_item_text_shadow_color">@color/solidBlack</item>
         <item name="reusable_list_id_text_color">@color/offWhite</item>
@@ -176,8 +180,8 @@
 
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>
 
-        <item name="android:radioButtonStyle">@style/EDRadioButton_reusable</item>
-        <item name="radioButtonStyle">@style/EDRadioButton_reusable</item>
+        <item name="android:radioButtonStyle">@style/ed_radio_button_style_reusable</item>
+        <item name="radioButtonStyle">@style/ed_radio_button_style_reusable</item>
     </style>
 
 </resources>

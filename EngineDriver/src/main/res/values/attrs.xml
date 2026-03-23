@@ -10,8 +10,8 @@
     <attr name="list_item_condensed_style" format="reference" />
     <attr name="list_id_style" format="reference" />
     <attr name="list_extras_style" format="reference" />
-    <attr name="EDListView" format="reference" />
-    <attr name="EDRadioButton" format="reference" />
+    <attr name="ed_list_view_style" format="reference" />
+    <attr name="ed_radio_button_style" format="reference" />
     <attr name="listSeparatorTextViewStyle" format="reference" />
     <attr name="preferenceCategoryBackgroundColor" format="reference" />
 
@@ -176,6 +176,7 @@
     <attr name="reusable_radio_button_normal_color" format="reference" />
     <attr name="reusable_radio_button_activate_color" format="reference" />
     <attr name="reusable_title_text_color" format="reference" />
+    <attr name="reusable_title_text_shadow_color" format="reference" />
     <attr name="reusable_title_background_color" format="reference" />
     <attr name="reusable_small_heading_text_color" format="reference" />
     <attr name="reusable_small_heading_text_shadow_color" format="reference" />
@@ -267,6 +268,11 @@
     <attr name="reusable_overflow_menu_color" format="reference" />
 
     <attr name="reusable_button_corner_radius" format="reference" />
+
+    <!-- -->
+
+    <attr name="edit_text_underline_normal" format="reference" />
+    <attr name="edit_text_underline_activated" format="reference" />
 
     <!-- -->
 

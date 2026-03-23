@@ -36,7 +36,7 @@
 
             <ListView
                 android:id="@+id/consist_lights_list"
-                style="?attr/EDListView"
+                style="?attr/ed_list_view_style"
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"

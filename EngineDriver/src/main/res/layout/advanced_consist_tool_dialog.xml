@@ -131,7 +131,7 @@
 
         <Button
             android:id="@+id/advanced_consist_tool_add_button"
-            style="?attr/ed_dialog_button_style"
+            style="?attr/ed_dialog_positive_button_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

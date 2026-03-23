@@ -24,10 +24,15 @@
 
         <item name="android:windowBackground">@drawable/wallpaper_metal_tread_repeating</item>
         <item name="android:windowTitleStyle">@style/app_title</item>
-        <item name="android:listViewStyle">@style/EDListView</item>
-        <item name="android:expandableListViewStyle">@style/EDListView</item>
+
+        <item name="android:listViewStyle">@style/ed_list_view_style_reusable</item>
+        <item name="android:expandableListViewStyle">@style/ed_list_view_style_reusable</item>
+        <item name="ed_list_view_style">@style/ed_list_view_style_reusable</item>
+
+        <item name="reusable_divider_color">@color/grey</item>
+
         <item name="android:listSeparatorTextViewStyle">@style/small_heading_style</item>
-        <item name="android:actionBarStyle">@style/actionBarStyle</item>
+<!--        <item name="android:actionBarStyle">@style/actionBarStyle</item>-->
 
         <item name="ed_text_color_primary">@color/solidWhite</item>
         <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
@@ -69,7 +74,6 @@
         <item name="list_item_condensed_style">@style/list_item_condensed_style</item>
         <item name="list_id_style">@style/list_id_style</item>
         <item name="list_extras_style">@style/list_extras_style</item>
-        <item name="EDListView">@style/EDListView</item>
 
         <item name="ed_fn_scrollview_style">@style/fn_scrollview_style</item>
 
@@ -85,9 +89,9 @@
         <item name="ed_fn_button_style">@style/fn_button_style</item>
         <item name="ed_list_button_style">@style/list_button_style</item>
 
-        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>
-        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>
-        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>
+<!--        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>-->
+<!--        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>-->
+<!--        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>-->
 
         <!--        <item name="ed_thumb">@drawable/reusable_thumb</item>-->
         <!--        <item name="ed_vertical_thumb">@drawable/reusable_thumb_vertical</item>-->
@@ -98,7 +102,7 @@
         <!-- toolbar -->
 
         <item name="ed_toolbar_background">@drawable/reusable_toolbar_background</item>
-        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
         <!-- currently only used for the custom toast -->
         <!--        <item name="ed_background_popup">@drawable/reusable_popup_background</item>-->
@@ -110,8 +114,8 @@
         <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
         <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
 
-        <item name="EDRadioButton">@style/EDRadioButton</item>
-        <item name="android:radioButtonStyle">@style/EDRadioButton</item>
+<!--        <item name="ed_radio_button_style">@style/ed_radio_button_style</item>-->
+<!--        <item name="android:radioButtonStyle">@style/ed_radio_button_style</item>-->
 
         <!-- everything following this is a partial move of this theme  to the new reusable theme -->
 
@@ -151,13 +155,13 @@
         <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_glyph_folder_dccex</item>
         <item name="ed_folder_esu_icon">@drawable/reusable_preference_glyph_folder_esu</item>
 
-        <!-- general button colours -->
-        <item name="reusable_button_edge_highlight_color">@color/colorful_tan_very_light</item>
-        <item name="reusable_button_edge_light_color">@color/transparent</item>
-        <item name="reusable_button_edge_dark_color">@color/colorful_tan_very_dark</item>
-        <item name="reusable_button_face_end_color">@color/colorful_tan_light</item>
-        <item name="reusable_button_face_center_color">@color/colorful_tan</item>
-        <item name="reusable_button_face_start_color">@color/colorful_tan_very_dark</item>
+<!--        &lt;!&ndash; general button colours &ndash;&gt;-->
+<!--        <item name="reusable_button_edge_highlight_color">@color/colorful_tan_very_light</item>-->
+<!--        <item name="reusable_button_edge_light_color">@color/transparent</item>-->
+<!--        <item name="reusable_button_edge_dark_color">@color/colorful_tan_very_dark</item>-->
+<!--        <item name="reusable_button_face_end_color">@color/colorful_tan_light</item>-->
+<!--        <item name="reusable_button_face_center_color">@color/colorful_tan</item>-->
+<!--        <item name="reusable_button_face_start_color">@color/colorful_tan_very_dark</item>-->
 
         <!-- button dimension overrides -->
         <item name="reusable_toolbar_button_outline_stroke_width_dimen">@dimen/reusable_toolbar_button_outline_stroke_width</item>
@@ -288,14 +292,14 @@
         <item name="reusable_toolbar_button_wizard_face_end_color">@color/colorful_cyan</item>
         <item name="reusable_toolbar_button_wizard_face_start_color">@color/colorful_lime</item>
 
-        <!-- dialog colours -->
-        <item name="reusable_radio_button_normal_color">@color/grey_light</item>
-        <item name="reusable_radio_button_activate_color">@color/holoBlue</item>
+<!--        &lt;!&ndash; dialog colours &ndash;&gt;-->
+<!--        <item name="reusable_radio_button_normal_color">@color/grey_light</item>-->
+<!--        <item name="reusable_radio_button_activate_color">@color/holoBlue</item>-->
 
-        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>
-        <item name="reusable_dialog_text_color">@color/solidWhite</item>
-        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>
-        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>
+<!--        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>-->
+<!--        <item name="reusable_dialog_text_color">@color/solidWhite</item>-->
+<!--        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>-->
+<!--        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>-->
 
     </style>
 

@@ -144,7 +144,7 @@
 
                         <ListView
                             android:id="@+id/routes_list"
-                            style="?attr/EDListView"
+                            style="?attr/ed_list_view_style"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content" />
 
