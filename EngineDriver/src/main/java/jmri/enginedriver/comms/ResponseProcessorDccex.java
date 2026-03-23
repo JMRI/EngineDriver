@@ -847,41 +847,49 @@ public class ResponseProcessorDccex {
                             int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
                             if (whichThrottle >= 0) {
 
-//                                if ((args.length != 4) || (!args[2].equals("\"\"")) || (!args[2].equals("\"\""))) {
-                                if ( (args.length != 4) || (!args[2].equals("\"\"")) ) {
-                                    String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
-                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
-                                    responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
-                                    for (int i = 0; i < fnArgs.length; i++) {
-                                        if (fnArgs[i].isEmpty()) {
-                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
-                                        } else {
-                                            if (fnArgs[i].charAt(0) == '*') { // is NOT latching
-                                                responseStrBuilder.append(fnArgs[i].substring(1));
-                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
-                                            } else {
-                                                responseStrBuilder.append(fnArgs[i]);
-                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
-                                            }
-                                        }
-                                        if (i < fnArgs.length - 1) {
-                                            responseStrBuilder.append("]\\[");
-                                        }
-                                    }
-                                }
-
                                 found = true;
                                 String lead = mainapp.consists[whichThrottle].getLeadAddr();
                                 if (lead.equals(addr_str)) { // only process the functions for lead engine in consist
                                     if ((mainapp.consists[whichThrottle].isLeadFromRoster()) || (mainapp.prefAlwaysUseFunctionsFromServer)) { // only process the functions if the lead engine from the roster or the override preference is set
+
                                         if (args[3].length() > 2) {
+                                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Processing Functions for lead loco");
+
+                                            if ( (args.length != 4) || (!args[2].equals("\"\"")) ) {
+                                                String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
+                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
+                                                responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                                                for (int i = 0; i < fnArgs.length; i++) {
+                                                    if (fnArgs[i].isEmpty()) {
+                                                        mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
+                                                    } else {
+                                                        if (fnArgs[i].charAt(0) == '*') { // is NOT latching
+                                                            responseStrBuilder.append(fnArgs[i].substring(1));
+                                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
+                                                        } else {
+                                                            responseStrBuilder.append(fnArgs[i]);
+                                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                                        }
+                                                    }
+                                                    if (i < fnArgs.length - 1) {
+                                                        responseStrBuilder.append("]\\[");
+                                                    }
+                                                }
+                                            }
+
                                             comm_thread.processRosterFunctionString(responseStrBuilder.toString(), whichThrottle);
                                             mainapp.consists[whichThrottle].setFunctionLabels(addr_str, responseStrBuilder.toString());
-                                            skipDefaultAlertToAllActivities = false;
                                         } else {
+                                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Problem Processing Functions for lead loco");
                                             mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
+                                            skipDefaultAlertToAllActivities = false;
                                         }
+                                    } else {
+                                        Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Processing Functions -  lead loco is not from the roster");
                                     }
+                                } else {
+                                    Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Processing Functions -  not the lead loco - ignoring");
+
                                 }
 
                                 Consist con = mainapp.consists[whichThrottle];
@@ -1130,7 +1138,7 @@ public class ResponseProcessorDccex {
                     for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
                         if (!mainapp.dccexRouteDetailsReceived[i]) {
                             ready = false;
-                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoster(): Routes incomplete. Missing: " + mainapp.dccexRouteIDs[i]);
+                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes incomplete. Missing: " + mainapp.dccexRouteIDs[i]);
                             break;
                         }
                     }

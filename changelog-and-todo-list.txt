@@ -7,7 +7,8 @@
      * Bug fix for muted IPLS sounds restarting when going to another screen
      * Bug fix for the 'simple' layout not showing the correct space for the optional function button area.
      * Bug fix for the 'original' and 'horizontal switching' layouts leaving a blank space at the bottom of the screen when three locos selected.
-     * Add missing Stop button UI change when pressed
+     * Add missing Stop button UI change when pressed.
+     * Bug fix for the function button latching when using consists/MUs with DCC-EX.
  * Other
      * Major changes in the way that inter-activity communication works (now uses Bundles)
        Removed a number of unnecessary and/or repetitive calls to comm_handler.
@@ -16,7 +17,7 @@
        DCC-EX and WiThrottle send and receive methods moved to separate classes.
      * Created a generic 'reusable' theme to make it easy to add new themes.
      * Altered the 'neon blue', 'colourful' and 'ultra' (Dark) themes so they use the generic 'reusable' theme, so can't be moved.
-     * Partial move of the 'original', 'Outline' and 'Black' theme to use the generic 'reusable' theme.  Toolbars, thumbs and preferences only. The main buttons have a different style to the 'reusable' ones.
+     * Partial move of the 'original', 'Outline' and 'Black' theme to use the generic 'reusable' theme.  mainly toolbars, thumbs and preferences. The main buttons have a different style to the 'reusable' ones.
      * Removed some textViews in all the throttles (behind the fwd/rev buttons) that could never be seen.
      * Simplified part of all the throttles in all the views (related to the fwd/rev buttons).
      * Removed a number of unused drawables.
@@ -1061,6 +1062,7 @@
  *   TODO: rewrite procedural process_xxx functions into proper OO classes
  *   TODO: move some actions from onCreate() or onResume() to onStart() in activities to simplify and remove some repeated calls.
  *   TODO: Improve the way it deals with multiple DCC-EX commands on single line. Really needs to be read char by char.
+ *   TODO: Continue converting the three old style themes/styles to the reusable format.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro
  * web
@@ -1078,7 +1080,7 @@
  *   TODO: provide for adding/editing names of recent connections
  *   TODO: add "Check for Updates" link to first menu and to About page.
  *   TODO: Add DCC-EX to "Auto-connect to first server?"
- *   TODO: Why does the first connection attempt fail sometimes
+ *   TODO: Why does the first connection attempt fail sometimes?
  * disconnect/reconnect
  *   TODO: set limit on reconnect attempts?
  *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout

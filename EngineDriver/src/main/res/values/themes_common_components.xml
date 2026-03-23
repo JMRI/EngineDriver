@@ -156,6 +156,7 @@
         <item name="edit_text_underline_normal">@color/grey_light</item>
 
         <!-- for the original themes, these are only really used for the dialog buttons -->
+        <item name="reusable_button_corner_radius">@dimen/button_corner_radius_original</item>
         <item name="reusable_button_edge_highlight_color">@color/grey_ultra_light</item>
         <item name="reusable_button_edge_light_color">@color/grey_light</item>
         <item name="reusable_button_edge_dark_color">@color/grey_dark</item>
