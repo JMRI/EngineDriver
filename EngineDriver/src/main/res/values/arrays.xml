@@ -801,7 +801,7 @@
         <item>@array/prefGamePadVolumeLabels</item>      <!-- Volume -->
     </array>
 
-    <!--  which array to use for the key/button labels in the gamepad_test activity -->
+    <!--  which array to use for the key/button labels in the GamepadTestActivity activity -->
     <array name="gamepadTestButtonLabelsIds" translatable="false">
         <item>@array/gamepadTestButtonLabelsDefault</item>
         <item>@array/gamepadTestButtonLabelsDefault</item>     <!-- iCade-rotate -->

@@ -9,6 +9,7 @@
      * Bug fix for the 'original' and 'horizontal switching' layouts leaving a blank space at the bottom of the screen when three locos selected.
      * Add missing Stop button UI change when pressed.
      * Bug fix for the function button latching when using consists/MUs with DCC-EX.
+     * Bug fix for retrieving the roster entry information from the JMRI web server.
  * Other
      * Major changes in the way that inter-activity communication works (now uses Bundles)
        Removed a number of unnecessary and/or repetitive calls to comm_handler.
@@ -22,6 +23,7 @@
      * Simplified part of all the throttles in all the views (related to the fwd/rev buttons).
      * Removed a number of unused drawables.
      * Renamed most of the drawables to make the names consistent.
+     * Upgrade to Gradle 9.1.0
 **Version 2.42.220
  * Bug fixes
     * Bug fix for the Consist Edit and Consist Light Edit screens on early versions of Android
@@ -1111,6 +1113,7 @@
  *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
  *   TODO: option to show roster images above each throttle
+ *   TODO: change the number of tick marks on the slider based on the number of chosen steps
  * Gamepads (throttle):
  *   TODO: move code to a separate class. This is now partly done.
  *   TODO: support Routes on keyboards.

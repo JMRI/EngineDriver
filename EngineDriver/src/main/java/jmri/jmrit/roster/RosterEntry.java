@@ -447,7 +447,7 @@ public class RosterEntry {
     }
 
     //format a human-readable output of the values  TODO: figure out a way to loop thru properties instead
-    public String toString(Context context) {
+    public String getRosterEntryWebDetails(Context context) {
         String res = "";
 //        if (!_dccAddress.equals("")) res += "DCC Address: " + _dccAddress + "\n";
 //        if (!_roadName.equals("")) res += "Road Name: " + _roadName + "\n";

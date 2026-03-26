@@ -80,8 +80,8 @@ import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.util.Tts;
 import jmri.enginedriver.type.gamepad_test_type;
 
-public class gamepad_test extends AppCompatActivity implements OnGestureListener {
-    static final String activityName = "gamepad_test";
+public class GamepadTestActivity extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "GamepadTestActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu overflowMenu;
@@ -602,11 +602,11 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
 
         //Set the button
         Button cancelButton = findViewById(R.id.gamepad_test_button_cancel);
-        gamepad_test.cancel_button_listener cancel_click_listener = new gamepad_test.cancel_button_listener();
+        GamepadTestActivity.cancel_button_listener cancel_click_listener = new GamepadTestActivity.cancel_button_listener();
         cancelButton.setOnClickListener(cancel_click_listener);
 
         Button resetButton = findViewById(R.id.gamepad_test_button_reset);
-        gamepad_test.reset_button_listener reset_click_listener = new gamepad_test.reset_button_listener();
+        GamepadTestActivity.reset_button_listener reset_click_listener = new GamepadTestActivity.reset_button_listener();
         resetButton.setOnClickListener(reset_click_listener);
 
         Button skipButton = findViewById(R.id.gamepad_test_button_skip);
@@ -617,7 +617,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
             TextView tvHelpText = findViewById(R.id.gamepad_test_help);
             tvHelpText.setText(R.string.gamepadTestHelpNonForced);
         } else {
-            gamepad_test.skip_button_listener skip_click_listener = new gamepad_test.skip_button_listener();
+            GamepadTestActivity.skip_button_listener skip_click_listener = new GamepadTestActivity.skip_button_listener();
             skipButton.setOnClickListener(skip_click_listener);
         }
 
@@ -637,7 +637,7 @@ public class gamepad_test extends AppCompatActivity implements OnGestureListener
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(gamepad_test.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(GamepadTestActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };

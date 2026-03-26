@@ -1084,7 +1084,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             return true;
 
         } else if (item.getItemId() == R.id.about_mnu) {
-            in = new Intent().setClass(this, about_page.class);
+            in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -1094,7 +1094,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.withrottle_cv_programmer_mnu) {
-            in = new Intent().setClass(this, withrottle_cv_programmer.class);
+            in = new Intent().setClass(this, WiThrottleCvProgrammerActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;

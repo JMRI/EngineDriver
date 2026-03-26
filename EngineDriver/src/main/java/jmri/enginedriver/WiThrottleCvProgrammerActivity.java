@@ -58,8 +58,8 @@ import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class withrottle_cv_programmer extends AppCompatActivity {
-    static final String activityName = "withrottle_cv_programmer";
+public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
+    static final String activityName = "WiThrottleCvProgrammerActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu overflowMenu;
@@ -624,7 +624,7 @@ public class withrottle_cv_programmer extends AppCompatActivity {
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(withrottle_cv_programmer.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(WiThrottleCvProgrammerActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };

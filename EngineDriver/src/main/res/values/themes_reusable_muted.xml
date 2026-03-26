@@ -118,9 +118,9 @@
         <item name="reusable_progress_bar_fill_50_color">@color/muted_sepia_transparent_50</item>
         <item name="reusable_progress_bar_fill_25_color">@color/muted_sepia_transparent_25</item>
 
-        <item name="reusable_toolbar_face_end_color">@color/muted_dark</item>
-        <item name="reusable_toolbar_face_center_color">@color/muted_very_dark</item>
-        <item name="reusable_toolbar_face_start_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_face_end_color">@color/muted_light</item>
+        <item name="reusable_toolbar_face_center_color">@color/muted_dark</item>
+        <item name="reusable_toolbar_face_start_color">@color/muted_mega_dark</item>
 
         <item name="reusable_overflow_menu_color">@color/solidWhite</item>
 

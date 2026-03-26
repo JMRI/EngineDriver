@@ -367,7 +367,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             this.reload();
 
             try {
-                Intent in = new Intent().setClass(this, gamepad_test.class);
+                Intent in = new Intent().setClass(this, GamepadTestActivity.class);
                 startActivity(in);
                 connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {

@@ -1435,4 +1435,8 @@
     <item name="android:activityCloseExitAnimation">
       @anim/fade_in</item>
   </style>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
 </resources>

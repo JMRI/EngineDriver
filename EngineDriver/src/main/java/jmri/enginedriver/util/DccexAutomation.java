@@ -19,8 +19,8 @@ import androidx.fragment.app.DialogFragment;
 
 import jmri.enginedriver.R;
 
-public class dccexAutomation extends DialogFragment {
-    static final String activityName = "dccexAutomation";
+public class DccexAutomation extends DialogFragment {
+    static final String activityName = "DccexAutomation";
 
     private EditText editText;
     private Button buttonConfirm;
@@ -37,8 +37,8 @@ public class dccexAutomation extends DialogFragment {
 
     private OnConfirmListener listener;
 
-    public static dccexAutomation newInstance(int initialAddress, String routeOrAutomationId, int themeResId) {
-        dccexAutomation fragment = new dccexAutomation();
+    public static DccexAutomation newInstance(int initialAddress, String routeOrAutomationId, int themeResId) {
+        DccexAutomation fragment = new DccexAutomation();
         Bundle args = new Bundle();
         args.putInt("initialAddress", initialAddress); // Use a key to store the value
         args.putString("routeOrAutomationId", routeOrAutomationId); // Use a key to store the value

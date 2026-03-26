@@ -2743,7 +2743,7 @@ public class throttle extends AppCompatActivity implements
         if (prefGamepadTestEnforceTesting) {
             mainapp.gamePadDeviceIdsTested[gamepadNo] = gamepad_status_type.UNKNOWN;
             try {
-                Intent intent = new Intent().setClass(this, gamepad_test.class);
+                Intent intent = new Intent().setClass(this, GamepadTestActivity.class);
                 intent.putExtra("whichGamepadNo", Integer.toString(gamepadNo));
                 intent.putExtra("onlyTestCurrent", true);
                 tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST);
@@ -6960,7 +6960,7 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.withrottle_cv_programmer_mnu) {
-            in = new Intent().setClass(this, withrottle_cv_programmer.class);
+            in = new Intent().setClass(this, WiThrottleCvProgrammerActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -7024,7 +7024,7 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.about_mnu) {
-            in = new Intent().setClass(this, about_page.class);
+            in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;

@@ -67,10 +67,10 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
+import jmri.enginedriver.util.CvBitCalculator;
 import jmri.enginedriver.util.LocaleHelper;
-import jmri.enginedriver.util.cvBitCalculator;
 
-public class DccexActivity extends AppCompatActivity implements cvBitCalculator.OnConfirmListener {
+public class DccexActivity extends AppCompatActivity implements CvBitCalculator.OnConfirmListener {
     static final String activityName = "DccexActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -1563,7 +1563,7 @@ public class DccexActivity extends AppCompatActivity implements cvBitCalculator.
             initialValue = Integer.parseInt(etDccexCvValue.getText().toString());
         } catch (Exception ignored) {
         }
-        cvBitCalculator cvBitCalculatorDialogFragment = cvBitCalculator.newInstance(initialValue, initialCv, mainapp.getSelectedTheme(false));
+        CvBitCalculator cvBitCalculatorDialogFragment = CvBitCalculator.newInstance(initialValue, initialCv, mainapp.getSelectedTheme(false));
         cvBitCalculatorDialogFragment.setOnConfirmListener(this); // Set the listener
         cvBitCalculatorDialogFragment.show(getSupportFragmentManager(), "cvBitCalculatorDialogFragment");
     }

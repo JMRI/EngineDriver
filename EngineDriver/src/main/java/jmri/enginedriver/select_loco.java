@@ -27,7 +27,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import android.app.Dialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -2479,24 +2479,28 @@ public class select_loco extends AppCompatActivity {
     protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String rosterAddressString, String iconURL) {
 //        Log.d(threaded_application.applicationName, activityName + ": showRosterDetailsDialog(): Showing details for roster entry " + rosterNameString);
         String res;
-        final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
-        dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosterNameString);
-        dialog.setContentView(R.layout.roster_entry_page);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.roster_entry_page, null);
+        builder.setView(view);
+        builder.setTitle(getString(R.string.rosterDetailsDialogTitle) + " " + rosterNameString);
+
+        final AlertDialog dialog = builder.create();
+
         if (re != null) {
-            res = re.toString();
+            res = re.getRosterEntryWebDetails(this);
         } else {
 //            res = "\n DCC Address: " + rosterAddressString +"\n Roster Entry: " + rosterNameString + "\n";
             res = "\n" + getApplicationContext().getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + rosterAddressString
                     +"\n" + getApplicationContext().getResources().getString(R.string.rosterDecoderInfoRosterEntry) + " " +rosterNameString + "\n";
         }
-        TextView tv = dialog.findViewById(R.id.rosterEntryText);
+        TextView tv = view.findViewById(R.id.rosterEntryText);
         tv.setText(res);
 
-        detailsRosterImageView = dialog.findViewById(R.id.rosterEntryImage);
+        detailsRosterImageView = view.findViewById(R.id.rosterEntryImage);
         detailsRosterImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         loadRosterOrRecentImage(rosterNameString, detailsRosterImageView, iconURL);
 
-        buttonClose = dialog.findViewById(R.id.rosterEntryButtonClose);
+        buttonClose = view.findViewById(R.id.rosterEntryButtonClose);
         buttonClose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (newRosterImageSelected) {
@@ -2510,7 +2514,7 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
-        Button buttonSelectRosterImage = dialog.findViewById(R.id.selectRosterEntryImage);
+        Button buttonSelectRosterImage = view.findViewById(R.id.selectRosterEntryImage);
         buttonSelectRosterImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 detailsRosterNameString = rosterNameString; // store the name for the return result
@@ -2519,7 +2523,7 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
-        buttonRemoveRosterImage = dialog.findViewById(R.id.removeRosterEntryImage);
+        buttonRemoveRosterImage = view.findViewById(R.id.removeRosterEntryImage);
         buttonRemoveRosterImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (deleteLocoImageFile(rosterNameString)) {
@@ -2535,7 +2539,7 @@ public class select_loco extends AppCompatActivity {
 
         if ((iconURL != null) && (!iconURL.isEmpty())) {
             buttonSelectRosterImage.setVisibility(GONE);
-            TextView rosterEntryImageHelpText = dialog.findViewById(R.id.rosterEntryImageHelpText);
+            TextView rosterEntryImageHelpText = view.findViewById(R.id.rosterEntryImageHelpText);
             rosterEntryImageHelpText.setText(getString(R.string.rosterEntryImageServerImageHelpText));
             buttonRemoveRosterImage.setVisibility(GONE);
         }

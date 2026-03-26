@@ -709,7 +709,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         } else if (item.getItemId() == R.id.about_mnu) {
             threaded_application.activityInTransition(activityName);
-            navigateAway(false, about_page.class);
+            navigateAway(false, AboutActivity.class);
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {

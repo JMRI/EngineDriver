@@ -76,13 +76,13 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
+import jmri.enginedriver.util.DccexAutomation;
 import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
-import jmri.enginedriver.util.dccexAutomation;
 
 public class routes extends AppCompatActivity
-        implements android.gesture.GestureOverlayView.OnGestureListener, dccexAutomation.OnConfirmListener {
+        implements android.gesture.GestureOverlayView.OnGestureListener, DccexAutomation.OnConfirmListener {
     static final String activityName = "routes";
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -452,7 +452,7 @@ public class routes extends AppCompatActivity
         } catch (Exception ignored) {
         }
 
-        dccexAutomation dccexAutomationDialogFragment = dccexAutomation.newInstance(initialAddress, routeOrAutomationId, mainapp.getSelectedTheme(false));
+        DccexAutomation dccexAutomationDialogFragment = DccexAutomation.newInstance(initialAddress, routeOrAutomationId, mainapp.getSelectedTheme(false));
         dccexAutomationDialogFragment.setOnConfirmListener(this); // Set the listener
         dccexAutomationDialogFragment.show(getSupportFragmentManager(), "dccexAutomationDialogFragment");
     }
@@ -931,7 +931,7 @@ public class routes extends AppCompatActivity
 
         } else if (item.getItemId() == R.id.about_mnu) {
             threaded_application.activityInTransition(activityName);
-            in = new Intent().setClass(this, about_page.class);
+            in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;

@@ -1141,7 +1141,7 @@ public class connection_activity extends AppCompatActivity implements Permission
             startPreferencesActivity();
             return true;
         } else if (item.getItemId() == R.id.about_mnu) {
-            in = new Intent().setClass(this, about_page.class);
+            in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;

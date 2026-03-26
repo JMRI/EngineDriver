@@ -26,8 +26,8 @@ import java.util.List;
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
 
-public class cvBitCalculator extends DialogFragment {
-    static final String activityName = "cvBitCalculator";
+public class CvBitCalculator extends DialogFragment {
+    static final String activityName = "CvBitCalculator";
 
     private EditText editText;
     private CheckBox[] checkBoxes = new CheckBox[8];
@@ -49,8 +49,8 @@ public class cvBitCalculator extends DialogFragment {
 
     private OnConfirmListener listener;
 
-    public static cvBitCalculator newInstance(int initialValue, int initialCv, int themeResId) {
-        cvBitCalculator fragment = new cvBitCalculator();
+    public static CvBitCalculator newInstance(int initialValue, int initialCv, int themeResId) {
+        CvBitCalculator fragment = new CvBitCalculator();
         Bundle args = new Bundle();
         args.putInt("initialValue", initialValue); // Use a key to store the value
         args.putInt("initialCv", initialCv); // Use a key to store the value

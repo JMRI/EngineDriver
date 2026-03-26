@@ -42,8 +42,8 @@ import java.util.Objects;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.message_type;
 
-public class about_page extends AppCompatActivity {
-    static final String activityName = "about_page";
+public class AboutActivity extends AppCompatActivity {
+    static final String activityName = "AboutActivity";
 
     private threaded_application mainapp; // hold pointer to mainapp
     private Menu overflowMenu;
@@ -91,7 +91,7 @@ public class about_page extends AppCompatActivity {
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(about_page.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(AboutActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -155,7 +155,7 @@ public class about_page extends AppCompatActivity {
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
