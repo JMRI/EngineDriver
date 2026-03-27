@@ -49,6 +49,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Loco;
 import jmri.enginedriver.type.address_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
+import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
@@ -793,7 +794,7 @@ public class ImportExportPreferences {
             tempRecentConsistLocoAddressList_inner.add(l.getIntAddress());
             tempRecentConsistAddressSizeList_inner.add(l.getIntAddressLength());
             String addr = locoAddressToString(l.getIntAddress(), l.getIntAddressLength(), true);
-            tempRecentConsistDirectionList_inner.add((consist.isBackward(addr) ? 1 : 0));
+            tempRecentConsistDirectionList_inner.add((consist.isBackward(addr) ? direction_type.BACKWARD : direction_type.FORWARD ));
             String rosterName = "";
             if (l.getRosterName() != null) {
                 rosterName = l.getRosterName();

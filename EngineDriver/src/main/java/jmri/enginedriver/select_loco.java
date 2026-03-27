@@ -2479,7 +2479,7 @@ public class select_loco extends AppCompatActivity {
     protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String rosterAddressString, String iconURL) {
 //        Log.d(threaded_application.applicationName, activityName + ": showRosterDetailsDialog(): Showing details for roster entry " + rosterNameString);
         String res;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
         View view = getLayoutInflater().inflate(R.layout.roster_entry_page, null);
         builder.setView(view);
         builder.setTitle(getString(R.string.rosterDetailsDialogTitle) + " " + rosterNameString);
@@ -2833,7 +2833,7 @@ public class select_loco extends AppCompatActivity {
     }
 
     public void showEditRecentConsistsNameDialog(final int pos) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.edit_recent_name, null);
         dialogBuilder.setView(dialogView);
@@ -2867,7 +2867,7 @@ public class select_loco extends AppCompatActivity {
     }
 
     public void showEditRecentsNameDialog(final int pos) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.edit_recent_name, null);
         dialogBuilder.setView(dialogView);

@@ -10,6 +10,7 @@
      * Add missing Stop button UI change when pressed.
      * Bug fix for the function button latching when using consists/MUs with DCC-EX.
      * Bug fix for retrieving the roster entry information from the JMRI web server.
+     * Bug fix for recent consist loco directions.
  * Other
      * Major changes in the way that inter-activity communication works (now uses Bundles)
        Removed a number of unnecessary and/or repetitive calls to comm_handler.

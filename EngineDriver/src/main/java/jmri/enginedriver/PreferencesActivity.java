@@ -419,7 +419,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             fileNames.add(file.getName());
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.file_list_dialog, null);
         builder.setView(dialogView);

@@ -85,7 +85,7 @@ public class AdvancedConsistTool extends DialogFragment {
         if (mainapp.activityBundleMessageHandlers[activity_id_type.ADVANCED_CONSIST_TOOL] == null)
             mainapp.activityBundleMessageHandlers[activity_id_type.ADVANCED_CONSIST_TOOL] = new BundleMessageHandler(Looper.getMainLooper());
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.alert_dialog_style_reusable);
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.advanced_consist_tool_dialog, null); // Use your layout file name
 
