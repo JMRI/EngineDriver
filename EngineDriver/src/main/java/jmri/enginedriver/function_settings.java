@@ -109,7 +109,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.function_settings);
+        setContentView(R.layout.function_settings_page);
         orientationChange = false;
 
         if (savedInstanceState == null) {    //if not an orientation change then init settings array
@@ -178,12 +178,12 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         overrideRosterWithNoFunctionLabelsSpinner = findViewById(R.id.fb_override_roster_with_no_function_labels);
         overrideRosterWithNoFunctionLabelsSpinner.setOnItemSelectedListener(new OverrideRosterWithNoFunctionLabelsSpinnerListener());
 
-        findViewById(R.id.fb_override_withrottles_function_latching_label).setEnabled(!mainapp.isDCCEX);
-//        overrideWiThrottlesFunctionLatchingSpinner.setEnabled(!mainapp.isDCCEX);
-        overrideWiThrottlesFunctionLatchingSpinner.setVisibility(mainapp.isDCCEX ? GONE : VISIBLE);
+        findViewById(R.id.fb_override_withrottles_function_latching_label).setEnabled(mainapp.isWiThrottleProtocol());
+//        overrideWiThrottlesFunctionLatchingSpinner.setEnabled(mainapp.isWiThrottleProtocol());
+        overrideWiThrottlesFunctionLatchingSpinner.setVisibility(mainapp.isDccexProtocol() ? GONE : VISIBLE);
 
         overrideWiThrottlesFunctionLatchingLabel = findViewById(R.id.fb_override_withrottles_function_latching_label);
-        overrideWiThrottlesFunctionLatchingLabel.setVisibility(mainapp.isDCCEX ? GONE : VISIBLE);
+        overrideWiThrottlesFunctionLatchingLabel.setVisibility(mainapp.isDccexProtocol() ? GONE : VISIBLE);
 
         mainapp.set_default_function_labels(true);
         move_settings_to_view();            //copy settings array to view
@@ -195,7 +195,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         }
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.function_settings_msg_handler = new function_settings_handler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.FUNCTION_SETTINGS] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.FUNCTION_SETTINGS] = new BundleMessageHandler(Looper.getMainLooper());
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -272,6 +273,8 @@ public class function_settings extends AppCompatActivity implements PermissionsH
             aFnc.clear();
         }
         super.onDestroy();
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.FUNCTION_SETTINGS);
     }
 
     @Override
@@ -316,31 +319,30 @@ public class function_settings extends AppCompatActivity implements PermissionsH
         }
     }
 
-    @SuppressLint("HandlerLeak")
-    class function_settings_handler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public function_settings_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case message_type.RESPONSE: {    //handle messages from WiThrottle server
-                    String s = msg.obj.toString();
-                    if (s.length() >= 3) {
-                        String com1 = s.substring(0, 3);
-                        //update power icon
-                        if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
-                    }
-                    break;
-                }
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+//            Bundle bundle = msg.getData();
 
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+            switch (msg.what) {
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                     break;
+
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
@@ -354,9 +356,6 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
-                    break;
-
-                default:
                     break;
 
             }

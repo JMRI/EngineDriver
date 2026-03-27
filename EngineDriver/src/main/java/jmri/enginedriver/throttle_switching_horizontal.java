@@ -556,7 +556,7 @@ public class throttle_switching_horizontal extends throttle {
                         jumpDir = dir; // save ultimate target direction
                         limitedJump[whichThrottle] = true;
                         throttle.setProgress(lastSliderPosition);  // put the slider back to the original position
-                        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+                        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
                         if (newSliderPosition < lastSliderPosition) { // going down
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
@@ -587,7 +587,7 @@ public class throttle_switching_horizontal extends throttle {
 //                    Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() -- touch while processing limited jump");
                     newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
                     throttle.setProgress(lastSliderPosition);
-                    if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+                    if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
 //                    Log.d(threaded_application.applicationName, activityName + ": onProgressChange(): fromUser: " + fromUser + " hsbSwitchingSpeeds[wt].touchFromUser: " +hsbSwitchingSpeeds[whichThrottle].touchFromUser + " isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
                 }
@@ -635,7 +635,7 @@ public class throttle_switching_horizontal extends throttle {
                             limitedJump[whichThrottle] = false;
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                             throttle.setProgress(getNewSliderPositionFromSpeed(jumpSpeed, whichThrottle, false));
-                            if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+                            if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
                             speedUpdate(whichThrottle, getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false));
                         }
                     }
@@ -721,11 +721,11 @@ public class throttle_switching_horizontal extends throttle {
         switchingThrottleSlider.setProgress(newSliderPosition);
         speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
         setDisplayedSpeed(whichThrottle, speed);
-        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
 //        Log.d(threaded_application.applicationName, activityName + ": speedChange():  speed: " + speed + " change: " + change);
 
-        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
         return speed;
 
@@ -746,7 +746,7 @@ public class throttle_switching_horizontal extends throttle {
 
         getSwitchingThrottleSlider(whichThrottle).setProgress(sliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
-        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
 //        Log.d(threaded_application.applicationName, activityName + ": speedChange(): speedUpdate -  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
     }
@@ -762,10 +762,13 @@ public class throttle_switching_horizontal extends throttle {
 
         int sliderPosition;
         if (!changeTimers[whichThrottle].isDelayInProgress()) {
+//            threaded_application.extendedLogging(activityName + ": speedUpdateWiT(): set speed: " + speedWiT);
             sliderPosition = getNewSliderPositionFromSpeed(speedWiT, whichThrottle, false);
             hsbSwitchingSpeeds[whichThrottle].setProgress(sliderPosition);
+        } else {
+            threaded_application.extendedLogging(activityName + ": speedUpdateWiT(): :<>: pacing delay. speed update ignored");
         }
-        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
     }
 
 
@@ -870,7 +873,7 @@ public class throttle_switching_horizontal extends throttle {
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
         if (isLimitSpeeds[whichThrottle]) {
-            bLimitSpeeds[whichThrottle].setSelected(true);
+            setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], true);
             limitSpeedSliderScalingFactors[whichThrottle] = 100/ ((float) prefLimitSpeedPercent);
             sbs[whichThrottle].setMax( Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
 
@@ -879,7 +882,7 @@ public class throttle_switching_horizontal extends throttle {
             hsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
 
         } else {
-            bLimitSpeeds[whichThrottle].setSelected(false);
+            setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], false);
             sbs[whichThrottle].setMax(maxThrottle);
 
             throttleMidPointZero[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone);
@@ -908,12 +911,12 @@ public class throttle_switching_horizontal extends throttle {
         final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int[] throttleHeights = {0, 0, 0, 0, 0, 0};
 
-        int height = getAvailableScreenHeight();
+        double height = getAvailableScreenHeight();
 
         if ((height > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
 
             if (mainapp.prefNumThrottles == 1) {        // just one throttle
-                throttleHeights[0] = height;
+                throttleHeights[0] = (int) height;
             } else {
                 boolean[] throttlesInUse = {false, false, false, false, false, false};
                 int throttlesInUseCount = 0;
@@ -933,17 +936,17 @@ public class throttle_switching_horizontal extends throttle {
 
                     if (mainapp.prefNumThrottles == 2) {
                         if (throttlesInUseCount <= 1) {
-                            activeHeight = height - llLocoIdAndSpeedViewGroups[0].getHeight();
+                            activeHeight = height - inactiveHeight;
                         } else {  // equals 2
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / (float) 2;
+                            activeHeight = height / 2;
                         }
                     } else { // equals 3
                         if (throttlesInUseCount <= 1) {
-                            activeHeight = height - (llLocoIdAndSpeedViewGroups[0].getHeight() * 2);
+                            activeHeight = height - (inactiveHeight * 2);
                         } else if (throttlesInUseCount == 2) {
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / (float) 2;
-                        } else {  // equals 3
-                            activeHeight = (height - llLocoIdAndSpeedViewGroups[0].getHeight()) / (float) 3;
+                            activeHeight = (height - inactiveHeight) /2;
+                        } else {  // equals 3 in use
+                            activeHeight = height / 3;
                         }
                     }
                     for (int i = 0; i < mainapp.prefNumThrottles; i++) {

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.sounds_type;
 
 public class InPhoneLocoSounds {
@@ -46,23 +47,23 @@ public class InPhoneLocoSounds {
         int whichThrottle;
         int currentSpeed;
         int dir;
-        boolean soundsIsMuted;
+        boolean soundsAreMutedForThisThrottle;
 
-        public DoLocoSoundDelayed(int whichThrottle, int currentSpeed, int dir, boolean soundsIsMuted) {
+        public DoLocoSoundDelayed(int whichThrottle, int currentSpeed, int dir, boolean soundsAreMutedForThisThrottle) {
             this.whichThrottle = whichThrottle;
             this.currentSpeed = currentSpeed;
             this.dir = dir;
-            this.soundsIsMuted = soundsIsMuted;
+            this.soundsAreMutedForThisThrottle = soundsAreMutedForThisThrottle;
         }
 
         @Override
         public void run() {
 //            Log.d(threaded_application.applicationName, activityName + ": doLocoSoundDelayed(): run: (ipls) wt" + whichThrottle);
-            doLocoSound(whichThrottle, currentSpeed, dir, soundsIsMuted);
+            doLocoSound(whichThrottle, currentSpeed, dir, soundsAreMutedForThisThrottle);
         }
     } // end DoLocoSoundDelayed()
 
-    public void doLocoSound(int whichThrottle, int currentSpeed, int dir, boolean soundsIsMuted) {
+    public void doLocoSound(int whichThrottle, int currentSpeed, int dir, boolean soundsAreMutedForThisThrottle) {
 //        Log.d(threaded_application.applicationName, activityName + ": doLocoSound : (ipls) wt: " + whichThrottle + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
         if (!mainapp.soundsSoundsAreBeingReloaded) {
             if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
@@ -78,17 +79,17 @@ public class InPhoneLocoSounds {
                                 //see if there is a startup sound for this profile
                                 if (mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX] > 0) {
 //                                    Log.d(threaded_application.applicationName, activityName + ": doLocoSound 3              : (ipls) wt: " + whichThrottle + " snd: " + mSound);
-                                    soundStart(sounds_type.LOCO, whichThrottle, sounds_type.STARTUP_INDEX, sounds_type.REPEAT_NONE, soundsIsMuted);
-                                    scheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX], soundsIsMuted);
-                                    queueNextLocoSound(whichThrottle, mSound, dir, soundsIsMuted);
+                                    soundStart(sounds_type.LOCO, whichThrottle, sounds_type.STARTUP_INDEX, sounds_type.REPEAT_NONE, soundsAreMutedForThisThrottle);
+                                    scheduleNextLocoSound(whichThrottle, mSound, mainapp.soundsLocoDuration[whichThrottle][sounds_type.STARTUP_INDEX], soundsAreMutedForThisThrottle);
+                                    queueNextLocoSound(whichThrottle, mSound, dir, soundsAreMutedForThisThrottle);
                                 } else {
 //                                    Log.d(threaded_application.applicationName, activityName + ": doLocoSound 4              : (ipls) wt: " + whichThrottle + " snd: " + mSound);
-                                    soundStart(sounds_type.LOCO, whichThrottle, mSound, sounds_type.REPEAT_INFINITE, soundsIsMuted);
+                                    soundStart(sounds_type.LOCO, whichThrottle, mSound, sounds_type.REPEAT_INFINITE, soundsAreMutedForThisThrottle);
                                     mainapp.soundsLocoQueue[whichThrottle].setLastAddedValue(mSound);
                                 }
 
                             } else {
-                                queueNextLocoSound(whichThrottle, mSound, dir, soundsIsMuted);
+                                queueNextLocoSound(whichThrottle, mSound, dir, soundsAreMutedForThisThrottle);
                             }
                         }
                     } else {
@@ -100,7 +101,7 @@ public class InPhoneLocoSounds {
         }
     } // end doLocoSound()
 
-    private void queueNextLocoSound(int whichThrottle, int mSound, int dir, boolean soundsIsMuted) {
+    private void queueNextLocoSound(int whichThrottle, int mSound, int dir, boolean soundsAreMutedForThisThrottle) {
         Log.d(threaded_application.applicationName, activityName + ": queueNextLocoSound : (ipls) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
         boolean wasDirectionChange = mainapp.soundsLocoLastDirection[whichThrottle] != dir;
 
@@ -113,12 +114,12 @@ public class InPhoneLocoSounds {
 
         if (mainapp.soundsLocoQueue[whichThrottle].enqueueWithIntermediateSteps(mSound, wasDirectionChange)) {
             if (queueCount == 0) {
-                scheduleNextLocoSound(whichThrottle, mSound, -1, soundsIsMuted);
+                scheduleNextLocoSound(whichThrottle, mSound, -1, soundsAreMutedForThisThrottle);
             }
         }
     } // end queueNextLocoSound()
 
-    public void scheduleNextLocoSound(int whichThrottle, int mSound, int forcedExpectedEndTime, boolean soundsIsMuted) {
+    public void scheduleNextLocoSound(int whichThrottle, int mSound, int forcedExpectedEndTime, boolean soundsAreMutedForThisThrottle) {
 //        Log.d(threaded_application.applicationName, activityName + ": scheduleNextLocoSound : (ipls) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
 
         int expectedEndTime;
@@ -130,8 +131,9 @@ public class InPhoneLocoSounds {
         int nextSound = mainapp.soundsLocoQueue[whichThrottle].frontOfQueue();
 
         if (nextSound >= 0) {
-            mainapp.throttle_msg_handler.postDelayed(
-                    new ScheduleNextSoundToPlay(sounds_type.LOCO, whichThrottle, nextSound, soundsIsMuted),
+            if (mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE] != null)
+                mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE].postDelayed(
+                    new ScheduleNextSoundToPlay(sounds_type.LOCO, whichThrottle, nextSound),
                     expectedEndTime - 100);
 //            Log.d(threaded_application.applicationName, activityName + ": soundScheduleNextLocoSound : (ipls) wt:" + whichThrottle + " snd: " + nextSound + " Start in: " + expectedEndTime + "msec");
         }
@@ -183,24 +185,25 @@ public class InPhoneLocoSounds {
         return isPlaying;
     } // end soundIsPlaying()
 
-    public void startBellHornSound(int soundType, int whichThrottle, boolean soundsIsMuted) {
+    public void startBellHornSound(int soundType, int whichThrottle, boolean soundsAreMutedForThisThrottle) {
 //        Log.d(threaded_application.applicationName, activityName + ": startBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle);
         int soundTypeArrayIndex = soundType - 1;
 
         if (soundIsPlaying(soundType, whichThrottle) < 0) { // check if the loop sound is not currently playing
             if (soundType != sounds_type.HORN_SHORT) {
-                soundStart(soundType, whichThrottle, sounds_type.BELL_HORN_START, 0, soundsIsMuted);
+                soundStart(soundType, whichThrottle, sounds_type.BELL_HORN_START, 0, soundsAreMutedForThisThrottle);
                 // queue up the loop sound to be played when the start sound is finished
-                mainapp.throttle_msg_handler.postDelayed(
-                        new ScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_START, soundsIsMuted),
+                if (mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE] != null)
+                    mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE].postDelayed(
+                        new ScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_START),
                         mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][sounds_type.BELL_HORN_START]);
             } else {
-                soundStart(soundType, whichThrottle, 0, 0, soundsIsMuted);   // mSound always 0 for the short horn (not really used)
+                soundStart(soundType, whichThrottle, 0, 0, soundsAreMutedForThisThrottle);   // mSound always 0 for the short horn (not really used)
             }
         }
     } // end startBellHornSound()
 
-    public void stopBellHornSound(int soundType, int whichThrottle, boolean soundsIsMuted) {
+    public void stopBellHornSound(int soundType, int whichThrottle, boolean soundsAreMutedForThisThrottle) {
 //        Log.d(threaded_application.applicationName, activityName + ": stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
         int soundTypeArrayIndex = soundType - 1;
 
@@ -208,15 +211,17 @@ public class InPhoneLocoSounds {
             if (soundIsPlaying(soundType, whichThrottle) == 0) {
                 // if the start sound is currently playing need to do something special
                 // as the loop is probably scheduled to run but has not started yet
-                mainapp.throttle_msg_handler.postDelayed(
+                if (mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE] != null)
+                    mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE].postDelayed(
                         new ScheduleSoundToStop(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP),
                         mainapp.soundsExtrasDuration[soundTypeArrayIndex][whichThrottle][sounds_type.BELL_HORN_START] + 100);
 
             } else if (soundIsPlaying(soundType, whichThrottle) == 1) { // check if the loop sound is currently playing
                 int expectedEndTime = soundStop(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP, false);
                 // queue up the end sound
-                mainapp.throttle_msg_handler.postDelayed(
-                        new ScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP, soundsIsMuted),
+                if (mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE] != null)
+                    mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE].postDelayed(
+                        new ScheduleNextSoundToPlay(soundType, whichThrottle, sounds_type.BELL_HORN_LOOP),
                         expectedEndTime);
             }
         } else { // for the short horn, stop immediately
@@ -224,7 +229,7 @@ public class InPhoneLocoSounds {
         }
     } // end stopBellHornSound(
 
-    public void soundStart(int soundType, int whichThrottle, int mSound, int loop, boolean soundsIsMuted) {
+    public void soundStart(int soundType, int whichThrottle, int mSound, int loop, boolean soundsAreMutedForThisThrottle) {
 //        Log.d(threaded_application.applicationName, activityName + ": soundStart: SoundType:" + soundType + " wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop);
         int soundTypeArrayIndex = soundType - 1;
 
@@ -235,8 +240,8 @@ public class InPhoneLocoSounds {
                 if (mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] != mSound) { // nothing playing
                     mainapp.soundsExtrasStreamId[soundTypeArrayIndex][whichThrottle][mSound]
                             = mainapp.soundPool.play(mainapp.soundsExtras[soundTypeArrayIndex][whichThrottle][mSound],
-                            volume(soundType, whichThrottle, soundsIsMuted),
-                            volume(soundType, whichThrottle, soundsIsMuted),
+                            volume(soundType, whichThrottle, soundsAreMutedForThisThrottle),
+                            volume(soundType, whichThrottle, soundsAreMutedForThisThrottle),
                             0, loop, 1);
                     mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle] = (mSound < 2) ? mSound : -1; // if it is the end sound, treat it like is not playing
                     mainapp.soundsExtrasStartTime[soundTypeArrayIndex][whichThrottle][mSound] = System.currentTimeMillis();
@@ -251,14 +256,14 @@ public class InPhoneLocoSounds {
                         if (mSound < sounds_type.STARTUP_INDEX) {
                             mainapp.soundsLocoStreamId[whichThrottle][mSound]
                                     = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
-                                    volume(sounds_type.LOCO, whichThrottle, soundsIsMuted),
-                                    volume(sounds_type.LOCO, whichThrottle, soundsIsMuted),
+                                    volume(sounds_type.LOCO, whichThrottle, soundsAreMutedForThisThrottle),
+                                    volume(sounds_type.LOCO, whichThrottle, soundsAreMutedForThisThrottle),
                                     0, sounds_type.REPEAT_INFINITE, 1);
                         } else if (mSound == sounds_type.STARTUP_INDEX) {
                             mainapp.soundsLocoStreamId[whichThrottle][mSound]
                                     = mainapp.soundPool.play(mainapp.soundsLoco[whichThrottle][mSound],
-                                    volume(sounds_type.LOCO, whichThrottle, soundsIsMuted),
-                                    volume(sounds_type.LOCO, whichThrottle, soundsIsMuted),
+                                    volume(sounds_type.LOCO, whichThrottle, soundsAreMutedForThisThrottle),
+                                    volume(sounds_type.LOCO, whichThrottle, soundsAreMutedForThisThrottle),
                                     0, sounds_type.REPEAT_NONE, 1);
 //                            Log.d(threaded_application.applicationName, activityName + ": soundStart SU            : (ipls) wt: " + whichThrottle + " snd: " + mSound + " loop:" + loop + " Sid: " + mainapp.soundsLocoStreamId[whichThrottle][mSound]);
 
@@ -367,34 +372,36 @@ public class InPhoneLocoSounds {
         int whichThrottle;
         int soundType;
         int mSound;
-        boolean soundsIsMuted;
+        boolean soundsAreMutedForThisThrottle;
 
-        // soundsIsMuted = soundsIsMuted[whichThrottle]
-        public ScheduleNextSoundToPlay(int soundType, int whichThrottle, int mSound, boolean soundsIsMuted) {
+        public ScheduleNextSoundToPlay(int soundType, int whichThrottle, int mSound) {
             this.whichThrottle = whichThrottle;
             this.soundType = soundType;
             this.mSound = mSound;
-            this.soundsIsMuted = soundsIsMuted;
+            soundsAreMutedForThisThrottle = mainapp.soundsIsMuted[whichThrottle];
         }
 
         @Override
         public void run() {
 //            Log.d(threaded_application.applicationName, activityName + ": SoundScheduleNextSoundToPlay.run: Type" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
+
+            soundsAreMutedForThisThrottle = mainapp.soundsIsMuted[whichThrottle]; // recheck each loop
+
             switch (soundType) {
                 case sounds_type.LOCO: // loco
                     // pull the next sound off the queue
 //                    Log.d(threaded_application.applicationName, activityName + ": ScheduleNextSoundToPlay.run: (ipls) wt: " + whichThrottle + " snd: " + mSound);
                     soundStop(soundType, whichThrottle, mainapp.soundsLocoCurrentlyPlaying[whichThrottle], true);
-                    soundStart(soundType, whichThrottle, mSound, sounds_type.REPEAT_INFINITE, soundsIsMuted);
+                    soundStart(soundType, whichThrottle, mSound, sounds_type.REPEAT_INFINITE, soundsAreMutedForThisThrottle);
                     mainapp.soundsLocoQueue[whichThrottle].dequeue();
                     if (mainapp.soundsLocoQueue[whichThrottle].queueCount() > 0) {  // if there are more on the queue, start the process to stop the one you just started
-                        scheduleNextLocoSound(whichThrottle, mainapp.soundsLocoQueue[whichThrottle].frontOfQueue(), -1, soundsIsMuted);
+                        scheduleNextLocoSound(whichThrottle, mainapp.soundsLocoQueue[whichThrottle].frontOfQueue(), -1, soundsAreMutedForThisThrottle);
                     }
                     break;
                 case sounds_type.BELL: // bell
                 case sounds_type.HORN: // horn
                     int loop = (mSound == sounds_type.BELL_HORN_START) ? sounds_type.REPEAT_INFINITE : sounds_type.REPEAT_NONE; // of 0 now, then we will be playig the lop sound next.
-                    soundStart(soundType, whichThrottle, mSound + 1, loop, soundsIsMuted);
+                    soundStart(soundType, whichThrottle, mSound + 1, loop, soundsAreMutedForThisThrottle);
                     break;
 //                case sounds_type.HORN_SHORT:
 //                    break;
@@ -431,10 +438,10 @@ public class InPhoneLocoSounds {
         }
     } // end class SoundScheduleSoundToStop
 
-    public float volume(int soundType, int whichThrottle, boolean soundsIsMuted) {
+    public float volume(int soundType, int whichThrottle, boolean soundsAreMutedForThisThrottle) {
         float volume = 0;
         if ((whichThrottle < mainapp.maxThrottlesCurrentScreen) && (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)) {
-            if (!soundsIsMuted) {
+            if (!soundsAreMutedForThisThrottle) {
                 switch (soundType) {
                     case sounds_type.BELL: // bell
                         volume = mainapp.prefDeviceSoundsBellVolume;
@@ -453,20 +460,20 @@ public class InPhoneLocoSounds {
         return volume;
     }
 
-    public void muteUnmuteCurrentSounds(int whichThrottle, boolean soundsIsMuted) {
+    public void muteUnmuteCurrentSounds(int whichThrottle, boolean soundsAreMutedForThisThrottle) {
         if (mainapp.soundPool != null) {
             if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) {
                 int mSound = mainapp.soundsLocoCurrentlyPlaying[whichThrottle];
                 if (mSound >= 0) {
                     mainapp.soundPool.setVolume(mainapp.soundsLocoStreamId[whichThrottle][mSound],
-                           volume(sounds_type.LOCO, whichThrottle, soundsIsMuted),
-                           volume(sounds_type.LOCO, whichThrottle, soundsIsMuted));
+                           volume(sounds_type.LOCO, whichThrottle, soundsAreMutedForThisThrottle),
+                           volume(sounds_type.LOCO, whichThrottle, soundsAreMutedForThisThrottle));
                 }
                 for (int soundType = 0; soundType < 2; soundType++) {  // don't worry about the short horn
                     if (mainapp.soundsExtrasCurrentlyPlaying[soundType][whichThrottle] == sounds_type.BELL_HORN_LOOP) {
                         mainapp.soundPool.setVolume(mainapp.soundsExtrasStreamId[soundType][whichThrottle][sounds_type.BELL_HORN_LOOP],
-                                volume(soundType + 1, whichThrottle, soundsIsMuted),
-                                volume(soundType + 1, whichThrottle, soundsIsMuted));
+                                volume(soundType + 1, whichThrottle, soundsAreMutedForThisThrottle),
+                                volume(soundType + 1, whichThrottle, soundsAreMutedForThisThrottle));
                     }
                 }
             }

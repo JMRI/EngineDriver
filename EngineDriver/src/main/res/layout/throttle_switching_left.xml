@@ -303,72 +303,80 @@
 
                                 </LinearLayout>
 
-                                <TableLayout
+                                <LinearLayout
                                     android:id="@+id/dir_buttons_table_0"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="50dp"
-                                    android:stretchColumns="0,1,2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
                                     android:visibility="gone">
 
-                                    <TableRow
-                                        android:layout_height="wrap_content"
-                                        android:weightSum="1.0">
+<!--                                <TableLayout-->
+<!--                                    android:id="@+id/dir_buttons_table_0"-->
+<!--                                    android:layout_width="fill_parent"-->
+<!--                                    android:layout_height="50dp"-->
+<!--                                    android:stretchColumns="0,1,2"-->
+<!--                                    android:visibility="gone">-->
 
-                                        <RelativeLayout
-                                            android:id="@+id/direction_left_cell_0"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight=".5">
+<!--                                    <TableRow-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:weightSum="1.0">-->
+
+<!--                                        <RelativeLayout-->
+<!--                                            android:id="@+id/direction_left_cell_0"-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:layout_weight=".5">-->
 
                                             <Button
                                                 android:id="@+id/button_fwd_0"
                                                 style="?attr/ed_normal_button_style"
-                                                android:layout_width="fill_parent"
+                                                android:layout_width="0dp"
                                                 android:layout_height="wrap_content"
+                                                android:layout_weight=".5"
                                                 android:enabled="false"
                                                 android:text="@string/prefLeftDirectionButtonsShortDefaultValue" />
 
-                                            <TextView
-                                                android:id="@+id/loco_left_direction_indication_0"
-                                                style="?attr/ed_loco_label_style"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignRight="@+id/button_fwd_0"
-                                                android:layout_alignParentRight="true"
-                                                android:paddingLeft="0dp"
-                                                android:paddingTop="2dp"
-                                                android:paddingRight="6dp"
-                                                android:text="@string/none" />
-                                        </RelativeLayout>
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/loco_left_direction_indication_0"-->
+<!--                                                style="?attr/ed_loco_label_style"-->
+<!--                                                android:layout_width="wrap_content"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_alignRight="@+id/button_fwd_0"-->
+<!--                                                android:layout_alignParentRight="true"-->
+<!--                                                android:paddingLeft="0dp"-->
+<!--                                                android:paddingTop="2dp"-->
+<!--                                                android:paddingRight="6dp"-->
+<!--                                                android:text="@string/none" />-->
+<!--                                        </RelativeLayout>-->
 
-                                        <RelativeLayout
-                                            android:id="@+id/direction_right_cell_0"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight=".5">
+<!--                                        <RelativeLayout-->
+<!--                                            android:id="@+id/direction_right_cell_0"-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:layout_weight=".5">-->
 
                                             <Button
                                                 android:id="@+id/button_rev_0"
                                                 style="?attr/ed_normal_button_style"
-                                                android:layout_width="fill_parent"
-                                                android:layout_height="wrap_content"
-                                                android:enabled="false"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:visibility="gone"
                                                 android:text="@string/prefRightDirectionButtonsShortDefaultValue" />
 
-                                            <TextView
-                                                android:id="@+id/loco_right_direction_indication_0"
-                                                style="?attr/ed_loco_label_style"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignRight="@+id/button_rev_0"
-                                                android:layout_alignParentRight="true"
-                                                android:paddingLeft="0dp"
-                                                android:paddingTop="2dp"
-                                                android:paddingRight="6dp"
-                                                android:text="@string/none" />
-                                        </RelativeLayout>
-                                    </TableRow>
-                                </TableLayout>
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/loco_right_direction_indication_0"-->
+<!--                                                style="?attr/ed_loco_label_style"-->
+<!--                                                android:layout_width="wrap_content"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_alignRight="@+id/button_rev_0"-->
+<!--                                                android:layout_alignParentRight="true"-->
+<!--                                                android:paddingLeft="0dp"-->
+<!--                                                android:paddingTop="2dp"-->
+<!--                                                android:paddingRight="6dp"-->
+<!--                                                android:text="@string/none" />-->
+<!--                                        </RelativeLayout>-->
+<!--                                    </TableRow>-->
+<!--                                </TableLayout>-->
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"

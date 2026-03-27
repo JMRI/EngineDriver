@@ -70,7 +70,7 @@ public class intro_write_settings extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.intro_write_settings, container, false);
+        return inflater.inflate(R.layout.intro_write_settings_page, container, false);
     }
 
 }

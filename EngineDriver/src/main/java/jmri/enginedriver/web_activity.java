@@ -57,6 +57,7 @@ import java.util.Objects;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
@@ -72,6 +73,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     private static boolean clearHistory = false;        // flags webViewClient to clear history when page load finishes
     private static String firstUrl = null;            // first url loaded that isn't noUrl
     private Menu overflowMenu;
+    volatile Handler gestureHandler;
     private static boolean savedWebMenuSelected;
     private int urlRestoreStep = 0;
     private static Bundle webBundle = new Bundle();
@@ -92,6 +94,12 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
 //    Button closeButton;
 
+    static class GestureHandler extends Handler {
+
+        public GestureHandler(Looper looper) {
+            super(looper);
+        }
+    }
 
     @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {
@@ -131,15 +139,15 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         mVelocityTracker.clear();
 
         // start the gesture timeout timer
-        if (mainapp.web_msg_handler != null)
-            mainapp.web_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+        if (gestureHandler != null)
+            gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
     }
 
     public void gestureMove(MotionEvent event) {
         // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): action " + event.getAction());
-        if ( (mainapp != null) && (mainapp.web_msg_handler != null) && (gestureInProgress) ) {
+        if ( (mainapp != null) && (gestureHandler != null) && (gestureInProgress) ) {
             // stop the gesture timeout timer
-            mainapp.web_msg_handler.removeCallbacks(gestureStopped);
+            gestureHandler.removeCallbacks(gestureStopped);
 
             mVelocityTracker.addMovement(event);
             if ((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) {
@@ -156,15 +164,15 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             }
             if (gestureInProgress) {
                 // restart the gesture timeout timer
-                mainapp.web_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+                gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
             }
         }
     }
 
     private void gestureEnd(MotionEvent event) {
         // Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
-        if ( (mainapp != null) && (mainapp.web_msg_handler != null) && (gestureInProgress) ) {
-            mainapp.web_msg_handler.removeCallbacks(gestureStopped);
+        if ( (mainapp != null) && (gestureHandler != null) && (gestureInProgress) ) {
+            gestureHandler.removeCallbacks(gestureStopped);
 
             float deltaX = (event.getX() - gestureStartX);
             float absDeltaX =  Math.abs(deltaX);
@@ -182,8 +190,8 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     }
 
     private void gestureCancel(MotionEvent event) {
-        if (mainapp.web_msg_handler != null)
-            mainapp.web_msg_handler.removeCallbacks(gestureStopped);
+        if (gestureHandler != null)
+            gestureHandler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
     }
 
@@ -219,54 +227,27 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
     };
 
+    private class BundleMessageHandler extends Handler {
 
-    @SuppressLint("HandlerLeak")
-    class web_handler extends Handler {
-
-        public web_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+            Bundle bundle = msg.getData();
+
             switch (msg.what) {
-
-                case message_type.RESPONSE: {    //handle messages from WiThrottle server
-                    String s = msg.obj.toString();
-                    String response_str = s.substring(0, Math.min(s.length(), 2));
-                    if ("PW".equals(response_str)       // PW - web server port info
-                            || ("HTMRC".equals(s))) {        // If connected to the MRC Wifi adapter, treat as PW, which isn't coming
-                        if (urlRestoreStep == 3) {
-                            urlRestore(true);
-                        }
-                    }
-
-                    if (s.length() >= 3) {
-                        String com1 = s.substring(0, 3);
-                        //update power icon
-                        if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
-                    }
-
-                    break;
-                }
-
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                     break;
 
-                case message_type.REFRESH_OVERFLOW_MENU:
-                    refreshOverflowMenu();
-                    break;
-
-                case message_type.REOPEN_THROTTLE:
-                    if (threaded_application.currentActivity == activity_id_type.WEB)
-                        reopenThrottlePage();
-                    break;
-
-                case message_type.WIT_CON_RETRY:
-                    witRetry(msg.obj.toString());
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
 
                 case message_type.INITIAL_WEB_WEBPAGE:
@@ -274,8 +255,45 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                     urlRestore(true);
                     break;
 
-                case message_type.TIME_CHANGED:
+                case message_type.RECEIVED_WEB_PORT:
+                    urlRestore(true);
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
+
+                case message_type.RECEIVED_TIME_CHANGE:
                     setActivityTitle();
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.WIT_CON_RETRY:
+                    if ((bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.MESSAGE))) {
+
+                        witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
+                    }
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.WEB)
+                        reopenThrottlePage();
+                    break;
+
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
+                case message_type.LOW_MEMORY:
+                case message_type.WIT_CON_RECONNECT:
+                    // ignore
+                    break;
+
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
 
                 case message_type.RESTART_APP:
@@ -283,17 +301,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 case message_type.SHUTDOWN:
                     shutdown();
                     break;
-
-                case message_type.DISCONNECT:
-                    disconnect();
-                    break;
-
-                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
-                case message_type.LOW_MEMORY:
-                case message_type.WIT_CON_RECONNECT:
-                default:
-                    break;
-
             }
         }
     }
@@ -338,7 +345,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             return;
         }
 
-        setContentView(R.layout.web_activity);
+        setContentView(R.layout.web_page);
 
         webView = findViewById(R.id.webActivityWebView);
         String databasePath = webView.getContext().getDir("databases", Context.MODE_PRIVATE).getPath();
@@ -438,9 +445,6 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 //        web_activity.close_button_listener close_click_listener = new web_activity.close_button_listener();
 //        closeButton.setOnClickListener(close_click_listener);
 
-        //put pointer to this activity's handler in main app's shared variable
-//        mainapp.web_msg_handler = new web_handler();
-
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -495,7 +499,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
             return;
         }
 
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TIME_CHANGED);    // request time update
+        mainapp.sendMsg(mainapp.commBundleMessageHandler, message_type.REQUEST_TIME);    // request time update
 
         resumeWebView();
         CookieManager cookieManager = CookieManager.getInstance();
@@ -536,9 +540,14 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
     public void onStart() {
         super.onStart();
         Log.d(threaded_application.applicationName, activityName + ": onStart()");
+
+        if (gestureHandler == null)
+            gestureHandler = new GestureHandler(Looper.getMainLooper());
+
         // put pointer to this activity's handler in main app's shared variable
-        if (mainapp.web_msg_handler == null)
-            mainapp.web_msg_handler = new web_handler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.WEB] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.WEB] = new BundleMessageHandler(Looper.getMainLooper());
+
     }
 
     @Override
@@ -564,12 +573,15 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                 webGroup.removeView(webView);
             }
         }
-        if (mainapp.web_msg_handler !=null) {
-            mainapp.web_msg_handler.removeCallbacksAndMessages(null);
-            mainapp.web_msg_handler = null;
+
+        if (gestureHandler !=null) {
+            gestureHandler.removeCallbacksAndMessages(null);
+            gestureHandler = null;
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.web_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
         }
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.WEB);
     }
 
     protected void onSaveInstanceState(Bundle outState) {
@@ -680,7 +692,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         } else if (item.getItemId() == R.id.settings_mnu) {
             threaded_application.activityInTransition(activityName);
-            in = new Intent().setClass(this, SettingsActivity.class);
+            in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -697,7 +709,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         } else if (item.getItemId() == R.id.about_mnu) {
             threaded_application.activityInTransition(activityName);
-            navigateAway(false, about_page.class);
+            navigateAway(false, AboutActivity.class);
             return true;
 
         } else if (item.getItemId() == R.id.flashlight_button) {

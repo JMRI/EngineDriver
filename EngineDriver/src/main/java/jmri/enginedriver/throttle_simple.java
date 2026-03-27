@@ -322,6 +322,7 @@ public class throttle_simple extends throttle {
             if ( (prefSimpleThrottleLayoutShowFunctionButtonCount > 0) && (lLowersHeight > 0) )  {
                 llSetSpeeds[throttleIndex].getLayoutParams().height
                         = lLowersHeight - (int) (prefSimpleThrottleLayoutShowFunctionButtonCount * functionButtonViewGroupHeight + 20 * denScale);
+
                 svFunctionButtons[throttleIndex].getLayoutParams().height = (int) (prefSimpleThrottleLayoutShowFunctionButtonCount * functionButtonViewGroupHeight + 20 * denScale);
             }
         }

@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import jmri.enginedriver.PreferencesActivity;
 import jmri.enginedriver.R;
-import jmri.enginedriver.SettingsActivity;
 
 public class AutoServerConnectDialogFragmentCompat extends PreferenceDialogFragmentCompat {
 
@@ -69,8 +69,8 @@ public class AutoServerConnectDialogFragmentCompat extends PreferenceDialogFragm
      * @return The address of the currently connected server.
      */
     private String getConnectedHostname() {
-        if (getTargetFragment() instanceof SettingsActivity.SettingsFragment) {
-            SettingsActivity.SettingsFragment settingsFragment = (SettingsActivity.SettingsFragment) getTargetFragment();
+        if (getTargetFragment() instanceof PreferencesActivity.SettingsFragment) {
+            PreferencesActivity.SettingsFragment settingsFragment = (PreferencesActivity.SettingsFragment) getTargetFragment();
 //            if (settingsFragment != null) {
                 return settingsFragment.getConnectedHostname();
 //            }
@@ -80,8 +80,8 @@ public class AutoServerConnectDialogFragmentCompat extends PreferenceDialogFragm
     }
 
     private int getSelectedTheme() {
-        if (getTargetFragment() instanceof SettingsActivity.SettingsFragment) {
-            SettingsActivity.SettingsFragment settingsFragment = (SettingsActivity.SettingsFragment) getTargetFragment();
+        if (getTargetFragment() instanceof PreferencesActivity.SettingsFragment) {
+            PreferencesActivity.SettingsFragment settingsFragment = (PreferencesActivity.SettingsFragment) getTargetFragment();
             return settingsFragment.mainapp.getSelectedTheme(true);
         }
         return 0;

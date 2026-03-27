@@ -59,6 +59,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.activity_outcome_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.SwipeDetector;
@@ -158,60 +159,59 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         result = activity_outcome_type.RESULT_CON_EDIT;
     }
 
+    private class BundleMessageHandler extends Handler {
 
-    //Handle messages from the communication thread back to this thread (responses from withrottle)
-    @SuppressLint("HandlerLeak")
-    class ConsistEditHandler extends Handler {
-
-        public ConsistEditHandler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+            Bundle bundle = msg.getData();
+
             switch (msg.what) {
-                case message_type.RESPONSE:                       // see if loco added to or removed from any throttle
-                    String response_str = msg.obj.toString();
-                    if (response_str.length() >= 3) {
-                        char com1 = response_str.charAt(0);
-                        char com2 = response_str.charAt(2);
-                        if (com1 == 'M' && (com2 == '+' || com2 == '-'))
-                            refreshConsistLists();
-
-                        String comA = response_str.substring(0, 3);
-                        //update power icon
-                        if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
-                    }
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                     break;
 
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
+
+                case message_type.RECEIVED_THROTTLE_LOCO_ADDED:
+                case message_type.RECEIVED_THROTTLE_LOCO_REMOVED:
+                    refreshConsistLists();
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
                     break;
 
-                case message_type.REOPEN_THROTTLE:
-                    if (threaded_application.currentActivity == activity_id_type.CONSIST_EDIT)
-                        reopenThrottlePage();
-                    break;
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.WIT_CON_RETRY:
-                    witRetry(msg.obj.toString());
+                    if ( (bundle != null)
+                        && (bundle.containsKey(alert_bundle_tag_type.MESSAGE)) ) {
+
+                        witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
+                    }
                     break;
+
                 case message_type.WIT_CON_RECONNECT:
                     refreshConsistLists();
                     break;
-                case message_type.RESTART_APP:
-                case message_type.RELAUNCH_APP:
-                case message_type.SHUTDOWN:
-                    shutdown();
-                    break;
-                case message_type.DISCONNECT:
-                    disconnect();
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.CONSIST_EDIT)
+                        reopenThrottlePage();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
@@ -219,9 +219,15 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     endThisActivity();
                     break;
 
-                default:
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
 
+                case message_type.RESTART_APP:
+                case message_type.RELAUNCH_APP:
+                case message_type.SHUTDOWN:
+                    shutdown();
+                    break;
             }
         }
     }
@@ -250,10 +256,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.consist);
+        setContentView(R.layout.consist_page);
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.consist_edit_msg_handler = new ConsistEditHandler(Looper.getMainLooper());
-//        myGesture = new GestureDetector(this);
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.CONSIST_EDIT] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.CONSIST_EDIT] = new BundleMessageHandler(Looper.getMainLooper());
 
         CONSIST_EDIT_LABEL_LEAD = getResources().getString(R.string.ConsistEditLabelLead);
         CONSIST_EDIT_LABEL_TRAIL = getResources().getString(R.string.ConsistEditLabelTrail);
@@ -425,12 +431,8 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
             int whichEntryIsBeingUpdated = importExportPreferences.addCurrentConsistToBeginningOfList(consist);
             importExportPreferences.writeRecentConsistsListToFile(getApplicationContext(), prefs, whichEntryIsBeingUpdated);
         }
-        if (mainapp.consist_edit_msg_handler != null) {
-            mainapp.consist_edit_msg_handler.removeCallbacksAndMessages(null);
-            mainapp.consist_edit_msg_handler = null;
-        } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.consist_edit_msg_handler is null. Unable to removeCallbacksAndMessages");
-        }
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.CONSIST_EDIT);
     }
 
     @Override
@@ -538,7 +540,13 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
                     if (!consist.getLeadAddr().equals(address)) {
                         consist.remove(address);
-                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, address, whichThrottle);   //release the loco
+//                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, address, whichThrottle);   //release the loco
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+                        bundle.putString(alert_bundle_tag_type.LOCO_TEXT,address);
+                        mainapp.alertCommHandlerWithBundle(message_type.RELEASE, bundle);
+
                         refreshConsistLists();
                     }
                 }

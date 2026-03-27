@@ -811,7 +811,7 @@
     <string name="RecentsNameEditText">Geben Sie einen Namen für die Loco</string>
     <string name="toastDccexInvalidRosterId">Ungültige Roster-ID \'%1$s\'. Gesamte Dienstplan, Weichen und Routenlisten werden wahrscheinlich nicht geladen.</string>
     <string name="RecentsNameEditTitle">Aktuelle Lokname</string>
-    <string name="rosterDetailsDialogTitle">Wählen Sie aus Roster / Consist Einträge </string>
+    <string name="rosterDetailsDialogTitle">Wählen Sie aus Roster Einträge</string>
     <string name="toastRecentCleared">Loco entfernt von der Liste</string>
     <string name="toastRecentConsistCleared">Consist aus der Liste entfernt</string>
     <string name="editConsistButtonLabel">Bearbeiten Reihenfolge und Richtung</string>

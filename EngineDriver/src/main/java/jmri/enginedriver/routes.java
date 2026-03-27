@@ -71,17 +71,18 @@ import java.util.Objects;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
+import jmri.enginedriver.util.DccexAutomation;
 import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
-import jmri.enginedriver.util.dccexAutomation;
 
 public class routes extends AppCompatActivity
-        implements android.gesture.GestureOverlayView.OnGestureListener, dccexAutomation.OnConfirmListener {
+        implements android.gesture.GestureOverlayView.OnGestureListener, DccexAutomation.OnConfirmListener {
     static final String activityName = "routes";
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -97,6 +98,7 @@ public class routes extends AppCompatActivity
     private Spinner locationSpinner;
 
     //    private GestureDetector myGesture;
+    volatile Handler gestureHandler;
     private Menu overflowMenu;
 
     private LinearLayout screenNameLine;
@@ -296,71 +298,62 @@ public class routes extends AppCompatActivity
         return txtLen;
     }
 
-    //Handle messages from the communication thread back to this thread (responses from withrottle)
-    @SuppressLint("HandlerLeak")
-    class routes_handler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public routes_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
-            threaded_application.extendedLogging(activityName + ": routes_handler: handleMessage("+msg.obj.toString()+")");
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+            Bundle bundle = msg.getData();
 
             switch (msg.what) {
-                case message_type.WIT_CON_RECONNECT:
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
+                    break;
+
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
                 case message_type.ROUTE_LIST_CHANGED:
                     refresh_route_view();
                     break;
 
-                case message_type.RESPONSE: {
-                    String response_str = msg.obj.toString();
-
-                    if (response_str.length() >= 3) {
-                        String com1 = response_str.substring(0, 3);
-//                        //refresh routes if any have changed sta
-//                        if ("PRL".equals(com1)) { //handle new route list
-//                            refresh_route_view();
-//                        } else if ("PRA".equals(com1)) { //handle change to individual route entry
-//                            refresh_route_view();
-//                        }
-                        //update power icon
-                        if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
-                    }
-                }
-                break;
-
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
-                    break;
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
                     break;
 
-                case message_type.WIT_CON_RETRY:
-                    witRetry(msg.obj.toString());
-                    break;
-
-                case message_type.TIME_CHANGED:
+                case message_type.RECEIVED_TIME_CHANGE:
                     setActivityTitle();
                     break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.WIT_CON_RETRY:
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.MESSAGE)) ) {
+
+                        witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
+                    }
+                    break;
+
+                case message_type.WIT_CON_RECONNECT:
+                    refresh_route_view();
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REOPEN_THROTTLE:
                     if (threaded_application.currentActivity == activity_id_type.ROUTES)
                         reopenThrottlePage();
-                    break;
-
-                case message_type.RESTART_APP:
-                case message_type.RELAUNCH_APP:
-                case message_type.SHUTDOWN:
-                    shutdown();
-                    break;
-                case message_type.DISCONNECT:
-                    disconnect();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
@@ -368,9 +361,15 @@ public class routes extends AppCompatActivity
                     endThisActivity();
                     break;
 
-                default:
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
 
+                case message_type.RESTART_APP:
+                case message_type.RELAUNCH_APP:
+                case message_type.SHUTDOWN:
+                    shutdown();
+                    break;
             }
         }
     }
@@ -395,8 +394,13 @@ public class routes extends AppCompatActivity
             EditText entryView = findViewById(R.id.route_entry);
             String entryText = entryView.getText().toString().trim();
             if (!entryText.isEmpty()) {
-                if (!mainapp.isDCCEX) {
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, whichCommand + entryText);
+                if (mainapp.isWiThrottleProtocol()) {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(alert_bundle_tag_type.ROUTE, entryText);
+                    bundle.putChar(alert_bundle_tag_type.ROUTE_ACTION, whichCommand);
+                    mainapp.alertCommHandlerWithBundle(message_type.ROUTE, bundle);
+
                 } else {
                     getLocoForDccExAutomationHandoff(entryText);
                 }
@@ -417,7 +421,12 @@ public class routes extends AppCompatActivity
             }
         }
         if (!routeType.equals("A")) { // route
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, "2" + routeOrAutomationId);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.ROUTE, routeOrAutomationId);
+            bundle.putChar(alert_bundle_tag_type.ROUTE_ACTION, '2');
+            mainapp.alertCommHandlerWithBundle(message_type.ROUTE, bundle);
+
         } else { // automation
             automationLoco = whichLoco.isEmpty() ? "" : whichLoco.substring(1);
 
@@ -426,7 +435,12 @@ public class routes extends AppCompatActivity
                 showDccexAutomationDialog(routeOrAutomationId, automationLoco);
             } else {
                 int automationLocoNo = Integer.parseInt(automationLoco);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, "2" + routeOrAutomationId, automationLocoNo);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(alert_bundle_tag_type.ROUTE, routeOrAutomationId);
+                bundle.putInt(alert_bundle_tag_type.LOCO, automationLocoNo);
+                bundle.putChar(alert_bundle_tag_type.ROUTE_ACTION, '2');
+                mainapp.alertCommHandlerWithBundle(message_type.START_AUTOMATION, bundle);
             }
         }
     }
@@ -438,7 +452,7 @@ public class routes extends AppCompatActivity
         } catch (Exception ignored) {
         }
 
-        dccexAutomation dccexAutomationDialogFragment = dccexAutomation.newInstance(initialAddress, routeOrAutomationId, mainapp.getSelectedTheme(false));
+        DccexAutomation dccexAutomationDialogFragment = DccexAutomation.newInstance(initialAddress, routeOrAutomationId, mainapp.getSelectedTheme(false));
         dccexAutomationDialogFragment.setOnConfirmListener(this); // Set the listener
         dccexAutomationDialogFragment.show(getSupportFragmentManager(), "dccexAutomationDialogFragment");
     }
@@ -448,8 +462,13 @@ public class routes extends AppCompatActivity
     public void onConfirm(String inputText, String routeOrAutomationId) {
         threaded_application.extendedLogging(activityName + ": DCC_EX_AUTOMATION onConfirm(): Input Text: " + inputText);
         int automationLocoNo = Integer.parseInt(inputText);
-        if (automationLocoNo != 0)
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.START_AUTOMATION, '2' + routeOrAutomationId, automationLocoNo);
+        if (automationLocoNo != 0) {
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.ROUTE, routeOrAutomationId);
+            bundle.putInt(alert_bundle_tag_type.LOCO, automationLocoNo);
+            bundle.putChar(alert_bundle_tag_type.ROUTE_ACTION, '2');
+            mainapp.alertCommHandlerWithBundle(message_type.START_AUTOMATION, bundle);
+        }
     }
 
     public class SortButtonListener implements View.OnClickListener {
@@ -482,8 +501,12 @@ public class routes extends AppCompatActivity
             ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemName and userName
             TextView snv = (TextView) rl.getChildAt(1); // get systemName text from 2nd box
             String systemName = snv.getText().toString();
-            if (!mainapp.isDCCEX) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.ROUTE, "2" + systemName); // 2=toggle
+            if (mainapp.isWiThrottleProtocol()) {
+                Bundle bundle = new Bundle();
+                bundle.putString(alert_bundle_tag_type.ROUTE, systemName);
+                bundle.putChar(alert_bundle_tag_type.ROUTE_ACTION, '2');
+                mainapp.alertCommHandlerWithBundle(message_type.ROUTE, bundle);
+
             } else {
                 getLocoForDccExAutomationHandoff(systemName);
             }
@@ -523,9 +546,14 @@ public class routes extends AppCompatActivity
             }
         }
 
-        setContentView(R.layout.routes);
+        setContentView(R.layout.routes_page);
+
+        if (gestureHandler == null)
+            gestureHandler = new GestureHandler(Looper.getMainLooper());
+
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.routes_msg_handler = new routes_handler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.ROUTES] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.ROUTES] = new BundleMessageHandler(Looper.getMainLooper());
 
         getDefaultSortOrderRoutes();
 
@@ -550,7 +578,7 @@ public class routes extends AppCompatActivity
         routes_lv = findViewById(R.id.routes_list);
         routes_lv.setAdapter(routes_list_adapter);
 
-        if (mainapp.isDCCEX) {
+        if (mainapp.isDccexProtocol()) {
             // need to setup a listener so that we can update the buttons states AFTER the list has been fully updated
             ViewTreeObserver viewTreeObserver = routes_lv.getViewTreeObserver();
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -732,13 +760,15 @@ public class routes extends AppCompatActivity
 
         super.onDestroy();
 
-        if (mainapp.routes_msg_handler != null) {
-            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
-            mainapp.routes_msg_handler.removeCallbacksAndMessages(null);
-            mainapp.routes_msg_handler = null;
+        if (gestureHandler != null) {
+            gestureHandler.removeCallbacks(gestureStopped);
+            gestureHandler.removeCallbacksAndMessages(null);
+            gestureHandler = null;
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.routes_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
         }
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.ROUTES);
     }
 
     @Override
@@ -836,14 +866,14 @@ public class routes extends AppCompatActivity
 
         } else if (item.getItemId() == R.id.settings_mnu) {
             threaded_application.activityInTransition(activityName);
-            in = new Intent().setClass(this, SettingsActivity.class);
+            in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
             threaded_application.activityInTransition(activityName);
-            in = new Intent().setClass(this, dcc_ex.class);
+            in = new Intent().setClass(this, DccexActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -864,7 +894,9 @@ public class routes extends AppCompatActivity
             b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     threaded_application.activityInTransition(activityName);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
+
+                    mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
+
                     final Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -899,7 +931,7 @@ public class routes extends AppCompatActivity
 
         } else if (item.getItemId() == R.id.about_mnu) {
             threaded_application.activityInTransition(activityName);
-            in = new Intent().setClass(this, about_page.class);
+            in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -961,6 +993,13 @@ public class routes extends AppCompatActivity
                     "");
     }
 
+    static class GestureHandler extends Handler {
+
+        public GestureHandler(Looper looper) {
+            super(looper);
+        }
+    }
+
     @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {
         gestureMove(event);
@@ -999,15 +1038,15 @@ public class routes extends AppCompatActivity
         mVelocityTracker.clear();
 
         // start the gesture timeout timer
-        if (mainapp.routes_msg_handler != null)
-            mainapp.routes_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+        if (gestureHandler != null)
+            gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
     }
 
     public void gestureMove(MotionEvent event) {
         threaded_application.extendedLogging(activityName + ": gestureMove() action " + event.getAction());
-        if (mainapp!=null && mainapp.routes_msg_handler!=null && gestureInProgress) {
+        if (mainapp!=null && gestureHandler!=null && gestureInProgress) {
             // stop the gesture timeout timer
-            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
+            gestureHandler.removeCallbacks(gestureStopped);
 
             mVelocityTracker.addMovement(event);
             if ((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) {
@@ -1024,15 +1063,15 @@ public class routes extends AppCompatActivity
             }
             if (gestureInProgress) {
                 // restart the gesture timeout timer
-                mainapp.routes_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+                gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
             }
         }
     }
 
     private void gestureEnd(MotionEvent event) {
         threaded_application.extendedLogging(activityName + ": gestureEnd() action " + event.getAction() + " inProgress? " + gestureInProgress);
-        if ( (mainapp!=null) && (mainapp.routes_msg_handler != null) && (gestureInProgress) ) {
-            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
+        if ( (mainapp!=null) && (gestureHandler != null) && (gestureInProgress) ) {
+            gestureHandler.removeCallbacks(gestureStopped);
 
             float deltaX = (event.getX() - gestureStartX);
             float absDeltaX =  Math.abs(deltaX);
@@ -1050,8 +1089,8 @@ public class routes extends AppCompatActivity
     }
 
     private void gestureCancel(MotionEvent event) {
-        if (mainapp.routes_msg_handler != null)
-            mainapp.routes_msg_handler.removeCallbacks(gestureStopped);
+        if (gestureHandler != null)
+            gestureHandler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
     }
 

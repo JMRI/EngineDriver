@@ -207,6 +207,8 @@
         <item>Escuro</item>
         <item>Das cores</item>
         <item>Azul néon</item>
+        <item>Verde Neon</item>
+        <item>Papel</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Nada (Usar somente \'v\',\'1\')</item>

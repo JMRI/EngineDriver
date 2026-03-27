@@ -18,25 +18,29 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver.type;
 
 public interface activity_id_type {
-    int NONE = 0;
-    int THROTTLE = 1;
-    int ROUTES = 2;
-    int TURNOUTS = 3;
-    int ABOUT = 4;
-    int CONNECTION = 5;
-    int CONSIST_EDIT = 6;
-    int CONSIST_LIGHTS_EDIT = 7;
-    int DCC_EX = 8;
-    int DEVICE_SOUNDS_SETTINGS = 9;
-    int FUNCTION_CONSIST_SETTINGS = 10;
-    int FUNCTION_SETTINGS = 11;
-    int GAMEPAD_TEST = 12;
-    int POWER_CONTROL = 13;
-    int RECONNECT_STATUS = 14;
-    int SELECT_LOCO = 15;
-    int SETTINGS = 16;
-    int WEB = 17;
-    int WITHROTTLE_CV_PROGRAMMER = 18;
-    int INTRO = 19;
-    int LOG_VIEWER = 20;
+    int THROTTLE =                   0;
+    int ROUTES =                     1;
+    int TURNOUTS =                   2;
+    int ABOUT =                      3;
+    int CONNECTION =                 4;
+    int CONSIST_EDIT =               5;
+    int CONSIST_LIGHTS_EDIT =        6;
+    int DCC_EX =                     7;
+    int DEVICE_SOUNDS_SETTINGS =     8;
+    int FUNCTION_CONSIST_SETTINGS =  9;
+    int FUNCTION_SETTINGS =         10;
+    int GAMEPAD_TEST =              11;
+    int POWER_CONTROL =             12;
+    int RECONNECT_STATUS =          13;
+    int SELECT_LOCO =               14;
+    int SETTINGS =                  15;
+    int WEB =                       16;
+    int WITHROTTLE_CV_PROGRAMMER =  17;
+    int INTRO =                     18;
+    int LOG_VIEWER =                19;
+    int ADVANCED_CONSIST_TOOL =     20;
+
+    // these allow for additional handlers that are not included broadcasts to all activities
+    int MIN =                        0;
+    int MAX =                       20;
 }

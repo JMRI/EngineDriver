@@ -47,6 +47,7 @@ import java.util.Objects;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
@@ -57,48 +58,65 @@ public class reconnect_status extends AppCompatActivity {
     private threaded_application mainapp;  // hold pointer to mainapp
     private String prog = "";
     private boolean backOk = true;
-    private boolean retryFirst = false;
+//    private boolean retryFirst = false;
 
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
     private LinearLayout statusLine;
 
-    //Handle messages from the communication thread back to this thread (responses from withrottle)
-    @SuppressLint("HandlerLeak")
-    class reconnect_status_handler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public reconnect_status_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+            Bundle bundle = msg.getData();
+
             switch (msg.what) {
-                case message_type.RESPONSE:
-                    if (!retryFirst) {              // Got a message from WiThrottle server so the socket must already be ok.  This means the
-                        reconnected();              // RETRY/RECONNECT sequence was over before this Screen came up, so just resume normal ops.
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.WIT_CON_RETRY: {
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ) {
+
+//                    retryFirst = true;
+                        String command = (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ? bundle.getString(alert_bundle_tag_type.COMMAND) : "";
+                        refresh_reconnect_status(command);
                     }
                     break;
+                }
+
+                case message_type.WIT_CON_RECONNECT: {
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ) {
+
+                        String command = (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ? bundle.getString(alert_bundle_tag_type.COMMAND) : "";
+                        refresh_reconnect_status(command);
+                        reconnected();
+                    }
+                    break;
+                }
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REOPEN_THROTTLE:
                     // ignore
                     break;
 
-                case message_type.WIT_CON_RETRY:
-                    retryFirst = true;
-                    refresh_reconnect_status(msg.obj.toString());
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
-                case message_type.WIT_CON_RECONNECT:
-                    refresh_reconnect_status(msg.obj.toString());
-                    reconnected();
-                    break;
+
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
                 case message_type.SHUTDOWN:
                     shutdown();
                     break;
-                case message_type.DISCONNECT:
-                    disconnect();
-                    break;
+
             }
         }
     }
@@ -119,9 +137,9 @@ public class reconnect_status extends AppCompatActivity {
             backOk = false;
             TextView tv = findViewById(R.id.reconnect_help);
             tv.setText(getString(R.string.reconnect_success));
-            if (mainapp.reconnect_status_msg_handler != null) {
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SEND_HEARTBEAT_START);
-                mainapp.reconnect_status_msg_handler.postDelayed(delayCloseScreen, 500L);
+            if (mainapp.activityBundleMessageHandlers[activity_id_type.RECONNECT_STATUS] != null) {
+                mainapp.alertCommHandlerWithBundle(message_type.SEND_HEARTBEAT_START);
+                mainapp.activityBundleMessageHandlers[activity_id_type.RECONNECT_STATUS].postDelayed(delayCloseScreen, 500L);
             } else {
                 Log.d(threaded_application.applicationName, activityName + ": reconnected(): handler already null");
                 endThisActivity();
@@ -161,7 +179,8 @@ public class reconnect_status extends AppCompatActivity {
         setContentView(R.layout.reconnect_page);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
-        mainapp.reconnect_status_msg_handler = new reconnect_status_handler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.RECONNECT_STATUS] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.RECONNECT_STATUS] = new BundleMessageHandler(Looper.getMainLooper());
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -170,7 +189,7 @@ public class reconnect_status extends AppCompatActivity {
                 refresh_reconnect_status(msg);
             }
         }
-        retryFirst = false;
+//        retryFirst = false;
 
         if (mainapp.prefFeedbackOnDisconnect) {
             MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
@@ -248,12 +267,7 @@ public class reconnect_status extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
 
-        if (mainapp.reconnect_status_msg_handler !=null) {
-            mainapp.reconnect_status_msg_handler.removeCallbacksAndMessages(null);
-            mainapp.reconnect_status_msg_handler = null;
-        } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.reconnect_status_msg_handler is null. Unable to removeCallbacksAndMessages");
-        }
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.RECONNECT_STATUS);
     }
 
     private void disconnect() {
@@ -332,7 +346,7 @@ public class reconnect_status extends AppCompatActivity {
             b.setCancelable(true);
             b.setPositiveButton(R.string.yes, (dialog, id) -> {
                 threaded_application.activityInTransition(activityName);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
+                mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(() -> {
                     Intent in = new Intent().setClass(thisActivity, connection_activity.class);

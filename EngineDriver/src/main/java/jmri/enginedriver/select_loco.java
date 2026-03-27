@@ -27,7 +27,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import android.app.Dialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -102,6 +102,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.Loco;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.light_follow_type;
 import jmri.enginedriver.type.select_loco_method_type;
 import jmri.enginedriver.type.sort_type;
@@ -170,10 +171,13 @@ public class select_loco extends AppCompatActivity {
     private Menu overflowMenu;
     private Toolbar toolbar;
 
-    protected final int layoutViewId = R.layout.select_loco;
+    protected final int layoutViewId = R.layout.select_loco_page;
 
     private String prefRosterFilter = "";
     EditText filterRosterText;
+
+    ImageButton dropBeforeAcquireButton1;
+    boolean prefDropOnAcquire = false;
 
     TextView dccAddressHelpText;
     RelativeLayout rosterToolbarGroupLayout;
@@ -472,7 +476,7 @@ public class select_loco extends AppCompatActivity {
     // lookup and set values of various informational text labels and size the
     // screen elements
     protected void setLabels() {
-        Log.d(threaded_application.applicationName, activityName + ": setLabels()");
+//        threaded_application.extendedLogging(activityName + ": setLabels()");
 
         refreshRosterList();
 //        showMethod(prefSelectLocoMethod);
@@ -489,7 +493,7 @@ public class select_loco extends AppCompatActivity {
         currentLocosLayout[1] = findViewById(R.id.current_locos_layout1);
 
         boolean prefShowDispatchButton = prefs.getBoolean("prefShowDispatchButton", false);
-        if (mainapp.isDCCEX) prefShowDispatchButton = false; // not relevant to DCC-EX
+        if (mainapp.isDccexProtocol()) prefShowDispatchButton = false; // not relevant to DCC-EX
 
         ImageButton dispatchButton1 = findViewById(R.id.dispatch_button1);
         dispatchButton1.setOnClickListener(new DispatchButtonListener(whichThrottle));
@@ -501,6 +505,8 @@ public class select_loco extends AppCompatActivity {
         releaseButton0.setVisibility(GONE);
         ImageButton releaseButton1 = findViewById(R.id.release_button1);
         releaseButton1.setVisibility(GONE);
+
+        dropBeforeAcquireButton1 = findViewById(R.id.drop_before_acquire_button1);
 
         LinearLayout [] consistOptionsLayout = new LinearLayout[2];
         consistOptionsLayout[0] = findViewById(R.id.current_locos_options_layout0);
@@ -604,84 +610,67 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
-    // Handle messages from the communication thread back to this thread
-    // (responses from withrottle)
-    @SuppressLint("HandlerLeak")
-    class SelectLocoHandler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public SelectLocoHandler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): " + msg);
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+            Bundle bundle = msg.getData();
 
             switch (msg.what) {
-                case message_type.RESPONSE:
-                    String response_str = msg.obj.toString();
-                    Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): RESPONSE - message <--:" + response_str);
-                    if (response_str.length() >= 3) {
-                        String comA = response_str.substring(0, 3);
-                        //update power icon
-                        if ("PPA".equals(comA)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
-                    }
-                    if (!response_str.isEmpty()) {
-                        char com1 = response_str.charAt(0);
-                        if (com1 == 'R') {                                  //refresh labels when any roster response is received
-                            rosterListAdapter.notifyDataSetChanged();
-                            setLabels();
-                            break;
-                        } else if (com1 == 'M' && response_str.length() >= 3) { // refresh Release buttons if loco is added or removed from a consist
-                            char com2 = response_str.charAt(2);
-                            if (com2 == '+' || com2 == '-')
-                                setLabels();
-                            break;
-                        } else { // ignore everything else
-                            Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): RESPONSE - ignoring message: " + response_str);
-                            break;
-                        }
-                    }
-                    if (!selectLocoRendered)         // call setLabels() if the select loco textViews had not rendered the last time it was called
-                        setLabels();
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                     break;
 
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
                     break;
+
+                case message_type.RECEIVED_THROTTLE_LOCO_ADDED:
+                case message_type.RECEIVED_THROTTLE_LOCO_REMOVED:
+                    setLabels();
+                    break;
+
+                case message_type.RECEIVED_ROSTER_UPDATE:
+                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): RECEIVED_ROSTER_UPDATE");
+                    rosterListAdapter.notifyDataSetChanged();
+                    setLabels();
+                    showMethod(prefSelectLocoMethod);
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
                     break;
 
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
                 case message_type.WIT_CON_RETRY:
-                    Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): WIT_CON_RETRY");
-                    witRetry(msg.obj.toString());
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.MESSAGE)) ) {
+
+                        witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
+                    }
                     break;
 
-                case message_type.ROSTER_UPDATE:
-                    Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): ROSTER_UPDATE");
-                    setLabels();
-                    showMethod(prefSelectLocoMethod);
-                    break;
-
-                case message_type.REOPEN_THROTTLE:
-                    if (threaded_application.currentActivity == activity_id_type.SELECT_LOCO)
-                        reopenThrottlePage();
-                    break;
                 case message_type.WIT_CON_RECONNECT:
-                    Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): WIT_CON_RECONNECT");
                     rosterListAdapter.notifyDataSetChanged();
                     setLabels();
                     break;
 
-                case message_type.RESTART_APP:
-                case message_type.RELAUNCH_APP:
-                case message_type.DISCONNECT:
-                    Log.d(threaded_application.applicationName, activityName + ": SelectLocoHandler(): DISCONNECT");
-                    endThisActivity();
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.SELECT_LOCO)
+                        reopenThrottlePage();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
@@ -689,9 +678,11 @@ public class select_loco extends AppCompatActivity {
                     endThisActivity();
                     break;
 
-                default:
+                case message_type.RESTART_APP:
+                case message_type.RELAUNCH_APP:
+                case message_type.DISCONNECT:
+                    endThisActivity();
                     break;
-
             }
         }
     }
@@ -709,7 +700,12 @@ public class select_loco extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": releaseLoco()");
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);
         mainapp.consists[whichThrottle].release();
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.RELEASE, "", whichThrottle); // pass 0, 1 or 2 in message
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+        bundle.putString(alert_bundle_tag_type.LOCO_TEXT,"");
+        mainapp.alertCommHandlerWithBundle(message_type.RELEASE, bundle);
+
         importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
     }
 
@@ -718,7 +714,12 @@ public class select_loco extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": dispatchLoco()");
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);  //not relevant to DCC-EX
         mainapp.consists[whichThrottle].release();
-        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISPATCH, "", whichThrottle); // pass 0, 1 or 2 in message
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+        bundle.putString(alert_bundle_tag_type.LOCO_TEXT,"");
+        mainapp.alertCommHandlerWithBundle(message_type.DISPATCH, bundle);
+
         importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
     }
 
@@ -758,14 +759,16 @@ public class select_loco extends AppCompatActivity {
                 if (consist.getLoco(sAddr) != null) {
                     overrideThrottleName = "";
                     mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected, sAddr), Toast.LENGTH_SHORT);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);  // send the acquire message anyway
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(alert_bundle_tag_type.LOCO_TEXT, sAddr);
+                    if ( ( roster_name!=null) && (!roster_name.isEmpty()) )
+                        bundle.putString(alert_bundle_tag_type.ROSTER_NAME, roster_name);
+                    bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+                    mainapp.alertCommHandlerWithBundle(message_type.REQUEST_LOCO_BY_ADDRESS, bundle);
                     return false;
                 }
             }
-        }
-
-        if (!roster_name.isEmpty()) {// add roster selection info if present
-            sAddr += "<;>" + roster_name;
         }
 
         // user preference set to not consist, or consisting not supported in this JMRI, so drop before adding
@@ -787,7 +790,14 @@ public class select_loco extends AppCompatActivity {
             consist.setWhichSource(importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, true), locoSource);
             consist.setLeadAddr(l.getAddress());
             consist.setTrailAddr(l.getAddress());
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.LOCO_TEXT, sAddr);
+            if ( ( roster_name!=null) && (!roster_name.isEmpty()) )
+                bundle.putString(alert_bundle_tag_type.ROSTER_NAME, roster_name);
+            bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+            mainapp.alertCommHandlerWithBundle(message_type.REQUEST_LOCO_BY_ADDRESS, bundle);
+
             result = RESULT_OK;
             endThisActivity();
 
@@ -797,7 +807,13 @@ public class select_loco extends AppCompatActivity {
             if (newEngine || !conLoco.isConfirmed()) {        // if engine is not already in the consist, or if it is but never got acquired
                 consist.add(l);
                 consist.setWhichSource(importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, true), locoSource);
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, sAddr, whichThrottle);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(alert_bundle_tag_type.LOCO_TEXT, sAddr);
+                if ( ( roster_name!=null) && (!roster_name.isEmpty()) )
+                    bundle.putString(alert_bundle_tag_type.ROSTER_NAME, roster_name);
+                bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+                mainapp.alertCommHandlerWithBundle(message_type.REQUEST_LOCO_BY_ADDRESS, bundle);
 
                 saveUpdateList = bUpdateList;
                 consist.setTrailAddr(l.getAddress());  // set the newly added loco as the trailing loco
@@ -808,7 +824,7 @@ public class select_loco extends AppCompatActivity {
         }
 
         // see if we can get the functions for the recent locos list
-        if ( (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_LOCOS)) && (!mainapp.isDCCEX) ) {
+        if ( (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_LOCOS)) && (mainapp.isWiThrottleProtocol()) ) {
             int position = mainapp.findLocoInRecents(locoAddress ,locoAddressSize ,locoName);
             if (position>0) {
                 if (mainapp.prefAlwaysUseFunctionsFromServer) { // unless overridden by the preference
@@ -1298,7 +1314,12 @@ public class select_loco extends AppCompatActivity {
             Log.d(threaded_application.applicationName, activityName + ": IdngoButtonListener(): onClick()");
             Consist consist = mainapp.consists[whichThrottle];
             consist.setWaitingOnID(true);
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.REQ_LOCO_ADDR, "*", whichThrottle);
+
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.LOCO_TEXT, "*");
+            bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+            mainapp.alertCommHandlerWithBundle(message_type.REQUEST_LOCO_BY_ADDRESS, bundle);
+
             result = RESULT_OK;
             mainapp.hideSoftKeyboard(v, activityName);
             endThisActivity();
@@ -1322,6 +1343,21 @@ public class select_loco extends AppCompatActivity {
             mainapp.hideSoftKeyboard(v, activityName);
             endThisActivity();
             mainapp.buttonVibration();
+        }
+    }
+
+    public class DropBeforeAcquireButtonListener implements View.OnClickListener {
+
+        @SuppressLint("ApplySharedPref")
+        public void onClick(View v) {
+            Log.d(threaded_application.applicationName, activityName + ": DropBeforeButtonListener(): onClick()");
+            mainapp.buttonVibration();
+
+            prefDropOnAcquire = prefs.getBoolean("prefDropOnAcquire", false);
+            prefDropOnAcquire = !prefDropOnAcquire;
+            prefs.edit().putBoolean("prefDropOnAcquire", prefDropOnAcquire).commit();
+            dropBeforeAcquireButton1.setSelected(prefDropOnAcquire);
+
         }
     }
 
@@ -1765,7 +1801,8 @@ public class select_loco extends AppCompatActivity {
         setContentView(layoutViewId);
 
         // put pointer to this activity's handler in main app's shared variable
-        mainapp.select_loco_msg_handler = new SelectLocoHandler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.SELECT_LOCO] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.SELECT_LOCO] = new BundleMessageHandler(Looper.getMainLooper());
 
 //        getDefaultSortOrderRoster();
         prefRosterFilter = prefs.getString("prefRosterFilter", this.getResources().getString(R.string.prefRosterFilterDefaultValue));
@@ -1815,7 +1852,7 @@ public class select_loco extends AppCompatActivity {
 
         // Set up a list adapter to allow adding the list of recent engines to the UI.
         recentLocosList = new ArrayList<>();
-        recentListAdapter = new RecentSimpleAdapter(this, recentLocosList, R.layout.engine_list_item,
+        recentListAdapter = new RecentSimpleAdapter(this, recentLocosList, R.layout.select_loco_engine_list_item,
                 new String[]{"engine"},
                 new int[]{R.id.engine_item_label, R.id.engine_icon_image});
         recentListView = findViewById(R.id.recentLocoListView);
@@ -1833,7 +1870,7 @@ public class select_loco extends AppCompatActivity {
         // Set up a list adapter to allow adding the list of recent consists to the UI.
         recentConsistsList = new ArrayList<>();
         recentConsistsListAdapter = new RecentConsistsSimpleAdapter(this, recentConsistsList,
-                R.layout.consists_list_item, new String[]{"consist"},
+                R.layout.consist_list_item, new String[]{"consist"},
                 new int[]{R.id.consist_item_label});
         recentConsistsListView = findViewById(R.id.consists_list);
         recentConsistsListView.setAdapter(recentConsistsListAdapter);
@@ -1895,6 +1932,11 @@ public class select_loco extends AppCompatActivity {
         button.setOnClickListener(new ReleaseButtonListener(whichThrottle));
         ImageButton imageButton = findViewById(R.id.release_button1);
         imageButton.setOnClickListener(new ReleaseButtonListener(whichThrottle));
+
+        dropBeforeAcquireButton1 = findViewById(R.id.drop_before_acquire_button1);
+        dropBeforeAcquireButton1.setOnClickListener(new DropBeforeAcquireButtonListener());
+        prefDropOnAcquire = prefs.getBoolean("prefDropOnAcquire", false);
+        dropBeforeAcquireButton1.setSelected(prefDropOnAcquire);
 
         EditText la = findViewById(R.id.loco_address);
         la.addTextChangedListener(new TextWatcher() {
@@ -2043,7 +2085,7 @@ public class select_loco extends AppCompatActivity {
         prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", getResources().getBoolean(R.bool.prefSelectLocoByRadioButtonsDefaultValue));
         prefSelectLocoMethod = prefs.getString("prefSelectLocoMethod", select_loco_method_type.FIRST);
 
-        if (mainapp.isDCCEX) maxAddr = 10239;  // DCC-EX supports the full range
+        if (mainapp.isDccexProtocol()) maxAddr = 10239;  // DCC-EX supports the full range
 
         overrideThrottleName = "";
 
@@ -2288,12 +2330,7 @@ public class select_loco extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": onDestroy(): called");
         super.onDestroy();
 
-        if (mainapp.select_loco_msg_handler != null) {
-            mainapp.select_loco_msg_handler.removeCallbacksAndMessages(null);
-            mainapp.select_loco_msg_handler = null;
-        } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.select_loco_msg_handler is null. Unable to removeCallbacksAndMessages");
-        }
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.SELECT_LOCO);
     } // end onDestroy()
 
     @Override
@@ -2315,12 +2352,12 @@ public class select_loco extends AppCompatActivity {
         mainapp.refreshCommonOverflowMenu(overflowMenu);
 
         MenuItem menuItem = overflowMenu.findItem(R.id.advancedConsistButton);
-//        menuItem.setVisible((!mainapp.isDCCEX)
+//        menuItem.setVisible((mainapp.isWiThrottleProtocol())
 //                && (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))));
         if (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))) {
             menuItem.setVisible(true);
             TypedValue outValue = new TypedValue();
-            if (mainapp.isDCCEX) {
+            if (mainapp.isDccexProtocol()) {
                 mainapp.theme.resolveAttribute(R.attr.ed_dccex_consist_button, outValue, true);
                 if (mainapp.getDccexVersionNumeric() <= 5.005057) menuItem.setVisible(false);
             } else {
@@ -2442,24 +2479,28 @@ public class select_loco extends AppCompatActivity {
     protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String rosterAddressString, String iconURL) {
 //        Log.d(threaded_application.applicationName, activityName + ": showRosterDetailsDialog(): Showing details for roster entry " + rosterNameString);
         String res;
-        final Dialog dialog = new Dialog(select_loco.this, mainapp.getSelectedTheme());
-        dialog.setTitle(getApplicationContext().getResources().getString(R.string.rosterDetailsDialogTitle) + rosterNameString);
-        dialog.setContentView(R.layout.roster_entry);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
+        View view = getLayoutInflater().inflate(R.layout.roster_entry_page, null);
+        builder.setView(view);
+        builder.setTitle(getString(R.string.rosterDetailsDialogTitle) + " " + rosterNameString);
+
+        final AlertDialog dialog = builder.create();
+
         if (re != null) {
-            res = re.toString();
+            res = re.getRosterEntryWebDetails(this);
         } else {
 //            res = "\n DCC Address: " + rosterAddressString +"\n Roster Entry: " + rosterNameString + "\n";
             res = "\n" + getApplicationContext().getResources().getString(R.string.rosterDecoderInfoDccAddress) + " " + rosterAddressString
                     +"\n" + getApplicationContext().getResources().getString(R.string.rosterDecoderInfoRosterEntry) + " " +rosterNameString + "\n";
         }
-        TextView tv = dialog.findViewById(R.id.rosterEntryText);
+        TextView tv = view.findViewById(R.id.rosterEntryText);
         tv.setText(res);
 
-        detailsRosterImageView = dialog.findViewById(R.id.rosterEntryImage);
+        detailsRosterImageView = view.findViewById(R.id.rosterEntryImage);
         detailsRosterImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         loadRosterOrRecentImage(rosterNameString, detailsRosterImageView, iconURL);
 
-        buttonClose = dialog.findViewById(R.id.rosterEntryButtonClose);
+        buttonClose = view.findViewById(R.id.rosterEntryButtonClose);
         buttonClose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (newRosterImageSelected) {
@@ -2473,7 +2514,7 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
-        Button buttonSelectRosterImage = dialog.findViewById(R.id.selectRosterEntryImage);
+        Button buttonSelectRosterImage = view.findViewById(R.id.selectRosterEntryImage);
         buttonSelectRosterImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 detailsRosterNameString = rosterNameString; // store the name for the return result
@@ -2482,7 +2523,7 @@ public class select_loco extends AppCompatActivity {
             }
         });
 
-        buttonRemoveRosterImage = dialog.findViewById(R.id.removeRosterEntryImage);
+        buttonRemoveRosterImage = view.findViewById(R.id.removeRosterEntryImage);
         buttonRemoveRosterImage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (deleteLocoImageFile(rosterNameString)) {
@@ -2498,7 +2539,7 @@ public class select_loco extends AppCompatActivity {
 
         if ((iconURL != null) && (!iconURL.isEmpty())) {
             buttonSelectRosterImage.setVisibility(GONE);
-            TextView rosterEntryImageHelpText = dialog.findViewById(R.id.rosterEntryImageHelpText);
+            TextView rosterEntryImageHelpText = view.findViewById(R.id.rosterEntryImageHelpText);
             rosterEntryImageHelpText.setText(getString(R.string.rosterEntryImageServerImageHelpText));
             buttonRemoveRosterImage.setVisibility(GONE);
         }
@@ -2687,7 +2728,7 @@ public class select_loco extends AppCompatActivity {
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.engine_list_item, null, false);
+            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.select_loco_engine_list_item, null, false);
 //            RelativeLayout view = (RelativeLayout) convertView;
 //            if (convertView == null) {
 //                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -2763,7 +2804,7 @@ public class select_loco extends AppCompatActivity {
                 return convertView;
 
             LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consists_list_item, null, false);
+            @SuppressLint("ViewHolder") RelativeLayout view = (RelativeLayout) inflater.inflate(R.layout.consist_list_item, null, false);
 //            RelativeLayout view = (RelativeLayout) convertView;
 //            if (convertView == null) {
 //                LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -2792,7 +2833,7 @@ public class select_loco extends AppCompatActivity {
     }
 
     public void showEditRecentConsistsNameDialog(final int pos) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.edit_recent_name, null);
         dialogBuilder.setView(dialogView);
@@ -2826,7 +2867,7 @@ public class select_loco extends AppCompatActivity {
     }
 
     public void showEditRecentsNameDialog(final int pos) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.edit_recent_name, null);
         dialogBuilder.setView(dialogView);

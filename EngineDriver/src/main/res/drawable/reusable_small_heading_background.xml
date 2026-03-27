@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/headingCornerRadius_neon" />
+    <stroke android:width="0px" android:color="@color/transparent" />
+    <gradient
+        android:centerX="60%"
+        android:startColor="?attr/reusable_heading_small_start_color"
+        android:centerColor="?attr/reusable_heading_small_center_color"
+        android:endColor="?attr/reusable_heading_small_end_color"
+        android:type="linear"
+        />
+    <corners android:radius="@dimen/headingCornerRadius_neon" />
+</shape>

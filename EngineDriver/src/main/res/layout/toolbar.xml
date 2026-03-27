@@ -35,7 +35,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="left"
-                android:src="?attr/ed_icon"
+                app:srcCompat="?attr/ed_icon"
                 tools:ignore="ContentDescription,RtlHardcoded" />
 
             <TextView

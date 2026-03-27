@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--    used as the additional Volume Keys highlight for the Select button-->
+
+    <item
+        android:drawable="@drawable/original_button_enabled" />
+
+    <!-- inside border  -->
+    <item
+        android:top="@dimen/buttonActivatedInsideStrokePaddingTopLeft_outline"
+        android:left="@dimen/buttonActivatedInsideStrokePaddingTopLeft_outline"
+        android:right="@dimen/buttonActivatedInsideStrokePaddingBottomRight_outline"
+        android:bottom="@dimen/buttonActivatedInsideStrokePaddingBottomRight_outline">
+
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_hover" />
+            <stroke android:width="@dimen/buttonStroke_hover" android:color="@color/buttonActivatedHoveredInsideStroke_outline" />
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle"  >
+            <corners android:radius="?attr/reusable_button_corner_radius" />
+            <stroke
+                android:width="@dimen/reusable_button_disabled_stroke_width"
+                android:color="?attr/reusable_button_disabled_stroke_color" />
+            <solid
+                android:color="?attr/reusable_button_disabled_fill_color" />
+        </shape>
+    </item>
+
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true"
+        android:drawable="@drawable/reusable_button_fn_selected">
+    </item>
+
+    <item
+        android:drawable="@drawable/reusable_button_fn_enabled">
+    </item>
+</selector>

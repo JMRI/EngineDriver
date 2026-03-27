@@ -78,7 +78,7 @@ public class intro_throttle_name extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.intro_throttle_name, container, false);
+        return inflater.inflate(R.layout.intro_throttle_name_page, container, false);
     }
 
 

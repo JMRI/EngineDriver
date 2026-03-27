@@ -257,7 +257,7 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.device_sounds_settings);
+        setContentView(R.layout.device_sounds_settings_page);
         //put pointer to this activity's handler in main app's shared variable
 //        myGesture = new GestureDetector(this);
 
@@ -303,7 +303,8 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
         dss_throttle1.setOnItemSelectedListener(new spinner_listener_1());
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.device_sounds_settings_msg_handler = new device_sounds_settings_handler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.DEVICE_SOUNDS_SETTINGS] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.DEVICE_SOUNDS_SETTINGS] = new BundleMessageHandler(Looper.getMainLooper());
 
 //        deviceSoundsEntryValuesArray = this.getResources().getStringArray(R.array.deviceSoundsEntryValues);
 //        deviceSoundsEntriesArray = this.getResources().getStringArray(R.array.deviceSoundsEntries);
@@ -467,6 +468,8 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
         Log.d(threaded_application.applicationName, activityName + ": onDestroy() called");
         iplsLoader.loadSounds();
         super.onDestroy();
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.DEVICE_SOUNDS_SETTINGS);
     }
 
     public class close_button_listener implements View.OnClickListener {
@@ -530,31 +533,30 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
         }
     }
 
-    @SuppressLint("HandlerLeak")
-    class device_sounds_settings_handler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public device_sounds_settings_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case message_type.RESPONSE: {    //handle messages from WiThrottle server
-                    String s = msg.obj.toString();
-                    if (s.length() >= 3) {
-                        String com1 = s.substring(0, 3);
-                        //update power icon
-                        if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
-                    }
-                    break;
-                }
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+//            Bundle bundle = msg.getData();
 
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+            switch (msg.what) {
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                     break;
+
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
@@ -568,9 +570,6 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
-                    break;
-
-                default:
                     break;
 
             }

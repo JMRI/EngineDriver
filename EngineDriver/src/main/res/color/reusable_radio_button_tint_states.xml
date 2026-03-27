@@ -1,0 +1,8 @@
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"
+        android:color="?attr/reusable_radio_button_normal_color"/>
+    <item android:state_checked="true"
+        android:color="?attr/reusable_radio_button_activate_color"/>
+    <item android:color="?attr/reusable_radio_button_normal_color"/>
+</selector>

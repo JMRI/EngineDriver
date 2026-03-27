@@ -147,6 +147,8 @@
         <item>暗色</item>
         <item>彩色</item>
         <item>霓虹蓝</item>
+        <item>荧光绿</item>
+        <item>纸</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>无（仅使用“v”、“1”）</item>
@@ -474,6 +476,7 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>无</item>
         <item>DCC主轨（Main)</item>
+        <item>DCC主轨（Main) 倒</item>
         <item>DCC编程轨（Prog)</item>
         <item>DC轨</item>
         <item>直流反极性</item>

@@ -104,6 +104,8 @@ import java.util.regex.Pattern;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
+import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.auto_import_export_option_type;
 import jmri.enginedriver.type.dccex_emergency_stop_state_type;
 import jmri.enginedriver.type.gamepad_status_type;
@@ -120,6 +122,7 @@ import jmri.enginedriver.type.source_type;
 import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.toolbar_button_size_type;
+import jmri.enginedriver.type.function_state_type;
 import jmri.enginedriver.util.ArrayQueue;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
@@ -241,13 +244,13 @@ public class threaded_application extends Application {
     public String prefAppIconAction = "throttle";
 
     public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
-    public boolean isDCCEX = false;  // is a DCC-EX EX-CommandStation
+    private boolean protocolCurrentlyInUseIsDccex = false;  // is a DCC-EX EX-CommandStation  use the methods to set or interrogate this
     public String prefUseDccexProtocol = "Auto";
     public boolean prefAlwaysUseFunctionsFromServer = false;
-    public String dccexVersionString = "";
+    public static String dccexVersionString = "";
     public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
-    public boolean dccexScreenIsOpen = false;
+    public static boolean dccexScreenIsOpen = false;
     public boolean witScreenIsOpen = false;
 
     public int dccexActionTypeIndex = 0;
@@ -261,7 +264,8 @@ public class threaded_application extends Application {
 
 //    public boolean dccexRosterFullyReceived = false;
     public boolean dccexRosterRequested = false;
-    public String dccexRosterString = ""; // used to process the roster list
+    public boolean dccexRosterProcessed = false;
+//    public String dccexRosterString = ""; // used to process the roster list
     public int [] dccexRosterIDs;  // used to process the roster list
     public String [] dccexRosterLocoNames;  // used to process the roster list
     public String [] dccexRosterLocoFunctions;  // used to process the roster list
@@ -276,16 +280,18 @@ public class threaded_application extends Application {
     public String [][] throttleLocoReleaseListDCCEX = {null, null, null, null, null, null};  // used to process the list of locos to release on a throttle
 
     public boolean dccexTurnoutsBeingProcessed = false;
+    public boolean dccexTurnoutsProcessed = false;
     public boolean dccexTurnoutsRequested = false;
     public boolean dccexTurnoutsFullyReceived = false;
-    public String dccexTurnoutString = ""; // used to process the turnout list
+//    public String dccexTurnoutString = ""; // used to process the turnout list
     public int [] dccexTurnoutIDs;  // used to process the turnout list
     public String [] dccexTurnoutNames;  // used to process the turnout list
     public String [] dccexTurnoutStates;  // used to process the turnout list
     public boolean [] dccexTurnoutDetailsReceived;  // used to process the turnout list
 
     public boolean dccexRoutesBeingProcessed = false;
-    public String dccexRouteString = ""; // used to process the route list
+    public boolean dccexRoutesListReceived = false;
+//    public String dccexRouteString = ""; // used to process the route list
     public int [] dccexRouteIDs;  // used to process the route list
     public String [] dccexRouteNames;  // used to process the route list
     public String [] dccexRouteTypes;  // used to process the route list
@@ -300,28 +306,11 @@ public class threaded_application extends Application {
     public int[] numericKeyFunctionStateAtTimePressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
     //For communication to the comm_thread.
-    public comm_handler comm_msg_handler = null;
+//    public comm_handler comm_msg_handler = null;
+    public comm_handler commBundleMessageHandler = null;
+
     //For communication to each of the activities (set and unset by the activity)
-    public volatile Handler connection_msg_handler;
-    public volatile Handler throttle_msg_handler;
-    public volatile Handler web_msg_handler;
-    public volatile Handler select_loco_msg_handler;
-    public volatile Handler turnouts_msg_handler;
-    public volatile Handler routes_msg_handler;
-    public volatile Handler consist_edit_msg_handler;
-    public volatile Handler consist_lights_edit_msg_handler;
-    public volatile Handler power_control_msg_handler;
-    public volatile Handler dcc_ex_msg_handler;
-    public volatile Handler advancedConsistToolMesssgeHandler;
-    public volatile Handler withrottle_cv_programmer_msg_handler;
-    public volatile Handler reconnect_status_msg_handler;
-    public volatile Handler settings_msg_handler;
-    public volatile Handler logviewer_msg_handler;
-    public volatile Handler about_page_msg_handler;
-    public volatile Handler function_settings_msg_handler;
-    public volatile Handler function_consist_settings_msg_handler;
-    public volatile Handler gamepad_test_msg_handler;
-    public volatile Handler device_sounds_settings_msg_handler;
+    public volatile Handler [] activityBundleMessageHandlers = new Handler[activity_id_type.MAX+1];
 
     // for handling control of camera flash
     public static Flashlight flashlight;
@@ -387,7 +376,9 @@ public class threaded_application extends Application {
     public boolean shownToastRoster = false;
     public boolean shownToastConsistEdit = false;
 
+    public boolean hasRosterTurnouts = false;
     public boolean shownRosterTurnouts = false;
+
     public boolean firstWebActivity = false;
     public boolean exitConfirmed = false;
     /** @noinspection FieldCanBeLocal*/
@@ -489,6 +480,9 @@ public class threaded_application extends Application {
     public ArrayQueue[] soundsLocoQueue = new ArrayQueue[2];
 
     public int[] soundsLocoSteps = new int[2];
+
+    // this needs to be in t_a because to it checked each time the sounds reschedule
+    public boolean [] soundsIsMuted;
 
     public ArrayList<String> iplsNames;
     public ArrayList<String> iplsFileNames;
@@ -849,9 +843,11 @@ public class threaded_application extends Application {
                             mainapp.getResources().getBoolean(R.bool.prefStopOnBackgroundDefaultValue))) {
                         Log.d(threaded_application.applicationName, activityName + ": onTrimMemory(): Stopping Trains");
                         if (mainapp.consists != null) {
+                            Bundle bundle = new Bundle();
                             for (int i = 0; i < mainapp.prefNumThrottles; i++) {
                                 if ( (mainapp.consists[i] != null) && (mainapp.consists[i].isActive()) ) {
-                                    sendMsg(comm_msg_handler, message_type.ESTOP_ONE_THROTTLE, "", i);
+                                    bundle.putInt(alert_bundle_tag_type.THROTTLE, i);
+                                    mainapp.alertCommHandlerWithBundle(message_type.ESTOP_ONE_THROTTLE, bundle);
                                 }
                             }
                         }
@@ -865,6 +861,7 @@ public class threaded_application extends Application {
                     if (runningActivity != null) {
                         removeNotification(runningActivity.getIntent());
                         addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
+                        mainapp.alertActivitiesWithBundle(message_type.LOW_MEMORY);
                         // if this is called, assume that we will need to recreate the Throttle Screen
                         mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
                     }
@@ -874,7 +871,11 @@ public class threaded_application extends Application {
                 if (!isActivityVisible()) {   // double check it is in background
                     // disconnect and shutdown
                     safeToast(getResources().getString(R.string.notificationInBackgroundTextKilled),Toast.LENGTH_LONG);
-                    sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(alert_bundle_tag_type.URGENT, 1);
+                    mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN, bundle);
+
                     exitConfirmed = true;
                 }
             }
@@ -900,6 +901,15 @@ public class threaded_application extends Application {
         doFinish = false;
     }
 
+    public void setIsDccexProtocol(boolean isDccex) {
+        protocolCurrentlyInUseIsDccex = isDccex;
+    }
+    public boolean isDccexProtocol() {
+        return protocolCurrentlyInUseIsDccex;
+    }
+    public boolean isWiThrottleProtocol() {
+        return !protocolCurrentlyInUseIsDccex;
+    }
 
     //init default function labels from the settings files or set to default
     //also collects the loco and latching handling for the 'Special' consist function string matching
@@ -1065,8 +1075,8 @@ public class threaded_application extends Application {
                 try {
                     runMethod(this);
                     if (!cancel) {
-                        Log.d(applicationName, "t_a: sendMsg - message - ROSTER_UPDATE");
-                        sendMsg(comm_msg_handler, message_type.ROSTER_UPDATE);      //send message to alert other activities
+                        Log.d(applicationName, "t_a: sendMsg - message - RECEIVED_ROSTER_UPDATE");
+                        alertActivitiesWithBundle(message_type.RECEIVED_ROSTER_UPDATE);
                     }
                 } catch (Throwable t) {
                     Log.d(applicationName, "t_a: Data fetch failed: " + t.getMessage());
@@ -1197,7 +1207,7 @@ public class threaded_application extends Application {
             web_server_port = 80; //hardcode web port for MRC
         } else if (serverType.equals("Digitrax")) {
             WiThrottle_Msg_Interval = 200; //increase the interval for LnWi
-        } else if ( (serverType.equals("DCC-EX")) && (isDCCEX) ) {
+        } else if ( (serverType.equals("DCC-EX")) && (isDccexProtocol()) ) {
             WiThrottle_Msg_Interval = 100; //increase the interval for DCC-EX
         }
     }
@@ -1245,7 +1255,7 @@ public class threaded_application extends Application {
             if (getWithrottleVersion() != 0.0) {
                 sHtml += "<small>, Protocol: </small>";
                 s += ", Protocol: ";
-                if (!isDCCEX) {
+                if (isWiThrottleProtocol()) {
                     sHtml += "<b>WiThrottle</b> v</small><b>" + getWithrottleVersion() +"</b>";
                     sHtml += String.format("<small>, Heartbeat: </small><b>%dms</b>", heartbeatInterval);
                     s += "WiThrottle v" + getWithrottleVersion();
@@ -1307,7 +1317,7 @@ public class threaded_application extends Application {
 
         prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
-        mainapp.isDCCEX = prefUseDccexProtocol.equals("Yes") || mainapp.isDCCEX;   // force it if the preference is set
+        mainapp.setIsDccexProtocol( prefUseDccexProtocol.equals("Yes") || mainapp.isDccexProtocol() );   // force it if the preference is set
 
         dccexVersionString = "";
         dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
@@ -1324,9 +1334,12 @@ public class threaded_application extends Application {
         dccexScreenIsOpen = false;
         witScreenIsOpen = false;
 
-        dccexRosterString = "";
-        dccexTurnoutString = "";
-        dccexRouteString = "";
+//        dccexRosterString = "";
+//        dccexTurnoutString = "";
+//        dccexRouteString = "";
+        dccexRosterProcessed = false;
+        dccexTurnoutsProcessed = false;
+        dccexRoutesListReceived = false;
 
         try {
             consists = new Consist[maxThrottles];
@@ -1408,14 +1421,18 @@ public class threaded_application extends Application {
         if ("1".equals(power_state)) {          //toggle to opposite value 0=off, 1=on
             newState = 0;
         }
-        sendMsg(comm_msg_handler, message_type.POWER_CONTROL, "", newState);
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(alert_bundle_tag_type.POWER_STATE, newState);
+        mainapp.alertCommHandlerWithBundle(message_type.POWER_CONTROL, bundle);
     }
 
     public void displayPowerStateMenuButton(Menu menu) {
         MenuItem menuItem = menu.findItem(R.id.powerLayoutButton);
         if (menuItem == null) return;
 
-        if (prefs.getBoolean("prefShowLayoutPowerButton", false) && (power_state != null)) {
+        if ( (prefs.getBoolean("prefShowLayoutPowerButton", false) && (power_state != null))
+            && (!mainapp.connectedHostName.isEmpty()) ) {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1531,7 +1548,7 @@ public class threaded_application extends Application {
         if (menu != null) {
             MenuItem item = menu.findItem(R.id.dcc_ex_mnu);
             if (item != null) {
-                item.setVisible(isDCCEX);
+                item.setVisible(isDccexProtocol());
             }
         }
     }
@@ -1540,7 +1557,7 @@ public class threaded_application extends Application {
         if (menu != null) {
             MenuItem item = menu.findItem(R.id.withrottle_cv_programmer_mnu);
             if (item != null) {
-                item.setVisible((!isDCCEX)
+                item.setVisible((isWiThrottleProtocol())
                         && (prefs.getBoolean("prefShowWitPom",  getResources().getBoolean(R.bool.prefShowWitPomDefaultValue)) ));
             }
         }
@@ -1601,17 +1618,29 @@ public class threaded_application extends Application {
         }
     }
 
-    public void forceFunction(String throttleAndAddr, int functionNumber, boolean state) {
-        int onOff = 0;
-        if (state) onOff = 1;
+    public void setFunction(int whichThrottle, String addr, int functionNumber, int state, boolean force) {
         if ((functionNumber >= 0) && (functionNumber <= MAX_FUNCTION_NUMBER)) {
-            sendMsg(comm_msg_handler, message_type.FORCE_FUNCTION, throttleAndAddr, functionNumber, onOff);
+            Bundle bundle = new Bundle();
+            bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+            bundle.putString(alert_bundle_tag_type.LOCO_TEXT, addr);
+            bundle.putInt(alert_bundle_tag_type.FUNCTION, functionNumber);
+            bundle.putInt(alert_bundle_tag_type.FUNCTION_ACTION, state);
+            bundle.putBoolean(alert_bundle_tag_type.FORCE, force);
+            mainapp.alertCommHandlerWithBundle(message_type.FUNCTION, bundle);
+
+//            extendedLogging(activityName + ": setFunction(): :<>: fn: " + functionNumber + " state: " + state + " force:" + force);
         } // otherwise just ignore the request
     }
 
-    public void toggleFunction(String throttleAndAddr, int functionNumber) {
+    public void toggleFunction(int whichThrottle, String addr, int functionNumber) {
         if ((functionNumber >= 0) && (functionNumber <= MAX_FUNCTION_NUMBER)) {
-            sendMsg(comm_msg_handler, message_type.FUNCTION, throttleAndAddr, functionNumber, 1);
+//            sendMsg(comm_msg_handler, message_type.FUNCTION, throttleAndAddr, functionNumber, 1);
+
+            boolean fnState = mainapp.function_states[whichThrottle][functionNumber];
+            int newFnState =  function_state_type.ON;
+            if (fnState) newFnState = function_state_type.OFF;
+            setFunction(whichThrottle, addr, functionNumber, newFnState, false);
+
         } // otherwise just ignore the request
     }
 
@@ -1686,7 +1715,7 @@ public class threaded_application extends Application {
             refreshRequired = true;
             final Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(() -> {
-                alert_activities(message_type.REFRESH_OVERFLOW_MENU, "");  //send response to running activities
+                alertActivitiesWithBundle(message_type.REFRESH_OVERFLOW_MENU);
             }, 100);
         } else {
             setFlashlightActionViewButton(menu, flashlightButtonMenuItem);
@@ -1699,7 +1728,7 @@ public class threaded_application extends Application {
             if (!refreshRequired) { // don't bother if we already requested it for the flashlight
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(() -> {
-                    alert_activities(message_type.REFRESH_OVERFLOW_MENU, "");  //send response to running activities
+                    alertActivitiesWithBundle(message_type.REFRESH_OVERFLOW_MENU);
                 }, 100);
             }
         } else {
@@ -1720,7 +1749,7 @@ public class threaded_application extends Application {
         TypedArray power_button_state_attr_ids = getResources().obtainTypedArray(R.array.power_button_state_attr_ids);
 
         int powerState = (power_state != null) ? Integer.parseInt(power_state) : 2;  // default to unknown
-        if ( (mainapp.isDCCEX) && (powerState == 2) ) powerState = 3; // mixed - part on, part off
+        if ( (mainapp.isDccexProtocol()) && (powerState == 2) ) powerState = 3; // mixed - part on, part off
 
         theme.resolveAttribute(power_button_state_attr_ids.getResourceId(powerState,0), outValue, true);
         power_button_state_attr_ids.recycle();
@@ -1732,7 +1761,8 @@ public class threaded_application extends Application {
         MenuItem mi = menu.findItem(R.id.emergency_stop_button);
         if (mi == null) return;
 
-        if (prefs.getBoolean("prefShowEmergencyStopButton", false)) {
+        if ( (prefs.getBoolean("prefShowEmergencyStopButton", false))
+        && (!mainapp.connectedHostName.isEmpty()) ) {
             actionBarIconCountThrottle++;
             actionBarIconCountRoutes++;
             actionBarIconCountTurnouts++;
@@ -1757,16 +1787,21 @@ public class threaded_application extends Application {
     }
 
     public void sendEStopMsg() {
-        if ( (mainapp.isDCCEX) && (prefDccexEmergencyStopPauseResume) ) {
+        if ( (mainapp.isDccexProtocol()) && (prefDccexEmergencyStopPauseResume) ) {
             if (mainapp.dccexEmergencyStopState == dccex_emergency_stop_state_type.RESUMED) {
-                sendMsg(comm_msg_handler, message_type.DCCEX_ESTOP_PAUSE, "");
+                mainapp.alertCommHandlerWithBundle(message_type.DCCEX_ESTOP_PAUSE);
             } else {
-                sendMsg(comm_msg_handler, message_type.DCCEX_ESTOP_RESUME, "");
+                mainapp.alertCommHandlerWithBundle(message_type.DCCEX_ESTOP_RESUME);
             }
+
         } else {
+            Bundle bundle = new Bundle();
             for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
                 if (consists != null && consists[i] != null && consists[i].isActive()) {
-                    sendMsg(comm_msg_handler, message_type.ESTOP, "", i);
+
+                    bundle.putInt(alert_bundle_tag_type.THROTTLE, i);
+                    mainapp.alertCommHandlerWithBundle(message_type.ESTOP);
+
                     EStopActivated = true;
                     threaded_application.extendedLogging(activityName + ":  sendEStopMsg(): EStop sent to server for throttle " + i);
                 }
@@ -1776,97 +1811,104 @@ public class threaded_application extends Application {
 
     public void sendEStopOneThrottleMsg(int whichThrottle) {
         if (consists != null && consists[whichThrottle] != null && consists[whichThrottle].isActive()) {
-            sendMsg(comm_msg_handler, message_type.ESTOP_ONE_THROTTLE, "", whichThrottle);
+
+            Bundle bundle = new Bundle();
+            bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+            mainapp.alertCommHandlerWithBundle(message_type.ESTOP_ONE_THROTTLE, bundle);
+
             EStopActivated = true;
             Log.d(applicationName, activityName + ": sendEStopOneThrottleMsg(): EStop sent to server for throttle " + whichThrottle);
         }
     }
 
-    // forward a message to all running activities
-    public void alert_activities(int msgType, String msgBody) {
-        Log.d(threaded_application.applicationName, activityName + ": alert_activities(): " + msgType + " : " + msgBody);
+    // - - - - - - - - - - - - - - - - - - - - - - - - //
 
-        try {
-            sendMsg(connection_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(turnouts_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(routes_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(consist_edit_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(consist_lights_edit_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(throttle_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(web_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(power_control_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(dcc_ex_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(advancedConsistToolMesssgeHandler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(withrottle_cv_programmer_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(reconnect_status_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(select_loco_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(settings_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(logviewer_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(about_page_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(function_settings_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(function_consist_settings_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(gamepad_test_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
-        }
-        try {
-            sendMsg(device_sounds_settings_msg_handler, msgType, msgBody);
-        } catch (Exception ignored) {
+    public void alertActivitiesWithBundle(int msgType) {
+        Bundle bundle = new Bundle();
+        alertActivitiesWithBundle(msgType, 0L, bundle, -1);
+    }
+    public void alertActivitiesWithBundle(int msgType, long delayMs) {
+        Bundle bundle = new Bundle();
+        alertActivitiesWithBundle(msgType, delayMs, bundle, -1);
+    }
+    public void alertActivitiesWithBundle(int msgType, int activityIndex) {
+        Bundle bundle = new Bundle();
+        alertActivitiesWithBundle(msgType, 0L, bundle, activityIndex);
+    }
+    public void alertActivitiesWithBundle(int msgType, Bundle bundle) {
+        alertActivitiesWithBundle(msgType, 0L, bundle, -1);
+    }
+    public void alertActivitiesWithBundle(int msgType, long delayMs, Bundle bundle) {
+        alertActivitiesWithBundle(msgType, delayMs, bundle, -1);
+    }
+    public void alertActivitiesWithBundle(int msgType, Bundle bundle, int activityIndex) {
+        alertActivitiesWithBundle(msgType, 0L, bundle, activityIndex);
+    }
+    public void alertActivitiesWithBundle(int msgType, long delayMs, Bundle bundle, int activityIndex) {
+//        threaded_application.extendedLogging(activityName + ": alertActivitiesWithBundle(): " + msgType);
+        if (activityIndex < 0) { // send to all
+            for (int i = activity_id_type.MIN; i <= activity_id_type.MAX; i++) {  // exclude 0 by default as that is the comm_thread
+                if (activityBundleMessageHandlers[i] != null) {
+                    try {
+                        sendMessageWithBundleDelay(activityBundleMessageHandlers[i], delayMs, msgType, bundle);
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
+        } else {  // send to a specific activity only
+            if (activityBundleMessageHandlers[activityIndex] != null) {
+                sendMessageWithBundleDelay(activityBundleMessageHandlers[activityIndex], delayMs, msgType, bundle);
+            }
         }
     }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+    public void alertCommHandlerWithBundle(int msgType) {
+        Bundle bundle = new Bundle();
+        alertCommHandlerWithBundle(msgType, 0, bundle);
+    }
+    public void alertCommHandlerWithBundle(int msgType, long delayMs) {
+        Bundle bundle = new Bundle();
+        alertCommHandlerWithBundle(msgType, delayMs, bundle);
+    }
+    public void alertCommHandlerWithBundle(int msgType, Bundle bundle) {
+        alertCommHandlerWithBundle(msgType, 0, bundle);
+    }
+    public void alertCommHandlerWithBundle(int msgType, long delayMs, Bundle bundle) {
+        if (commBundleMessageHandler != null) {
+            sendMessageWithBundleDelay(commBundleMessageHandler, delayMs, msgType, bundle);
+        }
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+    public void sendMessageWithBundle(Handler h, int msgType, Bundle bundle) {
+        sendMessageWithBundleDelay(h, 0, msgType, bundle);
+    }
+
+    public void sendMessageWithBundleDelay(Handler h, long delayMs, int msgType, Bundle bundle) {
+//        threaded_application.extendedLogging(activityName + ": sendMessageWithBundleDelay(): " + msgType);
+
+        boolean sent = false;
+        if (h != null) {
+            Message msg = Message.obtain();
+            msg.what = msgType;
+            msg.setData(bundle);
+            try {                           // handler access is not locked and might have been removed by activity
+                sent = h.sendMessageDelayed(msg, delayMs);
+            } catch (Exception e) {
+                try {                       // exception could be that handler is gone so use another try/catch here
+                    h.removeCallbacksAndMessages(null);
+                } catch (Exception ignored) {
+                }
+            }
+            if (!sent)
+                msg.recycle();
+        }
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - //
 
     /** @noinspection UnusedReturnValue*/
     public boolean sendMsg(Handler h, int msgType) {
@@ -1924,6 +1966,8 @@ public class threaded_application extends Application {
         return sent;
     }
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - //
+
     //
     // methods for use by Activities
     //
@@ -1970,17 +2014,27 @@ public class threaded_application extends Application {
             return switch (prefTheme) {
                 case "Black" -> R.style.app_theme_black;
                 case "Outline" -> R.style.app_theme_outline;
-                case "Ultra" -> R.style.app_theme_ultra;
-                case "Colorful" -> R.style.app_theme_colorful;
-                case "Neon" -> R.style.app_theme_neon;
+                case "Ultra" -> R.style.app_theme_new_ultra;
+                case "Colorful" -> R.style.app_theme_new_colorful;
+                case "Neon" -> R.style.app_theme_neon_blue;
+                case "Green" -> R.style.app_theme_neon_green;
+                case "Muted" -> R.style.app_theme_muted;
                 default -> R.style.app_theme;
             };
         } else {
             return switch (prefTheme) {
-                case "Black", "Outline", "Ultra", "Neon", "Colorful" ->
+                case "Black", "Outline" ->
                         R.style.app_theme_black_preferences;
-//                case "Colorful ->
-//                    R.style.app_theme_colorful;
+                case "Ultra" ->
+                        R.style.app_theme_new_ultra_preferences;
+                case "Neon" ->
+                        R.style.app_theme_neon_blue_preferences;
+                case "Green" ->
+                        R.style.app_theme_neon_green_preferences;
+                case "Muted" ->
+                        R.style.app_theme_muted_preferences;
+                case "Colorful" ->
+                        R.style.app_theme_new_colorful_preferences;
                 default -> R.style.app_theme_preferences;
             };
         }
@@ -2084,7 +2138,9 @@ public class threaded_application extends Application {
             } else {
                 exitConfirmed = true;
                 exitDoubleBackButtonInitiated = 0;
-                sendMsg(comm_msg_handler, message_type.SHUTDOWN, "");  //trigger disconnect / shutdown sequence
+
+                mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN);
+
                 buttonVibration();
             }
         }
@@ -2103,7 +2159,10 @@ public class threaded_application extends Application {
 //            } else {
 //                exitConfirmed = true;
 //                exitDoubleBackButtonInitiated = 0;
-//                sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);  //trigger fast disconnect / shutdown sequence
+////                sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);  //trigger fast disconnect / shutdown sequence
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(alert_bundle_tag_type.URGENT, 1);
+//                mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN, bundle);
 //                buttonVibration();
 //            }
 //        }
@@ -2125,10 +2184,14 @@ public class threaded_application extends Application {
             public void onClick(DialogInterface dialog, int id) {
                 Log.d(applicationName, "t_a: checkAskExit(): onClick() ");
                 exitConfirmed = true;
-                if (!forceFastDisconnect) {
-                    sendMsg(comm_msg_handler, message_type.SHUTDOWN, "");  //trigger disconnect / shutdown sequence
-                } else {
-                    sendMsg(comm_msg_handler, message_type.SHUTDOWN, "", 1);  //trigger fast disconnect / shutdown sequence
+                if (!forceFastDisconnect) { //trigger disconnect / shutdown sequence
+                    mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN);
+
+                } else { //trigger fast disconnect / shutdown sequence
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(alert_bundle_tag_type.URGENT, 1);
+                    mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN, bundle);
                 }
                 buttonVibration();
             }
@@ -2270,7 +2333,7 @@ public class threaded_application extends Application {
         mi = menu.findItem(R.id.dcc_ex_button);
         if (mi != null) {
             boolean rslt = prefActionBarShowDccExButton;
-            if ( (rslt) && (isDCCEX) ) {
+            if ( (rslt) && (isDccexProtocol()) ) {
                 actionBarIconCountThrottle++;
                 mi.setVisible(true);
             } else {
@@ -2896,11 +2959,11 @@ public class threaded_application extends Application {
                 ImportExportPreferences importExportPreferences = new ImportExportPreferences();
                 importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), prefs, exportedPreferencesFileName, deviceId, true);
 
-                Message msg = Message.obtain();
-                msg.what = message_type.RESTART_APP;
-                msg.arg1 = restart_reason_type.AUTO_IMPORT;
+                Bundle bundle = new Bundle();
+                bundle.putInt(alert_bundle_tag_type.RESTART_REASON, restart_reason_type.AUTO_IMPORT);
+                mainapp.alertCommHandlerWithBundle(message_type.RESTART_APP, bundle);
+
                 Log.d(applicationName, "t_a: updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
-                comm_msg_handler.sendMessage(msg);
             } else {
                 safeToast(getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG);
             }
@@ -2950,7 +3013,7 @@ public class threaded_application extends Application {
         return withrottle_version;
     }
 
-    public String getDccexVersionString() {
+    public static String getDccexVersionString() {
         return dccexVersionString;
     }
     public float getDccexVersionNumeric() {
@@ -3050,7 +3113,7 @@ public class threaded_application extends Application {
             if (prefAppIconAction.equals("estop")) {
                 sendEStopMsg();
             } else if (prefAppIconAction.equals("throttle")) {
-                mainapp.alert_activities(message_type.REOPEN_THROTTLE, "");
+                mainapp.alertActivitiesWithBundle(message_type.REOPEN_THROTTLE);
             }
             buttonVibration();
         }
@@ -3253,13 +3316,14 @@ public class threaded_application extends Application {
                 action = ACTION_UP;
             }
 
-            sendMsg(comm_msg_handler, message_type.GAMEPAD_JOYSTICK_ACTION,
-                    action + ":"
-                            + whichGamePadIsEventFrom + ":"
-                            + xAxis + ":"
-                            + yAxis + ":"
-                            + xAxis2 + ":"
-                            + yAxis2);
+            Bundle bundle = new Bundle();
+            bundle.putInt(alert_bundle_tag_type.EVENT_ORIGIN, whichGamePadIsEventFrom);
+            bundle.putInt(alert_bundle_tag_type.EVENT_ACTION, action);
+            bundle.putFloat(alert_bundle_tag_type.EVENT_X_AXIS, xAxis);
+            bundle.putFloat(alert_bundle_tag_type.EVENT_Y_AXIS, yAxis);
+            bundle.putFloat(alert_bundle_tag_type.EVENT_X_AXIS_2, xAxis2);
+            bundle.putFloat(alert_bundle_tag_type.EVENT_Y_AXIS_2, yAxis2);
+            mainapp.alertActivitiesWithBundle(message_type.GAMEPAD_JOYSTICK_ACTION, bundle, activity_id_type.THROTTLE);
 
             return (true); // stop processing this key
         }
@@ -3314,12 +3378,13 @@ public class threaded_application extends Application {
                 }
 
                 if (acceptEvent) {
-                    sendMsg(comm_msg_handler, message_type.GAMEPAD_ACTION,
-                            action + ":"
-                                    + keyCode + ":"
-                                    + ((isShiftPressed) ? "1" : "0") + ":"
-                                    + repeatCnt + ":"
-                                    + whichGamePadIsEventFrom);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(alert_bundle_tag_type.EVENT_ORIGIN, whichGamePadIsEventFrom);
+                    bundle.putInt(alert_bundle_tag_type.EVENT_ACTION, action);
+                    bundle.putInt(alert_bundle_tag_type.EVENT_KEY_CODE, keyCode);
+                    bundle.putBoolean(alert_bundle_tag_type.EVENT_IS_SHIFTED, isShiftPressed);
+                    bundle.putInt(alert_bundle_tag_type.EVENT_REPEAT_COUNT, repeatCnt);
+                    mainapp.alertActivitiesWithBundle(message_type.GAMEPAD_ACTION, bundle, activity_id_type.THROTTLE);
 
                     return (true); // stop processing this key
                 }
@@ -3329,8 +3394,11 @@ public class threaded_application extends Application {
             int keyCode = event.getKeyCode();
             int repeatCnt = event.getRepeatCount();
             if ((keyCode == KEYCODE_VOLUME_UP) || (keyCode == KEYCODE_VOLUME_DOWN)) {
-                sendMsg(comm_msg_handler, message_type.VOLUME_BUTTON_ACTION,
-                        action + ":" + keyCode + ":" + repeatCnt);
+                Bundle bundle = new Bundle();
+                bundle.putInt(alert_bundle_tag_type.EVENT_ACTION, action);
+                bundle.putInt(alert_bundle_tag_type.EVENT_KEY_CODE, keyCode);
+                bundle.putInt(alert_bundle_tag_type.EVENT_REPEAT_COUNT, repeatCnt);
+                mainapp.alertActivitiesWithBundle(message_type.VOLUME_BUTTON_ACTION, bundle, activity_id_type.THROTTLE);
 
                 return (true); // stop processing this key
             }
@@ -3403,7 +3471,7 @@ public class threaded_application extends Application {
 
     // for DCC-EX we need to temp store the list of locos so we can remove them individually
     public void storeThrottleLocosForReleaseDCCEX(int whichThrottle) {
-        if (isDCCEX) {
+        if (isDccexProtocol()) {
             Consist con = mainapp.consists[whichThrottle];
             throttleLocoReleaseListDCCEX[whichThrottle] = new String [con.size()];
             int i=0;
@@ -3504,6 +3572,22 @@ public class threaded_application extends Application {
             if (i > threaded_application.MAX_FUNCTION_NUMBER +1) break; //ignore unsupported functions
             if (i > 0 && !"".equals(ts)) { //skip first chunk, which is length, and skip any blank entries
                 functionLabelsMap.put(i - 1, ts); //index is hashmap key, value is label string
+            }
+            i++;
+        }
+        return functionLabelsMap;
+    }
+    // simplified version for use with DCC-EX
+    // fnArgs contains the labels of the functions
+    public static LinkedHashMap<Integer, String> parseFunctionLabels(String [] fnArgs) {
+
+        //populate a temp label array from RF command string
+        LinkedHashMap<Integer, String> functionLabelsMap = new LinkedHashMap<>();
+        int i = 0;
+        for (String ts : fnArgs) {
+            if (i > threaded_application.MAX_FUNCTION_NUMBER) break; //ignore unsupported functions
+            if ("".equals(ts)) { //skip any blank entries
+                functionLabelsMap.put(i, ts); //index is hashmap key, value is label string
             }
             i++;
         }
@@ -3681,6 +3765,7 @@ public class threaded_application extends Application {
     // Source - https://stackoverflow.com/a/40168175
     // Modified from post by mgcaguioa
     // Retrieved 2026-02-17, License - CC BY-SA 3.0
+    // title is not used
     public static void showCustomToast(final Activity activity, String title, String message, int length, int yOffsetSixthOfScreen) {
         if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
 
@@ -3688,7 +3773,7 @@ public class threaded_application extends Application {
 
         // inflate your xml layout
         LayoutInflater inflater = activity.getLayoutInflater();
-        final View layout = inflater.inflate(R.layout.custom_toast, null);
+        final View layout = inflater.inflate(R.layout.toast_custom, null);
 
         Display display = activity.getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -3753,4 +3838,19 @@ public class threaded_application extends Application {
         }
     }
 
+    public void clearActivityBundleMessageHandler(int activityIndex) {
+        if (mainapp.activityBundleMessageHandlers[activityIndex] != null) {
+            mainapp.activityBundleMessageHandlers[activityIndex].removeCallbacksAndMessages(null);
+            mainapp.activityBundleMessageHandlers[activityIndex] = null;
+        } else {
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): activityBundleMessageHandlers[" + activityIndex + "] is null. Unable to removeCallbacksAndMessages");
+        }
+    }
+
+    public static int getRgbColorFromThemeAttribute(Context context, int attribute) {
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(attribute, typedValue, true);
+        int color = typedValue.data;
+        return color;
+    }
 }

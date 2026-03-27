@@ -18,7 +18,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import jmri.enginedriver.threaded_application;
 
 public class RosterLoader {
-    static final String activityName = "comm_handler";
+    static final String activityName = "roster";
     final URL rosterUrl;
 
     public RosterLoader(String Url) {

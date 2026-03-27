@@ -100,7 +100,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
         mainapp.applyTheme(this);
 
-        setContentView(R.layout.function_consist_settings);
+        setContentView(R.layout.function_consist_settings_page);
         orientationChange = false;
 
         if (savedInstanceState == null) {    //if not an orientation change then init settings array
@@ -133,7 +133,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         }
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.function_consist_settings_msg_handler = new function_consist_settings_handler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.FUNCTION_CONSIST_SETTINGS] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.FUNCTION_CONSIST_SETTINGS] = new BundleMessageHandler(Looper.getMainLooper());
 
         if ( (mainapp.prefAlwaysUseDefaultFunctionLabels)
                 && (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)) ) {
@@ -214,6 +215,8 @@ public class function_consist_settings extends AppCompatActivity implements Perm
             aLatching.clear();
         }
         super.onDestroy();
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.FUNCTION_CONSIST_SETTINGS);
     }
 
     @Override
@@ -258,31 +261,30 @@ public class function_consist_settings extends AppCompatActivity implements Perm
         }
     }
 
-    @SuppressLint("HandlerLeak")
-    class function_consist_settings_handler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public function_consist_settings_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case message_type.RESPONSE: {    //handle messages from WiThrottle server
-                    String s = msg.obj.toString();
-                    if (s.length() >= 3) {
-                        String com1 = s.substring(0, 3);
-                        //update power icon
-                        if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
-                    }
-                    break;
-                }
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+//            Bundle bundle = msg.getData();
 
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+            switch (msg.what) {
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
                     break;
+
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
@@ -297,10 +299,6 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                 case message_type.LOW_MEMORY:
                     endThisActivity();
                     break;
-
-                default:
-                    break;
-
 
             }
         }
@@ -336,12 +334,11 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     //take data from arrays and update the editing view
     void move_settings_to_view(boolean isReset) {
 
-//        if ((!isSpecial) && (mainapp.isDCCEX)) {   // if it is for DCC-EX only, we don't show the lead/trail etc options so expand the space for the instructions
         if ( (!isSpecial) && (!isReset) ) {   // if it is for DCC-EX only, we don't show the lead/trail etc options so expand the space for the instructions
             View v = findViewById(R.id.function_consist_instruction);
             ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
-            Double newWidth = layoutParams.width * 2.0;
-            layoutParams.width =  newWidth.intValue();
+            double newWidth = layoutParams.width * 2.0;
+            layoutParams.width = (int) newWidth;
             v.setLayoutParams(layoutParams);
         }
 
@@ -356,7 +353,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 //                sLocos.setSelection(getSpinnerIndex(sLocos, aLocos.get(ndx)));
 
                 sLocos.setSelection(getArrayIndex(LOCOS, aLocos.get(ndx)));
-//                if ((!isSpecial) && (mainapp.isDCCEX)
+//                if ((!isSpecial) && (mainapp.isDccexProtocol())
                 if ( (!isSpecial)
                         && (!mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL) )
                 ) { // if it is for DCC-EX only, don't show the lead/trail etc options

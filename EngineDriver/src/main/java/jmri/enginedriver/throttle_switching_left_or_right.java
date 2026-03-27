@@ -626,7 +626,7 @@ public class throttle_switching_left_or_right extends throttle {
                         jumpDir = dir; // save ultimate target direction
                         limitedJump[whichThrottle] = true;
                         throttle.setProgress(lastSliderPosition);  // put the slider back to the original position
-                        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+                        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
                         if (newSliderPosition < lastSliderPosition) { // going down
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
@@ -657,7 +657,7 @@ public class throttle_switching_left_or_right extends throttle {
 //                    Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() -- touch while processing limited jump");
                     newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
                     throttle.setProgress(lastSliderPosition);
-                    if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+                    if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
 //                    Log.d(threaded_application.applicationName, activityName + ": onProgressChange(): fromUser: " + fromUser + " vsbSwitchingSpeeds[wt].touchFromUser: " +vsbSwitchingSpeeds[whichThrottle].touchFromUser + " isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
                 }
@@ -790,7 +790,7 @@ public class throttle_switching_left_or_right extends throttle {
         switchingThrottleSlider.setProgress(newSliderPosition);
         speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
         setDisplayedSpeed(whichThrottle, speed);
-        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
 //        Log.d(threaded_application.applicationName, activityName + ": speedChange():  speed: " + speed + " change: " + change);
 
@@ -814,7 +814,7 @@ public class throttle_switching_left_or_right extends throttle {
 
         getSwitchingThrottleSlider(whichThrottle).setProgress(sliderPosition);
         setDisplayedSpeed(whichThrottle, speed);
-        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
 //        Log.d(threaded_application.applicationName, activityName + ": speedUpdate():  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
     }
@@ -830,10 +830,13 @@ public class throttle_switching_left_or_right extends throttle {
 
         int sliderPosition;
         if (!changeTimers[whichThrottle].isDelayInProgress()) {
+//            threaded_application.extendedLogging(activityName + ": speedUpdateWiT(): set speed: " + speedWiT);
             sliderPosition = getNewSliderPositionFromSpeed(speedWiT, whichThrottle, false);
             vsbSwitchingSpeeds[whichThrottle].setProgress(sliderPosition);
+        } else {
+            threaded_application.extendedLogging(activityName + ": speedUpdateWiT(): :<>: pacing delay. speed update ignored");
         }
-        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], soundsIsMuted[whichThrottle]);
+        if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
     }
 
 
@@ -959,7 +962,7 @@ public class throttle_switching_left_or_right extends throttle {
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
         if (isLimitSpeeds[whichThrottle]) {
-            bLimitSpeeds[whichThrottle].setSelected(true);
+            setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], true);
             limitSpeedSliderScalingFactors[whichThrottle] = 100/ ((float) prefLimitSpeedPercent);
             sbs[whichThrottle].setMax( Math.round(MAX_SPEED_VAL_WIT / limitSpeedSliderScalingFactors[whichThrottle]));
 
@@ -968,7 +971,7 @@ public class throttle_switching_left_or_right extends throttle {
             vsbSwitchingSpeeds[whichThrottle].setMax(throttleSwitchingMax[whichThrottle]);
 
         } else {
-            bLimitSpeeds[whichThrottle].setSelected(false);
+            setLimitSpeedsOrPauseButton(bLimitSpeeds[whichThrottle], false);
             sbs[whichThrottle].setMax(maxThrottle);
 
             throttleMidPointZero[whichThrottle] = (maxThrottle + prefSwitchingThrottleSliderDeadZone);

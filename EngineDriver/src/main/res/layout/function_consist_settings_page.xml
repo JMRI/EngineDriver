@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,Autofill,LabelFor"
+    android:fitsSystemWindows="true" >
+
+    <include layout="@layout/toolbar_screen_name_line" />
+    <include layout="@layout/toolbar" />
+    <include layout="@layout/toolbar_status_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="2dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <!--- Width of this column will be programatically changed if used for DCC-EX Functions-->
+        <RelativeLayout
+            android:id="@+id/function_consist_instruction"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/function_consist_heading"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/functionConsistHeader"
+                tools:ignore="RtlSymmetry" />
+
+            <ScrollView
+                android:id="@+id/function_consist_instruction_text_scroll_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/function_consist_heading"
+                android:padding="0dp"
+                tools:ignore="RtlSymmetry" >
+
+                <TextView
+                    android:id="@+id/function_consist_instruction_text"
+                    style="?attr/floating_text_style"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2sp"
+                    android:text="@string/functionConsistHelpText"
+                    android:textSize="14sp"
+                    tools:ignore="SmallSp" />
+
+            </ScrollView>
+
+            <Button
+                android:id="@+id/functionConsistReset"
+                style="?attr/ed_normal_button_condensed_style"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_above="@id/functionConsistClose"
+                android:layout_centerHorizontal="true"
+                android:text="@string/fbResetFunctionLabels"
+                app:drawableStartCompat="?attr/ed_reset_glyph"
+                android:padding="0dp"
+                tools:ignore="RtlSymmetry" />
+
+            <Button
+                android:id="@+id/functionConsistClose"
+                style="?attr/ed_small_button_condensed_text_style"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="4dp"
+                android:padding="0dp"
+                android:text="@string/logviewerClose"
+                app:drawableStartCompat="?attr/ed_cross_glyph"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/ScrollView01"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            tools:ignore="RtlSymmetry" >
+
+            <TableLayout
+                android:id="@+id/function_consist_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:ignore="Autofill,HardcodedText,LabelFor,TextFields,TooManyViews">
+
+                <TableRow >  <!--Header-->
+
+                    <TextView
+                        style="?android:attr/listSeparatorTextViewStyle"
+                        android:fontFamily="sans-serif-condensed"
+                        android:layout_width="30dp"
+                        android:layout_marginRight="2dp"
+                        android:textSize="12sp"
+                        android:text="@string/functionConsistColumnLabel"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/function_consist_LocosHeader"
+                        android:layout_width="130dp"
+                        android:layout_marginRight="2dp"
+                        android:textSize="12sp"
+                        android:text="@string/functionConsistColumnLocos"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-condensed"
+                        style="?android:attr/listSeparatorTextViewStyle"  />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="40dp"
+                        android:layout_marginRight="2dp"
+                        android:textSize="12sp"
+                        android:text="@string/functionConsistColumnLatching"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-condensed"
+                        style="?android:attr/listSeparatorTextViewStyle"  />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" > <!--Row 00-->
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton00DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton01DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton02DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:weightSum="1"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton03DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton04DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton05DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton06DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton07DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton08DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton09DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton10DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/functionButton11DefaultValue"
+                        android:textSize="14sp" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton12DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton13DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton14DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton15DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton16DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton17DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton18DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton19DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton20DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton21DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="50dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton22DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="50dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton23DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton24DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton25DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="50dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton26DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton27DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton28DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton29DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton30DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp" >
+
+                    <TextView
+                        style="?attr/edit_label_condensed_text_style"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/functionButton31DefaultValue" />
+
+                    <Spinner
+                        android:layout_width="130dp"
+                        android:paddingRight="-50dp"
+                        android:entries="@array/prefFunctionConsistLocosEntries"
+                        android:entryValues="@array/prefFunctionConsistLocosEntryValues" />
+
+                    <Spinner
+                        android:layout_width="40dp"
+                        android:entries="@array/prefFunctionConsistLatchingEntries"
+                        android:entryValues="@array/prefFunctionConsistLatchingEntryValues" />
+
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

@@ -78,6 +78,7 @@ import java.util.regex.Pattern;
 
 import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.type.restart_reason_type;
@@ -105,6 +106,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     //    private GestureDetector myGesture;
     private Menu overflowMenu;
+    volatile Handler gestureHandler;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
@@ -346,75 +348,79 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         return txtLen;
     }
 
-    //Handle messages from the communication thread back to this thread (responses from withrottle)
-    @SuppressLint("HandlerLeak")
-    class turnouts_handler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public turnouts_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
-            String response_str;
-            switch (msg.what) {
-                case message_type.RESPONSE:
-                    response_str = msg.obj.toString();
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+            Bundle bundle = msg.getData();
 
-                    if (response_str.length() >= 3) {
-                        String com1 = response_str.substring(0, 3);
-                        //refresh turnouts if any have changed or if turnout list has changed
-                        if ("PTA".equals(com1) || "PTL".equals(com1)) {
-                            refreshTurnoutsView();
-                            refreshTurnoutViewStates();
-                            refreshRecentTurnoutViewStates();
-                            //show server list first time it arrives
-                            if ("PTL".equals(com1) && !mainapp.shownRosterTurnouts) {
-                                showMethod(WHICH_METHOD_ROSTER);
-                            }
-                        }
-                        //update power icon
-                        if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
+            switch (msg.what) {
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
+                    break;
+
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.WIT_TURNOUT_NOT_DEFINED: {
+                    if ((bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.COMMAND))) {
+
+                        removeTurnoutFromRecentList(bundle.getString(alert_bundle_tag_type.COMMAND));
                     }
                     break;
+                }
+
+                case message_type.RECEIVED_TURNOUT_UPDATE:
+                    refreshTurnoutsView();
+                    refreshTurnoutViewStates();
+                    refreshRecentTurnoutViewStates();
+                    //show server list first time it arrives
+                    if ( (mainapp.hasRosterTurnouts) && (!mainapp.shownRosterTurnouts) ) {
+                        showMethod(WHICH_METHOD_ROSTER);
+                    }
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
                     break;
 
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                case message_type.RECEIVED_TIME_CHANGE:
+                    setActivityTitle();
                     break;
 
-                case message_type.REOPEN_THROTTLE:
-                    if (threaded_application.currentActivity == activity_id_type.TURNOUTS)
-                        reopenThrottlePage();
-                    break;
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.WIT_CON_RETRY:
-                    witRetry(msg.obj.toString());
+                    if ((bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.MESSAGE))) {
+
+                        witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
+                    }
                     break;
+
                 case message_type.WIT_CON_RECONNECT:
                     refreshTurnoutsView();
                     refreshTurnoutViewStates();
                     loadRecentTurnoutsList();
                     refreshRecentTurnoutViewStates();
                     break;
-                case message_type.TIME_CHANGED:
-                    setActivityTitle();
-                    break;
-                case message_type.RESTART_APP:
-                case message_type.RELAUNCH_APP:
-                case message_type.SHUTDOWN:
-                    shutdown();
-                    break;
-                case message_type.DISCONNECT:
-                    disconnect();
-                    break;
-                case message_type.WIT_TURNOUT_NOT_DEFINED:
-                    removeTurnoutFromRecentList(msg.obj.toString());
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.TURNOUTS)
+                        reopenThrottlePage();
                     break;
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
@@ -422,9 +428,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     endThisActivity();
                     break;
 
-                default:
+                case message_type.DISCONNECT:
+                    disconnect();
                     break;
 
+                case message_type.RESTART_APP:
+                case message_type.RELAUNCH_APP:
+                case message_type.SHUTDOWN:
+                    shutdown();
+                    break;
             }
         }
     }
@@ -457,7 +469,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                         return;
                     }
                 }
-                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, whichCommand + entryText);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(alert_bundle_tag_type.TURNOUT, entryText);
+                bundle.putChar(alert_bundle_tag_type.TURNOUT_ACTION, whichCommand);
+                mainapp.alertCommHandlerWithBundle(message_type.TURNOUT, bundle);
 
                 turnoutSystemName = entryText;
                 turnoutUserName = entryText;
@@ -521,7 +537,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             turnoutSystemName = snv.getText().toString();
             turnoutUserName = unv.getText().toString();
             turnoutSource = source_type.ROSTER;
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, _buttonType + turnoutSystemName);    // C=Close T=Throw 2=toggle
+
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.TURNOUT, turnoutSystemName);
+            bundle.putChar(alert_bundle_tag_type.TURNOUT_ACTION, _buttonType.charAt(0));
+            mainapp.alertCommHandlerWithBundle(message_type.TURNOUT, bundle);
 
             saveRecentTurnoutsList(true);
             mainapp.buttonVibration();
@@ -545,7 +565,11 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             turnoutSystemName = snv.getText().toString();
             turnoutUserName = unv.getText().toString();
             turnoutSource = Integer.parseInt(source.getText().toString());
-            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.TURNOUT, _buttonType + turnoutSystemName);    // C=Close T=Throw 2=toggle
+
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.TURNOUT, turnoutSystemName);
+            bundle.putChar(alert_bundle_tag_type.TURNOUT_ACTION, _buttonType.charAt(0));
+            mainapp.alertCommHandlerWithBundle(message_type.TURNOUT, bundle);
 
             removingTurnoutOrForceReload = true;
             saveRecentTurnoutsList(true);
@@ -592,12 +616,14 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
         }
 
-        setContentView(R.layout.turnouts);
+        setContentView(R.layout.turnouts_page);
+
+        if (gestureHandler == null)
+            gestureHandler = new GestureHandler(Looper.getMainLooper());
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
-        mainapp.turnouts_msg_handler = new turnouts_handler(Looper.getMainLooper());
-
-//        myGesture = new GestureDetector(this);
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.TURNOUTS] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.TURNOUTS] = new BundleMessageHandler(Looper.getMainLooper());
 
         // -------------------------------------------------------------------
 
@@ -929,13 +955,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         //Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
         super.onDestroy();
 
-        if (mainapp.turnouts_msg_handler != null) {
-            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
-            mainapp.turnouts_msg_handler.removeCallbacksAndMessages(null);
-            mainapp.turnouts_msg_handler = null;
+        if (gestureHandler != null) {
+            gestureHandler.removeCallbacks(gestureStopped);
+            gestureHandler.removeCallbacksAndMessages(null);
+            gestureHandler = null;
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): mainapp.turnouts_msg_handler is null. Unable to removeCallbacksAndMessages");
+            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
         }
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.TURNOUTS);
     }
 
     void endThisActivity() {
@@ -1007,7 +1035,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.settings_mnu) {
-            in = new Intent().setClass(this, SettingsActivity.class);
+            in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -1021,7 +1049,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     threaded_application.activityInTransition(activityName);
-                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
+
+                    mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
+
                     final Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -1054,17 +1084,17 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             return true;
 
         } else if (item.getItemId() == R.id.about_mnu) {
-            in = new Intent().setClass(this, about_page.class);
+            in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
-            in = new Intent().setClass(this, dcc_ex.class);
+            in = new Intent().setClass(this, DccexActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.withrottle_cv_programmer_mnu) {
-            in = new Intent().setClass(this, withrottle_cv_programmer.class);
+            in = new Intent().setClass(this, WiThrottleCvProgrammerActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -1517,6 +1547,13 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         bToggle.setText(currentStateDesc);
     }
 
+    static class GestureHandler extends Handler {
+
+        public GestureHandler(Looper looper) {
+            super(looper);
+        }
+    }
+
     @Override
     public void onGesture(GestureOverlayView arg0, MotionEvent event) {
         gestureMove(event);
@@ -1554,15 +1591,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         mVelocityTracker.clear();
 
         // start the gesture timeout timer
-        if (mainapp.turnouts_msg_handler != null)
-            mainapp.turnouts_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+        if (gestureHandler != null)
+            gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
     }
 
     public void gestureMove(MotionEvent event) {
         // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): action " + event.getAction());
-        if (mainapp!=null && mainapp.turnouts_msg_handler!=null && gestureInProgress) {
+        if (mainapp!=null && gestureHandler!=null && gestureInProgress) {
             // stop the gesture timeout timer
-            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
+            gestureHandler.removeCallbacks(gestureStopped);
 
             mVelocityTracker.addMovement(event);
             if ((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) {
@@ -1579,15 +1616,15 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             }
             if (gestureInProgress) {
                 // restart the gesture timeout timer
-                mainapp.turnouts_msg_handler.postDelayed(gestureStopped, gestureCheckRate);
+                gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
             }
         }
     }
 
     private void gestureEnd(MotionEvent event) {
         // Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
-        if ( (mainapp!=null) && (mainapp.turnouts_msg_handler != null) && (gestureInProgress)) {
-            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
+        if ( (mainapp!=null) && (gestureHandler != null) && (gestureInProgress)) {
+            gestureHandler.removeCallbacks(gestureStopped);
 
             float deltaX = (event.getX() - gestureStartX);
             float absDeltaX =  Math.abs(deltaX);
@@ -1605,8 +1642,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void gestureCancel(MotionEvent event) {
-        if (mainapp.turnouts_msg_handler != null)
-            mainapp.turnouts_msg_handler.removeCallbacks(gestureStopped);
+        if (gestureHandler != null)
+            gestureHandler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
     }
 

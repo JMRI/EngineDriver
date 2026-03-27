@@ -24,6 +24,8 @@
         <item>Dark</item>
         <item>Colourful</item>
         <item>Neon Blue</item>
+        <item>Neon Green</item>
+        <item>Paper</item>
     </string-array>
 
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->

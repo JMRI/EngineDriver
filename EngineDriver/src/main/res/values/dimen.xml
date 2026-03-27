@@ -28,6 +28,8 @@
 
     <!-- Black theme -->
 
+    <dimen name="headingCornerRadius_black">4dp</dimen>
+
     <dimen name="buttonDisabledStroke_black">1dip</dimen>
     <dimen name="buttonSelectedStroke_black">1dip</dimen>
     <dimen name="buttonSelectedInsideStroke_black">1dip</dimen>
@@ -85,7 +87,7 @@
 
     <!-- Ultra Black theme -->
 
-    <dimen name="headingCornerRadius_ultra">1dp</dimen>
+    <dimen name="headingCornerRadius_ultra">4dp</dimen>
 
     <dimen name="buttonDisabledStroke_ultra">1px</dimen>
     <dimen name="buttonSelectedStroke_ultra">1px</dimen>
@@ -123,6 +125,8 @@
     <dimen name="spinnerBackgroundCornerRadius_ultra">3dp</dimen>
 
     <!-- Colorful theme -->
+
+    <dimen name="headingCornerRadius_colorful">4dp</dimen>
 
     <dimen name="buttonDisabledStroke_colorful">1dip</dimen>
     <dimen name="buttonSelectedStroke_colorful">1dip</dimen>
@@ -167,7 +171,7 @@
 
     <!-- Neon Blue theme -->
 
-    <dimen name="headingCornerRadius_neon">1dp</dimen>
+    <dimen name="headingCornerRadius_neon">4dp</dimen>
 
     <dimen name="buttonDisabledStroke_neon">1px</dimen>
     <dimen name="buttonSelectedStroke_neon">1px</dimen>
@@ -187,12 +191,61 @@
 
     <dimen name="buttonStopDisabledStroke_neon">1px</dimen>
     <dimen name="buttonStopSelectedStroke_neon">1px</dimen>
-    <dimen name="buttonStopSelectedInsideStroke_neon">2dp</dimen>
+<!--    <dimen name="buttonStopSelectedInsideStroke_neon">2dp</dimen>-->
     <dimen name="buttonStopSelectedInsideStrokePadding_neon">2dp</dimen>
     <dimen name="buttonStopStroke_neon">1dp</dimen>
     <dimen name="buttonStopCornerRadius_neon">3dp</dimen>
 
     <dimen name="spinnerBackgroundCornerRadius_neon">3dp</dimen>
+
+    <!-- Reusable theme -->
+
+    <dimen name="reusable_button_corner_radius">4dp</dimen>
+
+    <dimen name="reusable_button_stroke_width">2dp</dimen>
+    <dimen name="reusable_button_disabled_stroke_width">1dp</dimen>
+
+    <dimen name="reusable_button_active_stroke_top_left_light">0dp</dimen>
+    <dimen name="reusable_button_active_stroke_top_left_highlight">1dp</dimen>
+    <dimen name="reusable_button_active_stroke_bottom_right_highlight">1dp</dimen>
+    <dimen name="reusable_button_active_stroke_top_left_dark">3dp</dimen>
+    <dimen name="reusable_button_active_fill_top_left">2dp</dimen>
+    <dimen name="reusable_button_active_fill_bottom_right">2dp</dimen>
+
+    <dimen name="reusable_button_active_inside_1_top_left">3dp</dimen>
+    <dimen name="reusable_button_active_inside_1_bottom_right">3dp</dimen>
+    <dimen name="reusable_button_active_inside_2_top_left">5dp</dimen>
+    <dimen name="reusable_button_active_inside_2_bottom_right">5dp</dimen>
+
+    <dimen name="reusable_button_pressed_stroke_top_right_light">2dp</dimen>
+    <dimen name="reusable_button_pressed_stroke_top_right_highlight">3dp</dimen>
+    <dimen name="reusable_button_pressed_stroke_bottom_left_highlight">0dp</dimen>
+    <dimen name="reusable_button_pressed_stroke_bottom_left_light">1dp</dimen>
+    <dimen name="reusable_button_pressed_fill_top_left">2dp</dimen>
+    <dimen name="reusable_button_pressed_fill_bottom_right">2dp</dimen>
+
+    <dimen name="reusable_thumb_stroke_width">1dip</dimen>
+    <dimen name="reusable_thumb_shadow_width">5dp</dimen>
+
+    <dimen name="reusable_toolbar_button_outline_stroke_width">0</dimen> // don't add dp or dip. default is 0=don't show
+
+    <!-- use in the dialogs of the three original themes -->
+
+    <dimen name="button_corner_radius_original">6dp</dimen>
+
+    <!-- Muted theme -->
+
+    <dimen name="button_corner_radius_muted">12dp</dimen>
+    <dimen name="reusable_button_active_stroke_top_left_light_muted">1dp</dimen>
+    <dimen name="reusable_button_active_stroke_top_left_highlight_muted">2dp</dimen>
+
+    <!-- new_colorful theme -->
+
+    <dimen name="button_corner_radius_colorful">6dp</dimen>
+
+    <!-- outline theme -->
+
+    <dimen name="reusable_toolbar_button_outline_stroke_width_outline">20</dimen> // don't add dp or dip.
 
 
 </resources>

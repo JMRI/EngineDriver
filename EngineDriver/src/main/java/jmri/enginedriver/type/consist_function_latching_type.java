@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver.type;
 
 public interface consist_function_latching_type {
-    String IS_LATCHING_TEXT = "latching";
+//    String IS_LATCHING_TEXT = "latching";
     String IS_NOT_LATCHING_TEXT = "none";
 
     int NA = -1;

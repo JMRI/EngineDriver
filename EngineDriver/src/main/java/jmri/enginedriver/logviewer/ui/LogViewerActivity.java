@@ -46,6 +46,7 @@ import java.util.Objects;
 import jmri.enginedriver.R;
 import jmri.enginedriver.connection_activity;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.util.LocaleHelper;
@@ -66,7 +67,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private Button saveButton;
     private Button stopSaveButton;
     private Button shareButton;
-    private TextView saveInfoTV;
+//    private TextView saveInfoTV;
 
 //    private static final String ENGINE_DRIVER_DIR = "Android\\data\\jmri.enginedriver\\files";
 
@@ -74,6 +75,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private Toolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         if (mainapp.isForcingFinish()) {        // expedite
@@ -82,12 +84,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         }
 
         mainapp.applyTheme(this);
-        setContentView(R.layout.log_main);
+        setContentView(R.layout.log_viewer_page);
 
         final ListView listView = findViewById(android.R.id.list);
 
         ArrayList<String> logArray = new ArrayList<>();
-        adaptor = new LogStringAdaptor(this, R.layout.logitem, logArray);
+        adaptor = new LogStringAdaptor(this, R.layout.log_viewer_item, logArray);
 
         listView.setAdapter(adaptor);
 
@@ -119,7 +121,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         StopSaveButtonListener stopSaveClickListener = new StopSaveButtonListener();
         stopSaveButton.setOnClickListener(stopSaveClickListener);
 
-        saveInfoTV = findViewById(R.id.logviewer_info);
+//        saveInfoTV = findViewById(R.id.logviewer_info);
 
         shareButton = findViewById(R.id.logviewer_button_share); // Assuming you added the button with this ID
         shareButton.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +139,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //        logReaderTask.execute();
 
         //put pointer to this activity's handler in main app's shared variable
-        mainapp.logviewer_msg_handler = new logviewer_handler(Looper.getMainLooper());
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.LOG_VIEWER] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.LOG_VIEWER] = new BundleMessageHandler(Looper.getMainLooper());
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -187,9 +190,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @Override
     public void onResume() {
+        Log.d(threaded_application.applicationName, activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
+
+        mainapp.applyTheme(this);
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.LOG_VIEWER;
@@ -254,6 +260,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             logReaderTask.stopTask();
         }
         super.onDestroy();
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.LOG_VIEWER);
     }
 
     @Override
@@ -281,40 +289,46 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
-    class logviewer_handler extends Handler {
+    private class BundleMessageHandler extends Handler {
 
-        public logviewer_handler(Looper looper) {
+        public BundleMessageHandler(Looper looper) {
             super(looper);
         }
 
+        @Override
         public void handleMessage(Message msg) {
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+
+            Bundle bundle = msg.getData();
+
             switch (msg.what) {
-                case message_type.RESPONSE: {    //handle messages from WiThrottle server
-                    String s = msg.obj.toString();
-                    if (s.length() >= 3) {
-                        String com1 = s.substring(0, 3);
-                        //update power icon
-                        if ("PPA".equals(com1)) {
-                            mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
-                        }
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
+                    break;
+
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.LOG_ENTRY_RECEIVED: {
+                    if ( (bundle!=null)
+                        && (bundle.containsKey(alert_bundle_tag_type.LOG_ENTRY)) ) {
+
+                        String logEntry = bundle.getString(alert_bundle_tag_type.LOG_ENTRY);
+                        addLogEntryToView(logEntry);
                     }
                     break;
                 }
 
-                case message_type.ESTOP_PAUSED:
-                case message_type.ESTOP_RESUMED:
-                    mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
-                    break;
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
 
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
                     break;
 
-                case message_type.LOG_ENTRY_RECEIVED: {
-                    String s = msg.obj.toString();
-                    addLogEntryToView(s);
-                    break;
-                }
                 case message_type.REOPEN_THROTTLE:
                     endThisActivity();
                     break;
@@ -322,9 +336,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
-                    break;
-
-                default:
                     break;
 
             }
@@ -380,13 +391,13 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             saveButton.setVisibility(View.GONE);
             stopSaveButton.setVisibility(View.VISIBLE);
 //            shareButton.setVisibility(View.GONE);
-            saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
-            saveInfoTV.setVisibility(View.GONE);
+//            saveInfoTV.setText(String.format(getApplicationContext().getResources().getString(R.string.infoSaveLogFile), mainapp.logSaveFilename) );
+//            saveInfoTV.setVisibility(View.GONE);
         } else {
             saveButton.setVisibility(View.VISIBLE);
             stopSaveButton.setVisibility(View.GONE);
 //            shareButton.setVisibility((checkHasLogFiles()) ? View.VISIBLE : View.GONE);
-            saveInfoTV.setVisibility(View.GONE);
+//            saveInfoTV.setVisibility(View.GONE);
         }
     }
 
@@ -452,7 +463,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
             if (null == view) {
                 LayoutInflater vi = (LayoutInflater) LogViewerActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = vi.inflate(R.layout.logitem, parent, false);
+                view = vi.inflate(R.layout.log_viewer_item, parent, false);
             }
 
             String data = objects.get(position);
@@ -479,11 +490,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     msg = msg.replaceAll("<", "&lt;");
                     msg = msg.replaceAll(">", "&gt;");
                     if (!msg.contains("About: ")) {
-                        if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
-                            msg = "<span style=\"color: #404040\">" + msg;
-                        } else {
-                            msg = "<span style=\"color: #CCCCCC\">" + msg;
-                        }
+//                        if (mainapp.getSelectedTheme() == R.style.app_theme_colorful) {
+//                            msg = "<span style=\"color: #404040\">" + msg;
+//                        } else {
+//                            msg = "<span style=\"color: #CCCCCC\">" + msg;
+//                        }
+                        msg = "<span>" + msg;
                     } else {
                         msg = "<br/><span>" + msg;
                     }
@@ -538,7 +550,10 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
                 while (isRunning) {
                     line = reader.readLine();
-                    mainapp.sendMsg(mainapp.logviewer_msg_handler, message_type.LOG_ENTRY_RECEIVED, line);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(alert_bundle_tag_type.LOG_ENTRY, line);
+                    mainapp.alertActivitiesWithBundle(message_type.LOG_ENTRY_RECEIVED, bundle, activity_id_type.LOG_VIEWER);
                 }
             } catch (Exception e) {
                 isRunning = false;

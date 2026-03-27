@@ -116,7 +116,7 @@ public class Loco {
 
     public Integer getIntAddressLength() {
         String s = this.addr.substring(0,1);
-        Integer rslt = 0;
+        int rslt = 0;
         if (s.equals("L")) { rslt=1;}
         return rslt;
     }
@@ -227,7 +227,7 @@ public class Loco {
     }
 **/
      public Integer getFunctionNumberFromLabel(String lab) {
-        Integer functionNumber = -1;
+        int functionNumber = -1;
         if (!lab.isEmpty()) {
              if (functionLabels != null) {
                  for (int i = 0; i <= functionLabelsMaxKey; i++) {
@@ -249,7 +249,7 @@ public class Loco {
                                               threaded_application mainapp) {
         //List<String> functionList = new ArrayList<>();
         List<Integer> functionList = new ArrayList<>();
-        Integer matchingRule = -1;
+        int matchingRule = -1;
 
         if (prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX)) {
             // work out if/which rule the activated function matches

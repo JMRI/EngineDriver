@@ -21,7 +21,7 @@
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:visibility="gone"
-        app:srcCompat="@drawable/tick_glyph_large_dark"
+        app:srcCompat="@drawable/glyph_tick_large"
         tools:ignore="ContentDescription" />
 
     <TextView

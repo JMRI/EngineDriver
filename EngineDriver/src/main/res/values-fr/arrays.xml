@@ -163,6 +163,8 @@
         <item>Thème foncé</item>
         <item>Thème en couleurs</item>
         <item>Bleu Electrique</item>
+        <item>Vert fluo</item>
+        <item>Papier</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntries">
@@ -490,6 +492,7 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>Aucun</item>
         <item>DCC Main</item>
+        <item>DCC Main inversé</item>
         <item>PROGRAMME DCC</item>
         <item>DC</item>
         <item>Inversion polarité DC</item>

@@ -1,0 +1,2707 @@
+/* Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+package jmri.enginedriver;
+
+import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.database.Cursor;
+import android.media.ToneGenerator;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.provider.MediaStore;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.core.content.FileProvider;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.EditTextPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceGroup;
+import androidx.preference.PreferenceScreen;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import eu.esu.mobilecontrol2.sdk.MobileControl2;
+
+import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
+import jmri.enginedriver.type.auto_import_export_option_type;
+import jmri.enginedriver.type.consist_function_rule_style_type;
+import jmri.enginedriver.type.import_export_option_type;
+import jmri.enginedriver.type.restart_reason_type;
+import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.type.activity_outcome_type;
+
+import jmri.enginedriver.type.throttle_screen_type;
+import jmri.enginedriver.type.pref_import_type;
+import jmri.enginedriver.util.AutoServerConnectDialogFragmentCompat;
+import jmri.enginedriver.util.AutoServerIpConnectDialogFragmentCompat;
+import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
+import jmri.enginedriver.import_export.ImportExportPreferences;
+import jmri.enginedriver.util.LocaleHelper;
+
+public class PreferencesActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+    static final String activityName = "PreferencesActivity";
+
+    private int result = RESULT_OK;
+
+    public static final String DELIMITER = "\n --> ";
+
+    private String deviceId = "";
+
+    public SharedPreferences prefs;
+    public threaded_application mainapp;  // hold pointer to mainapp
+
+    private LinearLayout screenNameLine;
+    private Toolbar toolbar;
+    private LinearLayout statusLine;
+    private Menu overflowMenu;
+
+    private String exportedPreferencesFileName = "exported_preferences.ed";
+//    private boolean overwriteFile = false;
+
+    public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
+
+    private static final String IMPORT_PREFIX = "Import- "; // these two have to be the same length
+    private static final String EXPORT_PREFIX = "Export- ";
+
+    private static final String EXTERNAL_URL_PREFERENCES_IMPORT = "external_url_preferences_import.ed";
+    private static final String ENGINE_DRIVER_DIR = "Android/data/jmri.enginedriver/files";
+//    private static final String SERVER_ENGINE_DRIVER_DIR = "prefs/engine_driver";
+
+    private static final String DEMO_HOST = "jmri.mstevetodd.com";
+    private String[] prefHostImportExportEntriesFound = {"None"};
+    private String[] prefHostImportExportEntryValuesFound = {"None"};
+
+//    private ProgressDialog pDialog;
+//    public static final int PROGRESS_BAR_TYPE = 0;
+
+    private static final String GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL = "Button not available";
+    private static final String GAMEPAD_BUTTON_NOT_USABLE_LABEL = "Button not usable";
+
+    private boolean forceRestartAppOnPreferencesClose = false;
+    private int forceRestartAppOnPreferencesCloseReason = 0;
+    private boolean forceReLaunchAppOnPreferencesClose = false;
+
+    private String prefThrottleSwitchOption1 = "Default";
+    private String prefThrottleSwitchOption2 = "Default";
+
+    private String prefThrottleScreenType = "Default";
+    private String prefThrottleScreenTypeOriginal = "Default";
+    private int prefDisplaySemiRealisticThrottleNotches = 100;
+    private int prefDisplaySemiRealisticThrottleNotchesOriginal = 100;
+    protected boolean prefBackgroundImage = false;
+    boolean prefThrottleSwitchButtonDisplay = false;
+    boolean prefThrottleSwitchButtonCycleAll = false;
+    protected boolean prefHideSlider = false;
+
+    private String prefConsistFollowRuleStyle = "original";
+    private String priorPrefConsistFollowRuleStyle = "original";
+
+    private boolean ignoreThisThrottleNumChange = false;
+
+    private String currentSearchQuery = "";
+
+    protected final ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.d(threaded_application.applicationName, activityName + ": galleryLauncher callback received. ResultCode: " + result.getResultCode());
+
+                int resultCode = result.getResultCode();
+                if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
+                    Intent data = result.getData();
+                    handleGalleryResult(data);
+                }
+            }
+    );
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+
+            mainapp = (threaded_application) this.getApplication();
+        mainapp.applyTheme(this,true);
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.preferences_page);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+                if (savedInstanceState == null) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            SettingsFragment settingsFragment = SettingsFragment.newInstance("Advanced Setting");
+            fragmentTransaction.add(R.id.settings_preferences_frame, settingsFragment);
+            fragmentTransaction.commit();
+        }
+
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+
+        deviceId = mainapp.getFakeDeviceId();
+
+        //put pointer to this activity's message handler in main app's shared variable (If needed)
+        if (mainapp.activityBundleMessageHandlers[activity_id_type.SETTINGS] == null)
+            mainapp.activityBundleMessageHandlers[activity_id_type.SETTINGS] = new BundleMessageHandler(Looper.getMainLooper());
+
+        InPhoneLocoSoundsLoader iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, getApplicationContext());
+        iplsLoader.getIplsList();
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                mainapp.exitDoubleBackButtonInitiated = 0;
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    threaded_application.activityInTransition(activityName);
+                    setResult(result);
+                    finish();
+                    connection_activity.overridePendingTransition(PreferencesActivity.this, R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_preferences),
+                    "");
+            threaded_application.extendedLogging(activityName + ": onCreate(): Set toolbar");
+        }
+
+    } // end onCreate
+
+    @Override
+    public boolean onPreferenceStartScreen(PreferenceFragmentCompat preferenceFragmentCompat,
+                                           PreferenceScreen preferenceScreen) {
+        Log.d(threaded_application.applicationName, activityName + ": onPreferenceStartScreen(): callback called to attach the preference sub screen");
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        SettingsSubScreenFragment fragment = SettingsSubScreenFragment.newInstance("Advanced Settings Subscreen");
+        Bundle args = new Bundle();
+        //Defining the sub screen as new root for the  subscreen
+        args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, preferenceScreen.getKey());
+        fragment.setArguments(args);
+        ft.replace(R.id.settings_preferences_frame, fragment, preferenceScreen.getKey());
+//        ft.addToBackStack(null);
+        ft.addToBackStack(preferenceScreen.getKey());
+        ft.commit();
+
+        return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        threaded_application.activityPaused(activityName);
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(threaded_application.applicationName, activityName + ": onResume()");
+        super.onResume();
+        threaded_application.activityResumed(activityName);
+        mainapp.removeNotification(this.getIntent());
+
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
+        threaded_application.currentActivity = activity_id_type.SETTINGS;
+
+//        try {
+//            dismissDialog(PROGRESS_BAR_TYPE);
+//        } catch (Exception e) {
+//            Log.d(threaded_application.applicationName, activityName + ": onResume() no dialog to kill");
+//        }
+
+        if (mainapp.isForcingFinish()) {     //expedite
+            this.finish();
+            return;
+        }
+        mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
+
+        refreshOverflowMenu();
+
+//        mainapp.applyTheme(this,true);
+
+        screenNameLine = findViewById(R.id.screen_name_line);
+        toolbar = findViewById(R.id.toolbar);
+        statusLine = findViewById(R.id.status_line);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.showOverflowMenu();
+            mainapp.setToolbarTitle(toolbar, statusLine, screenNameLine,
+                    getApplicationContext().getResources().getString(R.string.app_name),
+                    getApplicationContext().getResources().getString(R.string.app_name_preferences),
+                    "");
+            Log.d(threaded_application.applicationName, activityName + ": onResume(): Set toolbar");
+        }
+
+        // save some values
+        prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+        priorPrefConsistFollowRuleStyle = prefConsistFollowRuleStyle;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        super.onDestroy();
+
+        mainapp.clearActivityBundleMessageHandler(activity_id_type.SETTINGS);
+
+        if (forceRestartAppOnPreferencesClose) {
+            forceRestartApp(forceRestartAppOnPreferencesCloseReason);
+        }
+        if (forceReLaunchAppOnPreferencesClose) {
+            forceReLaunchApp(forceRestartAppOnPreferencesCloseReason);
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public void forceRestartApp(int forcedRestartReason) {
+        Log.d(threaded_application.applicationName, activityName + ": forceRestartApp() - forcedRestartReason: " + forcedRestartReason);
+
+        String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
+
+        if (prefAutoImportExport.equals(auto_import_export_option_type.CONNECT_AND_DISCONNECT)) {
+            if (!mainapp.connectedHostName.isEmpty()) {
+                String exportedPreferencesFileName = mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                writeSharedPreferencesToFile(prefs, exportedPreferencesFileName, false);
+            }
+        }
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(alert_bundle_tag_type.RESTART_REASON, forcedRestartReason);
+        mainapp.alertCommHandlerWithBundle(message_type.RESTART_APP, bundle);
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public void forceReLaunchApp(int forcedRestartReason) {
+        threaded_application.extendedLogging(activityName + ": forceRelaunchApp() ");
+
+        this.finish();
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        Message msg = Message.obtain();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(alert_bundle_tag_type.RESTART_REASON, forcedRestartReason);
+        mainapp.alertCommHandlerWithBundle(message_type.RELAUNCH_APP, bundle);
+
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public void startGamepadTestActivity() {
+
+        boolean result = prefs.getBoolean("prefGamepadTestNow", getResources().getBoolean(R.bool.prefGamepadTestNowDefaultValue));
+
+        if (result) {
+            prefs.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
+            this.reload();
+
+            try {
+                Intent in = new Intent().setClass(this, GamepadTestActivity.class);
+                startActivity(in);
+                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            } catch (Exception ex) {
+                Log.d(threaded_application.applicationName, activityName + ": startGamepadTestActivity(): Settings: " + ex.getMessage());
+            }
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public void shareFileNow() {
+
+        boolean result = prefs.getBoolean("prefShareFileNow", getResources().getBoolean(R.bool.prefShareFileNowDefaultValue));
+
+        if (result) {
+            prefs.edit().putBoolean("prefShareFileNow", false).commit();  //reset the preference
+            showFileSelectionDialog();
+        }
+    }
+
+    public ArrayList<File> getFilesForDialog() {
+        ArrayList<File> logFiles = new ArrayList<>();
+        try {
+            File dir = new File(getApplicationContext().getExternalFilesDir(null).getPath());
+            if (dir.exists() && dir.isDirectory()) {
+                File[] filesList = dir.listFiles();
+                if (filesList != null) {
+                    for (File file : filesList) {
+                        logFiles.add(file);
+                        threaded_application.extendedLogging(activityName + ": getFilesForDialog(): Found: " + file.getName());
+                    }
+                    Collections.sort(logFiles, (file1, file2) -> file1.getName().compareTo(file2.getName()));
+                }
+            }
+        } catch (Exception e) {
+            Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
+            mainapp.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
+        }
+        return logFiles;
+    }
+
+    private void showFileSelectionDialog() {
+        ArrayList<File> logFiles = getFilesForDialog();
+
+        if (logFiles.isEmpty()) return;
+
+        // Extract just the file names for display in the dialog
+        ArrayList<String> fileNames = new ArrayList<>();
+        for (File file : logFiles) {
+            fileNames.add(file.getName());
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.file_list_dialog, null);
+        builder.setView(dialogView);
+
+        ListView dialogListView = dialogView.findViewById(R.id.file_dialog_listview);
+        Button cancelButton = dialogView.findViewById(R.id.file_dialog_button_cancel);
+
+        // --- Setup ListView ---
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
+                R.layout.file_list_item, // This layout MUST define the font
+                R.id.file_list_item_text,    // The ID of the TextView within logfile_list_item.xml
+                fileNames);
+        dialogListView.setAdapter(listAdapter);
+
+        final AlertDialog dialog = builder.create(); // Create before setting item click listener for ListView
+
+        dialogListView.setOnItemClickListener((parent, view, position, id) -> {
+            File selectedFile = logFiles.get(position);
+//            mainapp.safeToast("Selected: " + selectedFile.getName(), Toast.LENGTH_SHORT);
+            shareFile(selectedFile,selectedFile.getName());
+            dialog.dismiss();
+        });
+
+        cancelButton.setOnClickListener(v -> {dialog.dismiss(); reload();} );
+
+        dialog.show();
+    }
+
+    private void shareFile(File file, String fileName) {
+        Uri fileUri = FileProvider.getUriForFile(
+                this,
+                getApplicationContext().getPackageName() + ".fileprovider",
+                file
+        );
+        shareFile(fileUri, fileName);
+    }
+    private void shareFile(Uri fileUri, String fileName) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("*/*"); // Set the MIME type of the file
+        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION); // Important for granting temporary read access
+
+        // Verify that there are apps available to handle this intent
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(Intent.createChooser(shareIntent, getApplicationContext().getResources().getString(R.string.shareFile, fileName)));
+        } else {
+            mainapp.safeToast(R.string.toastNoAppToShare, Toast.LENGTH_SHORT);
+        }
+        this.reload();
+    }
+
+    public void reload() {
+        // restart the activity so all the preferences show correctly based on what was imported / hidden
+        Log.d(threaded_application.applicationName, activityName + ": reload(): Forcing activity to recreate");
+        recreate();
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private void writeSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
+//        Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
+        sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
+        if (!exportedPreferencesFileName.equals(".ed")) {
+            File dst = new File(getApplicationContext().getExternalFilesDir(null), exportedPreferencesFileName);
+
+            if ((dst.exists()) && (confirmDialog)) {
+                overwriteFileDialog(sharedPreferences, ENGINE_DRIVER_DIR + "/" + exportedPreferencesFileName);
+            } else {
+                importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+            }
+        } else {
+            mainapp.safeToast(R.string.prefImportExportErrorNotConnected, Toast.LENGTH_LONG);
+        }
+    }
+
+    public String getCurrentSearchQuery() {
+        return currentSearchQuery;
+    }
+
+    public void overwriteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            //@Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+//                        overwriteFile = true;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+//                        overwriteFile = false;
+                        break;
+                }
+                fixAndReloadImportExportPreference(sharedPreferences);
+                mainapp.buttonVibration();
+            }
+        };
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setMessage(getApplicationContext().getResources().getString(R.string.prefImportExportOverwite).replace("%1$s",fileNameAndPath))
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.cancel, dialogClickListener);
+        ab.show();
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences) {
+        Log.d(threaded_application.applicationName, activityName + ": fixAndReloadImportExportPreference()");
+        sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
+        sharedPreferences.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
+        reload();
+    }
+
+    /** @noinspection SameParameterValue*/
+    private void loadSharedPreferencesFromFileDialog(final SharedPreferences sharedPreferences, final String exportedPreferencesFileName, final String deviceId, final int forceRestartReason) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            //@Override
+            @SuppressLint("ApplySharedPref")
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        loadSharedPreferencesFromFile(sharedPreferences, exportedPreferencesFileName, deviceId, forceRestartReason);
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
+                        reload();
+                        break;
+                }
+                mainapp.buttonVibration();
+            }
+        };
+
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmImportPreferencesTitle))
+                .setMessage(getApplicationContext().getResources().getString(R.string.dialogImportPreferencesQuestion))
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.cancel, dialogClickListener);
+        ab.show();
+    }
+
+    private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
+        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + exportedPreferencesFileName);
+        boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
+
+        if (!result) {
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG);
+        }
+        forceRestartApp(forceRestartReason);
+    }
+
+    private void resetPreferencesDialog() {
+        Log.d(threaded_application.applicationName, activityName + ": resetPreferencesDialog()");
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            //@Override
+            @SuppressLint("ApplySharedPref")
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        resetPreferences();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
+                        reload();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmResetPreferencesTitle))
+                .setMessage(getApplicationContext().getResources().getString(R.string.dialogResetPreferencesQuestion))
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.cancel, dialogClickListener);
+        ab.show();
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private void resetPreferences() {
+        SharedPreferences.Editor prefEdit = prefs.edit();
+        prefEdit.clear();
+        prefEdit.commit();
+        Log.d(threaded_application.applicationName, activityName + ": resetPreferences(): Reset succeeded");
+        delete_settings_file("function_settings.txt");
+        delete_settings_file("connections_list.txt");
+        delete_settings_file("recent_engine_list.txt");
+        delete_auto_import_settings_files();
+
+        threaded_application.INTRO_VERSION = "0"; // force the re-run of the intro
+
+        reload();
+
+        forceRestartApp(restart_reason_type.RESET);
+    }
+
+    private void delete_auto_import_settings_files() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File dir = new File(getApplicationContext().getExternalFilesDir(null), ENGINE_DRIVER_DIR);
+            File[] edFiles = dir.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File folder, String name) {
+                    return name.toLowerCase().startsWith("auto_");
+                }
+            });
+            if (edFiles != null && edFiles.length > 0){
+                for (File edFile : edFiles) {
+                    delete_settings_file(edFile.getName());
+                }
+            }
+        }
+    }
+
+    private void delete_settings_file(String file_name) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File settings_file = new File(getApplicationContext().getExternalFilesDir(null), file_name);
+            if (settings_file.exists()) {
+                if (settings_file.delete()) {
+                    Log.d(threaded_application.applicationName, activityName + ": delete_settings_file(): Settings: " + file_name + " deleted");
+                } else {
+                    Log.e(threaded_application.applicationName, activityName + ": delete_settings_file(): Settings: " + file_name + " NOT deleted");
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.onAttach(base));
+    }
+
+    private class BundleMessageHandler extends Handler {
+
+        public BundleMessageHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+//            Bundle bundle = msg.getData();
+
+            switch (msg.what) {
+                case message_type.RECEIVED_POWER_STATE_CHANGE:
+                    if (overflowMenu != null)
+                        mainapp.setPowerStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.powerLayoutButton));
+                    break;
+
+                case message_type.RECEIVED_DCCEX_ESTOP_PAUSED:
+                case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
+                    if (overflowMenu != null)
+                        mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
+                case message_type.REFRESH_OVERFLOW_MENU:
+                    refreshOverflowMenu();
+                    break;
+
+                case message_type.REOPEN_THROTTLE:
+                    if (threaded_application.currentActivity == activity_id_type.SETTINGS)
+                        endThisActivity();
+                    break;
+
+                case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
+                case message_type.LOW_MEMORY:
+                    endThisActivity();
+                    break;
+
+            }
+        }
+    }
+
+    @SuppressWarnings("ChainOfInstanceofChecks")
+    public void updatePreference(Preference preference) {
+        if (preference == null) return;
+
+        String summary = (String) preference.getSummary();
+        if (summary == null) return;
+        if (summary.contains(DELIMITER)) {
+            summary = summary.substring(0, summary.indexOf(DELIMITER));
+            preference.setSummary(summary);
+        }
+        String prefValue;
+        if (preference instanceof ListPreference listPreference) {
+            prefValue = (String) listPreference.getEntry();
+            listPreference.setSummary(summary + DELIMITER + (prefValue!=null ? prefValue : ""));
+        } else if (preference instanceof EditTextPreference editTextPref) {
+            prefValue = editTextPref.getText();
+            editTextPref.setSummary(summary + DELIMITER + ((prefValue!=null) &&(!prefValue.equals("::")) ? prefValue : ""));
+        }
+
+//            SharedPreferences sharedPrefs = getPreferenceManager().getSharedPreferences();
+//            preference.setSummary(sharedPrefs.getString(key, "Default"));
+    }
+
+//    @Override
+//    protected Dialog onCreateDialog(int id) { // dialog for the progress bar
+//        //noinspection SwitchStatementWithTooFewBranches
+//        switch (id) {
+//            case PROGRESS_BAR_TYPE: // we set this to 0
+//                pDialog = new ProgressDialog(this);
+//                pDialog.setMessage("Downloading file. Please wait...");
+//                pDialog.setIndeterminate(false);
+//                pDialog.setMax(100);
+//                pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//                pDialog.setCancelable(true);
+//                pDialog.show();
+//                return pDialog;
+//            default:
+//                return null;
+//        }
+//    }
+
+//    class importFromURL extends AsyncTask<String, String, String> {   // Background Async Task to download file
+//
+//        //Before starting background thread Show Progress Bar Dialog
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            showDialog(PROGRESS_BAR_TYPE);
+//        }
+//
+//        // Importing file in background thread
+//        @SuppressLint("ApplySharedPref")
+//        @Override
+//        protected String doInBackground(String... f_url) {
+//            Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: start");
+//            int count;
+//            String n_url = f_url[0].trim();
+//
+//            if ((mainapp.connectedHostip != null)) {
+//                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + f_url[0];
+//            } else {
+//                Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: Not currently connected");
+//                return null;
+//            }
+//
+//            try {
+//                URL url = new URL(n_url);
+//                URLConnection connection = url.openConnection();
+//                connection.connect();
+//
+//                // to help show a 0-100% progress bar
+//                int lengthOfFile = connection.getContentLength();
+//
+//                // download the file
+//                InputStream input = new BufferedInputStream(url.openStream(),
+//                        8192);
+//
+////                File Directory = new File(ENGINE_DRIVER_DIR); // in case the folder does not already exist
+//
+//                // Output stream
+////                FileOutputStream output = new FileOutputStream(Environment
+////                        .getExternalStorageDirectory().toString()
+////                        + "/" + ENGINE_DRIVER_DIR + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
+//                FileOutputStream output = new FileOutputStream(context.getExternalFilesDir(null)
+//                        + "/" + EXTERNAL_URL_PREFERENCES_IMPORT);
+//
+//                byte data[] = new byte[1024];
+//
+//                long total = 0;
+//
+//                while ((count = input.read(data)) != -1) {
+//                    total += count;
+//                    // publishing the progress....
+//                    // After this onProgressUpdate will be called
+//                    publishProgress("" + (int) ((total * 100) / lengthOfFile));
+//
+//                    // writing data to file
+//                    output.write(data, 0, count);
+//                }
+//
+//                // flushing output
+//                output.flush();
+//
+//                // closing streams
+//                output.close();
+//                input.close();
+//
+//                dismissDialog(PROGRESS_BAR_TYPE);
+//                prefs.edit().putString("prefPreferencesImportFileName", n_url).commit();
+//                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
+//
+//            } catch (Exception e) {
+//                Log.e(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server Failed: " + e.getMessage());
+//                try {
+//                    dismissDialog(PROGRESS_BAR_TYPE);
+//                } catch (Exception ignored) {
+//                }
+//                prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_RESET).commit();
+//                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
+//            }
+//
+//            Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: End");
+//            return null;
+//        }
+//
+//        protected void onProgressUpdate(String... progress) {  //update progress bar
+//            // setting progress percentage
+//            pDialog.setProgress(Integer.parseInt(progress[0]));
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String file_url) {
+//            // dismiss the dialog after the file was downloaded
+//            dismissDialog(PROGRESS_BAR_TYPE);
+//
+//        }
+//
+//    }
+
+    protected void loadImageFromGallery() {
+        try {
+            // Create intent to Open Image applications like Gallery, Google Photos
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryLauncher.launch(intent);
+            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        } catch (Exception ex) {
+            Log.d(threaded_application.applicationName, activityName + ": loadImageFromGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private void handleGalleryResult(Intent data) {
+        Log.d(threaded_application.applicationName, activityName + ": handleGalleryResult() ");
+
+        try {
+            // When an Image is picked
+            if (data != null) {
+                // Get the Image from data
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.MediaColumns.DATA };
+
+                // Get the cursor
+                assert selectedImage != null;
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                assert cursor != null;
+                cursor.moveToFirst();
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgpath = cursor.getString(columnIndex);
+                cursor.close();
+
+                SharedPreferences.Editor edit=prefs.edit();
+                edit.putString("prefBackgroundImageFileName",imgpath);
+                edit.commit();
+
+                forceRestartAppOnPreferencesClose = true;
+                forceRestartAppOnPreferencesCloseReason = restart_reason_type.BACKGROUND;
+            }
+            else {
+                mainapp.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
+            }
+        } catch (Exception e) {
+            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
+        }
+    }
+
+    void endThisActivity() {
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.activityInTransition(activityName);
+        setResult(result);
+        this.finish();  //end this activity
+        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(threaded_application.applicationName, activityName + ": onCreateOptionsMenu()");
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.preferences_menu, menu);
+        overflowMenu = menu;
+
+        refreshOverflowMenu();
+
+        MenuItem searchItem = menu.findItem(R.id.search_button);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false; // Handled by onQueryTextChange
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    currentSearchQuery = newText; // Store the query
+                    Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.settings_preferences_frame);
+                    if (currentFragment instanceof SettingsFragment) {
+                        ((SettingsFragment) currentFragment).filterPreferences(newText);
+                    } else if (currentFragment instanceof SettingsSubScreenFragment) {
+                        ((SettingsSubScreenFragment) currentFragment).filterPreferences(newText);
+                    }
+                    return true;
+                }
+            });
+        }
+
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(@NonNull MenuItem item) {
+                return true; // Allow expand
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(@NonNull MenuItem item) {
+                currentSearchQuery = ""; // Clear stored query
+                // Re-filter with empty string to show all
+                Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.settings_preferences_frame);
+                if (currentFragment instanceof SettingsFragment) {
+                    ((SettingsFragment) currentFragment).filterPreferences("");
+                } else if (currentFragment instanceof SettingsSubScreenFragment) {
+                    ((SettingsSubScreenFragment) currentFragment).filterPreferences("");
+                }
+                return true; // Allow collapse
+            }
+        });
+
+        // Restore search view state if activity is recreated
+        if (currentSearchQuery != null && !currentSearchQuery.isEmpty()) {
+            searchItem.expandActionView();
+            if (searchView != null) {
+                searchView.setQuery(currentSearchQuery, false);
+                searchView.clearFocus();
+            }
+        }
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    // excludes search
+    private void refreshOverflowMenu() {
+        if (overflowMenu == null) return;
+
+        mainapp.refreshCommonOverflowMenu(overflowMenu);
+        adjustToolbarSize(overflowMenu);
+    }
+
+        @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle all of the possible menu actions.
+        if (item.getItemId() == R.id.emergency_stop_button) {
+            mainapp.sendEStopMsg();
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.flashlight_button) {
+            mainapp.toggleFlashlightActionView(this, overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
+            mainapp.buttonVibration();
+            return true;
+        } else if (item.getItemId() == R.id.powerLayoutButton) {
+            if (!mainapp.isPowerControlAllowed()) {
+                mainapp.powerControlNotAllowedDialog(overflowMenu);
+            } else {
+                mainapp.powerStateMenuButton();
+            }
+            mainapp.buttonVibration();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    protected void limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
+        Log.d(threaded_application.applicationName, activityName + ": limitIntPrefValue()");
+        EditTextPreference prefText = prefScreen.findPreference(key);
+
+        if (prefText == null) return;
+
+        try {
+            int newVal = Integer.parseInt(sharedPreferences.getString(key, defaultVal).trim());
+            if (newVal > maxVal) {
+                sharedPreferences.edit().putString(key, Integer.toString(maxVal)).commit();
+                prefText.setText(Integer.toString(maxVal));
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                        Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG);
+            } else if (newVal < minVal) {
+                sharedPreferences.edit().putString(key, Integer.toString(minVal)).commit();
+                prefText.setText(Integer.toString(minVal));
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                        Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG);
+            }
+        } catch (NumberFormatException e) {
+            sharedPreferences.edit().putString(key, defaultVal).commit();
+            prefText.setText(defaultVal);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                                        Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
+        }
+    }
+
+    /** @noinspection SameParameterValue, SameParameterValue */
+    @SuppressLint("ApplySharedPref")
+    protected void limitIntArrayPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
+        Log.d(threaded_application.applicationName, activityName + ": limitIntArrayPrefValue()");
+
+        String prefValue = sharedPreferences.getString(key, defaultVal).trim();
+        String[] prefValues = threaded_application.splitByString(prefValue, " ");
+
+        int pass = 0; // all good
+
+        EditTextPreference prefText = prefScreen.findPreference(key);
+        for (int i = 0; i < prefValues.length; i++) {
+            try {
+                int newVal = Integer.parseInt(prefValues[i].trim());
+                if (newVal > maxVal) {
+                    pass = 1; // need to rewrite
+                    prefValues[i] = Integer.toString(maxVal);
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                            Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(maxVal)), Toast.LENGTH_LONG);
+                } else if (newVal < minVal) {
+                    pass = 1; // need to rewrite
+                    prefValues[i] = Integer.toString(minVal);
+                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                            Integer.toString(minVal), Integer.toString(maxVal), Integer.toString(minVal)), Toast.LENGTH_LONG);
+                }
+            } catch (NumberFormatException e) {
+                pass = 2; //fail
+            }
+        }
+
+        if (prefText == null) return;
+
+        if (pass==1) {
+            StringBuilder newValue = new StringBuilder();
+            for (String value : prefValues) {
+                newValue.append(value);
+                newValue.append(" ");
+            }
+            sharedPreferences.edit().putString(key, newValue.toString().trim()).commit();
+            prefText.setText(newValue.toString().trim());
+
+        } else if (pass==2) {
+            sharedPreferences.edit().putString(key, defaultVal).commit();
+            prefText.setText(defaultVal);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                    Integer.toString(minVal), Integer.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
+        }
+    }
+
+    /** @noinspection SameParameterValue, SameParameterValue , SameParameterValue */
+    @SuppressLint("ApplySharedPref")
+    protected void limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
+        Log.d(threaded_application.applicationName, activityName + ": limitFloatPrefValue()");
+        EditTextPreference prefText = prefScreen.findPreference(key);
+        if (prefText == null) return;
+        try {
+            float newVal = Float.parseFloat(sharedPreferences.getString(key, defaultVal).trim());
+            if (newVal > maxVal) {
+                sharedPreferences.edit().putString(key, Float.toString(maxVal)).commit();
+                prefText.setText(Float.toString(maxVal));
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                    Float.toString(minVal), Float.toString(maxVal), Float.toString(maxVal)), Toast.LENGTH_LONG);
+            } else if (newVal < minVal) {
+                sharedPreferences.edit().putString(key, Float.toString(minVal)).commit();
+                prefText.setText(Float.toString(minVal));
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesOutsideLimits,
+                                    Float.toString(minVal), Float.toString(maxVal), Float.toString(minVal)), Toast.LENGTH_LONG);
+            }
+        } catch (NumberFormatException e) {
+            sharedPreferences.edit().putString(key, defaultVal).commit();
+            prefText.setText(defaultVal);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastPreferencesNotNumeric,
+                                    Float.toString(minVal), Float.toString(maxVal), defaultVal), Toast.LENGTH_LONG);
+        }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    public void checkThrottleScreenType(SharedPreferences sharedPreferences) {
+        Log.d(threaded_application.applicationName, activityName + ": checkThrottleScreenType()");
+        prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+
+        if (prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC)) {
+            sharedPreferences.edit().putString("prefDisplaySpeedUnits", "100").commit();
+            prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
+//            if( prefDisplaySemiRealisticThrottleNotches < 100) {
+//                sharedPreferences.edit().putString("speed>Timer_arrows_throttle_speed_step", "1").commit();
+//            }
+        }
+        if ( (!prefThrottleScreenType.equals(prefThrottleScreenTypeOriginal))
+        || (prefDisplaySemiRealisticThrottleNotchesOriginal != prefDisplaySemiRealisticThrottleNotches) ) {
+            SharedPreferences.Editor prefEdit = sharedPreferences.edit();
+            prefEdit.commit();
+
+//            if (maxThrottlesCurrentScreenTypeOriginal >= mainapp.getMaxThrottlesForScreen(prefThrottleScreenType)) {
+                forceRestartAppOnPreferencesClose = true;
+//            } else {
+//                forceReLaunchAppOnPreferencesClose = true;
+//            }
+            forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
+        }
+    }
+
+    String getThrottleScreenType(SharedPreferences sharedPreferences, String throttleTypePrefName) {
+        return switch (throttleTypePrefName) {
+            case "prefThrottleSwitchOption1" -> {
+                prefThrottleSwitchOption1 = sharedPreferences.getString("prefThrottleSwitchOption1", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                yield prefThrottleSwitchOption1;
+            }
+            case "prefThrottleSwitchOption2" -> {
+                prefThrottleSwitchOption2 = sharedPreferences.getString("prefThrottleSwitchOption2", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                yield prefThrottleSwitchOption2;
+            }
+            default -> {
+                prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                yield prefThrottleScreenType;
+            }
+        };
+    }
+
+    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
+        limitNumThrottles(prefScreen, sharedPreferences, "prefThrottleScreenType", "prefNumThrottles");
+    }
+    @SuppressLint("ApplySharedPref")
+    public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String throttleTypePrefName, String numThrottlesPrefName) {
+        Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles()");
+        int prefNumThrottles = mainapp.Numeralise(sharedPreferences.getString(numThrottlesPrefName, getResources().getString(R.string.prefNumThrottlesDefaultValue)));
+        getThrottleScreenType(sharedPreferences, throttleTypePrefName);
+
+        int index = getThrottleScreenTypeArrayIndex(sharedPreferences, throttleTypePrefName);
+        String[] textNumbers = this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues);
+        int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
+        int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
+
+        if (index < 0) return; //bail if no matches
+
+        if ( ((fixed[index] == 1) && (prefNumThrottles != max[index]))
+                || ((fixed[index] == 0) && (prefNumThrottles > max[index])) ) {
+            Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: prefNumThrottles " +  prefNumThrottles + " fixed " + fixed[index] + " max " + max[index]);
+
+            sharedPreferences.edit().putString(numThrottlesPrefName, textNumbers[max[index]-1]).commit();
+            if (prefNumThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
+                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastNumThrottles,
+                                        textNumbers[max[index] - 1]), Toast.LENGTH_LONG);
+            }
+            ListPreference listPref = prefScreen.findPreference(numThrottlesPrefName);
+            if (listPref != null) {
+                ignoreThisThrottleNumChange = true;
+                Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
+                listPref.setValue(textNumbers[max[index]-1]);
+                listPref.setValueIndex(max[index]-1);
+            }
+        }
+        // get it again.  forces refresh of the internal variables.
+        getThrottleScreenType(sharedPreferences, throttleTypePrefName);
+    }
+
+
+    /** @noinspection SameParameterValue*/
+    @SuppressLint("ApplySharedPref")
+    void setSharedPreferenceValueString(PreferenceScreen prefScreen, String key, String val) {
+        ListPreference prefList = prefScreen.findPreference(key);
+        if (prefList == null) return;
+        prefList.setValue(val);
+        prefs.edit().putString(key, val).commit();
+    }
+
+    void showThrottleNumberPreferenceDialog(PreferenceScreen prefScreen) {
+        int numThrottles = mainapp.Numeralise(prefs.getString("prefNumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
+
+        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        int index = getThrottleScreenTypeArrayIndex(prefs);
+        int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
+        int[] max = this.getResources().getIntArray(R.array.prefThrottleScreenTypeMaxThrottleNumber);
+
+        if (index < 0) return; //bail if no matches .  should never happen
+        if (fixed[index] == 1 ) return;  // can't be altered
+
+        if (numThrottles > max[index]) numThrottles = max[index]; // probably has not had a chance to refresh yet.
+
+
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.preference_dialog_num_throttle);
+        Button cancelButton = dialog.findViewById(R.id.num_throttles_dialog_button_cancel);
+
+        List<String> entryList=new ArrayList<>();
+        List<String> entryValueList=new ArrayList<>();
+        int size = this.getResources().getStringArray(R.array.NumOfThrottlesEntries).length;
+        for (int i=0; i<size && i<max[index]; i++) {
+            entryList.add(this.getResources().getStringArray(R.array.NumOfThrottlesEntries)[i]);
+            entryValueList.add(this.getResources().getStringArray(R.array.NumOfThrottlesEntryValues)[i]);
+        }
+
+        int radioButtonPadding = (int) (15 * getResources().getDisplayMetrics().density);
+        RadioGroup rGroup = dialog.findViewById(R.id.radio_group);
+        for(int i=0;i<size && i<max[index];i++){
+            RadioButton radioButton=new RadioButton(this); // dynamically creating RadioButton and adding to RadioGroup.
+            radioButton.setText(entryList.get(i));
+            radioButton.setPadding(0,radioButtonPadding,0,radioButtonPadding);
+            radioButton.setChecked(i == numThrottles-1);
+            rGroup.addView(radioButton);
+        }
+
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("ApplySharedPref")
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int childCount = group.getChildCount();
+                for (int x = 0; x < childCount; x++) {
+                    RadioButton btn = (RadioButton) group.getChildAt(x);
+                    if (btn.getId() == checkedId) {
+                        Log.e(threaded_application.applicationName, activityName + ": selected RadioButton-> " + btn.getText().toString());
+                        setSharedPreferenceValueString(prefScreen, "prefNumThrottles", entryValueList.get(x));
+                    }
+                }
+                dialog.cancel();
+            }
+        });
+        cancelButton.setOnClickListener(v -> {dialog.dismiss(); reload();} );
+        dialog.show();
+    }
+
+    boolean throttleScreenTypeSupportsWebView(SharedPreferences sharedPreferences) {
+        Log.d(threaded_application.applicationName, activityName + ": throttleScreenTypeSupportsWebView()");
+        prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+        boolean supportsWebView = false;
+
+        int index = getThrottleScreenTypeArrayIndex(sharedPreferences);
+        if (index < 0) return false; //bail if no matches
+
+        int[] supportWebView = this.getResources().getIntArray(R.array.prefThrottleScreenTypeSupportsWebView);
+        if (supportWebView[index] == 0) {
+            supportsWebView = true;
+        }
+        return supportsWebView;
+    }
+
+    int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences) {
+        return getThrottleScreenTypeArrayIndex(sharedPreferences,"prefThrottleScreenType");
+    }
+    int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences, String throttleTypePrefName) {
+        Log.d(threaded_application.applicationName, activityName + ": getThrottleScreenTypeArrayIndex()");
+        String throttleScreenType = getThrottleScreenType(sharedPreferences, throttleTypePrefName);
+
+        int index = -1;
+        String[] arr = this.getResources().getStringArray(R.array.prefThrottleScreenTypeEntryValues);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i].equals(throttleScreenType)) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
+    }
+
+    private void setGamePadPrefLabels(PreferenceScreen prefScreen, SharedPreferences sharedPreferences) {
+        String prefGamePadType = sharedPreferences.getString("prefGamePadType", "None").trim();
+        String[] gamePadPrefLabels;
+        String[] gamePadPrefButtonReferences = this.getResources().getStringArray(R.array.prefGamePadPrefButtonReferences);
+
+        String[] gamePadModeEntriesArray = this.getResources().getStringArray(R.array.prefGamePadTypeEntryValues);
+        int prefGamePadTypeIndex = Arrays.asList(gamePadModeEntriesArray).indexOf(prefGamePadType);
+        if (prefGamePadTypeIndex<0) prefGamePadTypeIndex=0;
+
+        TypedArray gamepadSettingsButtonLabelsIds = getResources().obtainTypedArray(R.array.gamepadSettingsButtonLabelsIds);
+        gamePadPrefLabels = this.getResources().getStringArray(gamepadSettingsButtonLabelsIds.getResourceId(prefGamePadTypeIndex,0));
+        gamepadSettingsButtonLabelsIds.recycle();
+
+        for (int i = 1; i < gamePadPrefLabels.length; i++) {  // skip the first one
+            boolean thisEnabled = true;
+            Preference thisPref = prefScreen.findPreference(gamePadPrefButtonReferences[i]);
+            if (thisPref != null) {
+                thisPref.setTitle(gamePadPrefLabels[i]);
+                if ((gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_AVAILABLE_LABEL)) || (gamePadPrefLabels[i].equals(GAMEPAD_BUTTON_NOT_USABLE_LABEL))) {
+                    thisEnabled = false;
+                }
+                thisPref.setSelectable(thisEnabled);
+                thisPref.setEnabled(thisEnabled);
+            }
+        }
+
+        boolean thisEnabled = !prefGamePadType.equals("None");
+
+        enableDisablePreference(prefScreen, "prefGamePadFeedbackVolume", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamePadSpeedArrowsThrottleRepeatDelay", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamePadDoublePressStop", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamepadSwapForwardReverseWithScreenButtons", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamepadTestEnforceTesting", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamepadTestNow", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamePadSpeedButtonsSpeedStep", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamepadTestEnforceTestingSimple", thisEnabled);
+        enableDisablePreference(prefScreen, "prefGamePadIgnoreJoystick", thisEnabled);
+
+    }
+
+    private void enableDisablePreference(PreferenceScreen prefScreen, String key, boolean enable) {
+//        Log.d(threaded_application.applicationName, activityName + ": enableDisablePreference(): key: " + key);
+        Preference p = prefScreen.findPreference(key);
+        if (p != null) {
+            p.setSelectable(enable);
+            p.setEnabled(enable);
+        } else {
+            Log.w(threaded_application.applicationName, activityName + ": enableDisablePreference(): Preference key '" + key + "' not found, not set to " + enable);
+        }
+    }
+
+    private void showHideLimitSpeedPreferences(PreferenceScreen prefScreen) {
+        boolean prefLimitSpeedButton = prefs.getBoolean("prefLimitSpeedButton", false);
+
+        enableDisablePreference(prefScreen, "prefLimitSpeedPercent", prefLimitSpeedButton);
+    }
+
+    private void showHidePauseSpeedPreferences(PreferenceScreen prefScreen) {
+        boolean prefPauseSpeedButton = prefs.getBoolean("prefPauseSpeedButton", false);
+
+        enableDisablePreference(prefScreen, "prefPauseSpeedRate", prefPauseSpeedButton);
+        enableDisablePreference(prefScreen, "prefPauseSpeedStep", prefPauseSpeedButton);
+
+        boolean enable =
+                !prefThrottleScreenType.equals(throttle_screen_type.DEFAULT)
+                && !prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
+                && prefPauseSpeedButton;
+        enableDisablePreference(prefScreen, "prefPauseAlternateButton", enable);
+    }
+
+    private void showHideBackgroundImagePreferences(PreferenceScreen prefScreen) {
+        boolean enable = !prefBackgroundImage;
+        enableDisablePreference(prefScreen, "prefBackgroundImageFileNameImagePicker", !enable);
+        enableDisablePreference(prefScreen, "prefBackgroundImagePosition", !enable);
+    }
+
+    private void showHideAutoConnectPreferences(PreferenceScreen prefScreen) {
+        boolean enable = prefs.getBoolean("prefConnectToFirstServer", false);
+        enableDisablePreference(prefScreen, "prefAutoServerNamedConnect", !enable);
+    }
+
+    private void showHideDispatchPreferences(PreferenceScreen prefScreen) {
+        boolean enableCmd = prefs.getBoolean("prefUseDispatchCommand", false);
+        boolean enableButton = prefs.getBoolean("prefShowDispatchButton", false);
+        boolean prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", false);
+        if (!enableCmd && !enableButton) {enableCmd = true; enableButton = true;} // in case both are enabled accidentally
+        if (mainapp.isDccexProtocol()) {
+            enableCmd = false; enableButton = false;
+        } else {
+            if (prefSelectLocoByRadioButtons) {
+                enableCmd = true; enableButton = false;
+            }
+        }
+        enableDisablePreference(prefScreen, "prefShowDispatchButton", enableButton);
+        enableDisablePreference(prefScreen, "prefUseDispatchCommand", enableCmd);
+    }
+
+    private void showHidePrefThrottleSwitchButtonCycleAllPreferences(PreferenceScreen prefScreen) {
+        boolean enable = !prefThrottleSwitchButtonCycleAll;
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1NumThrottles", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2NumThrottles", enable);
+    }
+
+    private void showHideWebSwipePreferences(PreferenceScreen prefScreen) {
+        boolean enable = true;
+        String currentValue = prefs.getString("prefThrottleOrientation", "");
+        if (!currentValue.equals("Auto-Web")) {
+            enable = false;
+        }
+        enableDisablePreference(prefScreen, "prefSwipeThroughWeb", !enable);
+    }
+
+    private void showHideTTSPreferences(PreferenceScreen prefScreen) {
+        boolean enable = true;
+        String currentValue = prefs.getString("prefTtsWhen", "");
+        if (!currentValue.equals("None")) {
+            enable = false;
+        }
+
+        enableDisablePreference(prefScreen, "prefTtsThrottleResponse", !enable);
+        enableDisablePreference(prefScreen, "prefTtsThrottleSpeed", !enable);
+        enableDisablePreference(prefScreen, "prefTtsGamepadTest", !enable);
+        enableDisablePreference(prefScreen, "prefTtsGamepadTestComplete", !enable);
+        enableDisablePreference(prefScreen, "prefTtsGamepadTestKeys", !enable);
+
+    }
+
+    @SuppressLint("ApplySharedPref")
+    private void showHideConsistRuleStylePreferences(PreferenceScreen prefScreen) {
+        boolean enable = prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.ORIGINAL);
+        enableDisablePreference(prefScreen, "prefSelectiveLeadSound", enable);
+        enableDisablePreference(prefScreen, "prefSelectiveLeadSoundF1", enable);
+        enableDisablePreference(prefScreen, "prefSelectiveLeadSoundF2", enable);
+
+        enable = prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX);
+        enableDisablePreference(prefScreen, "prefConsistFollowDefaultAction", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowString1", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowAction1", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowString2", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowAction2", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowString3", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowAction3", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowString4", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowAction4", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowString5", enable);
+        enableDisablePreference(prefScreen, "prefConsistFollowAction5", enable);
+
+        enable = prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL);
+
+        if ( (enable) && (!prefConsistFollowRuleStyle.equals(priorPrefConsistFollowRuleStyle)) ) {
+            enableDisablePreference(prefScreen, "prefAlwaysUseDefaultFunctionLabels", false);
+            prefs.edit().putBoolean("prefAlwaysUseDefaultFunctionLabels", true).commit();
+            reload();
+        }
+        priorPrefConsistFollowRuleStyle = prefConsistFollowRuleStyle;
+    }
+
+    private void showHideDccexPreferences(PreferenceScreen prefScreen) {
+        boolean enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= 5.005058))
+                || (mainapp.connectedHostName.isEmpty()));
+        enableDisablePreference(prefScreen, "prefDccexEmergencyStopPauseResume", enable);
+    }
+
+    private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {
+        Log.d(threaded_application.applicationName, activityName + ": showHideThrottleSwitchPreferences()");
+        boolean enable = prefThrottleSwitchButtonDisplay;
+        enableDisablePreference(prefScreen, "prefThrottleSwitchButtonCycleAll", enable);
+        enable = prefThrottleSwitchButtonDisplay & !prefThrottleSwitchButtonCycleAll;
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption1NumThrottles", enable);
+        enableDisablePreference(prefScreen, "prefThrottleSwitchOption2NumThrottles", enable);
+
+        prefThrottleScreenType = prefs.getString("prefThrottleScreenType",
+                getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+
+        enable = prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
+        enableDisablePreference(prefScreen, "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
+
+        enable = !prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC);
+        enableDisablePreference(prefScreen, "semi_realistic_throttle_preferences", !enable);
+        enableDisablePreference(prefScreen, "prefDisplaySpeedUnits", enable);
+//        enableDisablePreference(prefScreen, "prefMaximumThrottle", enable);
+        enableDisablePreference(prefScreen, "prefMaximumThrottleChange", enable);
+        enableDisablePreference(prefScreen, "prefSpeedButtonsRepeat", enable);
+        enableDisablePreference(prefScreen, "prefSpeedButtonsSpeedStepDecrement", enable);
+        enableDisablePreference(prefScreen, "prefDirChangeWhileMoving", enable);
+
+        enable = prefs.getBoolean("prefDirChangeWhileMoving",
+                getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+
+        enableDisablePreference(prefScreen, "prefStopOnDirectionChange", enable);
+
+        enable = prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
+                || prefThrottleScreenType.equals(throttle_screen_type.DEFAULT) ;
+
+        enableDisablePreference(prefScreen, "prefHideFunctionButtonsOfNonSelectedThrottle", enable);
+    }
+
+    private void showHideSemiRealisticThrottlePreferences(PreferenceScreen prefScreen) {
+        String prefDisplaySemiRealisticThrottleDecoderBrakeType = prefs.getString("prefDisplaySemiRealisticThrottleDecoderBrakeType", getApplicationContext().getResources().getString(R.string.prefDisplaySemiRealisticThrottleDecoderBrakeTypeDefaultValue));
+
+        boolean enable = prefDisplaySemiRealisticThrottleDecoderBrakeType.equals("esu");
+
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu", enable);
+
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu", enable);
+    }
+
+    private void showHideEsuMc2Preferences(PreferenceScreen prefScreen) {
+        // Disable all ESU MC 2/Pro preferences if not an ESU MC II/Pro
+        if (!MobileControl2.isMobileControl2()) {
+            enableDisablePreference(prefScreen, "prefEsuMc2", false);
+            return;
+        }
+
+        String prefEsuMc2SliderType = prefs.getString("prefEsuMc2SliderType", getApplicationContext().getResources().getString(R.string.prefEsuMc2SliderTypeDefaultValue));
+
+        boolean enable = prefEsuMc2SliderType.equals("esu");
+
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeLowFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeMidFunctionEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeHighFunctionEsu", enable);
+
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeLowValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeMidValueEsu", enable);
+        enableDisablePreference(prefScreen, "prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu", enable);
+
+        enableDisablePreference(prefScreen, "prefToolbarButtonSize", false);
+    }
+
+
+    public void loadSharedPreferences(){
+        prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
+    }
+
+    private void getConnectionsList() {
+        boolean foundDemoHost = false;
+        String host_name;
+        String host_name_filename;
+        String errMsg;
+
+        try {
+            File connections_list_file = new File(getApplicationContext().getExternalFilesDir(null), "connections_list.txt");
+
+            if (connections_list_file.exists()) {
+                BufferedReader list_reader = new BufferedReader(new FileReader(connections_list_file));
+                while (list_reader.ready()) {
+                    String line = list_reader.readLine();
+                    List<String> parts = Arrays.asList(line.split(":", 3)); //split record from file, max of 3 parts
+                    if (parts.size() > 1) {  //skip if not split
+                        host_name = parts.get(0);
+                        host_name_filename = host_name.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
+                        if (host_name.equals(DEMO_HOST)) {
+                            foundDemoHost = true;
+                        }
+                        if ((!host_name.isEmpty()) && (!isAlreadyInArray(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename))) {
+                            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + host_name_filename);
+                            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + host_name_filename);
+                        }
+                    }
+                }
+                list_reader.close();
+            } else {
+                Log.d(threaded_application.applicationName, activityName + ": getConnectionsList(): Recent connections not found");
+            }
+        } catch (IOException except) {
+            errMsg = except.getMessage();
+            Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
+            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingList) + " " + errMsg, Toast.LENGTH_SHORT);
+        }
+
+        if (!foundDemoHost) {
+            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntriesFound = add(prefHostImportExportEntriesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, IMPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+            prefHostImportExportEntryValuesFound = add(prefHostImportExportEntryValuesFound, EXPORT_PREFIX + DEMO_HOST.replaceAll("[^A-Za-z0-9_]", "_") + ".ed");
+        }
+
+    }
+
+    private static String[] add(String[] stringArray, String newValue) {
+        String[] tempArray = new String[stringArray.length + 1];
+        System.arraycopy(stringArray, 0, tempArray, 0, stringArray.length);
+        tempArray[stringArray.length] = newValue;
+        return tempArray;
+    }
+
+    public static boolean isAlreadyInArray(String[] arr, String targetValue) {
+        for (String s : arr) {
+            if (s.equals(targetValue))
+                return true;
+        }
+        return false;
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    public static class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+        public threaded_application mainapp;  // hold pointer to mainapp
+        private SharedPreferences prefs;
+
+        private String prefThemeOriginal = "Default";
+
+        public String[] advancedPreferences;
+
+        protected String defaultName;
+        PreferencesActivity parentActivity;
+
+        public static final String PAGE_ID = "page_id";
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        public static SettingsFragment newInstance(String pageId) {
+            SettingsFragment f = new SettingsFragment();
+            Bundle args = new Bundle();
+            args.putString(PAGE_ID, pageId);
+            f.setArguments(args);
+            return (f);
+        }
+
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences()");
+                setPreferencesFromResource(R.xml.preferences, rootKey);
+
+            Activity a = getActivity();
+            parentActivity = (PreferencesActivity) a;
+
+            setPreferencesUI();
+        }
+
+        @Override
+        public void onResume() {
+            Log.d(threaded_application.applicationName, activityName + ": SettingsFragment onResume()");
+            super.onResume();
+            threaded_application.activityResumed(activityName);
+            if (parentActivity != null)
+                parentActivity.mainapp.removeNotification(parentActivity.getIntent());
+
+            //noinspection AssignmentToStaticFieldFromInstanceMethod
+            threaded_application.currentActivity = activity_id_type.SETTINGS;
+
+            getPreferenceScreen().getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
+
+            setPreferencesUI();
+
+            for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); ++i) {
+                Preference preference = getPreferenceScreen().getPreference(i);
+                if (preference instanceof PreferenceGroup) {
+                    PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
+                    for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
+                        Preference singlePref = preferenceGroup.getPreference(j);
+                        parentActivity.updatePreference(singlePref);
+                    }
+                } else {
+                    parentActivity.updatePreference(preference);
+                }
+            }
+
+            // Re-apply filter on resume
+            if (parentActivity != null) {
+                filterPreferences(parentActivity.getCurrentSearchQuery());
+            }
+        }
+
+        @Override
+        public boolean onPreferenceTreeClick(Preference preference) {
+            super.onPreferenceTreeClick(preference);
+            return false;
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            threaded_application.activityPaused(activityName);
+
+            getPreferenceScreen().getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @SuppressLint("ApplySharedPref")
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Log.d(threaded_application.applicationName, activityName + ": onSharedPreferenceChanged(): key: " + key);
+            boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
+
+            if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
+                switch (key) {
+                    case "prefThrottleName": {
+//                        String currentValue = parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
+                        parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
+                        break;
+                    }
+                    case "prefMaximumThrottleChange":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "25");
+                        break;
+                    case "prefSpeedButtonsSpeedStep":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 99, "4");
+                        break;
+                    case "prefScreenBrightnessDim":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "5");
+                        break;
+                    case "prefConnectTimeoutMs":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 99999, getResources().getString(R.string.prefConnectTimeoutMsDefaultValue));
+                        break;
+                    case "prefSocketTimeoutMs":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 9999, getResources().getString(R.string.prefSocketTimeoutMsDefaultValue));
+                        break;
+                    case "prefHeartbeatResponseFactor":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 50, 90, getResources().getString(R.string.prefHeartbeatResponseFactorDefaultValue));
+                        break;
+                    case "prefDirChangeWhileMoving":
+                        boolean enable = prefs.getBoolean("prefDirChangeWhileMoving",
+                                getResources().getBoolean(R.bool.prefDirChangeWhileMovingDefaultValue));
+                        parentActivity.enableDisablePreference(getPreferenceScreen(), "prefStopOnDirectionChange", enable);
+                        break;
+                    case "prefDeviceSounds0":
+                        mainapp.prefDeviceSounds[0] = prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+                    case "prefDeviceSounds1":
+                        mainapp.prefDeviceSounds[1] = prefs.getString("prefDeviceSounds1", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue));
+                        mainapp.soundsReloadSounds = true;
+                        // the sounds will actually be reloaded in the throttle.onResume()
+//                        iplsLoader.loadSounds();
+                        break;
+                    case "prefMaximumThrottle":
+                    case "prefDeviceSoundsLocoVolume":
+                    case "prefDeviceSoundsBellVolume":
+                    case "prefDeviceSoundsHornVolume":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
+                        break;
+                    case "prefDeviceSoundsMomentum":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 2000, "1000");
+                        break;
+                    case "prefThrottleOrientation":
+                        setSwipeThroughWebPreference(); //disable web swipe if Auto-Web
+                        //if mode was fixed (Port or Land) won't get callback so need explicit call here
+                        parentActivity.mainapp.setActivityOrientation(parentActivity);
+                        break;
+                    case "prefInitialWebPage":
+                        parentActivity.mainapp.alertActivitiesWithBundle(message_type.INITIAL_WEB_WEBPAGE);
+                        break;
+
+                    case "prefClockDisplayType":
+                        try {
+                            mainapp.fastClockFormat = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefClockDisplayType", "0")));
+                        } catch (NumberFormatException e) {
+                            mainapp.fastClockFormat = 0;
+                        }
+                        mainapp.alertActivitiesWithBundle(message_type.RECEIVED_TIME_CHANGE);
+                        break;
+
+                    case "prefNumberOfDefaultFunctionLabels":
+                        // limit check new value
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 32, "32");
+                        parentActivity.mainapp.set_default_function_labels(false);
+                        break;
+
+                    case "prefLocale":
+                        sharedPreferences.edit().putString("prefLeftDirectionButtons", "").commit();
+                        sharedPreferences.edit().putString("prefRightDirectionButtons", "").commit();
+                        sharedPreferences.edit().putString("prefLeftDirectionButtonsShort", "").commit();
+                        sharedPreferences.edit().putString("prefRightDirectionButtonsShort", "").commit();
+                        parentActivity.forceReLaunchAppOnPreferencesClose = true;
+                        parentActivity.forceRestartApp(restart_reason_type.LOCALE);
+                        break;
+
+                    case "prefThrottleScreenType":
+                        parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                        parentActivity.checkThrottleScreenType(sharedPreferences);
+                        parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+                        showHideThrottleWebViewPreferences(sharedPreferences);
+                        if ( (parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE))
+                           && (prefs.getString("prefSimpleThrottleLayoutShowFunctionButtonCount", parentActivity.getApplicationContext().getResources().getString(R.string.prefSimpleThrottleLayoutShowFunctionButtonCountDefaultValue)).equals("0"))
+                           && ( (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none"))
+                              || (!prefs.getString("prefDeviceSounds0", parentActivity.getApplicationContext().getResources().getString(R.string.prefDeviceSoundsDefaultValue)).equals("none")) ) ) {
+                            mainapp.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastDeviceSoundsSimpleLayoutWarning), Toast.LENGTH_LONG);
+                        }
+                        parentActivity.showThrottleNumberPreferenceDialog(getPreferenceScreen());
+
+                    case "prefNumThrottles":
+                        showHideThrottleNumberPreference(sharedPreferences);
+                        if (!parentActivity.ignoreThisThrottleNumChange) {
+                            parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences);
+                        }
+                        parentActivity.ignoreThisThrottleNumChange = false;
+                        break;
+
+                    case "prefTheme":
+                        String prefTheme = sharedPreferences.getString("prefTheme", parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+                        if (!prefTheme.equals(prefThemeOriginal)) {
+                            parentActivity.forceRestartApp(restart_reason_type.THEME);
+                        }
+                        break;
+
+                    case "prefShowAdvancedPreferences":
+                        parentActivity.reload();
+                        break;
+
+                    case "prefAllowMobileData":
+                        parentActivity.mainapp.haveForcedWiFiConnection = false;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.FORCE_WIFI;
+                        parentActivity.forceReLaunchAppOnPreferencesClose = true;
+                        break;
+
+                    case "prefFeedbackOnDisconnect":
+                        mainapp.prefFeedbackOnDisconnect = sharedPreferences.getBoolean("prefFeedbackOnDisconnect",
+                                getResources().getBoolean(R.bool.prefFeedbackOnDisconnectDefaultValue));
+                        break;
+
+                    case "prefThrottleViewImmersiveModeHideToolbar":
+                        mainapp.prefThrottleViewImmersiveModeHideToolbar = sharedPreferences.getBoolean("prefThrottleViewImmersiveModeHideToolbar",
+                                getResources().getBoolean(R.bool.prefThrottleViewImmersiveModeHideToolbarDefaultValue));
+                        parentActivity.forceReLaunchAppOnPreferencesClose =true;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.IMMERSIVE_MODE;
+                        break;
+
+                    case "prefHapticFeedbackButtons":
+                        mainapp.prefHapticFeedbackButtons = prefs.getBoolean("prefHapticFeedbackButtons", getResources().getBoolean(R.bool.prefHapticFeedbackButtonsDefaultValue));
+                        break;
+
+                    case "prefAlwaysUseFunctionsFromServer":
+                        parentActivity.mainapp.prefAlwaysUseFunctionsFromServer = sharedPreferences.getBoolean("prefAlwaysUseFunctionsFromServer",
+                                getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
+                        break;
+                    case "prefSortOrderRoster":
+                        parentActivity.mainapp.getDefaultSortOrderRoster();
+                        break;
+
+                    case "prefHideInstructionalToasts":
+                        parentActivity.mainapp.prefHideInstructionalToasts = sharedPreferences.getBoolean("prefHideInstructionalToasts",
+                                getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
+                        break;
+
+                    case "prefConnectToFirstServer":
+                        parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefSelectLocoByRadioButtons":
+                    case "prefUseDispatchCommand":
+                        if (prefs.getBoolean("prefSelectLocoByRadioButtons", false)) {
+                            sharedPreferences.edit().putBoolean("prefShowDispatchButton", false).commit();
+                            parentActivity.reload();
+                        }
+                        parentActivity.showHideDispatchPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefShowDispatchButton":
+                        sharedPreferences.edit().putBoolean("prefUseDispatchCommand", false).commit();
+                        parentActivity.showHideDispatchPreferences(getPreferenceScreen());
+                        break;
+
+                }
+            }
+
+            parentActivity.updatePreference(findPreference(key));
+        }
+
+        @Override
+        public void onDisplayPreferenceDialog(Preference preference) {
+            // Check if this is the preference we want to handle
+            if (preference.getKey().equals("prefAutoServerNamedConnect")) {
+                // Create and show our custom dialog
+                DialogFragment dialogFragment = AutoServerConnectDialogFragmentCompat.newInstance(preference.getKey());
+                dialogFragment.setTargetFragment(this, 0);
+                dialogFragment.show(getFragmentManager(), null); // Tag can be null or a custom string
+            } else if (preference.getKey().equals("prefAutoServerIpConnect")) {
+                // Create and show our custom dialog
+                DialogFragment dialogFragment = AutoServerIpConnectDialogFragmentCompat.newInstance(preference.getKey());
+                dialogFragment.setTargetFragment(this, 0);
+                dialogFragment.show(getFragmentManager(), null); // Tag can be null or a custom string
+            } else if (preference.getKey().equals("prefNumThrottles")) {
+                parentActivity.showThrottleNumberPreferenceDialog(getPreferenceScreen());
+            } else {
+                // Let the default implementation handle all other preferences
+                super.onDisplayPreferenceDialog(preference);
+            }
+        }
+
+        /**
+         * Public accessor to get the current server description from the main application context.
+         * @return A string describing the current server, or an empty string if not available.
+         */
+        public String getConnectedHostname() {
+            if (mainapp != null) {
+                return mainapp.connectedHostName;
+            }
+            return "";
+        }
+        public String getConnectedHostAddress() {
+            if ( (mainapp != null) && (!mainapp.connectedHostip.isEmpty()) ) {
+                return mainapp.connectedHostip;
+            }
+            return "";
+        }
+        public String getConnectedHostPort() {
+            if ( (mainapp != null)  && (!mainapp.connectedHostip.isEmpty()) ) {
+                return Integer.toString(mainapp.port);
+            }
+            return "";
+        }
+        public Boolean getConnectedHostIsDccEx() {
+            if (mainapp != null) {
+                return mainapp.isDccexProtocol();
+            }
+            return false;
+        }
+
+        @SuppressLint("ApplySharedPref")
+        void setPreferencesUI() {
+            Log.d(threaded_application.applicationName, activityName + ": setPreferencesUI()");
+            prefs = parentActivity.prefs;
+            defaultName = parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
+
+            mainapp = parentActivity.mainapp;
+            if (mainapp != null) {
+//                mainapp.applyTheme(parentActivity, true);
+
+                if ( (!mainapp.isPowerControlAllowed()) && (!mainapp.connectedHostName.isEmpty()) ) {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefShowLayoutPowerButton", false);
+                }
+//                if (mainapp.androidVersion < mainapp.minImmersiveModeVersion) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveMode", false);
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefThrottleViewImmersiveModeHideToolbar", false);
+//                }
+
+                if (mainapp.connectedHostName.isEmpty()) { // option is only available when there is no current connection
+                    parentActivity.getConnectionsList();
+                    ListPreference preference = findPreference("prefHostImportExport");
+                    if (preference!=null) {
+                        preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
+                        preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
+                    }
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", true);
+                } else {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAllowMobileData", false);
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
+                }
+
+//                if (mainapp.androidVersion < mainapp.minActivatedButtonsVersion) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSelectedLocoIndicator", false);
+//                }
+
+//                if ((!mainapp.connectedHostip.isEmpty()) || (mainapp.web_server_port == 0)) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(),  "prefImportServerManual", false);
+//                }
+
+//                iplsLoader.getIplsList();
+                int ipslCount = mainapp.iplsNames.size();
+                int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
+                // display version
+                String[] deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
+                String[] deviceSoundsEntryValuesArray = new String[deviceSoundsCount + ipslCount];
+                for (int i=0; i<deviceSoundsCount; i++) {
+                    deviceSoundsEntriesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntries)[i];
+                    deviceSoundsEntryValuesArray[i] = this.getResources().getStringArray(R.array.deviceSoundsEntryValues)[i];
+                }
+                if (!mainapp.iplsNames.isEmpty()) {
+                    for (int i=0; i<ipslCount; i++) {
+                        deviceSoundsEntriesArray[deviceSoundsCount+i] = mainapp.iplsNames.get(i);
+                        deviceSoundsEntryValuesArray[deviceSoundsCount+i] = mainapp.iplsFileNames.get(i);
+                    }
+                }
+
+                ListPreference lp = findPreference("prefDeviceSounds0");
+                if (lp != null) {
+                    lp.setEntries(deviceSoundsEntriesArray);
+                    lp.setEntryValues(deviceSoundsEntryValuesArray);
+                }
+
+                lp = findPreference("prefDeviceSounds1");
+                if (lp != null) {
+                    lp.setEntries(deviceSoundsEntriesArray);
+                    lp.setEntryValues(deviceSoundsEntryValuesArray);
+                }
+            }
+
+
+            if (prefs != null) {
+                prefThemeOriginal = prefs.getString("prefTheme",
+                        parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue));
+//                if (mainapp.androidVersion < mainapp.minThemeVersion) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTheme", false);
+//                }
+
+                parentActivity.result = RESULT_OK;
+
+//                // Disable ESU MCII preferences if not an ESU MCII
+//                if (!MobileControl2.isMobileControl2()) {
+//                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefEsuMc2", false);
+//                }
+                parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
+                parentActivity.showHideDccexPreferences(getPreferenceScreen());
+
+                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFlashlightButtonDisplay", mainapp.isFlashlightAvailable());
+
+                parentActivity.deviceId = mainapp.getFakeDeviceId();
+                prefs.edit().putString("prefAndroidId", parentActivity.deviceId).commit();
+
+                // - - - - - - - - - - - -
+
+                parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+                parentActivity.prefThrottleScreenTypeOriginal = parentActivity.prefThrottleScreenType;
+
+                parentActivity.prefDisplaySemiRealisticThrottleNotches = threaded_application.getIntPrefValue(prefs, "prefDisplaySemiRealisticThrottleNotches", parentActivity.getApplicationContext().getResources().getString(R.string.prefSemiRealisticThrottleNotchesDefaultValue));
+                parentActivity.prefDisplaySemiRealisticThrottleNotchesOriginal = parentActivity.prefDisplaySemiRealisticThrottleNotches;
+
+                showHideThrottleTypePreferences();
+                showHideThrottleNumberPreference(prefs);
+                showHideThrottleWebViewPreferences(prefs);
+                parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+                showHideFilterPreferences();
+                showHideTurnoutsPreferences();
+
+                prefs.edit().putBoolean("prefForcedRestart", false).commit();
+                prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
+                prefs.edit().putString("prefPreferencesImportAll", pref_import_type.ALL_RESET).commit();
+
+                if (!prefs.getString("prefImportExport", parentActivity.getApplicationContext().getResources().getString(R.string.prefThemeDefaultValue)).equals("None")) {
+                    // preference is still confused after a reload or reset
+                    prefs.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
+                }
+
+                parentActivity.prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+
+                parentActivity.prefThrottleSwitchButtonDisplay = prefs.getBoolean("prefThrottleSwitchButtonDisplay", false);
+
+                setSwipeThroughWebPreference();
+
+                parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
+                parentActivity.showHideDispatchPreferences(getPreferenceScreen());
+
+                advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
+                hideAdvancedPreferences();
+            }
+
+        }
+
+//        @SuppressLint("ApplySharedPref")
+//        static void putObject(SharedPreferences sharedPreferences, final String key, final Object val) {
+//            if (val instanceof Boolean)
+//                sharedPreferences.edit().putBoolean(key, (Boolean) val).commit();
+//            else if (val instanceof Float)
+//                sharedPreferences.edit().putFloat(key, (Float) val).commit();
+//            else if (val instanceof Integer)
+//                sharedPreferences.edit().putInt(key, (Integer) val).commit();
+//            else if (val instanceof Long)
+//                sharedPreferences.edit().putLong(key, (Long) val).commit();
+//            else if (val instanceof String)
+//                sharedPreferences.edit().putString(key, ((String) val)).commit();
+//        }
+
+        private void showHideThrottleNumberPreference(SharedPreferences sharedPreferences) {
+            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleNumberPreference()");
+            boolean enable = true;
+            parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
+            int index = parentActivity.getThrottleScreenTypeArrayIndex(sharedPreferences);
+            int[] fixed = this.getResources().getIntArray(R.array.prefThrottleScreenTypeFixedThrottleNumber);
+
+            if ((index >=0) && (index<fixed.length) && (fixed[index] == 0)) {
+                enable = false;
+            }
+
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefNumThrottles", !enable);
+        }
+
+        private void showHideThrottleWebViewPreferences(SharedPreferences sharedPreferences) {
+            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleWebViewPreferences()");
+            boolean enable = parentActivity.throttleScreenTypeSupportsWebView(sharedPreferences);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "throttle_webview_preference", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
+        }
+
+        private void showHideFilterPreferences() {
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefRosterOwnersFilterShowOption", mainapp.isWiThrottleProtocol());
+        }
+
+        private void showHideTurnoutsPreferences() {
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefDccexSwapThrowClose", ((mainapp.isDccexProtocol()) || (parentActivity.mainapp.connectedHostName.isEmpty())) );
+        }
+
+        @SuppressLint("ApplySharedPref")
+        private void setSwipeThroughWebPreference() {
+            String to = prefs.getString("prefThrottleOrientation",
+                    getResources().getString(R.string.prefThrottleOrientationDefaultValue));
+            if (to.equals("Auto-Web")) {
+                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSwipeThroughWeb", false);
+                boolean swipeWeb = prefs.getBoolean("prefSwipeThroughWeb",
+                        getResources().getBoolean(R.bool.prefSwipeThroughWebDefaultValue));
+                if (swipeWeb) {
+                    prefs.edit().putBoolean("prefSwipeThroughWeb", false).commit();  //make sure preference is off
+                    mainapp.safeToast(parentActivity.getApplicationContext().getResources().getString(R.string.toastPreferencesSwipeThroughWebDisabled), Toast.LENGTH_LONG);
+                }
+            } else {
+                parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSwipeThroughWeb", true);
+            }
+        }
+
+
+        private void showHideThrottleTypePreferences() {
+            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleTypePreferences()");
+            boolean enable = (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_LEFT)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_RIGHT))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_SWITCHING_LEFT))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_VERTICAL_LEFT))
+                    && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_LEFT)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_RIGHT));
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefIncreaseSliderHeight", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefLeftSliderMargin", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHideSliderAndSpeedButtons", enable);
+
+            enable = !parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefAlwaysUseDefaultFunctionLabels", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefNumberOfDefaultFunctionLabels", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefNumberOfDefaultFunctionLabelsForRoster", enable);
+
+            enable = parentActivity.prefThrottleScreenType.equals(throttle_screen_type.DEFAULT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_RIGHT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_RIGHT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING_HORIZONTAL)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_SWITCHING_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.TABLET_VERTICAL_LEFT)
+                    || parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewLocation", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefIncreaseWebViewSize", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefInitialThrottleWebPage", enable);
+
+            enable = !parentActivity.prefThrottleScreenType.equals(throttle_screen_type.DEFAULT);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefTickMarksOnSliders", enable);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefVerticalStopButtonMargin", enable);
+
+            enable = parentActivity.prefThrottleScreenType.equals(throttle_screen_type.DEFAULT);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefDecreaseLocoNumberHeight", enable);
+
+            enable = parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE);
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefSimpleThrottleLayoutShowFunctionButtonCount", enable);
+        }
+
+
+        public void removePreference(Preference preference) {
+            try {
+                PreferenceGroup parent = getParent(getPreferenceScreen(), preference);
+                if (parent != null)
+                    parent.removePreference(preference);
+                else //Doesn't have a parent
+                    getPreferenceScreen().removePreference(preference);
+            } catch (Exception except) {
+                Log.d(threaded_application.applicationName, activityName + ": removePreference(): failed: " + preference);
+            }
+        }
+
+        private void hideAdvancedPreferences() {
+            if (!prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
+                for (String advancedPreference1 : advancedPreferences) {
+// //                Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
+                    Preference advancedPreference = findPreference(advancedPreference1);
+                    if (advancedPreference != null) {
+                        if (!MobileControl2.isMobileControl2()) {
+                            removePreference(advancedPreference);
+                        } else {
+                             if (!advancedPreference1.equals("prefEsuMc2")) {
+                                 removePreference(advancedPreference);
+                             }
+                        }
+                    } else {
+                        Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): '" + advancedPreference1 + "' not found.");
+                    }
+                }
+            }
+        }
+
+        public void filterPreferences(String query) {
+            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase().trim());
+        }
+
+        private boolean filterRecursive(Preference preference, String query) {
+            if (preference == null) {
+                return false;
+            }
+
+            if (preference instanceof PreferenceGroup) {
+                PreferenceGroup group = (PreferenceGroup) preference;
+                boolean hasVisibleChild = false;
+
+                // CRITICAL: Iterate over a stable snapshot of the children to prevent crashes.
+                List<Preference> children = new ArrayList<>(group.getPreferenceCount());
+                for (int i = 0; i < group.getPreferenceCount(); i++) {
+                    children.add(group.getPreference(i));
+                }
+
+                // We recurse on the children first (bottom-up).
+                for (Preference child : children) {
+                    // The || ensures we process all children and don't short-circuit.
+                    hasVisibleChild = filterRecursive(child, query) || hasVisibleChild;
+                }
+
+                // Now, check the group's own title.
+                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+                boolean selfMatches = !query.isEmpty() && title.contains(query);
+
+                // A group is visible if it matches or has a visible child.
+                boolean isVisible = hasVisibleChild || selfMatches;
+                preference.setVisible(isVisible);
+                return isVisible;
+            }
+
+            // For a leaf preference (not a group).
+            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase() : "";
+            if (title.equals("roster in recent locos?"))
+                Log.d(threaded_application.applicationName, activityName + ": filterRecursive(): " + title);
+            boolean isVisible = query.isEmpty() || title.contains(query) || summary.contains(query);
+            try {
+                preference.setVisible(isVisible);
+            } catch (Exception ignored) {}
+            return isVisible;
+        }
+
+        private PreferenceGroup getParent(PreferenceGroup groupToSearchIn, Preference preference) {
+            for (int i = 0; i < groupToSearchIn.getPreferenceCount(); ++i) {
+                Preference child = groupToSearchIn.getPreference(i);
+
+                if (child == preference)
+                    return groupToSearchIn;
+
+                if (child instanceof PreferenceGroup) {
+                    PreferenceGroup childGroup = (PreferenceGroup)child;
+                    PreferenceGroup result = getParent(childGroup, preference);
+                    if (result != null)
+                        return result;
+                }
+            }
+
+            return null;
+        }
+
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public static class SettingsSubScreenFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+        private static final String TAG = SettingsSubScreenFragment.class.getName();
+        public static final String PAGE_ID = "page_id";
+        PreferencesActivity parentActivity;
+        public String[] advancedSubPreferences;
+
+        public static SettingsSubScreenFragment newInstance(String pageId) {
+            SettingsSubScreenFragment f = new SettingsSubScreenFragment();
+            Bundle args = new Bundle();
+            args.putString(PAGE_ID, pageId);
+            f.setArguments(args);
+
+            return (f);
+        }
+
+        @SuppressLint("ApplySharedPref")
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+            // rootKey is the name of preference sub screen key name , here--customPrefKey
+            setPreferencesFromResource(R.xml.preferences, rootKey); // Call this only ONCE.
+            Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences(): of the sub screen " + rootKey);
+
+            Activity a = getActivity();
+            parentActivity = (PreferencesActivity) a;
+            assert parentActivity != null;
+            if (parentActivity.prefs==null) {
+                parentActivity.loadSharedPreferences();
+            }
+
+            showHideAll();
+
+            // option is only available when there is no current connection
+
+            if (parentActivity.mainapp != null) {
+                if (parentActivity.mainapp.connectedHostName.isEmpty()) {
+                    parentActivity.getConnectionsList();
+                    ListPreference preference = findPreference("prefHostImportExport");
+                    if (preference != null) {
+                        preference.setEntries(parentActivity.prefHostImportExportEntriesFound);
+                        preference.setEntryValues(parentActivity.prefHostImportExportEntryValuesFound);
+                    }
+                } else {
+                    parentActivity.enableDisablePreference(getPreferenceScreen(), "prefHostImportExport", false);
+                }
+            }
+
+            advancedSubPreferences = getResources().getStringArray(R.array.advancedSubPreferences);
+            hideAdvancedSubPreferences();
+        }
+
+        @SuppressLint("ApplySharedPref")
+        private void showHideAll() {
+            parentActivity.setGamePadPrefLabels(getPreferenceScreen(), parentActivity.prefs);
+            parentActivity.prefs.edit().putBoolean("prefGamepadTestNow", false).commit();  //reset the preference
+
+            parentActivity.prefBackgroundImage = parentActivity.prefs.getBoolean("prefBackgroundImage", false);
+            parentActivity.showHideBackgroundImagePreferences(getPreferenceScreen());
+            parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
+            parentActivity.showHidePrefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
+            parentActivity.showHideWebSwipePreferences(getPreferenceScreen());
+            parentActivity.showHideTTSPreferences(getPreferenceScreen());
+            parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
+            parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+            parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
+            parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
+            parentActivity.showHideSemiRealisticThrottlePreferences(getPreferenceScreen());
+            parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
+            parentActivity.showHideDccexPreferences(getPreferenceScreen());
+        }
+
+        @Override
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+        }
+
+        @Override
+        public void onResume() {
+            Log.d(threaded_application.applicationName, activityName + ": SettingsFragment onResume()");
+            super.onResume();
+            threaded_application.activityResumed(activityName);
+
+            //noinspection AssignmentToStaticFieldFromInstanceMethod
+            threaded_application.currentActivity = activity_id_type.SETTINGS;
+
+            getPreferenceScreen().getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
+
+            parentActivity.prefConsistFollowRuleStyle = parentActivity.prefs.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+            parentActivity.priorPrefConsistFollowRuleStyle = parentActivity.prefConsistFollowRuleStyle;
+            parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
+//            showHideLeftRightSwipePreferences();
+
+            for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); ++i) {
+                Preference preference = getPreferenceScreen().getPreference(i);
+                if (preference instanceof PreferenceGroup) {
+                    PreferenceGroup preferenceGroup = (PreferenceGroup) preference;
+                    for (int j = 0; j < preferenceGroup.getPreferenceCount(); ++j) {
+                        Preference singlePref = preferenceGroup.getPreference(j);
+                        parentActivity.updatePreference(singlePref);
+                    }
+                } else {
+                    parentActivity.updatePreference(preference);
+                }
+            }
+
+            // Re-apply filter on resume
+            if (parentActivity != null) {
+                filterPreferences(parentActivity.getCurrentSearchQuery());
+            }
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            threaded_application.activityPaused(activityName);
+
+            getPreferenceScreen().getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public boolean onPreferenceTreeClick(Preference preference) {
+            if (preference.getKey().equals("prefBackgroundImageFileNameImagePicker")) {
+                parentActivity.loadImageFromGallery();
+                return true;
+            } else {
+                super.onPreferenceTreeClick(preference);
+            }
+            return false;
+        }
+
+        private PreferenceGroup getParent(PreferenceGroup groupToSearchIn, Preference preference) {
+            for (int i = 0; i < groupToSearchIn.getPreferenceCount(); ++i) {
+                Preference child = groupToSearchIn.getPreference(i);
+
+                if (child == preference)
+                    return groupToSearchIn;
+
+                if (child instanceof PreferenceGroup) {
+                    PreferenceGroup childGroup = (PreferenceGroup)child;
+                    PreferenceGroup result = getParent(childGroup, preference);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        public void removeSubPreference(Preference preference) {
+            try {
+                PreferenceGroup parent = getParent(getPreferenceScreen(), preference);
+                if (parent != null)
+                    parent.removePreference(preference);
+                else //Doesn't have a parent
+                    getPreferenceScreen().removePreference(preference);
+            } catch (Exception except) {
+                Log.d(threaded_application.applicationName, activityName + ": removeSubPreference: failed: " + preference);
+            }
+        }
+
+        public void filterPreferences(String query) {
+            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase().trim());
+        }
+
+        private boolean filterRecursive(Preference preference, String query) {
+            if (preference == null) {
+                return false;
+            }
+
+            if (preference instanceof PreferenceGroup) {
+                PreferenceGroup group = (PreferenceGroup) preference;
+                boolean hasVisibleChild = false;
+
+                // CRITICAL: Iterate over a stable snapshot of the children to prevent crashes.
+                List<Preference> children = new ArrayList<>(group.getPreferenceCount());
+                for (int i = 0; i < group.getPreferenceCount(); i++) {
+                    children.add(group.getPreference(i));
+                }
+
+                // We recurse on the children first (bottom-up).
+                for (Preference child : children) {
+                    // The || ensures we process all children and don't short-circuit.
+                    hasVisibleChild = filterRecursive(child, query) || hasVisibleChild;
+                }
+
+                // Now, check the group's own title.
+                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+                boolean selfMatches = !query.isEmpty() && title.contains(query);
+
+                // A group is visible if it matches or has a visible child.
+                boolean isVisible = hasVisibleChild || selfMatches;
+                preference.setVisible(isVisible);
+                return isVisible;
+            }
+
+            // For a leaf preference (not a group).
+            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase() : "";
+            boolean isVisible = query.isEmpty() || title.contains(query) || summary.contains(query);
+            preference.setVisible(isVisible);
+            return isVisible;
+        }
+
+        private void hideAdvancedSubPreferences() {
+            if (!parentActivity.prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
+                for (String advancedSubPreference1 : advancedSubPreferences) {
+// //                Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
+                    Preference advancedSubPreference = findPreference(advancedSubPreference1);
+                    if (advancedSubPreference != null) {
+                        removeSubPreference(advancedSubPreference);
+                    } else {
+                        Log.d(threaded_application.applicationName, activityName + ": hideAdvancedSubPreferences(): '" + advancedSubPreference1 + "' not found.");
+                    }
+                }
+            }
+        }
+
+        private void showHideLeftRightSwipePreferences() {
+            Log.d(threaded_application.applicationName, activityName + ": showHideLeftRightSwipePreferences()");
+            boolean enable = parentActivity.prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
+                    getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
+            parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFullScreenSwipeArea", !enable);
+        }
+
+        @SuppressLint("ApplySharedPref")
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
+
+            if ((key != null) && !prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
+                switch (key) {
+                    case "prefImportExport":
+                        if (!parentActivity.importExportPreferences.currentlyImporting) {
+                            parentActivity.exportedPreferencesFileName = "exported_preferences.ed";
+                            String currentValue = sharedPreferences.getString(key, "");
+                            switch (currentValue) {
+                                case import_export_option_type.EXPORT:
+                                    parentActivity.writeSharedPreferencesToFile(sharedPreferences,
+                                            parentActivity.exportedPreferencesFileName, true);
+                                    break;
+                                case import_export_option_type.IMPORT:
+                                    parentActivity.loadSharedPreferencesFromFileDialog(sharedPreferences,
+                                            parentActivity.exportedPreferencesFileName, parentActivity.deviceId,
+                                            restart_reason_type.IMPORT);
+                                    break;
+                                case import_export_option_type.RESET:
+                                    parentActivity.resetPreferencesDialog();
+                                    break;
+                            }
+                        }
+                        break;
+                    case "prefPreferencesImportAll":
+//                        String val = sharedPreferences.getString("prefImportServerManual", parentActivity.getApplicationContext().getResources().getString(R.string.prefImportServerManualDefaultValue));
+//                        val = val.trim();
+//                        if (!(sharedPreferences.getString("prefPreferencesImportAll", "").equals(pref_import_type.ALL_RESET))) {
+//                            new preferences.importFromURL().execute(val);
+//                        }
+                        break;
+                    case "prefHostImportExport":
+                        if (!parentActivity.importExportPreferences.currentlyImporting) {
+                            String currentValue = sharedPreferences.getString(key, "");
+                            if (!currentValue.equals(import_export_option_type.NONE)) {
+                                String action = currentValue.substring(0, IMPORT_PREFIX.length());
+                                parentActivity.exportedPreferencesFileName = currentValue.substring(IMPORT_PREFIX.length());
+                                if (action.equals(EXPORT_PREFIX)) {
+                                    parentActivity.writeSharedPreferencesToFile(sharedPreferences,
+                                            parentActivity.exportedPreferencesFileName, true);
+                                } else if (action.equals(IMPORT_PREFIX)) {
+                                    parentActivity.loadSharedPreferencesFromFile(sharedPreferences,
+                                            parentActivity.exportedPreferencesFileName, parentActivity.deviceId,
+                                            restart_reason_type.IMPORT);
+                                }
+                            }
+                        }
+                        break;
+                    case "prefGamepadTestNow":
+                        parentActivity.startGamepadTestActivity();
+                        break;
+                    case "prefGamePadFeedbackVolume":
+                        //limit check new value
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key,
+                                ToneGenerator.MIN_VOLUME, ToneGenerator.MAX_VOLUME,
+                                parentActivity.getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue));
+                        parentActivity.result = activity_outcome_type.RESULT_GAMEPAD;
+                        break;
+                    case "prefGamePadType":
+                        parentActivity.setGamePadPrefLabels(getPreferenceScreen(), sharedPreferences);
+                    case "prefGamePadStartButton":
+                        parentActivity.result = activity_outcome_type.RESULT_GAMEPAD;
+                        break;
+
+                    case "prefShareFileNow":
+                        parentActivity.shareFileNow();
+                        break;
+
+                    case "prefBackgroundImage":
+                        parentActivity.prefBackgroundImage = sharedPreferences.getBoolean("prefBackgroundImage", false);
+                        parentActivity.showHideBackgroundImagePreferences(getPreferenceScreen());
+                    case "prefBackgroundImageFileName":
+                    case "prefBackgroundImagePosition":
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.BACKGROUND;
+                        break;
+
+                    case "prefTtsWhen":
+                        parentActivity.showHideTTSPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefConsistFollowRuleStyle":
+                        parentActivity.prefConsistFollowRuleStyle = sharedPreferences.getString("prefConsistFollowRuleStyle", parentActivity.getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
+                        parentActivity.showHideConsistRuleStylePreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefLimitSpeedButton":
+                        parentActivity.showHideLimitSpeedPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefPauseSpeedButton":
+                        parentActivity.showHidePauseSpeedPreferences(getPreferenceScreen());
+                        break;
+
+                    case "prefAccelerometerShakeThreshold":
+                        parentActivity.limitFloatPrefValue(getPreferenceScreen(), sharedPreferences, key, 1.2F, 3.0F, "2.0"); // limit check new value
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.SHAKE_THRESHOLD;
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
+                        break;
+
+                    case "prefHideSlider":
+                        parentActivity.prefHideSlider = sharedPreferences.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue));
+                        break;
+
+                    case "prefWebViewLocation":
+                        parentActivity.mainapp.alertActivitiesWithBundle(message_type.WEBVIEW_LOCATION, activity_id_type.THROTTLE);
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
+                        break;
+
+                    case "prefInitialThrottleWebPage":
+                        parentActivity.mainapp.alertActivitiesWithBundle(message_type.INITIAL_THROTTLE_WEBPAGE, activity_id_type.THROTTLE);
+                        break;
+
+                    case "prefDirectionButtonLongPressDelay":
+                    case "prefStopButtonLongPressDelay":
+                        // limit check new value
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 250, 9999, "1000");
+                        break;
+
+                    case "prefEsuMc2ZeroTrim":
+                        // limit check new value
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 255, "10");
+                        parentActivity.result = activity_outcome_type.RESULT_ESUMCII;
+                        break;
+                    case "prefEsuMc2ButtonsRepeatDelay":
+                    case "prefEsuMc2StopButtonDelay":
+                        // limit check new value
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 0, 9999, "500");
+                        break;
+
+                    case "prefShowTimeOnLogEntry":
+                        parentActivity.mainapp.prefShowTimeOnLogEntry = sharedPreferences.getBoolean("prefShowTimeOnLogEntry",
+                                getResources().getBoolean(R.bool.prefShowTimeOnLogEntryDefaultValue));
+                        break;
+
+                    case "prefHideInstructionalToasts":
+                        parentActivity.mainapp.prefHideInstructionalToasts = sharedPreferences.getBoolean("prefHideInstructionalToasts",
+                                getResources().getBoolean(R.bool.prefHideInstructionalToastsDefaultValue));
+                        break;
+
+                    case "prefSwitchingThrottleSliderDeadZone":
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.DEAD_ZONE;
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
+                        break;
+
+                    case "prefDisplaySemiRealisticThrottleNotches":
+                        parentActivity.checkThrottleScreenType(sharedPreferences);
+                        break;
+
+                    case "prefMaximumThrottle":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "100");
+                        break;
+
+                    case "prefEsuMc2SliderType":
+                        parentActivity.showHideEsuMc2Preferences(getPreferenceScreen());
+                        break;
+
+                    case "prefSemiRealisticThrottleNumberOfBrakeSteps":
+                    case "prefSemiRealisticThrottleNumberOfLoadSteps":
+                        parentActivity.forceRestartAppOnPreferencesClose = true;
+                        parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.THROTTLE_SWITCH;
+                        break;
+
+                    case "prefDisplaySemiRealisticThrottleDecoderBrakeType":
+                        parentActivity.showHideSemiRealisticThrottlePreferences(getPreferenceScreen());
+                        break;
+                    case "prefSemiRealisticMaximumBrakePcnt":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 5, 100, "70");
+                        break;
+
+                    case "prefSemiRealisticThrottleMaxLoadPcnt":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 100, 20000, "100");
+                        break;
+
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeLowFunctionEsu":
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu":
+                        parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "4");
+                        break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeMidFunctionEsu":
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu":
+                        parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "5");
+                        break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeHighFunctionEsu":
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu":
+                        parentActivity.limitIntArrayPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, MAX_FUNCTIONS-1, "6");
+                        break;
+
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeLowValueEsu":
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "30");
+                        break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeMidValueEsu":
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "60");
+                        break;
+                    case "prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu":
+                    case "prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, -1, 100, "100");
+                        break;
+                    case "prefLeftRightSwipeChangesSpeed":
+                        sharedPreferences.edit().putBoolean("prefFullScreenSwipeArea", true).commit();
+                        showHideLeftRightSwipePreferences();
+                        break;
+
+                    case "prefThrottleSwitchButtonDisplay":
+                        parentActivity.prefThrottleSwitchButtonDisplay
+                                = sharedPreferences.getBoolean("prefThrottleSwitchButtonDisplay", false);
+                        parentActivity.showHideThrottleSwitchPreferences(getPreferenceScreen());
+                        break;
+                    case "prefThrottleSwitchButtonCycleAll":
+                        parentActivity.prefThrottleSwitchButtonCycleAll = parentActivity.prefs.getBoolean("prefThrottleSwitchButtonCycleAll", false);
+                        parentActivity.showHidePrefThrottleSwitchButtonCycleAllPreferences(getPreferenceScreen());
+                        break;
+                    case "prefThrottleSwitchOption1":
+                    case "prefThrottleSwitchOption1NumThrottles":
+                        parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences, "prefThrottleSwitchOption1", "prefThrottleSwitchOption1NumThrottles");
+                        break;
+                    case "prefThrottleSwitchOption2":
+                    case "prefThrottleSwitchOption2NumThrottles":
+                        parentActivity.limitNumThrottles(getPreferenceScreen(), sharedPreferences, "prefThrottleSwitchOption2", "prefThrottleSwitchOption2NumThrottles");
+                        break;
+                    case "prefExtendedLogging":
+                        threaded_application.prefExtendedLogging = parentActivity.prefs.getBoolean("prefExtendedLogging", false);
+                        break;
+
+                }
+                parentActivity.updatePreference(findPreference(key));
+            }
+        }
+    }
+
+    void adjustToolbarSize(Menu menu) {
+        int newHeightAndWidth = mainapp.adjustToolbarSize(toolbar);
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            View itemChooser = item.getActionView();
+
+            if ( (itemChooser != null) && (itemChooser.getLayoutParams() != null) ){
+                itemChooser.getLayoutParams().height = newHeightAndWidth;
+                itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
+
+                itemChooser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onOptionsItemSelected(item);
+                    }
+                });
+            }
+        }
+    }
+}

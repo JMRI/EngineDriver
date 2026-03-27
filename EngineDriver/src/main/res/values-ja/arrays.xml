@@ -156,6 +156,8 @@
         <item>暗い</item>
         <item>カラフル</item>
         <item>ネオンブルー</item>
+        <item>ネオングリーン</item>
+        <item>紙</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>なし (「v」、「1」のみを使用)</item>
@@ -438,6 +440,7 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>なし</item>
         <item>DCCメイン</item>
+        <item>DCCメイン反転</item>
         <item>DCCプログラム</item>
         <item>DC</item>
         <item>DC逆極性</item>

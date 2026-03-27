@@ -781,7 +781,7 @@
     <string name="infoSaveLogFile">Registrando em: %s</string>
     <string name="toastDccexInvalidRosterId">ID de lista inválido \'%1$s\'. Listas inteiras de listas, comparecimentos e rotas provavelmente não serão carregadas.</string>
     <string name="RecentsNameEditTitle">Recentes Nome Loco</string>
-    <string name="rosterDetailsDialogTitle">Seleccione a partir Roster / Consistem Entradas</string>
+    <string name="rosterDetailsDialogTitle">Seleccione a partir Roster Entradas</string>
     <string name="toastRecentCleared">Loco removido da lista</string>
     <string name="toastRecentConsistCleared">Consistem removido da lista</string>
     <string name="editConsistButtonLabel">Editar ordem e direção</string>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--    used as the additional Gamepad highlight for the Select button-->
+
+    <item
+        android:drawable="@drawable/original_button_enabled" />
+
+    <!-- inside border 2 -->
+    <item
+        android:top="@dimen/buttonActivated2InsideStrokePaddingTopLeft_outline"
+        android:left="@dimen/buttonActivated2InsideStrokePaddingTopLeft_outline"
+        android:right="@dimen/buttonActivated2InsideStrokePaddingBottomRight_outline"
+        android:bottom="@dimen/buttonActivated2InsideStrokePaddingBottomRight_outline">
+
+        <shape android:shape="rectangle"  >
+            <corners android:radius="@dimen/buttonCornerRadius_hover" />
+            <stroke android:width="@dimen/buttonStroke_hover" android:color="@color/buttonActivatedHoveredInside2Stroke_outline" />
+        </shape>
+    </item>
+
+</layer-list>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<resources>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'black' theme. Appears as 'high contrast' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_black" parent="common_app_theme_components">
+        <item name="preferenceTheme">@style/app_theme_black_preferences</item>
+
+        <item name="android:windowBackground">@color/solidBlack</item>
+        <item name="android:windowTitleStyle">@style/app_title_reusable</item>
+
+        <!-- Lists -->
+        <item name="android:listViewStyle">@style/ed_list_view_style_reusable</item>
+        <item name="android:expandableListViewStyle">@style/ed_list_view_style_reusable</item>
+        <item name="ed_list_view_style">@style/ed_list_view_style_reusable</item>
+        <item name="android:listSeparatorTextViewStyle">@style/small_heading_style_reusable</item>
+
+        <item name="list_item_style">@style/list_item_style_black</item>
+        <item name="list_item_condensed_style">@style/list_item_condensed_style_black</item>
+        <item name="list_id_style">@style/list_id_style_black</item>
+        <item name="list_extras_style">@style/list_extras_style_black</item>
+
+<!--        <item name="android:actionBarStyle">@style/actionBarStyle_black</item>-->
+        <item name="android:titleTextStyle">@style/app_title_reusable</item>
+        <!--        <item name="android:dialogTheme">@style/dialogStyle_black</item>-->
+        <!--        <item name="dialogTheme">@style/dialogStyle_black</item>-->
+        <!--        <item name="android:alertDialogTheme">@style/alertDialogStyle_black</item>-->
+        <!--        <item name="alertDialogTheme">@style/alertDialogStyle_black</item>-->
+        <!--        <item name="android:alertDialogStyle">@style/alertDialogStyle_black</item>-->
+        <!--        <item name="alertDialogStyle">@style/alertDialogStyle_black</item>-->
+
+        <!--        <item name="buttonStyle">@style/normal_button_style_black</item>-->
+        <!--        <item name="buttonBarButtonStyle">@style/normal_button_style_black</item>-->
+        <!--        <item name="buttonBarPositiveButtonStyle">@style/normal_button_style_black</item>-->
+        <!--        <item name="buttonBarNegativeButtonStyle">@style/normal_button_style_black</item>-->
+        <!--        <item name="buttonBarNeutralButtonStyle">@style/normal_button_style_black</item>-->
+
+<!--        <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>-->
+
+        <item name="ed_text_color_primary">@color/solidWhite</item>
+        <item name="ed_text_shadow_color_primary">@color/grey_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/solidBlack</item>
+        <item name="ed_text_color_secondary">@color/grey_light</item>
+        <item name="ed_text_color_hint">@color/grey</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
+
+        <item name="android:itemBackground">#ff000000</item>
+        <item name="android:textColor">@color/primary_text_color_selector_black</item>
+        <item name="android:actionMenuTextColor">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorPrimary">@color/primary_text_color_selector_black</item>
+        <item name="android:textColorSecondary">@color/reusable_secondary_text_color_selector</item>
+        <item name="android:textColorHint">@color/tertiary_text</item>
+
+        <item name="ed_primaryLineColor">@color/grey</item>
+        <item name="ed_secondaryLineColor">@color/grey_very_dark</item>
+
+        <item name="ed_dialog_secondary_background_color">@color/grey_dark</item>
+
+        <item name="ed_loco_label_style">@style/loco_label_style</item>
+        <item name="floating_text_style">@style/floating_text_style_black</item>
+        <item name="floating_text_condensed_style">@style/floating_text_condensed_style_black</item>
+        <item name="popup_floating_text_style">@style/popup_floating_text_style_black</item>
+        <item name="edit_label_style">@style/edit_label_style_black</item>
+        <item name="edit_label_condensed_text_style">@style/edit_label_condensed_text_style_black</item>
+        <item name="android:dropDownListViewStyle">@style/spinner_style_reusable</item>
+        <item name="android:spinnerDropDownItemStyle">@style/spinner_dropdown_item_style</item>
+        <item name="android:spinnerStyle">@style/spinner</item>
+        <item name="android:spinnerItemStyle">@style/spinner_item</item>
+        <item name="edit_func_style">@style/edit_func_style_black</item>
+
+        <item name="ed_fn_scrollview_style">@style/fn_scrollview_style_black</item>
+
+        <item name="ed_large_button_style">@style/large_button_style_black</item>
+        <item name="ed_normal_button_style">@style/normal_button_style_black</item>
+        <item name="ed_normal_button2_style">@style/normal_button2_style_black</item>
+        <item name="ed_normal_button_condensed_style">@style/normal_button_condensed_style_black</item>
+        <item name="ed_loco_select_button_style">@style/loco_select_button_style_black</item>
+        <item name="ed_small_button_style">@style/small_button_style_black</item>
+        <item name="ed_small_button_condensed_text_style">@style/small_button_condensed_text_style_black</item>
+        <item name="ed_hover_button_style">@style/button_small_hover_style</item>
+        <item name="ed_stop_button_style">@style/stop_button_style_black</item>
+        <item name="ed_fn_button_style">@style/fn_button_style_black</item>
+        <item name="ed_list_button_style">@style/list_button_style_black</item>
+
+<!--        <item name="ed_dialog_button_style">@style/alertDialogButtonStyle_black</item>-->
+<!--        <item name="ed_dialog_positive_button_style">@style/alertDialogPositiveButtonStyle_black</item>-->
+<!--        <item name="ed_dialog_negative_button_style">@style/alertDialogButtonStyle_black</item>-->
+
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+
+        <!--        <item name="ed_thumb">@drawable/reusable_thumb</item>-->
+        <!--        <item name="ed_vertical_thumb">@drawable/reusable_thumb_vertical</item>-->
+
+        <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="actionButtonStyle">@style/ActionButton</item>
+
+        <item name="ed_toolbar_background">@drawable/reusable_toolbar_background</item>
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
+
+        <item name="ed_folder_icon">@drawable/reusable_preference_glyph_folder_folder</item>
+        <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_glyph_folder_dccex</item>
+        <item name="ed_folder_esu_icon">@drawable/reusable_preference_glyph_folder_esu</item>
+
+        <!-- currently only used for the custom toast -->
+        <!--        <item name="ed_background_popup">@drawable/reusable_popup_background</item>-->
+
+        <!--        <item name="ed_advanced_preferences">@drawable/glyph_preferences_advanced_preferences</item>-->
+        <item name="ed_icon">@drawable/icon_vector_outline</item>
+
+        <item name="ed_progressBar">@drawable/original_progress_bar</item>
+        <!--        <item name="ed_progressBarBackground">@color/seekBarTickColor</item>-->
+        <!--        <item name="ed_progressBarSelected">@color/holoBlue</item>-->
+        <item name="ed_throttle_tick_mark">@color/seekBarTickColor</item>
+
+<!--        <item name="ed_radio_button_style">@style/ed_radio_button_style_black</item>-->
+<!--        <item name="android:radioButtonStyle">@style/ed_radio_button_style_black</item>-->
+
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+
+        <!-- everything following this is a partial move of this theme  to the new reusable theme -->
+
+        <!-- general colours -->
+
+        <item name="reusable_popup_background_color">@color/grey_light</item>
+
+        <item name="reusable_spinner_divider_color">@color/grey_mid_dark</item>
+        <item name="reusable_spinner_background_color">@color/grey_mega_dark</item>
+        <item name="reusable_preference_heading_text_color">@color/solidBlack</item>
+
+        <item name="reusable_app_background_highlight_color">@color/black_grey_50</item>
+        <item name="reusable_app_background_highlight_secondary_color">@color/black_grey_dark_50</item>
+        <item name="reusable_app_background_highlight_tertiary_color">@color/black_grey_very_dark_50</item>
+        <item name="ed_background_highlight">@drawable/reusable_background_highlight</item>
+        <item name="ed_background_highlight_secondary">@drawable/reusable_background_highlight_secondary</item>
+        <item name="ed_background_highlight_tertiary">@drawable/reusable_background_highlight_tertiary</item>
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_inner_color">@color/holoBlue_light</item>
+        <item name="reusable_thumb_fill_outer_color">@color/solidBlack</item>
+        <item name="reusable_thumb_stroke_color">@color/solidWhite</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/solidBlack</item>
+        <item name="reusable_thumb_shadow_color">@color/transparent</item>
+        <!--        <item name="ed_throttle_tick_mark">@color/grey_light</item>-->
+
+        <!-- toolbar button overrides -->
+
+        <item name="reusable_button_active_light_bar_color">@color/solidYellow</item>
+        <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
+
+        <!-- preference glyph default colours -->
+
+        <item name="reusable_preference_glyph_fill_color">@color/grey_light</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/grey_very_light</item>
+        <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_outline_stroke_width_dimen">@dimen/reusable_toolbar_button_outline_stroke_width_outline</item>
+        <item name="reusable_toolbar_button_outline_stroke_color">@color/solidWhite</item>
+
+        <!-- Toolbar -->
+        <item name="reusable_toolbar_face_end_color">@color/ultra_grey</item>
+        <item name="reusable_toolbar_face_center_color">@color/ultra_grey_dark</item>
+        <item name="reusable_toolbar_face_start_color">@color/solidBlack</item>
+
+        <!-- toolbar buttons -->
+
+        <item name="ed_throttle_switch_button">@drawable/reusable_toolbar_button_throttle_switch_button</item>
+        <item name="ed_preferences_button">@drawable/reusable_toolbar_button_preferences</item>
+        <item name="ed_wizard_button">@drawable/reusable_toolbar_button_wizard</item>
+        <item name="ed_throttle_button">@drawable/reusable_toolbar_button_throttle</item>
+        <item name="ed_web_button">@drawable/reusable_toolbar_button_web</item>
+        <item name="ed_turnouts_button">@drawable/reusable_toolbar_button_turnouts</item>
+        <item name="ed_routes_button">@drawable/reusable_toolbar_button_routes</item>
+
+        <item name="ed_flashlight_on_button">@drawable/reusable_toolbar_button_flashlight_on</item>
+        <item name="ed_flashlight_off_button">@drawable/reusable_toolbar_button_flashlight_off</item>
+        <item name="ed_esu_mc2_knob_on_button">@drawable/reusable_toolbar_button_esu_mc2_knob_on</item>
+        <item name="ed_esu_mc2_knob_off_button">@drawable/reusable_toolbar_button_esu_mc2_knob_off</item>
+        <item name="ed_estop_button">@drawable/reusable_toolbar_button_estop</item>
+        <item name="ed_estop_active_button">@drawable/reusable_toolbar_button_estop_active</item>
+        <item name="ed_search_button">@drawable/reusable_toolbar_button_search</item>
+        <item name="ed_timer_button">@drawable/reusable_toolbar_button_timer</item>
+        <item name="ed_power_green_button">@drawable/reusable_toolbar_button_power_green</item>
+        <item name="ed_power_green_red_button">@drawable/reusable_toolbar_button_power_green_red</item>
+        <item name="ed_power_yellow_button">@drawable/reusable_toolbar_button_power_yellow</item>
+        <item name="ed_power_red_button">@drawable/reusable_toolbar_button_power_red</item>
+
+        <item name="ed_clock_icon">@drawable/reusable_toolbar_button_fast_clock</item>
+        <item name="ed_web_view_button">@drawable/reusable_toolbar_button_web_view</item>
+        <item name="ed_in_device_sounds_button">@drawable/reusable_toolbar_button_ipls</item>
+        <item name="ed_cv19_consist_button">@drawable/reusable_toolbar_button_cv19_consist</item>
+        <item name="ed_dccex_consist_button">@drawable/reusable_toolbar_button_dccex_consist</item>
+        <item name="ed_dcc_ex_button">@drawable/reusable_toolbar_button_dcc_ex</item>
+
+        <!-- toolbar button individual colour overrides -->
+
+        <item name="reusable_toolbar_button_stop_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_stop_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_stop_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_stop_face_start_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_stop_hand_color">@color/solidWhite</item>
+        <item name="reusable_toolbar_button_stop_hand_active_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_stop_spotlight_active_color">@color/solidWhite</item>
+
+        <item name="reusable_toolbar_button_cv19_consist_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_cv19_consist_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_cv19_consist_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_cv19_consist_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_esu_knob_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_esu_knob_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_esu_knob_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_esu_knob_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_dccex_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_dccex_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_dccex_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_dccex_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_in_device_sounds_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_in_device_sounds_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_in_device_sounds_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_in_device_sounds_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_flashlight_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_flashlight_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_flashlight_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_flashlight_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_power_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_power_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_power_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_power_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_preferences_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_preferences_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_preferences_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_preferences_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_routes_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_routes_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_routes_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_routes_face_start_color">@color/transparent</item>
+
+        <!--        <item name="reusable_toolbar_button_search_edge_highlight_color">@color/solidWhite</item>-->
+        <!--        <item name="reusable_toolbar_button_search_edge_dark_color">@color/colorful_cyan_ultra_dark</item>-->
+        <!--        <item name="reusable_toolbar_button_search_face_end_color">@color/colorful_blue</item>-->
+        <!--        <item name="reusable_toolbar_button_search_face_start_color">@color/colorful_cyan_ultra_dark</item>-->
+
+        <item name="reusable_toolbar_button_throttle_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_throttle_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_throttle_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_throttle_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_throttle_switch_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_throttle_switch_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_throttle_switch_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_throttle_switch_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_timer_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_timer_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_timer_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_timer_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_turnouts_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_turnouts_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_turnouts_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_turnouts_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_web_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_web_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_web_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_web_face_start_color">@color/solidBlack</item>
+
+        <item name="reusable_toolbar_button_wizard_edge_highlight_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_wizard_edge_dark_color">@color/transparent</item>
+        <item name="reusable_toolbar_button_wizard_face_end_color">@color/solidBlack</item>
+        <item name="reusable_toolbar_button_wizard_face_start_color">@color/solidBlack</item>
+
+<!--        &lt;!&ndash; dialog colours &ndash;&gt;-->
+<!--        <item name="reusable_radio_button_normal_color">@color/grey_light</item>-->
+<!--        <item name="reusable_radio_button_activate_color">@color/holoBlue</item>-->
+
+<!--        <item name="reusable_dialog_background_color">@color/grey_ultra_dark</item>-->
+<!--        <item name="reusable_dialog_text_color">@color/solidWhite</item>-->
+<!--        <item name="reusable_dialog_button_text_color">@color/solidWhite</item>-->
+<!--        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>-->
+
+    </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Preferences Theme. Used by the 'Black' / 'High Contrast' theme -->
+    <!-- Preferences Theme. Used by the 'Outline' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_black_preferences" parent="@style/app_theme_black">
+        <item name="android:divider">@drawable/divider_black</item>
+        <item name="android:listDivider">@drawable/divider_black</item>
+
+        <item name="android:listSeparatorTextViewStyle">@style/preference_heading_style_reusable</item>
+
+        <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
+
+        <item name="preferenceCategoryBackgroundColor">@drawable/reusable_preference_heading_background</item>
+        <item name="reusable_preference_heading_background_color">@color/solidWhite</item>
+    </style>
+
+</resources>

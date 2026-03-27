@@ -23,7 +23,7 @@ public interface message_type {
 //    int ERROR = 0;              // not used
     int CONNECT = 1;            // ca(select)->ta ipaddr, port (sends CONNECTED if no error)
     int DISCONNECT = 2;         // sl(exit)->ta  -- (send Q, turns off heartbeat, ends read timer)
-    int REQ_LOCO_ADDR = 3;      // sl(acquire) -> ta engineaddr, size (sends Tengineaddr to WiT)
+    int REQUEST_LOCO_BY_ADDRESS = 3;      // sl(acquire) -> ta engineaddr, size (sends Tengineaddr to WiT)
     int VELOCITY = 4;           // ed(sliderchg) -> ta speed (sends TVspeed to WiT)
     int DIRECTION = 5;          // ed(fwd/rev) -> ta direction (sends TRx to WiT)
     int FUNCTION = 6;           // ed(buttons) -> ta function, on then off (sends TFxy to WiT)
@@ -42,28 +42,28 @@ public interface message_type {
     int SERVICE_REMOVED = 19;   // ta(service removed) -> ca ipaddr, ,port  (removes from list)
 //    int REQ_VEL_AND_DIR = 20;      // ed(delay after sliderchg) -> ta, pass whichThrottle, (requests velocity and direction from WiT)
 //    int REQ_DIRECTION = 21;     // ed -> ta , pass whichThrottle, (requests direction from WiT)
-    int WEBVIEW_LOC = 22;       // pref -> throt  user changed webview location pref
-    int ROSTER_UPDATE = 23;     // ta -> ed  roster-related data updated in background
+    int WEBVIEW_LOCATION = 22;       // pref -> throt  user changed webview location pref
+    int RECEIVED_ROSTER_UPDATE = 23;     // ta -> ed  roster-related data updated in background
     int WIT_CON_RETRY = 24;     // ta -> ed  WiT connection lost and trying to reconnect
     int WIT_CON_RECONNECT = 25; // ta -> ed  WiT connection reestablished
     int INITIAL_WEB_WEBPAGE = 26;   // pref -> web  user changed initial webpage
-    int INITIAL_THR_WEBPAGE = 27;   // pref -> throt   user changed initial webpage
-    int TIME_CHANGED = 28;      // ta -> activities  updates current time
+    int INITIAL_THROTTLE_WEBPAGE = 27;   // pref -> throt   user changed initial webpage
+    int REQUEST_TIME = 28;
     int CLOCK_DISPLAY_CHANGED = 29;     // pref -> ta  clock display preference changed
     int ESTOP = 30;             // ta(sendeStopMsg) -> ta  estop requested
     int WIFI_QUIT = 31;   // ta(disconnect) -> ta send quit command to server
-    int REQ_STEAL = 32;         // ta(message_action) pass addr, throttle -> throttle
+    int RECEIVED_REQ_STEAL = 32;         // ta(message_action) pass addr, throttle -> throttle
     int STEAL = 33;             // ta(checkSteal) pass addr, throttle -> ta send commands to steal
     int WIFI_SEND = 34;         // ta, pass complete message, used for delayed sends
     int SEND_HEARTBEAT_START = 35;    // ta, pass complete message, used for delayed sends
-    int FORCE_FUNCTION = 36;     // ed(buttons) -> ta function, on = 0 off =1(sends Tfxy to WiT)
+//    int FORCE_FUNCTION = 36;     // ed(buttons) -> ta function, on = 0 off =1(sends Tfxy to WiT)
     int TOAST_MESSAGE = 37;      //web_activity -> ta pass message text
     int KIDS_TIMER_ENABLE = 38;  //
     int KIDS_TIMER_START = 39;   //
     int KIDS_TIMER_END = 40;     //
     int KIDS_TIMER_TICK = 41;    //
-    int IMPORT_SERVER_MANUAL_SUCCESS = 42;    //
-    int IMPORT_SERVER_MANUAL_FAIL = 43;    //
+//    int IMPORT_SERVER_MANUAL_SUCCESS = 42;    //
+//    int IMPORT_SERVER_MANUAL_FAIL = 43;    //
     int IMPORT_SERVER_AUTO_AVAILABLE = 44;    //
     int WIT_TURNOUT_NOT_DEFINED = 45;    //
     int RESTART_APP = 46;   //
@@ -79,16 +79,16 @@ public interface message_type {
     int REQUEST_DECODER_ADDRESS = 57;
     int RECEIVED_DECODER_ADDRESS = 58;
     int WRITE_DECODER_ADDRESS = 59;
-    int WRITE_DECODER_SUCCESS = 60;
-    int WRITE_DECODER_FAIL = 61;
+    int RECEIVED_WRITE_DECODER_SUCCESS = 60;
+    int RECEIVED_WRITE_DECODER_FAIL = 61;
     int WRITE_CV = 62;
     int REQUEST_CV = 63;
     int RECEIVED_CV = 64;
-    int DCCEX_RESPONSE = 65;
+    int RECEIVED_DCCEX_RESPONSE = 65;
     int DCCEX_COMMAND_ECHO = 66;
     int DCCEX_SEND_COMMAND = 67;
     int WRITE_POM_CV = 68;
-    int RECEIVED_TRACKS = 69;
+    int RECEIVED_DCCEX_TRACKS = 69;
     int REQUEST_TRACKS = 70;
     int WRITE_TRACK = 71;
     int WRITE_TRACK_POWER = 72;
@@ -112,9 +112,9 @@ public interface message_type {
     int RECEIVED_CONSIST_ADDRESS = 89;
     int DISPATCH = 90;
     int START_AUTOMATION = 91;
-    int WEB_PORT_RECEIVED = 92;
-    int ESTOP_PAUSED = 93;
-    int ESTOP_RESUMED = 94;
+    int RECEIVED_WEB_PORT = 92;
+    int RECEIVED_DCCEX_ESTOP_PAUSED = 93;
+    int RECEIVED_DCCEX_ESTOP_RESUMED = 94;
     int REFRESH_OVERFLOW_MENU = 95;
     int DCCEX_ESTOP_PAUSE = 96;
     int DCCEX_ESTOP_RESUME = 97;
@@ -122,5 +122,22 @@ public interface message_type {
     int WRITE_DCCEX_COMMAND_STATION_CONSIST_REMOVE = 99;
     int DCCEX_REQUEST_CONSIST_LIST = 100;
     int DCCEX_RECEIVED_CONSIST_ENTRY = 101;
+    int CONNECTION_FAILED = 102;
+
+    // split from the old RESPONSE
+
+    int RECEIVED_THROTTLE_LOCO_ADDED = 201;
+    int RECEIVED_THROTTLE_LOCO_REMOVED = 202;
+    int RECEIVED_THROTTLE_FUNCTION_LABELS_UPDATE = 203;
+
+    int RECEIVED_THROTTLE_SET_DIRECTION = 204;
+    int RECEIVED_THROTTLE_SET_SPEED = 205;
+    int RECEIVED_THROTTLE_SET_FUNCTION = 206;
+    int RECEIVED_THROTTLE_SET_SPEED_STEP = 207;
+
+    int RECEIVED_POWER_STATE_CHANGE = 208;
+    int RECEIVED_TIME_CHANGE = 209;
+
+    int RECEIVED_TURNOUT_UPDATE = 210;
 
 }
