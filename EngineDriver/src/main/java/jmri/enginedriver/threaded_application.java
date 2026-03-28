@@ -1293,7 +1293,7 @@ public class threaded_application extends Application {
         throttle.initStatics();
         throttle_original.initStatics();
         throttle_simple.initStatics();
-        web_activity.initStatics();
+        WebActivity.initStatics();
     }
 
     //initialize shared variables
@@ -2088,7 +2088,7 @@ public class threaded_application extends Application {
     /**
      * Set activity screen orientation based on prefs, check to avoid sending change when already there.
      * checks "auto Web on landscape" preference and returns false if orientation requires activity switch
-     * Uses web orientation pref if called from web_activity, uses throttle orientation pref otherwise
+     * Uses web orientation pref if called from WebActivity, uses throttle orientation pref otherwise
      *
      * @param activity calling activity
      * @return true if the new orientation is ok for this activity.
@@ -2096,7 +2096,7 @@ public class threaded_application extends Application {
      */
     @SuppressLint("SourceLockedOrientationActivity")
     public boolean setActivityOrientation(Activity activity) {
-        boolean isWeb = (activity.getLocalClassName().equals("web_activity"));
+        boolean isWeb = (activity.getLocalClassName().equals("WebActivity"));
         String to = prefs.getString("prefThrottleOrientation",
                 getApplicationContext().getResources().getString(R.string.prefThrottleOrientationDefaultValue));
         if ((to.equals("Auto-Web")) && (!webMenuSelected)) {
@@ -2740,7 +2740,7 @@ public class threaded_application extends Application {
         return switch (nextScreen) {
             case screen_swipe_index_type.ROUTES -> new Intent().setClass(this, routes.class);
             case screen_swipe_index_type.TURNOUTS -> new Intent().setClass(this, turnouts.class);
-            case screen_swipe_index_type.WEB -> new Intent().setClass(this, web_activity.class);
+            case screen_swipe_index_type.WEB -> new Intent().setClass(this, WebActivity.class);
             default -> getThrottleIntent();
         };
     }

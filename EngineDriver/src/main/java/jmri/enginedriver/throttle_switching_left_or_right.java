@@ -215,7 +215,7 @@ public class throttle_switching_left_or_right extends throttle {
             vsbSwitchingSpeeds[throttleIndex] = findViewById(speed_switching_resource_ids.getResourceId(throttleIndex,0));
             svFunctionButtons[throttleIndex] = findViewById(function_buttons_scroller_resource_ids.getResourceId(throttleIndex,0));
 
-            vsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
+            vsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_100_0_100);
             vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
             vsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
 

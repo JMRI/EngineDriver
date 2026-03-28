@@ -36,7 +36,6 @@ import android.widget.ScrollView;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.max_throttles_current_screen_type;
-import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
 
@@ -150,7 +149,9 @@ public class throttle_simple extends throttle {
             lLowers[throttleIndex] = findViewById(loco_lower_resource_ids.getResourceId(throttleIndex,0));
             bPauses[throttleIndex] = findViewById(button_pause_resource_ids.getResourceId(throttleIndex,0));
 
-            vsbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
+//            vsbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
+            vsbSpeeds[throttleIndex].setTickType(prefDisplaySpeedUnits);
+            vsbSpeeds[throttleIndex].setShowNumericValues(false);
             PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
             bPauses[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
         }

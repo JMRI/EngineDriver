@@ -66,8 +66,8 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
 @SuppressLint("ApplySharedPref")
-public class function_settings extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
-    static final String activityName = "function_settings";
+public class FunctionSettingsActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "FunctionSettingsActivity";
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
@@ -212,7 +212,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(function_settings.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(FunctionSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -709,9 +709,9 @@ public class function_settings extends AppCompatActivity implements PermissionsH
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
         Log.d(threaded_application.applicationName, activityName + ": navigateToHandler():" + requestCode);
-        if (!PermissionsHelper.getInstance().isPermissionGranted(function_settings.this, requestCode)) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(FunctionSettingsActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
-                PermissionsHelper.getInstance().requestNecessaryPermissions(function_settings.this, requestCode);
+                PermissionsHelper.getInstance().requestNecessaryPermissions(FunctionSettingsActivity.this, requestCode);
             }
         } else {
 //            switch (requestCode) {
@@ -732,7 +732,7 @@ public class function_settings extends AppCompatActivity implements PermissionsH
 
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(function_settings.this, requestCode, permissions, grantResults)) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(FunctionSettingsActivity.this, requestCode, permissions, grantResults)) {
             Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }

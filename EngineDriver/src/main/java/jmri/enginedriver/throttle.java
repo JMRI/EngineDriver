@@ -225,6 +225,9 @@ public class throttle extends AppCompatActivity implements
 
     protected ViewGroup[] functionButtonViewGroups; // function button tables
 
+    int maxThrottlePcnt = 100;
+    int maxThrottle = 126;
+
     protected Button[] bForwards; // buttons
     protected Button[] bStops;
     protected Button[] bPauses;
@@ -1230,7 +1233,7 @@ public class throttle extends AppCompatActivity implements
                     // if web activity is not open then reinit web statics for next time it is opened
 //                    if (mainapp.web_msg_handler == null) {
                     if (mainapp.activityBundleMessageHandlers[activity_id_type.WEB] == null) {
-                        web_activity.initStatics();
+                        WebActivity.initStatics();
                     }
                     break;
 
@@ -1612,6 +1615,9 @@ public class throttle extends AppCompatActivity implements
             prefWebViewLocation = prefs.getString("prefWebViewLocation", getApplicationContext().getResources().getString(R.string.prefWebViewLocationDefaultValue));
         }
         isSemiRealisticThrottle = false;
+
+        maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "prefMaximumThrottle", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
+        maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
 
         prefDirectionButtonLongPressDelay = threaded_application.getIntPrefValue(prefs, "prefDirectionButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefDirectionButtonLongPressDelayDefaultValue));
         prefStopButtonLongPressDelay = threaded_application.getIntPrefValue(prefs, "prefStopButtonLongPressDelay", getApplicationContext().getResources().getString(R.string.prefStopButtonLongPressDelayDefaultValue));
@@ -2837,7 +2843,7 @@ public class throttle extends AppCompatActivity implements
 
     void startDeviceSoundsSettingsActivity() {
         try {
-            Intent intent = new Intent().setClass(this, DeviceSoundsSettings.class);
+            Intent intent = new Intent().setClass(this, DeviceSoundsSettingsActivity.class);
             deviceSoundsSettingsActivityLauncher.launch(intent);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
@@ -5424,10 +5430,14 @@ public class throttle extends AppCompatActivity implements
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
             if ((fromUser) || (touchFromUser)) {
 
+                int adjustedSpeed = getNotchedSpeed(speed);
+                if (adjustedSpeed != speed)
+                    throttle.setProgress(adjustedSpeed);
+
                 if ((!limitedJump[whichThrottle])         // touch generates multiple onProgressChanged events, skip processing after first limited jump
                         && (sliderType != slider_type.SWITCHING)) {
 
-                    int dif = speed - lastSpeed;
+                    int dif = adjustedSpeed - lastSpeed;
                     if (prefSpeedButtonsSpeedStepDecrement) {  // don't limit the decrement speed if the preference is not set
                         dif = (Math.abs(speed - lastSpeed));
                     }
@@ -5436,12 +5446,12 @@ public class throttle extends AppCompatActivity implements
 
                         // Log.d(threaded_application.applicationName, activityName + ": onProgressChanged(): throttling change");
 
-                        if (speed < lastSpeed) { // going down
+                        if (adjustedSpeed < lastSpeed) { // going down
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
                         } else { // going up
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
                         }
-                        jumpSpeed = speed;      // save ultimate target value
+                        jumpSpeed = adjustedSpeed;      // save ultimate target value
                         limitedJump[whichThrottle] = true;
                         throttle.setProgress(lastSpeed);
 
@@ -6446,7 +6456,7 @@ public class throttle extends AppCompatActivity implements
         super.onConfigurationChanged(newConfig);
 
         if (!mainapp.setActivityOrientation(this)) { // set screen orientation based on prefs
-            Intent in = new Intent().setClass(this, web_activity.class); // if autoWeb and landscape, switch to Web activity
+            Intent in = new Intent().setClass(this, WebActivity.class); // if autoWeb and landscape, switch to Web activity
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -6938,7 +6948,7 @@ public class throttle extends AppCompatActivity implements
 
         } else if ( (item.getItemId() == R.id.web_mnu)
         || (item.getItemId() == R.id.web_button) ) {
-            in = new Intent().setClass(this, web_activity.class);
+            in = new Intent().setClass(this, WebActivity.class);
             startACoreActivity(this, in, false, 0);
             mainapp.webMenuSelected = true;
             return true;
@@ -6970,13 +6980,13 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.function_defaults_mnu) {
-            in = new Intent().setClass(this, function_settings.class);
+            in = new Intent().setClass(this, FunctionSettingsActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.function_consist_settings_mnu) {
-            in = new Intent().setClass(this, function_consist_settings.class);
+            in = new Intent().setClass(this, FunctionConsistSettingsActivity.class);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
@@ -8291,4 +8301,21 @@ public class throttle extends AppCompatActivity implements
         }
     }
 
+    // used to create notches on the speed sliders
+    int getNotchedSpeed(int newSpeed) {
+        if ( (prefDisplaySpeedUnits == -1) || (prefDisplaySpeedUnits >= 126) || (newSpeed == 0)|| (newSpeed == 126) ) return newSpeed;
+
+        double steps = (double) prefDisplaySpeedUnits;
+        double scale = (double) (maxThrottle / steps);
+        double max = (double) maxThrottle;
+
+        int newSliderPosition = (int) (Math.round(newSpeed / max * steps) * scale);
+
+        if (newSliderPosition != newSpeed) {
+//            mainapp.buttonVibration();
+            threaded_application.extendedLogging(activityName + ": getNotchedSpeed(): pref: " + prefDisplaySpeedUnits + " in: " + newSpeed + " out: " + newSliderPosition + " scale: " + scale  + " max: " + max);
+        }
+
+        return newSliderPosition;
+    }
 }

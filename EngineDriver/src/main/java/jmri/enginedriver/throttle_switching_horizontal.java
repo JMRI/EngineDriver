@@ -179,7 +179,7 @@ public class throttle_switching_horizontal extends throttle {
             llSetSpeeds[throttleIndex] = findViewById(throttle_set_speed_resource_ids.getResourceId(throttleIndex,0));
             sbSpeeds[throttleIndex] = findViewById(speed_resource_ids.getResourceId(throttleIndex,0));
             hsbSwitchingSpeeds[throttleIndex] = findViewById(speed_switching_resource_ids.getResourceId(throttleIndex,0));
-            hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
+            hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_100_0_100);
             hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
             hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
         }

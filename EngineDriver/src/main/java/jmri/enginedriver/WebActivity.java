@@ -62,8 +62,8 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.type.screen_swipe_index_type;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class web_activity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
-    static final String activityName = "web_activity";
+public class WebActivity extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
+    static final String activityName = "WebActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -361,11 +361,9 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
         }
 
         // enable remote debugging of all webviews
-//        if (Build.VERSION.SDK_INT >= 19) {
-            if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
-                WebView.setWebContentsDebuggingEnabled(true);
-            }
-//        }
+        if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
 
         // open all links inside the current view (don't start external web browser)
         WebViewClient EDWebClient = new WebViewClient() {
@@ -397,6 +395,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                     urlRestore();
                 }
             }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return handleLoadingErrorRetries();
@@ -442,7 +441,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
 
         //Set the buttons
 //        closeButton = findViewById(R.id.webview_button_close);
-//        web_activity.close_button_listener close_click_listener = new web_activity.close_button_listener();
+//        WebActivity.close_button_listener close_click_listener = new WebActivity.close_button_listener();
 //        closeButton.setOnClickListener(close_click_listener);
 
 
@@ -459,7 +458,7 @@ public class web_activity extends AppCompatActivity implements android.gesture.G
                     } else {
                         threaded_application.activityInTransition(activityName);
                         Intent in = mainapp.getThrottleIntent();
-                        startACoreActivity(web_activity.this, in, false, 0);
+                        startACoreActivity(WebActivity.this, in, false, 0);
                     }
                 }
             }

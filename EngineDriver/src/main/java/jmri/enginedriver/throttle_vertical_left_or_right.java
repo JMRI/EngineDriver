@@ -37,7 +37,6 @@ import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.max_throttles_current_screen_type;
 import jmri.enginedriver.type.throttle_screen_type;
-import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
@@ -173,7 +172,10 @@ public class throttle_vertical_left_or_right extends throttle {
             svFunctionButtons[throttleIndex] = findViewById(function_buttons_scroller_resource_ids.getResourceId(throttleIndex,0));
             bPauses[throttleIndex] = findViewById(button_pause_resource_ids.getResourceId(throttleIndex,0));
 
-            vsbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
+//            vsbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
+            vsbSpeeds[throttleIndex].setTickType(prefDisplaySpeedUnits);
+            vsbSpeeds[throttleIndex].setShowNumericValues(false);
+
             PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
             bPauses[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
         }

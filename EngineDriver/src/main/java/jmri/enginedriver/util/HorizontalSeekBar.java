@@ -97,7 +97,7 @@ public class HorizontalSeekBar extends SeekBar {
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
             prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "prefDisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
 
-            steps = prefDisplaySpeedUnits;
+            steps = (prefDisplaySpeedUnits!=-1) ? prefDisplaySpeedUnits : 100;
             if (steps >= 100) {
                 steps = steps / 3;
             } else {
@@ -120,7 +120,7 @@ public class HorizontalSeekBar extends SeekBar {
             gridMiddle = ((float) height) / 2;
 
             switch (tickMarkType) {
-                case tick_type.TICK_0_100_0:
+                case tick_type.TICK_100_0_100:
 
                     int tempSteps = steps/2;
                     gridBottom = (float) height /2 - getPaddingLeft();
@@ -144,8 +144,9 @@ public class HorizontalSeekBar extends SeekBar {
                     }
                     break;
 
+                case tick_type.TICK_AUTO:
                 case tick_type.TICK_0_100:
-                default:
+                case tick_type.TICK_0_126:
 
                     tickSpacing = (float) (width - (getPaddingLeft() * 2)) / (steps - 1);
                     sizeIncrease = (gridMiddle - getPaddingTop() - additionalPadding) / (steps * steps);
@@ -154,6 +155,20 @@ public class HorizontalSeekBar extends SeekBar {
                         d = getPaddingLeft() + i * tickSpacing;
                         l = gridMiddle - startSize - sizeIncrease * i * i;
                         r = gridMiddle + startSize + sizeIncrease * i * i;
+                        c.drawLine(d, l, d, r, tickPaint);   // x, y, end_x, end_y
+                    }
+                    break;
+
+                default: // 8, 10, 28 etc. steps
+
+                    tickSpacing = (float) (width - (getPaddingLeft() * 2)) / ((tickMarkType+1) - 1);
+                    sizeIncrease = (gridMiddle - getPaddingTop() - additionalPadding) / ((tickMarkType+1) * (tickMarkType+1));
+
+                    for (int i = 0; i < (tickMarkType+1); i++) {
+                        j = (tickMarkType+1) - i;
+                        d = getPaddingLeft() + j * tickSpacing;
+                        l = gridMiddle - startSize - sizeIncrease * j * j;
+                        r = gridMiddle + startSize + sizeIncrease * j * j;
                         c.drawLine(d, l, d, r, tickPaint);   // x, y, end_x, end_y
                     }
                     break;

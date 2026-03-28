@@ -39,6 +39,7 @@ public class VerticalSeekBar extends SeekBar {
     Paint textPaint;
 
     int sliderPurpose = 0;  // 0=Throttle
+    boolean showNumericValues = true;
     String title = "";
 
     protected int steps;
@@ -137,6 +138,10 @@ public class VerticalSeekBar extends SeekBar {
         sliderPurpose = requestedSliderPurpose;
     }
 
+    public void setShowNumericValues(boolean requestedShowNumericValues) {
+        showNumericValues = requestedShowNumericValues;
+    }
+
     public void setTitle(String requestedTitle) {
         title = requestedTitle;
     }
@@ -159,7 +164,7 @@ public class VerticalSeekBar extends SeekBar {
         int size = (int) Math.round((double) (width) / 12);
         textPaint.setTextSize(size);
 
-        if (!tickMarksChecked) {
+        if (!tickMarksChecked) { // only do this once
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
             prefSemiRealisticThrottleNumberOfBrakeSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfBrakeSteps", "7");
@@ -169,7 +174,7 @@ public class VerticalSeekBar extends SeekBar {
 
             if (sliderPurpose == SLIDER_PURPOSE_THROTTLE) {
                 prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "prefDisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-                steps = prefDisplaySpeedUnits;
+                steps = (prefDisplaySpeedUnits!=-1) ? prefDisplaySpeedUnits : 100;
                 if (steps >= 100) {
                     steps = steps / 3;
                 } else {
@@ -210,7 +215,7 @@ public class VerticalSeekBar extends SeekBar {
 
             gridMiddle = width / (float) 2;
 
-            if (tickMarkType == tick_type.TICK_0_100) {
+            if ( (tickMarkType == tick_type.TICK_0_100) || (tickMarkType == tick_type.TICK_0_126)|| (tickMarkType == tick_type.TICK_AUTO) ) {
                 gridBottom = height - paddingLeft;
                 tickSpacing = (paddingRight - gridBottom) / (steps - 1);
                 sizeIncrease = endSize / (steps * steps);
@@ -239,7 +244,7 @@ public class VerticalSeekBar extends SeekBar {
                     c.rotate(-90, height - paddingLeft + 10, gridMiddle);
                 }
 
-            } else if (tickMarkType == tick_type.TICK_0_100_0) {
+            } else if (tickMarkType == tick_type.TICK_100_0_100) {
                 int tempSteps = steps / 2;
                 gridBottom = (float) height / 2 - paddingLeft;
                 tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
@@ -261,7 +266,7 @@ public class VerticalSeekBar extends SeekBar {
                     c.drawLine(d, l, d, r, tickPaint);
                 }
 
-            } else {
+            } else { // 8, 10, 28 etc. steps
                 if (width < 150) {
                     startSize = 2;
                     endSize = width/ (float) 2 - 15;
@@ -279,10 +284,12 @@ public class VerticalSeekBar extends SeekBar {
                     l = gridMiddle - startSize - sizeIncrease * j * j;
                     r = gridMiddle + startSize + sizeIncrease * j * j;
                     c.drawLine(d, l, d, r, tickPaint);
-                    c.rotate(90, d-10, r+10);
-                    String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
-                    c.drawText(tickMarkText,  d-10,r+10, textPaint);
-                    c.rotate(-90, d-10, r+10);
+                    if (showNumericValues) {
+                        c.rotate(90, d - 10, r + 10);
+                        String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
+                        c.drawText(tickMarkText, d - 10, r + 10, textPaint);
+                        c.rotate(-90, d - 10, r + 10);
+                    }
                 }
 
                 if (!title.isEmpty()) {

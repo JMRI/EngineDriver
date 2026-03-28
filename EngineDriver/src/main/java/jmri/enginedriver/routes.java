@@ -744,7 +744,7 @@ public class routes extends AppCompatActivity
         super.onConfigurationChanged(newConfig);
 
         if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
-            Intent in = new Intent().setClass(this, web_activity.class);      // if autoWeb and landscape, switch to Web activity
+            Intent in = new Intent().setClass(this, WebActivity.class);      // if autoWeb and landscape, switch to Web activity
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
             connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -849,7 +849,7 @@ public class routes extends AppCompatActivity
             return true;
         } else if ( (item.getItemId() == R.id.web_mnu)
                 || (item.getItemId() == R.id.web_button) ) {
-            in = new Intent().setClass(this, web_activity.class);
+            in = new Intent().setClass(this, WebActivity.class);
             startACoreActivity(this, in, false, 0);
             mainapp.webMenuSelected = true;
             return true;
