@@ -7173,6 +7173,18 @@ public class throttle extends AppCompatActivity implements
         setAllFunctionLabelsAndListeners();
         setLabels();
         soundsShowHideAllMuteButtons();
+
+        // added for if the preference for the number of steps is changed.
+        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
+            if ( (vsbSpeeds != null) && (vsbSpeeds[throttleIndex] != null) )
+                vsbSpeeds[throttleIndex].resetTickMarks();
+            if ( (sbSpeeds != null) && (sbSpeeds[throttleIndex] != null) )
+                sbSpeeds[throttleIndex].resetTickMarks();
+            if ( (hsbSwitchingSpeeds != null) && (hsbSwitchingSpeeds[throttleIndex] != null) )
+                hsbSwitchingSpeeds[throttleIndex].resetTickMarks();
+            if ( (vsbSwitchingSpeeds != null) && (vsbSwitchingSpeeds[throttleIndex] != null) )
+                vsbSwitchingSpeeds[throttleIndex].resetTickMarks();
+        }
     }
 
     private void activityConsistUpdate(Bundle extras) {

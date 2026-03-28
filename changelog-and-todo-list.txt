@@ -1,6 +1,6 @@
 **Version 2.43.224
  * New Features
-     * Added notching on the non-shunting throttle sliders when using other than 126 or percent options.
+     * Added notching on the throttle sliders when using other than 126 or percent options.
  * Other
      * Theme tweaks.
      * Continued the process of renaming elements for consistency.

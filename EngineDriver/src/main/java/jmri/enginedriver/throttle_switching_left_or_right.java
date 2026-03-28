@@ -41,7 +41,6 @@ import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
-import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
@@ -215,7 +214,8 @@ public class throttle_switching_left_or_right extends throttle {
             vsbSwitchingSpeeds[throttleIndex] = findViewById(speed_switching_resource_ids.getResourceId(throttleIndex,0));
             svFunctionButtons[throttleIndex] = findViewById(function_buttons_scroller_resource_ids.getResourceId(throttleIndex,0));
 
-            vsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_100_0_100);
+//            vsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_100_0_100);
+            vsbSwitchingSpeeds[throttleIndex].setTickType(prefDisplaySpeedUnits + 1000);
             vsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
             vsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
 
