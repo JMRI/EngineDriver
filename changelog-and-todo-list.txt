@@ -1,3 +1,9 @@
+**Version 2.43.223
+ * New Features
+     * Added notching on the non-shunting throttle sliders when using other than 126 or percent options.
+ * Other
+     * Theme tweaks.
+     * Continued the process of renaming elements for consistency.
 **Version 2.43.222
  * New Features
      * New 'Neon Green' and 'Muted' themes  ('Muted' appears as 'Paper' in the menu.)
