@@ -32,6 +32,7 @@ public class HorizontalSeekBar extends SeekBar {
     protected int paddingTop;
     protected int paddingBottom;
     protected float gridBottom;
+    protected float gridTop;
     protected float gridCenter;
     protected float gridMiddle;
     protected float tickSpacing;
@@ -125,7 +126,7 @@ public class HorizontalSeekBar extends SeekBar {
 
             paddingLeft = getPaddingLeft();
             paddingRight = getPaddingRight();
-            realWidth = getWidth() - paddingLeft - paddingRight - additionalPadding * 2;
+            realWidth = getWidth() - paddingLeft - paddingRight;
             gridMiddle = ((float) height) / 2;
 
             switch (tickMarkType) {
@@ -158,40 +159,49 @@ public class HorizontalSeekBar extends SeekBar {
                     break;
                 }
 
+                /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
                 case tick_type.TICK_8_0_8:
                 case tick_type.TICK_10_0_10:
                 case tick_type.TICK_14_0_14:
                 case tick_type.TICK_28_0_28: {
 
-                    float adjustedSteps = tickMarkType - 1000 + 1;
+                    float adjustedSteps = tickMarkType - 999; // 1000+1;
                     int tempSteps = tickMarkType - 1000;
 
-                    gridCenter = paddingLeft + additionalPadding + (float) (realWidth / 2);
-                    gridBottom = (float) paddingLeft;
-                    tickSpacing = (float) (realWidth) / ((adjustedSteps * 2) - 1);
+                    gridCenter = paddingLeft + (float) (realWidth / 2);
+                    gridBottom = (float) paddingLeft; // left
+                    gridTop = (float) (realWidth + paddingLeft); // right
+                    tickSpacing = (float) (realWidth) / (tempSteps * 2);
                     sizeIncrease = endSize / (adjustedSteps * adjustedSteps);
 
+                    float tickLength;
+
                     //left
-                    for (int i = -1; i < adjustedSteps; i++) {
+                    for (int i = 0; i < adjustedSteps; i++) {
                         j = (adjustedSteps - i);
-                        d = gridCenter - (adjustedSteps - i - 1) * tickSpacing;
-                        l = gridMiddle - startSize - sizeIncrease * j * j;
-                        r = gridMiddle + startSize + sizeIncrease * j * j;
+                        d = gridBottom + (adjustedSteps - i - 1) * tickSpacing;
+                        tickLength = startSize + (sizeIncrease) * i * i;
+                        l = gridMiddle - tickLength;
+                        r = gridMiddle + tickLength;
                         // Draw a line from (startX, startY) to (stopX, stopY)
                         c.drawLine(d, l, d, r, tickPaint);
                     }
 
                     // right
-                    for (int i = -1; i < tempSteps; i++) {
+                    for (int i = 0; i < adjustedSteps; i++) {
                         j = adjustedSteps - i;
-                        d = gridCenter + ((adjustedSteps - i - 1) * tickSpacing);
-                        l = gridMiddle - startSize - sizeIncrease * j * j;
-                        r = gridMiddle + startSize + sizeIncrease * j * j;
+                        d = gridTop - ((adjustedSteps - i - 1) * tickSpacing);
+                        tickLength = startSize + (sizeIncrease) * i * i;
+                        l = gridMiddle - tickLength;
+                        r = gridMiddle + tickLength;
                         // Draw a line from (startX, startY) to (stopX, stopY)
                         c.drawLine(d, l, d, r, tickPaint);
                     }
                     break;
                 }
+
+                /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
                 case tick_type.TICK_AUTO:
                 case tick_type.TICK_0_100:

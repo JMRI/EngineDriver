@@ -550,6 +550,10 @@ public class throttle_switching_horizontal extends throttle {
 
                 if (!limitedJump[whichThrottle]) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
 
+                    int adjustedSpeed = getNotchedSpeed(speed);
+                    if (adjustedSpeed != speed)
+                        throttle.setProgress(getNewSliderPositionFromSpeed(adjustedSpeed, whichThrottle, false));
+
                     if (Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) { // if jump is too large then limit it
 
                         jumpSpeed = getSpeedFromSliderPosition(hsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle,false);      // save ultimate target value

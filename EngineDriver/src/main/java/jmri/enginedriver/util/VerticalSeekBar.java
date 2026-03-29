@@ -50,6 +50,7 @@ public class VerticalSeekBar extends SeekBar {
     protected float realWidth; // minus the padding
     protected float realTouchY;
     protected float gridBottom;
+    protected float gridTop;
     protected float gridCenter;
     protected float gridMiddle;
     protected float tickSpacing;
@@ -226,7 +227,7 @@ public class VerticalSeekBar extends SeekBar {
                 case tick_type.TICK_AUTO:
                 case tick_type.TICK_0_100:
                 case tick_type.TICK_0_126: {
-//            if ( (tickMarkType == tick_type.TICK_0_100) || (tickMarkType == tick_type.TICK_0_126)|| (tickMarkType == tick_type.TICK_AUTO) ) {
+
                     gridBottom = height - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (steps - 1);
                     sizeIncrease = endSize / (steps * steps);
@@ -257,10 +258,12 @@ public class VerticalSeekBar extends SeekBar {
                     break;
                 }
 
+                /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
                 case tick_type.TICK_AUTO_0_AUTO:
                 case tick_type.TICK_100_0_100:
                 case tick_type.TICK_126_0_126: {
-//            } else if (tickMarkType == tick_type.TICK_100_0_100) {
+
                     int tempSteps = steps / 2;
                     gridBottom = (float) height / 2 - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
@@ -293,20 +296,24 @@ public class VerticalSeekBar extends SeekBar {
                 case tick_type.TICK_14_0_14:
                 case tick_type.TICK_28_0_28: {
 
-                    float adjustedSteps = tickMarkType-1000+1;
-                    int tempSteps = tickMarkType-1000;
+                    float adjustedSteps = tickMarkType - 999; // 1000+1;
+                    int tempSteps = tickMarkType - 1000;
 
                     gridCenter = paddingLeft + (float) (realWidth / 2);
                     gridBottom = (float) paddingLeft;
-                    tickSpacing = (float) (realWidth) / (((adjustedSteps) * 2) - 1);
+                    gridTop = (float) (realWidth + paddingLeft);
+                    tickSpacing = (float) (realWidth) / (tempSteps * 2);
                     sizeIncrease = endSize / (adjustedSteps * adjustedSteps);
+
+                    float tickLength;
 
                     //bottom / Left
                     for (int i = 0; i < adjustedSteps; i++) {
                         j = adjustedSteps - i;
-                        d = gridCenter - (adjustedSteps - i - 1) * tickSpacing;
-                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
-                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
+                        d = gridBottom + (adjustedSteps - i - 1) * tickSpacing;
+                        tickLength = startSize + (sizeIncrease) * i * i;
+                        l = gridMiddle - tickLength;
+                        r = gridMiddle + tickLength;
                         // Draw a line from (startX, startY) to (stopX, stopY)
                         c.drawLine(d, l, d, r, tickPaint);
                     }
@@ -314,9 +321,10 @@ public class VerticalSeekBar extends SeekBar {
                     // top / Right
                     for (int i = 0; i < adjustedSteps; i++) {
                         j = adjustedSteps - i;
-                        d = gridCenter + ((adjustedSteps - i - 1) * tickSpacing);
-                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
-                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
+                        d = gridTop - ((adjustedSteps - i - 1) * tickSpacing);
+                        tickLength = startSize + (sizeIncrease) * i * i;
+                        l = gridMiddle - tickLength;
+                        r = gridMiddle + tickLength;
                         // Draw a line from (startX, startY) to (stopX, stopY)
                         c.drawLine(d, l, d, r, tickPaint);
                     }

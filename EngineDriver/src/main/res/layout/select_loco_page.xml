@@ -488,7 +488,8 @@
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
-                        android:weightSum="1">
+                        android:weightSum="1"
+                        android:visibility="gone">
 
                         <RadioGroup
                             android:id="@+id/select_loco_method_radio_button_group"

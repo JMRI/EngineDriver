@@ -619,6 +619,11 @@ public class throttle_switching_left_or_right extends throttle {
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
             if ((fromUser) || (vsbSwitchingSpeeds[whichThrottle].touchFromUser) ) {
+
+                int adjustedSpeed = getNotchedSpeed(speed);
+                if (adjustedSpeed != speed)
+                    throttle.setProgress(getNewSliderPositionFromSpeed(adjustedSpeed, whichThrottle, false));
+
                 if (!limitedJump[whichThrottle]) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
 
                     if (Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) { // if jump is too large then limit it
