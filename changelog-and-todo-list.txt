@@ -3,6 +3,7 @@
      * Added notching on the throttle sliders when using other than 126 or percent options.
   * Bug fixes
      * Reconnect page was never closing.  (Mistake made in the switch to Bundles.)
+     * Throttle Web Page not loading if initial web page preference changed
   * Other
      * Theme tweaks.
      * Tweaking the toast messages on connect. Makes more extensive use of the customToast.
