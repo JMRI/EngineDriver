@@ -1,7 +1,9 @@
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
- * Other
+  * Bug fixes
+     * Reconnect page was never closing.  (Mistake made in the switch to Bundles.)
+  * Other
      * Theme tweaks.
      * Tweaking the toast messages on connect. Makes more extensive use of the customToast.
      * Continued the process of renaming elements for consistency.

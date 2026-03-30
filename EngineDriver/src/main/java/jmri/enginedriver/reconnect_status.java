@@ -91,13 +91,11 @@ public class reconnect_status extends AppCompatActivity {
                 }
 
                 case message_type.WIT_CON_RECONNECT: {
-                    if ( (bundle != null)
-                            && (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ) {
-
+                    if (bundle != null) {
                         String command = (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ? bundle.getString(alert_bundle_tag_type.COMMAND) : "";
                         refresh_reconnect_status(command);
-                        reconnected();
                     }
+                    reconnected();
                     break;
                 }
 
