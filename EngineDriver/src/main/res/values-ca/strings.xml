@@ -1034,6 +1034,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Amaga el botó de silenci</string>
     <string name="prefDeviceSoundsButtonSummary">Mostra un botó d\'acció de barra per canviar les opcions del telèfon de Loco sona</string>
     <string name="prefDeviceSoundsButtonTitle">Al botó de sons del telèfon</string>
+    <string name="prefRosterSummary">Opcions relacionades amb la llista del servidor</string>
     <string name="deviceSoundsMenu">Loco sona</string>
     <string name="app_name_device_sounds_settings">Al telèfon sona loco</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomanem que augmenteu la mida de la zona de botons de la funció, o no podreu accedir a les funcions de so de campana / banya / silenci</string>
@@ -1294,5 +1295,6 @@
     <string name="prefActionBarShowWebButtonTitle">Botó web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Intercanvi de desviaments Llançar/Tancament</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Ús de la pausa/reprenguda d\'aturada d\'emergència</string>
+    <string name="prefRosterTitle">Preferències de la llista</string>
 
 </resources>

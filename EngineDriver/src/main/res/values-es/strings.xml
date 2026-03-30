@@ -1032,6 +1032,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Ocultar botón de silencio</string>
     <string name="prefDeviceSoundsButtonSummary">Mostrar un botón de la barra de acción para cambiar las opciones de sonidos de LOCO de teléfono.</string>
     <string name="prefDeviceSoundsButtonTitle">En el botón de sonidos telefónicos</string>
+    <string name="prefRosterSummary">Opciones relacionadas con la lista de jugadores del servidor</string>
     <string name="deviceSoundsMenu">Suena loco</string>
     <string name="app_name_device_sounds_settings">En el teléfono LOCO sonidos</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomendamos que aumente el tamaño del área de los botones de la función, o no podrá acceder a las funciones de sonido de campana / cuerno / mute</string>
@@ -1281,5 +1282,6 @@
     <string name="prefActionBarShowWebButtonTitle">¿Botón web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Intercambio de desvíos Lanzar/Cerrar</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar parada de emergencia, pausa/reanudación</string>
+    <string name="prefRosterTitle">Preferencias de la lista</string>
 
 </resources>

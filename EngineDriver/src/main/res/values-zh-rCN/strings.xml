@@ -456,6 +456,7 @@
     <string name="prefScreenBrightnessDimTitle">屏幕亮度调暗百分比值</string>
     <string name="prefScreenBrightnessDimSummary">调暗屏幕时使用的亮度设置（0%-99%）。设置后将禁用自动或自适应亮度。</string>
 
+    <string name="prefRosterSummary">服务器中与名册相关的选项</string>
     <string name="deviceSoundsMenu">机车声音</string>
 
     <string name="logViewer">查看日志</string>
@@ -1394,6 +1395,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefActionBarShowWebButtonTitle">网页按钮？</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - 道岔交换开关</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 使用紧急停止暂停/恢复功能</string>
+    <string name="prefRosterTitle">名单偏好</string>
 
 </resources>
 

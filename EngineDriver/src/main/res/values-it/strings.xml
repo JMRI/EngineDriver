@@ -973,6 +973,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Nascondi il pulsante di disattivazione audio</string>
     <string name="prefDeviceSoundsButtonSummary">Mostra un pulsante della barra di azione per modificare le opzioni dei suoni del telefono del telefono</string>
     <string name="prefDeviceSoundsButtonTitle">Nel pulsante dei suoni del telefono</string>
+    <string name="prefRosterSummary">Opzioni relative all\'elenco dal server</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">Nei suoni del telefono del telefono</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Consiglia di aumentare i pulsanti della funzione Dimensioni dell\'area o non sarà possibile accedere alle funzioni del suono Bell / Horn / Mute Sound</string>
@@ -1231,5 +1232,6 @@
     <string name="prefActionBarShowWebButtonTitle">Pulsante Web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Scambio scambi Lancia/Chiudi</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utilizzo di arresto di emergenza, pausa/ripresa</string>
+    <string name="prefRosterTitle">Preferenze di elenco</string>
 
 </resources>

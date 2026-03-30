@@ -980,6 +980,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Ocultar botão mudo</string>
     <string name="prefDeviceSoundsButtonSummary">Mostrar um botão de barra de ação para alterar as opções de sons de loco no telefone</string>
     <string name="prefDeviceSoundsButtonTitle">No botão de sons do telefone</string>
+    <string name="prefRosterSummary">Opções relacionadas à lista de jogadores do servidor</string>
     <string name="deviceSoundsMenu">Loco sons</string>
     <string name="app_name_device_sounds_settings">Em sons de loco de telefone</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomende que você aumente o tamanho da área de botões de função, ou você não poderá acessar as funções de som Bell / Horn / Mudo</string>
@@ -1237,4 +1238,5 @@
     <string name="prefActionBarShowWebButtonTitle">Botão da Web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Trocar desvios, acionar/fechar</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar Parada de Emergência, Pausa/Retomada</string>
+    <string name="prefRosterTitle">Preferências de escalação</string>
 </resources>

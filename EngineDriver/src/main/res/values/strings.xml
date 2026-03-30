@@ -571,6 +571,9 @@
     <string name="prefScreenBrightnessDimSummary">Brightness setting to use when dimming the screen (0%-99%). Disables Auto or Adaptive Brightness if set.</string>
     <string name="prefScreenBrightnessDimDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefRosterTitle">Roster preferences</string>
+    <string name="prefRosterSummary">Options related to the Roster from the server</string>
+
     <string name="deviceSoundsMenu">Loco Sounds</string>
 
     <string name="logViewer">View Log</string>

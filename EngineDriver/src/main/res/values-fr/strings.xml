@@ -1073,6 +1073,7 @@
     <string name="sharedFileProcessing">Traitement en cours des fichiers partagés</string>
     <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Traitement de %d fichier(s) partagé(s)...</string>
     <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Reçu %d fichier(s) partagé(s)...</string>
+    <string name="sharedFileSavingFile">Préférences d\'effectif</string>
     <string name="sharedFileSavingCount">Enregistrement %d fichier(s)</string>
     <string name="sharedFileSavedCount">Enregistré %d fichier(s)</string>
     <string name="sharedFileFailedToSaveCount">Echec enregistrement %d fichier(s)</string>
@@ -1302,5 +1303,6 @@
     <string name="prefActionBarShowWebButtonTitle">Bouton Web ?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Aiguillages à manœuvrer (ouverture/fermeture)</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utiliser l\'arrêt d\'urgence, la pause et la reprise</string>
+    <string name="prefRosterTitle">Options relatives à la liste des joueurs depuis le serveur</string>
 
 </resources>
