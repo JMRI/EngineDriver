@@ -1049,7 +1049,7 @@
     <string name="prefDccexTitle">Use comandos nativos do DCC-EX</string>
     <string name="useProtocolDCCEX">Protocolo a ser usado?</string>
     <string name="useProtocolDccexPlusAutoHint">Protocolo a ser usado?\n<small><small>(\'Auto\' procura por \"DCCEX\", \"DCC-EX\" ou porta 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Usando o protocolo DCC-EX. Desmarcar \"Use comandos nativos DCC-EX\" Preferência para usar o protocolo Withrottle.</string>
+    <string name="usingProtocolDCCEX">Usando o protocolo DCC-EX.</string>
     <string name="prefDccexConnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Solicitações de itens sequenciados</string>
     <string name="prefDccexSequenceItemRequestsSummary">Aguarde até que todos os itens de um tipo (Roster, Turnouts, Routes e Tracks) sejam recuperados antes de solicitar todos os itens do próximo tipo.</string>

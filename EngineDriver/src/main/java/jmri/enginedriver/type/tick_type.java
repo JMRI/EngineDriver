@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver.type;
 
 public interface tick_type {
-    int TICK_0_100_0 = 0;
+    int TICK_AUTO = -1;
     int TICK_0_2 = 2;
     int TICK_0_3 = 3;
     int TICK_0_4 = 4;
@@ -27,7 +27,19 @@ public interface tick_type {
     int TICK_0_7 = 7;
     int TICK_0_8 = 8;
     int TICK_0_9 = 9;
+    int TICK_0_10 = 10;
     int TICK_0_14 = 14;
     int TICK_0_28 = 28;
+    int TICK_0_126 = 126;
     int TICK_0_100 = 100;
+
+    // 1000 + the prefDisplaySpeedUnits
+    int TICK_AUTO_0_AUTO = 999; // 1000 - 1
+    int TICK_100_0_100 = 1100;
+    int TICK_126_0_126 = 1126;
+    int TICK_8_0_8 = 1008;
+    int TICK_10_0_10 = 1010;
+    int TICK_14_0_14 = 1014;
+    int TICK_28_0_28 = 1028;
+
 }

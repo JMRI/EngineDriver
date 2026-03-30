@@ -1174,7 +1174,7 @@
 
     <string name="useProtocolDCCEX">使用するプロトコル?</string>
     <string name="useProtocolDccexPlusAutoHint">使用するプロトコル?\n<small><small>(\'Auto\' は \"DCCEX\"、\"DCC-EX\" またはポート 2560 を探します)</small></small></string>
-    <string name="usingProtocolDCCEX">DCC-EX プロトコルを使用します。 wiThrottle プロトコルを使用するには、[ネイティブ DCC-EX コマンドを使用する] 設定のチェックを外します。</string>
+    <string name="usingProtocolDCCEX">DCC-EX プロトコルを使用します。</string>
     <string name="web">ウェブ</string>
 
     <string name="webViewButtonBar">Webビューボタン</string>

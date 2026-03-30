@@ -1,4 +1,12 @@
 **Version 2.43.224
+ * New Features
+     * Added notching on the throttle sliders when using other than 126 or percent options.
+  * Bug fixes
+     * Reconnect page was never closing.  (Mistake made in the switch to Bundles.)
+  * Other
+     * Theme tweaks.
+     * Tweaking the toast messages on connect. Makes more extensive use of the customToast.
+     * Continued the process of renaming elements for consistency.
 **Version 2.43.222
  * New Features
      * New 'Neon Green' and 'Muted' themes  ('Muted' appears as 'Paper' in the menu.)
@@ -1091,8 +1099,6 @@
  *   TODO: On reconnect, consider dropping all locos from the throttles and reacquiring them (like reloading saved locos)
  * at connection or close connection / exit app
  *   TODO: add option to save and automatically load locos on connection to be server specific
- * disconnect/reconnect
- *   TODO: On reconnect, consider dropping all locos from the throttles and reacquiring them (like reloading saved locos)
  * threaded_application
  *   TODO: verify MRC fastclock messages
  *   TODO: when MT+ received, if the loco is in a consist, request the consist address also
@@ -1115,13 +1121,12 @@
  *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
  *   TODO: option to show roster images above each throttle
- *   TODO: change the number of tick marks on the slider based on the number of chosen steps
  * Gamepads (throttle):
  *   TODO: move code to a separate class. This is now partly done.
  *   TODO: support Routes on keyboards.
  *   TODO: work out how to fully support the gamepads on the Turnouts and Routes pages.  Android reports a different id for the device.
  *   TODO: add the ability to support custom gamepad configs
- *   TODO: add the ability for the keyboard type to send custom commands.  e.g. everything between quotes(") is send to the CS unaltered.
+ *   TODO: add the ability for the keyboard type to send custom commands.  e.g. everything between quotes(") is sent to the CS unaltered.
  * In Phone Loco Sounds (throttle):
  *   TODO: move code to a separate class. This is now partly done, but the variables are still in t_a
  *   TODO: custom sound profiles to be able to specify/override the momentum delay

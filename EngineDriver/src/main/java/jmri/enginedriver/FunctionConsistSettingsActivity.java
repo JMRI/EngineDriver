@@ -61,8 +61,8 @@ import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.LocaleHelper;
 
 @SuppressLint("ApplySharedPref")
-public class function_consist_settings extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
-    static final String activityName = "function_consist_settings";
+public class FunctionConsistSettingsActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "FunctionConsistSettingsActivity";
 
     private threaded_application mainapp;
     private boolean orientationChange = false;
@@ -152,7 +152,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(function_consist_settings.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(FunctionConsistSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -522,9 +522,9 @@ public class function_consist_settings extends AppCompatActivity implements Perm
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
         Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
-        if (!PermissionsHelper.getInstance().isPermissionGranted(function_consist_settings.this, requestCode)) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(FunctionConsistSettingsActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
-                PermissionsHelper.getInstance().requestNecessaryPermissions(function_consist_settings.this, requestCode);
+                PermissionsHelper.getInstance().requestNecessaryPermissions(FunctionConsistSettingsActivity.this, requestCode);
             }
         } else {
 //            switch (requestCode) {
@@ -545,7 +545,7 @@ public class function_consist_settings extends AppCompatActivity implements Perm
 
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(function_consist_settings.this, requestCode, permissions, grantResults)) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(FunctionConsistSettingsActivity.this, requestCode, permissions, grantResults)) {
             Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }

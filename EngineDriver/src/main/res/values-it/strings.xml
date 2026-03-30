@@ -1041,7 +1041,7 @@
     <string name="prefDccexTitle">Usa i comandi DCC-Ex nativi</string>
     <string name="useProtocolDCCEX">Protocollo da utilizzare?</string>
     <string name="useProtocolDccexPlusAutoHint">Protocollo da utilizzare?\n<small><small>(\'Auto\' cerca \"DCCEX\", \"DCC-EX\" o porta 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Utilizzando il protocollo DCC-EX. Sconcensione \"Usa comandi DCC-EX nativi\" Preferenza per utilizzare il protocollo Withrottle.</string>
+    <string name="usingProtocolDCCEX">Utilizzando il protocollo DCC-EX.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opzione per passare tra i protocolli Withrottle e DCC-EX nella schermata di connessione.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Richieste di articoli in sequenza</string>
     <string name="prefDccexSequenceItemRequestsSummary">Attendere che tutti gli elementi di un tipo (Elenchi, Scambi, Percorsi e Tracciati) vengano recuperati prima di richiedere tutti quelli del tipo successivo.</string>

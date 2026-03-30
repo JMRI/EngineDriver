@@ -39,6 +39,7 @@ public class VerticalSeekBar extends SeekBar {
     Paint textPaint;
 
     int sliderPurpose = 0;  // 0=Throttle
+    boolean showNumericValues = true;
     String title = "";
 
     protected int steps;
@@ -46,19 +47,22 @@ public class VerticalSeekBar extends SeekBar {
     protected int width;
     protected int paddingLeft;
     protected int paddingRight;
-    protected float realHeight;
+    protected float realWidth; // minus the padding
     protected float realTouchY;
-//    protected float gridLeft;
     protected float gridBottom;
-//            protected float gridTop;
-//            protected float gridRight;
+    protected float gridTop;
+    protected float gridCenter;
     protected float gridMiddle;
     protected float tickSpacing;
     protected float sizeIncrease;
+    protected float endSize;
+    protected float startSize;
     protected float d;
     protected float l;
     protected float r;
     protected float j;
+//    protected float deadZoneUpper;
+//    protected float deadZoneLower;
 
 
 
@@ -133,9 +137,22 @@ public class VerticalSeekBar extends SeekBar {
         tickMarkType = requestedTickMarkType;
     }
 
+    public void resetTickMarks() {
+        tickMarksChecked = false;
+    }
+
     public void setSliderPurpose(int requestedSliderPurpose) {
         sliderPurpose = requestedSliderPurpose;
     }
+
+    public void setShowNumericValues(boolean requestedShowNumericValues) {
+        showNumericValues = requestedShowNumericValues;
+    }
+
+//    public void setDeadZones(int requestedDeadZoneUpper, int requestedDeadZoneLower) {
+//        deadZoneUpper = (float) requestedDeadZoneUpper;
+//        deadZoneLower = (float) requestedDeadZoneLower;
+//    }
 
     public void setTitle(String requestedTitle) {
         title = requestedTitle;
@@ -147,19 +164,17 @@ public class VerticalSeekBar extends SeekBar {
         c.rotate(ROTATION_ANGLE);
         c.translate(-getHeight(), 0);
 
-//        if (android.os.Build.VERSION.SDK_INT <= 21) {
-//            Drawable progressDrawable = getResources().getDrawable(R.drawable.transparent_progress_bar);
-//
-//            this.setProgressDrawable(progressDrawable);
-//        }
-
         height = getHeight();
         width = getWidth();
+
+        paddingLeft = getPaddingLeft();
+        paddingRight = getPaddingRight();
+        realWidth = height - paddingLeft - paddingRight;
 
         int size = (int) Math.round((double) (width) / 12);
         textPaint.setTextSize(size);
 
-        if (!tickMarksChecked) {
+        if (!tickMarksChecked) { // only do this once
             tickMarksChecked = true;
             prefTickMarksOnSliders = prefs.getBoolean("prefTickMarksOnSliders", getResources().getBoolean(R.bool.prefTickMarksOnSlidersDefaultValue));
             prefSemiRealisticThrottleNumberOfBrakeSteps = threaded_application.getIntPrefValue(prefs, "prefSemiRealisticThrottleNumberOfBrakeSteps", "7");
@@ -169,7 +184,7 @@ public class VerticalSeekBar extends SeekBar {
 
             if (sliderPurpose == SLIDER_PURPOSE_THROTTLE) {
                 prefDisplaySpeedUnits = threaded_application.getIntPrefValue(prefs, "prefDisplaySpeedUnits", getResources().getString(R.string.prefDisplaySpeedUnitsDefaultValue));
-                steps = prefDisplaySpeedUnits;
+                steps = (prefDisplaySpeedUnits!=-1) ? prefDisplaySpeedUnits : 100;
                 if (steps >= 100) {
                     steps = steps / 3;
                 } else {
@@ -193,102 +208,167 @@ public class VerticalSeekBar extends SeekBar {
 
         }
 
-        paddingLeft = getPaddingLeft();
-        paddingRight = getPaddingRight();
-        realHeight = getHeight() - paddingLeft - paddingRight;
-
         if (prefTickMarksOnSliders) {
 
-            int startSize = 10;
-            float endSize = width/ (float) 2 - 30;
+            startSize = 10;
+//            float endSize = width/ (float) 2 - 30;
+            endSize = (float) (( (float) height * 0.5) / 2.0);
             if (width < 150) {
                 startSize = 2;
-                endSize = width/ (float) 2 - 15;
-            } else if ( (endSize) > startSize * 9) {
+//                endSize = width/ (float) 2 - 15;
+            }
+            if ( endSize > startSize * 9) {
                 endSize = startSize * 9;
             }
 
             gridMiddle = width / (float) 2;
 
-            if (tickMarkType == tick_type.TICK_0_100) {
-                gridBottom = height - paddingLeft;
-                tickSpacing = (paddingRight - gridBottom) / (steps - 1);
-                sizeIncrease = endSize / (steps * steps);
+            switch (tickMarkType) {
+                case tick_type.TICK_AUTO:
+                case tick_type.TICK_0_100:
+                case tick_type.TICK_0_126: {
 
-                for (int i = 0; i < steps; i++) {
-                    j = (steps - i);
-                    d = gridBottom + i * tickSpacing;
-                    l = gridMiddle - startSize - sizeIncrease * j * j;
-                    r = gridMiddle + startSize + sizeIncrease * j * j;
-                    c.drawLine(d, l, d, r, tickPaint);
+                    gridBottom = height - paddingLeft;
+                    tickSpacing = (paddingRight - gridBottom) / (steps - 1);
+                    sizeIncrease = endSize / (steps * steps);
 
-                    if ( (sliderPurpose == SLIDER_PURPOSE_BRAKE) || (sliderPurpose == SLIDER_PURPOSE_LOAD) ) {
-                        if ( (i == 0) || (i == i / 10 * 10) ) {  // only do every tenth
-                            float offset = (float) (gridMiddle + startSize + sizeIncrease * j * j * 0.5);
-                            c.rotate(90, d - 10, offset);
-                            String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
-                            c.drawText(tickMarkText, d - 10, offset, textPaint);
-                            c.rotate(-90, d - 10, offset);
+                    for (int i = 0; i < steps; i++) {
+                        j = (steps - i);
+                        d = gridBottom + i * tickSpacing;
+                        l = gridMiddle - startSize - sizeIncrease * j * j;
+                        r = gridMiddle + startSize + sizeIncrease * j * j;
+                        c.drawLine(d, l, d, r, tickPaint);
+
+                        if ((sliderPurpose == SLIDER_PURPOSE_BRAKE) || (sliderPurpose == SLIDER_PURPOSE_LOAD)) {
+                            if ((i == 0) || (i == i / 10 * 10)) {  // only do every tenth
+                                float offset = (float) (gridMiddle + startSize + sizeIncrease * j * j * 0.5);
+                                c.rotate(90, d - 10, offset);
+                                String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
+                                c.drawText(tickMarkText, d - 10, offset, textPaint);
+                                c.rotate(-90, d - 10, offset);
+                            }
                         }
                     }
+
+                    if (!title.isEmpty()) {
+                        c.rotate(90, height - paddingLeft + 10, gridMiddle);
+                        c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
+                        c.rotate(-90, height - paddingLeft + 10, gridMiddle);
+                    }
+                    break;
                 }
 
-                if (!title.isEmpty()) {
-                    c.rotate(90, height - paddingLeft + 10, gridMiddle);
-                    c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
-                    c.rotate(-90, height - paddingLeft + 10, gridMiddle);
+                /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+                case tick_type.TICK_AUTO_0_AUTO:
+                case tick_type.TICK_100_0_100:
+                case tick_type.TICK_126_0_126: {
+
+                    int tempSteps = steps / 2;
+                    gridBottom = (float) height / 2 - paddingLeft;
+                    tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
+                    sizeIncrease = endSize / (tempSteps * tempSteps);
+
+                    // bottom
+                    for (int i = -1; i < tempSteps; i++) {
+                        j = (tempSteps - i);
+                        d = gridBottom + ((float) height / 2) + (i * tickSpacing);
+                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
+                        c.drawLine(d, l, d, r, tickPaint);
+                    }
+
+                    // top
+                    for (int i = -1; i < tempSteps; i++) {
+                        j = (tempSteps - i);
+                        d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
+                        l = gridMiddle - startSize - (sizeIncrease) * j * j;
+                        r = gridMiddle + startSize + (sizeIncrease) * j * j;
+                        c.drawLine(d, l, d, r, tickPaint);
+                    }
+                    break;
                 }
 
-            } else if (tickMarkType == tick_type.TICK_0_100_0) {
-                int tempSteps = steps / 2;
-                gridBottom = (float) height / 2 - paddingLeft;
-                tickSpacing = (paddingRight - gridBottom) / (tempSteps - 1);
-                sizeIncrease = endSize / (tempSteps * tempSteps);
+                /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-                for (int i = -1; i < tempSteps; i++) {
-                    j = (tempSteps - i);
-                    d = gridBottom + ((float) height / 2) + (i * tickSpacing);
-                    l = gridMiddle - startSize - (sizeIncrease) * j * j;
-                    r = gridMiddle + startSize + (sizeIncrease) * j * j;
-                    c.drawLine(d, l, d, r, tickPaint);
+                case tick_type.TICK_8_0_8:
+                case tick_type.TICK_10_0_10:
+                case tick_type.TICK_14_0_14:
+                case tick_type.TICK_28_0_28: {
+
+                    float adjustedSteps = tickMarkType - 999; // 1000+1;
+                    int tempSteps = tickMarkType - 1000;
+
+                    gridCenter = paddingLeft + (float) (realWidth / 2);
+                    gridBottom = (float) paddingLeft;
+                    gridTop = (float) (realWidth + paddingLeft);
+                    tickSpacing = (float) (realWidth) / (tempSteps * 2);
+                    sizeIncrease = endSize / (adjustedSteps * adjustedSteps);
+
+                    float tickLength;
+
+                    //bottom / Left
+                    for (int i = 0; i < adjustedSteps; i++) {
+                        j = adjustedSteps - i;
+                        d = gridBottom + (adjustedSteps - i - 1) * tickSpacing;
+                        tickLength = startSize + (sizeIncrease) * i * i;
+                        l = gridMiddle - tickLength;
+                        r = gridMiddle + tickLength;
+                        // Draw a line from (startX, startY) to (stopX, stopY)
+                        c.drawLine(d, l, d, r, tickPaint);
+                    }
+
+                    // top / Right
+                    for (int i = 0; i < adjustedSteps; i++) {
+                        j = adjustedSteps - i;
+                        d = gridTop - ((adjustedSteps - i - 1) * tickSpacing);
+                        tickLength = startSize + (sizeIncrease) * i * i;
+                        l = gridMiddle - tickLength;
+                        r = gridMiddle + tickLength;
+                        // Draw a line from (startX, startY) to (stopX, stopY)
+                        c.drawLine(d, l, d, r, tickPaint);
+                    }
+
+                    break;
                 }
 
-                for (int i = -1; i < tempSteps; i++) {
-                    j = (tempSteps - i);
-                    d = gridBottom + ((tempSteps - i - 1) * tickSpacing);
-                    l = gridMiddle - startSize - (sizeIncrease) * j * j;
-                    r = gridMiddle + startSize + (sizeIncrease) * j * j;
-                    c.drawLine(d, l, d, r, tickPaint);
-                }
+                /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-            } else {
-                if (width < 150) {
-                    startSize = 2;
-                    endSize = width/ (float) 2 - 15;
-                } else if ( (endSize) > startSize * 6) {
-                    endSize = startSize * 6;
-                }
+                case tick_type.TICK_0_8:
+                case tick_type.TICK_0_10:
+                case tick_type.TICK_0_28:
+                default: { // 8, 10, 28 etc. steps
+//            } else { // 8, 10, 28 etc. steps
+                    if (width < 150) {
+                        startSize = 2;
+                        endSize = width / (float) 2 - 15;
+                    } else if ((endSize) > startSize * 6) {
+                        endSize = startSize * 6;
+                    }
 
-                gridBottom = height - paddingLeft;
-                tickSpacing = (paddingRight - gridBottom) / tickMarkType;
-                sizeIncrease = endSize / ((tickMarkType+1) * (tickMarkType+1));
+                    gridBottom = height - paddingLeft;
+                    tickSpacing = (paddingRight - gridBottom) / tickMarkType;
+                    sizeIncrease = endSize / ((tickMarkType + 1) * (tickMarkType + 1));
 
-                for (int i = 0; i < (tickMarkType+1); i++) {
-                    j = ((tickMarkType+1) - i);
-                    d = gridBottom + i * tickSpacing;
-                    l = gridMiddle - startSize - sizeIncrease * j * j;
-                    r = gridMiddle + startSize + sizeIncrease * j * j;
-                    c.drawLine(d, l, d, r, tickPaint);
-                    c.rotate(90, d-10, r+10);
-                    String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
-                    c.drawText(tickMarkText,  d-10,r+10, textPaint);
-                    c.rotate(-90, d-10, r+10);
-                }
+                    for (int i = 0; i < (tickMarkType + 1); i++) {
+                        j = ((tickMarkType + 1) - i);
+                        d = gridBottom + i * tickSpacing;
+                        l = gridMiddle - startSize - sizeIncrease * j * j;
+                        r = gridMiddle + startSize + sizeIncrease * j * j;
+                        c.drawLine(d, l, d, r, tickPaint);
+                        if (showNumericValues) {
+                            c.rotate(90, d - 10, r + 10);
+                            String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
+                            c.drawText(tickMarkText, d - 10, r + 10, textPaint);
+                            c.rotate(-90, d - 10, r + 10);
+                        }
+                    }
 
-                if (!title.isEmpty()) {
-                    c.rotate(90, height - paddingLeft + 10, gridMiddle);
-                    c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
-                    c.rotate(-90, height - paddingLeft + 10, gridMiddle);
+                    if (!title.isEmpty()) {
+                        c.rotate(90, height - paddingLeft + 10, gridMiddle);
+                        c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
+                        c.rotate(-90, height - paddingLeft + 10, gridMiddle);
+                    }
                 }
             }
         }
@@ -316,7 +396,7 @@ public class VerticalSeekBar extends SeekBar {
             case MotionEvent.ACTION_DOWN:
 //                float y = event.getY();
                 realTouchY = event.getY()-paddingLeft;
-                progress = getMax() - (int) (getMax() * realTouchY / realHeight);
+                progress = getMax() - (int) (getMax() * realTouchY / realWidth);
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,realTouch);
@@ -325,7 +405,7 @@ public class VerticalSeekBar extends SeekBar {
 
             case MotionEvent.ACTION_MOVE:
                 realTouchY = event.getY()-paddingLeft;
-                progress = getMax() - (int) (getMax() * realTouchY / realHeight);
+                progress = getMax() - (int) (getMax() * realTouchY / realWidth);
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,realTouch);
@@ -333,7 +413,7 @@ public class VerticalSeekBar extends SeekBar {
 
             case MotionEvent.ACTION_UP:
                 realTouchY = event.getY()-paddingLeft;
-                progress = getMax() - (int) (getMax() * realTouchY / realHeight);
+                progress = getMax() - (int) (getMax() * realTouchY / realWidth);
                 if (progress<0) {progress = 0;}
                 if (progress>getMax()) {progress = getMax();}
                 setSeekBarProgress(progress,realTouch);

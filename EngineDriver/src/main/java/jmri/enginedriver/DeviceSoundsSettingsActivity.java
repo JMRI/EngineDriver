@@ -58,8 +58,8 @@ import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class DeviceSoundsSettings extends AppCompatActivity implements OnGestureListener {
-    static final String activityName = "DeviceSoundsSettings";
+public class DeviceSoundsSettingsActivity extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "DeviceSoundsSettingsActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private Menu overflowMenu;
@@ -404,7 +404,7 @@ public class DeviceSoundsSettings extends AppCompatActivity implements OnGesture
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(DeviceSoundsSettings.this, R.anim.fade_in, R.anim.fade_out);
+                    connection_activity.overridePendingTransition(DeviceSoundsSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };

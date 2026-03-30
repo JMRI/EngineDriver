@@ -827,8 +827,16 @@ public class ResponseProcessorDccex {
 
 //                            mainapp.dccexRosterFullyReceived = true;
                                 int count = (mainapp.dccexRosterIDs == null) ? 0 : mainapp.dccexRosterIDs.length;
-                                if (count > 0 )
-                                    mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
+                                if (count > 0 ) {
+//                                    mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
+
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.roster_available));
+                                    bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                                    bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, true);
+                                    mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
+                                }
+
                                 if (prefs.getBoolean("prefDccexSequenceItemRequests", false))
                                     SendProcessorDccex.sendDccexRequestTurnouts();
                             }
@@ -1036,8 +1044,15 @@ public class ResponseProcessorDccex {
                     mainapp.dccexTurnoutsBeingProcessed = false;
 
                     mainapp.dccexTurnoutsFullyReceived = true;
-                    if (count > 0)
-                        mainapp.safeToastInstructional(R.string.turnouts_available, LENGTH_SHORT);
+                    if (count > 0) {
+//                        mainapp.safeToastInstructional(R.string.turnouts_available, LENGTH_SHORT);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.turnouts_available));
+                        bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                        bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, true);
+                        mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
+                    }
                     if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
                         SendProcessorDccex.sendDccexRequestRoutes();
                 }
@@ -1178,8 +1193,15 @@ public class ResponseProcessorDccex {
                     mainapp.dccexRoutesBeingProcessed = false;
 
 //                    mainapp.dccexRoutesFullyReceived = true;
-                    if (count > 0)
-                        mainapp.safeToastInstructional(R.string.routes_available, LENGTH_SHORT);
+                    if (count > 0) {
+//                        mainapp.safeToastInstructional(R.string.routes_available, LENGTH_SHORT);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.routes_available));
+                        bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                        bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, true);
+                        mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
+                    }
                     if (prefs.getBoolean("prefDccexSequenceItemRequests",false))
                         SendProcessorDccex.sendDccexRequestTracks();
                 }

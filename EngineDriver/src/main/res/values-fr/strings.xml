@@ -1109,7 +1109,7 @@
     <string name="useProtocolDCCEX">Protocole a utiliser?</string>
     <string name="prefPauseAlternateButtonSummary">Bouton pause alternatif</string>
     <string name="useProtocolDccexPlusAutoHint">Protocole a utiliser?\n<small><small>(\'Auto\' recherchera soit \"DCCEX\", \"DCC-EX\" ou port 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Utilisation du protocol DCC-EX. Decocher la preference \"utilisez les commandes natives DCC-EX\" pour utiliser le protocole WiThrottle.</string>
+    <string name="usingProtocolDCCEX">Utilisation du protocol DCC-EX.</string>
     <string name="prefDccexConnectionOptionSummary">Afficher l option pour basculer entre les protocoles WiThrottle ou DCC-EX sur l ecran de connexion.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Choix type d elements</string>
     <string name="prefDccexSequenceItemRequestsSummary">Attendre que tous les élements d un type (roster, routes, aiguilles, voies) soient recupéres avant de passer au type suivant</string>

@@ -1524,7 +1524,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         public void onClick(View v) {
             mainapp.buttonVibration();
             mainapp.hideSoftKeyboard(v);
-            Intent in = new Intent().setClass(myContext, function_consist_settings.class);
+            Intent in = new Intent().setClass(myContext, FunctionConsistSettingsActivity.class);
             startActivity(in);
         }
     }

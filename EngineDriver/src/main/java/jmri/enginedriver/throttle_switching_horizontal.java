@@ -41,7 +41,6 @@ import jmri.enginedriver.type.auto_increment_or_decrement_type;
 import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.kids_timer_action_type;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
-import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
@@ -179,7 +178,8 @@ public class throttle_switching_horizontal extends throttle {
             llSetSpeeds[throttleIndex] = findViewById(throttle_set_speed_resource_ids.getResourceId(throttleIndex,0));
             sbSpeeds[throttleIndex] = findViewById(speed_resource_ids.getResourceId(throttleIndex,0));
             hsbSwitchingSpeeds[throttleIndex] = findViewById(speed_switching_resource_ids.getResourceId(throttleIndex,0));
-            hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100_0);
+//            hsbSwitchingSpeeds[throttleIndex].setTickType(tick_type.TICK_100_0_100);
+            hsbSwitchingSpeeds[throttleIndex].setTickType(prefDisplaySpeedUnits + 1000);
             hsbSwitchingSpeeds[throttleIndex].setMax(throttleSwitchingMax[throttleIndex]);
             hsbSwitchingSpeeds[throttleIndex].setProgress(throttleMidPointZero[throttleIndex]);
         }
@@ -549,6 +549,10 @@ public class throttle_switching_horizontal extends throttle {
             if ((fromUser) || (hsbSwitchingSpeeds[whichThrottle].touchFromUser) ) {
 
                 if (!limitedJump[whichThrottle]) {         // touch generates multiple onProgressChanged events, skip processing after first limited jump
+
+                    int adjustedSpeed = getNotchedSpeed(speed);
+                    if (adjustedSpeed != speed)
+                        throttle.setProgress(getNewSliderPositionFromSpeed(adjustedSpeed, whichThrottle, false));
 
                     if (Math.abs(newSliderPosition - lastSliderPosition) > max_throttle_change) { // if jump is too large then limit it
 

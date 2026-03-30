@@ -1526,7 +1526,7 @@ public class select_loco extends AppCompatActivity {
 
         public void onClick(View v) {
             Log.d(threaded_application.applicationName, activityName + ": DeviceSoundsButtonListener(): onClick()");
-            Intent deviceSounds = new Intent().setClass(_selectLocoActivity, DeviceSoundsSettings.class);
+            Intent deviceSounds = new Intent().setClass(_selectLocoActivity, DeviceSoundsSettingsActivity.class);
             startActivity(deviceSounds);
             connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             result = RESULT_OK;

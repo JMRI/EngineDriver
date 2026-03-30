@@ -34,7 +34,6 @@ import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.max_throttles_current_screen_type;
-import jmri.enginedriver.type.tick_type;
 import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
@@ -175,7 +174,8 @@ public class throttle_original extends throttle {
             bPauses[throttleIndex] = null;
             llSetSpeeds[throttleIndex] = findViewById(throttle_set_speed_resource_ids.getResourceId(throttleIndex,0));
 
-            sbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
+//            sbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
+            sbSpeeds[throttleIndex].setTickType(prefDisplaySpeedUnits);
         }
 
         // set label and dcc functions (based on settings) or hide if no label
