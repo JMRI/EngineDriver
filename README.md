@@ -11,8 +11,7 @@ Supported servers include <a href="https://jmri.org" target="_blank">JMRI</a>,
 <a href="https://myiott.org/index.php/iott-stick/communication-modules/whthrottle-server" target="_blank">IoTT&nbsp;Stick</a>. 
 
 Once connected, you can control your locomotives and your entire model railroad. Speed, direction, and up to 32 DCC functions are supported 
-for one to six locomotives or consists. You can create and edit consists (software-defined). 
-You can also control layout power, turnouts, routes, and access <a href="http://jmri.org/help/en/html/web/">JMRI web</a> panels and windows.
+for one to six locomotives or consists. You can create and edit consists/MUs (software-defined). 
+You can also control layout power, turnouts/points, routes, and access <a href="http://jmri.org/help/en/html/web/">JMRI web</a> panels and windows.
 
-For more details, visit <a href="https://enginedriver.mstevetodd.com" target="_blank">[EngineDriver&nbsp;site]</a>.<br />
-For screenshots, click <a href="https://enginedriver.mstevetodd.com/screenshots" target="_blank">[here]</a>.
+For more details, visit <a href="https://enginedriver.mstevetodd.com" target="_blank">[EngineDriver&nbsp;Documentation&nbsp;site]</a>.<br />For screenshots, click <a href="https://enginedriver.mstevetodd.com/screenshots" target="_blank">[here]</a>.

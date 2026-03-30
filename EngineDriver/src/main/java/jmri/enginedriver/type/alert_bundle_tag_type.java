@@ -38,6 +38,8 @@ public interface alert_bundle_tag_type {
     String SPEED_STEPS = "steps";
     String COMMAND = "cmd";
     String MESSAGE = "msg";
+    String DURATION = "duration";
+    String INSTRUCTIONAL = "instruct";
     String POWER_STATE = "pwr";
     String TRACK = "trk";
     String TRACK_TYPE_TEXT= "trk_type_txt";

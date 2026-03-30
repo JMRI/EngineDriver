@@ -1111,7 +1111,7 @@
     <string name="useProtocolDCCEX">Protocol a utilitzar?</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé (%1$s)</string>
     <string name="useProtocolDccexPlusAutoHint">Protocol a utilitzar?\n<small><small>(\'Automàtic\' cerca \"DCCEX\", \"DCC-EX\" o el port 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX. \nDesmarqueu \"Utilitzeu les ordres natives DCC-EX\" preferir per utilitzar el protocol amb WithRottle.</string>
+    <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX.</string>
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Sol·licituds d\'elements seqüenciades</string>
     <string name="prefDccexSequenceItemRequestsSummary">Espereu que es recuperin tots els elements d\'un tipus (Llista, desviacions, rutes i pistes) abans de demanar el següent tipus.</string>

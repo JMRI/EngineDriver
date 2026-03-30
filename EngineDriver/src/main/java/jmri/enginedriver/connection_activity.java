@@ -427,10 +427,26 @@ public class connection_activity extends AppCompatActivity implements Permission
             Bundle bundle = msg.getData();
 
             switch (msg.what) {
+
+                case message_type.CUSTOM_TOAST_MESSAGE:
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.MESSAGE))
+                            && (bundle.containsKey(alert_bundle_tag_type.DURATION)) ) {
+
+                        String message = bundle.getString(alert_bundle_tag_type.MESSAGE);
+                        int duration = bundle.getInt(alert_bundle_tag_type.DURATION);
+                        boolean instructional = false;
+                        if (bundle.containsKey(alert_bundle_tag_type.INSTRUCTIONAL))
+                            instructional = bundle.getBoolean(alert_bundle_tag_type.INSTRUCTIONAL);
+                        threaded_application.showCustomToast(connection_activity.this,"", message, duration, 4, instructional);
+                    }
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
                 case message_type.RESTART_APP:
                     startNewConnectionActivity();
                     break;
-
 
                 // - - - - - - - - - - - - - - - - - - - - - - - - //
 
@@ -955,7 +971,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoverySsidUnavailable));
             }
 //            mainapp.safeToast(warningTextBuilder.toString(), Toast.LENGTH_LONG);
-            threaded_application.showCustomToast(this, "", warningTextBuilder.toString(), Toast.LENGTH_LONG, 2);
+            threaded_application.showCustomToast(this, "", warningTextBuilder.toString(), Toast.LENGTH_LONG, 2, false);
         }
 
         discoveredServersHeading.setText(String.format(getString(R.string.discovered_services), ssid));
@@ -1551,6 +1567,6 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
     private void showCustomToast(String message, int length, int yOffsetSixthOfScreen) {
-        threaded_application.showCustomToast( this,"", message, length, yOffsetSixthOfScreen);
+        threaded_application.showCustomToast( this,"", message, length, yOffsetSixthOfScreen, false);
     }
 }

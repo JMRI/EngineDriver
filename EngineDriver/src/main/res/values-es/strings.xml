@@ -1101,7 +1101,7 @@
     <string name="prefDccexTitle">Use comandos nativos de DCC-EX</string>
     <string name="useProtocolDCCEX">¿Protocolo a utilizar?</string>
     <string name="useProtocolDccexPlusAutoHint">¿Protocolo a utilizar?\n<small><small>(\'Auto\' busca \"DCCEX\", \"DCC-EX\" o el puerto 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Usando el protocolo DCC-EX. Desactivar \"Use los comandos DCC-EX nativos\" Preferencia para usar el protocolo Witrottle.</string>
+    <string name="usingProtocolDCCEX">Usando el protocolo DCC-EX.</string>
     <string name="prefDccexConnectionOptionSummary">Mostrar opción para cambiar entre los protocolos Withrottle y DCC-EX en la pantalla de conexión.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Solicitudes de artículos secuenciadas</string>
     <string name="prefDccexSequenceItemRequestsSummary">Espere a que se recuperen todos los elementos de un tipo (lista, desvíos, rutas y recorridos) antes de solicitar todos los del siguiente tipo.</string>

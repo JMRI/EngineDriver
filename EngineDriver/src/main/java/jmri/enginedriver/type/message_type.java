@@ -124,6 +124,8 @@ public interface message_type {
     int DCCEX_RECEIVED_CONSIST_ENTRY = 101;
     int CONNECTION_FAILED = 102;
 
+    int CUSTOM_TOAST_MESSAGE = 103;
+
     // split from the old RESPONSE
 
     int RECEIVED_THROTTLE_LOCO_ADDED = 201;

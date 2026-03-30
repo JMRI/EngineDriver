@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.comms;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +35,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.R;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
@@ -170,7 +173,12 @@ public class comm_handler extends Handler {
                if (comm_thread.socketWiT.connect()) {
                   if (mainapp.isDccexProtocol()) {
                      if (!mainapp.prefHideInstructionalToasts) {
-                        mainapp.safeToast(R.string.usingProtocolDCCEX, Toast.LENGTH_LONG);
+//                        mainapp.safeToast(R.string.usingProtocolDCCEX, Toast.LENGTH_SHORT);
+
+                        bundle = new Bundle();
+                        bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.usingProtocolDCCEX));
+                        bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                        mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.CONNECTION);
                      }
                   }
 

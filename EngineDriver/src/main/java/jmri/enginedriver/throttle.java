@@ -1258,6 +1258,22 @@ public class throttle extends AppCompatActivity implements
 
                 // - - - - - - - - - - - - - - - - - - - - - - - - //
 
+                case message_type.CUSTOM_TOAST_MESSAGE:
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.MESSAGE))
+                            && (bundle.containsKey(alert_bundle_tag_type.DURATION)) ) {
+
+                        String message = bundle.getString(alert_bundle_tag_type.MESSAGE);
+                        int duration = bundle.getInt(alert_bundle_tag_type.DURATION);
+                        boolean instructional = false;
+                        if (bundle.containsKey(alert_bundle_tag_type.INSTRUCTIONAL))
+                            instructional = bundle.getBoolean(alert_bundle_tag_type.INSTRUCTIONAL);
+                        threaded_application.showCustomToast(throttle.this, "", message, duration, 4, instructional);
+                    }
+                    break;
+
+                // - - - - - - - - - - - - - - - - - - - - - - - - //
+
                 case message_type.REFRESH_OVERFLOW_MENU:
                     refreshOverflowMenu();
                     break;
@@ -5685,11 +5701,11 @@ public class throttle extends AppCompatActivity implements
 
         // only do this in onCreate
         if (prefs.getBoolean("prefThrottlesLocos",getResources().getBoolean(R.bool.prefThrottlesLocosDefaultValue))) {
+            threaded_application.showCustomToast(throttle.this, getResources().getString(R.string.prefThrottlesLocosToast), Toast.LENGTH_SHORT, 4);
             final Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mainapp.safeToastInstructional(R.string.prefThrottlesLocosToast, Toast.LENGTH_LONG);
                     importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, getApplicationContext());
                     setLabels();
                 }

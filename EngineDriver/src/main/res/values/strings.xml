@@ -1589,7 +1589,7 @@
 
     <string name="useProtocolDCCEX">Protocol to use?</string>
     <string name="useProtocolDccexPlusAutoHint">Protocol to use?\n<small><small>(\'Auto\' looks for \"DCCEX\", \"DCC-EX\" or port 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Using the DCC-EX protocol.\nUncheck \"Use native DCC-EX commands\" preference to use the WiThrottle protocol.</string>
+    <string name="usingProtocolDCCEX">Using the DCC-EX protocol.</string>
 
     <string name="prefDccexSequenceItemRequestsTitle">Sequenced item requests</string>
     <string name="prefDccexSequenceItemRequestsSummary">Wait for all items of one type (Roster, Turnouts, Routes and Tracks) are retrieved before asking for all the next type.</string>

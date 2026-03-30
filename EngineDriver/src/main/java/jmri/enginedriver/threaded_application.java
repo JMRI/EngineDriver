@@ -60,6 +60,8 @@ import android.os.Vibrator;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.util.Pair;
+import androidx.preference.PreferenceManager;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -94,7 +96,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -521,6 +525,9 @@ public class threaded_application extends Application {
     public String witCv = "";
     public String witCvValue = "";
     public String witAddress = "";
+
+//    static List<Pair<String, Double>> customToastPairList = new ArrayList<>();
+    static final List<Pair<String, Double>> customToastPairList = Collections.synchronizedList(new ArrayList<>());
 
     static boolean activityVisible = false;
     static boolean activityInTransition = false;
@@ -3206,7 +3213,7 @@ public class threaded_application extends Application {
             int reassigningGamepad = -1;
             int i;
 
-            // set for only one but the descrptor has changed - probably turned off then on
+            // set for only one but the descriptor has changed - probably turned off then on
             if ( (gamepadCount==1) && (prefGamepadOnlyOneGamepad) && (!gamePadDeviceDescriptors[0].equals(eventDeviceDescriptor)) ) {
                 for (int k = 0; k < prefNumThrottles; k++) {
                     if (gamePadDescriptorsAssignedToThrottles[k].equals(gamePadDeviceDescriptors[0])) {
@@ -3763,13 +3770,42 @@ public class threaded_application extends Application {
     }
 
     // Source - https://stackoverflow.com/a/40168175
-    // Modified from post by mgcaguioa
+    // Heavily modified from post by mgcaguioa
     // Retrieved 2026-02-17, License - CC BY-SA 3.0
     // title is not used
-    public static void showCustomToast(final Activity activity, String title, String message, int length, int yOffsetSixthOfScreen) {
+    public static void showCustomToast(final Activity activity, String message, int length, int yOffsetSixthOfScreen) {
+        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, false);
+    }
+    public static void showCustomToast(final Activity activity, String message, int length, int yOffsetSixthOfScreen, boolean instructional) {
+        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, instructional);
+    }
+    public static void showCustomToast(final Activity activity,  String title, String message, int length, int yOffsetSixthOfScreen, boolean instructional) {
         if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        boolean prefHideInstructionalToasts = sharedPreferences.getBoolean("prefHideInstructionalToasts", false);
+        if (instructional && (prefHideInstructionalToasts)) return;
+
         int durationMs = (length==Toast.LENGTH_SHORT) ? 3000 : 6000;
+        double endTime = System.currentTimeMillis() + durationMs;
+
+        StringBuilder tempToastText = new StringBuilder();
+        synchronized(customToastPairList) {
+            Iterator<Pair<String, Double>> it = customToastPairList.iterator();
+            while (it.hasNext()) {
+                Pair<String, Double> pair = it.next();
+                if ((System.currentTimeMillis() >= pair.second) || (pair.first.equals(message)) ) {
+                    it.remove(); // This is safe during iteration
+                    Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): removing: " + pair.first);
+
+                } else {
+                    tempToastText.append(pair.first).append("\n");
+                }
+            }
+            customToastPairList.add(new Pair(message, endTime));
+            Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): adding: " + message);
+        }
+        tempToastText.append(message);
 
         // inflate your xml layout
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -3790,7 +3826,7 @@ public class threaded_application extends Application {
         } else {
             ((TextView) layout.findViewById(R.id.title)).setVisibility(View.GONE);
         }
-        ((TextView) layout.findViewById(R.id.message)).setText(message);
+        ((TextView) layout.findViewById(R.id.message)).setText(tempToastText.toString());
 
         // initialize your popupWindow and use your custom layout as the view
         final PopupWindow toastPopupWindow = new PopupWindow(layout,

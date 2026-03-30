@@ -1064,7 +1064,7 @@
     <string name="prefDccexTitle">Verwenden Sie native DCC-EX-Befehle</string>
     <string name="useProtocolDCCEX">Zu verwendendes Protokoll?</string>
     <string name="useProtocolDccexPlusAutoHint">Zu verwendendes Protokoll?\n<small><small>(\'Auto\' sucht nach \"DCCEX\", \"DCC-EX\" oder Port 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls. Deaktivieren Sie \"Verwenden Sie native DCC-EX-Befehle\", um das WithRottle-Protokoll zu verwenden.</string>
+    <string name="usingProtocolDCCEX">Verwenden des DCC-EX-Protokolls.</string>
     <string name="prefDccexConnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Sequenzierte Artikelanfragen</string>
     <string name="prefDccexSequenceItemRequestsSummary">Warten Sie, bis alle Elemente eines Typs (Dienstplan, Weichen, Routen und Gleise) abgerufen wurden, bevor Sie nach allen Elementen des nächsten Typs fragen.</string>

@@ -1199,7 +1199,7 @@
     <string name="prefDccexTitle">Použijte nativní příkazy DCC-EX</string>
     <string name="useProtocolDCCEX">Protokol použít?</string>
     <string name="useProtocolDccexPlusAutoHint">Protokol, který chcete použít?\n<small><small>(\'Auto\' hledá \"DCCEX\", \"DCC-EX\" nebo port 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Pomocí protokolu DCC-Ex. \nZrušte zaškrtnutí zaškrtnutí „Nativní příkazy DCC-EX“ preference k použití protokolu Withrottle.</string>
+    <string name="usingProtocolDCCEX">Pomocí protokolu DCC-Ex.</string>
     <string name="prefDccexConnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Sekvenční požadavky na položky</string>
     <string name="prefDccexSequenceItemRequestsSummary">Počkejte, než se načtou všechny položky jednoho typu (rozpiska, výhybky, cesty a stopy), než se zeptáte na všechny další typy.</string>

@@ -1098,7 +1098,7 @@
 
     <string name="useProtocolDCCEX">Protocole à utiliser?</string>
     <string name="useProtocolDccexPlusAutoHint">Protocole à utiliser?\n<small><small>(\'Auto\' recherchera soit \"DCCEX\", \"DCC-EX\" ou port 2560)</small></small></string>
-    <string name="usingProtocolDCCEX">Utilisation du protocole DCC-EX.  Décocher \"Utilisation des commands DCC-EX natives\" dans les préférences afin d\'utiliser le protocole WiThrottle.</string>
+    <string name="usingProtocolDCCEX">Utilisation du protocole DCC-EX.</string>
     <string name="web">Web</string>
 
     <string name="webViewButtonBar">Touche pour l\'affichage web</string>
