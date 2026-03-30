@@ -1140,6 +1140,7 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Tlačítko skrýt ztlumení</string>
     <string name="prefDeviceSoundsButtonSummary">Zobrazte tlačítko ACCE BUNKU pro změnu možností v telefonu Loco Sounds</string>
     <string name="prefDeviceSoundsButtonTitle">V telefonu zvuky</string>
+    <string name="prefRosterSummary">Možnosti týkající se soupisky ze serveru</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">V telefonu Loco zvuky</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Doporučujeme zvýšit velikost funkčních tlačítek, nebo nebudete moci přistupovat k zvukovým funkcím Bell / Horn / Mute</string>
@@ -1379,5 +1380,6 @@
     <string name="prefActionBarShowWebButtonTitle">Webové tlačítko?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Výměna výhybek - Vyhození/Zavření</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Použití nouzového zastavení, pozastavení/obnovení</string>
+    <string name="prefRosterTitle">Předvolby soupisky</string>
 
 </resources>

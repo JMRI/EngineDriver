@@ -75,5 +75,7 @@
     <string name="prefShareFileNowSummary">Ermöglicht Ihnen, eine Konfigurationsdatei, gespeicherte Einstellungen oder eine Protokolldatei sofort freizugeben.</string>
     <string name="prefStopButtonLongPressDelayTitle">Stopptaste Langes Drücken Verzögerung</string>
     <string name="prefStopButtonLongPressDelaySummary">Wie viele Millisekunden dauert ein langer Druck auf die Stopp-Tasten, um den EStop einzuleiten?</string>
+    <string name="prefRosterSummary">Optionen im Zusammenhang mit der Kaderliste vom Server</string>
+    <string name="prefRosterTitle">Kaderpräferenzen</string>
 
 </resources>

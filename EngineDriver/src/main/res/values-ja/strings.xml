@@ -117,6 +117,7 @@
     <string name="dccexSendCommandLabel">DCC-EX コマンド (「&lt;」と「&gt;」を除く)</string>
 
     <string name="dccexWriteCvValueLabel">値</string>
+    <string name="prefRosterSummary">サーバーからの名簿に関するオプション</string>
     <string name="deviceSoundsMenu">ロコサウンド</string>
     <string name="deviceSoundsMuteButton">ミュート</string>
     <string name="dialogConfirmClearTitle">リストをクリア</string>
@@ -1305,5 +1306,6 @@
     <string name="prefActionBarShowWebButtonTitle">ウェブボタン？</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - ターンアウトのスロー/クローズの切り替え</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 緊急停止の一時停止/再開を使用する</string>
+    <string name="prefRosterTitle">名簿設定</string>
 
 </resources>

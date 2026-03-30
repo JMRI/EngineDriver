@@ -6569,7 +6569,7 @@ public class throttle extends AppCompatActivity implements
             firstUrl = null;
         } else {
             if (url == null || url.equals(noUrl)) {                // if initializing
-                mainapp.defaultThrottleWebViewURL = prefs.getString("InitialThrottleWebPage",
+                mainapp.defaultThrottleWebViewURL = prefs.getString("prefInitialThrottleWebPage",
                         getApplicationContext().getResources().getString(R.string.prefInitialThrottleWebPageDefaultValue));
                 url = mainapp.createUrl(mainapp.defaultThrottleWebViewURL);
                 if (url == null) {      //if port is invalid
