@@ -328,6 +328,8 @@
     <string name="prefScreenBrightnessDimTitle">Anzeigenabdunklung \% Wert</string>
     <string name="prefScreenBrightnessDimSummary">Anzuwendende Helligkeitseinstellung für Anzeigenabdunklung (0%-99%). Automatische Abschaltung von Auto-Helligkeit / Adaptive Helligkeit wenn gesetzt.</string>
 
+    <string name="deviceSoundsVolumeNotice">Die Funktion „Loco Sounds“ im Telefon verwendet die Systemlautstärkeeinstellungen für „Klingeln“, nicht für „Medien“.</string>
+    <string name="deviceSoundsVolumeWarning">Diese sind derzeit nur auf %d%% eingestellt, daher kann es sein, dass Sie die Töne nur schwer hören können.</string>
     <string name="logViewer">Log ansehen</string>
     <string name="clearLocoList">Liste leeren</string>
     <string name="ClearConnList">Liste Letzte leeren</string>

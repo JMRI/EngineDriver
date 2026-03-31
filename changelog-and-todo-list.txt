@@ -8,6 +8,9 @@
      * Theme tweaks.
      * Tweaking the toast messages on connect. Makes more extensive use of the customToast.
      * Continued the process of renaming elements for consistency.
+     * Toast message if the Ring volume is set too low on the IPLS page.
+     * Cleanup of some of the preferences.
+     * Additional glyphs in the preferences.
 **Version 2.43.222
  * New Features
      * New 'Neon Green' and 'Muted' themes  ('Muted' appears as 'Paper' in the menu.)
@@ -1154,7 +1157,7 @@
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  *   TODO: add immersive mode to get extra screen space
  * preferences:
- *
+ *   TODO: disable the 'stop on phone call' preference if no sim card or don't have READ_PHONE_STATE permission
  * children's timer:
  *   TODO: Alternate version.  Allow the selection of locos, but only from the filtered roster.  Unlimited time. Routes and Points would be available.
  * log_viewer:

@@ -86,6 +86,15 @@
     <attr name="ed_background_highlight_tertiary" format="reference" />
 
     <attr name="ed_advanced_preferences" format="reference" />
+    <attr name="ed_preferences_localisation" format="reference" />
+    <attr name="ed_preferences_speed_units" format="reference" />
+    <attr name="ed_preferences_screen_orientation" format="reference" />
+    <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_double_back_button_to_exit" format="reference" />
+    <attr name="ed_preferences_number_of_throttles" format="reference" />
+    <attr name="ed_preferences_name" format="reference" />
+    <attr name="ed_preferences_immersive_mode" format="reference" />
+    <attr name="ed_preferences_throttle_screen_layout" format="reference" />
 
     <attr name="ed_icon" format="reference" />
 

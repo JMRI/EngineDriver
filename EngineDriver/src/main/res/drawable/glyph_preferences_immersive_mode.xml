@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="171.33dp"
+    android:height="171.33dp"
+    android:viewportWidth="607.09"
+    android:viewportHeight="607.09">
+  <path
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+      android:pathData="M381.15,76.23 L439.59,134.67 366.16,207.6 402.24,243.68 475.17,170.25 533.61,228.69L533.61,76.23ZM76.23,228.69 L134.67,170.25 207.6,243.68 243.68,207.6 170.25,134.67 228.69,76.23L76.23,76.23ZM228.69,533.61 L170.25,475.17 243.68,402.24 207.6,366.16 134.67,439.59 76.23,381.15l0,152.46zM533.61,381.15 L475.17,439.59 402.24,366.16 366.16,402.24 439.59,475.17 381.15,533.61l152.46,0z"/>
+</vector>

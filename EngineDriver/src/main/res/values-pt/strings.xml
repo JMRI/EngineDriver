@@ -363,6 +363,8 @@
     <string name="prefScreenBrightnessDimTitle">Redução de brilho da tela Valor \%</string>
     <string name="prefScreenBrightnessDimSummary">Luminosidade para uso com redução de brilho da tela (0%-99%). Automaticamente desabilita Auto-Brilho/ Brilho Adaptativo se definido.</string>
 
+    <string name="deviceSoundsVolumeNotice">O recurso In Phone Loco Sounds usa as configurações de volume do sistema \'Ring\', não o volume \'Media\'.</string>
+    <string name="deviceSoundsVolumeWarning">Atualmente, o volume está em apenas %d%%, então você pode ter dificuldade para ouvir os sons.</string>
     <string name="logViewer">Ver Relatório</string>
     <string name="clearLocoList">Limpar Lista</string>
     <string name="ClearConnList">Limpar Lista Recente</string>

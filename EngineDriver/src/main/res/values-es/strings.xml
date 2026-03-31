@@ -334,6 +334,8 @@
     <string name="prefScreenBrightnessDimTitle">Cambia \% el brillo de la pantalla</string>
     <string name="prefScreenBrightnessDimSummary">Parámetros del brillo a utilizar cuando lo cambiamos en la pantalla (0%-99%). Deshabilita automáticamente brillo-automático/adaptar el brillo si es posible. </string>
 
+    <string name="deviceSoundsVolumeNotice">La función In Phone Loco Sounds utiliza la configuración de volumen del sistema \'Timbre\', no el volumen \'Medios\'.</string>
+    <string name="deviceSoundsVolumeWarning">Actualmente solo está disponible en %d%%, por lo que puede tener dificultades para escuchar los sonidos.</string>
     <string name="logViewer">Ver Log</string>
     <string name="clearLocoList">Limpia la lista</string>
     <string name="ClearConnList">Limpiar lista de recientes</string>

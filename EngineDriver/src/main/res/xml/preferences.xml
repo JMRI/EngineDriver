@@ -23,7 +23,8 @@
             android:dialogTitle="@string/prefThrottleNameTitle"
             android:inputType="text"
             android:key="prefThrottleName"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_name"
             android:maxLines="1"
             android:summary="@string/prefThrottleNameSummary"
             android:title="@string/prefThrottleNameTitle" />
@@ -33,7 +34,8 @@
             android:entries="@array/OrientationEntries"
             android:entryValues="@array/OrientationEntryValues"
             android:key="prefThrottleOrientation"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_screen_orientation"
             android:summary="@string/prefThrottleOrientationSummary"
             android:title="@string/prefThrottleOrientationTitle" />
 
@@ -42,7 +44,8 @@
             android:entries="@array/prefThemeEntries"
             android:entryValues="@array/prefThemeEntryValues"
             android:key="prefTheme"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_theme"
             android:summary="@string/prefThemeSummary"
             android:title="@string/prefThemeTitle" />
 
@@ -51,7 +54,8 @@
             android:entries="@array/prefLocaleEntries"
             android:entryValues="@array/prefLocaleEntryValues"
             android:key="prefLocale"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_localisation"
             android:summary="@string/prefLocaleSummary"
             android:title="@string/prefLocaleTitle" />
 
@@ -121,7 +125,8 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDoubleBackButtonToExitDefaultValue"
             android:key="prefDoubleBackButtonToExit"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_double_back_button_to_exit"
             android:summary="@string/prefDoubleBackButtonToExitSummary"
             android:title="@string/prefDoubleBackButtonToExitTitle" />
 
@@ -162,7 +167,8 @@
             android:entries="@array/prefThrottleScreenTypeEntries"
             android:entryValues="@array/prefThrottleScreenTypeEntryValues"
             android:key="prefThrottleScreenType"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_throttle_screen_layout"
             android:summary="@string/prefThrottleScreenTypeSummary"
             android:title="@string/prefThrottleScreenTypeTitle" />
 <!--        <ListPreference-->
@@ -180,7 +186,8 @@
             android:entryValues="@array/NumOfThrottlesEntryValues"
             android:dialogLayout="@layout/preference_dialog_num_throttle"
             android:key="prefNumThrottles"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_number_of_throttles"
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
 
@@ -537,7 +544,8 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
             android:key="prefThrottleViewImmersiveMode"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_immersive_mode"
             android:summary="@string/prefThrottleViewImmersiveModeSummary"
             android:title="@string/prefThrottleViewImmersiveModeTitle" />
 
@@ -1067,7 +1075,8 @@
             android:entries="@array/DisplaySpeedUnitsEntries"
             android:entryValues="@array/DisplaySpeedUnitEntryValues"
             android:key="prefDisplaySpeedUnits"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_speed_units"
             android:summary="@string/prefDisplaySpeedUnitsSummary"
             android:title="@string/prefDisplaySpeedUnitsTitle" />
 
@@ -2250,29 +2259,45 @@
             android:summary="@string/prefHideDemoServerSummary"
             android:title="@string/prefHideDemoServerTitle" />
 
-        <EditTextPreference
-            android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
-            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
-            android:key="prefConnectTimeoutMs"
-            android:layout="@layout/preference_checkbox_no_icon"
-            android:summary="@string/prefConnectTimeoutMsSummary"
-            android:title="@string/prefConnectTimeoutMsTitle" />
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_icon"
+            android:key="prefConnectAdditionalPreferences"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:persistent="false"
+            android:summary="@string/prefConnectAdvancedPreferencesSummary"
+            android:title="@string/prefConnectAdvancedPreferencesTitle">
 
-        <EditTextPreference
-            android:defaultValue="@string/prefSocketTimeoutMsDefaultValue"
-            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
-            android:key="prefSocketTimeoutMs"
-            android:layout="@layout/preference_checkbox_no_icon"
-            android:summary="@string/prefSocketTimeoutMsSummary"
-            android:title="@string/prefSocketTimeoutMsTitle" />
+            <PreferenceCategory
+                android:icon="@drawable/glyph_preference_category_loco_sounds"
+                android:key="prefCategoryDeviceSoundsSub"
+                android:layout="@layout/preference_category_icon_left"
+                android:title="@string/prefConnectAdvancedPreferencesTitle">
 
-        <EditTextPreference
-            android:defaultValue="@string/prefHeartbeatResponseFactorDefaultValue"
-            android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
-            android:key="prefHeartbeatResponseFactor"
-            android:layout="@layout/preference_checkbox_no_icon"
-            android:summary="@string/prefHeartbeatResponseFactorSummary"
-            android:title="@string/prefHeartbeatResponseFactorTitle" />
+                    <EditTextPreference
+                        android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
+                        android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
+                        android:key="prefConnectTimeoutMs"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefConnectTimeoutMsSummary"
+                        android:title="@string/prefConnectTimeoutMsTitle" />
+
+                    <EditTextPreference
+                        android:defaultValue="@string/prefSocketTimeoutMsDefaultValue"
+                        android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
+                        android:key="prefSocketTimeoutMs"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefSocketTimeoutMsSummary"
+                        android:title="@string/prefSocketTimeoutMsTitle" />
+
+                    <EditTextPreference
+                        android:defaultValue="@string/prefHeartbeatResponseFactorDefaultValue"
+                        android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
+                        android:key="prefHeartbeatResponseFactor"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefHeartbeatResponseFactorSummary"
+                        android:title="@string/prefHeartbeatResponseFactorTitle" />
+            </PreferenceCategory>
+        </PreferenceScreen>
 
         <CheckBoxPreference
             android:defaultValue="@bool/prefAllowMobileDataDefaultValue"

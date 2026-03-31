@@ -336,6 +336,8 @@
     <string name="prefScreenBrightnessDimTitle">Canvia \% la brillantor de la pantalla</string>
     <string name="prefScreenBrightnessDimSummary">Paràmetres de la brillantor a utilizar quan la canviem en la pantalla (0%-99%). Deshabilita automàticament Brillantor-automàtic, adapta brillantor si es possible.</string>
 
+    <string name="deviceSoundsVolumeNotice">La funció Sons de locomoció al telèfon utilitza la configuració de volum del sistema \"Timbre\" no el volum \"Multimèdia\".</string>
+    <string name="deviceSoundsVolumeWarning">Actualment només està al %d%%, de manera que és possible que tingueu dificultats per sentir els sons.</string>
     <string name="logViewer">Veure Log</string>
     <string name="clearLocoList">Neteja la llista</string>
     <string name="ClearConnList">Neteja la llista de recents</string>

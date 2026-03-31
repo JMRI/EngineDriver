@@ -1429,6 +1429,12 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         boolean enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= 5.005058))
                 || (mainapp.connectedHostName.isEmpty()));
         enableDisablePreference(prefScreen, "prefDccexEmergencyStopPauseResume", enable);
+
+        enable = ( (mainapp.isDccexProtocol()) || (mainapp.connectedHostName.isEmpty()) );
+        enableDisablePreference(prefScreen, "prefDccExPreferences", enable);
+        enableDisablePreference(prefScreen, "prefDccexSwapThrowClose", enable);
+        enableDisablePreference(prefScreen, "prefDccexAutomationsAsk", enable);
+        enableDisablePreference(prefScreen, "prefActionBarShowDccExButton", enable);
     }
 
     private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {

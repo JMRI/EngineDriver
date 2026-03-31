@@ -51,8 +51,8 @@
 
                 <ImageView
                     android:id="@android:id/icon"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:layout_gravity="center"
                     android:layout_marginLeft="0dip"
                     android:layout_marginRight="1dip"

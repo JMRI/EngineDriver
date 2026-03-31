@@ -17,10 +17,13 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -423,6 +426,8 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
                     "");
         }
 
+        displayRingerVolume();
+
     } // end onCreate
 
     // ************************************************************************************************************* //
@@ -661,6 +666,26 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
                     }
                 });
             }
+        }
+    }
+
+    void displayRingerVolume() {
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        if (audioManager != null) {
+            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+            int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+            int volumePercent = (int) ((double) currentVolume / (double) maxVolume * 100);
+
+            String toastMessage = getApplicationContext().getResources().getString(R.string.deviceSoundsVolumeNotice);
+            boolean instructional = true;
+            if (volumePercent <= 20) {
+                toastMessage += "\n" + getApplicationContext().getResources().getString(R.string.deviceSoundsVolumeWarning, volumePercent);
+                instructional = false;
+            }
+            threaded_application.showCustomToast(DeviceSoundsSettingsActivity.this, toastMessage, LENGTH_LONG, 4, instructional);
+        } else {
+            Log.d(threaded_application.applicationName, activityName + ": VolumeInfo(displayRingerVolume) :AudioManager not available");
         }
     }
 }

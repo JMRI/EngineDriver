@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="171.33333mm"
+   height="171.33333mm"
+   viewBox="0 0 607.0866 607.08659"
+   id="svg2"
+   version="1.1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="glyph_preferences_number_of_throttles.svg"
+   inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\advanced_preferences.png"
+   inkscape:export-xdpi="7.0892334"
+   inkscape:export-ydpi="7.0892334"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4155"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4157" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4149">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4151" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4139"
+       inkscape:swatch="gradient">
+      <stop
+         style="stop-color:#2b2200;stop-opacity:1;"
+         offset="0"
+         id="stop4141" />
+      <stop
+         style="stop-color:#2b2200;stop-opacity:0;"
+         offset="1"
+         id="stop4143" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="306.88434"
+     inkscape:cy="400.92955"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="1"
+     fit-margin-left="1"
+     fit-margin-right="1"
+     fit-margin-bottom="1"
+     units="mm"
+     inkscape:window-width="1600"
+     inkscape:window-height="829"
+     inkscape:window-x="-8"
+     inkscape:window-y="114"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-65.224067,-173.70181)">
+    <path
+       id="path5"
+       style="stroke-width:23.088"
+       d="M 621.45366,547.42111 H 298.22099 V 224.18843 h 323.23267 z m 0,-369.40877 H 298.22099 c -25.39686,0 -46.1761,20.77925 -46.1761,46.17609 v 323.23268 c 0,25.39684 20.77924,46.17609 46.1761,46.17609 h 323.23267 c 25.39685,0 46.17608,-20.77925 46.17608,-46.17609 V 224.18843 c 0,-25.39684 -20.77923,-46.17609 -46.17608,-46.17609 z" />
+    <path
+       id="path3"
+       style="stroke-width:23.088"
+       d="m 436.74927,408.89282 h 46.1761 v 46.17609 h -46.1761 z m 0,92.35219 h 46.1761 c 25.39685,0 46.1761,-20.54836 46.1761,-46.1761 v -46.17609 c 0,-25.62773 -20.77925,-46.1761 -46.1761,-46.1761 h -46.1761 v -46.17609 h 92.3522 v -46.1761 h -92.3522 c -25.39685,0 -46.17609,20.54837 -46.17609,46.1761 v 138.52828 c 0,25.62774 20.77924,46.1761 46.17609,46.1761 z" />
+    <path
+       d="M 205.86879,270.36453 H 159.6927 V 639.7733 c 0,25.39685 20.77924,46.17609 46.17609,46.17609 H 575.27756 V 639.7733 H 205.86879 Z"
+       id="path2"
+       style="stroke-width:23.088" />
+    <path
+       d="M 114.24212,362.52782 H 68.066028 v 369.40876 c 0,25.39685 20.779243,46.1761 46.176092,46.1761 h 369.40877 v -46.1761 H 114.24212 Z"
+       id="path2-4"
+       style="stroke-width:23.088" />
+  </g>
+</svg>
