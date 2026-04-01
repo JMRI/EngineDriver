@@ -228,7 +228,7 @@
     <string name="prefIncreaseWebViewSizeTitle">增大控制器网页视图？</string>
     <string name="prefIncreaseWebViewSizeSummary">在小屏幕上将控制器网页视图大小增加到60%</string>
     <string name="prefThrottleViewImmersiveModeTitle">为控制器视图使用沉浸式模式？</string>
-    <string name="prefThrottleViewImmersiveModeSummary">全屏显示控制器视图。设置上下滑动选项可暂时禁用并访问菜单。</string>
+    <string name="prefThrottleViewImmersiveModeSummary">全屏显示控制器视图</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">在沉浸式模式下隐藏工具栏？</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">设置为在沉浸式模式下也隐藏工具栏</string>
     <string name="prefSwipeUpOptionTitle">控制器屏幕上滑操作？</string>
@@ -459,6 +459,8 @@
     <string name="prefRosterSummary">服务器中与名册相关的选项</string>
     <string name="deviceSoundsMenu">机车声音</string>
 
+    <string name="deviceSoundsVolumeNotice">手机本地音效功能使用的是“铃声”系统音量设置，而不是“媒体”音量设置。</string>
+    <string name="deviceSoundsVolumeWarning">目前只有 %d%% 版本，所以您可能听不到声音。</string>
     <string name="logViewer">查看日志</string>
     <string name="clearLocoList">清除列表</string>
     <string name="ClearConnList">清除最近列表</string>

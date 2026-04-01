@@ -272,7 +272,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
     <string name="prefIncreaseWebViewSizeSummary">Increase Throttle Web View size to 60\% for small screens</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.\nOptionally, you can set Swipe up or down options to temporarily disable and reach the menu.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen?</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Hide Toolbar in Immersive Mode?</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Set to also hide the Toolbar in immersive mode</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle screen?</string>
@@ -397,7 +397,7 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries. This MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
 
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override WiThrottle Function Latching</string>
-    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locs, rather that the defaults provided by WiThrottle</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locos, rather that the defaults provided by WiThrottle</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use Defaults for Roster Entries With No Functions</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Use Engine Driver\'s default Functions for roster entries with no function labels</string>
 
@@ -542,6 +542,8 @@
     <string name="prefInitialWebPageDefaultValue" translatable="false">/</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefInitialWebPageSummary">Enter the initial Web Page (such as \'/panel\') for the Web Screen</string>
     <string name="prefConnectTitle">Connect Preferences</string>
+    <string name="prefConnectAdvancedPreferencesTitle">Advanced Connect Preferences</string>
+    <string name="prefConnectAdvancedPreferencesSummary">Additional technical connection related preferences</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Recent Connections</string>
     <string name="prefMaximumRecentConnectionsDefaultValue" translatable="false">10</string>  <!-- DO NOT TRANSLATE -->
     <string name="prefMaximumRecentConnectionsSummary">Maximum Recent Connections to show in list</string>
@@ -575,6 +577,8 @@
     <string name="prefRosterSummary">Options related to the Roster from the server</string>
 
     <string name="deviceSoundsMenu">Loco Sounds</string>
+    <string name="deviceSoundsVolumeNotice">The In Phone Loco Sounds feature uses the \'Ring\' system volume settings not the \'Media\' volume.</string>
+    <string name="deviceSoundsVolumeWarning">This is currently only at %d%% so you may have difficulty hearing the sounds.</string>
 
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>

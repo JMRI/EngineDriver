@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <item
+      android:state_enabled="true">
+
+      <vector
+        android:width="171.33dp"
+        android:height="171.33dp"
+        android:viewportWidth="607.09"
+        android:viewportHeight="607.09">
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+          android:pathData="M556.23,373.72L233,373.72L233,50.49h323.23zM556.23,4.31L233,4.31c-25.4,0 -46.18,20.78 -46.18,46.18v323.23c0,25.4 20.78,46.18 46.18,46.18h323.23c25.4,0 46.18,-20.78 46.18,-46.18L602.41,50.49c0,-25.4 -20.78,-46.18 -46.18,-46.18z"
+          android:strokeWidth="23.088"/>
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+          android:pathData="m371.53,235.19h46.18v46.18h-46.18zM371.53,327.54h46.18c25.4,0 46.18,-20.55 46.18,-46.18v-46.18c0,-25.63 -20.78,-46.18 -46.18,-46.18h-46.18v-46.18h92.35v-46.18h-92.35c-25.4,0 -46.18,20.55 -46.18,46.18v138.53c0,25.63 20.78,46.18 46.18,46.18z"
+          android:strokeWidth="23.088"/>
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+          android:pathData="M140.64,96.66L94.47,96.66L94.47,466.07c0,25.4 20.78,46.18 46.18,46.18L510.05,512.25L510.05,466.07L140.64,466.07Z"
+          android:strokeWidth="23.088"/>
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+          android:pathData="M49.02,188.83L2.84,188.83v369.41c0,25.4 20.78,46.18 46.18,46.18h369.41v-46.18L49.02,558.23Z"
+          android:strokeWidth="23.088"/>
+    </vector>
+
+  </item>
+
+
+  <item
+      android:state_enabled="false">
+
+    <vector
+        android:width="171.33dp"
+        android:height="171.33dp"
+        android:viewportWidth="607.09"
+        android:viewportHeight="607.09">
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_disabled_color"
+          android:pathData="M556.23,373.72L233,373.72L233,50.49h323.23zM556.23,4.31L233,4.31c-25.4,0 -46.18,20.78 -46.18,46.18v323.23c0,25.4 20.78,46.18 46.18,46.18h323.23c25.4,0 46.18,-20.78 46.18,-46.18L602.41,50.49c0,-25.4 -20.78,-46.18 -46.18,-46.18z"
+          android:strokeWidth="23.088"/>
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_disabled_color"
+          android:pathData="m371.53,235.19h46.18v46.18h-46.18zM371.53,327.54h46.18c25.4,0 46.18,-20.55 46.18,-46.18v-46.18c0,-25.63 -20.78,-46.18 -46.18,-46.18h-46.18v-46.18h92.35v-46.18h-92.35c-25.4,0 -46.18,20.55 -46.18,46.18v138.53c0,25.63 20.78,46.18 46.18,46.18z"
+          android:strokeWidth="23.088"/>
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_disabled_color"
+          android:pathData="M140.64,96.66L94.47,96.66L94.47,466.07c0,25.4 20.78,46.18 46.18,46.18L510.05,512.25L510.05,466.07L140.64,466.07Z"
+          android:strokeWidth="23.088"/>
+      <path
+          android:fillColor="?attr/ed_monochrome_glyph_button_disabled_color"
+          android:pathData="M49.02,188.83L2.84,188.83v369.41c0,25.4 20.78,46.18 46.18,46.18h369.41v-46.18L49.02,558.23Z"
+          android:strokeWidth="23.088"/>
+    </vector>
+
+  </item>
+
+</selector>

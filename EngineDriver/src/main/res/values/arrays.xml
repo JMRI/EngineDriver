@@ -2752,7 +2752,9 @@
         <item>swipe_up_down_preferences</item>  <!-- PreferenceScreen -->
         <item>throttle_direction_preference</item>   <!-- PreferenceScreen -->
         <item>throttle_accelerometer_preference</item>  <!-- PreferenceScreen -->
+        <item>prefDecreaseLocoNumberHeight</item>
         <item>prefShowAddressInsteadOfName</item>
+        <item>prefSelectedLocoIndicator</item>
         <item>default_function_preferences</item>  <!-- PreferenceScreen -->
         <item>prefHideFunctionButtonsOfNonSelectedThrottle</item>
         <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item>
@@ -2832,8 +2834,9 @@
         <item>prefAutoServerNamedConnect</item>
         <item>prefAutoServerIpConnect</item>
         <item>prefAllowMobileData</item>
-        <item>prefConnectTimeoutMs</item>
-        <item>prefSocketTimeoutMs</item>
+        <item>prefConnectAdditionalPreferences</item>
+<!--        <item>prefConnectTimeoutMs</item>-->
+<!--        <item>prefSocketTimeoutMs</item>-->
         <item>prefFeedbackOnDisconnect</item>
         <item>prefUseDccexProtocol</item>
         <item>prefDCCEXConnectionOption</item>

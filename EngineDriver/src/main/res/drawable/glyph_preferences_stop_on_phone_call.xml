@@ -1,0 +1,25 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="171.33dp"
+    android:height="171.33dp"
+    android:viewportWidth="607.09"
+    android:viewportHeight="607.09">
+  <path
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+      android:pathData="m570.96,420.57c-41.78,0 -81.88,-6.68 -119.31,-19.05 -11.7,-3.68 -24.73,-1 -34.09,8.02L344.03,483.06C249.45,434.94 171.92,357.74 123.79,262.82l73.52,-73.86c9.36,-8.69 12.03,-21.72 8.36,-33.42 -12.37,-37.43 -19.05,-77.53 -19.05,-119.31 0,-18.38 -15.04,-33.42 -33.42,-33.42L36.23,2.81c-18.38,0 -33.42,15.04 -33.42,33.42 0,313.82 254.33,568.14 568.14,568.14 18.38,0 33.42,-15.04 33.42,-33.42L604.38,453.99c0,-18.38 -15.04,-33.42 -33.42,-33.42z"
+      android:strokeWidth="33.4202"/>
+  <path
+      android:pathData="M584.42,62.7m-15.5,0a15.5,15.5 0,1 1,31 0a15.5,15.5 0,1 1,-31 0"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  <path
+      android:pathData="M543.09,31.7m-15.5,0a15.5,15.5 0,1 1,31 0a15.5,15.5 0,1 1,-31 0"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  <path
+      android:pathData="M501.76,21.37m-15.5,0a15.5,15.5 0,1 1,31 0a15.5,15.5 0,1 1,-31 0"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  <path
+      android:pathData="M460.44,42.03m-15.5,0a15.5,15.5 0,1 1,31 0a15.5,15.5 0,1 1,-31 0"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  <path
+      android:pathData="M568.92,62.7L568.92,129.85c0,2.85 -2.31,5.17 -5.17,5.17 -2.85,0 -5.17,-2.31 -5.17,-5.17L558.59,31.7l-31,0L527.59,119.52c0,2.85 -2.31,5.17 -5.17,5.17 -2.85,0 -5.17,-2.31 -5.17,-5.17L517.26,21.37l-31,0L486.26,119.52c0,2.85 -2.31,5.17 -5.17,5.17 -2.85,0 -5.17,-2.31 -5.17,-5.17L475.93,42.03l-31,0L444.94,171.18L424.02,142.55c-6.2,-9.56 -18.3,-12.76 -27.16,-7.28 -8.83,5.6 -11.02,17.81 -4.91,27.34 0,0 33.74,51.07 48.13,72.93 14.38,21.86 37.68,38.96 81.25,38.96 72.14,0 78.59,-55.71 78.59,-72.32 0,-16.61 0,-139.48 0,-139.48z"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+</vector>

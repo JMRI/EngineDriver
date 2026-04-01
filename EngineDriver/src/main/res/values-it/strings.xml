@@ -193,7 +193,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Aumentare dimensioni schermo Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Aumentare dimensioni schermo Web del 60% per piccoli schermi.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Usare Modo Immersivo per il Controllore?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Mostrare il Controllore a schermo pieno. Scorrere in basso per disabilitare momentaneamente e accedere al menu. </string>
+    <string name="prefThrottleViewImmersiveModeSummary">Mostrare il Controllore a schermo pieno</string>
     <string name="prefSwipeUpOptionTitle">Scorrere in alto nella vista Controllore?</string>
     <string name="prefSwipeUpOptionSummary">Cosa succede quando si scorre verso l\'alto nella vista  Controllore.</string>
     <string name="prefVolumeTitle">Preferenze Volume</string>
@@ -362,6 +362,8 @@
     <string name="prefScreenBrightnessDimTitle">Riduzione di Brillantezza dello schermo Valore \%</string>
     <string name="prefScreenBrightnessDimSummary">Luminosità per uso con riduzione di Brillantezza dello schermo (0%-99%). Automaticamente disabilita Auto-Brillantezza / Brillantezza Adattativa se impostata.</string>
 
+    <string name="deviceSoundsVolumeNotice">La funzione In Phone Loco Sounds utilizza le impostazioni del volume di sistema \"Suoneria\" e non quelle del volume \"Media\".</string>
+    <string name="deviceSoundsVolumeWarning">Attualmente, il volume è impostato solo al %d%%, quindi potresti avere difficoltà a sentire i suoni.</string>
     <string name="logViewer">Vedere Relazione</string>
     <string name="clearLocoList">Pulire Lista</string>
     <string name="ClearConnList">Pulire LIsta Recente</string>

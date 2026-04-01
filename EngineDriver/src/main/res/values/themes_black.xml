@@ -136,6 +136,7 @@
         <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_button_disabled_color">@color/grey_dark</item>
 
         <!-- everything following this is a partial move of this theme  to the new reusable theme -->
 
@@ -322,6 +323,7 @@
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+        <item name="ed_monochrome_glyph_button_disabled_color">@color/grey_dark</item>
 
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>
 

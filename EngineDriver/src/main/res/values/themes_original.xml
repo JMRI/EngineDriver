@@ -142,6 +142,7 @@
         <item name="ed_monochrome_glyph_menu_primary_color">@color/solidWhite</item>
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidBlack</item>
         <item name="ed_monochrome_glyph_category_primary_color">@color/solidBlack</item>
+        <item name="ed_monochrome_glyph_button_disabled_color">@color/grey</item>
 
         <!-- general glyph colours -->
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
@@ -319,6 +320,7 @@
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
         <item name="preferenceCategoryStyle">@style/Preference.Category</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+        <item name="ed_monochrome_glyph_button_disabled_color">@color/grey_dark</item>
 
         <item name="preferenceCategoryBackgroundColor">@drawable/reusable_preference_heading_background</item>
         <item name="reusable_preference_heading_background_color">@color/solidWhite</item>
