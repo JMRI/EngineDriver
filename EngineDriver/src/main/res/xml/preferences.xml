@@ -893,7 +893,8 @@
             android:entries="@array/prefToolbarButtonSizeEntries"
             android:entryValues="@array/prefToolbarButtonSizeEntryValues"
             android:key="prefToolbarButtonSize"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_toolbar_button_size"
             android:summary="@string/prefToolbarButtonSizeSummary"
             android:title="@string/prefToolbarButtonSizeTitle" />
 

@@ -90,6 +90,7 @@
     <attr name="ed_preferences_speed_units" format="reference" />
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_toolbar_button_size" format="reference" />
     <attr name="ed_preferences_long_press" format="reference" />
     <attr name="ed_preferences_speed_step" format="reference" />
     <attr name="ed_preferences_drop_before_acquire" format="reference" />
