@@ -899,7 +899,7 @@
     <string name="prefThrottleTitle">スロットル制御の設定</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">イマーシブ モードでツールバーも非表示にするように設定します。</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">イマーシブ モードでツールバーを非表示にしますか?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">スロットルビューを全画面表示します。一時的に無効にしてメニューにアクセスするには、上または下にスワイプ オプションを設定します。</string>
+    <string name="prefThrottleViewImmersiveModeSummary">スロットルビューを全画面表示します</string>
     <string name="prefThrottleViewImmersiveModeTitle">スロットル ビューにイマーシブ モードを使用しますか?</string>
     <string name="prefTickMarksOnSlidersSummary">速度スライダーの背景の目盛りを表示または非表示にします。</string>
     <string name="prefTickMarksOnSlidersTitle">スピードスライダーの目盛り?</string>

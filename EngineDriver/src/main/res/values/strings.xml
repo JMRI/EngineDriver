@@ -272,7 +272,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Larger Throttle Web View?</string>
     <string name="prefIncreaseWebViewSizeSummary">Increase Throttle Web View size to 60\% for small screens</string>
     <string name="prefThrottleViewImmersiveModeTitle">Use Immersive Mode for Throttle view?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen.\nOptionally, you can set Swipe up or down options to temporarily disable and reach the menu.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Display the Throttle view full screen?</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Hide Toolbar in Immersive Mode?</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Set to also hide the Toolbar in immersive mode</string>
     <string name="prefSwipeUpOptionTitle">Swipe up action in the Throttle screen?</string>

@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="171.33dp"
+    android:height="171.33dp"
+    android:viewportWidth="607.09"
+    android:viewportHeight="607.09">
+  <path
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+      android:pathData="M1.88,518.04L1.88,457.83L182.51,457.83L182.51,277.2L363.14,277.2L363.14,96.56h240.85v60.21L423.35,156.77L423.35,337.41L242.72,337.41v180.63z"
+      android:strokeWidth="0.752641"/>
+</vector>

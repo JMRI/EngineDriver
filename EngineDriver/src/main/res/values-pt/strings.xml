@@ -192,7 +192,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Aumentar tamanho tela Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Aumentar tamanho tela Web de 60% para pequenas telas.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Usar Modo Imersivo para o Controlador?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Mostrar o Controlodaro em tela cheia. Deslize para baixo para desabilitar momentaneamente e alcançar o menu.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Mostrar o Controlodaro em tela cheia</string>
     <string name="prefSwipeUpOptionTitle">Deslizar para cima na vista Controlador?</string>
     <string name="prefSwipeUpOptionSummary">O que acontece quando desliza para cima na vista Controlador.</string>
     <string name="prefVolumeTitle">Preferências de Volume</string>

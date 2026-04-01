@@ -11,6 +11,7 @@
      * Toast message if the Ring volume is set too low on the IPLS page.
      * Cleanup of some of the preferences.
      * Additional glyphs in the preferences.
+     * Changes to the preferences to, hopefully, make them easier to navigate.
 **Version 2.43.222
  * New Features
      * New 'Neon Green' and 'Muted' themes  ('Muted' appears as 'Paper' in the menu.)

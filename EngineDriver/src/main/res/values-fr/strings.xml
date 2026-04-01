@@ -181,7 +181,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Augmenter la taille de l affichage Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Augmenter la taille de l affichage Web de 60% (petits écrans)</string>
     <string name="prefThrottleViewImmersiveModeTitle">Utilisation du régulateur en mode immersif?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Affichage plein écran, faire glisser vers le bas pour effacement temporaire et accès au menu.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Affichage plein écran</string>
     <string name="prefSwipeUpOptionTitle">Autoriser glisser vers le haut dans l affichage du régulateur?</string>
     <string name="prefSwipeUpOptionSummary">Que se passe-t il si vous faites glisser vers le haut l affichage du régulateur?</string>
     <string name="prefVolumeTitle">Préférences de volume</string>

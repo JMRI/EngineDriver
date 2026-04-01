@@ -176,6 +176,7 @@
         <item name="android:listSeparatorTextViewStyle">@style/preference_heading_style_reusable</item>
 
         <item name="ed_monochrome_glyph_button_primary_color">@color/solidWhite</item>
+        <item name="ed_monochrome_glyph_button_disabled_color">@color/grey_dark</item>
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
 
         <item name="colorBackgroundFloating">@color/grey_very_dark</item>

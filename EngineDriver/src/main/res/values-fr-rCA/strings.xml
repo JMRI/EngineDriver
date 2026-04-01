@@ -844,7 +844,7 @@
     <string name="prefThrottleTitle">Préférences des régulateurs</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarSummary">Permet de masquer également la barre d\'outils en mode immersif.</string>
     <string name="prefThrottleViewImmersiveModeHideToolbarTitle">Masquage de la barre d\'outils en mode immersif?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Affichage du régulateur en mode plein écran.  Se servir des options de balayage vertical pour temporairement désactiver l\'accès au menu.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Affichage du régulateur en mode plein écran</string>
     <string name="prefThrottleViewImmersiveModeTitle">Mode immersif du régulateur?</string>
     <string name="prefTickMarksOnSlidersSummary">Afficher ou masquer la graduation des curseurs de vitesse.</string>
     <string name="prefTickMarksOnSlidersTitle">Graduation des curseurs de vitesse?</string>

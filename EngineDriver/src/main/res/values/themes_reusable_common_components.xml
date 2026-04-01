@@ -180,6 +180,10 @@
         <item name="ed_preferences_speed_units">@drawable/glyph_preferences_speed_units</item>
         <item name="ed_preferences_screen_orientation">@drawable/glyph_preferences_screen_orientation</item>
         <item name="ed_preferences_theme">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_long_press">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_speed_step">@drawable/glyph_preferences_speed_step</item>
+        <item name="ed_preferences_drop_before_acquire">@drawable/glyph_preferences_drop_before_acquire</item>
+        <item name="ed_preferences_stop_on_phone_call">@drawable/glyph_preferences_stop_on_phone_call</item>
         <item name="ed_preferences_double_back_button_to_exit">@drawable/glyph_preferences_double_back_button_to_exit</item>
         <item name="ed_preferences_number_of_throttles">@drawable/glyph_preferences_number_of_throttles</item>
         <item name="ed_preferences_name">@drawable/glyph_preferences_name</item>

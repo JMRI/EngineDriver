@@ -179,7 +179,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Vergrößere Web Ansicht?</string>
     <string name="prefIncreaseWebViewSizeSummary">Vergrößere Web Ansicht auf 60\% für kleine Bildschirme.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Verwende immersiven Modus für die Anzeige des Fahrregler?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Vollbildanzeige für Fahrregler verwenden. Wische nach unten zum vorübergehenden Deaktivieren um das Menü zu erreichen.</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Vollbildanzeige für Fahrregler verwenden</string>
     <string name="prefSwipeUpOptionTitle">Aktion für Wischen nach oben im Fahrregler?</string>
     <string name="prefSwipeUpOptionSummary">Was soll geschehen beim Wischen nach oben im Fahrregler.</string>
     <string name="prefVolumeTitle">Voreinstellungen für Lautstärke</string>

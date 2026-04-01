@@ -180,7 +180,7 @@
     <string name="prefIncreaseWebViewSizeTitle">¿Incrementa el tamaño de la vista web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Incrementa el tamaño de la vista web un 60% para pantallas pequeñas</string>
     <string name="prefThrottleViewImmersiveModeTitle">¿Utiliza el modo inmersivo para la vista del Controlador?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Muestra el Controlador a pantalla completa. Desplaza hacia abajo para desactivarlos temporalmente y llegar al menú</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Muestra el Controlador a pantalla completa</string>
     <string name="prefSwipeUpOptionTitle">¿Desplaza hacia arriba en la vista del Controlador?</string>
     <string name="prefSwipeUpOptionSummary">Qué debe ocurrir cuando desplaces hacia arriba la vista del Controlador</string>
     <string name="prefVolumeTitle">Preferencias del volúmen</string>

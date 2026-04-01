@@ -193,7 +193,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Aumentare dimensioni schermo Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Aumentare dimensioni schermo Web del 60% per piccoli schermi.</string>
     <string name="prefThrottleViewImmersiveModeTitle">Usare Modo Immersivo per il Controllore?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Mostrare il Controllore a schermo pieno. Scorrere in basso per disabilitare momentaneamente e accedere al menu. </string>
+    <string name="prefThrottleViewImmersiveModeSummary">Mostrare il Controllore a schermo pieno</string>
     <string name="prefSwipeUpOptionTitle">Scorrere in alto nella vista Controllore?</string>
     <string name="prefSwipeUpOptionSummary">Cosa succede quando si scorre verso l\'alto nella vista  Controllore.</string>
     <string name="prefVolumeTitle">Preferenze Volume</string>

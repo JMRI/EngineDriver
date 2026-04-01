@@ -90,6 +90,10 @@
     <attr name="ed_preferences_speed_units" format="reference" />
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_long_press" format="reference" />
+    <attr name="ed_preferences_speed_step" format="reference" />
+    <attr name="ed_preferences_drop_before_acquire" format="reference" />
+    <attr name="ed_preferences_stop_on_phone_call" format="reference" />
     <attr name="ed_preferences_double_back_button_to_exit" format="reference" />
     <attr name="ed_preferences_number_of_throttles" format="reference" />
     <attr name="ed_preferences_name" format="reference" />
@@ -168,6 +172,7 @@
     <attr name="ed_monochrome_glyph_menu_primary_color" format="reference" />
     <attr name="ed_monochrome_glyph_button_primary_color" format="reference" />
     <attr name="ed_monochrome_glyph_category_primary_color" format="reference" />
+    <attr name="ed_monochrome_glyph_button_disabled_color" format="reference" />
 
     <attr name="reusable_spinner_divider_color" format="reference" />
     <attr name="reusable_spinner_background_color" format="reference" />

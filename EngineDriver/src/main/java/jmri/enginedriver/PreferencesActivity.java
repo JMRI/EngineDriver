@@ -1590,6 +1590,8 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         public String[] advancedPreferences;
 
+        private boolean prefShowAdvancedPreferences = false;
+
         protected String defaultName;
         PreferencesActivity parentActivity;
 
@@ -2159,7 +2161,9 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             }
         }
 
+
         public void filterPreferences(String query) {
+            prefShowAdvancedPreferences = prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue));
             filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase().trim());
         }
 
@@ -2187,9 +2191,9 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 // Now, check the group's own title.
                 String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
                 boolean selfMatches = !query.isEmpty() && title.contains(query);
-
+                boolean isDivider = query.isEmpty() && title.startsWith("divider") && prefShowAdvancedPreferences;
                 // A group is visible if it matches or has a visible child.
-                boolean isVisible = hasVisibleChild || selfMatches;
+                boolean isVisible = hasVisibleChild || selfMatches || isDivider;
                 preference.setVisible(isVisible);
                 return isVisible;
             }
