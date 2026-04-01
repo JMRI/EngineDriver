@@ -2275,6 +2275,7 @@
         android:key="prefCategoryConnect"
         android:layout="@layout/preference_category_icon_left"
         android:title="@string/prefConnectTitle">
+
         <EditTextPreference
             android:defaultValue="@string/prefMaximumRecentConnectionsDefaultValue"
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
@@ -2283,6 +2284,10 @@
             android:layout="@layout/preference_checkbox_no_icon"
             android:summary="@string/prefMaximumRecentConnectionsSummary"
             android:title="@string/prefMaximumRecentConnectionsTitle" />
+
+        <PreferenceCategory
+            android:title="divider"
+            android:layout="@layout/preference_category_divider"/>
 
         <EditTextPreference
             android:dialogLayout="@layout/preference_auto_server_ip_connect_dialog"
@@ -2395,6 +2400,10 @@
             android:layout="@layout/preference_checkbox_no_icon"
             android:summary="@string/prefShowWitPomSummary"
             android:title="@string/prefShowWitPomTitle" />
+
+        <PreferenceCategory
+            android:title="divider"
+            android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_dcc_ex_icon"

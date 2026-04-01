@@ -2201,8 +2201,6 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             // For a leaf preference (not a group).
             String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
             String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase() : "";
-            if (title.equals("roster in recent locos?"))
-                Log.d(threaded_application.applicationName, activityName + ": filterRecursive(): " + title);
             boolean isVisible = query.isEmpty() || title.contains(query) || summary.contains(query);
             try {
                 preference.setVisible(isVisible);
