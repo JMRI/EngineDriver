@@ -683,6 +683,7 @@
     <string name="prefLocaleTitle">Langues</string>
 
     <string name="prefMaximumRecentConnectionsSummary">Nombre maximal d\'entrées dans la liste des connexions</string>
+    <string name="prefConnectAdvancedPreferencesSummary">Préférences supplémentaires liées à la connexion technique</string>
     <string name="prefMaximumRecentConnectionsTitle">Nombre maximal de connexions récemment utilisées</string>
 
     <string name="prefMaximumRecentLocosSummary">Nombre maximal d\'entrées dans la liste des locomotives récemment utilisées</string>
@@ -1144,4 +1145,5 @@
     <string name="prefActionBarShowThrottleButtonTitle">Bouton d\'accélérateur ?</string>
     <string name="prefActionBarShowTurnoutsButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des aiguillages</string>
     <string name="prefActionBarShowThrottleButtonSummary">Afficher le bouton dans la barre d\'action pour passer à l\'écran des gaz</string>
+    <string name="prefConnectAdvancedPreferencesTitle">Préférences de connexion avancées</string>
 </resources>

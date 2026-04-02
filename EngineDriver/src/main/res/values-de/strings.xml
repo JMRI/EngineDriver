@@ -313,6 +313,7 @@
 
     <string name="prefInitialWebPageSummary">Web Startseite (wie \'/panel\')</string>
     <string name="prefConnectTitle">Voreinstellungen für Verbindungen</string>
+    <string name="prefConnectAdvancedPreferencesSummary">Zusätzliche technische Verbindungseinstellungen</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximum Letzte Verbindungen</string>
 
     <string name="prefMaximumRecentConnectionsSummary">Maximum kürzlich verwendeter Verbindungen zum Anzeigen in Liste</string>
@@ -1245,5 +1246,6 @@
     <string name="prefActionBarShowWebButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um zur Webansicht zu wechseln</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX – Weichen stellen/schließen</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX – Not-Aus-Pause/Fortsetzen verwenden</string>
+    <string name="prefConnectAdvancedPreferencesTitle">Erweiterte Verbindungseinstellungen</string>
 
 </resources>

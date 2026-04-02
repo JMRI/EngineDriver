@@ -327,6 +327,7 @@
 
     <string name="prefInitialWebPageSummary">Page accueil Web [par ex. \'/panel\')</string>
     <string name="prefConnectTitle">Préférences de connexion</string>
+    <string name="prefConnectAdvancedPreferencesSummary">Préférences supplémentaires liées à la connexion technique</string>
     <string name="prefMaximumRecentConnectionsTitle">Nombre maxi de connexions récentes</string>
 
     <string name="prefMaximumRecentConnectionsSummary">Nombre maxi de connexions récentes affichées en liste</string>
@@ -1306,5 +1307,6 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Aiguillages à manœuvrer (ouverture/fermeture)</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utiliser l\'arrêt d\'urgence, la pause et la reprise</string>
     <string name="prefRosterTitle">Options relatives à la liste des joueurs depuis le serveur</string>
+    <string name="prefConnectAdvancedPreferencesTitle">Préférences de connexion avancées</string>
 
 </resources>

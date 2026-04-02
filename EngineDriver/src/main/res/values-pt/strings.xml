@@ -348,6 +348,7 @@
 
     <string name="prefInitialWebPageSummary">Página Web Inicial (tipo \'/panel\')</string>
     <string name="prefConnectTitle">Preferências de Conexão</string>
+    <string name="prefConnectAdvancedPreferencesSummary">Preferências adicionais relacionadas à conexão técnica</string>
     <string name="prefMaximumRecentConnectionsTitle">Máximo Conexões Recentes</string>
 
     <string name="prefMaximumRecentConnectionsSummary">Máximo Conexões Recentes para mostrar na lista</string>
@@ -1241,4 +1242,5 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Trocar desvios, acionar/fechar</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar Parada de Emergência, Pausa/Retomada</string>
     <string name="prefRosterTitle">Preferências de escalação</string>
+    <string name="prefConnectAdvancedPreferencesTitle">Preferências avançadas de conexão</string>
 </resources>
