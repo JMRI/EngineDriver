@@ -1186,7 +1186,7 @@
             android:dialogTitle="@string/prefStopButtonLongPressDelayTitle"
             android:key="prefStopButtonLongPressDelay"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_timer"
+            android:icon="?attr/ed_preferences_stop_button_long_press_delay"
             android:summary="@string/prefStopButtonLongPressDelaySummary"
             android:title="@string/prefStopButtonLongPressDelayTitle" />
 
