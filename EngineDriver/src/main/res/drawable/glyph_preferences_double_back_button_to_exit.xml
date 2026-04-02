@@ -4,7 +4,15 @@
     android:viewportWidth="607.09"
     android:viewportHeight="607.09">
   <path
-      android:pathData="m454.62,146.04 l-42.56,42.56 77.87,78.17L182.97,266.78v60.37h306.96l-77.87,77.87 42.56,42.86 150.92,-150.92zM62.24,85.68h241.46v-60.37h-241.46c-33.2,0 -60.37,27.16 -60.37,60.37v422.56c0,33.2 27.16,60.37 60.37,60.37h241.46v-60.37h-241.46z"
-      android:strokeWidth="30.1832"
+      android:pathData="M109.45,66.68L359.77,66.68L359.77,4.1L109.45,4.1c-34.42,0 -62.58,28.16 -62.58,62.58v474.98c0,34.42 28.16,62.58 62.58,62.58L359.77,604.23L359.77,541.66L109.45,541.66Z"
+      android:strokeWidth="31.2893"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  <path
+      android:pathData="m462.69,88.25 l-28.67,29.57 52.46,54.32L279.69,172.14v41.94h206.79l-52.46,54.11 28.67,29.78 101.67,-104.86z"
+      android:strokeWidth="20.6505"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  <path
+      android:pathData="m462.69,310.47 l-28.67,29.57 52.46,54.32L279.69,394.36v41.94h206.79l-52.46,54.11 28.67,29.78 101.67,-104.86z"
+      android:strokeWidth="20.6505"
       android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"/>
 </vector>

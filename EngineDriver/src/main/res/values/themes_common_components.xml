@@ -24,6 +24,7 @@
         <item name="ed_advanced_preferences">@drawable/glyph_preferences_advanced_preferences</item>
         <item name="ed_preferences_localisation">@drawable/glyph_preferences_localisation</item>
         <item name="ed_preferences_speed_units">@drawable/glyph_preferences_speed_units</item>
+        <item name="ed_preferences_speed_arrows_repeat_delay">@drawable/glyph_preferences_speed_arrows_repeat_delay</item>
         <item name="ed_preferences_stop_on_direction_change">@drawable/glyph_preferences_stop_on_direction_change</item>
         <item name="ed_preferences_dir_change_while_moving">@drawable/glyph_preferences_dir_change_while_moving</item>
         <item name="ed_preferences_maximum_throttle">@drawable/glyph_preferences_maximum_throttle</item>

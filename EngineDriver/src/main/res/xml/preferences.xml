@@ -1149,7 +1149,7 @@
             android:dialogTitle="@string/prefSpeedButtonsRepeatTitle"
             android:key="prefSpeedButtonsRepeat"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_timer"
+            android:icon="?attr/ed_preferences_speed_arrows_repeat_delay"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle" />
 
@@ -1567,7 +1567,7 @@
                     android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
                     android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
                     android:layout="@layout/preference_checkbox_icon_left_highlight"
-                    android:icon="?attr/ed_preferences_timer"
+                    android:icon="?attr/ed_preferences_speed_arrows_repeat_delay"
                     android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
                     android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
 
