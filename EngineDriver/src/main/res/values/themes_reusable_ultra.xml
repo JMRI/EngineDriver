@@ -104,8 +104,8 @@
         <item name="reusable_button_active_light_rim_2_color">@color/ultra_blue_light</item>
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
-        <item name="reusable_preference_glyph_fill_color">@color/grey_very_light</item>
-        <item name="reusable_preference_glyph_stroke_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_fill_color">@color/colorful_yellow_very_light</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/colorful_yellow_ultra_light</item>
 
         <!-- used for the progress bar on the throttles -->
         <item name="reusable_progress_bar_fill_75_color">@color/ultra_blue_transparent_75</item>

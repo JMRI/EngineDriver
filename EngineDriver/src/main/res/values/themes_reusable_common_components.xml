@@ -363,8 +363,8 @@
         <!-- preference glyph default colours -->
 
         <item name="reusable_button_glyph_fill_color">@color/solidWhite</item>
-        <item name="reusable_preference_glyph_fill_color">@color/transparent</item>
-        <item name="reusable_preference_glyph_stroke_color">@color/solidWhite</item>
+        <item name="reusable_preference_glyph_fill_color">@color/colorful_yellow_very_dark</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/colorful_yellow</item>
         <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/transparent</item>
         <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidWhite</item>
 

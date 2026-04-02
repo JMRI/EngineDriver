@@ -166,8 +166,8 @@
 
         <!-- preference glyph default colours -->
 
-        <item name="reusable_preference_glyph_fill_color">@color/grey_light</item>
-        <item name="reusable_preference_glyph_stroke_color">@color/grey_very_light</item>
+        <item name="reusable_preference_glyph_fill_color">@color/colorful_yellow_very_light</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/colorful_yellow_ultra_light</item>
         <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/solidWhite</item>
         <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidBlack</item>
 
