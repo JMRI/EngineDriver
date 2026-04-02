@@ -110,6 +110,9 @@
     <attr name="ed_advanced_preferences" format="reference" />
     <attr name="ed_preferences_localisation" format="reference" />
     <attr name="ed_preferences_speed_units" format="reference" />
+    <attr name="ed_preferences_stop_on_direction_change" format="reference" />
+    <attr name="ed_preferences_dir_change_while_moving" format="reference" />
+    <attr name="ed_preferences_maximum_throttle" format="reference" />
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
     <attr name="ed_preferences_timer" format="reference" />

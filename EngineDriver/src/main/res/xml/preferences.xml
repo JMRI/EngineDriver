@@ -1119,7 +1119,8 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
             android:key="prefMaximumThrottle"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_maximum_throttle"
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle" />
 
@@ -1214,7 +1215,8 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"
             android:key="prefDirChangeWhileMoving"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_dir_change_while_moving"
             android:summary="@string/prefDirChangeWhileMovingSummary"
             android:title="@string/prefDirChangeWhileMovingTitle" />
 
@@ -1223,7 +1225,8 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefStopOnDirectionChangeDefaultValue"
             android:key="prefStopOnDirectionChange"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_stop_on_direction_change"
             android:summary="@string/prefStopOnDirectionChangeSummary"
             android:title="@string/prefStopOnDirectionChangeTitle" />
 
