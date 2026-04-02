@@ -168,12 +168,16 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     static final int WHICH_COMMAND = 3;
 
     static final int TRACK_TYPE_OFF_NONE_INDEX = 0;
-    //    static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
+//    static final int TRACK_TYPE_DCC_MAIN_INDEX = 1;
+//    static final int TRACK_TYPE_DCC_MAIN_INV_INDEX = 2;
     static final int TRACK_TYPE_DCC_PROG_INDEX = 3;
-//    static final int TRACK_TYPE_DC_INDEX = 3;
-//    static final int TRACK_TYPE_DCX_INDEX = 4;
+//    static final int TRACK_TYPE_DC_INDEX = 4;
+//    static final int TRACK_TYPE_DCX_INDEX = 5;
+//    static final int TRACK_TYPE_AUTO_INDEX = 6;
+//    static final int TRACK_TYPE_EXT_INDEX = 7;
+//    static final int TRACK_TYPE_BOOST_INDEX = 8;
 
-    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "BOOST"};
     static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, false, true, true, false, false, false};
     static final boolean[] TRACK_TYPES_SELECTABLE = {true, true, true, true, true, true, true, false, false};
 
@@ -810,7 +814,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
             }
             dccexTrackTypeSpinner[i].setEnabled(TRACK_TYPES_SELECTABLE[mainapp.dccexTrackType[i]]);
 
-            if (mainapp.dccexTrackType[i]==2) hasProgTrack = true;
+            if (mainapp.dccexTrackType[i] == TRACK_TYPE_DCC_PROG_INDEX) hasProgTrack = true;
         }
         showHideButtons();
 

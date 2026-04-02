@@ -506,7 +506,9 @@ public class throttle_switching_left_or_right extends throttle {
     void enableDisableButtons(int whichThrottle, boolean forceDisable) {
         boolean newEnabledState = false;
         // avoid index and null crashes
-        if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
+        if (mainapp.consists == null
+                || whichThrottle >= mainapp.maxThrottlesCurrentScreen
+                || whichThrottle >= mainapp.consists.length
                 || bForwards[whichThrottle] == null) {
             return;
         }
