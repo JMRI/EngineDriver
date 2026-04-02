@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
   <item
-      android:drawable="@drawable/reusable_preference_glyph_folder_folder" />
+      android:drawable="@drawable/reusable_preference_glyph_folder_empty" />
 
   <item
       android:top="0dp"

@@ -151,11 +151,6 @@
         <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/transparent</item>
         <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidBlack</item>
 
-        <!-- preference folder icons -->
-        <item name="ed_folder_icon">@drawable/reusable_preference_glyph_folder_folder</item>
-        <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_glyph_folder_dccex</item>
-        <item name="ed_folder_esu_icon">@drawable/reusable_preference_glyph_folder_esu</item>
-
 <!--        &lt;!&ndash; general button colours &ndash;&gt;-->
 <!--        <item name="reusable_button_edge_highlight_color">@color/colorful_tan_very_light</item>-->
 <!--        <item name="reusable_button_edge_light_color">@color/transparent</item>-->

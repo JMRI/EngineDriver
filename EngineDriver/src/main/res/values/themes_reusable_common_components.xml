@@ -69,7 +69,29 @@
         <item name="ed_power_red_button">@drawable/reusable_toolbar_button_power_red</item>
 
         <!-- preference folder icons -->
-        <item name="ed_folder_icon">@drawable/reusable_preference_glyph_folder_folder</item>
+        <item name="ed_folder_empty">@drawable/reusable_preference_glyph_folder_empty</item>
+        <item name="ed_folder_timer">@drawable/reusable_preference_glyph_folder_timer</item>
+        <item name="ed_folder_connect">@drawable/reusable_preference_glyph_folder_connect</item>
+        <item name="ed_folder_loco_sounds">@drawable/reusable_preference_glyph_folder_loco_sounds</item>
+        <item name="ed_folder_consist">@drawable/reusable_preference_glyph_folder_consist</item>
+        <item name="ed_folder_limit_speed_and_pause_buttons">@drawable/reusable_preference_glyph_folder_limit_speed_and_pause_buttons</item>
+        <item name="ed_folder_layout_switch_button">@drawable/reusable_preference_glyph_folder_layout_switch_button</item>
+        <item name="ed_folder_tts">@drawable/reusable_preference_glyph_folder_tts</item>
+        <item name="ed_folder_gamepad">@drawable/reusable_preference_glyph_folder_gamepad</item>
+        <item name="ed_folder_roster">@drawable/reusable_preference_glyph_folder_roster</item>
+        <item name="ed_folder_import">@drawable/reusable_preference_glyph_folder_import</item>
+        <item name="ed_folder_volume_buttons">@drawable/reusable_preference_glyph_folder_volume_buttons</item>
+        <item name="ed_folder_hint">@drawable/reusable_preference_glyph_folder_hint</item>
+        <item name="ed_folder_semi_realistic_throttle">@drawable/reusable_preference_glyph_folder_semi_realistic_throttle</item>
+        <item name="ed_folder_background">@drawable/reusable_preference_glyph_folder_background</item>
+        <item name="ed_folder_shake">@drawable/reusable_preference_glyph_folder_shake</item>
+        <item name="ed_folder_swipe_up_down">@drawable/reusable_preference_glyph_folder_swipe_up_down</item>
+        <item name="ed_folder_throttle_web_view">@drawable/reusable_preference_glyph_folder_throttle_web_view</item>
+        <item name="ed_folder_default_functions">@drawable/reusable_preference_glyph_folder_default_functions</item>
+        <item name="ed_folder_direction">@drawable/reusable_preference_glyph_folder_direction</item>
+        <item name="ed_folder_haptic">@drawable/reusable_preference_glyph_folder_haptic</item>
+        <item name="ed_folder_speed_slider">@drawable/reusable_preference_glyph_folder_speed_slider</item>
+        <item name="ed_folder_left_right_swipe">@drawable/reusable_preference_glyph_folder_left_right_swipe</item>
         <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_glyph_folder_dccex</item>
         <item name="ed_folder_esu_icon">@drawable/reusable_preference_glyph_folder_esu</item>
 
@@ -180,6 +202,11 @@
         <item name="ed_preferences_speed_units">@drawable/glyph_preferences_speed_units</item>
         <item name="ed_preferences_screen_orientation">@drawable/glyph_preferences_screen_orientation</item>
         <item name="ed_preferences_theme">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_timer">@drawable/glyph_preferences_timer</item>
+        <item name="ed_preferences_stop_on_background">@drawable/glyph_preferences_stop_on_background</item>
+        <item name="ed_preferences_dccex_estop_pause_resume">@drawable/glyph_preferences_dccex_estop_pause_resume</item>
+        <item name="ed_preferences_stop_on_release">@drawable/glyph_preferences_stop_on_release</item>
+        <item name="ed_preferences_estop_on_long_press">@drawable/glyph_preferences_estop_on_long_press</item>
         <item name="ed_preferences_toolbar_button_size">@drawable/glyph_preferences_toolbar_button_size</item>
         <item name="ed_preferences_long_press">@drawable/glyph_preferences_long_press</item>
         <item name="ed_preferences_speed_step">@drawable/glyph_preferences_speed_step</item>

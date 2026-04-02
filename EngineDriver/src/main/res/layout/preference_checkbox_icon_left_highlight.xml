@@ -48,20 +48,21 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dip"
-                android:layout_marginEnd="6dip"
+                android:layout_marginStart="3dip"
+                android:layout_marginEnd="3dip"
                 android:layout_marginTop="2dip"
-                android:layout_marginBottom="6dip"
+                android:layout_marginBottom="3dip"
                 android:orientation="horizontal"
                 >
 
                 <ImageView
                     android:id="@android:id/icon"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="0dip"
-                    android:layout_marginTop="4dip"
+                    android:layout_marginStart="3dip"
+                    android:layout_marginEnd="0dip"
+                    android:layout_marginTop="3dip"
                     android:layout_marginBottom="3dip"
                     tools:ignore="ContentDescription,RtlHardcoded" />
 
@@ -71,7 +72,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="?android:attr/textColorSecondary"
                     android:maxLines="30"
-                    android:layout_marginLeft="16dip"
+                    android:layout_marginStart="9dip"
                     tools:ignore="RtlHardcoded" />
 
         </LinearLayout>

@@ -1,0 +1,12 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/reusable_preference_glyph_folder_empty" />
+
+    <item
+        android:drawable="@drawable/glyph_preference_category_background"
+        android:top="20dp"
+        android:width="120dp"
+        android:height="120dp"
+        android:gravity="center" />
+
+
+</layer-list>

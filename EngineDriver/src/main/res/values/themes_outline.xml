@@ -104,10 +104,6 @@
         <item name="ed_toolbar_background">@color/black</item>
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
-        <item name="ed_folder_icon">@drawable/reusable_preference_glyph_folder_folder</item>
-        <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_glyph_folder_dccex</item>
-        <item name="ed_folder_esu_icon">@drawable/reusable_preference_glyph_folder_esu</item>
-
         <!-- currently only used for the custom toast -->
         <!--        <item name="ed_background_popup">@drawable/reusable_popup_background</item>-->
 

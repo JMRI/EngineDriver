@@ -68,7 +68,29 @@
     <attr name="ed_power_yellow_button" format="reference" />
     <attr name="ed_power_red_button" format="reference" />
 
-    <attr name="ed_folder_icon" format="reference" />
+    <attr name="ed_folder_empty" format="reference" />
+    <attr name="ed_folder_timer" format="reference" />
+    <attr name="ed_folder_connect" format="reference" />
+    <attr name="ed_folder_loco_sounds" format="reference" />
+    <attr name="ed_folder_consist" format="reference" />
+    <attr name="ed_folder_limit_speed_and_pause_buttons" format="reference" />
+    <attr name="ed_folder_layout_switch_button" format="reference" />
+    <attr name="ed_folder_tts" format="reference" />
+    <attr name="ed_folder_gamepad" format="reference" />
+    <attr name="ed_folder_roster" format="reference" />
+    <attr name="ed_folder_import" format="reference" />
+    <attr name="ed_folder_volume_buttons" format="reference" />
+    <attr name="ed_folder_hint" format="reference" />
+    <attr name="ed_folder_semi_realistic_throttle" format="reference" />
+    <attr name="ed_folder_background" format="reference" />
+    <attr name="ed_folder_shake" format="reference" />
+    <attr name="ed_folder_swipe_up_down" format="reference" />
+    <attr name="ed_folder_throttle_web_view" format="reference" />
+    <attr name="ed_folder_default_functions" format="reference" />
+    <attr name="ed_folder_direction" format="reference" />
+    <attr name="ed_folder_haptic" format="reference" />
+    <attr name="ed_folder_speed_slider" format="reference" />
+    <attr name="ed_folder_left_right_swipe" format="reference" />
     <attr name="ed_folder_dcc_ex_icon" format="reference" />
     <attr name="ed_folder_esu_icon" format="reference" />
     <attr name="ed_clock_icon" format="reference" />
@@ -90,6 +112,11 @@
     <attr name="ed_preferences_speed_units" format="reference" />
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_timer" format="reference" />
+    <attr name="ed_preferences_stop_on_background" format="reference" />
+    <attr name="ed_preferences_dccex_estop_pause_resume" format="reference" />
+    <attr name="ed_preferences_estop_on_long_press" format="reference" />
+    <attr name="ed_preferences_stop_on_release" format="reference" />
     <attr name="ed_preferences_toolbar_button_size" format="reference" />
     <attr name="ed_preferences_long_press" format="reference" />
     <attr name="ed_preferences_speed_step" format="reference" />

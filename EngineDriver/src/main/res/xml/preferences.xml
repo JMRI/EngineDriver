@@ -60,7 +60,7 @@
             android:title="@string/prefLocaleTitle" />
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_left_right_swipe"
             android:key="prefLeftRightSwipePreferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -131,12 +131,17 @@
             android:title="@string/prefDoubleBackButtonToExitTitle" />
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_hint"
             android:key="ToastsOptionsPreferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
             android:summary="@string/ToastsOptionsSummary"
             android:title="@string/ToastsOptionsTitle">
+
+            <PreferenceCategory
+                android:icon="@drawable/glyph_preference_category_hint"
+                android:layout="@layout/preference_category_icon_left"
+                android:title="@string/ToastsOptionsTitle">
 
             <CheckBoxPreference
                 android:defaultValue="@bool/prefHideInstructionalToastsDefaultValue"
@@ -151,6 +156,8 @@
                 android:layout="@layout/preference_checkbox_no_icon"
                 android:summary="@string/prefBeepOnAlertToastsSummary"
                 android:title="@string/prefBeepOnAlertToastsTitle" />
+
+            </PreferenceCategory>
 
         </PreferenceScreen>
 
@@ -192,7 +199,7 @@
             android:title="@string/prefNumOfThrottles" />
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_speed_slider"
             android:key="throttle_slider_preference"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -266,7 +273,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_haptic"
             android:key="prefCategoryHapticFeedbackScreen"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -320,7 +327,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_direction"
             android:key="throttle_direction_preference"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -352,7 +359,8 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefDirectionButtonLongPressDelayTitle"
                     android:key="prefDirectionButtonLongPressDelay"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_timer"
                     android:summary="@string/prefDirectionButtonLongPressDelaySummary"
                     android:title="@string/prefDirectionButtonLongPressDelayTitle" />
 
@@ -430,7 +438,7 @@
             android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_default_functions"
             android:key="default_function_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -510,7 +518,7 @@
             android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_throttle_web_view"
             android:key="throttle_webview_preference"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -567,7 +575,7 @@
             android:title="@string/prefThrottleViewImmersiveModeTitle" />
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_swipe_up_down"
             android:key="swipe_up_down_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -618,7 +626,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_shake"
             android:key="throttle_accelerometer_preference"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -656,7 +664,7 @@
             android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_background"
             android:key="prefBackgroundImageGroup"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -697,7 +705,7 @@
             android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_semi_realistic_throttle"
             android:key="semi_realistic_throttle_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -941,7 +949,7 @@
             android:title="@string/prefWebViewButtonTitle" />
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_layout_switch_button"
             android:key="prefThrottleSwitchButton"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -1139,7 +1147,8 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
             android:dialogTitle="@string/prefSpeedButtonsRepeatTitle"
             android:key="prefSpeedButtonsRepeat"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_timer"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle" />
 
@@ -1166,7 +1175,7 @@
             android:defaultValue="@bool/prefStopButtonEStopOnLongPressDefaultValue"
             android:key="prefStopButtonEStopOnLongPress"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_long_press"
+            android:icon="?attr/ed_preferences_estop_on_long_press"
             android:summary="@string/prefStopButtonEStopOnLongPressSummary"
             android:title="@string/prefStopButtonEStopOnLongPressTitle" />
 
@@ -1175,21 +1184,24 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
             android:dialogTitle="@string/prefStopButtonLongPressDelayTitle"
             android:key="prefStopButtonLongPressDelay"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_timer"
             android:summary="@string/prefStopButtonLongPressDelaySummary"
             android:title="@string/prefStopButtonLongPressDelayTitle" />
 
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnBackgroundDefaultValue"
             android:key="prefStopOnBackground"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_stop_on_background"
             android:summary="@string/prefStopOnBackgroundSummary"
             android:title="@string/prefStopOnBackgroundTitle" />
 
         <CheckBoxPreference
             android:defaultValue="@bool/prefDccexEmergencyStopPauseResumeDefaultValue"
             android:key="prefDccexEmergencyStopPauseResume"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_dccex_estop_pause_resume"
             android:summary="@string/prefDccexEmergencyStopPauseResumeSummary"
             android:title="@string/prefDccexEmergencyStopPauseResumeTitle" />
 
@@ -1220,7 +1232,7 @@
             android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_limit_speed_and_pause_buttons"
             android:key="prefLimitSpeedButtonPreferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -1290,7 +1302,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_consist"
             android:key="consist_follow_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -1442,7 +1454,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="prefConsistLightsLongClick"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_long_press"
             android:summary="@string/prefConsistLightsLongClickSummary"
             android:title="@string/prefConsistLightsLongClickTitle" />
 
@@ -1455,7 +1468,7 @@
         android:title="@string/prefThrottleAdditionalControlTitle">
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_volume_buttons"
             android:key="volume_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -1493,7 +1506,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_gamepad"
             android:key="gamepad_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -1550,7 +1563,8 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
                     android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_timer"
                     android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
                     android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
 
@@ -1758,7 +1772,8 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefEsuMc2StopButtonDelayTitle"
                     android:key="prefEsuMc2StopButtonDelay"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_timer"
                     android:summary="@string/prefEsuMc2StopButtonDelaySummary"
                     android:title="@string/prefEsuMc2StopButtonDelayTitle" />
 
@@ -1820,7 +1835,8 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefEsuMc2ButtonsRepeatTitle"
                     android:key="prefEsuMc2ButtonsRepeatDelay"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_timer"
                     android:summary="@string/prefEsuMc2ButtonsRepeatSummary"
                     android:title="@string/prefEsuMc2ButtonsRepeatTitle" />
             </PreferenceCategory>
@@ -1932,7 +1948,7 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_tts"
             android:key="prefTts"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -2011,7 +2027,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="prefStopOnRelease"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_stop_on_release"
             android:summary="@string/prefStopOnReleaseSummary"
             android:title="@string/prefStopOnReleaseTitle" />
 
@@ -2066,7 +2083,7 @@
             android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_roster"
             android:key="prefRoster"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -2078,6 +2095,60 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefRosterTitle">
 
+                <PreferenceCategory
+                    android:icon="@drawable/glyph_button_select_loco_roster"
+                    android:layout="@layout/preference_category_icon_left"
+                    android:title="@string/prefRosterTitle">
+
+                    <CheckBoxPreference
+                        android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
+                        android:key="prefRosterRecentLocos"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefRosterRecentLocosSummary"
+                        android:title="@string/prefRosterRecentLocosTitle" />
+
+                    <CheckBoxPreference
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
+                        android:key="prefRosterRecentLocoNames"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefRosterRecentLocoNamesSummary"
+                        android:title="@string/prefRosterRecentLocoNamesTitle" />
+
+                    <EditTextPreference
+                        android:defaultValue="@string/prefRosterFilterDefaultValue"
+                        android:dialogTitle="@string/prefRosterFilterTitle"
+                        android:key="prefRosterFilter"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:maxLength="10"
+                        android:summary="@string/prefRosterFilterSummary"
+                        android:title="@string/prefRosterFilterTitle" />
+
+                    <CheckBoxPreference
+                        android:defaultValue="@bool/prefRosterOwnersFilterShowOptionDefaultValue"
+                        android:key="prefRosterOwnersFilterShowOption"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefRosterOwnersFilterShowOptionSummary"
+                        android:title="@string/prefRosterOwnersFilterShowOptionTitle" />
+
+                    <ListPreference
+                        android:defaultValue="@string/prefSortOrderRosterDefaultValue"
+                        android:entries="@array/prefSortOrderEntries"
+                        android:entryValues="@array/prefSortOrderEntryValues"
+                        android:key="prefSortOrderRoster"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefSortOrderRosterSummary"
+                        android:title="@string/prefSortOrderRosterTitle" />
+
+                    <CheckBoxPreference
+                        android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
+                        android:key="prefAlwaysUseFunctionsFromServer"
+                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
+                        android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
+
+                </PreferenceCategory>
                 <CheckBoxPreference
                     android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
                     android:key="prefRosterRecentLocos"
@@ -2190,7 +2261,7 @@
             android:title="@string/prefDeviceSounds1Title" />
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_loco_sounds"
             android:key="prefDeviceSoundsAdditionalPreferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -2327,7 +2398,7 @@
             android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_connect"
             android:key="prefConnectAdditionalPreferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -2335,7 +2406,7 @@
             android:title="@string/prefConnectAdvancedPreferencesTitle">
 
             <PreferenceCategory
-                android:icon="@drawable/glyph_preference_category_loco_sounds"
+                android:icon="@drawable/glyph_preference_category_connect"
                 android:key="prefCategoryDeviceSoundsSub"
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefConnectAdvancedPreferencesTitle">
@@ -2570,7 +2641,7 @@
         android:title="@string/prefKidsSectionTitle">
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_timer"
             android:key="kids_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
@@ -2670,7 +2741,7 @@
         android:title="@string/prefThrottleImportExportTitle">
 
         <PreferenceScreen
-            android:icon="?attr/ed_folder_icon"
+            android:icon="?attr/ed_folder_import"
             android:key="importExport_preferences"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:persistent="false"
