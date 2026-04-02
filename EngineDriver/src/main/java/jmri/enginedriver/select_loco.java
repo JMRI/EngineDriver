@@ -1189,6 +1189,8 @@ public class select_loco extends AppCompatActivity {
 
     // save recent consists to file
     void saveRecentConsistsList(boolean bUpdateList) {
+        if (mainapp.consists == null) return;
+
         ArrayList<Integer> tempRecentConsistLocoAddressList_inner = new ArrayList<>();
         ArrayList<Integer> tempRecentConsistAddressSizeList_inner = new ArrayList<>();
         ArrayList<Integer> tempRecentConsistDirectionList_inner = new ArrayList<>();

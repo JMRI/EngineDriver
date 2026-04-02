@@ -4,7 +4,8 @@
   * Bug fixes
      * Reconnect page was never closing.  (Mistake made in the switch to Bundles.)
      * Throttle Web Page not loading if initial web page preference changed.
-     * DCC-EX Join button was permanently disabled.
+     * DCC-EX Fix for the Join button being permanently disabled.
+     * Catch NPE and Index Out of Bounds crashes reported to the Play Store
   * Other
      * Theme tweaks.
      * Tweaking the toast messages on connect. Makes more extensive use of the customToast.

@@ -7294,7 +7294,7 @@ public class throttle extends AppCompatActivity implements
         // check if the sliders are already hidden by preference
         if (!prefs.getBoolean("prefHideSlider", false)) {
             // if gesture is attempting to start over an enabled slider, ignore it and return immediately.
-            for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
+            for (int throttleIndex = 0; ( (throttleIndex < mainapp.prefNumThrottles) && (throttleIndex < sbs.length) ); throttleIndex++) {
                 if ((sbs[throttleIndex].isEnabled())
                         && (
                         ((gestureStartX >= sliderTopLeftX[throttleIndex])

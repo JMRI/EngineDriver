@@ -321,10 +321,12 @@ public class SendProcessorDccex {
 
         // check to see if the turnout is known and add it if it is not
         boolean found = false;
-        for (int i = 0; i < mainapp.to_system_names.length; i++) {
-            if (mainapp.to_system_names[i].equals(systemName)) {
-                found = true;
-                break;
+        if (mainapp.to_system_names != null) {
+            for (int i = 0; i < mainapp.to_system_names.length; i++) {
+                if (mainapp.to_system_names[i].equals(systemName)) {
+                    found = true;
+                    break;
+                }
             }
         }
         if (!found) {
