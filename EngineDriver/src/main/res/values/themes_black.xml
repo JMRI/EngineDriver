@@ -115,10 +115,6 @@
         <item name="ed_toolbar_background">@drawable/reusable_toolbar_background</item>
         <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
 
-        <item name="ed_folder_icon">@drawable/reusable_preference_glyph_folder_folder</item>
-        <item name="ed_folder_dcc_ex_icon">@drawable/reusable_preference_glyph_folder_dccex</item>
-        <item name="ed_folder_esu_icon">@drawable/reusable_preference_glyph_folder_esu</item>
-
         <!-- currently only used for the custom toast -->
         <!--        <item name="ed_background_popup">@drawable/reusable_popup_background</item>-->
 
@@ -170,8 +166,8 @@
 
         <!-- preference glyph default colours -->
 
-        <item name="reusable_preference_glyph_fill_color">@color/grey_light</item>
-        <item name="reusable_preference_glyph_stroke_color">@color/grey_very_light</item>
+        <item name="reusable_preference_glyph_fill_color">@color/colorful_yellow_very_light</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/colorful_yellow_ultra_light</item>
         <item name="reusable_preference_glyph_internal_glyph_fill_color">@color/solidWhite</item>
         <item name="reusable_preference_glyph_internal_glyph_stroke_color">@color/solidBlack</item>
 

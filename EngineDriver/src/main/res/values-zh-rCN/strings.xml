@@ -436,6 +436,7 @@
     <string name="prefInitialWebPageTitle">初始网页屏幕页面</string>
     <string name="prefInitialWebPageSummary">为网页屏幕输入初始网页（例如\'/panel\'）</string>
     <string name="prefConnectTitle">连接偏好设置</string>
+    <string name="prefConnectAdvancedPreferencesSummary">其他技术连接相关偏好</string>
     <string name="prefMaximumRecentConnectionsTitle">最大最近连接数</string>
     <string name="prefMaximumRecentConnectionsSummary">列表中显示的最大最近连接数</string>
     <string name="prefConnectTimeoutMsTitle">初始连接超时</string>
@@ -1398,6 +1399,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - 道岔交换开关</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 使用紧急停止暂停/恢复功能</string>
     <string name="prefRosterTitle">名单偏好</string>
+    <string name="prefConnectAdvancedPreferencesTitle">高级连接偏好设置</string>
 
 </resources>
 

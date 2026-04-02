@@ -404,6 +404,7 @@
 
     <string name="prefInitialWebPageSummary">Výchozí vebová stránka (např. jako \'/panel\')</string>
     <string name="prefConnectTitle">Předvolby připojení</string>
+    <string name="prefConnectAdvancedPreferencesSummary">Další preference týkající se technického připojení</string>
     <string name="prefMaximumRecentConnectionsTitle">Maximální počet Nedávných připojení</string>
 
     <string name="prefMaximumRecentConnectionsSummary">Maximální počet Nedávných připojení zobrazených v seznamu</string>
@@ -1383,5 +1384,6 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Výměna výhybek - Vyhození/Zavření</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Použití nouzového zastavení, pozastavení/obnovení</string>
     <string name="prefRosterTitle">Předvolby soupisky</string>
+    <string name="prefConnectAdvancedPreferencesTitle">Pokročilé nastavení připojení</string>
 
 </resources>
