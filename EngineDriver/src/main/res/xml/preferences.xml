@@ -2059,6 +2059,13 @@
             android:summary="@string/prefSelectLocoByRadioButtonsSummary"
             android:title="@string/prefSelectLocoByRadioButtonsTitle" />
 
+        <CheckBoxPreference
+            android:defaultValue="@bool/prefShowAdditionalButtonTextDefaultValue"
+            android:key="prefShowAdditionalButtonText"
+            android:layout="@layout/preference_checkbox_no_icon"
+            android:summary="@string/prefShowAdditionalButtonTextSummary"
+            android:title="@string/prefShowAdditionalButtonTextTitle" />
+
         <PreferenceCategory
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>

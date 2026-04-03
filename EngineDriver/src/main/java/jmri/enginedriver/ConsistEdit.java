@@ -89,6 +89,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     private Consist consist;
 
     private int result = RESULT_OK;
+    private boolean closeSelectLocoScreen = true;
 
     private int whichThrottle;
     private char saveConsistsFile = 'Y';
@@ -338,6 +339,8 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         //Set the buttons
         Button closeButton = findViewById(R.id.consist_edit_button_close);
         closeButton.setOnClickListener(new ConsistEdit.close_button_listener(this));
+        Button returnButton = findViewById(R.id.consist_edit_button_return);
+        returnButton.setOnClickListener(new ConsistEdit.ReturnButtonListener(this));
 
         //update consist list
         refreshConsistLists();
@@ -377,6 +380,9 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     getApplicationContext().getResources().getString(R.string.app_name_ConsistEdit),
                     "");
         }
+
+        threaded_application.showCustomToast(ConsistEdit.this, getResources().getString(R.string.consist_help), Toast.LENGTH_LONG, 4, true);
+
     } // end onCreate
 
     // ************************************************************************************************************* //
@@ -482,6 +488,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
+        resultIntent.putExtra("closeSelectScreen", closeSelectLocoScreen);
         setResult(result, resultIntent);
         this.finish();  //end this activity
         connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -576,6 +583,21 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         }
 
         public void onClick(View v) {
+            closeSelectLocoScreen = true;
+            mainapp.buttonVibration();
+            endThisActivity();
+        }
+    }
+
+    public class ReturnButtonListener implements View.OnClickListener {
+        Activity _consistEditActivity;
+
+        ReturnButtonListener(Activity consistEditActivity) {
+            _consistEditActivity = consistEditActivity;
+        }
+
+        public void onClick(View v) {
+            closeSelectLocoScreen = false;
             mainapp.buttonVibration();
             endThisActivity();
         }

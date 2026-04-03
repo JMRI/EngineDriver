@@ -200,6 +200,7 @@
     <attr name="ed_acquire_loco_glyph" format="reference" />
     <attr name="ed_reset_glyph" format="reference" />
     <attr name="ed_save_glyph" format="reference" />
+    <attr name="ed_select_loco_glyph" format="reference" />
     <attr name="ed_share_glyph" format="reference" />
 
     <attr name="ed_monochrome_glyph_menu_primary_color" format="reference" />

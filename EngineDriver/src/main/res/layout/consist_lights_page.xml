@@ -50,17 +50,17 @@
                 android:paddingRight="6dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/consistLights_help"
-                    style="?attr/floating_text_condensed_style"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:text="@string/consistLights_help"
-                    android:textSize="13sp"
-                    tools:ignore="NestedWeights,RtlHardcoded" />
+<!--                <TextView-->
+<!--                    android:id="@+id/consistLights_help"-->
+<!--                    style="?attr/floating_text_condensed_style"-->
+<!--                    android:textColor="?android:attr/textColorSecondary"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="0dp"-->
+<!--                    android:text="@string/consistLights_help"-->
+<!--                    android:textSize="13sp"-->
+<!--                    tools:ignore="NestedWeights,RtlHardcoded" />-->
 
                 <Button
                     android:id="@+id/consist_lights_edit_button_close"
@@ -68,10 +68,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginTop="0dp"
-                    android:text="@string/logviewerClose"
-                    app:drawableStartCompat="?attr/ed_cross_glyph"
+                    android:text="@string/returnTo"
+                    app:drawableStartCompat="?attr/ed_select_loco_glyph"
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
         </LinearLayout>

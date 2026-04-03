@@ -81,6 +81,7 @@
         <item name="ed_acquire_loco_glyph">@drawable/glyph_button_select_loco_acquire_states</item>
         <item name="ed_reset_glyph">@drawable/glyph_button_reset_states</item>
         <item name="ed_save_glyph">@drawable/glyph_button_save_states</item>
+        <item name="ed_select_loco_glyph">@drawable/glyph_button_select_loco</item>
         <item name="ed_share_glyph">@drawable/glyph_button_share</item>
         <item name="ed_read_glyph">@drawable/glyph_button_read_states</item>
         <item name="ed_preferences_glyph">@drawable/glyph_menu_preferences</item>

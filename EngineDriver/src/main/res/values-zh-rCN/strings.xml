@@ -178,6 +178,7 @@
     <string name="lightsTextUnknown">未知</string>
 
 <!--    <string name="logviewerReset">重置</string> -->
+    <string name="returnTo">返回</string>
     <string name="logviewerClose">关闭</string>
     <string name="logviewerSave">开始记录到文件</string>
 

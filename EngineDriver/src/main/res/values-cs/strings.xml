@@ -171,6 +171,7 @@
     <string name="lightsTextUnknown">Neznámý</string>
 
     <!--    <string name="logviewerReset">Reset</string> -->
+    <string name="returnTo">Návrat</string>
     <string name="logviewerClose">Zavřít</string>
     <string name="logviewerSave">Start</string>
 

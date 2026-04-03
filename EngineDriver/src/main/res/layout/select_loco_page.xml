@@ -91,6 +91,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_release" />
 
                             <TextView
+                                android:id="@+id/release_button_text_label1"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -123,6 +124,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_drop_before_acquire" />
 
                             <TextView
+                                android:id="@+id/drop_before_acquire_button_text_label1"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -167,6 +169,7 @@
                                     app:srcCompat="?attr/ed_select_loco_glyph_consist_order" />
 
                                 <TextView
+                                    android:id="@+id/edit_consist_button_text_label1"
                                     style="?attr/floating_text_style"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -199,6 +202,7 @@
                                     app:srcCompat="?attr/ed_select_loco_glyph_consist_lights" />
 
                                 <TextView
+                                    android:id="@+id/edit_consist_lights_button_text_label1"
                                     style="?attr/floating_text_style"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -236,6 +240,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_ipls" />
 
                             <TextView
+                                android:id="@+id/device_sounds_button_text_label1"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -269,6 +274,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_dispatch" />
 
                             <TextView
+                                android:id="@+id/dispatch_button_text_label1"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -333,6 +339,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_dcc_address" />
 
                             <TextView
+                                android:id="@+id/select_loco_glyph_dcc_address_button_text_label"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -366,6 +373,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_roster"/>
 
                             <TextView
+                                android:id="@+id/select_loco_glyph_roster_button_text_label"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -399,6 +407,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_recent_loco"/>
 
                             <TextView
+                                android:id="@+id/select_loco_glyph_recent_loco_button_text_label"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -432,6 +441,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_recent_consist"/>
 
                             <TextView
+                                android:id="@+id/select_loco_glyph_recent_consist_button_text_label"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -465,6 +475,7 @@
                                 app:srcCompat="?attr/ed_select_loco_glyph_idngo"/>
 
                             <TextView
+                                android:id="@+id/select_loco_glyph_idngo_button_text_label"
                                 style="?attr/floating_text_style"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"

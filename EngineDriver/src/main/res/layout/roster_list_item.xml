@@ -3,7 +3,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    android:minHeight="54dp">
+
     <ImageView
         android:id="@+id/roster_icon_image"
         android:layout_width="200dp"
@@ -17,9 +20,9 @@
         android:id="@+id/roster_address_label"
         style="?attr/list_id_style"
         android:layout_width="50dp"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:paddingLeft="2dp"
-        android:text="TestAddress"
+        android:text="Addr"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
     <TextView
@@ -32,7 +35,7 @@
         android:paddingLeft="50dp"
         android:paddingStart="50dp"
         android:paddingRight="0dp"
-        android:text=""
+        android:text="testOwner"
         tools:ignore="HardcodedText,RelativeOverlap,RtlHardcoded" />
 
     <TextView
@@ -40,9 +43,9 @@
         style="?attr/list_item_condensed_style"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="12dp"
+        android:paddingTop="14dp"
         android:paddingBottom="0dp"
         android:text="Test Roster Name"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"
         tools:ignore="HardcodedText" />
 </RelativeLayout>

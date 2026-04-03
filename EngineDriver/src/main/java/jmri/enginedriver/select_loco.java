@@ -32,6 +32,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -207,6 +208,7 @@ public class select_loco extends AppCompatActivity {
     boolean prefSelectLocoByRadioButtons = false;
 
     LinearLayout selectLocoMethodButtonsLayout;
+    LinearLayout selectLocoMethodRadioButtonsLayout;
     RadioGroup selectLocoMethodRadioButtonsGroup;
 
     LinearLayout[] selectMethodLayouts = new LinearLayout[5];
@@ -220,7 +222,7 @@ public class select_loco extends AppCompatActivity {
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
-                    handleConsistEditActivityResult();
+                    handleConsistEditActivityResult(result.getData(), resultCode);
                 }
             }
     );
@@ -860,7 +862,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
-    private void handleConsistEditActivityResult() {
+    private void handleConsistEditActivityResult(@NonNull Intent data, int resultCode) {
         Log.d(threaded_application.applicationName, activityName + ": handleConsistEditActivityResult() ");
 
         if (newEngine) {
@@ -869,7 +871,8 @@ public class select_loco extends AppCompatActivity {
         result = activity_outcome_type.RESULT_LOCO_EDIT;  //tell Throttle to update loco directions
 
         overrideThrottleName = "";
-        endThisActivity();
+        if ( (!data.hasExtra("closeSelectScreen")) || (data.getBooleanExtra("closeSelectScreen",true)) )
+            endThisActivity();
     }
 
     void startGallery() {
@@ -2029,6 +2032,7 @@ public class select_loco extends AppCompatActivity {
         selectLocoMethodSpinner.setSelection(selectLocoMethodIndex);
 
         selectLocoMethodButtonsLayout = findViewById(R.id.select_loco_method_buttons_layout);
+        selectLocoMethodRadioButtonsLayout = findViewById(R.id.acquire_and_current_locos_layout);
         selectLocoMethodRadioButtonsGroup = findViewById(R.id.select_loco_method_radio_button_group);
 
 //*********
@@ -2147,28 +2151,35 @@ public class select_loco extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
-        Log.d(threaded_application.applicationName, activityName + ": showMethod(): "  + whichMethod);
+        Log.d(threaded_application.applicationName, activityName + ": showMethod(): " + whichMethod);
         checkValidMethod(whichMethod);
 
-        selectLocoMethodRadioButtonsGroup.setVisibility(prefSelectLocoByRadioButtons ? VISIBLE : GONE);
+        selectLocoMethodRadioButtonsLayout.setVisibility(prefSelectLocoByRadioButtons ? VISIBLE : GONE);
         selectLocoMethodButtonsLayout.setVisibility(prefSelectLocoByRadioButtons ? GONE : VISIBLE);
 //        selectLocoMethodSpinner.setVisibility(prefSelectLocoByRadioButtons ? GONE : VISIBLE);
 
         if (mainapp.supportsIDnGo()) {
             rbIDnGo.setVisibility(VISIBLE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(VISIBLE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO) - 1].setVisibility(VISIBLE);
         } else {
             rbIDnGo.setVisibility(GONE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO)-1].setVisibility(GONE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO) - 1].setVisibility(GONE);
         }
 
         if (mainapp.supportsRoster()) {
             rbRoster.setVisibility(VISIBLE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(VISIBLE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER) - 1].setVisibility(VISIBLE);
         } else {
             rbRoster.setVisibility(GONE);
-            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER)-1].setVisibility(GONE);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.ROSTER) - 1].setVisibility(GONE);
         }
+
+        int showHideAdditionalButtonText = prefs.getBoolean("prefShowAdditionalButtonText", true) ? VISIBLE : GONE;
+        TypedArray select_locos_button_text_additional_labels_resource_ids = getResources().obtainTypedArray(R.array.select_locos_button_text_additional_labels_resource_ids);
+        for (int i = 0; i < select_locos_button_text_additional_labels_resource_ids.length(); i++) {
+            findViewById(select_locos_button_text_additional_labels_resource_ids.getResourceId(i,0)).setVisibility(showHideAdditionalButtonText);
+        }
+        select_locos_button_text_additional_labels_resource_ids.recycle();
 
         selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_LOCOS)-1].setVisibility(!importExportPreferences.recentLocoAddressList.isEmpty() ? VISIBLE : GONE);
         selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.RECENT_CONSISTS)-1].setVisibility(!recentConsistsList.isEmpty() ? VISIBLE : GONE);
@@ -2665,7 +2676,7 @@ public class select_loco extends AppCompatActivity {
 
         @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
-            Log.d(threaded_application.applicationName, activityName + ": RosterSimpleAdapter(): getView()");
+//            Log.d(threaded_application.applicationName, activityName + ": RosterSimpleAdapter(): getView()");
             if (position < 0 || position >= rosterList.size())
                 return convertView;
 

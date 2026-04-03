@@ -47,6 +47,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -378,6 +379,8 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                     getApplicationContext().getResources().getString(R.string.app_name_ConsistLightsEdit),
                     "");
         }
+
+        threaded_application.showCustomToast(ConsistLightsEdit.this, getResources().getString(R.string.consistLights_help), Toast.LENGTH_LONG, 4, true);
 
     }  // end onCreate()
 
