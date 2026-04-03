@@ -514,6 +514,8 @@
 
     <string name="prefSelectLocoByRadioButtonsTitle">Select loco method appearance</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Show a text list of methods instead of image buttons</string>
+    <string name="prefShowAdditionalButtonTextTitle">Show Additional Button Text</string>
+    <string name="prefShowAdditionalButtonTextSummary">Show additional text below image buttons. (Not recommended for small screens)</string>
 
     <!--    <string name="LocoSelectMethodQuestion">Method: </string>-->
     <string name="LocoSelectMethodAddress">DCC Address</string>

@@ -3165,6 +3165,20 @@
         <item>@id/semi_realistic_speed_0</item>
     </array>
 
+    <array  name="select_locos_button_text_additional_labels_resource_ids">
+        <item>@id/release_button_text_label1</item>
+        <item>@id/drop_before_acquire_button_text_label1</item>
+        <item>@id/edit_consist_button_text_label1</item>
+        <item>@id/edit_consist_lights_button_text_label1</item>
+        <item>@id/device_sounds_button_text_label1</item>
+        <item>@id/dispatch_button_text_label1</item>
+        <item>@id/select_loco_glyph_dcc_address_button_text_label</item>
+        <item>@id/select_loco_glyph_roster_button_text_label</item>
+        <item>@id/select_loco_glyph_recent_loco_button_text_label</item>
+        <item>@id/select_loco_glyph_recent_consist_button_text_label</item>
+        <item>@id/select_loco_glyph_idngo_button_text_label</item>
+    </array>
+
 <!-- T -->
 
     <array name="separator_resource_ids">

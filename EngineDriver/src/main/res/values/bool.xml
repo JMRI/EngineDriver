@@ -140,6 +140,7 @@
 
     <bool name="prefSemiRealisticThrottleDisableAirDefaultValue">false</bool>
     <bool name="prefSelectLocoByRadioButtonsDefaultValue">false</bool>
+    <bool name="prefShowAdditionalButtonTextDefaultValue">true</bool>
     <bool name="prefStopButtonEStopOnLongPressDefaultValue">false</bool>
 
     <bool name="prefBeepOnAlertToastsDefaultValue">true</bool>

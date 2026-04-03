@@ -1,11 +1,13 @@
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
+     * Option to hide the additonal button text on the Select Screen for tiny screens (e.g. the ESU MC Pro)
   * Bug fixes
      * Reconnect page was never closing.  (Mistake made in the switch to Bundles.)
      * Throttle Web Page not loading if initial web page preference changed.
      * DCC-EX Fix for the Join button being permanently disabled.
-     * Catch NPE and Index Out of Bounds crashes reported to the Play Store
+     * Catch NPE and Index Out of Bounds crashes reported to the Play Store.
+     * Radio buttons not showing if option to use the old style select loco method was chosen.
   * Other
      * Theme tweaks.
      * Tweaking the toast messages on connect. Makes more extensive use of the customToast.
@@ -1152,13 +1154,14 @@
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
  *   TODO: add a 'back' button to allow users to continuing adding to the consist without returning to the throttle screen
- *   TODO: DCC-EX modify the CV19 page to also support DCC-EX in-command-station consists.
+ *   TODO: add the ability (somehow) to deslect a loco but stay on the Select Loco screen
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from
  * DCC-EX screen
+ *   TODO: Look into adding an 'Unjoin' button
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
- *   TODO: add immersive mode to get extra screen space
+ *   TODO: Look at adding immersive mode to get extra screen space
  * preferences:
  *   TODO: disable the 'stop on phone call' preference if no sim card or don't have READ_PHONE_STATE permission
  * children's timer:
