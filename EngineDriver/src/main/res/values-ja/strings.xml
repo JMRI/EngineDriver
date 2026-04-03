@@ -336,6 +336,7 @@
     <string name="deviceSoundsVolumeNotice">電話内のロコサウンド機能は、「メディア」ボリュームではなく、「着信」のシステムボリューム設定を使用します。</string>
     <string name="deviceSoundsVolumeWarning">現在の設定は %d%% のみなので、音が聞こえにくい場合があります。</string>
     <string name="logViewer">ログの表示</string>
+    <string name="returnTo">戻る</string>
     <string name="logviewerClose">閉じる</string>
     <string name="logviewerSave">始める</string>
 

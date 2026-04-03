@@ -57,6 +57,8 @@
         <item name="android:textColorSecondary">@color/secondary_text_color_selector_black</item>
         <item name="android:textColorHint">@color/tertiary_text</item>
 
+        <item name="ed_text_color_secondary">@color/grey_light</item>
+
         <item name="ed_primaryLineColor">@color/grey</item>
         <item name="ed_secondaryLineColor">@color/grey_very_dark</item>
 

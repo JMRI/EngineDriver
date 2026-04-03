@@ -222,7 +222,7 @@ public class select_loco extends AppCompatActivity {
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
-                    handleConsistEditActivityResult();
+                    handleConsistEditActivityResult(result.getData(), resultCode);
                 }
             }
     );
@@ -862,7 +862,7 @@ public class select_loco extends AppCompatActivity {
         }
     }
 
-    private void handleConsistEditActivityResult() {
+    private void handleConsistEditActivityResult(@NonNull Intent data, int resultCode) {
         Log.d(threaded_application.applicationName, activityName + ": handleConsistEditActivityResult() ");
 
         if (newEngine) {
@@ -871,7 +871,8 @@ public class select_loco extends AppCompatActivity {
         result = activity_outcome_type.RESULT_LOCO_EDIT;  //tell Throttle to update loco directions
 
         overrideThrottleName = "";
-        endThisActivity();
+        if (data.getBooleanExtra("closeSelectScreen",true))
+            endThisActivity();
     }
 
     void startGallery() {

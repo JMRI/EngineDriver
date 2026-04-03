@@ -9,10 +9,12 @@
      * Catch NPE and Index Out of Bounds crashes reported to the Play Store.
      * Radio buttons not showing if option to use the old style select loco method was chosen.
   * Other
+     * Cleanup of the Edit Consist and Edit Light pages.
+     * New button to "Return" to the Select Loco page from the Consist Edit page.
      * Theme tweaks.
      * Tweaking the toast messages on connect. Makes more extensive use of the customToast.
      * Continued the process of renaming elements for consistency.
-     * Toast message if the Ring volume is set too low on the IPLS page.
+     * Toast message on the IPLS page if the 'Ring' volume is set too low.
      * Cleanup of some of the preferences.
      * Additional glyphs in the preferences.
      * Changes to the preferences to, hopefully, make them easier to navigate.
