@@ -1129,7 +1129,8 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
             android:dialogTitle="@string/prefMaximumThrottleChangeTitle"
             android:key="prefMaximumThrottleChange"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_maximum_throttle_change"
             android:summary="@string/prefMaximumThrottleChangeSummary"
             android:title="@string/prefMaximumThrottleChangeTitle" />
 
@@ -1156,7 +1157,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefSpeedButtonsSpeedStepDecrementDefaultValue"
             android:key="prefSpeedButtonsSpeedStepDecrement"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_speed_step_decrement"
             android:summary="@string/prefSpeedButtonsSpeedStepDecrementSummary"
             android:title="@string/prefSpeedButtonsSpeedStepDecrementTitle" />
 
@@ -2048,7 +2050,8 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefSelectLocoWhileMovingDefaultValue"
             android:key="prefSelectLocoWhileMoving"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_select_loco_while_moving"
             android:summary="@string/prefSelectLocoWhileMovingSummary"
             android:title="@string/prefSelectLocoWhileMovingTitle" />
 
@@ -2215,7 +2218,8 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:dialogTitle="@string/prefMaximumRecentLocosTitle"
             android:key="prefMaximumRecentLocos"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_maximum_recent_locos"
             android:summary="@string/prefMaximumRecentLocosSummary"
             android:title="@string/prefMaximumRecentLocosTitle" />
 
@@ -2226,7 +2230,8 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="prefLocoSelectHideIplsButton"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_hide_ipls_button"
             android:summary="@string/prefLocoSelectHideIplsButtonSummary"
             android:title="@string/prefLocoSelectHideIplsButtonTitle" />
 
@@ -2363,7 +2368,8 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
             android:key="prefMaximumRecentConnections"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_maximum_recent_connections"
             android:summary="@string/prefMaximumRecentConnectionsSummary"
             android:title="@string/prefMaximumRecentConnectionsTitle" />
 
@@ -2468,7 +2474,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
             android:key="prefFeedbackWhenGoingToBackground"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_feedback_when_going_into_background"
             android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
             android:title="@string/prefFeedbackWhenGoingToBackgroundTitle" />
 
@@ -2611,7 +2618,8 @@
             android:entries="@array/prefSortOrderEntries"
             android:entryValues="@array/prefSortOrderEntryValues"
             android:key="prefSortOrderTurnouts"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_sort_order_turnouts"
             android:summary="@string/prefSortOrderTurnoutsSummary"
             android:title="@string/prefSortOrderTurnoutsTitle" />
 
@@ -2620,7 +2628,8 @@
             android:entries="@array/prefSortOrderEntries"
             android:entryValues="@array/prefSortOrderEntryValues"
             android:key="prefSortOrderRoutes"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_sort_order_routes"
             android:summary="@string/prefSortOrderRoutesSummary"
             android:title="@string/prefSortOrderRoutesTitle" />
 

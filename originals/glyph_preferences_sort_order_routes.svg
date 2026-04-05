@@ -8,7 +8,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
-   sodipodi:docname="glyph_preferences_stop_on_phone_call.svg"
+   sodipodi:docname="glyph_preferences_sort_order_routes.svg"
    inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\advanced_preferences.png"
    inkscape:export-xdpi="7.0892334"
    inkscape:export-ydpi="7.0892334"
@@ -48,6 +48,24 @@
          offset="1"
          id="stop4143" />
     </linearGradient>
+    <mask
+       height="599"
+       width="599"
+       y="21"
+       x="406"
+       maskUnits="userSpaceOnUse"
+       mask-type="alpha"
+       id="mask0-5-8">
+      <rect
+         id="rect4-1-0"
+         fill="#ffffff"
+         transform="rotate(-45,406.51,320.148)"
+         rx="56.537102"
+         height="422.702"
+         width="422.702"
+         y="320.14801"
+         x="406.51001" />
+    </mask>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -56,9 +74,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="304.76302"
-     inkscape:cy="242.53763"
+     inkscape:zoom="0.5"
+     inkscape:cx="385"
+     inkscape:cy="545"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -73,7 +91,7 @@
      inkscape:window-y="114"
      inkscape:window-maximized="1"
      inkscape:showpageshadow="2"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata7">
@@ -91,43 +109,22 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-65.224067,-173.70181)">
-    <path
-       style="stroke-width:27.6013"
-       d="m 537.25899,626.27099 c -34.50165,0 -67.62323,-5.52026 -98.53671,-15.73261 -9.66047,-3.03629 -20.42498,-0.8273 -28.15335,6.62432 l -60.7229,60.7229 C 271.7343,638.1397 207.69924,574.38051 167.95334,495.99276 l 60.7229,-60.99876 c 7.72837,-7.17634 9.93648,-17.941 6.90033,-27.60132 -10.21249,-30.91348 -15.73275,-64.03506 -15.73275,-98.53686 0,-15.18057 -12.42059,-27.60132 -27.60132,-27.60132 H 95.63789 c -15.18073,0 -27.601323,12.42075 -27.601323,27.60132 0,259.17653 210.046033,469.22242 469.222423,469.22242 15.18072,0 27.60132,-12.42045 27.60132,-27.60132 v -96.60461 c 0,-15.18058 -12.4206,-27.60132 -27.60132,-27.60132 z"
-       id="path1" />
     <g
-       transform="matrix(10.33172,0,0,10.33172,425.11141,179.57399)"
-       id="g12"
-       style="fill:#000000">
-      <circle
-         style="fill:#000000"
-         cx="21.732"
-         cy="5.5"
-         r="1.5"
-         id="circle2" />
-      <circle
-         style="fill:#000000"
-         cx="17.732"
-         cy="2.5"
-         r="1.5"
-         id="circle4" />
-      <circle
-         style="fill:#000000"
-         cx="13.732"
-         cy="1.5"
-         r="1.5"
-         id="circle6" />
-      <circle
-         style="fill:#000000"
-         cx="9.7320004"
-         cy="3.5"
-         r="1.5"
-         id="circle8" />
-      <path
-         inkscape:connector-curvature="0"
-         style="fill:#000000"
-         d="M 20.232,5.5 V 12 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 2.5 h -3 V 11 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 1.5 h -3 V 11 c 0,0.276 -0.224,0.5 -0.5,0.5 -0.276,0 -0.5,-0.224 -0.5,-0.5 V 3.5 h -3 V 16 L 6.207,13.229 c -0.6,-0.925 -1.771,-1.235 -2.629,-0.705 -0.855,0.542 -1.067,1.724 -0.475,2.646 0,0 3.266,4.943 4.658,7.059 1.392,2.116 3.647,3.771 7.864,3.771 6.982,0 7.607,-5.392 7.607,-7 0,-1.608 0,-13.5 0,-13.5 z"
-         id="path10" />
+       id="g409"
+       transform="matrix(19.873645,0,0,19.873645,7.6417578,360.69107)"
+       style="fill:#000000;stroke:none">
+      <g
+         id="g407"
+         style="fill:#000000;stroke:none">
+        <path
+           d="M 19,15.18 V 7 C 19,4.79 17.21,3 15,3 12.79,3 11,4.79 11,7 v 10 c 0,1.1 -0.9,2 -2,2 C 7.9,19 7,18.1 7,17 V 8.82 C 8.16,8.4 9,7.3 9,6 9,4.34 7.66,3 6,3 4.34,3 3,4.34 3,6 3,7.3 3.84,8.4 5,8.82 V 17 c 0,2.21 1.79,4 4,4 2.21,0 4,-1.79 4,-4 V 7 c 0,-1.1 0.9,-2 2,-2 1.1,0 2,0.9 2,2 v 8.18 c -1.16,0.41 -2,1.51 -2,2.82 0,1.66 1.34,3 3,3 1.66,0 3,-1.34 3,-3 0,-1.3 -0.84,-2.4 -2,-2.82 z"
+           id="path405"
+           style="fill:#000000;stroke:none" />
+      </g>
     </g>
+    <path
+       d="m 371.26697,400.15653 h 99.93627 v -37.82512 h -99.93627 z m 0,-226.95065 v 37.8251 h 299.80881 v -37.8251 z m 0,132.38788 H 571.13952 V 267.76865 H 371.26697 Z"
+       id="path294-9"
+       style="stroke-width:17.7484" />
   </g>
 </svg>

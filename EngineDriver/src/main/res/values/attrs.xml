@@ -115,6 +115,14 @@
     <attr name="ed_preferences_stop_on_direction_change" format="reference" />
     <attr name="ed_preferences_dir_change_while_moving" format="reference" />
     <attr name="ed_preferences_maximum_throttle" format="reference" />
+    <attr name="ed_preferences_sort_order_turnouts" format="reference" />
+    <attr name="ed_preferences_sort_order_routes" format="reference" />
+    <attr name="ed_preferences_feedback_when_going_into_background" format="reference" />
+    <attr name="ed_preferences_maximum_recent_connections" format="reference" />
+    <attr name="ed_preferences_hide_ipls_button" format="reference" />
+    <attr name="ed_preferences_maximum_recent_locos" format="reference" />
+    <attr name="ed_preferences_speed_step_decrement" format="reference" />
+    <attr name="ed_preferences_maximum_throttle_change" format="reference" />
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
     <attr name="ed_preferences_timer" format="reference" />
@@ -126,6 +134,7 @@
     <attr name="ed_preferences_long_press" format="reference" />
     <attr name="ed_preferences_speed_step" format="reference" />
     <attr name="ed_preferences_drop_before_acquire" format="reference" />
+    <attr name="ed_preferences_select_loco_while_moving" format="reference" />
     <attr name="ed_preferences_stop_on_phone_call" format="reference" />
     <attr name="ed_preferences_double_back_button_to_exit" format="reference" />
     <attr name="ed_preferences_number_of_throttles" format="reference" />
