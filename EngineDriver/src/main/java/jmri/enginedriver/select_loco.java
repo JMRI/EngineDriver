@@ -871,8 +871,13 @@ public class select_loco extends AppCompatActivity {
         result = activity_outcome_type.RESULT_LOCO_EDIT;  //tell Throttle to update loco directions
 
         overrideThrottleName = "";
-        if ( (!data.hasExtra("closeSelectScreen")) || (data.getBooleanExtra("closeSelectScreen",true)) )
-            endThisActivity();
+        boolean closeSelectLocoScreen = true;
+        try {
+            if ((data.hasExtra("closeSelectScreen")))
+                closeSelectLocoScreen = data.getBooleanExtra("closeSelectScreen", true);
+        } catch (Exception ignored) {
+        }
+        if (closeSelectLocoScreen) endThisActivity();
     }
 
     void startGallery() {
