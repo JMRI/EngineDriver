@@ -21,7 +21,7 @@
 <!--    <string name="turnouts_label">Control Points</string>-->
     <string name="turnouts_available">Points - Available</string>
     <string name="turnouts_direct_entry_label">Enter Point#</string>
-    <string name="turnouts_list_label">Points (click state to toggle)</string>
+    <string name="turnouts_list_label">Points (tap state to toggle)</string>
     <string name="turnouts_turnout">Point</string>
 
     <string name="prefSwipeThroughTurnoutsTitle">Swipe Through Points?</string>
@@ -64,7 +64,7 @@
     <string name="app_name_consist_functions">Consist (MU) Function Settings</string>
     <string name="app_name_ConsistEdit">Consist (MU) Edit</string>
     <string name="app_name_ConsistLightsEdit">Consist (MU) Lights</string>
-    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist (MU). Swipe Right on a loco to remove it from the consist (MU). Press Back Arrow or Close when done.</string>
+    <string name="consist_help">Tap a loco to change its direction with respect to the front of the consist (MU). Swipe Right on a loco to remove it from the consist (MU). Press Back Arrow or Close when done.</string>
     <string name="consist_list_label">All Locos in Consist (MU)</string>
     <string name="dialogRecentConsistsConfirmClearQuestions">Confirm that you want remove all the Recent Consists (MUs)</string>
     <string name="edit_consist_lights_throttle_1">Edit Consist (MU) Lights Throttle 1</string>
@@ -99,9 +99,9 @@
     <string name="prefConsistFollowString5Summary">Comma separated string(s) to look for in the function labels of the locos in the consist (MU) to recognise a similar function.</string>
     <string name="prefConsistFollowSummary">Options for how functions will behave in a Consist (MU).</string>
     <string name="prefConsistFollowTitle">Consist (MU) Function Follow Preferences</string>
-    <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist (MU) with a long click on the Loco Select button.</string>
-    <string name="prefConsistLightsLongClickTitle">Control Consist (MU) lights on long click</string>
-    <string name="prefEsuMc2StopButtonShortPressSummary">Control Consist (MU) lights on long click</string>
+    <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist (MU) with a long press on the Loco Select button.</string>
+    <string name="prefConsistLightsLongClickTitle">Control Consist (MU) lights on long press</string>
+    <string name="prefEsuMc2StopButtonShortPressSummary">Control Consist (MU) lights on long press</string>
     <string name="prefSelectiveLeadSoundSummary">Send Horn/Bell functions to only the Lead unit in an EngineDriver consist (MU).  (Only/any function with a \'label\' that includes \'bell\', \'horn\' or \'whistle\' as part of the label.)</string>
     <string name="recent_consists">Select from Recent Consists (MUs)</string>
     <string name="RecentConsistsNameEditText">Enter a name for the Consist (MU)</string>

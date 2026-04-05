@@ -2116,11 +2116,6 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefRosterTitle">
 
-                <PreferenceCategory
-                    android:icon="@drawable/glyph_button_select_loco_roster"
-                    android:layout="@layout/preference_category_icon_left"
-                    android:title="@string/prefRosterTitle">
-
                     <CheckBoxPreference
                         android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
                         android:key="prefRosterRecentLocos"
@@ -2168,55 +2163,6 @@
                         android:layout="@layout/preference_checkbox_no_icon"
                         android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
                         android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
-
-                </PreferenceCategory>
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
-                    android:key="prefRosterRecentLocos"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefRosterRecentLocosSummary"
-                    android:title="@string/prefRosterRecentLocosTitle" />
-
-                <CheckBoxPreference
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
-                    android:key="prefRosterRecentLocoNames"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefRosterRecentLocoNamesSummary"
-                    android:title="@string/prefRosterRecentLocoNamesTitle" />
-
-                <EditTextPreference
-                    android:defaultValue="@string/prefRosterFilterDefaultValue"
-                    android:dialogTitle="@string/prefRosterFilterTitle"
-                    android:key="prefRosterFilter"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:maxLength="10"
-                    android:summary="@string/prefRosterFilterSummary"
-                    android:title="@string/prefRosterFilterTitle" />
-
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefRosterOwnersFilterShowOptionDefaultValue"
-                    android:key="prefRosterOwnersFilterShowOption"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefRosterOwnersFilterShowOptionSummary"
-                    android:title="@string/prefRosterOwnersFilterShowOptionTitle" />
-
-                <ListPreference
-                    android:defaultValue="@string/prefSortOrderRosterDefaultValue"
-                    android:entries="@array/prefSortOrderEntries"
-                    android:entryValues="@array/prefSortOrderEntryValues"
-                    android:key="prefSortOrderRoster"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefSortOrderRosterSummary"
-                    android:title="@string/prefSortOrderRosterTitle" />
-
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
-                    android:key="prefAlwaysUseFunctionsFromServer"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
-                    android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
 
             </PreferenceCategory>
         </PreferenceScreen>
