@@ -1,0 +1,42 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="171.33dp"
+    android:height="171.33dp"
+    android:viewportWidth="607.09"
+    android:viewportHeight="607.09">
+  <path
+      android:pathData="M325.8,138.22L436.48,27.54A32.21,32.21 90,0 1,482.03 27.54L592.71,138.22A32.21,32.21 0,0 1,592.71 183.77L482.03,294.45A32.21,32.21 0,0 1,436.48 294.45L325.8,183.77A32.21,32.21 0,0 1,325.8 138.22z"
+      android:strokeAlpha="0.956863"
+      android:strokeLineJoin="round"
+      android:strokeWidth="7.26"
+      android:fillColor="#00000000"
+      android:strokeColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  <group>
+    <clip-path
+        android:pathData="M328.18,140.91L438.86,30.23A28.58,28.58 90,0 1,479.27 30.23L589.95,140.91A28.58,28.58 90,0 1,589.95 181.33L479.27,292.01A28.58,28.58 90,0 1,438.86 292.01L328.18,181.33A28.58,28.58 0,0 1,328.18 140.91z"/>
+    <path
+        android:strokeWidth="1"
+        android:pathData="m384.56,4.83c3.69,3.21 157.43,131.55 9.72,246.4l47.95,44.06 25.27,5.83 31.2,-21.3C615.46,140.57 418.16,-0.49 413.77,-2.96Z"
+        android:fillColor="#00000000"
+        android:strokeColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+    <path
+        android:pathData="m395.31,25.38 l46.33,-19.58 17.12,13.15 -51.36,21.63 8.39,14.32 56.4,-22.79 15.44,14.9 -65.8,23.96 6.71,14.9 74.19,-23.09 12.76,17.24 -79.9,22.79 1.34,20.16 94.34,-20.16 20.48,29.22 -112.8,13.44 -11.08,23.96 132.94,-9.64l0,36.24l-144.02,-1.75 -12.09,20.75 143.69,24.55 -22.49,42.08 -141.33,-42.08"
+        android:strokeWidth="5.19"
+        android:fillColor="#00000000"
+        android:strokeColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+    <path
+        android:pathData="M390.94,247.78C538.66,132.93 388.59,5.22 384.9,2.01M414.11,-5.79c4.39,2.47 201.7,143.53 84.94,282.79L474.63,301.13"
+        android:strokeWidth="10.37"
+        android:fillColor="#00000000"
+        android:strokeColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+    <path
+        android:pathData="M390.94,247.78C538.66,132.93 388.59,5.22 384.9,2.01M414.11,-5.79c4.39,2.47 201.7,143.53 84.94,282.79l-22.47,22.83"
+        android:strokeWidth="5.19"
+        android:fillColor="#00000000"
+        android:strokeColor="?attr/ed_monochrome_glyph_button_primary_color"/>
+  </group>
+  <path
+      android:pathData="m118.83,491.97 l-29.67,29.67 -84.16,-84.16 84.16,-84.16 29.67,29.67 -33.24,33.45c31.77,-6.94 78.48,1.68 108.78,28.61v76.59C179,467.35 129.77,448.63 85.58,458.52ZM311.97,491.97 L341.64,521.64 425.8,437.48 341.64,353.32 311.97,382.98 345.21,416.44c-31.77,-6.94 -78.48,1.68 -108.78,28.61L236.44,307.66l33.45,33.45 29.67,-29.88 -84.16,-84.16 -84.16,84.16 29.67,29.67 33.45,-33.24v298.14h42.08v-84.16c15.36,-54.28 64.59,-73.01 108.78,-63.12z"
+      android:strokeWidth="21.04"
+      android:fillColor="?attr/ed_monochrome_glyph_button_primary_color"
+      android:strokeColor="#00000000"/>
+</vector>

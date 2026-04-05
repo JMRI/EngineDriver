@@ -125,6 +125,9 @@
     <attr name="ed_preferences_maximum_throttle_change" format="reference" />
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_allow_mobile_data" format="reference" />
+    <attr name="ed_preferences_show_wit_pom" format="reference" />
+    <attr name="ed_preferences_dccex_swap_throw_close" format="reference" />
     <attr name="ed_preferences_timer" format="reference" />
     <attr name="ed_preferences_stop_on_background" format="reference" />
     <attr name="ed_preferences_dccex_estop_pause_resume" format="reference" />

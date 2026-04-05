@@ -2410,7 +2410,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefAllowMobileDataDefaultValue"
             android:key="prefAllowMobileData"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:icon="?attr/ed_preferences_allow_mobile_data"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:summary="@string/prefAllowMobileDataSummary"
             android:title="@string/prefAllowMobileDataTitle" />
 
@@ -2432,7 +2433,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowWitPomDefaultValue"
             android:key="prefShowWitPom"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:icon="?attr/ed_preferences_show_wit_pom"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:summary="@string/prefShowWitPomSummary"
             android:title="@string/prefShowWitPomTitle" />
 
@@ -2586,7 +2588,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefDccexSwapThrowCloseDefaultValue"
             android:key="prefDccexSwapThrowClose"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_dccex_swap_throw_close"
             android:summary="@string/prefDccexSwapThrowCloseSummary"
             android:title="@string/prefDccexSwapThrowCloseTitle" />
 

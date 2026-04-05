@@ -688,7 +688,7 @@
     <string name="prefShareFileNowTitle">Share a settings file now!</string>
     <string name="prefShareFileNowSummary">Allows you to share a configuration file, saved preferences or log file, immediately.</string>
 
-    <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwite?</string>
+    <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwrite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
     <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host</string>
@@ -700,7 +700,7 @@
     <string name="prefImportServerAutoTitle">Auto import from all Servers?</string>
     <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' is on the server and if it is more recent than the last time checked.)</string>
 
-    <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwitten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Layout preferences, will be overwitten.</string>
+    <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwritten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Layout preferences, will be overwitten.</string>
     <string name="importServerAutoDialogPositiveButton">Full</string>
     <string name="importServerAutoDialogNeutralButton">Partial</string>
 
