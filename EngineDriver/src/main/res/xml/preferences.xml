@@ -157,6 +157,14 @@
                 android:summary="@string/prefBeepOnAlertToastsSummary"
                 android:title="@string/prefBeepOnAlertToastsTitle" />
 
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
+                android:key="prefFeedbackWhenGoingToBackground"
+                android:layout="@layout/preference_checkbox_icon_left_highlight"
+                android:icon="?attr/ed_preferences_feedback_when_going_into_background"
+                android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
+                android:title="@string/prefFeedbackWhenGoingToBackgroundTitle" />
+
             </PreferenceCategory>
 
         </PreferenceScreen>
@@ -2470,14 +2478,6 @@
             android:layout="@layout/preference_checkbox_no_icon"
             android:summary="@string/prefFeedbackOnDisconnectSummary"
             android:title="@string/prefFeedbackOnDisconnectTitle" />
-
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
-            android:key="prefFeedbackWhenGoingToBackground"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_feedback_when_going_into_background"
-            android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
-            android:title="@string/prefFeedbackWhenGoingToBackgroundTitle" />
 
         <PreferenceCategory
             android:title="divider"
