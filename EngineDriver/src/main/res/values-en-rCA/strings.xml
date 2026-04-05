@@ -31,7 +31,7 @@
 
     <string name="turnouts">Turnouts</string>
     <string name="turnouts_direct_entry_label">Enter Turnout # or name</string>
-    <string name="turnouts_list_label">Turnouts (click state to toggle)</string>
+    <string name="turnouts_list_label">Turnouts (press state to toggle)</string>
     <string name="turnouts_location_label">Filter by Location</string>
     <string name="turnouts_turnout">Turnout</string>
     <string name="turnoutsRecentHeading">Recent Turnouts</string>

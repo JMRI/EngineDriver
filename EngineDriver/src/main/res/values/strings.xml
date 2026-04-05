@@ -121,7 +121,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limit the Function Labels shown for Server Roster Entries with no function Labels</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="consist_help">Click a loco to change its direction with respect to the front of the consist.  Swipe Right on a loco to remove it from the consist.  Press Back Arrow when done.</string>
+    <string name="consist_help">Tap a loco to change its direction with respect to the front of the consist.  Swipe Right on a loco to remove it from the consist.  Press Back Arrow when done.</string>
     <string name="about">About</string>
     <string name="web">Web</string>
 
@@ -150,7 +150,7 @@
     <!--    <string name="turnouts_label">Control Turnouts</string>-->
     <string name="turnouts_direct_entry_label">Enter Turnout # or name</string>
     <string name="turnouts_location_label">Filter by Location</string>
-    <string name="turnouts_list_label">Turnouts (click state to toggle)</string>
+    <string name="turnouts_list_label">Turnouts (tap state to toggle)</string>
     <string name="turnouts_turnout">Turnout</string>
     <string name="location_all">ALL LOCATIONS</string>
     <string name="routes">Routes</string>
@@ -158,7 +158,7 @@
     <!--    <string name="routes_label">Control Routes</string>-->
     <string name="routes_direct_entry_label">Enter Route System Name</string>
     <string name="routes_location_label">Filter by Location</string>
-    <string name="routes_list_label">Route (click state to activate)</string>
+    <string name="routes_list_label">Route (tap state to activate)</string>
     <string name="consist_lead_label">Lead Loco</string>
     <string name="consist_trail_label">Trailing Loco</string>
     <string name="consist_list_label">Consist Top</string>
@@ -398,7 +398,7 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries. This MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
 
     <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override WiThrottle Function Latching</string>
-    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locos, rather that the defaults provided by WiThrottle</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locos, rather than the defaults provided by WiThrottle</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use Defaults for Roster Entries With No Functions</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Use Engine Driver\'s default Functions for roster entries with no function labels</string>
 
@@ -523,7 +523,7 @@
     <string name="LocoSelectMethodRoster">Server Roster</string>
     <string name="LocoSelectMethodRecent">Recent Locos</string>
     <string name="LocoSelectMethodRecentConsist">Recent Consists</string>
-    <string name="LocoSelectMethodHelp" tools:ignore="Typos">Enter the DCC Address of your loco above and click \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by clicking one of the buttons above.</string>
+    <string name="LocoSelectMethodHelp" tools:ignore="Typos">Enter the DCC Address of your loco above and press \'Acquire\'.\n\nAlternately, select a loco from the Server \'Roster\' or select from \'Recent\' locos by pressing one of the buttons above.</string>
 
     <string name="prefLocoSelectHideIplsButtonTitle">Hide the Loco Sounds button</string>
     <string name="prefLocoSelectHideIplsButtonSummary">Hide the Loco Phone Loco Sounds button in the Select Loco Screen</string>
@@ -626,7 +626,7 @@
     <string name="prefSelectedLocoIndicatorDefaultValue" translatable="false">None</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefAppIconActionTitle">App Icon Action</string>
-    <string name="prefAppIconActionSummary">What happens when you click the App Icon or App Name on the Action Bar.</string>
+    <string name="prefAppIconActionSummary">What happens when you tap the App Icon or App Name on the Action Bar.</string>
     <string name="prefAppIconActionDefaultValue" translatable="false">throttle</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefDisableVolumeKeysTitle">Disable Volume keys?</string>
@@ -663,9 +663,9 @@
     <string name="prefShowAdvancedPreferencesTitle">Show Advanced Preferences?</string>
     <string name="prefShowAdvancedPreferencesSummary">Show or hide less common preferences</string>
 
-    <string name="prefConsistLightsLongClickTitle">Control consist Lights on long click</string>
-    <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long click on the Loco Select button.</string>
-    <string name="consistLights_help">Click on a Loco to toggle the Lights for that Loco \'Off\', \'On\' or \'Follow Function Button\'. \nLong Click to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused).</string>
+    <string name="prefConsistLightsLongClickTitle">Control consist Lights on long press</string>
+    <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long press on the Loco Select button.</string>
+    <string name="consistLights_help">Tap on a Loco to toggle the Lights for that Loco \'Off\', \'On\' or \'Follow Function Button\'. \nLong Press to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused).</string>
 
     <string name="prefThrottleImportExportTitle">Import/Export/Reset &amp; Log Preferences</string>
     <string name="prefThrottleImportExportSummary">Import/Export/Reset and Log Preferences</string>
@@ -688,7 +688,7 @@
     <string name="prefShareFileNowTitle">Share a settings file now!</string>
     <string name="prefShareFileNowSummary">Allows you to share a configuration file, saved preferences or log file, immediately.</string>
 
-    <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwite?</string>
+    <string name="prefImportExportOverwite">File \'%1$s\' already exists. Overwrite?</string>
     <string name="prefImportExportErrorReadingList">Error reading recent connections list:</string>
     <string name="prefImportExportErrorReadingFrom">Import from \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' failed! You may not have saved the preferences for this host yet.</string>
     <string name="prefImportExportErrorNotConnected">Not connected to a host</string>
@@ -698,9 +698,9 @@
     <string name="prefImportServerManualDefaultValue" translatable="false">preferences.ed</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefImportServerAutoTitle">Auto import from all Servers?</string>
-    <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' is on the server and if it is more recent that the last time checked.)</string>
+    <string name="prefImportServerAutoSummary">Automatically import the preferences from servers on connection.\n(If the file \'[jmri railroad base folder]\\prefs\\engine_driver\\auto_preferences.ed\' is on the server and if it is more recent than the last time checked.)</string>
 
-    <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwitten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Layout preferences, will be overwitten.</string>
+    <string name="importServerAutoDialog">New Preferences file has been found on this server: (%1$s).\nDo you want to import it?\n\nWarning!\n\'Full\' - All your preferences will be overwritten.\n\n\'Partial\' - All preferences, except Theme and some Throttle Layout preferences, will be overwitten.</string>
     <string name="importServerAutoDialogPositiveButton">Full</string>
     <string name="importServerAutoDialogNeutralButton">Partial</string>
 
@@ -741,7 +741,7 @@
     <string name="prefTickMarksOnSlidersSummary">Show tick marks on the background of the Speed Sliders</string>
 
     <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">Hide function buttons on non-selected throttle?</string>
-    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">If enabled, on the horizontal layouts the function buttons will be hidden for all bar the selected \'Volume\' throttle, indicated by a \'v\'.          Click on the speed value of a throttle to select it.          Set the \'Volume keys follow touch\' preference to select a throttle on any touch (except speed).</string>
+    <string name="prefHideFunctionButtonsOfNonSelectedThrottleSummary">If enabled, on the horizontal layouts the function buttons will be hidden for all bar the selected \'Volume\' throttle, indicated by a \'v\'.          Tap on the speed value of a throttle to select it.          Set the \'Volume keys follow touch\' preference to select a throttle on any touch (except speed).</string>
 
     <string name="prefThemeTitle">Theme/Style</string>
     <string name="prefThemeSummary">Select a visual appearance for this app</string>
@@ -1229,9 +1229,9 @@
     <string name="prefKidsHelpSummary">- Select a loco before starting the first time.
         \n- Timer will start with the first change in speed.
         \n- When the timer runs out:
-        \n\u00A0 - Click the overflow menu.
+        \n\u00A0 - Tap the overflow menu.
         \n\u00A0 \u00A0   Only the \'Timer\' option will be available.
-        \n\u00A0 - Click \'Timer\' and a password will be requested.
+        \n\u00A0 - Press \'Timer\' and a password will be requested.
         \n\u00A0 - Enter one of the two passwords to either:
         \n\u00A0 \u00A0 - restart the timer for the next period, or
         \n\u00A0 \u00A0 - end/cancel timer running.
@@ -1303,7 +1303,7 @@
     <!--    <string name="permissionsReadFunctionSettings">Engine Driver needs STORAGE permissions to read function settings.</string>-->
     <!--    <string name="permissionsStoreFunctionSettings">Engine Driver needs STORAGE permissions to store function settings.</string>-->
     <string name="permissionsWriteSettings">Engine Driver needs ALLOW MODIFYING SYSTEM SETTINGS permissions to change screen brightness.</string>
-    <string name="permissionsWriteSettingsAdditional">- Click the button below.\n- Grant the permission.\n- Click \'Back\' to return here.</string>
+    <string name="permissionsWriteSettingsAdditional">- Press the button below.\n- Grant the permission.\n- Tap \'Back\' to return here.</string>
     <string name="permissionsWriteSettingsAdditional2">Engine Driver will work without it. Ignore this if you don\'t need Engine Driver to alter the brightness.</string>
     <string name="permissionsACCESS_FINE_LOCATION">Engine Driver needs ACCESS_FINE_LOCATION permissions to retrieve current wifi SSID.\n\nEngine Driver will work without it, but Server Discovery may be limited.</string>
     <string name="permissionsACCESS_COARSE_LOCATION">Engine Driver needs ACCESS_COURSE_LOCATION permissions to retrieve current wifi SSID.</string>

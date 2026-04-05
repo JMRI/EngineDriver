@@ -157,6 +157,14 @@
                 android:summary="@string/prefBeepOnAlertToastsSummary"
                 android:title="@string/prefBeepOnAlertToastsTitle" />
 
+            <CheckBoxPreference
+                android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
+                android:key="prefFeedbackWhenGoingToBackground"
+                android:layout="@layout/preference_checkbox_icon_left_highlight"
+                android:icon="?attr/ed_preferences_feedback_when_going_into_background"
+                android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
+                android:title="@string/prefFeedbackWhenGoingToBackgroundTitle" />
+
             </PreferenceCategory>
 
         </PreferenceScreen>
@@ -2108,11 +2116,6 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefRosterTitle">
 
-                <PreferenceCategory
-                    android:icon="@drawable/glyph_button_select_loco_roster"
-                    android:layout="@layout/preference_category_icon_left"
-                    android:title="@string/prefRosterTitle">
-
                     <CheckBoxPreference
                         android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
                         android:key="prefRosterRecentLocos"
@@ -2160,55 +2163,6 @@
                         android:layout="@layout/preference_checkbox_no_icon"
                         android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
                         android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
-
-                </PreferenceCategory>
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
-                    android:key="prefRosterRecentLocos"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefRosterRecentLocosSummary"
-                    android:title="@string/prefRosterRecentLocosTitle" />
-
-                <CheckBoxPreference
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
-                    android:key="prefRosterRecentLocoNames"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefRosterRecentLocoNamesSummary"
-                    android:title="@string/prefRosterRecentLocoNamesTitle" />
-
-                <EditTextPreference
-                    android:defaultValue="@string/prefRosterFilterDefaultValue"
-                    android:dialogTitle="@string/prefRosterFilterTitle"
-                    android:key="prefRosterFilter"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:maxLength="10"
-                    android:summary="@string/prefRosterFilterSummary"
-                    android:title="@string/prefRosterFilterTitle" />
-
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefRosterOwnersFilterShowOptionDefaultValue"
-                    android:key="prefRosterOwnersFilterShowOption"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefRosterOwnersFilterShowOptionSummary"
-                    android:title="@string/prefRosterOwnersFilterShowOptionTitle" />
-
-                <ListPreference
-                    android:defaultValue="@string/prefSortOrderRosterDefaultValue"
-                    android:entries="@array/prefSortOrderEntries"
-                    android:entryValues="@array/prefSortOrderEntryValues"
-                    android:key="prefSortOrderRoster"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefSortOrderRosterSummary"
-                    android:title="@string/prefSortOrderRosterTitle" />
-
-                <CheckBoxPreference
-                    android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
-                    android:key="prefAlwaysUseFunctionsFromServer"
-                    android:layout="@layout/preference_checkbox_no_icon"
-                    android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
-                    android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
 
             </PreferenceCategory>
         </PreferenceScreen>
@@ -2456,7 +2410,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefAllowMobileDataDefaultValue"
             android:key="prefAllowMobileData"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:icon="?attr/ed_preferences_allow_mobile_data"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:summary="@string/prefAllowMobileDataSummary"
             android:title="@string/prefAllowMobileDataTitle" />
 
@@ -2471,14 +2426,6 @@
             android:summary="@string/prefFeedbackOnDisconnectSummary"
             android:title="@string/prefFeedbackOnDisconnectTitle" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
-            android:key="prefFeedbackWhenGoingToBackground"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_feedback_when_going_into_background"
-            android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
-            android:title="@string/prefFeedbackWhenGoingToBackgroundTitle" />
-
         <PreferenceCategory
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
@@ -2486,7 +2433,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefShowWitPomDefaultValue"
             android:key="prefShowWitPom"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:icon="?attr/ed_preferences_show_wit_pom"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:summary="@string/prefShowWitPomSummary"
             android:title="@string/prefShowWitPomTitle" />
 
@@ -2640,7 +2588,8 @@
         <CheckBoxPreference
             android:defaultValue="@bool/prefDccexSwapThrowCloseDefaultValue"
             android:key="prefDccexSwapThrowClose"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_dccex_swap_throw_close"
             android:summary="@string/prefDccexSwapThrowCloseSummary"
             android:title="@string/prefDccexSwapThrowCloseTitle" />
 
