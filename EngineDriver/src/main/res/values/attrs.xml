@@ -124,6 +124,7 @@
     <attr name="ed_preferences_speed_step_decrement" format="reference" />
     <attr name="ed_preferences_maximum_throttle_change" format="reference" />
     <attr name="ed_preferences_screen_orientation" format="reference" />
+    <attr name="ed_preferences_address_instead_of_name" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
     <attr name="ed_preferences_allow_mobile_data" format="reference" />
     <attr name="ed_preferences_show_wit_pom" format="reference" />

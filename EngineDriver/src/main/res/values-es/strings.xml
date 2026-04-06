@@ -1275,7 +1275,7 @@
     <string name="prefActionBarShowTurnoutsButtonSummary">Mostrar el botón en la barra de acción para cambiar a la pantalla de desvíos</string>
     <string name="prefActionBarShowTurnoutsButtonTitle">¿Botón de desvíos?</string>
     <string name="prefActionBarShowRoutesButtonSummary">Mostrar botón en la barra de acción para cambiar a la pantalla de Rutas</string>
-    <string name="prefDccexAutomationsAskTitle">Dirección de locomotora para la automatización EXRAIL</string>
+    <string name="prefDccexAutomationsAskTitle">DCC-EX - ¿Solicitar la locomotora Automation?</string>
     <string name="prefExtendedLoggingTitle">¿Registro extendido?</string>
     <string name="prefLocoSelectHideIplsButtonTitle">Ocultar el botón Sonidos de locomotoras</string>
     <string name="newConnectionTitle">Nueva conexión</string>

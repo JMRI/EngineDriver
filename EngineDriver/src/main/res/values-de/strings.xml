@@ -1115,7 +1115,7 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver benötigt Benachrichtigungsberechtigungen, um Sie zu warnen, wenn Sie in den Hintergrund drücken.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Einstellungen</string>
     <string name="prefDccexPreferencesSummary">Optionen für die Verwendung eines EX-CommandStation</string>
-    <string name="prefDccexAutomationsAskTitle">Lokomotivadresse für den EXRAIL-Automaten</string>
+    <string name="prefDccexAutomationsAskTitle">DCC-EX - Lokomotivadresse für den EXRAIL-Automaten</string>
     <string name="prefDccexAutomationsAskSummary">Bei DCC-EX-Automatisierungen fragen Sie bitte, welche Lokomotive für die Automatisierung eingesetzt werden soll.</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Verwenden Sie immer Funktionsbezeichnungen vom Server</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Verwenden Sie bei deaktiviertem Deaktivieren von MotoredRIVER -Standardbezeichnungen für Lokos, die von der Adresse (nicht von Dienstplänen) ausgewählt wurden, und ignorieren Server -Standardbezeichnungen.</string>
