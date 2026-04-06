@@ -1,7 +1,7 @@
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
-     * Option to hide the additonal button text on the Select Screen for tiny screens (e.g. the ESU MC Pro)
+     * Option to hide the additional button text on the Select Screen for tiny screens (e.g. the ESU MC Pro)
   * Bug fixes
      * Reconnect page was never closing.  (Mistake made in the switch to Bundles.)
      * Throttle Web Page not loading if initial web page preference changed.

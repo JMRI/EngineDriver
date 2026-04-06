@@ -215,6 +215,7 @@
         <item name="ed_preferences_maximum_throttle_change">@drawable/glyph_preferences_maximum_throttle_change</item>
         <item name="ed_preferences_screen_orientation">@drawable/glyph_preferences_screen_orientation</item>
         <item name="ed_preferences_theme">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_address_instead_of_name">@drawable/glyph_preferences_address_instead_of_name</item>
         <item name="ed_preferences_allow_mobile_data">@drawable/glyph_preferences_allow_mobile_data_states</item>
         <item name="ed_preferences_show_wit_pom">@drawable/glyph_preferences_show_wit_pom_states</item>
         <item name="ed_preferences_dccex_swap_throw_close">@drawable/glyph_preferences_dccex_swap_throw_close</item>

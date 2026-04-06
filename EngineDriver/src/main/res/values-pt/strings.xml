@@ -1231,7 +1231,7 @@
     <string name="prefActionBarShowThrottleButtonTitle">Botão do acelerador?</string>
     <string name="prefActionBarShowTurnoutsButtonSummary">Mostrar botão na barra de ações para alternar para a tela de desvios.</string>
     <string name="prefActionBarShowThrottleButtonSummary">Exibir botão na barra de ações para alternar para a tela do acelerador.</string>
-    <string name="prefDccexAutomationsAskTitle">Endereço da locomotiva para a Automação EXRAIL</string>
+    <string name="prefDccexAutomationsAskTitle">DCC-EX - Solicitar a locomotiva de automação?</string>
     <string name="prefExtendedLoggingTitle">Registro de logs prolongado?</string>
     <string name="prefLocoSelectHideIplsButtonTitle">Ocultar o botão Sons da Locomotiva</string>
     <string name="newConnectionTitle">Nova conexão</string>
