@@ -126,6 +126,16 @@
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_address_instead_of_name" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_device_sounds_0" format="reference" />
+    <attr name="ed_preferences_device_sounds_1" format="reference" />
+    <attr name="ed_preferences_empty" format="reference" />
+    <attr name="ed_preferences_throttle_locos" format="reference" />
+    <attr name="ed_preferences_connect_to_first_server" format="reference" />
+    <attr name="ed_preferences_auto_server_ip_connect" format="reference" />
+    <attr name="ed_preferences_auto_server_named_connect" format="reference" />
+    <attr name="ed_preferences_hide_demo_server" format="reference" />
+    <attr name="ed_preferences_roster_filter" format="reference" />
+    <attr name="ed_preferences_sort_order_roster" format="reference" />
     <attr name="ed_preferences_allow_mobile_data" format="reference" />
     <attr name="ed_preferences_show_wit_pom" format="reference" />
     <attr name="ed_preferences_dccex_swap_throw_close" format="reference" />

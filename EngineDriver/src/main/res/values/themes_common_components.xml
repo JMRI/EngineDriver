@@ -26,7 +26,7 @@
         <item name="ed_preferences_speed_units">@drawable/glyph_preferences_speed_units</item>
         <item name="ed_preferences_stop_button_long_press_delay">@drawable/glyph_preferences_stop_button_long_press_delay</item>
         <item name="ed_preferences_speed_arrows_repeat_delay">@drawable/glyph_preferences_speed_arrows_repeat_delay</item>
-        <item name="ed_preferences_stop_on_direction_change">@drawable/glyph_preferences_stop_on_direction_change</item>
+        <item name="ed_preferences_stop_on_direction_change">@drawable/glyph_preferences_stop_on_direction_change_states</item>
         <item name="ed_preferences_dir_change_while_moving">@drawable/glyph_preferences_dir_change_while_moving</item>
         <item name="ed_preferences_maximum_throttle">@drawable/glyph_preferences_maximum_throttle</item>
         <item name="ed_preferences_sort_order_turnouts">@drawable/glyph_preferences_sort_order_turnouts</item>
@@ -39,6 +39,16 @@
         <item name="ed_preferences_maximum_throttle_change">@drawable/glyph_preferences_maximum_throttle_change</item>
         <item name="ed_preferences_screen_orientation">@drawable/glyph_preferences_screen_orientation</item>
         <item name="ed_preferences_theme">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_device_sounds_0">@drawable/glyph_preferences_device_sounds_0</item>
+        <item name="ed_preferences_device_sounds_1">@drawable/glyph_preferences_device_sounds_1</item>
+        <item name="ed_preferences_empty">@drawable/glyph_preferences_empty</item>
+        <item name="ed_preferences_throttle_locos">@drawable/glyph_preferences_throttle_locos</item>
+        <item name="ed_preferences_connect_to_first_server">@drawable/glyph_preferences_connect_to_first_server</item>
+        <item name="ed_preferences_auto_server_ip_connect">@drawable/glyph_preferences_auto_server_ip_connect</item>
+        <item name="ed_preferences_auto_server_named_connect">@drawable/glyph_preferences_auto_server_named_connect</item>
+        <item name="ed_preferences_hide_demo_server">@drawable/glyph_preferences_hide_demo_server</item>
+        <item name="ed_preferences_roster_filter">@drawable/glyph_preferences_roster_filter</item>
+        <item name="ed_preferences_sort_order_roster">@drawable/glyph_preferences_sort_order_roster</item>
         <item name="ed_preferences_address_instead_of_name">@drawable/glyph_preferences_address_instead_of_name</item>
         <item name="ed_preferences_allow_mobile_data">@drawable/glyph_preferences_allow_mobile_data_states</item>
         <item name="ed_preferences_show_wit_pom">@drawable/glyph_preferences_show_wit_pom_states</item>
