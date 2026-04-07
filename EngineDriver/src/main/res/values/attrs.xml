@@ -126,6 +126,9 @@
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_address_instead_of_name" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_default_address_range" format="reference" />
+    <attr name="ed_preferences_select_loco_by_radio_buttons" format="reference" />
+    <attr name="ed_preferences_consist_lights_on_long_press" format="reference" />
     <attr name="ed_preferences_device_sounds_0" format="reference" />
     <attr name="ed_preferences_device_sounds_1" format="reference" />
     <attr name="ed_preferences_empty" format="reference" />

@@ -215,6 +215,9 @@
         <item name="ed_preferences_maximum_throttle_change">@drawable/glyph_preferences_maximum_throttle_change</item>
         <item name="ed_preferences_screen_orientation">@drawable/glyph_preferences_screen_orientation</item>
         <item name="ed_preferences_theme">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_default_address_range">@drawable/glyph_preferences_default_address_range</item>
+        <item name="ed_preferences_select_loco_by_radio_buttons">@drawable/glyph_preferences_select_loco_by_radio_buttons</item>
+        <item name="ed_preferences_consist_lights_on_long_press">@drawable/glyph_preferences_consist_lights_on_long_press</item>
         <item name="ed_preferences_device_sounds_0">@drawable/glyph_preferences_device_sounds_0</item>
         <item name="ed_preferences_device_sounds_1">@drawable/glyph_preferences_device_sounds_1</item>
         <item name="ed_preferences_empty">@drawable/glyph_preferences_empty</item>

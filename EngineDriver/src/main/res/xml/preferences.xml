@@ -1496,7 +1496,7 @@
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="prefConsistLightsLongClick"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_long_press"
+            android:icon="?attr/ed_preferences_consist_lights_on_long_press"
             android:summary="@string/prefConsistLightsLongClickSummary"
             android:title="@string/prefConsistLightsLongClickTitle" />
 
@@ -2095,7 +2095,7 @@
             android:defaultValue="@bool/prefSelectLocoByRadioButtonsDefaultValue"
             android:key="prefSelectLocoByRadioButtons"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_select_loco_by_radio_buttons"
             android:summary="@string/prefSelectLocoByRadioButtonsSummary"
             android:title="@string/prefSelectLocoByRadioButtonsTitle" />
 
@@ -2109,7 +2109,7 @@
             android:entryValues="@array/address_size_defaultsEntryValues"
             android:key="prefDefaultAddressLength"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_default_address_range"
             android:summary="@string/prefDefaultAddressLengthSummary"
             android:title="@string/prefDefaultAddressLengthTitle" />
 
