@@ -462,7 +462,7 @@
             android:entryValues="@array/prefSelectedLocoIndicatorEntryValues"
             android:key="prefSelectedLocoIndicator"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_selected_loco_indicator"
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
 
@@ -2153,7 +2153,7 @@
             android:defaultValue="false"
             android:key="prefUseDispatchCommand"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_use_dispatch_command"
             android:summary="@string/prefUseDispatchCommandSummary"
             android:title="@string/prefUseDispatchCommandTitle" />
 
@@ -2161,7 +2161,7 @@
             android:defaultValue="false"
             android:key="prefShowDispatchButton"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_show_dispatch_button"
             android:summary="@string/prefShowDispatchButtonSummary"
             android:title="@string/prefShowDispatchButtonTitle" />
 
@@ -2219,7 +2219,7 @@
             android:defaultValue="@bool/prefRosterOwnersFilterShowOptionDefaultValue"
             android:key="prefRosterOwnersFilterShowOption"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_roster_owners_filter_show_option"
             android:summary="@string/prefRosterOwnersFilterShowOptionSummary"
             android:title="@string/prefRosterOwnersFilterShowOptionTitle" />
 

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="171.33333mm"
+   height="171.33333mm"
+   viewBox="0 0 607.0866 607.08659"
+   id="svg2"
+   version="1.1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="glyph_preferences_selected_loco_indicator.svg"
+   inkscape:export-filename="C:\Users\akers\StudioProjects\EngineDriver\EngineDriver\src\main\res\drawable-xhdpi\advanced_preferences.png"
+   inkscape:export-xdpi="7.0892334"
+   inkscape:export-ydpi="7.0892334"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4155"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4157" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4149">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop4151" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4139"
+       inkscape:swatch="gradient">
+      <stop
+         style="stop-color:#2b2200;stop-opacity:1;"
+         offset="0"
+         id="stop4141" />
+      <stop
+         style="stop-color:#2b2200;stop-opacity:0;"
+         offset="1"
+         id="stop4143" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="465.27626"
+     inkscape:cy="413.65747"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="1"
+     fit-margin-left="1"
+     fit-margin-right="1"
+     fit-margin-bottom="1"
+     units="mm"
+     inkscape:window-width="1600"
+     inkscape:window-height="829"
+     inkscape:window-x="-8"
+     inkscape:window-y="114"
+     inkscape:window-maximized="1"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-65.224067,-173.70181)">
+    <path
+       id="rect5645"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:20.7315;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 166.6352 176.63882 C 112.08029 176.63882 68.161079 220.55803 68.161079 275.11294 L 68.161079 679.37687 C 68.161079 733.93179 112.08029 777.85099 166.6352 777.85099 L 570.89913 777.85099 C 625.45404 777.85099 669.37325 733.93179 669.37325 679.37687 L 669.37325 275.11294 C 669.37325 220.55803 625.45404 176.63882 570.89913 176.63882 L 166.6352 176.63882 z M 179.11567 195.20022 L 558.41866 195.20022 C 609.60497 195.20022 650.81185 236.4071 650.81185 287.59341 L 650.81185 666.8964 C 650.81185 718.08271 609.60497 759.28959 558.41866 759.28959 L 179.11567 759.28959 C 127.92936 759.28959 86.722481 718.08271 86.722481 666.8964 L 86.722481 287.59341 C 86.722481 236.4071 127.92936 195.20022 179.11567 195.20022 z " />
+    <path
+       id="rect5645-8"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:17.3484;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 199.62086,225.69435 c -45.65216,0 -82.40425,36.75209 -82.40425,82.40425 v 338.29261 c 0,45.65217 36.75209,82.40425 82.40425,82.40425 h 338.29261 c 45.65216,0 82.40425,-36.75208 82.40425,-82.40425 V 308.0986 c 0,-45.65216 -36.75209,-82.40425 -82.40425,-82.40425 z m 10.4438,15.53239 h 317.40501 c 42.83328,0 77.31566,34.48238 77.31566,77.31566 v 317.40501 c 0,42.83328 -34.48238,77.31566 -77.31566,77.31566 H 210.06466 c -42.83328,0 -77.31566,-34.48238 -77.31566,-77.31566 V 318.5424 c 0,-42.83328 34.48238,-77.31566 77.31566,-77.31566 z" />
+  </g>
+</svg>
