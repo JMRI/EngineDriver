@@ -39,6 +39,8 @@
         <item name="ed_preferences_maximum_throttle_change">@drawable/glyph_preferences_maximum_throttle_change</item>
         <item name="ed_preferences_screen_orientation">@drawable/glyph_preferences_screen_orientation</item>
         <item name="ed_preferences_theme">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_dccex_automation_ask">@drawable/glyph_preferences_dccex_automation_ask</item>
+        <item name="ed_preferences_decrease_loco_number_height">@drawable/glyph_preferences_decrease_loco_number_height</item>
         <item name="ed_preferences_roster_in_recent_locos">@drawable/glyph_preferences_roster_in_recent_locos</item>
         <item name="ed_preferences_roster_in_recent_locos_names">@drawable/glyph_preferences_roster_in_recent_locos_names</item>
         <item name="ed_preferences_roster_owners_filter_show_option">@drawable/glyph_preferences_roster_owners_filter_show_option</item>

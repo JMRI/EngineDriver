@@ -1169,6 +1169,8 @@
     <string name="prefActionBarShowWebButtonTitle">Web button?</string>
     <string name="prefActionBarShowAdvancedConsistButtonSummary">Show button in action bar to open the Advanced Consist (CV19) Screen</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">Advanced Consist (CV19) button?</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">Show button in action bar to open the DCC-EX In Command Station Consist Screen</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">DCC-EX In Command Station Consist button?</string>
 
     <!--    <string name="logViewerTitle">LogViewerActivity | %1$s</string>-->
 
