@@ -619,7 +619,8 @@
                     android:dialogTitle="@string/prefInitialThrottleWebPageSummary"
                     android:inputType="text"
                     android:key="prefInitialThrottleWebPage"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_initial_web_page"
                     android:maxLines="1"
                     android:summary="@string/prefInitialThrottleWebPageSummary"
                     android:title="@string/prefInitialThrottleWebPageTitle" />
@@ -2588,7 +2589,7 @@
             android:inputType="text"
             android:key="prefInitialWebPage"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_initial_web_page"
             android:maxLines="1"
             android:summary="@string/prefInitialWebPageSummary"
             android:title="@string/prefInitialWebPageTitle" />
@@ -2728,7 +2729,8 @@
                     android:dialogTitle="@string/prefKidsTimerRestartPasswordTitle"
                     android:inputType="number"
                     android:key="prefKidsTimerRestartPassword"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_password"
                     android:summary="@string/prefKidsTimerRestartPasswordSummary"
                     android:title="@string/prefKidsTimerRestartPasswordTitle" />
 
@@ -2738,7 +2740,8 @@
                     android:dialogTitle="@string/prefKidsTimerResetPasswordTitle"
                     android:inputType="number"
                     android:key="prefKidsTimerResetPassword"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_password"
                     android:summary="@string/prefKidsTimerResetPasswordSummary"
                     android:title="@string/prefKidsTimerResetPasswordTitle" />
 
@@ -2748,7 +2751,8 @@
                     android:dialogTitle="@string/prefKidsTimerDemoModePasswordTitle"
                     android:inputType="number"
                     android:key="prefKidsTimerDemoModePassword"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:icon="?attr/ed_preferences_password"
                     android:summary="@string/prefKidsTimerDemoModePasswordSummary"
                     android:title="@string/prefKidsTimerDemoModePasswordTitle" />
 
