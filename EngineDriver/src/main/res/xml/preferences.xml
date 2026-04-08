@@ -2177,7 +2177,7 @@
             android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
             android:key="prefRosterRecentLocos"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_roster_in_recent_locos"
             android:summary="@string/prefRosterRecentLocosSummary"
             android:title="@string/prefRosterRecentLocosTitle" />
 
@@ -2187,7 +2187,7 @@
             android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
             android:key="prefRosterRecentLocoNames"
             android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_roster_in_recent_locos_names"
             android:summary="@string/prefRosterRecentLocoNamesSummary"
             android:title="@string/prefRosterRecentLocoNamesTitle" />
 

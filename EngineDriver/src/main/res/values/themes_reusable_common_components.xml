@@ -215,6 +215,8 @@
         <item name="ed_preferences_maximum_throttle_change">@drawable/glyph_preferences_maximum_throttle_change</item>
         <item name="ed_preferences_screen_orientation">@drawable/glyph_preferences_screen_orientation</item>
         <item name="ed_preferences_theme">@drawable/glyph_preferences_theme</item>
+        <item name="ed_preferences_roster_in_recent_locos">@drawable/glyph_preferences_roster_in_recent_locos</item>
+        <item name="ed_preferences_roster_in_recent_locos_names">@drawable/glyph_preferences_roster_in_recent_locos_names</item>
         <item name="ed_preferences_roster_owners_filter_show_option">@drawable/glyph_preferences_roster_owners_filter_show_option</item>
         <item name="ed_preferences_show_dispatch_button">@drawable/glyph_preferences_show_dispatch_button</item>
         <item name="ed_preferences_use_dispatch_command">@drawable/glyph_preferences_use_dispatch_command</item>
