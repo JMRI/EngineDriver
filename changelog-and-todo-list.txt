@@ -2,6 +2,7 @@
   * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
   * Other
+     * Change the preference checkboxes to switches.
      * More cleanup of some of the preferences.
      * Additional glyphs in the preferences.
      * Separate the CV19 button control for the DCC-EX In Command Station Consist button control.

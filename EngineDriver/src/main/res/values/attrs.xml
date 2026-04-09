@@ -461,5 +461,12 @@
     <attr name="reusable_toolbar_button_wizard_face_end_color" format="reference" />
     <attr name="reusable_toolbar_button_wizard_face_start_color" format="reference" />
 
+    <attr name="reusable_switch_thumb_enabled_checked_color" format="reference" />
+    <attr name="reusable_switch_thumb_enabled_unchecked_color" format="reference" />
+    <attr name="reusable_switch_thumb_disabled_checked_color" format="reference" />
+    <attr name="reusable_switch_thumb_disabled_unchecked_color" format="reference" />
+    <attr name="reusable_switch_track_enabled_color" format="reference" />
+    <attr name="reusable_switch_track_disabled_color" format="reference" />
+
 
 </resources>

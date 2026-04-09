@@ -30,7 +30,9 @@
     <color name="grey_very_light">#bababa</color>
     <color name="grey_ultra_light">#dadada</color>
 
+    <color name="grey_light_75">#BFa6a6a6</color>
     <color name="grey_light_50">#80a6a6a6</color>
+    <color name="grey_light_25">#40a6a6a6</color>
 
     <color name="red">#ff0000</color>
 
@@ -40,6 +42,7 @@
     <color name="solidWhite">#ffffffff</color>
     <color name="offWhite">#DEDEDE</color>
 
+    <color name="holoBlue_bright">#00BDFF</color>
     <color name="holoBlue">#ff33b5e5</color>
     <color name="holoBlue_light">#ffa6e0f2</color>
 
@@ -381,7 +384,8 @@
 
     <color name="muted_blue_light_50">#80b9c3df</color>
 
-    <color name="muted_cream_very_dark">#FF4C02</color>
+    <color name="muted_cream_ultra_dark">#FF4C02</color>
+    <color name="muted_cream_very_dark">#FB621F</color>
     <color name="muted_cream_dark">#FF9369</color>
     <color name="muted_cream">#FFC6B0</color>
     <color name="muted_cream_light">#FFDCCF</color>

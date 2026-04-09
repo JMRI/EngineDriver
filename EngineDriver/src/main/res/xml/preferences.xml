@@ -4,11 +4,11 @@
     android:summary="@string/prefSummary"
     android:title="@string/app_name_preferences">
 
-    <CheckBoxPreference
+    <SwitchPreferenceCompat
         android:defaultValue="@bool/prefShowAdvancedPreferencesDefaultValue"
         android:icon="?attr/ed_advanced_preferences"
         android:key="prefShowAdvancedPreferences"
-        android:layout="@layout/preference_checkbox_icon_left_highlight"
+        android:layout="@layout/preference_switch_icon_left_highlight"
         android:summary="@string/prefShowAdvancedPreferencesSummary"
         android:title="@string/prefShowAdvancedPreferencesTitle" />
 
@@ -72,10 +72,10 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefLeftRightSwipePreferencesTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
                     android:key="prefFullScreenSwipeArea"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefFullScreenSwipeAreaSummary"
                     android:title="@string/prefFullScreenSwipeAreaTitle" />
 
@@ -83,24 +83,24 @@
                     android:title="divider"
                     android:layout="@layout/preference_category_divider"/>
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwipeThroughWebDefaultValue"
                     android:key="prefSwipeThroughWeb"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSwipeThroughWebSummary"
                     android:title="@string/prefSwipeThroughWebTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
                     android:key="prefSwipeThroughTurnouts"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSwipeThroughTurnoutsSummary"
                     android:title="@string/prefSwipeThroughTurnoutsTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
                     android:key="prefSwipeThroughRoutes"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSwipeThroughRoutesSummary"
                     android:title="@string/prefSwipeThroughRoutesTitle" />
 
@@ -108,10 +108,10 @@
                     android:title="divider"
                     android:layout="@layout/preference_category_divider"/>
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
                     android:key="prefLeftRightSwipeChangesSpeed"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefLeftRightSwipeChangesSpeedSummary"
                     android:title="@string/prefLeftRightSwipeChangesSpeedTitle" />
 
@@ -128,25 +128,13 @@
 
         </PreferenceScreen>
 
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDoubleBackButtonToExitDefaultValue"
             android:key="prefDoubleBackButtonToExit"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_double_back_button_to_exit"
             android:summary="@string/prefDoubleBackButtonToExitSummary"
             android:title="@string/prefDoubleBackButtonToExitTitle" />
-
-<!--        <SwitchPreferenceCompat-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:defaultValue="@bool/prefDoubleBackButtonToExitDefaultValue"-->
-<!--            android:key="prefDoubleBackButtonToExit"-->
-<!--            android:layout="@layout/preference_switch_icon_left_highlight"-->
-<!--            android:icon="?attr/ed_preferences_double_back_button_to_exit"-->
-<!--            android:summary="@string/prefDoubleBackButtonToExitSummary"-->
-<!--            android:title="@string/prefDoubleBackButtonToExitTitle" />-->
 
             <PreferenceScreen
                 android:icon="?attr/ed_folder_hint"
@@ -161,17 +149,17 @@
                     android:layout="@layout/preference_category_icon_left"
                     android:title="@string/ToastsOptionsTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHideInstructionalToastsDefaultValue"
                     android:key="prefHideInstructionalToasts"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefHideInstructionalToastsSummary"
                     android:title="@string/prefHideInstructionalToastsTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefShowAdditionalButtonTextDefaultValue"
                     android:key="prefShowAdditionalButtonText"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefShowAdditionalButtonTextSummary"
                     android:title="@string/prefShowAdditionalButtonTextTitle" />
 
@@ -179,17 +167,17 @@
                     android:title="divider"
                     android:layout="@layout/preference_category_divider"/>
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefBeepOnAlertToastsDefaultValue"
                     android:key="prefBeepOnAlertToasts"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefBeepOnAlertToastsSummary"
                     android:title="@string/prefBeepOnAlertToastsTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
                     android:key="prefFeedbackWhenGoingToBackground"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:icon="?attr/ed_preferences_feedback_when_going_into_background"
                     android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
                     android:title="@string/prefFeedbackWhenGoingToBackgroundTitle" />
@@ -198,10 +186,10 @@
                     android:title="divider"
                     android:layout="@layout/preference_category_divider"/>
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFeedbackOnDisconnectDefaultValue"
                     android:key="prefFeedbackOnDisconnect"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefFeedbackOnDisconnectSummary"
                     android:title="@string/prefFeedbackOnDisconnectTitle" />
 
@@ -226,15 +214,7 @@
             android:icon="?attr/ed_preferences_throttle_screen_layout"
             android:summary="@string/prefThrottleScreenTypeSummary"
             android:title="@string/prefThrottleScreenTypeTitle" />
-<!--        <ListPreference-->
-<!--            android:defaultValue="@string/prefNumThrottlesDefaultValue"-->
-<!--            android:entries="@array/NumOfThrottlesEntries"-->
-<!--            android:entryValues="@array/NumOfThrottlesEntryValues"-->
-<!--            android:key="prefNumThrottles"-->
-<!--            android:layout="@layout/checkbox_no_icon"-->
-<!--            android:summary="@string/prefNumOfThrottlesSummary"-->
-<!--            android:title="@string/prefNumOfThrottles" />-->
-<!--        <EditTextPreference-->
+
         <ListPreference
             android:defaultValue="@string/prefNumThrottlesDefaultValue"
             android:entries="@array/NumOfThrottlesEntries"
@@ -259,10 +239,10 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefSliderTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
                     android:key="prefIncreaseSliderHeight"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefIncreaseSliderHeightSummary"
                     android:title="@string/prefIncreaseSliderHeightTitle" />
                 <EditTextPreference
@@ -287,28 +267,28 @@
                     android:title="divider"
                     android:layout="@layout/preference_category_divider"/>
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDisplaySpeedArrows"
                     android:key="prefDisplaySpeedButtons"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDisplaySpeedArrowsSummary"
                     android:title="@string/prefDisplaySpeedArrowsTitle" />
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHideSliderDefaultValue"
                     android:key="prefHideSlider"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefHideSliderSummary"
                     android:title="@string/prefHideSliderTitle" />
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
                     android:key="prefHideSliderAndSpeedButtons"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefHideSliderAndSpeedButtonsSummary"
                     android:title="@string/prefHideSliderAndSpeedButtonsTitle" />
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefTickMarksOnSlidersDefaultValue"
                     android:key="prefTickMarksOnSliders"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefTickMarksOnSlidersSummary"
                     android:title="@string/prefTickMarksOnSlidersTitle" />
 
@@ -373,10 +353,10 @@
                     android:summary="@string/prefHapticFeedbackDurationSummary"
                     android:title="@string/prefHapticFeedbackDurationTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHapticFeedbackButtonsDefaultValue"
                     android:key="prefHapticFeedbackButtons"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefHapticFeedbackButtonsSummary"
                     android:title="@string/prefHapticFeedbackButtonsTitle" />
 
@@ -396,17 +376,17 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefDirectionTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
                     android:key="prefSwapForwardReverseButtons"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSwapForwardReverseButtonsSummary"
                     android:title="@string/prefSwapForwardReverseButtonsTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwapForwardReverseButtonsLongPressDefaultValue"
                     android:key="prefSwapForwardReverseButtonsLongPress"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:icon="?attr/ed_preferences_long_press"
                     android:summary="@string/prefSwapForwardReverseButtonsLongPressSummary"
                     android:title="@string/prefSwapForwardReverseButtonsLongPressTitle" />
@@ -467,22 +447,22 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
             android:key="prefDecreaseLocoNumberHeight"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_decrease_loco_number_height"
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
             android:title="@string/prefDecreaseLocoNumberHeightTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
             android:key="prefShowAddressInsteadOfName"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_address_instead_of_name"
             android:summary="@string/prefShowAddressInsteadOfNameSummary"
             android:title="@string/prefShowAddressInsteadOfNameTitle" />
@@ -514,30 +494,30 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefDefaultFunctionsTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
                     android:key="prefAlwaysUseDefaultFunctionLabels"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
                     android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefOverrideWiThrottlesFunctionLatchingDefaultValue"
                     android:key="prefOverrideWiThrottlesFunctionLatching"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefOverrideWiThrottlesFunctionLatchingSummary"
                     android:title="@string/prefOverrideWiThrottlesFunctionLatchingTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefOverrideRosterWithNoFunctionLabelsDefaultValue"
                     android:key="prefOverrideRosterWithNoFunctionLabels"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefOverrideRosterWithNoFunctionLabelsSummary"
                     android:title="@string/prefOverrideRosterWithNoFunctionLabelsTitle" />
 
@@ -561,10 +541,10 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefHideFunctionButtonsOfNonSelectedThrottle"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_empty"
             android:summary="@string/prefHideFunctionButtonsOfNonSelectedThrottleSummary"
             android:title="@string/prefHideFunctionButtonsOfNonSelectedThrottleTitle" />
@@ -605,12 +585,12 @@
                     android:summary="@string/prefWebViewLocationSummary"
                     android:title="@string/prefWebViewLocationTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
                     android:key="prefIncreaseWebViewSize"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefIncreaseWebViewSizeSummary"
                     android:title="@string/prefIncreaseWebViewSizeTitle" />
 
@@ -631,12 +611,12 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
             android:key="prefThrottleViewImmersiveMode"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_immersive_mode"
             android:summary="@string/prefThrottleViewImmersiveModeSummary"
             android:title="@string/prefThrottleViewImmersiveModeTitle" />
@@ -654,12 +634,12 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefSwipeUpDownTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefThrottleViewImmersiveModeHideToolbarDefaultValue"
                     android:key="prefThrottleViewImmersiveModeHideToolbar"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefThrottleViewImmersiveModeHideToolbarSummary"
                     android:title="@string/prefThrottleViewImmersiveModeHideToolbarTitle" />
 
@@ -743,10 +723,10 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefBackgroundImagePreferencesTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefBackgroundImageDefaultValue"
                     android:key="prefBackgroundImage"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefBackgroundImageSummary"
                     android:title="@string/prefBackgroundImageTitle" />
 
@@ -856,10 +836,10 @@
                     android:summary="@string/prefSemiRealisticMaximumBrakePcntSummary"
                     android:title="@string/prefSemiRealisticMaximumBrakePcntTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSemiRealisticThrottleDisableAirDefaultValue"
                     android:key="prefSemiRealisticThrottleDisableAir"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSemiRealisticThrottleDisableAirSummary"
                     android:title="@string/prefSemiRealisticThrottleDisableAirTitle" />
 
@@ -973,27 +953,27 @@
             android:summary="@string/prefToolbarButtonSizeSummary"
             android:title="@string/prefToolbarButtonSizeTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
             android:icon="?attr/ed_estop_button"
             android:key="prefShowEmergencyStopButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefEmerStopSummary"
             android:title="@string/prefEmerStopTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
             android:icon="?attr/ed_power_green_button"
             android:key="prefShowLayoutPowerButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefPowerButtonBarSummary"
             android:title="@string/prefPowerButtonBarTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefFlashlightButtonDefaultValue"
             android:icon="?attr/ed_flashlight_on_button"
             android:key="prefFlashlightButtonDisplay"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefFlashlightSummary"
             android:title="@string/prefFlashlightTitle" />
 
@@ -1003,15 +983,15 @@
             android:entryValues="@array/DisplayClockEntryValues"
             android:icon="?attr/ed_clock_icon"
             android:key="prefClockDisplayType"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefWebViewButtonDefaultValue"
             android:icon="?attr/ed_web_view_button"
             android:key="prefWebViewButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefWebViewButtonSummary"
             android:title="@string/prefWebViewButtonTitle" />
 
@@ -1028,18 +1008,18 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefThrottleSwitchButtonPreferencesTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
                     android:icon="?attr/ed_throttle_switch_button"
                     android:key="prefThrottleSwitchButtonDisplay"
-                    android:layout="@layout/preference_checkbox_icon_right"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefThrottleSwitchButtonSummary"
                     android:title="@string/prefThrottleSwitchButtonTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefThrottleSwitchButtonCycleAllDefaultValue"
                     android:key="prefThrottleSwitchButtonCycleAll"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefThrottleSwitchButtonCycleAllSummary"
                     android:title="@string/prefThrottleSwitchButtonCycleAllTitle" />
 
@@ -1091,18 +1071,19 @@
 
         </PreferenceScreen>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDeviceSoundsButtonDefaultValue"
             android:icon="?attr/ed_in_device_sounds_button"
             android:key="prefDeviceSoundsButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefDeviceSoundsButtonSummary"
             android:title="@string/prefDeviceSoundsButtonTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowServerDescriptionDefaultValue"
             android:key="prefActionBarShowServerDescription"
-            android:layout="@layout/preference_checkbox_no_icon"
+            android:icon="?attr/ed_preferences_empty"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowServerDescriptionSummary"
             android:title="@string/prefActionBarShowServerDescriptionTitle" />
 
@@ -1112,15 +1093,15 @@
             android:entryValues="@array/prefAppIconActionEntryValues"
             android:icon="?attr/ed_icon"
             android:key="prefAppIconAction"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:summary="@string/prefAppIconActionSummary"
             android:title="@string/prefAppIconActionTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowDccExButtonDefaultValue"
             android:icon="?attr/ed_dcc_ex_button"
             android:key="prefActionBarShowDccExButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowDccExButtonSummary"
             android:title="@string/prefActionBarShowDccExButtonTitle" />
 
@@ -1128,35 +1109,35 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowThrottleButtonDefaultValue"
             android:icon="?attr/ed_throttle_button"
             android:key="prefActionBarShowThrottleButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowThrottleButtonSummary"
             android:title="@string/prefActionBarShowThrottleButtonTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowTurnoutsButtonDefaultValue"
             android:icon="?attr/ed_turnouts_button"
             android:key="prefActionBarShowTurnoutsButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowTurnoutsButtonSummary"
             android:title="@string/prefActionBarShowTurnoutsButtonTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowRoutesButtonDefaultValue"
             android:icon="?attr/ed_routes_button"
             android:key="prefActionBarShowRoutesButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowRoutesButtonSummary"
             android:title="@string/prefActionBarShowRoutesButtonTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowWebButtonDefaultValue"
             android:icon="?attr/ed_web_button"
             android:key="prefActionBarShowWebButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowWebButtonSummary"
             android:title="@string/prefActionBarShowWebButtonTitle" />
 
@@ -1164,19 +1145,19 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowAdvancedConsistButtonDefaultValue"
             android:icon="@drawable/reusable_toolbar_button_cv19_consist_states"
             android:key="prefActionBarShowAdvancedConsistButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowAdvancedConsistButtonSummary"
             android:title="@string/prefActionBarShowAdvancedConsistButtonTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowAdvancedConsistButtonDefaultValue"
             android:icon="@drawable/reusable_toolbar_button_dccex_consist_states"
             android:key="prefActionBarShowDccexConsistButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowDccexConsistButtonSummary"
             android:title="@string/prefActionBarShowDccexConsistButtonTitle" />
 
@@ -1238,10 +1219,10 @@
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefSpeedButtonsSpeedStepDecrementDefaultValue"
             android:key="prefSpeedButtonsSpeedStepDecrement"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_speed_step_decrement"
             android:summary="@string/prefSpeedButtonsSpeedStepDecrementSummary"
             android:title="@string/prefSpeedButtonsSpeedStepDecrementTitle" />
@@ -1250,18 +1231,18 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopOnPhoneCallDefaultValue"
             android:key="prefStopOnPhoneCall"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_stop_on_phone_call"
             android:summary="@string/prefStopOnPhoneCallSummary"
             android:title="@string/prefStopOnPhoneCallTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopButtonEStopOnLongPressDefaultValue"
             android:key="prefStopButtonEStopOnLongPress"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_estop_on_long_press"
             android:summary="@string/prefStopButtonEStopOnLongPressSummary"
             android:title="@string/prefStopButtonEStopOnLongPressTitle" />
@@ -1276,18 +1257,18 @@
             android:summary="@string/prefStopButtonLongPressDelaySummary"
             android:title="@string/prefStopButtonLongPressDelayTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopOnBackgroundDefaultValue"
             android:key="prefStopOnBackground"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_stop_on_background"
             android:summary="@string/prefStopOnBackgroundSummary"
             android:title="@string/prefStopOnBackgroundTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDccexEmergencyStopPauseResumeDefaultValue"
             android:key="prefDccexEmergencyStopPauseResume"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_dccex_estop_pause_resume"
             android:summary="@string/prefDccexEmergencyStopPauseResumeSummary"
             android:title="@string/prefDccexEmergencyStopPauseResumeTitle" />
@@ -1296,22 +1277,22 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"
             android:key="prefDirChangeWhileMoving"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_dir_change_while_moving"
             android:summary="@string/prefDirChangeWhileMovingSummary"
             android:title="@string/prefDirChangeWhileMovingTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefStopOnDirectionChangeDefaultValue"
             android:key="prefStopOnDirectionChange"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_stop_on_direction_change"
             android:summary="@string/prefStopOnDirectionChangeSummary"
             android:title="@string/prefStopOnDirectionChangeTitle" />
@@ -1333,10 +1314,10 @@
                 android:layout="@layout/preference_category_icon_left"
                 android:title="@string/prefLimitSpeedButtonPreferencesTitle">
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefLimitSpeedButtonDefaultValue"
                     android:key="prefLimitSpeedButton"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefLimitSpeedButtonSummary"
                     android:title="@string/prefLimitSpeedButtonTitle" />
 
@@ -1353,17 +1334,17 @@
                     android:title="divider"
                     android:layout="@layout/preference_category_divider"/>
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefPauseSpeedButtonDefaultValue"
                     android:key="prefPauseSpeedButton"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefPauseSpeedButtonSummary"
                     android:title="@string/prefPauseSpeedButtonTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefPauseAlternateButtonDefaultValue"
                     android:key="prefPauseAlternateButton"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefPauseAlternateButtonSummary"
                     android:title="@string/prefPauseAlternateButtonTitle" />
 
@@ -1384,13 +1365,7 @@
                     android:layout="@layout/preference_checkbox_no_icon"
                     android:summary="@string/prefPauseSpeedStepSummary"
                     android:title="@string/prefPauseSpeedStepTitle" />
-                <!--
-                                <CheckBoxPreference
-                                    android:defaultValue="@bool/prefPauseSpeedReverseDefaultValue"
-                                    android:key="prefPauseSpeedBReverse"
-                                    android:summary="@string/prefPauseSpeedReverseSummary"
-                                    android:title="@string/prefPauseSpeedReverseTitle" />
-                -->
+
             </PreferenceCategory>
         </PreferenceScreen>
 
@@ -1416,30 +1391,31 @@
                     android:summary="@string/prefConsistFollowRuleStyleSummary"
                     android:title="@string/prefConsistFollowRuleStyleTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
                     android:key="prefAlwaysUseDefaultFunctionLabels"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary2"
                     android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
                     android:key="prefSelectiveLeadSound"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSelectiveLeadSoundSummary"
                     android:title="@string/prefSelectiveLeadSoundTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                     android:key="prefSelectiveLeadSoundF1"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSelectiveLeadSoundF1Summary"
                     android:title="@string/prefSelectiveLeadSoundF1Title" />
-                <CheckBoxPreference
+
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                     android:key="prefSelectiveLeadSoundF2"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSelectiveLeadSoundF2Summary"
                     android:title="@string/prefSelectiveLeadSoundF2Title" />
 
@@ -1548,10 +1524,10 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="prefConsistLightsLongClick"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_consist_lights_on_long_press"
             android:summary="@string/prefConsistLightsLongClickSummary"
             android:title="@string/prefConsistLightsLongClickTitle" />
@@ -1586,17 +1562,17 @@
                     android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
                     android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
                     android:key="prefDisableVolumeKeys"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDisableVolumeKeysSummary"
                     android:title="@string/prefDisableVolumeKeysTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
                     android:key="prefVolumeKeysFollowLastTouchedThrottle"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
                     android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" />
             </PreferenceCategory>
@@ -1624,17 +1600,17 @@
                     android:summary="@string/prefGamePadTypeSummary"
                     android:title="@string/prefGamePadTypeTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadOnlyOneGamepadDefaultValue"
                     android:key="prefGamepadOnlyOneGamepad"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefGamepadOnlyOneGamepadSummary"
                     android:title="@string/prefGamepadOnlyOneGamepadTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
                     android:key="prefGamepadTestNow"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefGamepadTestNowSummary"
                     android:title="@string/prefGamepadTestNowTitle" />
 
@@ -1819,31 +1795,31 @@
                     android:title="@string/prefGamePadDoublePressStopTitle" />
 
                 <!--    Gamepad button preferences   -->
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
                     android:key="prefGamepadSwapForwardReverseWithScreenButtons"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
                     android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
                     android:key="prefGamepadTestEnforceTesting"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefGamepadTestEnforceTestingSummary"
                     android:title="@string/prefGamepadTestEnforceTestingTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadTestEnforceTestingSimpleDefaultValue"
                     android:key="prefGamepadTestEnforceTestingSimple"
                     android:layout="@layout/preference_checkbox_no_icon"
                     android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
                     android:title="@string/prefGamepadTestEnforceTestingSimpleTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamePadIgnoreJoystickDefaultValue"
                     android:key="prefGamePadIgnoreJoystick"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefGamePadIgnoreJoystickSummary"
                     android:title="@string/prefGamePadIgnoreJoystickTitle" />
             </PreferenceCategory>
@@ -1874,10 +1850,10 @@
                     android:summary="@string/prefEsuMc2StopButtonDelaySummary"
                     android:title="@string/prefEsuMc2StopButtonDelayTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefEsuMc2StopButtonShortPressDefaultValue"
                     android:key="prefEsuMc2StopButtonShortPress"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefEsuMc2StopButtonShortPressSummary"
                     android:title="@string/prefEsuMc2StopButtonShortPressTitle" />
             </PreferenceCategory>
@@ -1953,18 +1929,18 @@
                     android:summary="@string/prefEsuMc2ZeroTrimSummary"
                     android:title="@string/prefEsuMc2ZeroTrimTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue"
                     android:key="prefEsuMc2EndStopDirectionChange"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefEsuMc2EndStopDirectionChangeSummary"
                     android:title="@string/prefEsuMc2EndStopDirectionChangeTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefEsuMc2KnobButtonDefaultValue"
                     android:icon="?attr/ed_esu_mc2_knob_on_button"
                     android:key="prefEsuMc2KnobButtonDisplay"
-                    android:layout="@layout/preference_checkbox_icon_right"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefEsuMc2KnobButtonSummary"
                     android:title="@string/prefEsuMc2KnobButtonTitle" />
             </PreferenceCategory>
@@ -2084,30 +2060,30 @@
                     android:summary="@string/prefTtsThrottleSpeedSummary"
                     android:title="@string/prefTtsThrottleSpeedTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefTtsGamepadTestDefaultValue"
                     android:key="prefTtsGamepadTest"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefTtsGamepadTestSummary"
                     android:title="@string/prefTtsGamepadTestTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefTtsGamepadTestCompleteDefaultValue"
                     android:key="prefTtsGamepadTestComplete"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefTtsGamepadTestCompleteSummary"
                     android:title="@string/prefTtsGamepadTestCompleteTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefTtsGamepadTestKeysDefaultValue"
                     android:key="prefTtsGamepadTestKeys"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefTtsGamepadTestKeysSummary"
                     android:title="@string/prefTtsGamepadTestKeysTitle" />
             </PreferenceCategory>
@@ -2121,36 +2097,34 @@
         android:layout="@layout/preference_category_icon_left"
         android:title="@string/prefSelectLocoTitle">
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="prefStopOnRelease"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_stop_on_release"
             android:summary="@string/prefStopOnReleaseSummary"
             android:title="@string/prefStopOnReleaseTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDropOnAcquireDefaultValue"
             android:key="prefDropOnAcquire"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_drop_before_acquire"
             android:summary="@string/prefDropOnAcquireSummary"
             android:title="@string/prefDropOnAcquireTitle" />
 
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefSelectLocoWhileMovingDefaultValue"
             android:key="prefSelectLocoWhileMoving"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_select_loco_while_moving"
             android:summary="@string/prefSelectLocoWhileMovingSummary"
             android:title="@string/prefSelectLocoWhileMovingTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefSelectLocoByRadioButtonsDefaultValue"
             android:key="prefSelectLocoByRadioButtons"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_select_loco_by_radio_buttons"
             android:summary="@string/prefSelectLocoByRadioButtonsSummary"
             android:title="@string/prefSelectLocoByRadioButtonsTitle" />
@@ -2169,12 +2143,12 @@
             android:summary="@string/prefDefaultAddressLengthSummary"
             android:title="@string/prefDefaultAddressLengthTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefThrottlesLocosDefaultValue"
             android:key="prefThrottlesLocos"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_throttle_locos"
             android:summary="@string/prefThrottlesLocosSummary"
             android:title="@string/prefThrottlesLocosTitle" />
@@ -2197,26 +2171,26 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefLocoSelectHideIplsButton"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_hide_ipls_button"
             android:summary="@string/prefLocoSelectHideIplsButtonSummary"
             android:title="@string/prefLocoSelectHideIplsButtonTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefUseDispatchCommand"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_use_dispatch_command"
             android:summary="@string/prefUseDispatchCommandSummary"
             android:title="@string/prefUseDispatchCommandTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefShowDispatchButton"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_show_dispatch_button"
             android:summary="@string/prefShowDispatchButtonSummary"
             android:title="@string/prefShowDispatchButtonTitle" />
@@ -2229,20 +2203,18 @@
         android:layout="@layout/preference_category_icon_left"
         android:title="@string/prefRosterTitle">
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
             android:key="prefRosterRecentLocos"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_roster_in_recent_locos"
             android:summary="@string/prefRosterRecentLocosSummary"
             android:title="@string/prefRosterRecentLocosTitle" />
 
-        <CheckBoxPreference
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
             android:key="prefRosterRecentLocoNames"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_roster_in_recent_locos_names"
             android:summary="@string/prefRosterRecentLocoNamesSummary"
             android:title="@string/prefRosterRecentLocoNamesTitle" />
@@ -2271,10 +2243,10 @@
             android:summary="@string/prefRosterFilterSummary"
             android:title="@string/prefRosterFilterTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefRosterOwnersFilterShowOptionDefaultValue"
             android:key="prefRosterOwnersFilterShowOption"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_roster_owners_filter_show_option"
             android:summary="@string/prefRosterOwnersFilterShowOptionSummary"
             android:title="@string/prefRosterOwnersFilterShowOptionTitle" />
@@ -2283,10 +2255,10 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
             android:key="prefAlwaysUseFunctionsFromServer"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_empty"
             android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
             android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
@@ -2342,10 +2314,10 @@
                     android:summary="@string/prefDeviceSoundsMomentumSummary"
                     android:title="@string/prefDeviceSoundsMomentumTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsMomentumOverrideDefaultValue"
                     android:key="prefDeviceSoundsMomentumOverride"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDeviceSoundsMomentumOverrideSummary"
                     android:title="@string/prefDeviceSoundsMomentumOverrideTitle" />
 
@@ -2376,24 +2348,24 @@
                     android:summary="@string/prefDeviceSoundsHornVolumeSummary"
                     android:title="@string/prefDeviceSoundsHornVolumeTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsBellIsMomentaryDefaultValue"
                     android:key="prefDeviceSoundsBellIsMomentary"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDeviceSoundsBellIsMomentarySummary"
                     android:title="@string/prefDeviceSoundsBellIsMomentaryTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsF1F2ActivateBellHornDefaultValue"
                     android:key="prefDeviceSoundsF1F2ActivateBellHorn"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDeviceSoundsF1F2ActivateBellHornSummary"
                     android:title="@string/prefDeviceSoundsF1F2ActivateBellHornTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsHideMuteButtonDefaultValue"
                     android:key="prefDeviceSoundsHideMuteButton"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDeviceSoundsHideMuteButtonSummary"
                     android:title="@string/prefDeviceSoundsHideMuteButtonTitle" />
 
@@ -2437,10 +2409,10 @@
             android:summary="@string/prefAutoServerNamedConnectSummary"
             android:title="@string/prefAutoServerNamedConnectTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefConnectToFirstServer"
             android:key="prefConnectToFirstServer"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_connect_to_first_server"
             android:summary="@string/prefConnectToFirstServerSummary"
             android:title="@string/PrefConnectToFirstServerTitle" />
@@ -2449,10 +2421,10 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefHideDemoServerDefaultValue"
             android:key="prefHideDemoServer"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_hide_demo_server"
             android:summary="@string/prefHideDemoServerSummary"
             android:title="@string/prefHideDemoServerTitle" />
@@ -2501,11 +2473,11 @@
             </PreferenceCategory>
         </PreferenceScreen>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefAllowMobileDataDefaultValue"
             android:key="prefAllowMobileData"
             android:icon="?attr/ed_preferences_allow_mobile_data"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefAllowMobileDataSummary"
             android:title="@string/prefAllowMobileDataTitle" />
 
@@ -2513,11 +2485,11 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefShowWitPomDefaultValue"
             android:key="prefShowWitPom"
             android:icon="?attr/ed_preferences_show_wit_pom"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefShowWitPomSummary"
             android:title="@string/prefShowWitPomTitle" />
 
@@ -2547,17 +2519,17 @@
                     android:summary="@string/prefDccexSummary"
                     android:title="@string/prefDccexTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDccexConnectionOptionDefaultValue"
                     android:key="prefDccexConnectionOption"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDccexConnectionOptionSummary"
                     android:title="@string/prefDccexConnectionOptionTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDccexSequenceItemRequestsDefaultValue"
                     android:key="prefDccexSequenceItemRequests"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefDccexSequenceItemRequestsSummary"
                     android:title="@string/prefDccexSequenceItemRequestsTitle" />
 
@@ -2609,18 +2581,18 @@
         <!--android:summary="@string/prefHardwareSystemSummary"-->
         <!--android:title="@string/prefHardwareSystemTitle" />-->
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefTurnoutsShowThrowCloseButtonsDefaultValue"
             android:key="prefTurnoutsShowThrowCloseButtons"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_empty"
             android:summary="@string/prefTurnoutsShowThrowCloseButtonsSummary"
             android:title="@string/prefTurnoutsShowThrowCloseButtonsTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
             android:key="prefHideSystemRouteNames"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_empty"
             android:summary="@string/prefHideSystemRouteNamesSummary"
             android:title="@string/prefHideSystemRouteNamesTitle" />
@@ -2637,10 +2609,10 @@
             android:summary="@string/prefDelimiterSummary"
             android:title="@string/prefDelimiterTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefHideIfNoUserNameDefaultValue"
             android:key="prefHideIfNoUserName"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_empty"
             android:summary="@string/prefHideIfNoUserNameSummary"
             android:title="@string/prefHideIfNoUserNameTitle" />
@@ -2673,18 +2645,18 @@
             android:title="divider"
             android:layout="@layout/preference_category_divider"/>
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDccexSwapThrowCloseDefaultValue"
             android:key="prefDccexSwapThrowClose"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_dccex_swap_throw_close"
             android:summary="@string/prefDccexSwapThrowCloseSummary"
             android:title="@string/prefDccexSwapThrowCloseTitle" />
 
-        <CheckBoxPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDccexAutomationsAskDefaultValue"
             android:key="prefDccexAutomationsAsk"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_dccex_automation_ask"
             android:summary="@string/prefDccexAutomationsAskSummary"
             android:title="@string/prefDccexAutomationsAskTitle" />
@@ -2760,18 +2732,18 @@
                     android:title="divider"
                     android:layout="@layout/preference_category_divider"/>
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefKidsTimerEnableReverseDefaultValue"
                     android:key="prefKidsTimerEnableReverse"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefKidsTimerEnableReverseSummary"
                     android:title="@string/prefKidsTimerEnableReverseTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefKidsTimerButtonDefaultValue"
                     android:icon="?attr/ed_timer_button"
                     android:key="prefKidsTimerButton"
-                    android:layout="@layout/preference_checkbox_icon_right"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefKidsTimerButtonSummary"
                     android:title="@string/prefKidsTimerButtonTitle" />
 
@@ -2784,10 +2756,10 @@
                     android:summary="@string/prefKidsTimerButtonDefaultSummary"
                     android:title="@string/prefKidsTimerButtonDefaultTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefKidsTimerKioskModeDefaultValue"
                     android:key="prefKidsTimerKioskMode"
-                    android:layout="@layout/preference_checkbox_icon_right"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefKidsTimerKioskModeSummary"
                     android:title="@string/prefKidsTimerKioskModeTitle" />
 
@@ -2849,17 +2821,17 @@
                                 android:inputType="text"
                                 android:maxLines="1"/>-->
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefImportServerAutoDefaultValue"
                     android:key="prefImportServerAuto"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefImportServerAutoSummary"
                     android:title="@string/prefImportServerAutoTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                     android:key="prefImportExportLocoList"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefImportExportLocoListSummary"
                     android:title="@string/prefImportExportLocoListTitle" />
 
@@ -2881,31 +2853,31 @@
                     android:summary="@string/prefHostImportExportSummary"
                     android:title="@string/prefHostImportExportTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefShowTimeOnLogEntryDefaultValue"
                     android:key="prefShowTimeOnLogEntry"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefShowTimeOnLogEntrySummary"
                     android:title="@string/prefShowTimeOnLogEntryTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefExtendedLoggingDefaultValue"
                     android:key="prefExtendedLogging"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefExtendedLoggingSummary"
                     android:title="@string/prefExtendedLoggingTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="false"
                     android:key="prefLogOnNextStartup"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefLogOnNextStartupSummary"
                     android:title="@string/prefLogOnNextStartupTitle" />
 
-                <CheckBoxPreference
+                <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefShareFileNowDefaultValue"
                     android:key="prefShareFileNow"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefShareFileNowSummary"
                     android:title="@string/prefShareFileNowTitle" />
 
