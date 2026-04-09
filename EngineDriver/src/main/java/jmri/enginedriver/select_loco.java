@@ -2370,9 +2370,12 @@ public class select_loco extends AppCompatActivity {
         mainapp.refreshCommonOverflowMenu(overflowMenu);
 
         MenuItem menuItem = overflowMenu.findItem(R.id.advancedConsistButton);
-//        menuItem.setVisible((mainapp.isWiThrottleProtocol())
-//                && (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))));
-        if (prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue))) {
+
+        boolean showForWiThrottle = !mainapp.isDccexProtocol() && prefs.getBoolean("prefActionBarShowAdvancedConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue));
+
+        boolean showForDccex = mainapp.isDccexProtocol() && prefs.getBoolean("prefActionBarShowDccexConsistButton",mainapp.getResources().getBoolean(R.bool.prefActionBarShowAdvancedConsistButtonDefaultValue));
+
+        if ( showForWiThrottle || showForDccex) {
             menuItem.setVisible(true);
             TypedValue outValue = new TypedValue();
             if (mainapp.isDccexProtocol()) {

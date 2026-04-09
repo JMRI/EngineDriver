@@ -126,6 +126,12 @@
     <attr name="ed_preferences_screen_orientation" format="reference" />
     <attr name="ed_preferences_address_instead_of_name" format="reference" />
     <attr name="ed_preferences_theme" format="reference" />
+    <attr name="ed_preferences_password" format="reference" />
+    <attr name="ed_preferences_initial_web_page" format="reference" />
+    <attr name="ed_preferences_dccex_automation_ask" format="reference" />
+    <attr name="ed_preferences_decrease_loco_number_height" format="reference" />
+    <attr name="ed_preferences_roster_in_recent_locos" format="reference" />
+    <attr name="ed_preferences_roster_in_recent_locos_names" format="reference" />
     <attr name="ed_preferences_roster_owners_filter_show_option" format="reference" />
     <attr name="ed_preferences_use_dispatch_command" format="reference" />
     <attr name="ed_preferences_show_dispatch_button" format="reference" />

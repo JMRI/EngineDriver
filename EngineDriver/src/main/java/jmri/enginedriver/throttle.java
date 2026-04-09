@@ -1632,6 +1632,12 @@ public class throttle extends AppCompatActivity implements
         }
         isSemiRealisticThrottle = false;
 
+        try {
+            mainapp.fastClockFormat = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefClockDisplayType", "0")));
+        } catch (NumberFormatException e) {
+            mainapp.fastClockFormat = 0;
+        }
+
         maxThrottlePcnt = threaded_application.getIntPrefValue(prefs, "prefMaximumThrottle", getApplicationContext().getResources().getString(R.string.prefMaximumThrottleDefaultValue));
         maxThrottle = (int) Math.round(MAX_SPEED_VAL_WIT * (0.01 * maxThrottlePcnt)); // convert from percent
 
