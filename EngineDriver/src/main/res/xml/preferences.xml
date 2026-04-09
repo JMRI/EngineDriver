@@ -983,7 +983,7 @@
             android:entryValues="@array/DisplayClockEntryValues"
             android:icon="?attr/ed_clock_icon"
             android:key="prefClockDisplayType"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
 
@@ -1082,6 +1082,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowServerDescriptionDefaultValue"
             android:key="prefActionBarShowServerDescription"
+            android:icon="?attr/ed_preferences_empty"
             android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowServerDescriptionSummary"
             android:title="@string/prefActionBarShowServerDescriptionTitle" />
@@ -1120,7 +1121,7 @@
             android:defaultValue="@bool/prefActionBarShowTurnoutsButtonDefaultValue"
             android:icon="?attr/ed_turnouts_button"
             android:key="prefActionBarShowTurnoutsButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowTurnoutsButtonSummary"
             android:title="@string/prefActionBarShowTurnoutsButtonTitle" />
 
@@ -1136,7 +1137,7 @@
             android:defaultValue="@bool/prefActionBarShowWebButtonDefaultValue"
             android:icon="?attr/ed_web_button"
             android:key="prefActionBarShowWebButton"
-            android:layout="@layout/preference_checkbox_icon_right"
+            android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowWebButtonSummary"
             android:title="@string/prefActionBarShowWebButtonTitle" />
 
