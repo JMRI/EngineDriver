@@ -17,6 +17,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
     android:paddingEnd="?android:attr/scrollbarSize"
@@ -84,5 +85,8 @@
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchWidget"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:thumbTint="@color/reusable_switch_thumb_color_states"
+        app:trackTint="@color/reusable_switch_track_color_states"
+        android:elevation="8dp"  />
 </LinearLayout>

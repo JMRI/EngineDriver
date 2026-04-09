@@ -165,6 +165,14 @@
         <item name="colorControlActivated">@color/neon_green_light</item>
         <item name="edit_text_underline_activated">@color/neon_green_light</item>
 
+        <!-- switch colors -->
+        <item name="reusable_switch_thumb_enabled_checked_color">@color/neon_green_light</item>
+        <item name="reusable_switch_thumb_enabled_unchecked_color">@color/grey</item>
+        <item name="reusable_switch_thumb_disabled_checked_color">@color/grey_light_50</item>
+        <item name="reusable_switch_thumb_disabled_unchecked_color">@color/transparent</item>
+        <item name="reusable_switch_track_enabled_color">@color/grey_light_50</item>
+        <item name="reusable_switch_track_disabled_color">@color/grey_light_25</item>
+
     </style>
 
     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
