@@ -380,7 +380,10 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                     "");
         }
 
-        threaded_application.showCustomToast(ConsistLightsEdit.this, getResources().getString(R.string.consistLights_help), Toast.LENGTH_LONG, 4, true);
+        if (!mainapp.shownToastConsistLightsEdit) {
+            threaded_application.showCustomToast(ConsistLightsEdit.this, getResources().getString(R.string.consistLights_help), Toast.LENGTH_LONG, 4, true);
+            mainapp.shownToastConsistLightsEdit = true;
+        }
 
     }  // end onCreate()
 

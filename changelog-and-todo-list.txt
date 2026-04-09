@@ -1,4 +1,6 @@
 **Version 2.43.226
+  * Bug Fixes
+     * Clock not displaying initially, and not updating consistently.
   * Other
      * More cleanup of some of the preferences.
      * Additional glyphs in the preferences.

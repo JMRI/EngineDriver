@@ -379,6 +379,7 @@ public class threaded_application extends Application {
     public boolean shownToastRecentLocos = false;
     public boolean shownToastRoster = false;
     public boolean shownToastConsistEdit = false;
+    public boolean shownToastConsistLightsEdit = false;
 
     public boolean hasRosterTurnouts = false;
     public boolean shownRosterTurnouts = false;

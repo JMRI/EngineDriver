@@ -346,10 +346,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         refreshConsistLists();
         result = RESULT_OK;
 
-        if (!mainapp.shownToastConsistEdit) {
-            mainapp.safeToastInstructional(R.string.toastConsistEditHelp, Toast.LENGTH_LONG);
-            mainapp.shownToastConsistEdit = true;
-        }
+//        if (!mainapp.shownToastConsistEdit) {
+//            mainapp.safeToastInstructional(R.string.toastConsistEditHelp, Toast.LENGTH_LONG);
+//            mainapp.shownToastConsistEdit = true;
+//        }
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -381,7 +381,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     "");
         }
 
-        threaded_application.showCustomToast(ConsistEdit.this, getResources().getString(R.string.consist_help), Toast.LENGTH_LONG, 4, true);
+        if (!mainapp.shownToastConsistEdit) {
+            threaded_application.showCustomToast(ConsistEdit.this, getResources().getString(R.string.consist_help), Toast.LENGTH_LONG, 4, true);
+            mainapp.shownToastConsistEdit = true;
+        }
 
     } // end onCreate
 
