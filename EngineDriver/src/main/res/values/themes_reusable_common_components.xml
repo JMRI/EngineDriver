@@ -218,7 +218,7 @@
         <item name="ed_preferences_password">@drawable/glyph_preferences_password</item>
         <item name="ed_preferences_initial_web_page">@drawable/glyph_preferences_initial_web_page</item>
         <item name="ed_preferences_dccex_automation_ask">@drawable/glyph_preferences_dccex_automation_ask</item>
-        <item name="ed_preferences_decrease_loco_number_height">@drawable/glyph_preferences_decrease_loco_number_height</item>
+        <item name="ed_preferences_decrease_loco_number_height">@drawable/glyph_preferences_decrease_loco_number_height_states</item>
         <item name="ed_preferences_roster_in_recent_locos">@drawable/glyph_preferences_roster_in_recent_locos</item>
         <item name="ed_preferences_roster_in_recent_locos_names">@drawable/glyph_preferences_roster_in_recent_locos_names</item>
         <item name="ed_preferences_roster_owners_filter_show_option">@drawable/glyph_preferences_roster_owners_filter_show_option</item>
@@ -243,6 +243,11 @@
         <item name="ed_preferences_show_wit_pom">@drawable/glyph_preferences_show_wit_pom_states</item>
         <item name="ed_preferences_dccex_swap_throw_close">@drawable/glyph_preferences_dccex_swap_throw_close</item>
         <item name="ed_preferences_timer">@drawable/glyph_preferences_timer</item>
+        <item name="ed_preferences_filter_by_location">@drawable/glyph_preferences_filter_by_location</item>
+        <item name="ed_preferences_always_show_throw_close">@drawable/glyph_preferences_always_show_throw_close</item>
+        <item name="ed_preferences_hide_system_route_names">@drawable/glyph_preferences_hide_system_route_names</item>
+        <item name="ed_preferences_always_use_functions_from_server">@drawable/glyph_preferences_always_use_functions_from_server</item>
+        <item name="ed_preferences_show_server_description">@drawable/glyph_preferences_show_server_description</item>
         <item name="ed_preferences_stop_on_background">@drawable/glyph_preferences_stop_on_background</item>
         <item name="ed_preferences_dccex_estop_pause_resume">@drawable/glyph_preferences_dccex_estop_pause_resume_states</item>
         <item name="ed_preferences_stop_on_release">@drawable/glyph_preferences_stop_on_release</item>

@@ -86,6 +86,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwipeThroughWebDefaultValue"
                     android:key="prefSwipeThroughWeb"
+                    android:icon="?attr/ed_preferences_swipe_through_web"
                     android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSwipeThroughWebSummary"
                     android:title="@string/prefSwipeThroughWebTitle" />
@@ -93,6 +94,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
                     android:key="prefSwipeThroughTurnouts"
+                    android:icon="?attr/ed_preferences_swipe_through_turnouts"
                     android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSwipeThroughTurnoutsSummary"
                     android:title="@string/prefSwipeThroughTurnoutsTitle" />
@@ -100,6 +102,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
                     android:key="prefSwipeThroughRoutes"
+                    android:icon="?attr/ed_preferences_swipe_through_routes"
                     android:layout="@layout/preference_switch_icon_left_highlight"
                     android:summary="@string/prefSwipeThroughRoutesSummary"
                     android:title="@string/prefSwipeThroughRoutesTitle" />
@@ -120,7 +123,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSwipeSpeedChangeStepTitle"
                     android:key="prefSwipeSpeedChangeStep"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_checkbox_icon_left_highlight"
                     android:summary="@string/prefSwipeSpeedChangeStepSummary"
                     android:title="@string/prefSwipeSpeedChangeStepTitle" />
 
@@ -1082,7 +1085,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowServerDescriptionDefaultValue"
             android:key="prefActionBarShowServerDescription"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_show_server_description"
             android:layout="@layout/preference_switch_icon_left_highlight"
             android:summary="@string/prefActionBarShowServerDescriptionSummary"
             android:title="@string/prefActionBarShowServerDescriptionTitle" />
@@ -2259,7 +2262,7 @@
             android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
             android:key="prefAlwaysUseFunctionsFromServer"
             android:layout="@layout/preference_switch_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_always_use_functions_from_server"
             android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
             android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
 
@@ -2585,7 +2588,7 @@
             android:defaultValue="@bool/prefTurnoutsShowThrowCloseButtonsDefaultValue"
             android:key="prefTurnoutsShowThrowCloseButtons"
             android:layout="@layout/preference_switch_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_always_show_throw_close"
             android:summary="@string/prefTurnoutsShowThrowCloseButtonsSummary"
             android:title="@string/prefTurnoutsShowThrowCloseButtonsTitle" />
 
@@ -2593,21 +2596,9 @@
             android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
             android:key="prefHideSystemRouteNames"
             android:layout="@layout/preference_switch_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_hide_system_route_names"
             android:summary="@string/prefHideSystemRouteNamesSummary"
             android:title="@string/prefHideSystemRouteNamesTitle" />
-
-        <EditTextPreference
-            android:defaultValue="@string/prefDelimiterDefaultValue"
-            android:dialogTitle="@string/prefDelimiterTitle"
-            android:inputType="text"
-            android:key="prefDelimiter"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:summary="@string/prefDelimiterSummary"
-            android:title="@string/prefDelimiterTitle" />
 
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefHideIfNoUserNameDefaultValue"
@@ -2640,6 +2631,18 @@
             android:icon="?attr/ed_preferences_sort_order_routes"
             android:summary="@string/prefSortOrderRoutesSummary"
             android:title="@string/prefSortOrderRoutesTitle" />
+
+        <EditTextPreference
+            android:defaultValue="@string/prefDelimiterDefaultValue"
+            android:dialogTitle="@string/prefDelimiterTitle"
+            android:inputType="text"
+            android:key="prefDelimiter"
+            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:icon="?attr/ed_preferences_filter_by_location"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:summary="@string/prefDelimiterSummary"
+            android:title="@string/prefDelimiterTitle" />
 
         <PreferenceCategory
             android:title="divider"

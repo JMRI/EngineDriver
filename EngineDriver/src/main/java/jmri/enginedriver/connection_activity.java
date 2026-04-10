@@ -243,15 +243,16 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private enum server_list_type {DISCOVERED_SERVER, RECENT_CONNECTION}
 
-    private class connect_item implements AdapterView.OnItemClickListener {
+    private class ConnectItemListener implements AdapterView.OnItemClickListener {
         final server_list_type server_type;
 
-        connect_item(server_list_type new_type) {
+        ConnectItemListener(server_list_type new_type) {
             server_type = new_type;
         }
 
         //When an item is clicked, connect to the given IP address and port.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            threaded_application.clearCustomToastPairList();
             mainapp.exitDoubleBackButtonInitiated = 0;
             if (connectionsListSwipeDetector.swipeDetected()) { // check for swipe
                 if (connectionsListSwipeDetector.getAction() == SwipeDetector.Action.LR) {
@@ -438,7 +439,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         boolean instructional = false;
                         if (bundle.containsKey(alert_bundle_tag_type.INSTRUCTIONAL))
                             instructional = bundle.getBoolean(alert_bundle_tag_type.INSTRUCTIONAL);
-                        threaded_application.showCustomToast(connection_activity.this,"", message, duration, 4, instructional);
+                        threaded_application.showCustomToast(connection_activity.this, message, duration, 5, instructional);
                     }
                     break;
 
@@ -621,7 +622,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label});
         ListView discover_list = findViewById(R.id.discovery_list);
         discover_list.setAdapter(discovery_list_adapter);
-        discover_list.setOnItemClickListener(new connect_item(server_list_type.DISCOVERED_SERVER));
+        discover_list.setOnItemClickListener(new ConnectItemListener(server_list_type.DISCOVERED_SERVER));
 
         importExportConnectionList = new ImportExportConnectionList(getApplicationContext(),prefs);
         //Set up a list adapter to allow adding the list of recent connections to the UI.
@@ -632,7 +633,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         ListView conn_list = findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
         conn_list.setOnTouchListener(connectionsListSwipeDetector = new SwipeDetector());
-        conn_list.setOnItemClickListener(new connect_item(server_list_type.RECENT_CONNECTION));
+        conn_list.setOnItemClickListener(new ConnectItemListener(server_list_type.RECENT_CONNECTION));
 
         // suppress popup keyboard until EditText is touched
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -1289,12 +1290,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                 } else {
                     if (((importExportConnectionList.foundDemoHost)
                             && (importExportConnectionList.connections_list.size() > 1)) || (!importExportConnectionList.connections_list.isEmpty())) {
-                        // use connToast so onPause can cancel toast if connection is made
-                        if (!mainapp.prefHideInstructionalToasts) {
-                            connToast.setText(getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp));
-                            connToast.setDuration(LENGTH_LONG);
-                            connToast.show();
-                        }
+                        threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG, 5, true, true);
                     }
                 }
             }
