@@ -3775,13 +3775,21 @@ public class threaded_application extends Application {
     // Retrieved 2026-02-17, License - CC BY-SA 3.0
     // title is not used
     public static void showCustomToast(final Activity activity, String message, int length, int yOffsetSixthOfScreen) {
-        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, false);
+        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, false, false);
     }
     public static void showCustomToast(final Activity activity, String message, int length, int yOffsetSixthOfScreen, boolean instructional) {
-        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, instructional);
+        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, instructional, false);
     }
-    public static void showCustomToast(final Activity activity,  String title, String message, int length, int yOffsetSixthOfScreen, boolean instructional) {
-        if (activity == null || activity.isFinishing() || activity.isDestroyed()) return;
+    public static void showCustomToast(final Activity activity, String message, int length, int yOffsetSixthOfScreen, boolean instructional, boolean clearPrevious) {
+        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, instructional, clearPrevious);
+    }
+    public static void showCustomToast(final Activity activity, String title, String message, int length, int yOffsetSixthOfScreen, boolean instructional) {
+        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, instructional, false);
+    }
+    public static void showCustomToast(final Activity activity,  String title, String message, int length, int yOffsetSixthOfScreen, boolean instructional, boolean clearPrevious) {
+
+        if (activity == null || activity.isFinishing() || activity.isDestroyed()
+        || (message.isEmpty()) ) return;
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         boolean prefHideInstructionalToasts = sharedPreferences.getBoolean("prefHideInstructionalToasts", false);
@@ -3791,18 +3799,24 @@ public class threaded_application extends Application {
         double endTime = System.currentTimeMillis() + durationMs;
 
         StringBuilder tempToastText = new StringBuilder();
-        synchronized(customToastPairList) {
-            Iterator<Pair<String, Double>> it = customToastPairList.iterator();
-            while (it.hasNext()) {
-                Pair<String, Double> pair = it.next();
-                if ((System.currentTimeMillis() >= pair.second) || (pair.first.equals(message)) ) {
-                    it.remove(); // This is safe during iteration
-                    Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): removing: " + pair.first);
+        if (!clearPrevious) {
+            synchronized (customToastPairList) {
+                Iterator<Pair<String, Double>> it = customToastPairList.iterator();
+                while (it.hasNext()) {
+                    Pair<String, Double> pair = it.next();
+                    if ((System.currentTimeMillis() >= pair.second) || (pair.first.equals(message))) {
+                        it.remove(); // This is safe during iteration
+                        Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): removing: " + pair.first);
 
-                } else {
-                    tempToastText.append(pair.first).append("\n");
+                    } else {
+                        tempToastText.append(pair.first).append("\n");
+                    }
                 }
+                customToastPairList.add(new Pair(message, endTime));
+                Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): adding: " + message);
             }
+        } else {
+            clearCustomToastPairList();
             customToastPairList.add(new Pair(message, endTime));
             Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): adding: " + message);
         }
@@ -3820,7 +3834,6 @@ public class threaded_application extends Application {
 
         int yOffset = height * yOffsetSixthOfScreen / 6;
 
-
         // set the custom display
         if (!title.isEmpty()) {
             ((TextView) layout.findViewById(R.id.title)).setText(title);
@@ -3834,7 +3847,7 @@ public class threaded_application extends Application {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT, true);
         toastPopupWindow.setWidth(width-40);
-        toastPopupWindow.setFocusable(true);
+        toastPopupWindow.setFocusable(false);
 
         // handle toastPopupWindow click event
         layout.setOnClickListener(new View.OnClickListener() {
@@ -3872,6 +3885,15 @@ public class threaded_application extends Application {
                     }
                 }
             });
+        }
+    }
+
+    public static void clearCustomToastPairList() {
+        Iterator<Pair<String, Double>> it = customToastPairList.iterator();
+        while (it.hasNext()) {
+            Pair<String, Double> pair = it.next();
+            it.remove(); // This is safe during iteration
+            Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): removing: " + pair.first);
         }
     }
 

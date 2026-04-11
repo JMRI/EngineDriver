@@ -153,6 +153,14 @@
     <attr name="ed_preferences_show_wit_pom" format="reference" />
     <attr name="ed_preferences_dccex_swap_throw_close" format="reference" />
     <attr name="ed_preferences_timer" format="reference" />
+    <attr name="ed_preferences_filter_by_location" format="reference" />
+    <attr name="ed_preferences_always_show_throw_close" format="reference" />
+    <attr name="ed_preferences_hide_system_route_names" format="reference" />
+    <attr name="ed_preferences_always_use_functions_from_server" format="reference" />
+    <attr name="ed_preferences_swipe_through_web" format="reference" />
+    <attr name="ed_preferences_swipe_through_routes" format="reference" />
+    <attr name="ed_preferences_swipe_through_turnouts" format="reference" />
+    <attr name="ed_preferences_show_server_description" format="reference" />
     <attr name="ed_preferences_stop_on_background" format="reference" />
     <attr name="ed_preferences_dccex_estop_pause_resume" format="reference" />
     <attr name="ed_preferences_estop_on_long_press" format="reference" />
