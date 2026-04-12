@@ -627,6 +627,7 @@
     <string name="prefRosterOwnersFilterShowOptionSummary">Zeigen Sie eine Option zum Filtern des Dienstplans nach Besitzer an</string>
     <string name="prefRosterOwnersFilterDefaultOwner">Alle</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Zeigt eine Textliste mit Methoden anstelle von Bildschaltflächen an</string>
+    <string name="prefShowAdditionalButtonTextSummary">Zusätzlichen Text unterhalb der Bildschaltflächen anzeigen. (Nicht für kleine Bildschirme empfohlen)</string>
     <string name="LocoSelectMethodAddress">DCC Adresse</string>
     <string name="LocoSelectMethodRoster">Lokverzeichnis</string>
     <string name="LocoSelectMethodRecent">Kürzlich verwendete</string>
@@ -658,6 +659,7 @@
 
     <string name="prefActionBarShowRoutesButtonTitle">Schaltfläche „Routen“?</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">Schaltfläche „Erweiterte Konsistenz (CV19)“?</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">DCC-EX In Command Station Conseach-Taste?</string>
     <string name="ConsistEditLabelLead">FÜHREN</string>
     <string name="ConsistEditLabelTrail">WEG</string>
     <string name="prefConsistFollowRuleStyleTitle">Consist-Funktionen - Folgen Sie dem Regelstil</string>
@@ -1248,5 +1250,7 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX – Weichen stellen/schließen</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX – Not-Aus-Pause/Fortsetzen verwenden</string>
     <string name="prefConnectAdvancedPreferencesTitle">Erweiterte Verbindungseinstellungen</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">Schaltfläche in der Aktionsleiste anzeigen, um den DCC-EX-In-Command-Station-Kontrollbildschirm zu öffnen</string>
+    <string name="prefShowAdditionalButtonTextTitle">Zusätzlichen Schaltflächentext anzeigen?</string>
 
 </resources>

@@ -647,6 +647,7 @@
 
     <string name="prefSelectLocoByRadioButtonsTitle">Seleccionar apariencia del método loco</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Mostrar una lista de texto de métodos en lugar de botones de imagen</string>
+    <string name="prefShowAdditionalButtonTextSummary">Mostrar texto adicional debajo de los botones de imagen. (No recomendado para pantallas pequeñas)</string>
     <string name="LocoSelectMethodAddress">Dirección DCC</string>
     <string name="LocoSelectMethodRoster">Flota</string>
     <string name="LocoSelectMethodRecent">Reciente</string>
@@ -695,6 +696,7 @@
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">¿Botón de rutas?</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">¿Botón de consistencia avanzada (CV19)?</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">¿Botón DCC-EX en la estación de mando?</string>
     <string name="ConsistEditLabelLead">DELANTERA</string>
     <string name="ConsistEditLabelTrail">TRASERA</string>
 
@@ -1240,6 +1242,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Retardo de pulsación larga del botón de parada</string>
     <string name="prefStopButtonLongPressDelaySummary">¿Cuántos milisegundos constituye una pulsación prolongada de los botones de parada para iniciar EStop?</string>
 
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirmar</string>
     <string name="dccexAutomationTitle">Dirección de locomotora para la automatización EXRAIL</string>
     <string name="autoServerConnectTitle">Conexión automática al servidor</string>
     <string name="autoServerConnectLabel">Nombre del servidor</string>
@@ -1288,5 +1291,7 @@
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar parada de emergencia, pausa/reanudación</string>
     <string name="prefRosterTitle">Preferencias de la lista</string>
     <string name="prefConnectAdvancedPreferencesTitle">Preferencias avanzadas de conexión</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">Mostrar botón en la barra de acciones para abrir la pantalla de la estación de comandos DCC-EX.</string>
+    <string name="prefShowAdditionalButtonTextTitle">¿Mostrar texto adicional del botón?</string>
 
 </resources>

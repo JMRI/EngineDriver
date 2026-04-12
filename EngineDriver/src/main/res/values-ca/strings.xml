@@ -654,6 +654,7 @@
     <string name="prefRosterOwnersFilterDefaultOwner">Tots</string>
     <string name="prefSelectLocoByRadioButtonsTitle">Seleccioneu l\'aspecte del mètode locomotor</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Mostra una llista de text de mètodes en lloc de botons d\'imatge</string>
+    <string name="prefShowAdditionalButtonTextSummary">Mostra text addicional sota els botons d\'imatge. (No recomanat per a pantalles petites)</string>
     <string name="LocoSelectMethodAddress">Adreça DCC</string>
     <string name="LocoSelectMethodRoster">Flota</string>
     <string name="LocoSelectMethodRecent">Recent</string>
@@ -701,6 +702,7 @@
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">Botó de rutes?</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">Botó Consist avançat (CV19)?</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">DCC-EX A l\'estació de comandament Botó Consist?</string>
     <string name="ConsistEditLabelLead">DAVANTERA</string>
     <string name="ConsistEditLabelTrail">DEL DARRERA</string>
 
@@ -1254,6 +1256,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Botó Atura Premsa llarga Retard</string>
     <string name="prefStopButtonLongPressDelaySummary">Quants mil·lisegons constitueixen una pressió llarga dels botons Atura per iniciar EStop</string>
 
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirma</string>
     <string name="dccexAutomationTitle">Adreça de la locomotora per a l\'automatisme EXRAIL</string>
     <string name="autoServerConnectTitle">Connexió automàtica del servidor</string>
     <string name="autoServerConnectLabel">Nom del servidor</string>
@@ -1301,5 +1304,7 @@
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Ús de la pausa/reprenguda d\'aturada d\'emergència</string>
     <string name="prefRosterTitle">Preferències de la llista</string>
     <string name="prefConnectAdvancedPreferencesTitle">Preferències de connexió avançada</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">Mostra el botó a la barra d\'accions per obrir la pantalla DCC-EX In Command Station Consist</string>
+    <string name="prefShowAdditionalButtonTextTitle">Mostra el text addicional del botó?</string>
 
 </resources>

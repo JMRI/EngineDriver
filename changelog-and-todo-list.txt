@@ -11,6 +11,7 @@
      * More cleanup of some of the preferences.
      * Additional glyphs in the preferences.
      * Separate the CV19 button control for the DCC-EX In Command Station Consist button control.
+     * Additional Google translations.
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.

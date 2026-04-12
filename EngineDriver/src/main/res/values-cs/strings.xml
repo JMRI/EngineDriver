@@ -381,6 +381,7 @@
     <string name="prefRosterOwnersFilterDefaultOwner">Všechno</string>
     <string name="prefSelectLocoByRadioButtonsTitle">Vyberte vzhled metody lokomotivy</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Namísto obrázkových tlačítek zobrazit textový seznam metod</string>
+    <string name="prefShowAdditionalButtonTextSummary">Zobrazit další text pod tlačítky obrázků. (Nedoporučuje se pro malé obrazovky)</string>
     <string name="LocoSelectMethodAddress">DCC adresa</string>
     <string name="LocoSelectMethodRoster">Evidence serveru</string>
     <string name="LocoSelectMethodRecent">Nedávné Lokomotivy</string>
@@ -832,6 +833,7 @@
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">Tlačítko Trasy?</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">Tlačítko Pokročilá sestava (CV19)?</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">DCC-EX v velitelské stanici obsahuje tlačítko?</string>
     <string name="ConsistEditLabelLead">PŘÍPŘEŽ</string>
     <string name="ConsistEditLabelTrail">POSTRK</string>
 
@@ -1339,6 +1341,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Tlačítko Stop Dlouhé stisknutí Zpoždění</string>
     <string name="prefStopButtonLongPressDelaySummary">Kolik milisekund představuje dlouhé stisknutí tlačítek Stop pro zahájení EStop</string>
 
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">Potvrdit</string>
     <string name="dccexAutomationTitle">Adresa lokomotivy pro EXRAIL Automatio</string>
     <string name="autoServerConnectTitle">Automatické připojení k serveru</string>
     <string name="autoServerConnectLabel">Název serveru</string>
@@ -1386,5 +1389,7 @@
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Použití nouzového zastavení, pozastavení/obnovení</string>
     <string name="prefRosterTitle">Předvolby soupisky</string>
     <string name="prefConnectAdvancedPreferencesTitle">Pokročilé nastavení připojení</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">Zobrazit tlačítko v panelu akcí pro otevření obrazovky složení velitelské stanice DCC-EX</string>
+    <string name="prefShowAdditionalButtonTextTitle">Zobrazit další text tlačítka?</string>
 
 </resources>
