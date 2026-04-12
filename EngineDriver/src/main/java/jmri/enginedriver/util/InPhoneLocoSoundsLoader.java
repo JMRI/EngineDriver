@@ -25,6 +25,7 @@ import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import java.util.Locale;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.activity_id_type;
+import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.sounds_type;
@@ -261,7 +263,13 @@ public class InPhoneLocoSoundsLoader {
          }
       }
       if (soundsLoading) {
-         mainapp.safeToast(R.string.toastInitialisingSounds, Toast.LENGTH_LONG);
+//         mainapp.safeToast(R.string.toastInitialisingSounds, Toast.LENGTH_LONG);
+
+         Bundle bundle = new Bundle();
+         bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.toastInitialisingSounds));
+         bundle.putInt(alert_bundle_tag_type.DURATION, Toast.LENGTH_SHORT);
+         bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, false);
+         mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
       }
       return true;   // true = sounds were reloaded
    } // end loadSounds()

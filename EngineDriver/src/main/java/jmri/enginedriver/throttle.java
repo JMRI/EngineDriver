@@ -7854,11 +7854,10 @@ public class throttle extends AppCompatActivity implements
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
         Log.d(threaded_application.applicationName, activityName + ": forceRestartApp() ");
-        Message msg = Message.obtain();
-        msg.what = message_type.RESTART_APP;
-        msg.arg1 = forcedRestartReason;
-//        mainapp.comm_msg_handler.sendMessage(msg);
-        mainapp.commBundleMessageHandler.sendMessage(msg);
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(alert_bundle_tag_type.RESTART_REASON, forcedRestartReason);
+        mainapp.alertCommHandlerWithBundle(message_type.RESTART_APP, bundle);
     }
 
     @SuppressLint("ApplySharedPref")

@@ -173,7 +173,6 @@ public class comm_handler extends Handler {
                if (comm_thread.socketWiT.connect()) {
                   if (mainapp.isDccexProtocol()) {
                      if (!mainapp.prefHideInstructionalToasts) {
-//                        mainapp.safeToast(R.string.usingProtocolDCCEX, Toast.LENGTH_SHORT);
 
                         bundle = new Bundle();
                         bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.usingProtocolDCCEX));

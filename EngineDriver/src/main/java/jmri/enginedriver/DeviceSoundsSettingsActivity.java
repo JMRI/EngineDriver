@@ -682,8 +682,12 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
             if (volumePercent <= 20) {
                 toastMessage += "\n" + getApplicationContext().getResources().getString(R.string.deviceSoundsVolumeWarning, volumePercent);
                 instructional = false;
+                mainapp.shownToastDeviceSoundsSettings = false;
             }
-            threaded_application.showCustomToast(DeviceSoundsSettingsActivity.this, toastMessage, LENGTH_LONG, 4, instructional);
+            if (!mainapp.shownToastDeviceSoundsSettings) {
+                threaded_application.showCustomToast(DeviceSoundsSettingsActivity.this, toastMessage, LENGTH_LONG, 4, instructional);
+                mainapp.shownToastDeviceSoundsSettings = true;
+            }
         } else {
             Log.d(threaded_application.applicationName, activityName + ": VolumeInfo(displayRingerVolume) :AudioManager not available");
         }

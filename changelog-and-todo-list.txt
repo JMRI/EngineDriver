@@ -3,6 +3,7 @@
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)"
  * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
+     * Layout swap button was not refreshing the screen.
   * Other
      * Reworking of the custom toast popup.
      * Reworking of most of the images in the intro/wizard
