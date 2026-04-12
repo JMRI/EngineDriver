@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/prefThrottleScreenTypeTitle"
+        android:textColor="@color/solidWhite"
         android:textSize="24sp"
         android:textStyle="bold"
         tools:ignore="RtlHardcoded, TextContrastCheck" />
@@ -234,6 +235,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/intro_throttle_type_tablet_left_two_function_columns"
+                    android:gravity="center|left"
+                    android:padding="5dp"
+                    android:text="@string/prefThrottleScreenTypeDefault"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif-condensed"
+                    tools:ignore="RtlHardcoded" />
+
+                <RadioButton
+                    android:id="@+id/intro_throttle_type_semi_realistic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/intro_throttle_type_semi_realistic"
                     android:gravity="center|left"
                     android:padding="5dp"
                     android:text="@string/prefThrottleScreenTypeDefault"

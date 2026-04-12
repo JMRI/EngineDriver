@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/introButtonsTitle"
+        android:textColor="@color/solidWhite"
         android:textSize="24sp"
         android:fontFamily="sans-serif-condensed"
         android:textStyle="bold"

@@ -304,6 +304,9 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //        showSkipButton(false);
 //        setProgressButtonEnabled(true);
 
+        // disable swiping
+        setSwipeLock(true);
+
         // Turn vibration on and set intensity.
         setVibrate(false);
         //setVibrateIntensity(30);
