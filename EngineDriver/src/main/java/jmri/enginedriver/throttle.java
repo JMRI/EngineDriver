@@ -2572,6 +2572,7 @@ public class throttle extends AppCompatActivity implements
 
     // indicate direction using the button pressed state
     void showDirectionIndication(int whichThrottle, int direction) {
+        if (whichThrottle > mainapp.maxThrottlesCurrentScreen) return;
 
         boolean setLeftDirectionButtonEnabled;
         if (direction == 0) {  //0=reverse 1=forward

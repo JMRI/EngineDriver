@@ -830,6 +830,8 @@ public class throttle_switching_left_or_right extends throttle {
     // update speed slider if didn't just send a speed update to WiT
     @Override
     void speedUpdateWiT(int whichThrottle, int speedWiT) {
+        if (whichThrottle > mainapp.maxThrottlesCurrentScreen) return;
+
         super.speedUpdateWiT(whichThrottle,speedWiT);
 
         if (speedWiT < 0)

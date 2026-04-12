@@ -397,9 +397,9 @@
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary">Display the default Function Labels instead of labels from roster entries</string>
     <string name="prefAlwaysUseDefaultFunctionLabelsSummary2">Display the default Function Labels instead of labels from roster entries. This MUST be enabled to use the \'Special\' Follow Rule Styles.</string>
 
-    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override WiThrottle Function Latching</string>
+    <string name="prefOverrideWiThrottlesFunctionLatchingTitle">Override WiThrottle Function Latching?</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">Use Engine Driver\'s default latching for non-roster locos, rather than the defaults provided by WiThrottle</string>
-    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use Defaults for Roster Entries With No Functions</string>
+    <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use Defaults for Roster Entries With No Functions?</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsSummary">Use Engine Driver\'s default Functions for roster entries with no function labels</string>
 
     <string name="prefDecreaseLocoNumberHeightTitle">Decrease Loco No. height?</string>
@@ -515,7 +515,7 @@
 
     <string name="prefSelectLocoByRadioButtonsTitle">Select loco method appearance</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Show a text list of methods instead of image buttons</string>
-    <string name="prefShowAdditionalButtonTextTitle">Show Additional Button Text</string>
+    <string name="prefShowAdditionalButtonTextTitle">Show Additional Button Text?</string>
     <string name="prefShowAdditionalButtonTextSummary">Show additional text below image buttons. (Not recommended for small screens)</string>
 
     <!--    <string name="LocoSelectMethodQuestion">Method: </string>-->
@@ -602,7 +602,7 @@
     <string name="prefVerticalStopButtonMarginSummary">Number of pixels to offset margins of the stop button from the speed buttons and bottom of screen.</string>
     <string name="prefVerticalStopButtonMarginDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
 
-    <string name="prefStopButtonEStopOnLongPressTitle">EStop On Stop Long Press</string>
+    <string name="prefStopButtonEStopOnLongPressTitle">EStop On Stop Long Press?</string>
     <string name="prefStopButtonEStopOnLongPressSummary">Emergency Stop all locos on the current throttle on a long press of the \'Stop\' button</string>
     <string name="prefStopButtonLongPressDelayTitle">Stop button Long Press Delay</string>
     <string name="prefStopButtonLongPressDelaySummary">How many milliseconds constitutes a long press for the Stop buttons, to initiate EStop</string>
@@ -663,7 +663,7 @@
     <string name="prefShowAdvancedPreferencesTitle">Show Advanced Preferences?</string>
     <string name="prefShowAdvancedPreferencesSummary">Show or hide less common preferences</string>
 
-    <string name="prefConsistLightsLongClickTitle">Control consist Lights on long press</string>
+    <string name="prefConsistLightsLongClickTitle">Control consist Lights on long press?</string>
     <string name="prefConsistLightsLongClickSummary">Change the Lights of the individual locos in a Consist with a long press on the Loco Select button.</string>
     <string name="consistLights_help">Tap on a Loco to toggle the Lights for that Loco \'Off\', \'On\' or \'Follow Function Button\'. \nLong Press to force the light status \'Off\', without sending the command to the Loco .(i.e. if ED is confused).</string>
 
@@ -1367,7 +1367,7 @@
     <string name="introButtonsSlider">Slider Only\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Slider + Buttons\n(not possible with \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Speed Buttons Only</string>
-    <string name="introButtonsNoSliderOrButtons">No Slider or Buttons   Recommended for ESU MC Pro</string>
+    <string name="introButtonsNoSliderOrButtons">No Slider or Buttons\n(Recommended for ESU MC Pro)</string>
 
     <string name="introDccexTitle">EX-CommandStation Options</string>
     <string name="introDccexSummary">Engine Driver can provide additional functionality, including CV programming,
@@ -1424,7 +1424,7 @@
     <string name="prefHideInstructionalToastsSummary">Hide instructional \'toast\' popup help/hints</string>
 
     <string name="prefBeepOnAlertToastsSummary">Play beep sound on Alert \'toast\' popup messages</string>
-    <string name="prefBeepOnAlertToastsTitle">Beep on Alerts</string>
+    <string name="prefBeepOnAlertToastsTitle">Beep on Alerts?</string>
 
     <string name="prefToolbarButtonSizeTitle">Toolbar Button Size</string>
     <string name="prefToolbarButtonSizeSummary">Set the size of the toolbar buttons. (Re-start required)</string>

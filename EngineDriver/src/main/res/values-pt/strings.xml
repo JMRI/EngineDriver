@@ -844,7 +844,7 @@
     <string name="throttleSwitchAction">Mudar telas do acelerador</string>
     <string name="prefBackgroundImagePreferencesTitle">Preferências imagem de fundo</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Preferências do botão do acelerador Interruptor</string>
-    <string name="introButtonsNoSliderOrButtons">Nenhum controle deslizante ou botões recomendados para ESU MC Pro</string>
+    <string name="introButtonsNoSliderOrButtons">Sem controle deslizante ou botões\n(Recomendado para ESU MC 2/Pro)</string>
     <string name="introDccexTitle">Opções EX-CommandStation</string>
     <string name="introDccexSummary">O Engine Driver pode fornecer funcionalidades adicionais, incluindo programação CV, se você estiver usando um DCC-EX EX-CommandStation diretamente. (Não via JMRI)\n\nSe você responder \'Sim\' abaixo, o Engine Driver usará como padrão comandos DCC-EX Native em vez de WiThrottle se o nome do servidor contiver \'DCC-EX\' ou \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Sim, usarei uma EX-CommandStation</string>

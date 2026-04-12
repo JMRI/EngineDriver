@@ -1014,7 +1014,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="introButtonsSliderAndButtons">滑块 + 按钮（不支持“大按钮”）。</string>
     <string name="introButtonsNoSlider">仅限速度按钮</string>
 
-    <string name="introButtonsNoSliderOrButtons">ESU MC Pro 不建议使用滑块或按钮。</string>
+    <string name="introButtonsNoSliderOrButtons">无滑块或按钮\n（推荐用于 ESU MC 2/Pro）</string>
     <string name="introDccexTitle">EX-CommandStation选项</string>
     <string name="introDccexSummary">如果您直接使用DCC-EX EX-CommandStation（不通过JMRI），Engine Driver可以提供额外功能，包括CV编程。\n\n如果您在下方选择“是”，当服务器名称包含“DCC-EX”或“DCCEX”或使用端口“2560”时，Engine Driver将默认使用DCC-EX原生命令而非WiThrottle。</string>
     <string name="introDccexQuestionYes">是，我将使用EX-CommandStation</string>

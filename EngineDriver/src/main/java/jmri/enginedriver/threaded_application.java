@@ -2627,6 +2627,8 @@ public class threaded_application extends Application {
                     ->  max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
             case throttle_screen_type.TABLET_VERTICAL_LEFT
                     -> max_throttles_current_screen_type.VERTICAL_TABLET;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS
+                    -> max_throttles_current_screen_type.VERTICAL_TABLET;
             case throttle_screen_type.SWITCHING
                     -> max_throttles_current_screen_type.SWITCHING;
             case throttle_screen_type.SWITCHING_LEFT, throttle_screen_type.SWITCHING_RIGHT
@@ -2651,7 +2653,8 @@ public class threaded_application extends Application {
             case throttle_screen_type.SIMPLE
                     -> new Intent().setClass(this, throttle_simple.class);
             case throttle_screen_type.VERTICAL, throttle_screen_type.VERTICAL_LEFT,
-                 throttle_screen_type.VERTICAL_RIGHT, throttle_screen_type.TABLET_VERTICAL_LEFT
+                 throttle_screen_type.VERTICAL_RIGHT, throttle_screen_type.TABLET_VERTICAL_LEFT,
+                 throttle_screen_type.TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS
                     -> new Intent().setClass(this, throttle_vertical_left_or_right.class);
             case throttle_screen_type.SWITCHING, throttle_screen_type.SWITCHING_LEFT,
                  throttle_screen_type.SWITCHING_RIGHT, throttle_screen_type.TABLET_SWITCHING_LEFT
@@ -2677,7 +2680,8 @@ public class threaded_application extends Application {
             case throttle_screen_type.VERTICAL -> throttle_screen_type.VERTICAL_LEFT;
             case throttle_screen_type.VERTICAL_LEFT -> throttle_screen_type.VERTICAL_RIGHT;
             case throttle_screen_type.VERTICAL_RIGHT -> throttle_screen_type.TABLET_VERTICAL_LEFT;
-            case throttle_screen_type.TABLET_VERTICAL_LEFT -> throttle_screen_type.SWITCHING;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT -> throttle_screen_type.TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS;
+            case throttle_screen_type.TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS -> throttle_screen_type.SWITCHING;
             case throttle_screen_type.SWITCHING -> throttle_screen_type.SWITCHING_LEFT;
             case throttle_screen_type.SWITCHING_LEFT -> throttle_screen_type.SWITCHING_RIGHT;
             case throttle_screen_type.SWITCHING_RIGHT -> throttle_screen_type.TABLET_SWITCHING_LEFT;

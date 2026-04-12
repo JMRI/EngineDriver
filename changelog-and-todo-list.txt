@@ -1,8 +1,11 @@
 **Version 2.43.226
-  * Bug Fixes
+ * New Features
+     * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)"
+ * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
   * Other
      * Reworking of the custom toast popup.
+     * Reworking of most of the images in the intro/wizard
      * Change the preference checkboxes to switches.
      * More cleanup of some of the preferences.
      * Additional glyphs in the preferences.

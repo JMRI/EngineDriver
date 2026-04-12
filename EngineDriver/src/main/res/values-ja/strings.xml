@@ -300,7 +300,7 @@
     <string name="introThrottleTypeSummary2">選択したタイプに応じて、画面上の個々のスロットルの数 (1 ～ 6) が制限されます。</string>
     <string name="introWelcomeSummary">このアプリは、JMRI、MRC、または DigiTrax WiThrottle サーバーに接続して、DCC ロコとデバイスを制御できます。次のページでは、初期設定について説明します。</string>
     <string name="introWelcomeTitle">\nエンジン ドライバーへようこそ</string>
-    <string name="introButtonsNoSliderOrButtons">ESU MC Pro にはスライダーやボタンは推奨されません</string>
+    <string name="introButtonsNoSliderOrButtons">スライダーやボタンはありません\n（ESU MC 2/Proに推奨）</string>
     <string name="introDccexTitle">EX-CommandStation オプション</string>
     <string name="introDccexSummary">DCC-EX EX-CommandStation を直接使用している場合、エンジン ドライバーは CV プログラミングなどの追加機能を提供できます。 (JMRI 経由ではありません)\n\n以下で「はい」と応答すると、サーバー名に「DCC-EX」または「DCCEX」が含まれている場合、エンジン ドライバーはデフォルトで WiThrottle ではなく DCC-EX ネイティブ コマンドを使用します。 。</string>
     <string name="introDccexQuestionYes">はい、EX-CommandStation を使用します</string>
