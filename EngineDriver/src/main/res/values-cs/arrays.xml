@@ -124,6 +124,7 @@
         <item tools:ignore="TypographyDashes">Jednoduchý - Tablet doporučeno (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Vlevo (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Vlevo (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet svisle vlevo - dva funkční sloupce (1-6)</item>
         <item >Polorealistická levá (1)</item>
     </string-array>
 

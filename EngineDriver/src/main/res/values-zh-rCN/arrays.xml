@@ -68,6 +68,7 @@
         <item tools:ignore="TypographyDashes">简单（1-6）（推荐使用平板电脑）</item>
         <item tools:ignore="TypographyDashes">平板电脑切换至左侧（1-6）</item>
         <item tools:ignore="TypographyDashes">平板电脑垂直左侧（1-6）</item>
+        <item tools:ignore="TypographyDashes">平板电脑垂直左侧 - 两列功能（1-6）</item>
         <item>半现实主义左派（1）</item>
     </string-array>
     <string-array name="DisplayClockEntries">

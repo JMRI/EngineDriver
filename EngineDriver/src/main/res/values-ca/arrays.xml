@@ -114,6 +114,7 @@
         <item tools:ignore="TypographyDashes">Simple - tablet recomanat (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching esquerra (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical esquerra (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Vertical esquerra: dues columnes de funció (1-6)</item>
         <item >Esquerra semirealista (1)</item>
     </string-array>
     <string-array name="DisplayClockEntries">

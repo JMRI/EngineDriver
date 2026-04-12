@@ -56,62 +56,53 @@
                 <RadioButton
                     android:id="@+id/intro_buttons_slider_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="320dp"
-                    android:maxWidth="420dp"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/intro_buttons_slider"
-                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:drawableTop="@drawable/intro_buttons_slider"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center|left"
                     android:paddingTop="5dp"
-                    android:layout_margin="0dp"
                     android:text="@string/introButtonsSlider"
                     android:textSize="16sp"
-                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_buttons_slider_and_buttons_name"
                     android:layout_width="wrap_content"
-                    android:minWidth="320dp"
-                    android:maxWidth="420dp"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/intro_buttons_slider_and_speed"
-                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:drawableTop="@drawable/intro_buttons_slider_and_speed"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center|left"
                     android:paddingTop="5dp"
-                    android:layout_margin="0dp"
                     android:text="@string/introButtonsSliderAndButtons"
                     android:textSize="16sp"
-                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
-
 
                 <RadioButton
                     android:id="@+id/intro_buttons_no_slider_name"
                     android:layout_width="wrap_content"
-                    android:maxWidth="320dp"
-                    android:minWidth="420dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
-                    android:drawableLeft="@drawable/intro_buttons_no_slider"
-                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:drawableTop="@drawable/intro_buttons_no_slider"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center|left"
                     android:paddingTop="5dp"
                     android:text="@string/introButtonsNoSlider"
                     android:textSize="16sp"
-                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/intro_buttons_no_slider_or_buttons_name"
                     android:layout_width="wrap_content"
-                    android:maxWidth="320dp"
-                    android:minWidth="420dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
-                    android:drawableLeft="@drawable/intro_buttons_no_slider_or_buttons"
-                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:drawableTop="@drawable/intro_buttons_no_slider_or_buttons"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center|left"
                     android:paddingTop="5dp"
                     android:text="@string/introButtonsNoSliderOrButtons"
                     android:textSize="16sp"
-                    android:fontFamily="sans-serif-condensed"
                     tools:ignore="RtlHardcoded, TextContrastCheck" />
 
 

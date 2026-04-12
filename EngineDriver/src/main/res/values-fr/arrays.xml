@@ -83,6 +83,7 @@
         <item tools:ignore="TypographyDashes">Simple – Recommandé Tablette (1–6)</item>
         <item tools:ignore="TypographyDashes">Switching a gauche tablette (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablette verticale à gauche (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablette verticale à gauche - deux colonnes de fonctions (1-6)</item>
         <item tools:ignore="TypographyDashes">Semi-réaliste - Gauche (1)</item>
     </string-array>
 

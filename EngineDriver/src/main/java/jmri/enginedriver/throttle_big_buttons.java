@@ -359,7 +359,7 @@ public class throttle_big_buttons extends throttle {
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // Log.d(threaded_application.applicationName, activityName + ": set_function_request()");
+        if (whichThrottle > mainapp.maxThrottlesCurrentScreen) return;
 
         Button b;
         boolean[] fs;   // copy of this throttle's function state array

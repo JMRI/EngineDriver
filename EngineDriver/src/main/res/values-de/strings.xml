@@ -738,7 +738,7 @@
     <string name="introButtonsSliderAndButtons">Schieberegler und Tasten\n(nicht möglich mit \'Big Buttons\'.)</string>
     <string name="introButtonsNoSlider">Nur Speed-Tasten</string>
 
-    <string name="introButtonsNoSliderOrButtons">Keine Schieberegler oder Tasten empfohlen für ESU MC Pro</string>
+    <string name="introButtonsNoSliderOrButtons">Kein Schieberegler oder Tasten\n(Empfohlen für ESU MC 2/Pro)</string>
     <string name="introDccexTitle">EX-CommandStation-Optionen</string>
     <string name="introDccexSummary">Engine Driver kann zusätzliche Funktionen bereitstellen, einschließlich CV-Programmierung, wenn Sie eine DCC-EX EX-CommandStation direkt verwenden. (Nicht über JMRI)\n\nWenn Sie unten mit „Ja“ antworten, verwendet Engine Driver standardmäßig native DCC-EX-Befehle anstelle von WiThrottle, wenn der Servername „DCC-EX“ oder „DCCEX“ enthält.</string>
     <string name="introDccexQuestionYes">Ja, ich werde eine EX-CommandStation verwenden</string>

@@ -822,7 +822,7 @@
     <string name="introButtonsSliderAndButtons">Control lliscant i tecles\n(no és possible amb \'Botons grans\')</string>
     <string name="introButtonsNoSlider">Només tecles de velocitat</string>
 
-    <string name="introButtonsNoSliderOrButtons">No es recomana cap control lliscant ni botons per a ESU MC Pro</string>
+    <string name="introButtonsNoSliderOrButtons">Sense control lliscant ni botons\n(Recomanat per a ESU MC 2/Pro)</string>
     <string name="introDccexTitle">Opcions de l\'EX-CommandStation</string>
     <string name="introDccexSummary">El controlador del motor pot proporcionar funcionalitats addicionals, inclosa la programació de CV, si utilitzeu directament una DCC-EX EX-CommandStation. (No mitjançant JMRI)\n\nSi responeu \'Sí\' a continuació, el controlador del motor utilitzarà per defecte les ordres natives de DCC-EX en comptes de WiThrottle si el nom del servidor conté \'DCC-EX\' o \'DCCEX\' .</string>
     <string name="introDccexQuestionYes">Sí, faré servir una EX-CommandStation</string>

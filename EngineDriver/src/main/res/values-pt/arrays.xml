@@ -115,6 +115,7 @@
         <item >Simples &#8211; Tablet Recomendado (1&#8211;6)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Esquerda (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Esquerda (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Vertical Esquerda - duas colunas de funções (1-6)</item>
         <item >Esquerda Semi-Realista (1)</item>
     </string-array>
 

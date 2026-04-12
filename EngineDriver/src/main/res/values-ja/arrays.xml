@@ -85,6 +85,7 @@
         <item>シンプル (1-6) (タブレット推奨)</item>
         <item>タブレット切り替え左 (1-6)</item>
         <item>タブレット縦型左 (1-6)</item>
+        <item>タブレット縦置き左 - 2つの機能列（1～6）</item>
         <item>セミリアル左 (1)</item>
     </string-array>
     <string-array name="DisplayClockEntries">

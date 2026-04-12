@@ -811,7 +811,7 @@
     <string name="introButtonsSliderAndButtons">Control deslizante y teclas\n(no es posible con \'Teclas grandes\'.)</string>
     <string name="introButtonsNoSlider">Teclas de velocidad solamente</string>
 
-    <string name="introButtonsNoSliderOrButtons">No se recomiendan controles deslizantes ni botones para ESU MC Pro</string>
+    <string name="introButtonsNoSliderOrButtons">Sin controles deslizantes ni botones\n(Recomendado para ESU MC 2/Pro)</string>
     <string name="introDccexTitle">Opciones de EX-CommandStation</string>
     <string name="introDccexSummary">Engine Driver puede proporcionar funciones adicionales, incluida la programación de CV, si utiliza directamente una EX-CommandStation DCC-EX. (No a través de JMRI)\n\nSi responde \'Sí\' a continuación, Engine Driver utilizará de forma predeterminada los comandos nativos DCC-EX en lugar de WiThrottle si el nombre del servidor contiene \'DCC-EX\' o \'DCCEX\'.</string>
     <string name="introDccexQuestionYes">Sí, usaré una EX-CommandStation</string>

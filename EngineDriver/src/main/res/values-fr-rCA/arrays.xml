@@ -47,6 +47,7 @@
         <item tools:ignore="TypographyDashes">Simple (1-6) (Tablette recommandée)</item>
         <item tools:ignore="TypographyDashes">Manoeuvre - Tablette - Gauche (1-6)</item>
         <item tools:ignore="TypographyDashes">Manoeuvre - Tablette - Droite (1-6)</item>
+        <item tools:ignore="TypographyDashes">Manoeuvre - Tablette - Droite - deux colonnes de fonctions (1-6)</item>
         <item>Semi-réaliste - Gauche (1)</item>
     </string-array>
 

@@ -603,6 +603,7 @@
         <item tools:ignore="TypographyDashes">Simple (1-6) (Tablet Recommended)</item>
         <item tools:ignore="TypographyDashes">Tablet Switching Left (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablet Vertical Left (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablet Vertical Left - two function columns (1-6)</item>
         <item >Semi-Realistic Left (1)</item>
     </string-array>
 
@@ -620,6 +621,7 @@
         <item >Simple</item>
         <item >Tablet Switching Left</item>
         <item >Tablet Vertical Left</item>
+        <item >Tablet Vertical Left - two function columns</item>
         <item >Semi Realistic Left</item>
     </string-array>
 
@@ -637,6 +639,7 @@
         <item >6</item>  <!-- Simple -->
         <item >6</item>  <!-- Tablet Switching Left -->
         <item >6</item>  <!-- Tablet Vertical Left -->
+        <item >6</item>  <!-- Tablet Vertical Left - two function columns -->
         <item >1</item>  <!-- Semi Realistic Left -->
     </integer-array>
 
@@ -654,6 +657,7 @@
         <item >0</item>  <!-- Simple -->
         <item >0</item>  <!-- Tablet Switching Left -->
         <item >0</item>  <!-- Tablet Vertical Left -->
+        <item >0</item>  <!-- Tablet Vertical Left - two function columns -->
         <item >1</item>  <!-- Semi Realistic Left -->
     </integer-array>
 
@@ -671,6 +675,7 @@
         <item >1</item>  <!-- Simple -->
         <item >0</item>  <!-- Tablet Switching Left -->
         <item >1</item>  <!-- Tablet Vertical Left -->
+        <item >1</item>  <!-- Tablet Vertical Left - two function columns -->
         <item >1</item>  <!-- Semi Realistic Left -->
     </integer-array>
 
