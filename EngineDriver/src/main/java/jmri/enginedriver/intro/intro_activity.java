@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import com.github.appintro.AppIntro2;
 import com.github.appintro.AppIntroFragment;
-import com.github.appintro.model.SliderPage;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 
@@ -72,12 +71,13 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
         // Note here that we DO NOT use setContentView();
 
-        SliderPage sliderPage0 = new SliderPage();
-        sliderPage0.setTitle(getApplicationContext().getResources().getString(R.string.introWelcomeTitle));
-        sliderPage0.setDescription(getApplicationContext().getResources().getString(R.string.introWelcomeSummary));
-        sliderPage0.setImageDrawable(R.drawable.intro_welcome);
-        sliderPage0.setBackgroundColor(getResources().getColor(R.color.intro_background));
-        addSlide(AppIntroFragment.newInstance(sliderPage0));
+        addSlide(AppIntroFragment.createInstance(
+                getApplicationContext().getResources().getString(R.string.introWelcomeTitle),
+                getApplicationContext().getResources().getString(R.string.introWelcomeSummary),
+                R.drawable.intro_welcome,
+                R.color.intro_background
+        ));
+
 
 //        int slideNumber = 1;  // how many preceding slides
 //
@@ -303,6 +303,9 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         // Hide Skip/Done button.
 //        showSkipButton(false);
 //        setProgressButtonEnabled(true);
+
+        // disable swiping
+        setSwipeLock(true);
 
         // Turn vibration on and set intensity.
         setVibrate(false);

@@ -1,15 +1,19 @@
 **Version 2.43.226
  * New Features
-     * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)"
+     * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
+     * Support for the new DCC-EX WiFi commands in the drop list.
  * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
+     * Layout swap button was not refreshing the screen.
   * Other
      * Reworking of the custom toast popup.
      * Reworking of most of the images in the intro/wizard
+     * Disabled left/right swipes in the intro/wizard.
      * Change the preference checkboxes to switches.
      * More cleanup of some of the preferences.
      * Additional glyphs in the preferences.
      * Separate the CV19 button control for the DCC-EX In Command Station Consist button control.
+     * Additional Google translations.
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
@@ -132,7 +136,7 @@
     * Added toolbar buttons for preferences and the wizard on the connection screen. Can be turned off with the existing preference to hide instructional hints
     * Added option for medium size toolbar/action bar buttons. The 'auto' option will make screens >=139.7cm (5.5") will use the medium size buttons
     * Reinstated the log and file sharing capability
-    * For DCC-EX automations, you are asked which loco to send on the automation. (Defaults to the currently selected loco.)  There is a preference to disable if prefered.
+    * For DCC-EX automations, you are asked which loco to send on the automation. (Defaults to the currently selected loco.)  There is a preference to disable if preferred.
     * Added preference to automatically connect to a specified IP and port, even if it is not discovered.
     * Added preference to start logging immediately after app startup.  Resets itself after use.
     * Added preference to hide the Advanced Consist (CV19) action bar button on the select loco screen.
@@ -295,7 +299,7 @@
  * Google Japanese Translations
  * New 'Neon Blue' theme
  * Improvements to the Original and Colorful themes
- * On Horizontal slider layouts, preference to auto show/hide the function buttons of the non-active (volume) throtttle
+ * On Horizontal slider layouts, preference to auto show/hide the function buttons of the non-active (volume) throttle
  * Added up/down swipe options to change the selected loco (volume) to the next available
  * Added shake action option for Emergency Stop
 **Version 2.38.187
@@ -326,7 +330,7 @@
  - split the TTS code and types into their own classes
  - Added the DCC-EX toolbar button the the Routes and Turnouts/Points screens
  - General cleanup and linting of the dcc_ex code
- - Improve maintaining of unique IDs for devices (needed for WitThrottle) as a byproduct of not beong allowed to access the real Device IDs anymore
+ - Improve maintaining of unique IDs for devices (needed for WitThrottle) as a byproduct of not being allowed to access the real Device IDs anymore
  - Automatically reduce the font size of buttons if the first word is long or the total text length is long
 **Version 2.37.182
  * Add intro/setup wizard page for DCC-EX
@@ -470,7 +474,7 @@
  * Option to use a normal keyboard (bluetooth or USB) as a gamepad type
  * Gamepads continue to function in most activities (excludes keyboards)
  * Images for any selected loco is cached locally
- * Option to select a local image for roster locos (For wiThrottle servers that don't support images)
+ * Option to select a local image for roster locos (For WiThrottle servers that don't support images)
  * Web Screen maintains state when swiping, using the menus or auto-web
 **Version 2.31.138
  * Fix: Auto Server preference load

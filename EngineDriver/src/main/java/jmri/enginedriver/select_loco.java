@@ -19,6 +19,7 @@ package jmri.enginedriver;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static android.widget.Toast.LENGTH_LONG;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -2221,7 +2222,7 @@ public class select_loco extends AppCompatActivity {
                 rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
 
                 if (!mainapp.shownToastRoster) { // only show it once
-                    mainapp.safeToastInstructional(R.string.toastRosterHelp, Toast.LENGTH_LONG);
+                    threaded_application.showCustomToast(select_loco.this,  getApplicationContext().getResources().getString(R.string.toastRosterHelp), LENGTH_LONG, 5, true, true);
                     mainapp.shownToastRoster = true;
                 }
                 mainapp.hideSoftKeyboard(selectMethodButton[1], activityName);
@@ -2232,7 +2233,11 @@ public class select_loco extends AppCompatActivity {
                 recentListView.setVisibility(VISIBLE);
                 rbRecent.setChecked(true);
                 selectMethodButton[2].setSelected(true);
-                mainapp.shownToastRecentLocos = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentLocos);
+
+                if (!mainapp.shownToastRecentLocos) {
+                    threaded_application.showCustomToast(select_loco.this,  getApplicationContext().getResources().getString(R.string.toastRecentsHelp), LENGTH_LONG, 5, true, true);
+                    mainapp.shownToastRecentLocos = true;
+                }
                 mainapp.hideSoftKeyboard(selectMethodButton[2], activityName);
                 break;
 
@@ -2240,7 +2245,11 @@ public class select_loco extends AppCompatActivity {
                 selectMethodLayouts[3].setVisibility(VISIBLE);
                 rbRecentConsists.setChecked(true);
                 selectMethodButton[3].setSelected(true);
-                mainapp.shownToastRecentConsists = mainapp.safeToastInstructionalShowOnce(R.string.toastRecentConsistsHelp, Toast.LENGTH_LONG, mainapp.shownToastRecentConsists);
+
+                if (!mainapp.shownToastRecentConsists) {
+                    threaded_application.showCustomToast(select_loco.this,  getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), LENGTH_LONG, 5, true, true);
+                    mainapp.shownToastRecentConsists = true;
+                }
                 mainapp.hideSoftKeyboard(selectMethodButton[3], activityName);
                 break;
 

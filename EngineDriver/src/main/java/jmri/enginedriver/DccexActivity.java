@@ -114,7 +114,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     private int dccCmdIndex = 0;
     String[] dccexCommonCommandsEntryValuesArray;
     String[] dccexCommonCommandsEntriesArray; // display version
-    int[] dccexCommonCommandsHasParametersArray; // display version
+    int[] dccexCommonCommandsHasParametersArray;
 
     //    private int dccexActionTypeIndex = 0;
     String[] dccexActionTypeEntryValuesArray;
@@ -737,7 +737,34 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
                 
                 dccexDccexWriteInfoLayout.setVisibility(VISIBLE);
 
-                sendCommandButton.setEnabled((!dccexSendCommandValue.isEmpty()) && (dccexSendCommandValue.charAt(0) != '<'));
+                boolean validCommand = true;
+                if ((dccexSendCommandValue.isEmpty()) || (dccexSendCommandValue.charAt(0) == '<')) {
+                    validCommand = false;
+                } else {
+
+                    // see if it is a known command
+                    int foundIndex = -1;
+                    for (int i = 1; i < dccexCommonCommandsEntryValuesArray.length; i++) {
+                        if ( (!dccexCommonCommandsEntryValuesArray[i].isEmpty()) // ignore the delimiters
+                                && (dccexSendCommandValue.startsWith(dccexCommonCommandsEntryValuesArray[i])) ) {
+                            foundIndex = i;
+                            break;
+                        }
+                    }
+                    if (foundIndex > 0) {
+                        try {
+                            String[] x = dccexCommonCommandsEntryValuesArray[foundIndex].split(" ");
+                            int commonCmdElementCount = dccexCommonCommandsEntryValuesArray[foundIndex].trim().split(" ").length;
+                            int commonCmdParameterCount = dccexCommonCommandsHasParametersArray[foundIndex];
+                            int commandElementsCount = dccexSendCommandValue.trim().split(" ").length;
+
+                            if (commandElementsCount < (commonCmdElementCount + commonCmdParameterCount)) {
+                                validCommand = false;
+                            }
+                        } catch (Exception ignoreException) {}
+                    }
+                }
+                sendCommandButton.setEnabled(validCommand);
                 previousCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
                 nextCommandButton.setEnabled((mainapp.dccexPreviousCommandIndex >= 0));
                 break;
@@ -1331,10 +1358,11 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
                 dccexSendCommandValueEditText.setText(dccexSendCommandValue);
                 dccexSendCommandValueEditText.requestFocus();
                 dccexSendCommandValueEditText.setSelection(dccexSendCommandValue.length());
+
+                dccexInfoStr = dccexCommonCommandsEntriesArray[dccCmdIndex];
             }
             dccCmdIndex = 0;
             dccexCommonCommandsSpinner.setSelection(dccCmdIndex);
-            dccexInfoStr = "";
 
             InputMethodManager imm =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

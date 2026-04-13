@@ -669,6 +669,7 @@
     <string name="prefRosterOwnersFilterDefaultOwner">Tous</string>
     <string name="prefSelectLocoByRadioButtonsTitle">Choisir methode d affichage (texte ou icone)</string>
     <string name="prefSelectLocoByRadioButtonsSummary">Afficher textes des methodes plutot queles images de bouton</string>
+    <string name="prefShowAdditionalButtonTextSummary">Afficher du texte supplémentaire sous les boutons d\'image. (Déconseillé pour les petits écrans)</string>
     <string name="LocoSelectMethodAddress">Adresse DCC</string>
     <string name="LocoSelectMethodRoster">Catalogue (roster)</string>
     <string name="LocoSelectMethodRecent">Récent</string>
@@ -755,6 +756,7 @@
 
     <string name="prefActionBarShowRoutesButtonTitle">Bouton Itinéraires ?</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">Bouton Advanced Consist (CV19) ?</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">Bouton DCC-EX dans la centrale de commande ?</string>
     <string name="ConsistEditLabelLead">TETE</string>
     <string name="ConsistEditLabelTrail">QUEUE</string>
     <string name="prefConsistFollowRuleStyleTitle">Fonctions d unités multiples (UM) - respecter la règle</string>
@@ -1262,6 +1264,7 @@
     <string name="prefStopButtonLongPressDelayTitle">Delai pour appui long sur STOP</string>
     <string name="prefStopButtonLongPressDelaySummary">Duree en millisecondes pour prise en compte arret d urgence par appui long sur STOP</string>
 
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirmer</string>
     <string name="dccexAutomationTitle">Adresse de la locomotive pour l\'automatisme EXRAIL</string>
     <string name="autoServerConnectTitle">Connexion automatique au serveur</string>
     <string name="autoServerConnectLabel">Nom du serveur</string>
@@ -1309,5 +1312,7 @@
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utiliser l\'arrêt d\'urgence, la pause et la reprise</string>
     <string name="prefRosterTitle">Options relatives à la liste des joueurs depuis le serveur</string>
     <string name="prefConnectAdvancedPreferencesTitle">Préférences de connexion avancées</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">Afficher le bouton dans la barre d\'actions pour ouvrir l\'écran de composition de la centrale de commande DCC-EX</string>
+    <string name="prefShowAdditionalButtonTextTitle">Afficher le texte supplémentaire du bouton ?</string>
 
 </resources>

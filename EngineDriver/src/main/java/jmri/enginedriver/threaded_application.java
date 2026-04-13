@@ -63,6 +63,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.util.Pair;
 import androidx.preference.PreferenceManager;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -379,6 +383,7 @@ public class threaded_application extends Application {
     public boolean shownToastRecentLocos = false;
     public boolean shownToastRoster = false;
     public boolean shownToastConsistEdit = false;
+    public boolean shownToastDeviceSoundsSettings = false;
     public boolean shownToastConsistLightsEdit = false;
 
     public boolean hasRosterTurnouts = false;
@@ -3788,7 +3793,7 @@ public class threaded_application extends Application {
         showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, instructional, clearPrevious);
     }
     public static void showCustomToast(final Activity activity, String title, String message, int length, int yOffsetSixthOfScreen, boolean instructional) {
-        showCustomToast(activity, "", message, length, yOffsetSixthOfScreen, instructional, false);
+        showCustomToast(activity, title, message, length, yOffsetSixthOfScreen, instructional, false);
     }
     public static void showCustomToast(final Activity activity,  String title, String message, int length, int yOffsetSixthOfScreen, boolean instructional, boolean clearPrevious) {
 
@@ -3826,6 +3831,15 @@ public class threaded_application extends Application {
         }
         tempToastText.append(message);
 
+        //adjust the inter-paragraph spacing
+        String text = tempToastText.toString().replace("\n","\n\0");;
+        Spannable spannable = new SpannableString(text);
+        for (int i = 0; i < text.length()-1; i++) {
+            if (text.charAt(i) == '\n') {
+                spannable.setSpan(new RelativeSizeSpan(1.2f), i+1, i+2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+
         // inflate your xml layout
         LayoutInflater inflater = activity.getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast_custom, null);
@@ -3844,7 +3858,8 @@ public class threaded_application extends Application {
         } else {
             ((TextView) layout.findViewById(R.id.title)).setVisibility(View.GONE);
         }
-        ((TextView) layout.findViewById(R.id.message)).setText(tempToastText.toString());
+//        ((TextView) layout.findViewById(R.id.message)).setText(tempToastText.toString());
+        ((TextView) layout.findViewById(R.id.message)).setText(spannable, TextView.BufferType.SPANNABLE);
 
         // initialize your popupWindow and use your custom layout as the view
         final PopupWindow toastPopupWindow = new PopupWindow(layout,

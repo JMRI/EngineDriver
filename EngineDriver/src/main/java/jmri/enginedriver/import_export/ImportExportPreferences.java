@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.import_export;
 
+import static android.widget.Toast.LENGTH_SHORT;
 import static java.lang.Math.min;
 
 import android.annotation.SuppressLint;
@@ -47,6 +48,7 @@ import java.util.Map;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Loco;
+import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.address_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.direction_type;
@@ -990,11 +992,17 @@ public class ImportExportPreferences {
                                 if (!consist.isEmpty()) {
                                     for (int j = 0; j <= consist.size(); j++) {
                                         if (consist.getLoco(locoAddress) != null) {
-                                            mainapp.safeToast(context.getResources().getString(R.string.toastLocoAlreadySelected, locoAddress), Toast.LENGTH_SHORT);
+
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected,  locoAddress));
+                                            bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                                            bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, false);
+                                            mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
+
                                             String rosterName = consist.getLoco(locoAddress).getRosterName();
 
                                             // send the acquire message anyway
-                                            Bundle bundle = new Bundle();
+                                            bundle = new Bundle();
                                             bundle.putString(alert_bundle_tag_type.LOCO_TEXT, locoAddress);
                                             if ( ( rosterName!=null) && (!rosterName.isEmpty()) )
                                                 bundle.putString(alert_bundle_tag_type.ROSTER_NAME, rosterName);

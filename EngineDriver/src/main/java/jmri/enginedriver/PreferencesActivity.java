@@ -1347,6 +1347,11 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         enableDisablePreference(prefScreen, "prefAutoServerNamedConnect", !enable);
     }
 
+    private void showHideStopButtonPreferences(PreferenceScreen prefScreen) {
+        boolean enable = prefs.getBoolean("prefStopButtonEStopOnLongPress", false);
+        enableDisablePreference(prefScreen, "prefStopButtonLongPressDelay", enable);
+    }
+
     private void showHideDispatchPreferences(PreferenceScreen prefScreen) {
         boolean enableCmd = prefs.getBoolean("prefUseDispatchCommand", false);
         boolean enableButton = prefs.getBoolean("prefShowDispatchButton", false);
@@ -1843,6 +1848,10 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                         parentActivity.showHideDispatchPreferences(getPreferenceScreen());
                         break;
 
+                    case "prefStopButtonEStopOnLongPress":
+                        parentActivity.showHideStopButtonPreferences(getPreferenceScreen());
+                        break;
+
                 }
             }
 
@@ -2022,6 +2031,8 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
                 parentActivity.showHideAutoConnectPreferences(getPreferenceScreen());
                 parentActivity.showHideDispatchPreferences(getPreferenceScreen());
+
+                parentActivity.showHideStopButtonPreferences(getPreferenceScreen());
 
                 advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
                 hideAdvancedPreferences();

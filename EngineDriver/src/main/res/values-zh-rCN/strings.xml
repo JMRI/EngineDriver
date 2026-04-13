@@ -417,6 +417,7 @@
     <string name="prefSelectLocoByRadioButtonsTitle">机车外观选择方式</string>
     <string name="prefSelectLocoByRadioButtonsSummary">显示方法文本列表而非图像按钮</string>
 
+    <string name="prefShowAdditionalButtonTextSummary">在图片按钮下方显示附加文字。（不建议在小屏幕上使用）</string>
     <string name="LocoSelectMethodAddress">DCC 地址</string>
     <string name="LocoSelectMethodRoster">服务器花名册</string>
     <string name="LocoSelectMethodRecent">最近机车</string>
@@ -883,6 +884,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <!-- Consist Follow Function Preferences etc. -->
     <string name="prefActionBarShowRoutesButtonTitle">路线按钮？</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">高级组成（CV19）按钮？</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">DCC-EX 指挥站组成按钮？</string>
     <string name="ConsistEditLabelLead">主车</string>
     <string name="ConsistEditLabelTrail">从车</string>
 
@@ -1401,6 +1403,8 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 使用紧急停止暂停/恢复功能</string>
     <string name="prefRosterTitle">名单偏好</string>
     <string name="prefConnectAdvancedPreferencesTitle">高级连接偏好设置</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">在操作栏中显示按钮，以打开 DCC-EX 指挥站组成屏幕</string>
+    <string name="prefShowAdditionalButtonTextTitle">显示其他按钮文字？</string>
 
 </resources>
 

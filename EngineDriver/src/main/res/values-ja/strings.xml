@@ -59,6 +59,7 @@
     <string name="consist_trail_label">後続機関車</string>
     <string name="prefActionBarShowRoutesButtonTitle">ルートボタン？</string>
     <string name="prefActionBarShowAdvancedConsistButtonTitle">高度な構成 (CV19) ボタン?</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">DCC-EXのコマンドステーションの編成ボタンですか？</string>
     <string name="ConsistEditLabelLead">先頭</string>
     <string name="ConsistEditLabelTrail">後続</string>
     <string name="consistLights_help">ロコをクリックすると、そのロコのライトが \'オフ\' または \'ファンクションボタンに従う\' に切り替わります。\n\nロコを長押しすると、ロコにコマンドを送信せずに、ライトの状態を \'オフ\' に強制します (ED が混乱している場合など)。\n\n完了したら、戻る矢印を押します。</string>
@@ -326,6 +327,7 @@
     <string name="loco_direction_right_extra">\u00B7R\u00B7</string>
     <string name="locoPressToSelect">選択</string>
     <string name="prefSelectLocoByRadioButtonsSummary">画像ボタンの代わりにメソッドのテキストリストを表示します</string>
+    <string name="prefShowAdditionalButtonTextSummary">画像ボタンの下にテキストを追加します。（小型画面での使用は推奨しません）</string>
     <string name="LocoSelectMethodAddress">DCCアドレス</string>
     <string name="LocoSelectMethodHelp">上記に機関車の DCC アドレスを入力し、[取得] をクリックします。\n\nまたは、JMRI の [列車情報] から機関車を選択するか、上記のラジオ ボタンのいずれかをクリックして [最近] 使用した機関車から選択します。</string>
     <string name="LocoSelectMethodIDNGo">ロコIDのリクエスト</string>
@@ -1264,6 +1266,7 @@
     <string name="prefStopButtonLongPressDelayTitle">停止ボタン長押し遅延</string>
     <string name="prefStopButtonLongPressDelaySummary">停止ボタンを長押ししてEStopを開始するまでの所要時間は、何ミリ秒ですか？</string>
 
+    <string name="dccexCvBitCalculatorConfirmButtonLabel">確認する</string>
     <string name="dccexAutomationTitle">EXRAIL Automatioの機関車アドレス</string>
     <string name="autoServerConnectTitle">自動サーバー接続</string>
     <string name="autoServerConnectLabel">サーバー名</string>
@@ -1312,5 +1315,7 @@
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 緊急停止の一時停止/再開を使用する</string>
     <string name="prefRosterTitle">名簿設定</string>
     <string name="prefConnectAdvancedPreferencesTitle">詳細接続設定</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">アクションバーの「表示」ボタンをクリックすると、DCC-EX In Command Stationの編成画面が開きます。</string>
+    <string name="prefShowAdditionalButtonTextTitle">追加のボタンテキストを表示しますか？</string>
 
 </resources>
