@@ -2121,7 +2121,7 @@
         <item>All Turnouts/Points</item>
         <item>All Outputs</item>
         <item>Track Manager</item>
-        <item>Route/Automation {loco} {id}</item>
+        <item>Start Route/Automation {loco} {id}</item>
         <item>Kill all Automations</item>
         <item>--- Diagnostic Commands ---</item>
         <item>ACK Limit {mA}</item>
@@ -2131,12 +2131,20 @@
         <item>Reset HAL Devices</item>
         <item>Show All HAL Devices</item>
         <item>PROG current boost</item>
-        <item>WIFI {ON|OFF}</item>
         <item>ETHERNET {ON|OFF}</item>
         <item>WiThrottle {ON|OFF}</item>
         <item>Show free RAM</item>
         <item>Show Consists/MUs</item>
         <item>Query EStop</item>
+        <item>--- WiFi Commands ---</item>
+        <item>STA Mode {\"SSID\"} {\"pwd\"}</item>
+        <item>AP Mode {\"SSID\"} {\"pwd\"} [channel]</item>
+        <item>Hidden AP {\"SSID\"} {\"pwd\"} [channel]</item>
+        <item>Host Name {\"name\"}</item>
+        <item>WiFi {ON|OFF}</item>
+        <item>Clear WiFi Settings</item>
+        <item>Visit WiFi {\"SSID\"} {\"pwd\"}</item>
+        <item>Display WiFi settings</item>
     </string-array>
     <string-array name="dccExCommonCommandsEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item />
@@ -2157,12 +2165,20 @@
         <item>D HAL RESET</item>
         <item>D HAL SHOW</item>
         <item>D PROGBOOST</item>
-        <item>D WIFI</item>
         <item>D ETHERNET</item>
         <item>D WIT</item>
         <item>D RAM</item>
         <item>^</item>
         <item>!Q</item>
+        <item />
+        <item>C WIFI</item>
+        <item>C WIFI AP</item>
+        <item>C WIFI HIDDENAP</item>
+        <item>C WIFI HOSTNAME</item>
+        <item>C WIFI</item>
+        <item>C WIFI DEFAULT</item>
+        <item>C WIFI TEMP</item>
+        <item>D WIFI SHOW</item>
     </string-array>
     <integer-array name="dccExCommonCommandsHasParameters" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item>
@@ -2183,12 +2199,20 @@
         <item>0</item>  // D HAL RESET
         <item>0</item>  // D HAL SHOW
         <item>0</item>  // D PROGBOOST
-        <item>1</item>  // D WIFI
         <item>1</item>  // D ETHERNET
         <item>1</item>  // D WIT
         <item>1</item>  // D RAM
         <item>0</item>  // ^
         <item>0</item>  // !Q
+        <item>0</item>  // delimiter
+        <item>1</item>  // C WIFI  - this is 1 not 2 because 'C WIFI' is common
+        <item>2</item>  // C WIFI AP
+        <item>2</item>  // C WIFI HIDDEN
+        <item>1</item>  // C WIFI HOSTNAME
+        <item>1</item>  // C WIFI
+        <item>0</item>  // C WIFI DEFAULT
+        <item>2</item>  // C WIFI TEMP
+        <item>0</item>  // C WIFI SHOW
     </integer-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

@@ -1,6 +1,7 @@
 **Version 2.43.226
  * New Features
-     * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)"
+     * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
+     * Support for the new DCC-EX WiFi commands in the drop list.
  * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
      * Layout swap button was not refreshing the screen.
