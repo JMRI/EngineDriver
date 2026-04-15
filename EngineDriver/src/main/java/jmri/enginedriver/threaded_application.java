@@ -223,7 +223,7 @@ public class threaded_application extends Application {
     public int turnouts_list_position = 0;                  //remember where user was in item lists
     public int routes_list_position = 0;
 
-    public static int WiThrottle_Msg_Interval = 100;   //minimum desired interval (ms) between messages sent to
+    public static int wifi_send_interval = 100;   //minimum desired interval (ms) between messages sent to
     //  WiThrottle server, can be changed for specific servers
     //   do not exceed 200, unless slider delay is also changed
 
@@ -1219,9 +1219,9 @@ public class threaded_application extends Application {
         if (serverType.equals("MRC")) {
             web_server_port = 80; //hardcode web port for MRC
         } else if (serverType.equals("Digitrax")) {
-            WiThrottle_Msg_Interval = 200; //increase the interval for LnWi
-        } else if ( (serverType.equals("DCC-EX")) && (isDccexProtocol()) ) {
-            WiThrottle_Msg_Interval = 100; //increase the interval for DCC-EX
+            wifi_send_interval = 200; //increase the interval for LnWi
+        } else if (serverType.equals("DCC-EX")) {
+            web_server_port = 80; //hardcode web port for DCC-EX
         }
     }
 
