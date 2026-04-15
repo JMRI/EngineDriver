@@ -597,7 +597,7 @@ public class comm_thread extends Thread {
         long lastGap = now - lastSentMs;
 
         //send if sufficient gap between messages or msg is timingSensitive, requeue if not
-        if (lastGap >= threaded_application.WiThrottle_Msg_Interval || timingSensitive(msg)) {
+        if (lastGap >= threaded_application.wifi_send_interval || timingSensitive(msg)) {
             //perform the send
             //noinspection UnnecessaryUnicodeEscape
             Log.d(threaded_application.applicationName, activityName + ": wifiSend(): " + (mainapp.isDccexProtocol() ? "DCC-EX" : "      ") + "            :<>: -->: " + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
@@ -611,7 +611,7 @@ public class comm_thread extends Thread {
             }
         } else {
             //requeue this message
-            int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (threaded_application.WiThrottle_Msg_Interval + 5); //extra 5 for processing
+            int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (threaded_application.wifi_send_interval + 5); //extra 5 for processing
             //noinspection UnnecessaryUnicodeEscape
             Log.d(threaded_application.applicationName, activityName + ": wifiSend(): requeue:" + msg.replaceAll("\n", "\u21B5") +
                     ", lastGap=" + lastGap + ", nextGap=" + nextGap); //replace newline with cr arrow
