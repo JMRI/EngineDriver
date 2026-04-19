@@ -142,6 +142,10 @@
     <attr name="ed_preferences_device_sounds_0" format="reference" />
     <attr name="ed_preferences_device_sounds_1" format="reference" />
     <attr name="ed_preferences_empty" format="reference" />
+    <attr name="ed_preferences_feedback_on_disconnect" format="reference" />
+    <attr name="ed_preferences_feedback_on_alert" format="reference" />
+    <attr name="ed_preferences_hide_if_no_username" format="reference" />
+    <attr name="ed_preferences_hide_function_buttons_on_non_selected_throttle" format="reference" />
     <attr name="ed_preferences_throttle_locos" format="reference" />
     <attr name="ed_preferences_connect_to_first_server" format="reference" />
     <attr name="ed_preferences_auto_server_ip_connect" format="reference" />

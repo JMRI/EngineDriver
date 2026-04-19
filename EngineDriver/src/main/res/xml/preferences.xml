@@ -8,7 +8,7 @@
         android:defaultValue="@bool/prefShowAdvancedPreferencesDefaultValue"
         android:icon="?attr/ed_advanced_preferences"
         android:key="prefShowAdvancedPreferences"
-        android:layout="@layout/preference_switch_icon_left_highlight"
+        android:layout="@layout/preference_item_switch_icon_left"
         android:summary="@string/prefShowAdvancedPreferencesSummary"
         android:title="@string/prefShowAdvancedPreferencesTitle" />
 
@@ -23,7 +23,7 @@
             android:dialogTitle="@string/prefThrottleNameTitle"
             android:inputType="text"
             android:key="prefThrottleName"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_name"
             android:maxLines="1"
             android:summary="@string/prefThrottleNameSummary"
@@ -34,7 +34,7 @@
             android:entries="@array/OrientationEntries"
             android:entryValues="@array/OrientationEntryValues"
             android:key="prefThrottleOrientation"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_screen_orientation"
             android:summary="@string/prefThrottleOrientationSummary"
             android:title="@string/prefThrottleOrientationTitle" />
@@ -44,7 +44,7 @@
             android:entries="@array/prefThemeEntries"
             android:entryValues="@array/prefThemeEntryValues"
             android:key="prefTheme"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_theme"
             android:summary="@string/prefThemeSummary"
             android:title="@string/prefThemeTitle" />
@@ -54,7 +54,7 @@
             android:entries="@array/prefLocaleEntries"
             android:entryValues="@array/prefLocaleEntryValues"
             android:key="prefLocale"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_localisation"
             android:summary="@string/prefLocaleSummary"
             android:title="@string/prefLocaleTitle" />
@@ -62,7 +62,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_left_right_swipe"
             android:key="prefLeftRightSwipePreferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefLeftRightSwipePreferencesSummary"
             android:title="@string/prefLeftRightSwipePreferencesTitle">
@@ -75,7 +75,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
                     android:key="prefFullScreenSwipeArea"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefFullScreenSwipeAreaSummary"
                     android:title="@string/prefFullScreenSwipeAreaTitle" />
 
@@ -87,7 +87,7 @@
                     android:defaultValue="@bool/prefSwipeThroughWebDefaultValue"
                     android:key="prefSwipeThroughWeb"
                     android:icon="?attr/ed_preferences_swipe_through_web"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:summary="@string/prefSwipeThroughWebSummary"
                     android:title="@string/prefSwipeThroughWebTitle" />
 
@@ -95,7 +95,7 @@
                     android:defaultValue="@bool/prefSwipeThroughTurnoutsDefaultValue"
                     android:key="prefSwipeThroughTurnouts"
                     android:icon="?attr/ed_preferences_swipe_through_turnouts"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:summary="@string/prefSwipeThroughTurnoutsSummary"
                     android:title="@string/prefSwipeThroughTurnoutsTitle" />
 
@@ -103,7 +103,7 @@
                     android:defaultValue="@bool/prefSwipeThroughRoutesDefaultValue"
                     android:key="prefSwipeThroughRoutes"
                     android:icon="?attr/ed_preferences_swipe_through_routes"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:summary="@string/prefSwipeThroughRoutesSummary"
                     android:title="@string/prefSwipeThroughRoutesTitle" />
 
@@ -114,7 +114,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFullScreenSwipeAreaDefaultValue"
                     android:key="prefLeftRightSwipeChangesSpeed"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefLeftRightSwipeChangesSpeedSummary"
                     android:title="@string/prefLeftRightSwipeChangesSpeedTitle" />
 
@@ -123,7 +123,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSwipeSpeedChangeStepTitle"
                     android:key="prefSwipeSpeedChangeStep"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSwipeSpeedChangeStepSummary"
                     android:title="@string/prefSwipeSpeedChangeStepTitle" />
 
@@ -134,15 +134,15 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDoubleBackButtonToExitDefaultValue"
             android:key="prefDoubleBackButtonToExit"
-            android:layout="@layout/preference_switch_icon_left_highlight"
             android:icon="?attr/ed_preferences_double_back_button_to_exit"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefDoubleBackButtonToExitSummary"
             android:title="@string/prefDoubleBackButtonToExitTitle" />
 
             <PreferenceScreen
                 android:icon="?attr/ed_folder_hint"
                 android:key="ToastsOptionsPreferences"
-                android:layout="@layout/preference_checkbox_icon_left_highlight"
+                android:layout="@layout/preference_item_common_icon_left"
                 android:persistent="false"
                 android:summary="@string/ToastsOptionsSummary"
                 android:title="@string/ToastsOptionsTitle">
@@ -155,14 +155,14 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHideInstructionalToastsDefaultValue"
                     android:key="prefHideInstructionalToasts"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefHideInstructionalToastsSummary"
                     android:title="@string/prefHideInstructionalToastsTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefShowAdditionalButtonTextDefaultValue"
                     android:key="prefShowAdditionalButtonText"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefShowAdditionalButtonTextSummary"
                     android:title="@string/prefShowAdditionalButtonTextTitle" />
 
@@ -173,14 +173,15 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefBeepOnAlertToastsDefaultValue"
                     android:key="prefBeepOnAlertToasts"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
+                    android:icon="?attr/ed_preferences_feedback_on_alert"
                     android:summary="@string/prefBeepOnAlertToastsSummary"
                     android:title="@string/prefBeepOnAlertToastsTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFeedbackWhenGoingToBackgroundDefaultValue"
                     android:key="prefFeedbackWhenGoingToBackground"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:icon="?attr/ed_preferences_feedback_when_going_into_background"
                     android:summary="@string/prefFeedbackWhenGoingToBackgroundSummary"
                     android:title="@string/prefFeedbackWhenGoingToBackgroundTitle" />
@@ -192,7 +193,8 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFeedbackOnDisconnectDefaultValue"
                     android:key="prefFeedbackOnDisconnect"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
+                    android:icon="?attr/ed_preferences_feedback_on_disconnect"
                     android:summary="@string/prefFeedbackOnDisconnectSummary"
                     android:title="@string/prefFeedbackOnDisconnectTitle" />
 
@@ -213,7 +215,7 @@
             android:entries="@array/prefThrottleScreenTypeEntries"
             android:entryValues="@array/prefThrottleScreenTypeEntryValues"
             android:key="prefThrottleScreenType"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_throttle_screen_layout"
             android:summary="@string/prefThrottleScreenTypeSummary"
             android:title="@string/prefThrottleScreenTypeTitle" />
@@ -224,7 +226,7 @@
             android:entryValues="@array/NumOfThrottlesEntryValues"
             android:dialogLayout="@layout/preference_dialog_num_throttle"
             android:key="prefNumThrottles"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_number_of_throttles"
             android:summary="@string/prefNumOfThrottlesSummary"
             android:title="@string/prefNumOfThrottles" />
@@ -232,7 +234,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_speed_slider"
             android:key="throttle_slider_preference"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefSliderSummary"
             android:title="@string/prefSliderTitle">
@@ -245,15 +247,16 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefIncreaseSliderHeightDefaultValue"
                     android:key="prefIncreaseSliderHeight"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefIncreaseSliderHeightSummary"
                     android:title="@string/prefIncreaseSliderHeightTitle" />
+
                 <EditTextPreference
                     android:defaultValue="@string/prefSliderLeftMarginDefaultValue"
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:dialogTitle="@string/prefSliderLeftMarginTitle"
                     android:key="prefLeftSliderMargin"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSliderLeftMarginSummary"
                     android:title="@string/prefSliderLeftMarginTitle" />
 
@@ -262,7 +265,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefVerticalStopButtonMarginTitle"
                     android:key="prefVerticalStopButtonMargin"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefVerticalStopButtonMarginSummary"
                     android:title="@string/prefVerticalStopButtonMarginTitle" />
 
@@ -273,25 +276,28 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDisplaySpeedArrows"
                     android:key="prefDisplaySpeedButtons"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDisplaySpeedArrowsSummary"
                     android:title="@string/prefDisplaySpeedArrowsTitle" />
+
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHideSliderDefaultValue"
                     android:key="prefHideSlider"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefHideSliderSummary"
                     android:title="@string/prefHideSliderTitle" />
+
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHideSliderAndSpeedButtonsDefaultValue"
                     android:key="prefHideSliderAndSpeedButtons"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefHideSliderAndSpeedButtonsSummary"
                     android:title="@string/prefHideSliderAndSpeedButtonsTitle" />
+
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefTickMarksOnSlidersDefaultValue"
                     android:key="prefTickMarksOnSliders"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefTickMarksOnSlidersSummary"
                     android:title="@string/prefTickMarksOnSlidersTitle" />
 
@@ -304,7 +310,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSwitchingThrottleSliderDeadZoneTitle"
                     android:key="prefSwitchingThrottleSliderDeadZone"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSwitchingThrottleSliderDeadZoneSummary"
                     android:title="@string/prefSwitchingThrottleSliderDeadZoneTitle" />
 
@@ -315,7 +321,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_haptic"
             android:key="prefCategoryHapticFeedbackScreen"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefHapticFeedbackSummary"
             android:title="@string/prefHapticFeedbackTitle">
@@ -331,7 +337,7 @@
                     android:entries="@array/prefHapticFeedbackEntries"
                     android:entryValues="@array/prefHapticFeedbackEntryValues"
                     android:key="prefHapticFeedback"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefHapticFeedbackSummary"
                     android:title="@string/prefHapticFeedbackTitle" />
 
@@ -352,14 +358,14 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefHapticFeedbackDurationTitle"
                     android:key="prefHapticFeedbackDuration"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefHapticFeedbackDurationSummary"
                     android:title="@string/prefHapticFeedbackDurationTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHapticFeedbackButtonsDefaultValue"
                     android:key="prefHapticFeedbackButtons"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefHapticFeedbackButtonsSummary"
                     android:title="@string/prefHapticFeedbackButtonsTitle" />
 
@@ -369,7 +375,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_direction"
             android:key="throttle_direction_preference"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefDirectionSummary"
             android:title="@string/prefDirectionTitle">
@@ -382,14 +388,14 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwapForwardReverseButtonsDefaultValue"
                     android:key="prefSwapForwardReverseButtons"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefSwapForwardReverseButtonsSummary"
                     android:title="@string/prefSwapForwardReverseButtonsTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSwapForwardReverseButtonsLongPressDefaultValue"
                     android:key="prefSwapForwardReverseButtonsLongPress"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:icon="?attr/ed_preferences_long_press"
                     android:summary="@string/prefSwapForwardReverseButtonsLongPressSummary"
                     android:title="@string/prefSwapForwardReverseButtonsLongPressTitle" />
@@ -399,7 +405,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefDirectionButtonLongPressDelayTitle"
                     android:key="prefDirectionButtonLongPressDelay"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_timer"
                     android:summary="@string/prefDirectionButtonLongPressDelaySummary"
                     android:title="@string/prefDirectionButtonLongPressDelayTitle" />
@@ -412,7 +418,7 @@
                     android:defaultValue="@string/prefLeftDirectionButtonsDefaultValue"
                     android:dialogTitle="@string/prefLeftDirectionButtonsTitle"
                     android:key="prefLeftDirectionButtons"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="7"
                     android:summary="@string/prefLeftDirectionButtonsSummary"
                     android:title="@string/prefLeftDirectionButtonsTitle" />
@@ -421,7 +427,7 @@
                     android:defaultValue="@string/prefRightDirectionButtonsDefaultValue"
                     android:dialogTitle="@string/prefRightDirectionButtonsTitle"
                     android:key="prefRightDirectionButtons"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="7"
                     android:summary="@string/prefRightDirectionButtonsSummary"
                     android:title="@string/prefRightDirectionButtonsTitle" />
@@ -430,7 +436,7 @@
                     android:defaultValue="@string/prefLeftDirectionButtonsShortDefaultValue"
                     android:dialogTitle="@string/prefLeftDirectionButtonsShortTitle"
                     android:key="prefLeftDirectionButtonsShort"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="7"
                     android:summary="@string/prefLeftDirectionButtonsShortSummary"
                     android:title="@string/prefLeftDirectionButtonsShortTitle" />
@@ -439,7 +445,7 @@
                     android:defaultValue="@string/prefRightDirectionButtonsShortDefaultValue"
                     android:dialogTitle="@string/prefRightDirectionButtonsShortTitle"
                     android:key="prefRightDirectionButtonsShort"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="7"
                     android:summary="@string/prefRightDirectionButtonsShortSummary"
                     android:title="@string/prefRightDirectionButtonsShortTitle" />
@@ -455,7 +461,7 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDecreaseLocoNumberHeightDefaultValue"
             android:key="prefDecreaseLocoNumberHeight"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_decrease_loco_number_height"
             android:summary="@string/prefDecreaseLocoNumberHeightSummary"
             android:title="@string/prefDecreaseLocoNumberHeightTitle" />
@@ -465,7 +471,7 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefShowAddressInsteadOfNameDefaultValue"
             android:key="prefShowAddressInsteadOfName"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_address_instead_of_name"
             android:summary="@string/prefShowAddressInsteadOfNameSummary"
             android:title="@string/prefShowAddressInsteadOfNameTitle" />
@@ -475,7 +481,7 @@
             android:entries="@array/prefSelectedLocoIndicatorEntries"
             android:entryValues="@array/prefSelectedLocoIndicatorEntryValues"
             android:key="prefSelectedLocoIndicator"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_selected_loco_indicator"
             android:summary="@string/prefSelectedLocoIndicatorSummary"
             android:title="@string/prefSelectedLocoIndicatorTitle" />
@@ -487,7 +493,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_default_functions"
             android:key="default_function_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefDefaultFunctionsSummary"
             android:title="@string/prefDefaultFunctionsTitle">
@@ -502,7 +508,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
                     android:key="prefAlwaysUseDefaultFunctionLabels"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary"
                     android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
 
@@ -511,7 +517,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefOverrideWiThrottlesFunctionLatchingDefaultValue"
                     android:key="prefOverrideWiThrottlesFunctionLatching"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefOverrideWiThrottlesFunctionLatchingSummary"
                     android:title="@string/prefOverrideWiThrottlesFunctionLatchingTitle" />
 
@@ -520,7 +526,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefOverrideRosterWithNoFunctionLabelsDefaultValue"
                     android:key="prefOverrideRosterWithNoFunctionLabels"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefOverrideRosterWithNoFunctionLabelsSummary"
                     android:title="@string/prefOverrideRosterWithNoFunctionLabelsTitle" />
 
@@ -529,7 +535,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsTitle"
                     android:key="prefNumberOfDefaultFunctionLabels"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefNumberOfDefaultFunctionLabelsSummary"
                     android:title="@string/prefNumberOfDefaultFunctionLabelsTitle" />
 
@@ -538,7 +544,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:dialogTitle="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle"
                     android:key="prefNumberOfDefaultFunctionLabelsForRoster"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefNumberOfDefaultFunctionLabelsForRosterSummary"
                     android:title="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
             </PreferenceCategory>
@@ -547,8 +553,8 @@
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefHideFunctionButtonsOfNonSelectedThrottle"
-            android:layout="@layout/preference_switch_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:layout="@layout/preference_item_switch_icon_left"
+            android:icon="?attr/ed_preferences_hide_function_buttons_on_non_selected_throttle"
             android:summary="@string/prefHideFunctionButtonsOfNonSelectedThrottleSummary"
             android:title="@string/prefHideFunctionButtonsOfNonSelectedThrottleTitle" />
 
@@ -557,7 +563,7 @@
             android:entries="@array/prefSimpleThrottleLayoutShowFunctionButtonCountEntries"
             android:entryValues="@array/prefSimpleThrottleLayoutShowFunctionButtonCountEntryValues"
             android:key="prefSimpleThrottleLayoutShowFunctionButtonCount"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_empty"
             android:summary="@string/prefSimpleThrottleLayoutShowFunctionButtonCountSummary"
             android:title="@string/prefSimpleThrottleLayoutShowFunctionButtonCountTitle" />
@@ -569,7 +575,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_throttle_web_view"
             android:key="throttle_webview_preference"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefWebViewSummary"
             android:title="@string/prefWebViewTitle">
@@ -584,7 +590,7 @@
                     android:entries="@array/WebViewLocationEntries"
                     android:entryValues="@array/WebViewLocationEntryValues"
                     android:key="prefWebViewLocation"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefWebViewLocationSummary"
                     android:title="@string/prefWebViewLocationTitle" />
 
@@ -593,7 +599,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefIncreaseWebViewSizeDefaultValue"
                     android:key="prefIncreaseWebViewSize"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefIncreaseWebViewSizeSummary"
                     android:title="@string/prefIncreaseWebViewSizeTitle" />
 
@@ -602,7 +608,7 @@
                     android:dialogTitle="@string/prefInitialThrottleWebPageSummary"
                     android:inputType="text"
                     android:key="prefInitialThrottleWebPage"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_initial_web_page"
                     android:maxLines="1"
                     android:summary="@string/prefInitialThrottleWebPageSummary"
@@ -619,7 +625,7 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefThrottleViewImmersiveModeDefaultValue"
             android:key="prefThrottleViewImmersiveMode"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_immersive_mode"
             android:summary="@string/prefThrottleViewImmersiveModeSummary"
             android:title="@string/prefThrottleViewImmersiveModeTitle" />
@@ -627,7 +633,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_swipe_up_down"
             android:key="swipe_up_down_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefSwipeUpDownSummary"
             android:title="@string/prefSwipeUpDownTitle">
@@ -642,7 +648,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefThrottleViewImmersiveModeHideToolbarDefaultValue"
                     android:key="prefThrottleViewImmersiveModeHideToolbar"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefThrottleViewImmersiveModeHideToolbarSummary"
                     android:title="@string/prefThrottleViewImmersiveModeHideToolbarTitle" />
 
@@ -651,7 +657,7 @@
                     android:entries="@array/prefSwipeUpOptionsEntries"
                     android:entryValues="@array/prefSwipeUpOptionsEntryValues"
                     android:key="prefSwipeDownOption"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSwipeDownOptionSummary"
                     android:title="@string/prefSwipeDownOptionTitle" />
 
@@ -660,7 +666,7 @@
                     android:entries="@array/prefSwipeUpOptionsEntries"
                     android:entryValues="@array/prefSwipeUpOptionsEntryValues"
                     android:key="prefSwipeUpOption"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSwipeUpOptionSummary"
                     android:title="@string/prefSwipeUpOptionTitle" />
 
@@ -669,7 +675,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefScreenBrightnessDimTitle"
                     android:key="prefScreenBrightnessDim"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefScreenBrightnessDimSummary"
                     android:title="@string/prefScreenBrightnessDimTitle" />
             </PreferenceCategory>
@@ -678,7 +684,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_shake"
             android:key="throttle_accelerometer_preference"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefAccelerometerSummary"
             android:title="@string/prefAccelerometerTitle">
@@ -693,7 +699,7 @@
                     android:entries="@array/prefAccelerometerShakeEntries"
                     android:entryValues="@array/prefAccelerometerShakeEntryValues"
                     android:key="prefAccelerometerShake"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefAccelerometerShakeSummary"
                     android:title="@string/prefAccelerometerShakeTitle" />
 
@@ -703,7 +709,7 @@
                     android:dialogTitle="@string/prefAccelerometerShakeThresholdTitle"
                     android:inputType="numberDecimal"
                     android:key="prefAccelerometerShakeThreshold"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefAccelerometerShakeThresholdSummary"
                     android:title="@string/prefAccelerometerShakeThresholdTitle" />
             </PreferenceCategory>
@@ -716,7 +722,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_background"
             android:key="prefBackgroundImageGroup"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefBackgroundImageSummary"
             android:title="@string/prefBackgroundImagePreferencesTitle">
@@ -729,13 +735,13 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefBackgroundImageDefaultValue"
                     android:key="prefBackgroundImage"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefBackgroundImageSummary"
                     android:title="@string/prefBackgroundImageTitle" />
 
                 <Preference
                     android:key="prefBackgroundImageFileNameImagePicker"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefBackgroundImageFileNameSummary"
                     android:title="@string/prefBackgroundImageFileNameTitle" />
 
@@ -744,7 +750,7 @@
                     android:entries="@array/prefBackgroundImagePositionEntries"
                     android:entryValues="@array/prefBackgroundImagePositionEntryValues"
                     android:key="prefBackgroundImagePosition"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefBackgroundImagePositionSummary"
                     android:title="@string/prefBackgroundImagePositionTitle" />
             </PreferenceCategory>
@@ -757,7 +763,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_semi_realistic_throttle"
             android:key="semi_realistic_throttle_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefSemiRealisticThrottleSummary"
             android:title="@string/prefSemiRealisticThrottleTitle">
@@ -772,7 +778,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefSemiRealisticThrottleAccelerationRepeatTitle"
                     android:key="prefSemiRealisticThrottleAccelerationRepeat"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleAccelerationRepeatSummary"
                     android:title="@string/prefSemiRealisticThrottleAccelerationRepeatTitle" />
 
@@ -781,7 +787,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecelerationRepeatTitle"
                     android:key="prefSemiRealisticThrottleDecelerationRepeat"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecelerationRepeatSummary"
                     android:title="@string/prefSemiRealisticThrottleDecelerationRepeatTitle" />
 
@@ -790,7 +796,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:dialogTitle="@string/prefSemiRealisticThrottleSpeedStepTitle"
                     android:key="prefSemiRealisticThrottleSpeedStep"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleSpeedStepSummary"
                     android:title="@string/prefSemiRealisticThrottleSpeedStepTitle" />
 
@@ -799,7 +805,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefMaximumThrottleTitle"
                     android:key="prefMaximumThrottle"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefMaximumThrottleSummary"
                     android:title="@string/prefMaximumThrottleTitle" />
 
@@ -808,7 +814,7 @@
                     android:entries="@array/prefDisplaySemiRealisticThrottleNotchesEntries"
                     android:entryValues="@array/prefDisplaySemiRealisticThrottleNotchesEntryValues"
                     android:key="prefDisplaySemiRealisticThrottleNotches"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleNotchesSummary"
                     android:title="@string/prefSemiRealisticThrottleNotchesTitle" />
 
@@ -817,7 +823,7 @@
                     android:entries="@array/prefSemiRealisticThrottleStopButtonActionEntries"
                     android:entryValues="@array/prefSemiRealisticThrottleStopButtonActionEntryValues"
                     android:key="prefSemiRealisticThrottleStopButtonAction"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleStopButtonActionSummary"
                     android:title="@string/prefSemiRealisticThrottleStopButtonActionTitle" />
 
@@ -826,7 +832,7 @@
                     android:entries="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntries"
                     android:entryValues="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntryValues"
                     android:key="prefSemiRealisticThrottleNumberOfBrakeSteps"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleNumberOfBrakeStepsSummary"
                     android:title="@string/prefSemiRealisticThrottleNumberOfBrakeStepsTitle" />
 
@@ -835,14 +841,14 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSemiRealisticMaximumBrakePcntTitle"
                     android:key="prefSemiRealisticMaximumBrakePcnt"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticMaximumBrakePcntSummary"
                     android:title="@string/prefSemiRealisticMaximumBrakePcntTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSemiRealisticThrottleDisableAirDefaultValue"
                     android:key="prefSemiRealisticThrottleDisableAir"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDisableAirSummary"
                     android:title="@string/prefSemiRealisticThrottleDisableAirTitle" />
 
@@ -851,7 +857,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
                     android:dialogTitle="@string/prefSemiRealisticThrottleAirRefreshRateTitle"
                     android:key="prefSemiRealisticThrottleAirRefreshRate"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleAirRefreshRateSummary"
                     android:title="@string/prefSemiRealisticThrottleAirRefreshRateTitle" />
 
@@ -860,7 +866,7 @@
                     android:entries="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntries"
                     android:entryValues="@array/prefDisplaySemiRealisticThrottleOtherSlidersEntryValues"
                     android:key="prefSemiRealisticThrottleNumberOfLoadSteps"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleNumberOfLoadStepsSummary"
                     android:title="@string/prefSemiRealisticThrottleNumberOfLoadStepsTitle" />
 
@@ -869,7 +875,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
                     android:dialogTitle="@string/prefSemiRealisticThrottleMaxLoadPcntTitle"
                     android:key="prefSemiRealisticThrottleMaxLoadPcnt"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleMaxLoadPcntSummary"
                     android:title="@string/prefSemiRealisticThrottleMaxLoadPcntTitle" />
 
@@ -878,7 +884,7 @@
                     android:entries="@array/prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntries"
                     android:entryValues="@array/prefDisplaySemiRealisticThrottleDecoderBrakeTypeEntryValues"
                     android:key="prefDisplaySemiRealisticThrottleDecoderBrakeType"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary"
                     android:title="@string/prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle" />
 
@@ -887,7 +893,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle" />
 
@@ -896,7 +902,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle" />
 
@@ -905,7 +911,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle" />
 
@@ -914,7 +920,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle" />
 
@@ -923,7 +929,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle" />
 
@@ -932,7 +938,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
                     android:key="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle" />
 
@@ -951,7 +957,7 @@
             android:entries="@array/prefToolbarButtonSizeEntries"
             android:entryValues="@array/prefToolbarButtonSizeEntryValues"
             android:key="prefToolbarButtonSize"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_toolbar_button_size"
             android:summary="@string/prefToolbarButtonSizeSummary"
             android:title="@string/prefToolbarButtonSizeTitle" />
@@ -960,7 +966,7 @@
             android:defaultValue="@bool/prefShowEmergencyStopButtonDefaultValue"
             android:icon="?attr/ed_estop_button"
             android:key="prefShowEmergencyStopButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefEmerStopSummary"
             android:title="@string/prefEmerStopTitle" />
 
@@ -968,7 +974,7 @@
             android:defaultValue="@bool/prefLayoutPowerButtonDefaultValue"
             android:icon="?attr/ed_power_green_button"
             android:key="prefShowLayoutPowerButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefPowerButtonBarSummary"
             android:title="@string/prefPowerButtonBarTitle" />
 
@@ -976,7 +982,7 @@
             android:defaultValue="@bool/prefFlashlightButtonDefaultValue"
             android:icon="?attr/ed_flashlight_on_button"
             android:key="prefFlashlightButtonDisplay"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefFlashlightSummary"
             android:title="@string/prefFlashlightTitle" />
 
@@ -986,7 +992,7 @@
             android:entryValues="@array/DisplayClockEntryValues"
             android:icon="?attr/ed_clock_icon"
             android:key="prefClockDisplayType"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:summary="@string/prefDisplayClockSummary"
             android:title="@string/prefDisplayClockTitle" />
 
@@ -994,14 +1000,14 @@
             android:defaultValue="@bool/prefWebViewButtonDefaultValue"
             android:icon="?attr/ed_web_view_button"
             android:key="prefWebViewButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefWebViewButtonSummary"
             android:title="@string/prefWebViewButtonTitle" />
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_layout_switch_button"
             android:key="prefThrottleSwitchButton"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefThrottleSwitchButtonSummary"
             android:title="@string/prefThrottleSwitchButtonPreferencesTitle">
@@ -1015,14 +1021,14 @@
                     android:defaultValue="@bool/prefThrottleSwitchButtonDefaultValue"
                     android:icon="?attr/ed_throttle_switch_button"
                     android:key="prefThrottleSwitchButtonDisplay"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:summary="@string/prefThrottleSwitchButtonSummary"
                     android:title="@string/prefThrottleSwitchButtonTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefThrottleSwitchButtonCycleAllDefaultValue"
                     android:key="prefThrottleSwitchButtonCycleAll"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefThrottleSwitchButtonCycleAllSummary"
                     android:title="@string/prefThrottleSwitchButtonCycleAllTitle" />
 
@@ -1031,7 +1037,7 @@
                     android:entries="@array/prefThrottleScreenTypeEntries"
                     android:entryValues="@array/prefThrottleScreenTypeEntryValues"
                     android:key="prefThrottleSwitchOption1"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefThrottleSwitchOption1Summary"
                     android:title="@string/prefThrottleSwitchOption1Title" />
                 <ListPreference
@@ -1039,7 +1045,7 @@
                     android:entries="@array/NumOfThrottlesEntries"
                     android:entryValues="@array/NumOfThrottlesEntryValues"
                     android:key="prefThrottleSwitchOption1NumThrottles"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefNumOfThrottlesSummary"
                     android:title="@string/prefNumOfThrottles" />
 
@@ -1048,7 +1054,7 @@
                     android:entries="@array/prefThrottleScreenTypeEntries"
                     android:entryValues="@array/prefThrottleScreenTypeEntryValues"
                     android:key="prefThrottleSwitchOption2"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefThrottleSwitchOption2Summary"
                     android:title="@string/prefThrottleSwitchOption2Title" />
 
@@ -1057,7 +1063,7 @@
                     android:entries="@array/NumOfThrottlesEntries"
                     android:entryValues="@array/NumOfThrottlesEntryValues"
                     android:key="prefThrottleSwitchOption2NumThrottles"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefNumOfThrottlesSummary"
                     android:title="@string/prefNumOfThrottles" />
 
@@ -1078,7 +1084,7 @@
             android:defaultValue="@bool/prefDeviceSoundsButtonDefaultValue"
             android:icon="?attr/ed_in_device_sounds_button"
             android:key="prefDeviceSoundsButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefDeviceSoundsButtonSummary"
             android:title="@string/prefDeviceSoundsButtonTitle" />
 
@@ -1086,7 +1092,7 @@
             android:defaultValue="@bool/prefActionBarShowServerDescriptionDefaultValue"
             android:key="prefActionBarShowServerDescription"
             android:icon="?attr/ed_preferences_show_server_description"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowServerDescriptionSummary"
             android:title="@string/prefActionBarShowServerDescriptionTitle" />
 
@@ -1096,7 +1102,7 @@
             android:entryValues="@array/prefAppIconActionEntryValues"
             android:icon="?attr/ed_icon"
             android:key="prefAppIconAction"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:summary="@string/prefAppIconActionSummary"
             android:title="@string/prefAppIconActionTitle" />
 
@@ -1104,7 +1110,7 @@
             android:defaultValue="@bool/prefActionBarShowDccExButtonDefaultValue"
             android:icon="?attr/ed_dcc_ex_button"
             android:key="prefActionBarShowDccExButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowDccExButtonSummary"
             android:title="@string/prefActionBarShowDccExButtonTitle" />
 
@@ -1116,7 +1122,7 @@
             android:defaultValue="@bool/prefActionBarShowThrottleButtonDefaultValue"
             android:icon="?attr/ed_throttle_button"
             android:key="prefActionBarShowThrottleButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowThrottleButtonSummary"
             android:title="@string/prefActionBarShowThrottleButtonTitle" />
 
@@ -1124,7 +1130,7 @@
             android:defaultValue="@bool/prefActionBarShowTurnoutsButtonDefaultValue"
             android:icon="?attr/ed_turnouts_button"
             android:key="prefActionBarShowTurnoutsButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowTurnoutsButtonSummary"
             android:title="@string/prefActionBarShowTurnoutsButtonTitle" />
 
@@ -1132,7 +1138,7 @@
             android:defaultValue="@bool/prefActionBarShowRoutesButtonDefaultValue"
             android:icon="?attr/ed_routes_button"
             android:key="prefActionBarShowRoutesButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowRoutesButtonSummary"
             android:title="@string/prefActionBarShowRoutesButtonTitle" />
 
@@ -1140,7 +1146,7 @@
             android:defaultValue="@bool/prefActionBarShowWebButtonDefaultValue"
             android:icon="?attr/ed_web_button"
             android:key="prefActionBarShowWebButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowWebButtonSummary"
             android:title="@string/prefActionBarShowWebButtonTitle" />
 
@@ -1152,7 +1158,7 @@
             android:defaultValue="@bool/prefActionBarShowAdvancedConsistButtonDefaultValue"
             android:icon="@drawable/reusable_toolbar_button_cv19_consist_states"
             android:key="prefActionBarShowAdvancedConsistButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowAdvancedConsistButtonSummary"
             android:title="@string/prefActionBarShowAdvancedConsistButtonTitle" />
 
@@ -1160,7 +1166,7 @@
             android:defaultValue="@bool/prefActionBarShowAdvancedConsistButtonDefaultValue"
             android:icon="@drawable/reusable_toolbar_button_dccex_consist_states"
             android:key="prefActionBarShowDccexConsistButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowDccexConsistButtonSummary"
             android:title="@string/prefActionBarShowDccexConsistButtonTitle" />
 
@@ -1177,7 +1183,7 @@
             android:entries="@array/DisplaySpeedUnitsEntries"
             android:entryValues="@array/DisplaySpeedUnitEntryValues"
             android:key="prefDisplaySpeedUnits"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_speed_units"
             android:summary="@string/prefDisplaySpeedUnitsSummary"
             android:title="@string/prefDisplaySpeedUnitsTitle" />
@@ -1187,7 +1193,7 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
             android:dialogTitle="@string/prefMaximumThrottleTitle"
             android:key="prefMaximumThrottle"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_maximum_throttle"
             android:summary="@string/prefMaximumThrottleSummary"
             android:title="@string/prefMaximumThrottleTitle" />
@@ -1197,7 +1203,7 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
             android:dialogTitle="@string/prefMaximumThrottleChangeTitle"
             android:key="prefMaximumThrottleChange"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_maximum_throttle_change"
             android:summary="@string/prefMaximumThrottleChangeSummary"
             android:title="@string/prefMaximumThrottleChangeTitle" />
@@ -1207,7 +1213,7 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:dialogTitle="@string/prefSpeedButtonsSpeedStepTitle"
             android:key="prefSpeedButtonsSpeedStep"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_speed_step"
             android:summary="@string/prefSpeedButtonsSpeedStepSummary"
             android:title="@string/prefSpeedButtonsSpeedStepTitle" />
@@ -1217,7 +1223,7 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
             android:dialogTitle="@string/prefSpeedButtonsRepeatTitle"
             android:key="prefSpeedButtonsRepeat"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_speed_arrows_repeat_delay"
             android:summary="@string/prefSpeedButtonsRepeatSummary"
             android:title="@string/prefSpeedButtonsRepeatTitle" />
@@ -1225,7 +1231,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefSpeedButtonsSpeedStepDecrementDefaultValue"
             android:key="prefSpeedButtonsSpeedStepDecrement"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_speed_step_decrement"
             android:summary="@string/prefSpeedButtonsSpeedStepDecrementSummary"
             android:title="@string/prefSpeedButtonsSpeedStepDecrementTitle" />
@@ -1237,7 +1243,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopOnPhoneCallDefaultValue"
             android:key="prefStopOnPhoneCall"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_stop_on_phone_call"
             android:summary="@string/prefStopOnPhoneCallSummary"
             android:title="@string/prefStopOnPhoneCallTitle" />
@@ -1245,7 +1251,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopButtonEStopOnLongPressDefaultValue"
             android:key="prefStopButtonEStopOnLongPress"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_estop_on_long_press"
             android:summary="@string/prefStopButtonEStopOnLongPressSummary"
             android:title="@string/prefStopButtonEStopOnLongPressTitle" />
@@ -1255,7 +1261,7 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
             android:dialogTitle="@string/prefStopButtonLongPressDelayTitle"
             android:key="prefStopButtonLongPressDelay"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_stop_button_long_press_delay"
             android:summary="@string/prefStopButtonLongPressDelaySummary"
             android:title="@string/prefStopButtonLongPressDelayTitle" />
@@ -1263,7 +1269,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopOnBackgroundDefaultValue"
             android:key="prefStopOnBackground"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_stop_on_background"
             android:summary="@string/prefStopOnBackgroundSummary"
             android:title="@string/prefStopOnBackgroundTitle" />
@@ -1271,7 +1277,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDccexEmergencyStopPauseResumeDefaultValue"
             android:key="prefDccexEmergencyStopPauseResume"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_dccex_estop_pause_resume"
             android:summary="@string/prefDccexEmergencyStopPauseResumeSummary"
             android:title="@string/prefDccexEmergencyStopPauseResumeTitle" />
@@ -1285,7 +1291,7 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefDirChangeWhileMovingDefaultValue"
             android:key="prefDirChangeWhileMoving"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_dir_change_while_moving"
             android:summary="@string/prefDirChangeWhileMovingSummary"
             android:title="@string/prefDirChangeWhileMovingTitle" />
@@ -1295,7 +1301,7 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefStopOnDirectionChangeDefaultValue"
             android:key="prefStopOnDirectionChange"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_stop_on_direction_change"
             android:summary="@string/prefStopOnDirectionChangeSummary"
             android:title="@string/prefStopOnDirectionChangeTitle" />
@@ -1307,7 +1313,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_limit_speed_and_pause_buttons"
             android:key="prefLimitSpeedButtonPreferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefLimitSpeedButtonSummary"
             android:title="@string/prefLimitSpeedButtonPreferencesTitle">
@@ -1320,7 +1326,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefLimitSpeedButtonDefaultValue"
                     android:key="prefLimitSpeedButton"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefLimitSpeedButtonSummary"
                     android:title="@string/prefLimitSpeedButtonTitle" />
 
@@ -1329,7 +1335,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefLimitSpeedPercentTitle"
                     android:key="prefLimitSpeedPercent"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefLimitSpeedPercentSummary"
                     android:title="@string/prefLimitSpeedPercentTitle" />
 
@@ -1340,14 +1346,14 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefPauseSpeedButtonDefaultValue"
                     android:key="prefPauseSpeedButton"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefPauseSpeedButtonSummary"
                     android:title="@string/prefPauseSpeedButtonTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefPauseAlternateButtonDefaultValue"
                     android:key="prefPauseAlternateButton"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefPauseAlternateButtonSummary"
                     android:title="@string/prefPauseAlternateButtonTitle" />
 
@@ -1356,7 +1362,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefPauseSpeedRateTitle"
                     android:key="prefPauseSpeedRate"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefPauseSpeedRateSummary"
                     android:title="@string/prefPauseSpeedRateTitle" />
 
@@ -1365,7 +1371,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:dialogTitle="@string/prefPauseSpeedStepTitle"
                     android:key="prefPauseSpeedStep"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefPauseSpeedStepSummary"
                     android:title="@string/prefPauseSpeedStepTitle" />
 
@@ -1375,7 +1381,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_consist"
             android:key="consist_follow_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefConsistFollowSummary"
             android:title="@string/prefConsistFollowTitle">
@@ -1390,35 +1396,35 @@
                     android:entries="@array/prefConsistFollowRuleStyleEntries"
                     android:entryValues="@array/prefConsistFollowRuleStyleEntryValues"
                     android:key="prefConsistFollowRuleStyle"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowRuleStyleSummary"
                     android:title="@string/prefConsistFollowRuleStyleTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefAlwaysUseDefaultFunctionLabelsDefaultValue"
                     android:key="prefAlwaysUseDefaultFunctionLabels"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefAlwaysUseDefaultFunctionLabelsSummary2"
                     android:title="@string/prefAlwaysUseDefaultFunctionLabelsTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSelectiveLeadSoundDefaultValue"
                     android:key="prefSelectiveLeadSound"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefSelectiveLeadSoundSummary"
                     android:title="@string/prefSelectiveLeadSoundTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                     android:key="prefSelectiveLeadSoundF1"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefSelectiveLeadSoundF1Summary"
                     android:title="@string/prefSelectiveLeadSoundF1Title" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefSelectiveLeadSoundF1DefaultValue"
                     android:key="prefSelectiveLeadSoundF2"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefSelectiveLeadSoundF2Summary"
                     android:title="@string/prefSelectiveLeadSoundF2Title" />
 
@@ -1431,7 +1437,7 @@
                     android:entries="@array/prefConsistFollowDefaultActionEntries"
                     android:entryValues="@array/prefConsistFollowDefaultActionEntryValues"
                     android:key="prefConsistFollowDefaultAction"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowDefaultActionSummary"
                     android:title="@string/prefConsistFollowDefaultActionTitle" />
 
@@ -1439,7 +1445,7 @@
                     android:defaultValue="@string/prefConsistFollowString1DefaultValue"
                     android:dialogTitle="@string/prefConsistFollowString1Summary"
                     android:key="prefConsistFollowString1"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="100"
                     android:summary="@string/prefConsistFollowString1Summary"
                     android:title="@string/prefConsistFollowString1Title" />
@@ -1449,7 +1455,7 @@
                     android:entries="@array/prefConsistFollowEntries"
                     android:entryValues="@array/prefConsistFollowEntryValues"
                     android:key="prefConsistFollowAction1"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowAction1Summary"
                     android:title="@string/prefConsistFollowAction1Title" />
 
@@ -1457,7 +1463,7 @@
                     android:defaultValue="@string/prefConsistFollowString2DefaultValue"
                     android:dialogTitle="@string/prefConsistFollowString2Summary"
                     android:key="prefConsistFollowString2"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="100"
                     android:summary="@string/prefConsistFollowString2Summary"
                     android:title="@string/prefConsistFollowString2Title" />
@@ -1467,7 +1473,7 @@
                     android:entries="@array/prefConsistFollowEntries"
                     android:entryValues="@array/prefConsistFollowEntryValues"
                     android:key="prefConsistFollowAction2"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowAction2Summary"
                     android:title="@string/prefConsistFollowAction2Title" />
 
@@ -1475,7 +1481,7 @@
                     android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
                     android:dialogTitle="@string/prefConsistFollowString3Summary"
                     android:key="prefConsistFollowString3"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="100"
                     android:summary="@string/prefConsistFollowString3Summary"
                     android:title="@string/prefConsistFollowString3Title" />
@@ -1485,7 +1491,7 @@
                     android:entries="@array/prefConsistFollowEntries"
                     android:entryValues="@array/prefConsistFollowEntryValues"
                     android:key="prefConsistFollowAction3"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowAction3Summary"
                     android:title="@string/prefConsistFollowAction3Title" />
 
@@ -1493,7 +1499,7 @@
                     android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
                     android:dialogTitle="@string/prefConsistFollowString4Summary"
                     android:key="prefConsistFollowString4"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="100"
                     android:summary="@string/prefConsistFollowString4Summary"
                     android:title="@string/prefConsistFollowString4Title" />
@@ -1503,7 +1509,7 @@
                     android:entries="@array/prefConsistFollowEntries"
                     android:entryValues="@array/prefConsistFollowEntryValues"
                     android:key="prefConsistFollowAction4"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowAction4Summary"
                     android:title="@string/prefConsistFollowAction4Title" />
 
@@ -1511,7 +1517,7 @@
                     android:defaultValue="@string/prefConsistFollowStringOtherDefaultValue"
                     android:dialogTitle="@string/prefConsistFollowString5Summary"
                     android:key="prefConsistFollowString5"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:maxLength="80"
                     android:summary="@string/prefConsistFollowString5Summary"
                     android:title="@string/prefConsistFollowString5Title" />
@@ -1521,7 +1527,7 @@
                     android:entries="@array/prefConsistFollowEntries"
                     android:entryValues="@array/prefConsistFollowEntryValues"
                     android:key="prefConsistFollowAction5"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowAction5Summary"
                     android:title="@string/prefConsistFollowAction5Title" />
             </PreferenceCategory>
@@ -1530,7 +1536,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefConsistLightsLongClickDefaultValue"
             android:key="prefConsistLightsLongClick"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_no_icon"
             android:icon="?attr/ed_preferences_consist_lights_on_long_press"
             android:summary="@string/prefConsistLightsLongClickSummary"
             android:title="@string/prefConsistLightsLongClickTitle" />
@@ -1546,7 +1552,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_volume_buttons"
             android:key="volume_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefVolumeSummary"
             android:title="@string/prefVolumeTitle">
@@ -1561,21 +1567,21 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:dialogTitle="@string/prefVolumeSpeedButtonsSpeedStepTitle"
                     android:key="prefVolumeSpeedButtonsSpeedStep"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
                     android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
                     android:key="prefDisableVolumeKeys"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDisableVolumeKeysSummary"
                     android:title="@string/prefDisableVolumeKeysTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefVolumeKeysFollowLastTouchedThrottleDefaultValue"
                     android:key="prefVolumeKeysFollowLastTouchedThrottle"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
                     android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" />
             </PreferenceCategory>
@@ -1584,7 +1590,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_gamepad"
             android:key="gamepad_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefGamePadSummary"
             android:title="@string/prefGamePadTitle">
@@ -1599,21 +1605,21 @@
                     android:entries="@array/prefGamePadTypeEntries"
                     android:entryValues="@array/prefGamePadTypeEntryValues"
                     android:key="prefGamePadType"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadTypeSummary"
                     android:title="@string/prefGamePadTypeTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadOnlyOneGamepadDefaultValue"
                     android:key="prefGamepadOnlyOneGamepad"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefGamepadOnlyOneGamepadSummary"
                     android:title="@string/prefGamepadOnlyOneGamepadTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadTestNowDefaultValue"
                     android:key="prefGamepadTestNow"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefGamepadTestNowSummary"
                     android:title="@string/prefGamepadTestNowTitle" />
 
@@ -1622,7 +1628,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                     android:dialogTitle="@string/prefGamePadSpeedButtonsSpeedStepTitle"
                     android:key="prefGamePadSpeedButtonsSpeedStep"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadSpeedButtonsSpeedStepSummary"
                     android:title="@string/prefGamePadSpeedButtonsSpeedStepTitle" />
 
@@ -1631,7 +1637,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefGamePadFeedbackVolumeTitle"
                     android:key="prefGamePadFeedbackVolume"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadFeedbackVolumeSummary"
                     android:title="@string/prefGamePadFeedbackVolumeTitle" />
                 <EditTextPreference
@@ -1639,7 +1645,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefGamePadSpeedButtonsRepeatTitle"
                     android:key="prefGamePadSpeedArrowsThrottleRepeatDelay"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_speed_arrows_repeat_delay"
                     android:summary="@string/prefGamePadSpeedButtonsRepeatSummary"
                     android:title="@string/prefGamePadSpeedButtonsRepeatTitle" />
@@ -1650,7 +1656,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButton1"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButton1Title" />
                 <ListPreference
@@ -1658,7 +1664,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButton3"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButton3Title" />
 
@@ -1667,7 +1673,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButton2"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButton2Title" />
 
@@ -1676,7 +1682,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButton4"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButton4Title" />
 
@@ -1685,7 +1691,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonStart"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonStartTitle" />
 
@@ -1694,7 +1700,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonReturn"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonReturnTitle" />
 
@@ -1703,7 +1709,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonUp"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonUpTitle" />
 
@@ -1712,7 +1718,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonRight"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonRightTitle" />
 
@@ -1721,7 +1727,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonDown"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonDownTitle" />
 
@@ -1730,7 +1736,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonLeft"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonLeftTitle" />
 
@@ -1739,7 +1745,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonLeftShoulder"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonLeftTitle" />
 
@@ -1748,7 +1754,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonRightShoulder"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonLeftTitle" />
 
@@ -1757,7 +1763,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonLeftTrigger"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonLeftTitle" />
 
@@ -1766,7 +1772,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonRightTrigger"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonLeftTitle" />
 
@@ -1775,7 +1781,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonLeftThumb"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonLeftTitle" />
 
@@ -1784,7 +1790,7 @@
                     android:entries="@array/prefGamePadKeyEntries"
                     android:entryValues="@array/prefGamePadKeyEntryValues"
                     android:key="prefGamePadButtonRightThumb"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadButtonSummary"
                     android:title="@string/prefGamePadButtonLeftTitle" />
 
@@ -1793,7 +1799,7 @@
                     android:entries="@array/prefGamePadDoublePressStopEntries"
                     android:entryValues="@array/prefGamePadDoublePressStopEntryValues"
                     android:key="prefGamePadDoublePressStop"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamePadDoublePressStopSummary"
                     android:title="@string/prefGamePadDoublePressStopTitle" />
 
@@ -1801,28 +1807,28 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadSwapForwardReverseWithScreenButtonsDefaultValue"
                     android:key="prefGamepadSwapForwardReverseWithScreenButtons"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefGamepadSwapForwardReverseWithScreenButtonsSummary"
                     android:title="@string/prefGamepadSwapForwardReverseWithScreenButtonsTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadTestEnforceTestingDefaultValue"
                     android:key="prefGamepadTestEnforceTesting"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefGamepadTestEnforceTestingSummary"
                     android:title="@string/prefGamepadTestEnforceTestingTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamepadTestEnforceTestingSimpleDefaultValue"
                     android:key="prefGamepadTestEnforceTestingSimple"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefGamepadTestEnforceTestingSimpleSummary"
                     android:title="@string/prefGamepadTestEnforceTestingSimpleTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefGamePadIgnoreJoystickDefaultValue"
                     android:key="prefGamePadIgnoreJoystick"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefGamePadIgnoreJoystickSummary"
                     android:title="@string/prefGamePadIgnoreJoystickTitle" />
             </PreferenceCategory>
@@ -1831,7 +1837,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_esu_icon"
             android:key="prefEsuMc2"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:shouldDisableView="true"
             android:summary="@string/prefEsuMc2Summary"
@@ -1848,7 +1854,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefEsuMc2StopButtonDelayTitle"
                     android:key="prefEsuMc2StopButtonDelay"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_timer"
                     android:summary="@string/prefEsuMc2StopButtonDelaySummary"
                     android:title="@string/prefEsuMc2StopButtonDelayTitle" />
@@ -1856,7 +1862,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefEsuMc2StopButtonShortPressDefaultValue"
                     android:key="prefEsuMc2StopButtonShortPress"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefEsuMc2StopButtonShortPressSummary"
                     android:title="@string/prefEsuMc2StopButtonShortPressTitle" />
             </PreferenceCategory>
@@ -1873,7 +1879,7 @@
                     android:entries="@array/prefEsuMc2KeyEntries"
                     android:entryValues="@array/prefEsuMc2KeyEntryValues"
                     android:key="prefEsuMc2ButtonTL"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefEsuMc2ButtonTLSummary"
                     android:title="@string/prefEsuMc2ButtonTLTitle" />
 
@@ -1882,7 +1888,7 @@
                     android:entries="@array/prefEsuMc2KeyEntries"
                     android:entryValues="@array/prefEsuMc2KeyEntryValues"
                     android:key="prefEsuMc2ButtonBL"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefEsuMc2ButtonBLSummary"
                     android:title="@string/prefEsuMc2ButtonBLTitle" />
 
@@ -1891,7 +1897,7 @@
                     android:entries="@array/prefEsuMc2KeyEntries"
                     android:entryValues="@array/prefEsuMc2KeyEntryValues"
                     android:key="prefEsuMc2ButtonTR"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefEsuMc2ButtonTRSummary"
                     android:title="@string/prefEsuMc2ButtonTRTitle" />
 
@@ -1900,7 +1906,7 @@
                     android:entries="@array/prefEsuMc2KeyEntries"
                     android:entryValues="@array/prefEsuMc2KeyEntryValues"
                     android:key="prefEsuMc2ButtonBR"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefEsuMc2ButtonBRSummary"
                     android:title="@string/prefEsuMc2ButtonBRTitle" />
                 <!-- Seems that ESU MCII buttons don't always register holds
@@ -1911,7 +1917,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefEsuMc2ButtonsRepeatTitle"
                     android:key="prefEsuMc2ButtonsRepeatDelay"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_timer"
                     android:summary="@string/prefEsuMc2ButtonsRepeatSummary"
                     android:title="@string/prefEsuMc2ButtonsRepeatTitle" />
@@ -1928,14 +1934,14 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefEsuMc2ZeroTrimTitle"
                     android:key="prefEsuMc2ZeroTrim"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefEsuMc2ZeroTrimSummary"
                     android:title="@string/prefEsuMc2ZeroTrimTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefEsuMc2EndStopDirectionChangeDefaultValue"
                     android:key="prefEsuMc2EndStopDirectionChange"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefEsuMc2EndStopDirectionChangeSummary"
                     android:title="@string/prefEsuMc2EndStopDirectionChangeTitle" />
 
@@ -1943,7 +1949,7 @@
                     android:defaultValue="@bool/prefEsuMc2KnobButtonDefaultValue"
                     android:icon="?attr/ed_esu_mc2_knob_on_button"
                     android:key="prefEsuMc2KnobButtonDisplay"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:summary="@string/prefEsuMc2KnobButtonSummary"
                     android:title="@string/prefEsuMc2KnobButtonTitle" />
             </PreferenceCategory>
@@ -1961,7 +1967,7 @@
                     android:entries="@array/prefEsuMc2SliderTypeEntries"
                     android:entryValues="@array/prefEsuMc2SliderTypeEntryValues"
                     android:key="prefEsuMc2SliderType"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefEsuMc2SliderTypeSummary"
                     android:title="@string/prefEsuMc2SliderTypeTitle" />
 
@@ -1970,7 +1976,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeLowFunctionEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle" />
 
@@ -1979,7 +1985,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeLowValueEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeLowValueEsuTitle" />
 
@@ -1988,7 +1994,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeMidFunctionEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidFunctionEsuTitle" />
 
@@ -1997,7 +2003,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeMidValueEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuTitle" />
 
@@ -2006,7 +2012,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_decoder_functions"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeHighFunctionEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighFunctionEsuTitle" />
 
@@ -2015,7 +2021,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle"
                     android:key="prefEsuMc2SliderTypeDecoderBrakeTypeHighValueEsu"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary"
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle" />
 
@@ -2026,7 +2032,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_tts"
             android:key="prefTts"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefTtsSummary"
             android:title="@string/prefTtsTitle">
@@ -2041,7 +2047,7 @@
                     android:entries="@array/prefTtsWhenEntries"
                     android:entryValues="@array/prefTtsWhenEntryValues"
                     android:key="prefTtsWhen"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefTtsWhenSummary"
                     android:title="@string/prefTtsWhenTitle" />
 
@@ -2050,7 +2056,7 @@
                     android:entries="@array/prefTtsThrottleResponseEntries"
                     android:entryValues="@array/prefTtsThrottleResponseEntryValues"
                     android:key="prefTtsThrottleResponse"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefTtsThrottleResponseSummary"
                     android:title="@string/prefTtsThrottleResponseTitle" />
 
@@ -2059,7 +2065,7 @@
                     android:entries="@array/prefTtsThrottleSpeedEntries"
                     android:entryValues="@array/prefTtsThrottleSpeedEntryValues"
                     android:key="prefTtsThrottleSpeed"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefTtsThrottleSpeedSummary"
                     android:title="@string/prefTtsThrottleSpeedTitle" />
 
@@ -2068,7 +2074,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefTtsGamepadTestDefaultValue"
                     android:key="prefTtsGamepadTest"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefTtsGamepadTestSummary"
                     android:title="@string/prefTtsGamepadTestTitle" />
 
@@ -2077,7 +2083,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefTtsGamepadTestCompleteDefaultValue"
                     android:key="prefTtsGamepadTestComplete"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefTtsGamepadTestCompleteSummary"
                     android:title="@string/prefTtsGamepadTestCompleteTitle" />
 
@@ -2086,7 +2092,7 @@
                     android:layout_height="wrap_content"
                     android:defaultValue="@bool/prefTtsGamepadTestKeysDefaultValue"
                     android:key="prefTtsGamepadTestKeys"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefTtsGamepadTestKeysSummary"
                     android:title="@string/prefTtsGamepadTestKeysTitle" />
             </PreferenceCategory>
@@ -2103,7 +2109,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefStopOnReleaseDefaultValue"
             android:key="prefStopOnRelease"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_stop_on_release"
             android:summary="@string/prefStopOnReleaseSummary"
             android:title="@string/prefStopOnReleaseTitle" />
@@ -2111,7 +2117,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDropOnAcquireDefaultValue"
             android:key="prefDropOnAcquire"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_drop_before_acquire"
             android:summary="@string/prefDropOnAcquireSummary"
             android:title="@string/prefDropOnAcquireTitle" />
@@ -2119,7 +2125,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefSelectLocoWhileMovingDefaultValue"
             android:key="prefSelectLocoWhileMoving"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_select_loco_while_moving"
             android:summary="@string/prefSelectLocoWhileMovingSummary"
             android:title="@string/prefSelectLocoWhileMovingTitle" />
@@ -2127,7 +2133,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefSelectLocoByRadioButtonsDefaultValue"
             android:key="prefSelectLocoByRadioButtons"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_select_loco_by_radio_buttons"
             android:summary="@string/prefSelectLocoByRadioButtonsSummary"
             android:title="@string/prefSelectLocoByRadioButtonsTitle" />
@@ -2141,7 +2147,7 @@
             android:entries="@array/address_size_defaultsEntries"
             android:entryValues="@array/address_size_defaultsEntryValues"
             android:key="prefDefaultAddressLength"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_default_address_range"
             android:summary="@string/prefDefaultAddressLengthSummary"
             android:title="@string/prefDefaultAddressLengthTitle" />
@@ -2151,7 +2157,7 @@
             android:layout_height="wrap_content"
             android:defaultValue="@bool/prefThrottlesLocosDefaultValue"
             android:key="prefThrottlesLocos"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_throttle_locos"
             android:summary="@string/prefThrottlesLocosSummary"
             android:title="@string/prefThrottlesLocosTitle" />
@@ -2165,7 +2171,7 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:dialogTitle="@string/prefMaximumRecentLocosTitle"
             android:key="prefMaximumRecentLocos"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_maximum_recent_locos"
             android:summary="@string/prefMaximumRecentLocosSummary"
             android:title="@string/prefMaximumRecentLocosTitle" />
@@ -2177,7 +2183,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefLocoSelectHideIplsButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_hide_ipls_button"
             android:summary="@string/prefLocoSelectHideIplsButtonSummary"
             android:title="@string/prefLocoSelectHideIplsButtonTitle" />
@@ -2185,7 +2191,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefUseDispatchCommand"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_use_dispatch_command"
             android:summary="@string/prefUseDispatchCommandSummary"
             android:title="@string/prefUseDispatchCommandTitle" />
@@ -2193,7 +2199,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="prefShowDispatchButton"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_show_dispatch_button"
             android:summary="@string/prefShowDispatchButtonSummary"
             android:title="@string/prefShowDispatchButtonTitle" />
@@ -2209,7 +2215,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefRosterRecentLocosDefaultValue"
             android:key="prefRosterRecentLocos"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_roster_in_recent_locos"
             android:summary="@string/prefRosterRecentLocosSummary"
             android:title="@string/prefRosterRecentLocosTitle" />
@@ -2217,7 +2223,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefRosterRecentLocoNamesDefaultValue"
             android:key="prefRosterRecentLocoNames"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_roster_in_recent_locos_names"
             android:summary="@string/prefRosterRecentLocoNamesSummary"
             android:title="@string/prefRosterRecentLocoNamesTitle" />
@@ -2231,7 +2237,7 @@
             android:entries="@array/prefSortOrderEntries"
             android:entryValues="@array/prefSortOrderEntryValues"
             android:key="prefSortOrderRoster"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_sort_order_roster"
             android:summary="@string/prefSortOrderRosterSummary"
             android:title="@string/prefSortOrderRosterTitle" />
@@ -2240,7 +2246,7 @@
             android:defaultValue="@string/prefRosterFilterDefaultValue"
             android:dialogTitle="@string/prefRosterFilterTitle"
             android:key="prefRosterFilter"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_roster_filter"
             android:maxLength="10"
             android:summary="@string/prefRosterFilterSummary"
@@ -2249,7 +2255,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefRosterOwnersFilterShowOptionDefaultValue"
             android:key="prefRosterOwnersFilterShowOption"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_roster_owners_filter_show_option"
             android:summary="@string/prefRosterOwnersFilterShowOptionSummary"
             android:title="@string/prefRosterOwnersFilterShowOptionTitle" />
@@ -2261,7 +2267,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefAlwaysUseFunctionsFromServerDefaultValue"
             android:key="prefAlwaysUseFunctionsFromServer"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_always_use_functions_from_server"
             android:summary="@string/prefAlwaysUseFunctionsFromServerSummary"
             android:title="@string/prefAlwaysUseFunctionsFromServerTitle" />
@@ -2279,7 +2285,7 @@
             android:entries="@array/deviceSoundsEntries"
             android:entryValues="@array/deviceSoundsEntryValues"
             android:key="prefDeviceSounds0"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_device_sounds_0"
             android:summary="@string/prefDeviceSounds0Summary"
             android:title="@string/prefDeviceSounds0Title" />
@@ -2289,7 +2295,7 @@
             android:entries="@array/deviceSoundsEntries"
             android:entryValues="@array/deviceSoundsEntryValues"
             android:key="prefDeviceSounds1"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_device_sounds_1"
             android:summary="@string/prefDeviceSounds1Summary"
             android:title="@string/prefDeviceSounds1Title" />
@@ -2297,7 +2303,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_loco_sounds"
             android:key="prefDeviceSoundsAdditionalPreferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefDeviceSoundsAdditionalPreferencesSummary"
             android:title="@string/prefDeviceSoundsAdditionalPreferencesTitle">
@@ -2313,14 +2319,14 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                     android:dialogTitle="@string/prefDeviceSoundsMomentumTitle"
                     android:key="prefDeviceSoundsMomentum"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefDeviceSoundsMomentumSummary"
                     android:title="@string/prefDeviceSoundsMomentumTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsMomentumOverrideDefaultValue"
                     android:key="prefDeviceSoundsMomentumOverride"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDeviceSoundsMomentumOverrideSummary"
                     android:title="@string/prefDeviceSoundsMomentumOverrideTitle" />
 
@@ -2329,7 +2335,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefDeviceSoundsLocoVolumeTitle"
                     android:key="prefDeviceSoundsLocoVolume"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefDeviceSoundsLocoVolumeSummary"
                     android:title="@string/prefDeviceSoundsLocoVolumeTitle" />
 
@@ -2338,7 +2344,7 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefDeviceSoundsBellVolumeTitle"
                     android:key="prefDeviceSoundsBellVolume"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefDeviceSoundsBellVolumeSummary"
                     android:title="@string/prefDeviceSoundsBellVolumeTitle" />
 
@@ -2347,28 +2353,28 @@
                     android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
                     android:dialogTitle="@string/prefDeviceSoundsHornVolumeTitle"
                     android:key="prefDeviceSoundsHornVolume"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefDeviceSoundsHornVolumeSummary"
                     android:title="@string/prefDeviceSoundsHornVolumeTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsBellIsMomentaryDefaultValue"
                     android:key="prefDeviceSoundsBellIsMomentary"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDeviceSoundsBellIsMomentarySummary"
                     android:title="@string/prefDeviceSoundsBellIsMomentaryTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsF1F2ActivateBellHornDefaultValue"
                     android:key="prefDeviceSoundsF1F2ActivateBellHorn"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDeviceSoundsF1F2ActivateBellHornSummary"
                     android:title="@string/prefDeviceSoundsF1F2ActivateBellHornTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDeviceSoundsHideMuteButtonDefaultValue"
                     android:key="prefDeviceSoundsHideMuteButton"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDeviceSoundsHideMuteButtonSummary"
                     android:title="@string/prefDeviceSoundsHideMuteButtonTitle" />
 
@@ -2387,7 +2393,7 @@
             android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
             android:dialogTitle="@string/prefMaximumRecentConnectionsTitle"
             android:key="prefMaximumRecentConnections"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_maximum_recent_connections"
             android:summary="@string/prefMaximumRecentConnectionsSummary"
             android:title="@string/prefMaximumRecentConnectionsTitle" />
@@ -2399,7 +2405,7 @@
         <EditTextPreference
             android:dialogLayout="@layout/preference_auto_server_ip_connect_dialog"
             android:key="prefAutoServerIpConnect"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_auto_server_ip_connect"
             android:summary="@string/prefAutoServerIpConnectSummary"
             android:title="@string/prefAutoServerIpConnectTitle" />
@@ -2407,7 +2413,7 @@
         <EditTextPreference
             android:dialogLayout="@layout/preference_auto_server_named_connect_dialog"
             android:key="prefAutoServerNamedConnect"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_auto_server_named_connect"
             android:summary="@string/prefAutoServerNamedConnectSummary"
             android:title="@string/prefAutoServerNamedConnectTitle" />
@@ -2415,7 +2421,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefConnectToFirstServer"
             android:key="prefConnectToFirstServer"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_connect_to_first_server"
             android:summary="@string/prefConnectToFirstServerSummary"
             android:title="@string/PrefConnectToFirstServerTitle" />
@@ -2427,7 +2433,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefHideDemoServerDefaultValue"
             android:key="prefHideDemoServer"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_hide_demo_server"
             android:summary="@string/prefHideDemoServerSummary"
             android:title="@string/prefHideDemoServerTitle" />
@@ -2439,7 +2445,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_connect"
             android:key="prefConnectAdditionalPreferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefConnectAdvancedPreferencesSummary"
             android:title="@string/prefConnectAdvancedPreferencesTitle">
@@ -2454,7 +2460,7 @@
                         android:defaultValue="@string/prefConnectTimeoutMsDefaultValue"
                         android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_5"
                         android:key="prefConnectTimeoutMs"
-                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:layout="@layout/preference_item_common_no_icon"
                         android:summary="@string/prefConnectTimeoutMsSummary"
                         android:title="@string/prefConnectTimeoutMsTitle" />
 
@@ -2462,7 +2468,7 @@
                         android:defaultValue="@string/prefSocketTimeoutMsDefaultValue"
                         android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_4"
                         android:key="prefSocketTimeoutMs"
-                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:layout="@layout/preference_item_common_no_icon"
                         android:summary="@string/prefSocketTimeoutMsSummary"
                         android:title="@string/prefSocketTimeoutMsTitle" />
 
@@ -2470,7 +2476,7 @@
                         android:defaultValue="@string/prefHeartbeatResponseFactorDefaultValue"
                         android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
                         android:key="prefHeartbeatResponseFactor"
-                        android:layout="@layout/preference_checkbox_no_icon"
+                        android:layout="@layout/preference_item_common_no_icon"
                         android:summary="@string/prefHeartbeatResponseFactorSummary"
                         android:title="@string/prefHeartbeatResponseFactorTitle" />
             </PreferenceCategory>
@@ -2480,7 +2486,7 @@
             android:defaultValue="@bool/prefAllowMobileDataDefaultValue"
             android:key="prefAllowMobileData"
             android:icon="?attr/ed_preferences_allow_mobile_data"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefAllowMobileDataSummary"
             android:title="@string/prefAllowMobileDataTitle" />
 
@@ -2492,7 +2498,7 @@
             android:defaultValue="@bool/prefShowWitPomDefaultValue"
             android:key="prefShowWitPom"
             android:icon="?attr/ed_preferences_show_wit_pom"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefShowWitPomSummary"
             android:title="@string/prefShowWitPomTitle" />
 
@@ -2503,7 +2509,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_dcc_ex_icon"
             android:key="prefDccExPreferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefDccexPreferencesSummary"
             android:title="@string/prefDccexPreferencesTitle">
@@ -2518,21 +2524,21 @@
                     android:entries="@array/prefYesNoAutoEntries"
                     android:entryValues="@array/prefYesNoAutoEntryValues"
                     android:key="prefUseDccexProtocol"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefDccexSummary"
                     android:title="@string/prefDccexTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDccexConnectionOptionDefaultValue"
                     android:key="prefDccexConnectionOption"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDccexConnectionOptionSummary"
                     android:title="@string/prefDccexConnectionOptionTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDccexSequenceItemRequestsDefaultValue"
                     android:key="prefDccexSequenceItemRequests"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefDccexSequenceItemRequestsSummary"
                     android:title="@string/prefDccexSequenceItemRequestsTitle" />
 
@@ -2553,7 +2559,7 @@
             android:entries="@array/WebOrientationEntries"
             android:entryValues="@array/WebOrientationEntryValues"
             android:key="prefWebOrientation"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_screen_orientation"
             android:summary="@string/prefWebOrientationSummary"
             android:title="@string/prefWebOrientationTitle" />
@@ -2563,7 +2569,7 @@
             android:dialogTitle="@string/prefInitialWebPageSummary"
             android:inputType="text"
             android:key="prefInitialWebPage"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_initial_web_page"
             android:maxLines="1"
             android:summary="@string/prefInitialWebPageSummary"
@@ -2587,7 +2593,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefTurnoutsShowThrowCloseButtonsDefaultValue"
             android:key="prefTurnoutsShowThrowCloseButtons"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_always_show_throw_close"
             android:summary="@string/prefTurnoutsShowThrowCloseButtonsSummary"
             android:title="@string/prefTurnoutsShowThrowCloseButtonsTitle" />
@@ -2595,7 +2601,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefHideSystemRouteNamesDefaultValue"
             android:key="prefHideSystemRouteNames"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_hide_system_route_names"
             android:summary="@string/prefHideSystemRouteNamesSummary"
             android:title="@string/prefHideSystemRouteNamesTitle" />
@@ -2603,8 +2609,8 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefHideIfNoUserNameDefaultValue"
             android:key="prefHideIfNoUserName"
-            android:layout="@layout/preference_switch_icon_left_highlight"
-            android:icon="?attr/ed_preferences_empty"
+            android:layout="@layout/preference_item_switch_icon_left"
+            android:icon="?attr/ed_preferences_hide_if_no_username"
             android:summary="@string/prefHideIfNoUserNameSummary"
             android:title="@string/prefHideIfNoUserNameTitle" />
 
@@ -2617,7 +2623,7 @@
             android:entries="@array/prefSortOrderEntries"
             android:entryValues="@array/prefSortOrderEntryValues"
             android:key="prefSortOrderTurnouts"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_sort_order_turnouts"
             android:summary="@string/prefSortOrderTurnoutsSummary"
             android:title="@string/prefSortOrderTurnoutsTitle" />
@@ -2627,7 +2633,7 @@
             android:entries="@array/prefSortOrderEntries"
             android:entryValues="@array/prefSortOrderEntryValues"
             android:key="prefSortOrderRoutes"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_sort_order_routes"
             android:summary="@string/prefSortOrderRoutesSummary"
             android:title="@string/prefSortOrderRoutesTitle" />
@@ -2637,7 +2643,7 @@
             android:dialogTitle="@string/prefDelimiterTitle"
             android:inputType="text"
             android:key="prefDelimiter"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:icon="?attr/ed_preferences_filter_by_location"
             android:maxLength="1"
             android:maxLines="1"
@@ -2651,7 +2657,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDccexSwapThrowCloseDefaultValue"
             android:key="prefDccexSwapThrowClose"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_dccex_swap_throw_close"
             android:summary="@string/prefDccexSwapThrowCloseSummary"
             android:title="@string/prefDccexSwapThrowCloseTitle" />
@@ -2659,7 +2665,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDccexAutomationsAskDefaultValue"
             android:key="prefDccexAutomationsAsk"
-            android:layout="@layout/preference_switch_icon_left_highlight"
+            android:layout="@layout/preference_item_switch_icon_left"
             android:icon="?attr/ed_preferences_dccex_automation_ask"
             android:summary="@string/prefDccexAutomationsAskSummary"
             android:title="@string/prefDccexAutomationsAskTitle" />
@@ -2675,7 +2681,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_timer"
             android:key="kids_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefKidsSectionSummary"
             android:title="@string/prefKidsSectionTitle">
@@ -2690,7 +2696,7 @@
                     android:entries="@array/prefKidsTimerEntries"
                     android:entryValues="@array/prefKidsTimerEntryValues"
                     android:key="prefKidsTimer"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefKidsTimerSummary"
                     android:title="@string/prefKidsTimerTitle" />
 
@@ -2704,7 +2710,7 @@
                     android:dialogTitle="@string/prefKidsTimerRestartPasswordTitle"
                     android:inputType="number"
                     android:key="prefKidsTimerRestartPassword"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_password"
                     android:summary="@string/prefKidsTimerRestartPasswordSummary"
                     android:title="@string/prefKidsTimerRestartPasswordTitle" />
@@ -2715,7 +2721,7 @@
                     android:dialogTitle="@string/prefKidsTimerResetPasswordTitle"
                     android:inputType="number"
                     android:key="prefKidsTimerResetPassword"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_password"
                     android:summary="@string/prefKidsTimerResetPasswordSummary"
                     android:title="@string/prefKidsTimerResetPasswordTitle" />
@@ -2726,7 +2732,7 @@
                     android:dialogTitle="@string/prefKidsTimerDemoModePasswordTitle"
                     android:inputType="number"
                     android:key="prefKidsTimerDemoModePassword"
-                    android:layout="@layout/preference_checkbox_icon_left_highlight"
+                    android:layout="@layout/preference_item_common_icon_left"
                     android:icon="?attr/ed_preferences_password"
                     android:summary="@string/prefKidsTimerDemoModePasswordSummary"
                     android:title="@string/prefKidsTimerDemoModePasswordTitle" />
@@ -2738,7 +2744,7 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefKidsTimerEnableReverseDefaultValue"
                     android:key="prefKidsTimerEnableReverse"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefKidsTimerEnableReverseSummary"
                     android:title="@string/prefKidsTimerEnableReverseTitle" />
 
@@ -2746,7 +2752,7 @@
                     android:defaultValue="@bool/prefKidsTimerButtonDefaultValue"
                     android:icon="?attr/ed_timer_button"
                     android:key="prefKidsTimerButton"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_icon_left"
                     android:summary="@string/prefKidsTimerButtonSummary"
                     android:title="@string/prefKidsTimerButtonTitle" />
 
@@ -2755,21 +2761,21 @@
                     android:entries="@array/prefKidsTimerEntries"
                     android:entryValues="@array/prefKidsTimerEntryValues"
                     android:key="prefKidsTimerButtonDefault"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefKidsTimerButtonDefaultSummary"
                     android:title="@string/prefKidsTimerButtonDefaultTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefKidsTimerKioskModeDefaultValue"
                     android:key="prefKidsTimerKioskMode"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefKidsTimerKioskModeSummary"
                     android:title="@string/prefKidsTimerKioskModeTitle" />
 
                 <Preference
                     android:enabled="true"
                     android:key="kids_Help"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:selectable="false"
                     android:summary="@string/prefKidsHelpSummary"
                     android:title="@string/prefKidsHelpTitle" />
@@ -2786,7 +2792,7 @@
         <PreferenceScreen
             android:icon="?attr/ed_folder_import"
             android:key="importExport_preferences"
-            android:layout="@layout/preference_checkbox_icon_left_highlight"
+            android:layout="@layout/preference_item_common_icon_left"
             android:persistent="false"
             android:summary="@string/prefThrottleImportExportSummary"
             android:title="@string/prefThrottleImportExportTitle">
@@ -2801,7 +2807,7 @@
                     android:entries="@array/prefImportExportEntries"
                     android:entryValues="@array/prefImportExportEntryValues"
                     android:key="prefImportExport"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefImportExportSummary"
                     android:title="@string/prefImportExportTitle" />
 
@@ -2827,14 +2833,14 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefImportServerAutoDefaultValue"
                     android:key="prefImportServerAuto"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefImportServerAutoSummary"
                     android:title="@string/prefImportServerAutoTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefImportExportLocoListDefaultValue"
                     android:key="prefImportExportLocoList"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefImportExportLocoListSummary"
                     android:title="@string/prefImportExportLocoListTitle" />
 
@@ -2843,7 +2849,7 @@
                     android:entries="@array/prefAutoImportExportEntries"
                     android:entryValues="@array/prefAutoImportExportEntryValues"
                     android:key="prefAutoImportExport"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefAutoImportExportSummary"
                     android:title="@string/prefAutoImportExportTitle" />
 
@@ -2852,35 +2858,35 @@
                     android:entries="@array/prefHostImportExportEntries"
                     android:entryValues="@array/prefHostImportExportEntryValues"
                     android:key="prefHostImportExport"
-                    android:layout="@layout/preference_checkbox_no_icon"
+                    android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefHostImportExportSummary"
                     android:title="@string/prefHostImportExportTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefShowTimeOnLogEntryDefaultValue"
                     android:key="prefShowTimeOnLogEntry"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefShowTimeOnLogEntrySummary"
                     android:title="@string/prefShowTimeOnLogEntryTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefExtendedLoggingDefaultValue"
                     android:key="prefExtendedLogging"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefExtendedLoggingSummary"
                     android:title="@string/prefExtendedLoggingTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="false"
                     android:key="prefLogOnNextStartup"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefLogOnNextStartupSummary"
                     android:title="@string/prefLogOnNextStartupTitle" />
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefShareFileNowDefaultValue"
                     android:key="prefShareFileNow"
-                    android:layout="@layout/preference_switch_icon_left_highlight"
+                    android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefShareFileNowSummary"
                     android:title="@string/prefShareFileNowTitle" />
 

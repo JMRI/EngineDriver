@@ -17,6 +17,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
     android:paddingEnd="?android:attr/scrollbarSize"
@@ -40,7 +41,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="center"
-            android:layout_marginStart="3dip"
+            android:layout_marginStart="0dip"
             android:layout_marginEnd="0dip"
             android:layout_marginTop="3dip"
             android:layout_marginBottom="3dip"
@@ -81,9 +82,11 @@
     </LinearLayout>
 
     <!-- Preference should place its actual preference widget here. -->
-    <LinearLayout android:id="@android:id/widget_frame"
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchWidget"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical" />
+        android:layout_height="wrap_content"
+        app:thumbTint="@color/reusable_switch_thumb_color_states"
+        app:trackTint="@color/reusable_switch_track_color_states"
+        android:elevation="8dp"  />
 </LinearLayout>

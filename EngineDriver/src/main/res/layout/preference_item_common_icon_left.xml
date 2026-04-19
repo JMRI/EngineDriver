@@ -21,51 +21,69 @@
     android:gravity="center_vertical"
     android:paddingEnd="?android:attr/scrollbarSize"
     android:background="?android:attr/selectableItemBackground"
-    tools:ignore="RtlSymmetry" >
+    tools:ignore="RtlSymmetry"
+    android:baselineAligned="false">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dip"
         android:layout_marginEnd="6dip"
         android:layout_marginTop="6dip"
         android:layout_marginBottom="6dip"
+        android:orientation="horizontal"
         android:layout_weight="1"
         >
 
-        <TextView android:id="@android:id/title"
+        <ImageView
+            android:id="@android:id/icon"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dip"
+            android:layout_marginEnd="0dip"
+            android:layout_marginTop="3dip"
+            android:layout_marginBottom="3dip"
+            tools:ignore="ContentDescription,RtlHardcoded" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="?android:attr/textColorPrimary"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal" />
+            android:layout_marginStart="3dip"
+            android:layout_marginEnd="3dip"
+            android:layout_marginTop="2dip"
+            android:layout_marginBottom="3dip"
+            android:orientation="vertical"
+            >
 
-        <TextView android:id="@android:id/summary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@android:id/title"
-            android:layout_alignStart="@android:id/title"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:attr/textColorSecondary"
-            android:maxLines="4"
-            />
+            <TextView
+                android:id="@android:id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dip"
+                android:fadingEdge="horizontal"
+                android:singleLine="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="italic" />
 
-    </RelativeLayout>
+
+            <TextView android:id="@android:id/summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="?android:attr/textColorSecondary"
+                android:maxLines="30"
+                android:layout_marginStart="6dip"
+                tools:ignore="RtlHardcoded" />
+
+        </LinearLayout>
+    </LinearLayout>
+
     <!-- Preference should place its actual preference widget here. -->
-
     <LinearLayout android:id="@android:id/widget_frame"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="vertical" />
-
-    <ImageView
-        android:id="@android:id/icon"
-        android:layout_width="41dp"
-        android:layout_height="41dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="8dip"
-        tools:ignore="ContentDescription, RtlHardcoded"  />
 </LinearLayout>

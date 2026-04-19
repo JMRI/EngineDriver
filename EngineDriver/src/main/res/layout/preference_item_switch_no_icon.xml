@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2006 The Android Open Source Project
+<!-- Copyright (C) 2006-2026 The Android Open Source Project
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -23,6 +23,7 @@
     android:paddingEnd="?android:attr/scrollbarSize"
     android:background="?android:attr/selectableItemBackground"
     tools:ignore="RtlSymmetry"
+    android:orientation="horizontal"
     android:baselineAligned="false">
 
     <LinearLayout
@@ -32,53 +33,31 @@
         android:layout_marginEnd="6dip"
         android:layout_marginTop="6dip"
         android:layout_marginBottom="6dip"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_weight="1"
         >
 
-        <ImageView
-            android:id="@android:id/icon"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="3dip"
-            android:layout_marginEnd="0dip"
-            android:layout_marginTop="3dip"
-            android:layout_marginBottom="3dip"
-            tools:ignore="ContentDescription,RtlHardcoded" />
-
-        <LinearLayout
+        <TextView
+            android:id="@android:id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dip"
-            android:layout_marginEnd="3dip"
-            android:layout_marginTop="2dip"
-            android:layout_marginBottom="3dip"
-            android:orientation="vertical"
-            >
+            android:layout_marginStart="0dip"
+            android:fadingEdge="horizontal"
+            android:singleLine="false"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="italic" />
 
-            <TextView
-                android:id="@android:id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dip"
-                android:fadingEdge="horizontal"
-                android:singleLine="false"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textStyle="italic" />
+        <TextView
+            android:id="@android:id/summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?android:attr/textColorSecondary"
+            android:maxLines="30"
+            android:layout_marginStart="0dip"
+            tools:ignore="RtlHardcoded" />
 
-
-            <TextView android:id="@android:id/summary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?android:attr/textColorSecondary"
-                android:maxLines="30"
-                android:layout_marginStart="6dip"
-                tools:ignore="RtlHardcoded" />
-
-        </LinearLayout>
     </LinearLayout>
 
     <!-- Preference should place its actual preference widget here. -->
