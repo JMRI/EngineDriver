@@ -55,6 +55,8 @@
         <item name="ed_preferences_device_sounds_0">@drawable/glyph_preferences_device_sounds_0</item>
         <item name="ed_preferences_device_sounds_1">@drawable/glyph_preferences_device_sounds_1</item>
         <item name="ed_preferences_empty">@drawable/glyph_preferences_empty</item>
+        <item name="ed_preferences_feedback_on_disconnect">@drawable/glyph_preferences_feedback_on_disconnect</item>
+        <item name="ed_preferences_feedback_on_alert">@drawable/glyph_preferences_feedback_on_alert</item>
         <item name="ed_preferences_hide_if_no_username">@drawable/glyph_preferences_hide_if_no_username</item>
         <item name="ed_preferences_hide_function_buttons_on_non_selected_throttle">@drawable/glyph_preferences_hide_function_buttons_on_non_selected_throttle_states</item>
         <item name="ed_preferences_throttle_locos">@drawable/glyph_preferences_throttle_locos</item>

@@ -173,7 +173,8 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefBeepOnAlertToastsDefaultValue"
                     android:key="prefBeepOnAlertToasts"
-                    android:layout="@layout/preference_item_switch_no_icon"
+                    android:layout="@layout/preference_item_switch_icon_left"
+                    android:icon="?attr/ed_preferences_feedback_on_alert"
                     android:summary="@string/prefBeepOnAlertToastsSummary"
                     android:title="@string/prefBeepOnAlertToastsTitle" />
 
@@ -192,7 +193,8 @@
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefFeedbackOnDisconnectDefaultValue"
                     android:key="prefFeedbackOnDisconnect"
-                    android:layout="@layout/preference_item_switch_no_icon"
+                    android:layout="@layout/preference_item_switch_icon_left"
+                    android:icon="?attr/ed_preferences_feedback_on_disconnect"
                     android:summary="@string/prefFeedbackOnDisconnectSummary"
                     android:title="@string/prefFeedbackOnDisconnectTitle" />
 
