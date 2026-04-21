@@ -1288,10 +1288,14 @@
     <string name="prefActionBarShowWebButtonSummary">Mostrar botón en la barra de acción para cambiar a la pantalla web</string>
     <string name="prefActionBarShowWebButtonTitle">¿Botón web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Intercambio de desvíos Lanzar/Cerrar</string>
+    <string name="prefDccexThrownLabelSummary">Personaliza la etiqueta del botón cuando el desvío esté \"Accionado\". Déjalo en blanco para la opción predeterminada (\"Cerrar\"). Se requiere reconexión.</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar parada de emergencia, pausa/reanudación</string>
     <string name="prefRosterTitle">Preferencias de la lista</string>
     <string name="prefConnectAdvancedPreferencesTitle">Preferencias avanzadas de conexión</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">Mostrar botón en la barra de acciones para abrir la pantalla de la estación de comandos DCC-EX.</string>
     <string name="prefShowAdditionalButtonTextTitle">¿Mostrar texto adicional del botón?</string>
+    <string name="prefDccexClosedLabelSummary">Personaliza la etiqueta del botón cuando el desvío esté \"Cerrado\". Déjalo en blanco para la opción predeterminada (\"Accionamiento\"). Se requiere reconexión.</string>
+    <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta del botón \'Cerrado/Accionamiento\'</string>
+    <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta del botón \'Arrojar/Cerrar\'</string>
 
 </resources>

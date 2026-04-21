@@ -2662,6 +2662,30 @@
             android:summary="@string/prefDccexSwapThrowCloseSummary"
             android:title="@string/prefDccexSwapThrowCloseTitle" />
 
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="@string/prefDccexThrownLabelTitle"
+            android:inputType="text"
+            android:key="prefDccexThrownLabel"
+            android:layout="@layout/preference_item_common_icon_left"
+            android:icon="?attr/ed_preferences_empty"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:summary="@string/prefDccexThrownLabelSummary"
+            android:title="@string/prefDccexThrownLabelTitle" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="@string/prefDccexClosedLabelTitle"
+            android:icon="?attr/ed_preferences_empty"
+            android:inputType="text"
+            android:key="prefDccexClosedLabel"
+            android:layout="@layout/preference_item_common_icon_left"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:summary="@string/prefDccexClosedLabelSummary"
+            android:title="@string/prefDccexClosedLabelTitle" />
+
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefDccexAutomationsAskDefaultValue"
             android:key="prefDccexAutomationsAsk"

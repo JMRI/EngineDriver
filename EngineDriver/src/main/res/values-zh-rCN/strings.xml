@@ -1400,11 +1400,15 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefActionBarShowWebButtonSummary">在操作栏中显示切换到 Web 屏幕的按钮</string>
     <string name="prefActionBarShowWebButtonTitle">网页按钮？</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - 道岔交换开关</string>
+    <string name="prefDccexThrownLabelSummary">自定义道岔“展开”时的按钮标签。留空则使用默认值（“关闭”）。需要重新连接。</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 使用紧急停止暂停/恢复功能</string>
     <string name="prefRosterTitle">名单偏好</string>
     <string name="prefConnectAdvancedPreferencesTitle">高级连接偏好设置</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">在操作栏中显示按钮，以打开 DCC-EX 指挥站组成屏幕</string>
     <string name="prefShowAdditionalButtonTextTitle">显示其他按钮文字？</string>
+    <string name="prefDccexClosedLabelSummary">当道岔处于“关闭”状态时，可自定义按钮标签。留空则使用默认值（“抛掷”）。需要重新连接。</string>
+    <string name="prefDccexThrownLabelTitle">DCC-EX - “抛掷/关闭”按钮标签</string>
+    <string name="prefDccexClosedLabelTitle">DCC-EX - “关闭/抛掷”按钮标签</string>
 
 </resources>
 

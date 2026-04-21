@@ -1238,10 +1238,14 @@
     <string name="prefActionBarShowWebButtonSummary">Mostra il pulsante nella barra delle azioni per passare alla schermata Web</string>
     <string name="prefActionBarShowWebButtonTitle">Pulsante Web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Scambio scambi Lancia/Chiudi</string>
+    <string name="prefDccexThrownLabelSummary">Personalizza l\'etichetta del pulsante quando lo scambio è \"azionato\". Lascia vuoto per l\'impostazione predefinita (\"Chiuso\"). È necessaria la riconnessione.</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utilizzo di arresto di emergenza, pausa/ripresa</string>
     <string name="prefRosterTitle">Preferenze di elenco</string>
     <string name="prefConnectAdvancedPreferencesTitle">Preferenze di connessione avanzate</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">Mostra il pulsante nella barra delle azioni per aprire la schermata di configurazione della stazione di comando DCC-EX.</string>
     <string name="prefShowAdditionalButtonTextTitle">Mostrare il testo aggiuntivo del pulsante?</string>
+    <string name="prefDccexClosedLabelSummary">Personalizza l\'etichetta del pulsante quando lo scambio è \"Chiuso\". Lascia vuoto per l\'impostazione predefinita (\"Lancia\"). È necessaria la riconnessione.</string>
+    <string name="prefDccexClosedLabelTitle">Etichetta del pulsante \'Chiuso/Lancia\' di DCC-EX</string>
+    <string name="prefDccexThrownLabelTitle">Etichetta del pulsante \'Lanciato/Chiuso\' di DCC-EX</string>
 
 </resources>

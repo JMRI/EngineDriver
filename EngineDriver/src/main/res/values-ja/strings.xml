@@ -1312,10 +1312,14 @@
     <string name="prefActionBarShowWebButtonSummary">アクションバーにWeb画面に切り替えるボタンを表示する</string>
     <string name="prefActionBarShowWebButtonTitle">ウェブボタン？</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - ターンアウトのスロー/クローズの切り替え</string>
+    <string name="prefDccexThrownLabelSummary">分岐器が「開閉」されたときのボタンラベルをカスタマイズします。デフォルト（「閉じる」）の場合は空白のままにしてください。再接続が必要です。</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - 緊急停止の一時停止/再開を使用する</string>
     <string name="prefRosterTitle">名簿設定</string>
     <string name="prefConnectAdvancedPreferencesTitle">詳細接続設定</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">アクションバーの「表示」ボタンをクリックすると、DCC-EX In Command Stationの編成画面が開きます。</string>
     <string name="prefShowAdditionalButtonTextTitle">追加のボタンテキストを表示しますか？</string>
+    <string name="prefDccexClosedLabelSummary">分岐器が「閉じている」ときのボタンラベルをカスタマイズします。デフォルト（「投げる」）の場合は空白のままにしてください。再接続が必要です。</string>
+    <string name="prefDccexClosedLabelTitle">DCC-EX - 「閉じた/投げる」ボタンのラベル</string>
+    <string name="prefDccexThrownLabelTitle">DCC-EX - 「投げられた/閉じる」ボタンのラベル</string>
 
 </resources>

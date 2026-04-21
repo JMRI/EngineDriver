@@ -1309,10 +1309,14 @@
     <string name="prefActionBarShowWebButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran Web</string>
     <string name="prefActionBarShowWebButtonTitle">Bouton Web ?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Aiguillages à manœuvrer (ouverture/fermeture)</string>
+    <string name="prefDccexThrownLabelSummary">Personnalisez le libellé du bouton lorsque l\'aiguillage est « Déployé ». Laissez vide pour la valeur par défaut (« Fermé »). Reconnexion requise.</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utiliser l\'arrêt d\'urgence, la pause et la reprise</string>
     <string name="prefRosterTitle">Options relatives à la liste des joueurs depuis le serveur</string>
     <string name="prefConnectAdvancedPreferencesTitle">Préférences de connexion avancées</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">Afficher le bouton dans la barre d\'actions pour ouvrir l\'écran de composition de la centrale de commande DCC-EX</string>
     <string name="prefShowAdditionalButtonTextTitle">Afficher le texte supplémentaire du bouton ?</string>
+    <string name="prefDccexClosedLabelSummary">Personnalisez le libellé du bouton lorsque l\'aiguillage est fermé. Laissez vide pour la valeur par défaut (« Lancer »). Reconnexion requise.</string>
+    <string name="prefDccexClosedLabelTitle">Étiquette du bouton « Fermé/Lancer » (DCC-EX)</string>
+    <string name="prefDccexThrownLabelTitle">Étiquette du bouton DCC-EX « Lancer/Fermer »</string>
 
 </resources>

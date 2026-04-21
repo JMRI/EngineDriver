@@ -964,9 +964,19 @@ public class ResponseProcessorDccex {
             throwCode = "2";
             closeCode ="4";
         }
+        String prefDccexThrownLabel = prefs.getString("prefDccexThrownLabel", "").trim();
+        String prefDccexClosedLabel = prefs.getString("prefDccexClosedLabel", "").trim();
 
-        mainapp.to_state_names.put(closeCode, mainapp.getResources().getString(R.string.dccexTurnoutClosed));
-        mainapp.to_state_names.put(throwCode, mainapp.getResources().getString(R.string.dccexTurnoutThrown));
+        if (prefDccexClosedLabel.isEmpty()) {
+            mainapp.to_state_names.put(closeCode, mainapp.getResources().getString(R.string.dccexTurnoutClosed));
+        } else {
+            mainapp.to_state_names.put(closeCode, prefDccexClosedLabel);
+        }
+        if (prefDccexThrownLabel.isEmpty()) {
+            mainapp.to_state_names.put(throwCode, mainapp.getResources().getString(R.string.dccexTurnoutThrown));
+        } else {
+            mainapp.to_state_names.put(throwCode, prefDccexThrownLabel);
+        }
         mainapp.to_state_names.put("1", mainapp.getResources().getString(R.string.dccexTurnoutUnknown));
         mainapp.to_state_names.put("8", mainapp.getResources().getString(R.string.dccexTurnoutInconsistent));
     }
