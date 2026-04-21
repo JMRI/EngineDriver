@@ -2,7 +2,8 @@
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
      * Support for the new DCC-EX WiFi commands in the drop list.
-     * Set web port to 80 for DCC-EX
+     * Set web port to 80 for DCC-EX.
+     * Added preferences to customise the Thrown/Closed button labels for DCC-EX.
  * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
      * Layout swap button was not refreshing the screen.
@@ -16,6 +17,7 @@
      * Additional glyphs in the preferences.
      * Separate the CV19 button control for the DCC-EX In Command Station Consist button control.
      * Additional Google translations.
+     * Disable the 'stop on phone call' preference if no sim card or don't have READ_PHONE_STATE permission.
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
@@ -1104,8 +1106,9 @@
  *   TODO: move some actions from onCreate() or onResume() to onStart() in activities to simplify and remove some repeated calls.
  *   TODO: Improve the way it deals with multiple DCC-EX commands on single line. Really needs to be read char by char.
  *   TODO: Continue converting the three old style themes/styles to the reusable format.
+ *   TODO: Move most, if not all, toasts to the new custom toast.
  * intro
- *   TODO: if saved preferences found, prompt for import and shortcircuit intro
+ *   TODO: if saved preferences found, prompt for import and shortcircuit intro. This is unlikely as the folder is not created till the app runs the first time, so you can't pre load the saved preferences in the folder.
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: allow zoom out more than the page width
@@ -1124,7 +1127,6 @@
  *   TODO: Why does the first connection attempt fail sometimes?
  * disconnect/reconnect
  *   TODO: set limit on reconnect attempts?
- *   TODO: while reconnecting, make "Exit EngineDriver?" immediate, not wait for next timeout
  *   TODO: On reconnect, consider dropping all locos from the throttles and reacquiring them (like reloading saved locos)
  * at connection or close connection / exit app
  *   TODO: add option to save and automatically load locos on connection to be server specific
@@ -1138,7 +1140,7 @@
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
  *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
- *   TODO: respect "Max Throttle %" from roster entry
+ *   TODO: respect "Max Throttle %" from roster entry. Requires changes to WiThrottle protocol.
  *   TODO: option to show the turnout view instead of the webview, including option for Recents
  *   TODO: option to use 'f' function commands for WiThrottle
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
@@ -1183,7 +1185,7 @@
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  *   TODO: Look at adding immersive mode to get extra screen space
  * preferences:
- *   TODO: disable the 'stop on phone call' preference if no sim card or don't have READ_PHONE_STATE permission
+ *
  * children's timer:
  *   TODO: Alternate version.  Allow the selection of locos, but only from the filtered roster.  Unlimited time. Routes and Points would be available.
  * log_viewer:

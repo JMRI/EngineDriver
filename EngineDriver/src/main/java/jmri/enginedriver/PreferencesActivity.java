@@ -57,6 +57,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
+
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -100,6 +102,7 @@ import jmri.enginedriver.util.AutoServerIpConnectDialogFragmentCompat;
 import jmri.enginedriver.util.InPhoneLocoSoundsLoader;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
+import jmri.enginedriver.util.PermissionsHelper;
 
 public class PreferencesActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
     static final String activityName = "PreferencesActivity";
@@ -1352,6 +1355,11 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         enableDisablePreference(prefScreen, "prefStopButtonLongPressDelay", enable);
     }
 
+    private void showHideSimPreferences(PreferenceScreen prefScreen) {
+        boolean enable = isSimAvailable(PreferencesActivity.this);
+        enableDisablePreference(prefScreen, "prefStopOnPhoneCall", enable);
+    }
+
     private void showHideDispatchPreferences(PreferenceScreen prefScreen) {
         boolean enableCmd = prefs.getBoolean("prefUseDispatchCommand", false);
         boolean enableButton = prefs.getBoolean("prefShowDispatchButton", false);
@@ -1431,13 +1439,18 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     private void showHideDccexPreferences(PreferenceScreen prefScreen) {
-        boolean enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= 5.005058))
+        boolean enable = ( (mainapp.isDccexProtocol())
+                || (mainapp.connectedHostName.isEmpty()) );
+        enableDisablePreference(prefScreen, "prefDccexSwapThrowClose", enable);
+        enableDisablePreference(prefScreen, "prefDccexThrownLabel", enable);
+        enableDisablePreference(prefScreen, "prefDccexClosedLabel", enable);
+
+        enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= 5.005058))
                 || (mainapp.connectedHostName.isEmpty()));
         enableDisablePreference(prefScreen, "prefDccexEmergencyStopPauseResume", enable);
 
         enable = ( (mainapp.isDccexProtocol()) || (mainapp.connectedHostName.isEmpty()) );
         enableDisablePreference(prefScreen, "prefDccExPreferences", enable);
-        enableDisablePreference(prefScreen, "prefDccexSwapThrowClose", enable);
         enableDisablePreference(prefScreen, "prefDccexAutomationsAsk", enable);
         enableDisablePreference(prefScreen, "prefActionBarShowDccExButton", enable);
         enableDisablePreference(prefScreen, "prefActionBarShowDccexConsistButton", enable);
@@ -2033,6 +2046,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 parentActivity.showHideDispatchPreferences(getPreferenceScreen());
 
                 parentActivity.showHideStopButtonPreferences(getPreferenceScreen());
+                parentActivity.showHideSimPreferences(getPreferenceScreen());
 
                 advancedPreferences = getResources().getStringArray(R.array.advancedPreferences);
                 hideAdvancedPreferences();
@@ -2729,5 +2743,19 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 });
             }
         }
+    }
+
+    public boolean isSimAvailable(Context context) {
+        PermissionsHelper phi = PermissionsHelper.getInstance();
+        if (!phi.isPermissionGranted(context, PermissionsHelper.READ_PHONE_STATE)) {
+            return false;
+        }
+
+        TelephonyManager telMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        if (telMgr != null) {
+            int simState = telMgr.getSimState();
+            return simState == TelephonyManager.SIM_STATE_READY;
+        }
+        return false;
     }
 }

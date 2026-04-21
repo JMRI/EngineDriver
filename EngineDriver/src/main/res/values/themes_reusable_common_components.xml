@@ -261,7 +261,7 @@
         <item name="ed_preferences_speed_step">@drawable/glyph_preferences_speed_step</item>
         <item name="ed_preferences_drop_before_acquire">@drawable/glyph_preferences_drop_before_acquire</item>
         <item name="ed_preferences_select_loco_while_moving">@drawable/glyph_preferences_select_loco_while_moving</item>
-        <item name="ed_preferences_stop_on_phone_call">@drawable/glyph_preferences_stop_on_phone_call</item>
+        <item name="ed_preferences_stop_on_phone_call">@drawable/glyph_preferences_stop_on_phone_call_states</item>
         <item name="ed_preferences_double_back_button_to_exit">@drawable/glyph_preferences_double_back_button_to_exit</item>
         <item name="ed_preferences_number_of_throttles">@drawable/glyph_preferences_number_of_throttles</item>
         <item name="ed_preferences_name">@drawable/glyph_preferences_name</item>

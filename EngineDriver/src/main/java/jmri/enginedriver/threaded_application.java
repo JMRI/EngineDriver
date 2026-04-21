@@ -1808,12 +1808,12 @@ public class threaded_application extends Application {
             }
 
         } else {
-            Bundle bundle = new Bundle();
             for (int i = 0; i < maxThrottlesCurrentScreen; i++) {
                 if (consists != null && consists[i] != null && consists[i].isActive()) {
 
+                    Bundle bundle = new Bundle();
                     bundle.putInt(alert_bundle_tag_type.THROTTLE, i);
-                    mainapp.alertCommHandlerWithBundle(message_type.ESTOP);
+                    mainapp.alertCommHandlerWithBundle(message_type.ESTOP, bundle);
 
                     EStopActivated = true;
                     threaded_application.extendedLogging(activityName + ":  sendEStopMsg(): EStop sent to server for throttle " + i);

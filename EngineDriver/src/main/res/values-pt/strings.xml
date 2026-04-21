@@ -1244,9 +1244,13 @@
     <string name="prefActionBarShowWebButtonSummary">Exibir botão na barra de ações para alternar para a tela da Web.</string>
     <string name="prefActionBarShowWebButtonTitle">Botão da Web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Trocar desvios, acionar/fechar</string>
+    <string name="prefDccexThrownLabelSummary">Personalize o rótulo do botão quando o desvio for acionado. Deixe em branco para o padrão (\"Fechar\"). Reconexão necessária.</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Usar Parada de Emergência, Pausa/Retomada</string>
     <string name="prefRosterTitle">Preferências de escalação</string>
     <string name="prefConnectAdvancedPreferencesTitle">Preferências avançadas de conexão</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">Exibir botão na barra de ações para abrir a tela de composição da estação de comando DCC-EX.</string>
     <string name="prefShowAdditionalButtonTextTitle">Exibir texto adicional do botão?</string>
+    <string name="prefDccexClosedLabelSummary">Personalize o rótulo do botão quando o desvio estiver \'Fechado\'. Deixe em branco para o padrão (\'Acionar\'). Reconexão necessária.</string>
+    <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta do botão \'Fechado/Lançar\'</string>
+    <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta do botão \'Arremessar/Fechar\'</string>
 </resources>

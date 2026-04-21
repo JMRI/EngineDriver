@@ -1587,6 +1587,11 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Swap Turnouts Throw/Close</string>
     <string name="prefDccexSwapThrowCloseSummary">Swap the throw/close labels for all DCC-EX turnouts. Reconnection required</string>
 
+    <string name="prefDccexClosedLabelTitle">DCC-EX - \'Closed/Throw\' button Label</string>
+    <string name="prefDccexClosedLabelSummary">Customise the button label when the Turnout is \'Closed\'. Leave blank for the default (\'Throw\'). Reconnection required</string>
+    <string name="prefDccexThrownLabelTitle">DCC-EX - \'Thrown/Close\' button Label</string>
+    <string name="prefDccexThrownLabelSummary">Customise the button label when the Turnout is \'Thrown\'. Leave blank for the default (\'Close\'). Reconnection required</string>
+
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Use EStop Pause/Resume</string>
     <string name="prefDccexEmergencyStopPauseResumeSummary">Use the DCC-EX Emergency Stop Pause/Resume feature instead of a simple Emergency Stop</string>
 

@@ -1301,10 +1301,14 @@
     <string name="prefActionBarShowWebButtonSummary">Mostra el botó a la barra d\'accions per canviar a la pantalla web</string>
     <string name="prefActionBarShowWebButtonTitle">Botó web?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Intercanvi de desviaments Llançar/Tancament</string>
+    <string name="prefDccexThrownLabelSummary">Personalitzeu l\'etiqueta del botó quan el desviament estigui \"Llançat\". Deixeu-ho en blanc per al valor per defecte (\"Tancar\"). Cal reconnexió.</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Ús de la pausa/reprenguda d\'aturada d\'emergència</string>
     <string name="prefRosterTitle">Preferències de la llista</string>
     <string name="prefConnectAdvancedPreferencesTitle">Preferències de connexió avançada</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">Mostra el botó a la barra d\'accions per obrir la pantalla DCC-EX In Command Station Consist</string>
     <string name="prefShowAdditionalButtonTextTitle">Mostra el text addicional del botó?</string>
+    <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta del botó \'Llançar/Tanca\'</string>
+    <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta del botó \'Tancat/Llançar\'</string>
+    <string name="prefDccexClosedLabelSummary">Personalitza l\'etiqueta del botó quan el desviament estigui \"Tancat\". Deixa-ho en blanc per al valor per defecte (\"Llançar\"). Cal reconnexió.</string>
 
 </resources>

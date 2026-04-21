@@ -118,4 +118,7 @@
     <string name="prefDccexSwapThrowCloseSummary">Swap the throw/close labels for all DCC-EX points. Reconnection required</string>
     <string name="advancedConsistToolDccexTitle">In Command Station Consist/MU Tool</string>
 
+    <string name="prefDccexClosedLabelSummary">Customise the button label when the Point is \'Closed\'. Leave blank for the default (\'Throw\'). Reconnection required</string>
+    <string name="prefDccexThrownLabelSummary">Customise the button label when the Point is \'Thrown\'. Leave blank for the default (\'Close\'). Reconnection required</string>
+
 </resources>
