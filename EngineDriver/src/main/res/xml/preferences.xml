@@ -2668,7 +2668,7 @@
             android:inputType="text"
             android:key="prefDccexThrownLabel"
             android:layout="@layout/preference_item_common_icon_left"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_turnout_thrown_label"
             android:maxLength="1"
             android:maxLines="1"
             android:summary="@string/prefDccexThrownLabelSummary"
@@ -2677,7 +2677,7 @@
         <EditTextPreference
             android:defaultValue=""
             android:dialogTitle="@string/prefDccexClosedLabelTitle"
-            android:icon="?attr/ed_preferences_empty"
+            android:icon="?attr/ed_preferences_turnout_closed_label"
             android:inputType="text"
             android:key="prefDccexClosedLabel"
             android:layout="@layout/preference_item_common_icon_left"
