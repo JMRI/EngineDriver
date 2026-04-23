@@ -1332,7 +1332,7 @@ public class throttle extends AppCompatActivity implements
         Intent newThrottle = mainapp.getThrottleIntent();
         this.finish();
         startActivity(newThrottle);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     // Change the screen brightness
@@ -1983,10 +1983,10 @@ public class throttle extends AppCompatActivity implements
     private void witRetry(String s) {
         if (this.hasWindowFocus()) {
             webView.stopLoading();
-            Intent in = new Intent().setClass(this, reconnect_status.class);
+            Intent in = new Intent().setClass(this, ReconnectActivity.class);
             in.putExtra("status", s);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -2724,10 +2724,10 @@ public class throttle extends AppCompatActivity implements
     void startSelectLocoActivity(int whichThrottle) {
         bSelects[whichThrottle].setPressed(true);
         try {
-            Intent intent = new Intent(this, select_loco.class);
+            Intent intent = new Intent(this, SelectLocoActivity.class);
             intent.putExtra("sWhichThrottle", mainapp.throttleIntToString(whichThrottle));
             selectLocoActivityLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": startSelectLocoActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -2777,7 +2777,7 @@ public class throttle extends AppCompatActivity implements
                 intent.putExtra("onlyTestCurrent", true);
                 tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST);
                 gamepadTestActivityLauncher.launch(intent);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
                 Log.d(threaded_application.applicationName, activityName + ": startGamepadTestActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
             }
@@ -2827,10 +2827,10 @@ public class throttle extends AppCompatActivity implements
     void startConsistLightsEditActivity(int whichThrottle) {
         if (prefConsistLightsLongClick) {  // only allow the editing in the consist lights if the preference is set
             try {
-                Intent intent = new Intent().setClass(this, ConsistLightsEdit.class);
+                Intent intent = new Intent().setClass(this, ConsistLightsEditActivity.class);
                 intent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
                 consistLightsEditActivityLauncher.launch(intent);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
                 Log.d(threaded_application.applicationName, activityName + ": startConsistLightsEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
             }
@@ -2844,10 +2844,10 @@ public class throttle extends AppCompatActivity implements
 
     void startConsistEditActivity(int whichThrottle) {
         try {
-            Intent intent = new Intent().setClass(this, ConsistEdit.class);
+            Intent intent = new Intent().setClass(this, ConsistEditActivity.class);
             intent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
             consistEditActivityLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -2868,7 +2868,7 @@ public class throttle extends AppCompatActivity implements
         try {
             Intent intent = new Intent().setClass(this, DeviceSoundsSettingsActivity.class);
             deviceSoundsSettingsActivityLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -2884,7 +2884,7 @@ public class throttle extends AppCompatActivity implements
         try {
             Intent intent = new Intent(this, PreferencesActivity.class);
             preferencesActivityLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -5673,9 +5673,9 @@ public class throttle extends AppCompatActivity implements
                 mainapp.prefsForcedRestart(prefForcedRestartReason);
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
-                Intent in = new Intent().setClass(this, connection_activity.class);
+                Intent in = new Intent().setClass(this, ConnectionActivity.class);
                 startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
 
@@ -6482,7 +6482,7 @@ public class throttle extends AppCompatActivity implements
             Intent in = new Intent().setClass(this, WebActivity.class); // if autoWeb and landscape, switch to Web activity
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -6908,14 +6908,14 @@ public class throttle extends AppCompatActivity implements
         webView.stopLoading();
         mainapp.appIsFinishing = true;
         this.finish(); // end this activity
-        connection_activity.overridePendingTransition(this, 0, 0);
+        ConnectionActivity.overridePendingTransition(this, 0, 0);
     }
 
     private void endThisActivity() {
         releaseThrottles();
         webView.stopLoading();
         this.finish(); // end this activity
-        connection_activity.overridePendingTransition(this, 0, 0);
+        ConnectionActivity.overridePendingTransition(this, 0, 0);
     }
 
     private void shutdown() {
@@ -6923,7 +6923,7 @@ public class throttle extends AppCompatActivity implements
         webView.stopLoading();
         mainapp.appIsFinishing = true;
         this.finish(); // end this activity
-        connection_activity.overridePendingTransition(this, 0, 0);
+        ConnectionActivity.overridePendingTransition(this, 0, 0);
     }
 
     // request release of specified throttle
@@ -6981,21 +6981,21 @@ public class throttle extends AppCompatActivity implements
             return true;
 
         } else if (item.getItemId() == R.id.power_control_mnu) {
-            in = new Intent().setClass(this, power_control.class);
+            in = new Intent().setClass(this, PowerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if ((item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu)) {
             in = new Intent().setClass(this, DccexActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.withrottle_cv_programmer_mnu) {
             in = new Intent().setClass(this, WiThrottleCvProgrammerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.settings_mnu) {
@@ -7005,13 +7005,13 @@ public class throttle extends AppCompatActivity implements
         } else if (item.getItemId() == R.id.function_defaults_mnu) {
             in = new Intent().setClass(this, FunctionSettingsActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.function_consist_settings_mnu) {
             in = new Intent().setClass(this, FunctionConsistSettingsActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.connect_menu) {
@@ -7022,6 +7022,7 @@ public class throttle extends AppCompatActivity implements
             b.setCancelable(true);
             b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    mainapp.manualRestartRequested = true;
                     threaded_application.activityInTransition(activityName);
 //                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
                     mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
@@ -7029,9 +7030,9 @@ public class throttle extends AppCompatActivity implements
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent in = new Intent().setClass(throttle.this, connection_activity.class);
+                            Intent in = new Intent().setClass(throttle.this, ConnectionActivity.class);
                             startActivity(in);
-                            connection_activity.overridePendingTransition(throttle.this, R.anim.fade_in, R.anim.fade_out);
+                            ConnectionActivity.overridePendingTransition(throttle.this, R.anim.fade_in, R.anim.fade_out);
                         }
                     }, 2000);
                 }
@@ -7059,13 +7060,13 @@ public class throttle extends AppCompatActivity implements
         } else if (item.getItemId() == R.id.about_mnu) {
             in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.logviewer_menu) {
             Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
             startActivity(logviewer);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.emergency_stop_button) {
@@ -7865,7 +7866,7 @@ public class throttle extends AppCompatActivity implements
         Log.d(threaded_application.applicationName, activityName + ": forceRelaunchApp() ");
 
         this.finish();
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 //        Message msg = Message.obtain();
 //        msg.what = message_type.RELAUNCH_APP;
 //        msg.arg1 = forcedRestartReason;

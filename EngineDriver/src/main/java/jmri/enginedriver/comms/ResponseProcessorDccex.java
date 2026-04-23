@@ -901,7 +901,7 @@ public class ResponseProcessorDccex {
                                 }
 
                                 Consist con = mainapp.consists[whichThrottle];
-                                if (con.getLoco(addr_str) != null) { //loco was added to consist in select_loco
+                                if (con.getLoco(addr_str) != null) { //loco was added to consist in SelectLocoActivity
                                     con.setConfirmed(addr_str);
                                     con.setWhichSource(addr_str, source_type.ROSTER); //entered by address, not roster
 //                                    con.setFunctionLabels(addr_str, threaded_application.parseFunctionLabels(responseStrBuilder.toString()));

@@ -151,6 +151,8 @@ public class threaded_application extends Application {
     public static final String applicationName = "Engine_Driver";
     public static final String activityName = "t_a";
 
+    public boolean manualRestartRequested = false;
+
     // it does not matter what these value are as long as they have never been used before (so just add 1)
     public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
     private static final String LAST_PREFERENCE_NAME_RUN = "3";  // set this to a different string to force the check and rename of the old preferences on next startup.
@@ -194,7 +196,7 @@ public class threaded_application extends Application {
     public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
     public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
-    public ArrayList<HashMap<String, String>> rosterFullList; // populated by select_loco. as different to roster which is populated using XML via the WebServer
+    public ArrayList<HashMap<String, String>> rosterFullList; // populated by SelectLocoActivity. as different to roster which is populated using XML via the WebServer
     public int rosterOrder = sort_type.NAME;
     public int recentLocosOrder = sort_type.LAST_USED;
     public int recentConsistsOrder = sort_type.LAST_USED;
@@ -850,7 +852,8 @@ public class threaded_application extends Application {
                     if (runningActivity != null)
                         addNotification(runningActivity.getIntent(), notification_type.APP_PUSHED_TO_BACKGROUND);
                     prefs.edit().putBoolean("prefForcedRestart", true).commit();
-                    prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.APP_PUSHED_TO_BACKGROUND).commit();
+                    if (!manualRestartRequested)
+                        prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.APP_PUSHED_TO_BACKGROUND).commit();
 
                     if (prefs.getBoolean("prefStopOnBackground",
                             mainapp.getResources().getBoolean(R.bool.prefStopOnBackgroundDefaultValue))) {
@@ -3151,7 +3154,7 @@ public class threaded_application extends Application {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             } catch (Exception e) {
-                Log.e(applicationName, "select_loco: hideSoftKeyboard(): unable to hide the soft keyboard");
+                Log.e(applicationName, "SelectLocoActivity: hideSoftKeyboard(): unable to hide the soft keyboard");
             }
         }
     }
@@ -3808,6 +3811,7 @@ public class threaded_application extends Application {
         double endTime = System.currentTimeMillis() + durationMs;
 
         StringBuilder tempToastText = new StringBuilder();
+        Log.d(threaded_application.applicationName, activityName + " : showCustomToast(): clearPrevious : " + clearPrevious);
         if (!clearPrevious) {
             synchronized (customToastPairList) {
                 Iterator<Pair<String, Double>> it = customToastPairList.iterator();
@@ -3815,19 +3819,20 @@ public class threaded_application extends Application {
                     Pair<String, Double> pair = it.next();
                     if ((System.currentTimeMillis() >= pair.second) || (pair.first.equals(message))) {
                         it.remove(); // This is safe during iteration
-                        Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): removing: " + pair.first);
+                        Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): removing: " + pair.first);
 
                     } else {
                         tempToastText.append(pair.first).append("\n");
+//                        Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): keeping: " + pair.first);
                     }
                 }
                 customToastPairList.add(new Pair(message, endTime));
-                Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): adding: " + message);
+                Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
             }
         } else {
             clearCustomToastPairList();
             customToastPairList.add(new Pair(message, endTime));
-            Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): adding: " + message);
+            Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
         }
         tempToastText.append(message);
 
@@ -3836,7 +3841,7 @@ public class threaded_application extends Application {
         Spannable spannable = new SpannableString(text);
         for (int i = 0; i < text.length()-1; i++) {
             if (text.charAt(i) == '\n') {
-                spannable.setSpan(new RelativeSizeSpan(1.2f), i+1, i+2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannable.setSpan(new RelativeSizeSpan(1.3f), i+1, i+2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
 
@@ -3912,7 +3917,7 @@ public class threaded_application extends Application {
         while (it.hasNext()) {
             Pair<String, Double> pair = it.next();
             it.remove(); // This is safe during iteration
-            Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): removing: " + pair.first);
+//            Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): clearCustomToastPairList() removing: " + pair.first);
         }
     }
 

@@ -51,8 +51,8 @@ import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class reconnect_status extends AppCompatActivity {
-    static final String activityName = "reconnect_status";
+public class ReconnectActivity extends AppCompatActivity {
+    static final String activityName = "ReconnectActivity";
 
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -227,7 +227,7 @@ public class reconnect_status extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                mainapp.checkExit(reconnect_status.this);
+                mainapp.checkExit(ReconnectActivity.this);
                 mainapp.exitDoubleBackButtonInitiated = 0;
             }
         };
@@ -289,7 +289,7 @@ public class reconnect_status extends AppCompatActivity {
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.fade_in, R.anim.fade_out);
             startActivity(in, options.toBundle());
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -310,7 +310,7 @@ public class reconnect_status extends AppCompatActivity {
         } else if (item.getItemId() == R.id.logviewer_menu) {
             Intent in = new Intent().setClass(this, LogViewerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else {
                 return super.onOptionsItemSelected(item);
@@ -347,9 +347,9 @@ public class reconnect_status extends AppCompatActivity {
                 mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(() -> {
-                    Intent in = new Intent().setClass(thisActivity, connection_activity.class);
+                    Intent in = new Intent().setClass(thisActivity, ConnectionActivity.class);
                     startActivity(in);
-                    connection_activity.overridePendingTransition(thisActivity, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(thisActivity, R.anim.fade_in, R.anim.fade_out);
                 }, 2000);
             });
             b.setNegativeButton(R.string.no, null);

@@ -377,10 +377,10 @@ public class routes extends AppCompatActivity
     private void witRetry(String s) {
         threaded_application.extendedLogging(activityName + ": witRetry()");
 
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     public class button_listener implements View.OnClickListener {
@@ -540,9 +540,9 @@ public class routes extends AppCompatActivity
                 mainapp.prefsForcedRestart(prefForcedRestartReason);
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
-                Intent in = new Intent().setClass(this, connection_activity.class);
+                Intent in = new Intent().setClass(this, ConnectionActivity.class);
                 startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
 
@@ -747,7 +747,7 @@ public class routes extends AppCompatActivity
             Intent in = new Intent().setClass(this, WebActivity.class);      // if autoWeb and landscape, switch to Web activity
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -793,7 +793,7 @@ public class routes extends AppCompatActivity
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
     }
 
     @Override
@@ -859,30 +859,30 @@ public class routes extends AppCompatActivity
 
         } else if (item.getItemId() == R.id.power_control_mnu) {
             threaded_application.activityInTransition(activityName);
-            in = new Intent().setClass(this, power_control.class);
+            in = new Intent().setClass(this, PowerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.settings_mnu) {
             threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
             threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, DccexActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.logviewer_menu) {
             threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, LogViewerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.connect_menu) {
@@ -902,9 +902,9 @@ public class routes extends AppCompatActivity
                         @Override
                         public void run() {
                             threaded_application.activityInTransition(activityName);
-                            Intent in = new Intent().setClass(routes.this, connection_activity.class);
+                            Intent in = new Intent().setClass(routes.this, ConnectionActivity.class);
                             startActivity(in);
-                            connection_activity.overridePendingTransition(routes.this, R.anim.fade_in, R.anim.fade_out);
+                            ConnectionActivity.overridePendingTransition(routes.this, R.anim.fade_in, R.anim.fade_out);
                         }
                     }, 2000);
                 }
@@ -933,7 +933,7 @@ public class routes extends AppCompatActivity
             threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.emergency_stop_button) {

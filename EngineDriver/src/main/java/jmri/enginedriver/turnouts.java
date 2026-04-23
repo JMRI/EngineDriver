@@ -442,10 +442,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     private void witRetry(String s) {
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     public class button_listener implements View.OnClickListener {
@@ -610,9 +610,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.prefsForcedRestart(prefForcedRestartReason);
                 prefs.edit().putBoolean("prefForcedRestart", false).commit();
                 prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.NONE).commit();
-                Intent in = new Intent().setClass(this, connection_activity.class);
+                Intent in = new Intent().setClass(this, ConnectionActivity.class);
                 startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             }
         }
 
@@ -943,7 +943,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             Intent in = new Intent().setClass(this, WebActivity.class);      // if autoWeb and landscape, switch to Web activity
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -970,7 +970,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();
-        connection_activity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.push_left_in, R.anim.push_left_out);
     }
 
     @Override
@@ -1030,14 +1030,14 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             mainapp.checkAskExit(this);
             return true;
         } else if (item.getItemId() == R.id.power_control_mnu) {
-            in = new Intent().setClass(this, power_control.class);
+            in = new Intent().setClass(this, PowerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.settings_mnu) {
             in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.connect_menu) {
@@ -1056,9 +1056,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent in = new Intent().setClass(turnouts.this, connection_activity.class);
+                            Intent in = new Intent().setClass(turnouts.this, ConnectionActivity.class);
                             startActivity(in);
-                            connection_activity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
+                            ConnectionActivity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
                         }
                     }, 2000);
                 }
@@ -1086,22 +1086,22 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         } else if (item.getItemId() == R.id.about_mnu) {
             in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if ( (item.getItemId() == R.id.dcc_ex_button) || (item.getItemId() == R.id.dcc_ex_mnu) ) {
             in = new Intent().setClass(this, DccexActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.withrottle_cv_programmer_mnu) {
             in = new Intent().setClass(this, WiThrottleCvProgrammerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.logviewer_menu) {
             Intent logviewer = new Intent().setClass(this, LogViewerActivity.class);
             startActivity(logviewer);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();

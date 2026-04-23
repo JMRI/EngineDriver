@@ -121,8 +121,8 @@ import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.direction_type;
 
-public class select_loco extends AppCompatActivity {
-    static final String activityName = "select_loco";
+public class SelectLocoActivity extends AppCompatActivity {
+    static final String activityName = "SelectLocoActivity";
 
     String prefSelectLocoMethod = select_loco_method_type.FIRST;
 
@@ -692,10 +692,10 @@ public class select_loco extends AppCompatActivity {
 
     private void witRetry(String s) {
         Log.d(threaded_application.applicationName, activityName + ": witRetry()");
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     // request release of specified throttle
@@ -726,8 +726,8 @@ public class select_loco extends AppCompatActivity {
         importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
     }
 
-    boolean saveUpdateList;         // save value across ConsistEdit activity 
-    boolean newEngine;              // save value across ConsistEdit activity
+    boolean saveUpdateList;         // save value across ConsistEditActivity activity
+    boolean newEngine;              // save value across ConsistEditActivity activity
 
     boolean acquireLoco(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
         Log.d(threaded_application.applicationName, activityName + ": acquireLoco()");
@@ -853,11 +853,11 @@ public class select_loco extends AppCompatActivity {
 
     void startConsistEditActivity(int whichThrottle, boolean saveConsistsFile) {
         try {
-            Intent intent = new Intent().setClass(this, ConsistEdit.class);
+            Intent intent = new Intent().setClass(this, ConsistEditActivity.class);
             intent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
             if (saveConsistsFile) intent.putExtra("saveConsistsFile", 'Y');
             consistEditActivityLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -887,7 +887,7 @@ public class select_loco extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             galleryLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": startGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -1419,12 +1419,12 @@ public class select_loco extends AppCompatActivity {
 
         public void onClick(View v) {
             Log.d(threaded_application.applicationName, activityName + ": EditConsistLightsButtonListener(): onClick()");
-            Intent consistLightsEdit = new Intent().setClass(_selectLocoActivity, ConsistLightsEdit.class);
+            Intent consistLightsEdit = new Intent().setClass(_selectLocoActivity, ConsistLightsEditActivity.class);
             consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
             mainapp.hideSoftKeyboard(v, activityName);
             startActivity(consistLightsEdit);
-            connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             mainapp.buttonVibration();
         }
     }
@@ -1453,7 +1453,7 @@ public class select_loco extends AppCompatActivity {
                 }
             };
 
-            AlertDialog.Builder ab = new AlertDialog.Builder(select_loco.this);
+            AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogDownloadRosterConfirmQuestion))
                     .setPositiveButton(R.string.yes, dialogClickListener)
@@ -1539,7 +1539,7 @@ public class select_loco extends AppCompatActivity {
             Log.d(threaded_application.applicationName, activityName + ": DeviceSoundsButtonListener(): onClick()");
             Intent deviceSounds = new Intent().setClass(_selectLocoActivity, DeviceSoundsSettingsActivity.class);
             startActivity(deviceSounds);
-            connection_activity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
             result = RESULT_OK;
             mainapp.hideSoftKeyboard(v, activityName);
             endThisActivity();
@@ -1687,7 +1687,7 @@ public class select_loco extends AppCompatActivity {
                 }
             };
 
-            AlertDialog.Builder ab = new AlertDialog.Builder(select_loco.this);
+            AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentLocoConfirmClearQuestion))
                     .setPositiveButton(R.string.yes, dialogClickListener)
@@ -1715,7 +1715,7 @@ public class select_loco extends AppCompatActivity {
                 }
             };
 
-            AlertDialog.Builder ab = new AlertDialog.Builder(select_loco.this);
+            AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentConsistsConfirmClearQuestions))
                     .setPositiveButton(R.string.yes, dialogClickListener)
@@ -2117,7 +2117,7 @@ public class select_loco extends AppCompatActivity {
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(select_loco.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(SelectLocoActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -2222,7 +2222,7 @@ public class select_loco extends AppCompatActivity {
                 rosterDownloadButton.setEnabled((!mainapp.rosterFullList.isEmpty()) && (mainapp.roster_entries.size()==mainapp.rosterFullList.size()));
 
                 if (!mainapp.shownToastRoster) { // only show it once
-                    threaded_application.showCustomToast(select_loco.this,  getApplicationContext().getResources().getString(R.string.toastRosterHelp), LENGTH_LONG, 5, true, true);
+                    threaded_application.showCustomToast(SelectLocoActivity.this,  getApplicationContext().getResources().getString(R.string.toastRosterHelp), LENGTH_LONG, 5, true, true);
                     mainapp.shownToastRoster = true;
                 }
                 mainapp.hideSoftKeyboard(selectMethodButton[1], activityName);
@@ -2235,7 +2235,7 @@ public class select_loco extends AppCompatActivity {
                 selectMethodButton[2].setSelected(true);
 
                 if (!mainapp.shownToastRecentLocos) {
-                    threaded_application.showCustomToast(select_loco.this,  getApplicationContext().getResources().getString(R.string.toastRecentsHelp), LENGTH_LONG, 5, true, true);
+                    threaded_application.showCustomToast(SelectLocoActivity.this,  getApplicationContext().getResources().getString(R.string.toastRecentsHelp), LENGTH_LONG, 5, true, true);
                     mainapp.shownToastRecentLocos = true;
                 }
                 mainapp.hideSoftKeyboard(selectMethodButton[2], activityName);
@@ -2247,7 +2247,7 @@ public class select_loco extends AppCompatActivity {
                 selectMethodButton[3].setSelected(true);
 
                 if (!mainapp.shownToastRecentConsists) {
-                    threaded_application.showCustomToast(select_loco.this,  getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), LENGTH_LONG, 5, true, true);
+                    threaded_application.showCustomToast(SelectLocoActivity.this,  getApplicationContext().getResources().getString(R.string.toastRecentConsistsHelp), LENGTH_LONG, 5, true, true);
                     mainapp.shownToastRecentConsists = true;
                 }
                 mainapp.hideSoftKeyboard(selectMethodButton[3], activityName);
@@ -2439,13 +2439,13 @@ public class select_loco extends AppCompatActivity {
     // end current activity
     void endThisActivity() {
         threaded_application.activityInTransition(activityName);
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity(): ending select_loco normally");
+        Log.d(threaded_application.applicationName, activityName + ": endThisActivity(): ending SelectLocoActivity normally");
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", sWhichThrottle.charAt(0));  //pass whichThrottle as an extra
         resultIntent.putExtra("overrideThrottleName", overrideThrottleName);
         setResult(result, resultIntent);
         this.finish();
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private void updateAddressEntry() {
@@ -2497,7 +2497,7 @@ public class select_loco extends AppCompatActivity {
         if (mainapp.rosterJmriWeb != null) {
             re = mainapp.rosterJmriWeb.get(rosterNameString);
             if (re == null) {
-                Log.w("Engine_Driver", "select_loco: onLongRosterListItemClick(): Roster entry " + rosterNameString + " not available.");
+                Log.w("Engine_Driver", "SelectLocoActivity: onLongRosterListItemClick(): Roster entry " + rosterNameString + " not available.");
                 return true;
             }
         }

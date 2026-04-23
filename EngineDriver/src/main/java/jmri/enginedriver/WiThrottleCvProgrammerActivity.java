@@ -309,10 +309,10 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
     }
 
     private void witRetry(String s) {
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private void resetTextField(int which) {
@@ -624,7 +624,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(WiThrottleCvProgrammerActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(WiThrottleCvProgrammerActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -714,7 +714,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
         threaded_application.activityInTransition(activityName);
         mainapp.witScreenIsOpen = false;
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private void disconnect() {

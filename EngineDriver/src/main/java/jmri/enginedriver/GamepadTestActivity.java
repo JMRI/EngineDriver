@@ -637,7 +637,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(GamepadTestActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(GamepadTestActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -710,7 +710,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
         resultIntent.putExtra("whichGamepadNo", whichGamepadNo + passedTest);  //pass whichGamepadNo as an extra - pass/fail/reset
         setResult(result, resultIntent);
         this.finish();
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

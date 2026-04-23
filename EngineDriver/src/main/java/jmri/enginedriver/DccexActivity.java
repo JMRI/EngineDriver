@@ -657,10 +657,10 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
 //    }
 
     private void witRetry(String s) {
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private void resetTextField(int which) {
@@ -1141,7 +1141,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(DccexActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(DccexActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -1241,7 +1241,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         threaded_application.activityInTransition(activityName);
         threaded_application.dccexScreenIsOpen = false;
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private void disconnect() {

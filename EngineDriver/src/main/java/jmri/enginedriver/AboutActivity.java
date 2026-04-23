@@ -91,7 +91,7 @@ public class AboutActivity extends AppCompatActivity {
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(AboutActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(AboutActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -181,7 +181,7 @@ public class AboutActivity extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private class BundleMessageHandler extends Handler {
@@ -244,12 +244,7 @@ public class AboutActivity extends AppCompatActivity {
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }
