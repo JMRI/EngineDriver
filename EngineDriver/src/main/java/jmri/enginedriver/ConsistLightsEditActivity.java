@@ -65,8 +65,8 @@ import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class ConsistLightsEdit extends AppCompatActivity implements OnGestureListener {
-    static final String activityName = "ConsistLightsEdit";
+public class ConsistLightsEditActivity extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "ConsistLightsEditActivity";
 
     public static String LIGHT_TEXT_OFF = "Off";
     public static String LIGHT_TEXT_ON = "On";
@@ -213,10 +213,10 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
     }
 
     private void witRetry(String s) {
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
 
@@ -361,7 +361,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(ConsistLightsEdit.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(ConsistLightsEditActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -381,7 +381,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         }
 
         if (!mainapp.shownToastConsistLightsEdit) {
-            threaded_application.showCustomToast(ConsistLightsEdit.this, getResources().getString(R.string.consistLights_help), Toast.LENGTH_LONG, 4, true);
+            threaded_application.showCustomToast(ConsistLightsEditActivity.this, getResources().getString(R.string.consistLights_help), Toast.LENGTH_LONG, 4, true);
             mainapp.shownToastConsistLightsEdit = true;
         }
 
@@ -488,7 +488,7 @@ public class ConsistLightsEdit extends AppCompatActivity implements OnGestureLis
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
         setResult(result, resultIntent);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

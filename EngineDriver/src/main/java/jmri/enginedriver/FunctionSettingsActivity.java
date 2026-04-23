@@ -212,7 +212,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(FunctionSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(FunctionSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -548,7 +548,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
                 || (!originalPrefNumberOfDefaultFunctionLabelsForRoster.equals(prefNumberOfDefaultFunctionLabelsForRoster)))  //if settings array is not current
             saveSettings();         //save function labels to file
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     void saveSettings() {

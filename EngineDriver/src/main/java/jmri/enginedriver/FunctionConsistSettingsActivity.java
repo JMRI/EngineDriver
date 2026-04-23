@@ -152,7 +152,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(FunctionConsistSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(FunctionConsistSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -470,7 +470,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
         if (!settingsCurrent)
             saveSettings();         //save function settings to the file
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     void saveSettings() {

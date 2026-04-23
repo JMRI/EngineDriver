@@ -61,7 +61,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -110,8 +109,8 @@ import jmri.enginedriver.logviewer.ui.LogViewerActivity;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.import_export.ImportExportConnectionList;
 
-public class connection_activity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
-    static final String activityName = "connection_activity";
+public class ConnectionActivity extends AppCompatActivity implements PermissionsHelper.PermissionsHelperGrantedCallback {
+    static final String activityName = "ConnectionActivity";
 
     //    private ArrayList<HashMap<String, String>> connections_list;
     private ArrayList<HashMap<String, String>> discovery_list;
@@ -129,13 +128,6 @@ public class connection_activity extends AppCompatActivity implements Permission
     private String connected_ssid;
     private String connected_serviceType;
 
-//    private static final String demo_host = "jmri.mstevetodd.com";
-//    private static final String demo_port = "44444";
-//    private static final String DUMMY_HOST = "999";
-//    private static final String DUMMY_ADDRESS = "999";
-//    private static final int DUMMY_PORT = 999;
-//    private static final String DUMMY_SSID = "";
-
     private static Method overridePendingTransition;
 
     public ImportExportPreferences importExportPreferences = new ImportExportPreferences();
@@ -143,6 +135,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     private Toast connToast = null;
     private boolean isRestarting = false;
+
+    private boolean connectionHintShownBefore = false;
 
     SwipeDetector connectionsListSwipeDetector;
 
@@ -219,7 +213,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     }
 
 
-    private void start_throttle_activity() {
+    private void startThrottleActivity() {
         threaded_application.activityInTransition(activityName);
         Intent throttle = mainapp.getThrottleIntent();
         startActivity(throttle);
@@ -235,7 +229,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         threaded_application.activityInTransition(activityName);
         //end current CA Intent then start the new Intent
-        Intent newConnection = new Intent().setClass(this, connection_activity.class);
+        Intent newConnection = new Intent().setClass(this, ConnectionActivity.class);
         this.finish();
         startActivity(newConnection);
         overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -252,15 +246,16 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //When an item is clicked, connect to the given IP address and port.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            threaded_application.clearCustomToastPairList();
             mainapp.exitDoubleBackButtonInitiated = 0;
             if (connectionsListSwipeDetector.swipeDetected()) { // check for swipe
                 if (connectionsListSwipeDetector.getAction() == SwipeDetector.Action.LR) {
-                    clearConnectionsListItem(getApplicationContext(), v, position, id);
+                    clearConnectionsListItem(getApplicationContext(), v);
+//                    clearConnectionsListItem(getApplicationContext(), v, position, id);
                     connectionsListSwipeDetector.swipeReset();
 //                } else {
                 }
             } else {  //no swipe
+                threaded_application.clearCustomToastPairList();
                 switch (server_type) {
                     case DISCOVERED_SERVER:
                     case RECENT_CONNECTION:
@@ -317,7 +312,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    private class button_listener implements View.OnClickListener {
+    private class ButtonListner implements View.OnClickListener {
         public void onClick(View v) {
             mainapp.exitDoubleBackButtonInitiated = 0;
             EditText entry = findViewById(R.id.host_ip);
@@ -342,13 +337,14 @@ public class connection_activity extends AppCompatActivity implements Permission
         }
     }
 
-    private void clearConnectionsListItem(Context context, View v, int position, long id) {
+//    private void clearConnectionsListItem(Context context, View v, int position, long id) {
+    private void clearConnectionsListItem(Context context, View v) {
         //When a connection swiped , remove it from the list
         ViewGroup vg = (ViewGroup) v; //convert to viewgroup for clicked row
         TextView hip = (TextView) vg.getChildAt(0); // get host ip from 1st box
         TextView hnv = (TextView) vg.getChildAt(1); // get host name from 2nd box
         TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
-        TextView ssidView = (TextView) vg.getChildAt(3); // get port from 4th box
+//        TextView ssidView = (TextView) vg.getChildAt(3); // get port from 4th box
         if (!(hnv.getText().toString().equals(threaded_application.DEMO_HOST)) || !(hpv.getText().toString().equals(threaded_application.DEMO_PORT))) {
             getConnectionsListImpl(context, hip.getText().toString(), hpv.getText().toString());
             connected_hostip = threaded_application.DUMMY_ADDRESS;
@@ -366,7 +362,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    mainapp.safeToastInstructional(R.string.toastConnectRemoved, Toast.LENGTH_SHORT);
+                    threaded_application.showCustomToast(ConnectionActivity.this, getResources().getString(R.string.toastConnectRemoved), Toast.LENGTH_SHORT, 5, false, false);
                     importExportConnectionList.saveConnectionsListExecute(mainapp, connected_hostip, connected_hostname, connected_port, "", connected_ssid, connected_serviceType);
                 }
 
@@ -374,40 +370,42 @@ public class connection_activity extends AppCompatActivity implements Permission
                 public void onAnimationRepeat(Animation animation) {
                 }
 
-                /** @noinspection EmptyMethod*/
-                public void run() {
-                }
+//                /** @noinspection EmptyMethod*/
+//                public void run() {
+//                }
             });
 
         } else {
-            mainapp.safeToast(R.string.toastConnectRemoveDemoHostError, Toast.LENGTH_SHORT);
+            threaded_application.showCustomToast(ConnectionActivity.this, getResources().getString(R.string.toastConnectRemoveDemoHostError), Toast.LENGTH_SHORT, 5, false, false);
         }
     }
 
 
     //Method to connect to first discovered WiThrottle server.
-    private void connectA() {
+    private void connectToFirstDiscoveredServer() {
         try {
             if (discovery_list.get(0) != null) {
                 HashMap<String, String> tm = discovery_list.get(0);
+                if (tm != null) {
+                    connected_hostip = tm.get("ip_address");
+                    String tempPort = tm.get("port");
 
-                connected_hostip = tm.get("ip_address");
-
-                if (!connected_hostip.trim().isEmpty()) {
-                    try {
-                        connected_port = Integer.parseInt(tm.get("port"));
-                    } catch (Exception except) {
-                        mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
-                        connected_port = 0;
-                        return;
+                    if ( (connected_hostip!=null) && (!connected_hostip.trim().isEmpty()) && (tempPort!=null) ) {
+                        try {
+                            connected_port = Integer.parseInt(tempPort);
+                        } catch (Exception except) {
+                            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectInvalidPort) + "\n" + except.getMessage(), Toast.LENGTH_SHORT);
+                            connected_port = 0;
+                            return;
+                        }
+                        connected_hostname = tm.get("host_name"); //copy ip to name
+                        connected_ssid = mainapp.client_ssid;
+                        checkIfDccexServerName(connected_hostname, connected_port);
+                        connect();
+                        mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
+                    } else {
+                        mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
                     }
-                    connected_hostname = tm.get("host_name"); //copy ip to name
-                    connected_ssid = mainapp.client_ssid;
-                    checkIfDccexServerName(connected_hostname, connected_port);
-                    connect();
-                    mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastConnectConnected, connected_hostname, Integer.toString(connected_port)), LENGTH_LONG);
-                } else {
-                    mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
                 }
             }
         } catch (Exception ex) {
@@ -439,7 +437,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                         boolean instructional = false;
                         if (bundle.containsKey(alert_bundle_tag_type.INSTRUCTIONAL))
                             instructional = bundle.getBoolean(alert_bundle_tag_type.INSTRUCTIONAL);
-                        threaded_application.showCustomToast(connection_activity.this, message, duration, 5, instructional);
+                        threaded_application.showCustomToast(ConnectionActivity.this, message, duration, 5, instructional);
                     }
                     break;
 
@@ -479,11 +477,16 @@ public class connection_activity extends AppCompatActivity implements Permission
                         HashMap<String, String> tm;
                         for (int index = 0; index < discovery_list.size(); index++) {
                             tm = discovery_list.get(index);
-                            if ((tm != null)
-                                    && (tm.get("ip_address").equals(found_ip_address))
-                                    && (tm.get("port").equals(found_port))) {
-                                entryExists = true;
-                                break;
+                            if (tm != null) {
+                                String thisIp = tm.get("ip_address");
+                                String thisPort = tm.get("port");
+                                if ( (thisIp != null) && (thisPort != null) ) {
+                                    if ( (thisIp.equals(found_ip_address))
+                                    && (thisPort.equals(found_port))) {
+                                        entryExists = true;
+                                        break;
+                                    }
+                                }
                             }
                         }
                         if (!entryExists) {                // if new host, add to discovered list on screen
@@ -498,12 +501,12 @@ public class connection_activity extends AppCompatActivity implements Permission
                             discovery_list_adapter.notifyDataSetChanged();
 
                             if (prefs.getBoolean("prefConnectToFirstServer", false)) {
-                                connectA();
+                                connectToFirstDiscoveredServer();
                             }
 
                             String prefAutoServerNamedConnect = prefs.getString("prefAutoServerNamedConnect", "").toLowerCase();
                             if ((!prefAutoServerNamedConnect.isEmpty()) && (found_host_name != null) && (found_host_name.toLowerCase().equals(prefAutoServerNamedConnect))) {
-                                connectA();
+                                connectToFirstDiscoveredServer();
                             }
                         }
                     }
@@ -518,10 +521,13 @@ public class connection_activity extends AppCompatActivity implements Permission
                         HashMap<String, String> tm;
                         for (int index = 0; index < discovery_list.size(); index++) {
                             tm = discovery_list.get(index);
-                            if (tm.get("host_name").equals(removed_host_name)) {
-                                discovery_list.remove(index);
-                                discovery_list_adapter.notifyDataSetChanged();
-                                break;
+                            if (tm != null) {
+                                String thisHostName = tm.get("host_name");
+                                if ( (thisHostName!=null) && (thisHostName.equals(removed_host_name)) ) {
+                                    discovery_list.remove(index);
+                                    discovery_list_adapter.notifyDataSetChanged();
+                                    break;
+                                }
                             }
                         }
                     }
@@ -549,7 +555,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
                     loadSharedPreferencesFromFile();
 
-                    start_throttle_activity();
+                    startThrottleActivity();
                     break;
                 }
                 case message_type.DISCONNECT: {
@@ -612,7 +618,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         setContentView(R.layout.connection_page);
 
-        boolean prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
+//        boolean prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
         mainapp.haveForcedWiFiConnection = false;
 
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
@@ -649,20 +655,14 @@ public class connection_activity extends AppCompatActivity implements Permission
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-        host_ip.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    showHideNumericOrTextButtons(true);
-                }
+        host_ip.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                showHideNumericOrTextButtons(true);
             }
         });
-        port.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    showHideNumericOrTextButtons(false);
-                }
+        port.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                showHideNumericOrTextButtons(false);
             }
         });
         port.addTextChangedListener(new TextWatcher() {
@@ -687,7 +687,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //Set the button callback.
         connect_button = findViewById(R.id.connect);
-        button_listener click_listener = new button_listener();
+        ButtonListner click_listener = new ButtonListner();
         connect_button.setOnClickListener(click_listener);
 
         discoveredServersHeading = findViewById(R.id.discoveredServersHeading);
@@ -709,18 +709,15 @@ public class connection_activity extends AppCompatActivity implements Permission
         rootView = findViewById(R.id.connection_view);
         rootView.requestFocus();
         rootViewHeight = rootView.getHeight();
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (rootViewHeight != 0) {
-                    int heightDiff = rootViewHeight - rootView.getHeight();
-                    if (heightDiff < -400) {  //keyboard closed
-                        rootView.requestFocus();
-                        showHideNumericOrTextButtons(false);
-                    }
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+            if (rootViewHeight != 0) {
+                int heightDiff = rootViewHeight - rootView.getHeight();
+                if (heightDiff < -400) {  //keyboard closed
+                    rootView.requestFocus();
+                    showHideNumericOrTextButtons(false);
                 }
-                rootViewHeight = rootView.getHeight();
             }
+            rootViewHeight = rootView.getHeight();
         });
 
         dccexConnectionOptionEntriesArray = this.getResources().getStringArray(R.array.prefYesNoAutoEntries);
@@ -736,7 +733,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                mainapp.checkExit(connection_activity.this);
+                mainapp.checkExit(ConnectionActivity.this);
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
@@ -788,6 +785,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         Log.d(threaded_application.applicationName, activityName + ": onStart()");
         super.onStart();
         mainapp.exitConfirmed = false;
+        connectionHintShownBefore = false;
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
@@ -798,6 +796,8 @@ public class connection_activity extends AppCompatActivity implements Permission
             BackgroundImageLoader backgroundImageLoader = new BackgroundImageLoader(prefs, mainapp, findViewById(R.id.backgroundImgView));
             backgroundImageLoader.loadBackgroundImage();
         }
+
+        mainapp.manualRestartRequested = false;
     } // end onStart()
 
     @Override
@@ -806,6 +806,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
+        threaded_application.clearCustomToastPairList();
 
         mainapp.applyTheme(this);
 
@@ -830,12 +831,10 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         getWifiInfo();
 //        getPhoneInfo();
-        set_labels();
+        setLabels();
 
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
         //start up server discovery listener
-        //	    sendMsgErr(0, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
-//        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);
         mainapp.sendMsg(mainapp.commBundleMessageHandler, message_type.SET_LISTENER, "", 1);
 
         Bundle bundle = new Bundle();
@@ -844,7 +843,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
         //populate the ListView with the recent connections
         getConnectionsList();
-        set_labels();
+        setLabels();
         mainapp.cancelForcingFinish();            // if fresh start or restart after being killed in the bkg, indicate app is running again
         //start up server discovery listener again (after a 1 second delay)
         //TODO: this is a rig, figure out why this is needed for ubuntu servers
@@ -856,7 +855,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         mainapp.alertCommHandlerWithBundle(message_type.SET_LISTENER, bundle);
 
         if (prefs.getBoolean("prefConnectToFirstServer", false)) {
-            connectA();
+            connectToFirstDiscoveredServer();
         }
         setConnectionProtocolOption();
 
@@ -943,7 +942,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     }
 
-    private void set_labels() {
+    private void setLabels() {
         SharedPreferences prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         TextView v = findViewById(R.id.ca_footer);
         String throttleName = prefs.getString("prefThrottleName", this.getResources().getString(R.string.prefThrottleNameDefaultValue));
@@ -965,7 +964,7 @@ public class connection_activity extends AppCompatActivity implements Permission
                     warningTextBuilder.append("\n  ");
                 }
                 PermissionsHelper phi = PermissionsHelper.getInstance();
-                if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
+                if (!phi.isPermissionGranted(ConnectionActivity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
                     warningTextBuilder.append(getString(R.string.statusThreadedAppServerDiscoveryAccessFineLocationNotGranted));
                     warningTextBuilder.append("\n  ");
                 }
@@ -990,13 +989,13 @@ public class connection_activity extends AppCompatActivity implements Permission
 //        Log.d(threaded_application.applicationName, activityName + ":  getPhoneInfo()");
 //
 //        PermissionsHelper phi = PermissionsHelper.getInstance();
-//        if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
+//        if (!phi.isPermissionGranted(ConnectionActivity.this, PermissionsHelper.READ_PHONE_STATE)) {
 //            if (prefs.getBoolean("prefStopOnPhoneCall", mainapp.getResources().getBoolean(R.bool.prefStopOnPhoneCallDefaultValue))) {
 //                if (Build.VERSION.SDK_INT >= 23) {
 //                    // how many times have we asked for this before?
 //                    int count = prefs.getInt("prefStopOnPhoneCallCount", 0);
 //                    if (count < 5) {  // this is effectively counted twice each startup
-//                        phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.READ_PHONE_STATE);
+//                        phi.requestNecessaryPermissions(ConnectionActivity.this, PermissionsHelper.READ_PHONE_STATE);
 //                        count++;
 //                    } else {
 //                        prefs.edit().putBoolean("prefStopOnPhoneCall", false).apply();
@@ -1014,40 +1013,40 @@ public class connection_activity extends AppCompatActivity implements Permission
      */
     void getWifiInfo() {
         Log.d(threaded_application.applicationName, activityName + ": getWifiInfo()");
-        int intaddr;
+        int intAddr;
         mainapp.client_address_inet4 = null;
         mainapp.client_address = null;
         //set several wifi-related variables, requesting permission if required
         try {
-            WifiManager wifi = (WifiManager) connection_activity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifi = (WifiManager) ConnectionActivity.this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             WifiInfo wifiinfo = wifi.getConnectionInfo();
-            intaddr = wifiinfo.getIpAddress();
-            if (intaddr != 0) {
-                byte[] byteaddr = new byte[]{(byte) (intaddr & 0xff), (byte) (intaddr >> 8 & 0xff), (byte) (intaddr >> 16 & 0xff),
-                        (byte) (intaddr >> 24 & 0xff)};
-                mainapp.client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteaddr);
+            intAddr = wifiinfo.getIpAddress();
+            if (intAddr != 0) {
+                byte[] byteAddr = new byte[]{(byte) (intAddr & 0xff), (byte) (intAddr >> 8 & 0xff), (byte) (intAddr >> 16 & 0xff),
+                        (byte) (intAddr >> 24 & 0xff)};
+                mainapp.client_address_inet4 = (Inet4Address) Inet4Address.getByAddress(byteAddr);
                 mainapp.client_address = mainapp.client_address_inet4.toString().substring(1);      //strip off leading /
             }
             //we must have location permissions to get SSID.
             PermissionsHelper phi = PermissionsHelper.getInstance();
-//            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
+//            if (!phi.isPermissionGranted(ConnectionActivity.this, PermissionsHelper.ACCESS_FINE_LOCATION)) {
 //                if (Build.VERSION.SDK_INT >= 23) {
-//                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
+//                    phi.requestNecessaryPermissions(ConnectionActivity.this, PermissionsHelper.ACCESS_FINE_LOCATION);
 //                }
 //            }
-//            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
+//            if (!phi.isPermissionGranted(ConnectionActivity.this, PermissionsHelper.ACCESS_COARSE_LOCATION)) {
 //                if (Build.VERSION.SDK_INT >= 23) {
-//                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
+//                    phi.requestNecessaryPermissions(ConnectionActivity.this, PermissionsHelper.ACCESS_COARSE_LOCATION);
 //                }
 //            }
-            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE)) {
+            if (!phi.isPermissionGranted(ConnectionActivity.this, PermissionsHelper.ACCESS_WIFI_STATE)) {
                 if (Build.VERSION.SDK_INT >= 23) {
-                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.ACCESS_WIFI_STATE);
+                    phi.requestNecessaryPermissions(ConnectionActivity.this, PermissionsHelper.ACCESS_WIFI_STATE);
                 }
             }
-            if (!phi.isPermissionGranted(connection_activity.this, PermissionsHelper.INTERNET)) {
+            if (!phi.isPermissionGranted(ConnectionActivity.this, PermissionsHelper.INTERNET)) {
                 if (Build.VERSION.SDK_INT >= 23) {
-                    phi.requestNecessaryPermissions(connection_activity.this, PermissionsHelper.INTERNET);
+                    phi.requestNecessaryPermissions(ConnectionActivity.this, PermissionsHelper.INTERNET);
                 }
             }
 
@@ -1074,12 +1073,13 @@ public class connection_activity extends AppCompatActivity implements Permission
             //determine if currently using mobile connection or wifi
             final ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo nInfo = cm.getActiveNetworkInfo();
-            switch (nInfo.getType()) {
-                case ConnectivityManager.TYPE_WIFI:
-                    mainapp.client_type = "WIFI";
+            if (nInfo != null) {
+                switch (nInfo.getType()) {
+                    case ConnectivityManager.TYPE_WIFI:
+                        mainapp.client_type = "WIFI";
 
-                    if (!prefAllowMobileData) {
-                        // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
+                        if (!prefAllowMobileData) {
+                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
 //                        if (Build.VERSION.SDK_INT >= 21) {
                             Log.d(threaded_application.applicationName, activityName + ": getWifiInfor(): Builder");
                             NetworkRequest.Builder request = new NetworkRequest.Builder();
@@ -1097,24 +1097,25 @@ public class connection_activity extends AppCompatActivity implements Permission
                                 }
                             });
 //                        }
-                    }
-                    break;
-                case ConnectivityManager.TYPE_MOBILE:
-                    if ((!mainapp.client_type.equals("WIFI")) && (prefAllowMobileData)) {
-                        mainapp.client_type = "MOBILE";
-                    }
-                    break;
-                case ConnectivityManager.TYPE_DUMMY:
-                    mainapp.client_type = "DUMMY";
-                    break;
-                case ConnectivityManager.TYPE_VPN:
-                    mainapp.client_type = "VPN";
-                    break;
-                default:
-                    mainapp.client_type = "other";
-                    break;
+                        }
+                        break;
+                    case ConnectivityManager.TYPE_MOBILE:
+                        if ((!mainapp.client_type.equals("WIFI")) && (prefAllowMobileData)) {
+                            mainapp.client_type = "MOBILE";
+                        }
+                        break;
+                    case ConnectivityManager.TYPE_DUMMY:
+                        mainapp.client_type = "DUMMY";
+                        break;
+                    case ConnectivityManager.TYPE_VPN:
+                        mainapp.client_type = "VPN";
+                        break;
+                    default:
+                        mainapp.client_type = "other";
+                        break;
+                }
+                Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): network type=" + nInfo.getType() + " " + mainapp.client_type);
             }
-            Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): network type=" + nInfo.getType() + " " + mainapp.client_type);
 
         } catch (Exception except) {
             Log.e(threaded_application.applicationName, activityName + ": getWifiInfo(): error getting IP addr: " + except.getMessage());
@@ -1149,7 +1150,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     public boolean onOptionsItemSelected(MenuItem item) {
         mainapp.exitDoubleBackButtonInitiated = 0;
 
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         Intent in;
         if (item.getItemId() == R.id.exit_mnu) {
             mainapp.checkAskExit(this);
@@ -1160,7 +1161,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         } else if (item.getItemId() == R.id.about_mnu) {
             in = new Intent().setClass(this, AboutActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 //        } else if (item.getItemId() == R.id.ClearconnList) {
 //            clearConnectionsList();
@@ -1173,12 +1174,12 @@ public class connection_activity extends AppCompatActivity implements Permission
         } else if (item.getItemId() == R.id.logviewer_menu) {
             in = new Intent().setClass(this, LogViewerActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if ( (item.getItemId() == R.id.intro_mnu) || (item.getItemId() == R.id.intro_button) ) {
             in = new Intent().setClass(this, intro_activity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -1189,7 +1190,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         try {
             Intent intent = new Intent(this, PreferencesActivity.class);
             preferencesActivityLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -1199,7 +1200,7 @@ public class connection_activity extends AppCompatActivity implements Permission
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //only one activity with results here
         super.onActivityResult(requestCode, resultCode, data);
-        set_labels();
+        setLabels();
     }
 
     private void checkIP() {
@@ -1236,28 +1237,26 @@ public class connection_activity extends AppCompatActivity implements Permission
             mainapp.safeToast(R.string.toastConnectErrorReadingRecentConnections, Toast.LENGTH_SHORT);
         } else {
 
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                //@Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            File connections_list_file = new File(getApplicationContext().getExternalFilesDir(null), "connections_list.txt");
+            //@Override
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        File connections_list_file = new File(getApplicationContext().getExternalFilesDir(null), "connections_list.txt");
 
-                            if (connections_list_file.exists()) {
-                                //noinspection ResultOfMethodCallIgnored
-                                connections_list_file.delete();
-                                importExportConnectionList.connections_list.clear();
-                                recreate();
-                            }
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                    mainapp.buttonVibration();
+                        if (connections_list_file.exists()) {
+                            //noinspection ResultOfMethodCallIgnored
+                            connections_list_file.delete();
+                            importExportConnectionList.connections_list.clear();
+                            recreate();
+                        }
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
                 }
+                mainapp.buttonVibration();
             };
 
-            AlertDialog.Builder ab = new AlertDialog.Builder(connection_activity.this);
+            AlertDialog.Builder ab = new AlertDialog.Builder(ConnectionActivity.this);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentConnectionsConfirmClearQuestions))
                     .setPositiveButton(R.string.yes, dialogClickListener)
@@ -1276,7 +1275,7 @@ public class connection_activity extends AppCompatActivity implements Permission
         importExportConnectionList.connections_list.clear();
 
         SharedPreferences prefsNoBackup = getSharedPreferences("jmri.enginedriver_preferences_no_backup", 0);
-        if (prefsNoBackup.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't red the SD card,
+        if (prefsNoBackup.getString("prefRunIntro", "0").equals(threaded_application.INTRO_VERSION)) { // if the intro hasn't run yet, the permissions may not have been granted yet, so don't read the SD card,
 
             if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
                 //alert user that recent connections list requires SD Card
@@ -1290,7 +1289,9 @@ public class connection_activity extends AppCompatActivity implements Permission
                 } else {
                     if (((importExportConnectionList.foundDemoHost)
                             && (importExportConnectionList.connections_list.size() > 1)) || (!importExportConnectionList.connections_list.isEmpty())) {
-                        threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG, 5, true, true);
+                        if (!connectionHintShownBefore)
+                            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG, 5, true, true);
+                        connectionHintShownBefore = true;
                     }
                 }
             }
@@ -1372,9 +1373,9 @@ public class connection_activity extends AppCompatActivity implements Permission
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
         threaded_application.extendedLogging(activityName + ": navigateToHandler(): " + requestCode);
-        if (!PermissionsHelper.getInstance().isPermissionGranted(connection_activity.this, requestCode)) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(ConnectionActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
-                PermissionsHelper.getInstance().requestNecessaryPermissions(connection_activity.this, requestCode);
+                PermissionsHelper.getInstance().requestNecessaryPermissions(ConnectionActivity.this, requestCode);
             }
         } else {
             // Go to the correct handler based on the request code.
@@ -1411,8 +1412,8 @@ public class connection_activity extends AppCompatActivity implements Permission
 
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults, true)) {
-        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(connection_activity.this, requestCode, permissions, grantResults)) {
+//        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(ConnectionActivity.this, requestCode, permissions, grantResults, true)) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(ConnectionActivity.this, requestCode, permissions, grantResults)) {
             Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -1431,8 +1432,8 @@ public class connection_activity extends AppCompatActivity implements Permission
                 os.write(buffer, 0, length);
             }
         } finally {
-            is.close();
-            os.close();
+            if (is!=null) is.close();
+            if (os!=null) os.close();
         }
     }
 
@@ -1534,7 +1535,7 @@ public class connection_activity extends AppCompatActivity implements Permission
 //            // setBounds(left, top, right, bottom)
 //            wrappedDrawable.setBounds(0, 0, widthPx, heightPx);
 //
-//            // 5. Re-set the modified drawable to the toolbar
+//            // 5. Re-set the modified drawable to the toolbar.
 //            toolbar.setOverflowIcon(wrappedDrawable);
 //        }
     }
@@ -1550,8 +1551,10 @@ public class connection_activity extends AppCompatActivity implements Permission
             try {
                 Runtime.getRuntime().exec("logcat -c");
                 mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
-                mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
                 mainapp.logSaveFilename = logFile.toString();
+
+                threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG, 4, true, true);
+
                 Log.d(threaded_application.applicationName, "Logging started to: " + logFile);
                 Log.d(threaded_application.applicationName, mainapp.getAboutInfo());
                 Log.d(threaded_application.applicationName, mainapp.getAboutInfo(false));

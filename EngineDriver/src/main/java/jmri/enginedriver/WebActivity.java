@@ -321,10 +321,10 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 
     private void witRetry(String s) {
         webView.stopLoading();
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     /**
@@ -557,7 +557,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
             Intent in = mainapp.getThrottleIntent();
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT );
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 
@@ -686,14 +686,14 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 
         } else if (item.getItemId() == R.id.power_control_mnu) {
             threaded_application.activityInTransition(activityName);
-            navigateAway(false, power_control.class);
+            navigateAway(false, PowerActivity.class);
             return true;
 
         } else if (item.getItemId() == R.id.settings_mnu) {
             threaded_application.activityInTransition(activityName);
             in = new Intent().setClass(this, PreferencesActivity.class);
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             return true;
 
         } else if (item.getItemId() == R.id.emergency_stop_button) {
@@ -741,7 +741,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
         threaded_application.activityInTransition(activityName);
         mainapp.webMenuSelected = false;    // not returning so clear flag
         this.finish();
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private void navigateAway(boolean returningToOtherActivity, Class activityClass) {
@@ -758,7 +758,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
             savedWebMenuSelected = mainapp.webMenuSelected; // returning so preserve flag
             mainapp.webMenuSelected = true;     // ensure we return regardless of auto-web setting and orientation changes
             startActivity(in);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         }
     }
 

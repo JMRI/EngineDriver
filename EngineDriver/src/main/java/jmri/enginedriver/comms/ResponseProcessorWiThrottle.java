@@ -56,7 +56,7 @@ public class ResponseProcessorWiThrottle {
 
                 if (com2 == '+') {  //"MT+L2591<;>"  loco was added
                     Consist con = mainapp.consists[whichThrottle];
-                    if (con.getLoco(addr) != null) { //loco was added to consist in select_loco
+                    if (con.getLoco(addr) != null) { //loco was added to consist in SelectLocoActivity
                         con.setConfirmed(addr);
                         mainapp.addLocoToRecents(con.getLoco(addr)); // WiT
                     } else if (con.isWaitingOnID()) { //we were waiting for this response to get address

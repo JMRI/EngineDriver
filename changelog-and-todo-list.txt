@@ -19,6 +19,8 @@
      * Additional Google translations.
      * Disable the 'stop on phone call' preference if no sim card or don't have READ_PHONE_STATE permission.
      * Gradle upgrade to 9.1.1
+     * Continued renaming of some files for consistency.
+     * Linting. Mostly in ConnectionActivity.
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.

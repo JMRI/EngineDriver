@@ -474,7 +474,7 @@ public class ImportExportPreferences {
             Log.d(threaded_application.applicationName, activityName + ": loadRecentLocosListFromFile(): Read recent locos list from file complete successfully");
 
         } catch (IOException except) {
-            Log.e(threaded_application.applicationName, activityName + ": loadRecentLocosListFromFile(): select_loco - Error reading recent loco file. "
+            Log.e(threaded_application.applicationName, activityName + ": loadRecentLocosListFromFile(): SelectLocoActivity - Error reading recent loco file. "
                     + except.getMessage());
         }
     }

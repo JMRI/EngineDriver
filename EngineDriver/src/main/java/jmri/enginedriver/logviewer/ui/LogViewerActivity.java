@@ -43,8 +43,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import jmri.enginedriver.ConnectionActivity;
 import jmri.enginedriver.R;
-import jmri.enginedriver.connection_activity;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
@@ -153,7 +153,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(LogViewerActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(LogViewerActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -286,7 +286,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private class BundleMessageHandler extends Handler {

@@ -67,8 +67,8 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.import_export.ImportExportPreferences;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class ConsistEdit extends AppCompatActivity implements OnGestureListener {
-    static final String activityName = "ConsistEdit";
+public class ConsistEditActivity extends AppCompatActivity implements OnGestureListener {
+    static final String activityName = "ConsistEditActivity";
 
     public static final String LIGHT_TEXT_OFF = "Off";
     public static final String LIGHT_TEXT_FOLLOW = "Follow Fn Btn";
@@ -234,10 +234,10 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
     }
 
     private void witRetry(String s) {
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
 
@@ -338,9 +338,9 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
 
         //Set the buttons
         Button closeButton = findViewById(R.id.consist_edit_button_close);
-        closeButton.setOnClickListener(new ConsistEdit.close_button_listener(this));
+        closeButton.setOnClickListener(new ConsistEditActivity.close_button_listener(this));
         Button returnButton = findViewById(R.id.consist_edit_button_return);
-        returnButton.setOnClickListener(new ConsistEdit.ReturnButtonListener(this));
+        returnButton.setOnClickListener(new ConsistEditActivity.ReturnButtonListener(this));
 
         //update consist list
         refreshConsistLists();
@@ -362,7 +362,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(ConsistEdit.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(ConsistEditActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -382,7 +382,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         }
 
         if (!mainapp.shownToastConsistEdit) {
-            threaded_application.showCustomToast(ConsistEdit.this, getResources().getString(R.string.consist_help), Toast.LENGTH_LONG, 4, true);
+            threaded_application.showCustomToast(ConsistEditActivity.this, getResources().getString(R.string.consist_help), Toast.LENGTH_LONG, 4, true);
             mainapp.shownToastConsistEdit = true;
         }
 
@@ -494,7 +494,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         resultIntent.putExtra("closeSelectScreen", closeSelectLocoScreen);
         setResult(result, resultIntent);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -613,7 +613,7 @@ public class ConsistEdit extends AppCompatActivity implements OnGestureListener 
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
         setResult(result, resultIntent);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     void adjustToolbarSize(Menu menu) {

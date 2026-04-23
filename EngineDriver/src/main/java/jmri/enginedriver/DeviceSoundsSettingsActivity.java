@@ -407,7 +407,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(DeviceSoundsSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(DeviceSoundsSettingsActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -493,7 +493,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
         Intent resultIntent = new Intent();
         setResult(result, resultIntent);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

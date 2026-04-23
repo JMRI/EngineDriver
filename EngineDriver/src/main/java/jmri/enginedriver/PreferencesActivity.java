@@ -220,7 +220,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(PreferencesActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(PreferencesActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -339,7 +339,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             }
         }
         this.finish();
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
 
         Bundle bundle = new Bundle();
         bundle.putInt(alert_bundle_tag_type.RESTART_REASON, forcedRestartReason);
@@ -351,7 +351,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         threaded_application.extendedLogging(activityName + ": forceRelaunchApp() ");
 
         this.finish();
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         Message msg = Message.obtain();
 
         Bundle bundle = new Bundle();
@@ -372,7 +372,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             try {
                 Intent in = new Intent().setClass(this, GamepadTestActivity.class);
                 startActivity(in);
-                connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+                ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
                 Log.d(threaded_application.applicationName, activityName + ": startGamepadTestActivity(): Settings: " + ex.getMessage());
             }
@@ -839,7 +839,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             Intent intent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             galleryLauncher.launch(intent);
-            connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+            ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
             Log.d(threaded_application.applicationName, activityName + ": loadImageFromGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
@@ -886,7 +886,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         threaded_application.activityInTransition(activityName);
         setResult(result);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

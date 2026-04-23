@@ -50,8 +50,8 @@ import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
 import jmri.enginedriver.util.LocaleHelper;
 
-public class power_control extends AppCompatActivity {
-    static final String activityName = "power_control";
+public class PowerActivity extends AppCompatActivity {
+    static final String activityName = "PowerActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -153,10 +153,10 @@ public class power_control extends AppCompatActivity {
     }
 
     private void witRetry(String s) {
-        Intent in = new Intent().setClass(this, reconnect_status.class);
+        Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     public class button_listener implements View.OnClickListener {
@@ -336,7 +336,7 @@ public class power_control extends AppCompatActivity {
                     threaded_application.activityInTransition(activityName);
                     setResult(result);
                     finish();
-                    connection_activity.overridePendingTransition(power_control.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(PowerActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }
             }
         };
@@ -448,7 +448,7 @@ public class power_control extends AppCompatActivity {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
-        connection_activity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
     private void disconnect() {
