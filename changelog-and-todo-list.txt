@@ -7,6 +7,8 @@
  * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
      * Layout swap button was not refreshing the screen.
+     * EStop Action Bar button not always sending EStop.
+     * Don't query the DCC-EX EStop Pause/Resume state unless the preference is set and the CS version is correct.
   * Other
      * Reworking of the custom toast popup.
      * Reworking of most of the images in the intro/wizard
@@ -1109,7 +1111,7 @@
  *   TODO: move some actions from onCreate() or onResume() to onStart() in activities to simplify and remove some repeated calls.
  *   TODO: Improve the way it deals with multiple DCC-EX commands on single line. Really needs to be read char by char.
  *   TODO: Continue converting the three old style themes/styles to the reusable format.
- *   TODO: Move most, if not all, toasts to the new custom toast.
+ *   TODO: Move most, if not all, toasts to the new custom toast. Especially the longer ones.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro. This is unlikely as the folder is not created till the app runs the first time, so you can't pre load the saved preferences in the folder.
  * web
@@ -1149,7 +1151,7 @@
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
  *   TODO: retrieve and show icons for function buttons (if set)
  *   TODO: if nS is lead of ED consist, MT-nS loses track of "other" loco (test with a "partial steal")
- *   TODO: option to make Stop "sticky" and ignore slider unless direction is selected
+ *   TODO: option to make Stop "sticky" and ignore slider unless direction is selected. (This is done for DCC-EX using the server feature.)
  *   TODO: avoid dup sends when function is non-latching (get from WiT)  e.g. HornSelect skips one
  *   TODO: add more info to Exit dialog, e.g. "2 locos will be stopped and released"
  *   TODO: re-arrangeable function buttons
@@ -1186,7 +1188,6 @@
  * DCC-EX screen
  *   TODO: Look into adding an 'Unjoin' button
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
- *   TODO: Look at adding immersive mode to get extra screen space
  * preferences:
  *
  * children's timer:

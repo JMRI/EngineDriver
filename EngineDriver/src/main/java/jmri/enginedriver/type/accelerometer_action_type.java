@@ -17,7 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
-public interface acceleratorometer_action_type {
+public interface accelerometer_action_type {
     String NONE = "None";
     String NEXT_V = "NextV";
     String DIM_SCREEN = "Dim";

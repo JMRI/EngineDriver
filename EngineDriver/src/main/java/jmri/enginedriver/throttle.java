@@ -178,7 +178,7 @@ import jmri.enginedriver.type.speed_commands_from_type;
 import jmri.enginedriver.type.gamepad_test_type;
 import jmri.enginedriver.type.swipe_up_down_option_type;
 import jmri.enginedriver.type.speed_step_type;
-import jmri.enginedriver.type.acceleratorometer_action_type;
+import jmri.enginedriver.type.accelerometer_action_type;
 import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.gamepad_status_type;
 
@@ -546,7 +546,7 @@ public class throttle extends AppCompatActivity implements
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private jmri.enginedriver.util.ShakeDetector shakeDetector;
-    private String prefAccelerometerShake = acceleratorometer_action_type.NONE;
+    private String prefAccelerometerShake = accelerometer_action_type.NONE;
     private boolean accelerometerCurrent = false;
 
     //    protected static final String THEME_DEFAULT = "Default";
@@ -1531,7 +1531,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void setupSensor() {
-        if (!prefAccelerometerShake.equals(acceleratorometer_action_type.NONE)) {
+        if (!prefAccelerometerShake.equals(accelerometer_action_type.NONE)) {
             // ShakeDetector initialization
             sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -1543,7 +1543,7 @@ public class throttle extends AppCompatActivity implements
                     public void onShake(int count) {
 
                         switch (prefAccelerometerShake) {
-                            case acceleratorometer_action_type.WEB_VIEW:
+                            case accelerometer_action_type.WEB_VIEW:
                                 if ((prefWebViewLocation.equals(web_view_location_type.NONE)) && (keepWebViewLocation.equals(web_view_location_type.NONE))) {
                                     GamepadFeedbackSound(true);
                                     mainapp.safeToast(R.string.toastShakeWebViewUnavailable, Toast.LENGTH_SHORT);
@@ -1552,7 +1552,7 @@ public class throttle extends AppCompatActivity implements
                                     showHideWebView(getApplicationContext().getResources().getString(R.string.toastShakeWebViewHidden));
                                 }
                                 break;
-                            case acceleratorometer_action_type.NEXT_V:
+                            case accelerometer_action_type.NEXT_V:
                                 GamepadFeedbackSound(false);
                                 setNextActiveThrottle();
                                 tts.speakWords(tts_msg_type.VOLUME_THROTTLE, whichVolume, false
@@ -1561,18 +1561,18 @@ public class throttle extends AppCompatActivity implements
                                         , 0
                                         , getConsistAddressString(whichVolume));
                                 break;
-                            case acceleratorometer_action_type.LOCK_DIM_SCREEN:
+                            case accelerometer_action_type.LOCK_DIM_SCREEN:
                                 GamepadFeedbackSound(false);
                                 setRestoreScreenLockDim(getApplicationContext().getResources().getString(R.string.toastShakeScreenLocked));
                                 break;
-                            case acceleratorometer_action_type.DIM_SCREEN:
+                            case accelerometer_action_type.DIM_SCREEN:
                                 GamepadFeedbackSound(false);
                                 setRestoreScreenDim(getApplicationContext().getResources().getString(R.string.toastShakeScreenDimmed));
                                 break;
-                            case acceleratorometer_action_type.ALL_STOP:
+                            case accelerometer_action_type.ALL_STOP:
                                 GamepadFeedbackSound(false);
                                 speedUpdateAndNotify(0);         // update all throttles
-                            case acceleratorometer_action_type.E_STOP:
+                            case accelerometer_action_type.E_STOP:
                                 GamepadFeedbackSound(false);
                                 mainapp.sendEStopMsg();
                                 if ( (mainapp.isWiThrottleProtocol()) || (!mainapp.prefDccexEmergencyStopPauseResume) ) {
@@ -5880,7 +5880,7 @@ public class throttle extends AppCompatActivity implements
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
 
-        if (!prefAccelerometerShake.equals(acceleratorometer_action_type.NONE)) {
+        if (!prefAccelerometerShake.equals(accelerometer_action_type.NONE)) {
             if (!accelerometerCurrent) { // preference has only just been changed to turn it on
                 setupSensor();
             } else {
