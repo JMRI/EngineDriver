@@ -46,7 +46,8 @@ public class SendProcessorDccex {
                 sendDccexRequestRoutes();
                 sendDccexRequestTracks();
             }
-            sendDccexRequestEmergencyStopState();
+            if (prefs.getBoolean("prefDccexEmergencyStopPauseResume", false))
+                sendDccexRequestEmergencyStopState();
             mainapp.DCCEXlistsRequested = 0;  // don't ask again
         } else {
             comm_thread.wifiSend("<#>");
@@ -100,7 +101,8 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     public static void sendDccexRequestEmergencyStopState() {
-        comm_thread.wifiSend("<!Q>");
+        if (mainapp.getDccexVersionNumeric() >= 5.005059)
+            comm_thread.wifiSend("<!Q>");
     }
 
     /* ******************************************************************************************** */

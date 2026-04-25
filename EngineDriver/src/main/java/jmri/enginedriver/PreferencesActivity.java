@@ -1445,7 +1445,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         enableDisablePreference(prefScreen, "prefDccexThrownLabel", enable);
         enableDisablePreference(prefScreen, "prefDccexClosedLabel", enable);
 
-        enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= 5.005058))
+        enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= 5.005059))
                 || (mainapp.connectedHostName.isEmpty()));
         enableDisablePreference(prefScreen, "prefDccexEmergencyStopPauseResume", enable);
 
