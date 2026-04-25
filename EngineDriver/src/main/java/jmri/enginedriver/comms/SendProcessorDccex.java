@@ -101,7 +101,7 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     public static void sendDccexRequestEmergencyStopState() {
-        if (mainapp.getDccexVersionNumeric() >= 5.005058)
+        if (mainapp.getDccexVersionNumeric() >= 5.005059)
             comm_thread.wifiSend("<!Q>");
     }
 
