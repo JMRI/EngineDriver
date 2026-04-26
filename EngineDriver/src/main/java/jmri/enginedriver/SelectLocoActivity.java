@@ -1018,7 +1018,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             }
 
             // now append it to the beginning of the list
-            importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);
+            importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, locoSource, keepFunctions);
 
             Log.d(threaded_application.applicationName, activityName + ": saveRecentLocosList(): Loco '"+ locoName + "' added to Recents");
         }
@@ -1027,19 +1027,17 @@ public class SelectLocoActivity extends AppCompatActivity {
         importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
     }
 
-    private void refreshRecentLocosList(boolean reload) {
+    private void refreshRecentLocosList() {
         Log.d(threaded_application.applicationName, activityName + ": refreshRecentLocosList()");
         importExportPreferences.recentLocoAddressList = new ArrayList<>();
         importExportPreferences.recentLocoAddressSizeList = new ArrayList<>();
         importExportPreferences.recentLocoNameList = new ArrayList<>();
         importExportPreferences.recentLocoSourceList = new ArrayList<>();
         importExportPreferences.recentLocoFunctionsList = new ArrayList<>();
-        if (reload) {
-            if (recentLocosList == null) {
-                recentLocosList = new ArrayList<>();
-            } else {
-                recentLocosList.clear();
-            }
+        if (recentLocosList == null) { // should never be true
+            recentLocosList = new ArrayList<>();
+        } else {
+            recentLocosList.clear();
         }
 
         rbRecent = findViewById(R.id.select_loco_method_recent_button);
@@ -1122,16 +1120,13 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
 
-    private void refreshRecentConsistsList(boolean reload) {
+    private void refreshRecentConsistsList() {
         Log.d(threaded_application.applicationName, activityName + ": refreshRecentConsistsList()");
         RadioButton myRadioButton = findViewById(R.id.select_consists_method_recent_button);
-
-        if (reload) {
-            if (recentConsistsList == null) {
-                recentConsistsList = new ArrayList<>();
-            } else {
-                recentLocosList.clear();
-            }
+        if (recentConsistsList == null) {  // should never be true
+            recentConsistsList = new ArrayList<>();
+        } else {
+            recentConsistsList.clear();
         }
 
         //if no SD Card present then there is no recent consists list
@@ -1499,7 +1494,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 default:
                     mainapp.recentLocosOrder=sort_type.NAME;
             }
-            refreshRecentLocosList(true);
+            refreshRecentLocosList();
             mainapp.toastSortType(mainapp.recentLocosOrder);
             mainapp.buttonVibration();
         }
@@ -1521,7 +1516,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 default:
                     mainapp.recentConsistsOrder=sort_type.NAME;
             }
-            refreshRecentConsistsList(true);
+            refreshRecentConsistsList();
             mainapp.toastSortType(mainapp.recentConsistsOrder);
             mainapp.buttonVibration();
         }
@@ -1876,7 +1871,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 return onLongRecentListItemClick(pos);
             }
         });
-        refreshRecentLocosList(false);
+//        refreshRecentLocosList();
 
         // Set up a list adapter to allow adding the list of recent consists to the UI.
         recentConsistsList = new ArrayList<>();
@@ -1893,7 +1888,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 return onLongRecentConsistsListItemClick(pos);
             }
         });
-        refreshRecentConsistsList(false);
+//        refreshRecentConsistsList();
 
         // Set the button listeners.
         Button button = findViewById(R.id.acquire_button);
@@ -2114,10 +2109,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
                 } else {
-                    threaded_application.activityInTransition(activityName);
-                    setResult(result);
-                    finish();
-                    ConnectionActivity.overridePendingTransition(SelectLocoActivity.this, R.anim.fade_in, R.anim.fade_out);
+                    endThisActivity();
                 }
             }
         };
@@ -2337,6 +2329,10 @@ public class SelectLocoActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         prefSelectLocoByRadioButtons = prefs.getBoolean("prefSelectLocoByRadioButtons", getResources().getBoolean(R.bool.prefSelectLocoByRadioButtonsDefaultValue));
+
+        refreshRecentLocosList();
+        refreshRecentConsistsList();
+        setLabels();
 
         refreshOverflowMenu();
         Log.d(threaded_application.applicationName, activityName + ": onResume(): end");
@@ -2628,7 +2624,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 recentLocosList.remove(onScreenPosition);
                 saveRecentLocosList(true);
-                refreshRecentLocosList(true);
+                refreshRecentLocosList();
                 mainapp.safeToastInstructional(R.string.toastRecentCleared, Toast.LENGTH_SHORT);
             }
 
@@ -2669,7 +2665,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 recentConsistsList.remove(onScreenPosition);
                 saveRecentConsistsList(true);
-                refreshRecentConsistsList(true);
+                refreshRecentConsistsList();
                 mainapp.safeToastInstructional(R.string.toastRecentConsistCleared, Toast.LENGTH_SHORT);
             }
 
@@ -2880,7 +2876,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                     importExportPreferences.recentConsistNameList.set(pos, rslt);
                     removingConsistOrForceRewrite = true;
                     saveRecentConsistsList(true);
-                    refreshRecentConsistsList(true);
+                    refreshRecentConsistsList();
                     recentConsistsListView.invalidateViews();
                 }
                 mainapp.buttonVibration();
@@ -2914,8 +2910,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                     importExportPreferences.recentLocoNameList.set(pos, rslt);
                     removingLocoOrForceReload = true;
                     saveRecentLocosList(true);
-                    refreshRecentLocosList(true);
-                    recentListView.invalidateViews();
+                    refreshRecentLocosList();
                     mainapp.buttonVibration();
                 }
             }

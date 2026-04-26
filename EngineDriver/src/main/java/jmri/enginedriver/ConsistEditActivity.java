@@ -28,6 +28,7 @@ import android.os.Looper;
 import android.os.Message;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
@@ -185,6 +186,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
 
                 case message_type.RECEIVED_THROTTLE_LOCO_ADDED:
                 case message_type.RECEIVED_THROTTLE_LOCO_REMOVED:
+                case message_type.WIT_CON_RECONNECT:
                     refreshConsistLists();
                     break;
 
@@ -202,10 +204,6 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
 
                         witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
                     }
-                    break;
-
-                case message_type.WIT_CON_RECONNECT:
-                    refreshConsistLists();
                     break;
 
                 // - - - - - - - - - - - - - - - - - - - - - - - - //
@@ -464,7 +462,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -498,30 +496,30 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
     }
 
     @Override
-    public boolean onDown(MotionEvent e) {
+    public boolean onDown(@NonNull MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFling(MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
+    public void onLongPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
+    public void onShowPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent e) {
+    public boolean onSingleTapUp(@NonNull MotionEvent e) {
         return false;
     }
 
@@ -545,8 +543,8 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
             if (LvSwipeDetector.swipeDetected()) {
                 if (LvSwipeDetector.getAction() == SwipeDetector.Action.LR) {
                     ViewGroup vg = (ViewGroup) v; //convert to ViewGroup for clicked row
-                    TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
-                    String address = addrv.getText().toString();
+                    TextView addressView = (TextView) vg.getChildAt(1); // get address text from 2nd box
+                    String address = addressView.getText().toString();
 
                     if (!consist.getLeadAddr().equals(address)) {
                         consist.remove(address);
@@ -563,8 +561,8 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
             } else {  //no swipe
                 // When an item is clicked,
                 ViewGroup vg = (ViewGroup) v; //convert to ViewGroup for clicked row
-                TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
-                String address = addrv.getText().toString();
+                TextView addressView = (TextView) vg.getChildAt(1); // get address text from 2nd box
+                String address = addressView.getText().toString();
 
                 try {
                     consist.setBackward(address, !consist.isBackward(address));
@@ -628,12 +626,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }
