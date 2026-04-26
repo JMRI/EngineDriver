@@ -9,7 +9,9 @@
      * Layout swap button was not refreshing the screen.
      * EStop Action Bar button not always sending EStop.
      * Don't query the DCC-EX EStop Pause/Resume state unless the preference is set and the CS version is correct.
-  * Other
+     * Recent Locos and Recent consists being duplicated.
+     * Locos acquired by Address and Roster not being recorded separately in the Recents.
+ * Other
      * Reworking of the custom toast popup.
      * Reworking of most of the images in the intro/wizard
      * Disabled left/right swipes in the intro/wizard.
@@ -27,13 +29,13 @@
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
      * Option to hide the additional button text on the Select Screen for tiny screens (e.g. the ESU MC Pro)
-  * Bug fixes
+ * Bug fixes
      * Reconnect page was never closing.  (Mistake made in the switch to Bundles.)
      * Throttle Web Page not loading if initial web page preference changed.
      * DCC-EX Fix for the Join button being permanently disabled.
      * Catch NPE and Index Out of Bounds crashes reported to the Play Store.
      * Radio buttons not showing if option to use the old style select loco method was chosen.
-  * Other
+ * Other
      * Cleanup of the Edit Consist and Edit Light pages.
      * New button to "Return" to the Select Loco page from the Consist Edit page.
      * Theme tweaks.

@@ -93,20 +93,20 @@ public class throttle_switching_left_or_right extends throttle {
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Switching":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-                mainapp.throttleLayoutViewId = R.layout.throttle_switching;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_switching;
                 break;
             case "Tablet Switching Left":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_TABLET_SWITCHING;
-                mainapp.throttleLayoutViewId = R.layout.throttle_switching_tablet_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_switching_tablet_left;
                 break;
             case "Switching Right":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_switching_right;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_switching_right;
                 break;
             case "Switching Left":
             default:
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_switching_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_switching_left;
                 break;
         }
     } // end setScreen()

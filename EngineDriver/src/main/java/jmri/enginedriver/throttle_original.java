@@ -118,7 +118,7 @@ public class throttle_original extends throttle {
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
         mainapp.currentScreenSupportsWebView = true;
 
-        mainapp.throttleLayoutViewId = R.layout.throttle;
+        mainapp.throttleLayoutViewId = R.layout.throttle_page_horizontal_linear;
     } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})

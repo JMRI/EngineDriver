@@ -745,7 +745,7 @@ public class threaded_application extends Application {
         registerComponentCallbacks(lifecycleHandler);
 
         prefNumThrottles = Numeralise(prefs.getString("prefNumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
-        throttleLayoutViewId = R.layout.throttle;
+        throttleLayoutViewId = R.layout.throttle_page_horizontal_linear;
 
         haveForcedWiFiConnection = false;
 
@@ -2926,7 +2926,7 @@ public class threaded_application extends Application {
             keepFunctions = functionLabels;  // restore functions from the previous value
         }
         // now append it to the beginning of the list
-        importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);
+        importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, locoSource, keepFunctions);
 
         importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
         Log.d(applicationName, "t_a: Loco '" + locoName + "' added to Recents");

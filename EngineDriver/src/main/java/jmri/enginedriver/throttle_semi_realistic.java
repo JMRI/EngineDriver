@@ -206,7 +206,7 @@ public class throttle_semi_realistic extends throttle {
         mainapp.currentScreenSupportsWebView = false;
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
 
-        mainapp.throttleLayoutViewId = R.layout.throttle_semi_realistic_left;
+        mainapp.throttleLayoutViewId = R.layout.throttle_page_semi_realistic_left;
     } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})

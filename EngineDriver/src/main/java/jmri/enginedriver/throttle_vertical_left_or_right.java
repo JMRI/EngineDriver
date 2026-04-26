@@ -68,24 +68,24 @@ public class throttle_vertical_left_or_right extends throttle {
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case "Vertical":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-                mainapp.throttleLayoutViewId = R.layout.throttle_vertical;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear;
                 break;
             case "Vertical Right":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_right;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_right;
                 break;
             case "Tablet Vertical Left":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_tablet_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_tablet_left;
                 break;
             case "Tablet Vertical Left - two function columns":
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_tablet_left_two_function_columns;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_tablet_left_two_function_columns;
                 break;
             case "Vertical Left":
             default:
                 mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_vertical_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_left;
                 break;
         }
     }
