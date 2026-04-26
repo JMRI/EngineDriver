@@ -64,7 +64,7 @@ public class throttle_simple extends throttle {
         mainapp.currentScreenSupportsWebView = false;
         sliderType = slider_type.VERTICAL;
 
-        mainapp.throttleLayoutViewId = R.layout.throttle_simple;
+        mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_simple;
     } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})

@@ -492,7 +492,24 @@ public class ImportExportPreferences {
             list_output = new PrintWriter(engine_list_file);
             if (maximumRecentLocos > 0) {
                 for (int i = 0; i < recentLocoAddressList.size() && i < maximumRecentLocos; i++) {
-                    list_output.format("%d:%d%d~%s]\\[%s\n",
+
+//                    Log.d(threaded_application.applicationName, activityName + ": writeRecentLocosListToFile(): checking: " + recentLocoAddressList.get(i));
+                    // check if loco has already been written
+                    boolean alreadyWritten = false;
+                    if (i>0) {
+                        for (int j=0; j<i; j++) {
+                            if ((recentLocoAddressList.get(i).equals(recentLocoAddressList.get(j)))
+                            && (recentLocoAddressSizeList.get(i).equals(recentLocoAddressSizeList.get(j)))
+                            && (recentLocoSourceList.get(i).equals(recentLocoSourceList.get(j))) ) {
+                                Log.d(threaded_application.applicationName, activityName + ": writeRecentLocosListToFile(): already written: " + recentLocoAddressList.get(i));
+                                alreadyWritten = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!alreadyWritten)
+                        list_output.format("%d:%d%d~%s]\\[%s\n",
                             recentLocoAddressList.get(i),
                             recentLocoAddressSizeList.get(i),
                             recentLocoSourceList.get(i),

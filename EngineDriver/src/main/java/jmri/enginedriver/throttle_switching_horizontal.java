@@ -87,7 +87,7 @@ public class throttle_switching_horizontal extends throttle {
         mainapp.currentScreenSupportsWebView = true;
         sliderType = slider_type.SWITCHING;
 
-        mainapp.throttleLayoutViewId = R.layout.throttle_switching_horizontal;
+        mainapp.throttleLayoutViewId = R.layout.throttle_page_horizontal_switching;
     } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
