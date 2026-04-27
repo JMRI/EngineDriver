@@ -147,7 +147,7 @@ public class ImportExportPreferences {
 
             loadRecentConsistsListFromFile(context);
             saveStringListDataToPreferences(recentConsistNameList, "prefRecentConsistName", sharedPreferences);
-            // note recentConsistNameHtmlList is not save or loaded. it is generated as needed
+            // note recentConsistNameHtmlList is not saved or loaded. it is generated as needed
             for (int i = 0; i < recentConsistNameList.size(); i++) {
                 saveIntListDataToPreferences(recentConsistLocoAddressList.get(i), "prefRecentConsistAddress_"+i, sharedPreferences);
                 saveIntListDataToPreferences(recentConsistAddressSizeList.get(i), "prefRecentConsistSize_"+i, sharedPreferences);
@@ -213,7 +213,7 @@ public class ImportExportPreferences {
 
     @SuppressWarnings("ChainOfInstanceofChecks")
     @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
-    public boolean loadSharedPreferencesFromFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean clearRecentsIfNoFile) {
+    public boolean loadSharedPreferencesFromFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean ignoredClearRecentsIfNoFile) {
         Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
@@ -894,7 +894,7 @@ public class ImportExportPreferences {
                             list_output.format("%s",
                                     recentConsistRosterNameList.get(i).get(j));
                         }
-                        // note recentConsistNameHtmlList is not save or loaded. it is generated as needed
+                        // note recentConsistNameHtmlList is not saved or loaded. it is generated as needed
 
                         list_output.format("\n");
                         numberOfRecentLocosToWrite--;
@@ -1158,7 +1158,7 @@ public class ImportExportPreferences {
         return engineAddressString;
     }
 
-    public String locoAddressToHtml(Integer addr, int size, int source) {
+    public String locoAddressToHtml(Integer addr, int size, int ignoredSource) {
         String engineAddressHtml = "";
         try {
             String addressLengthString = ((size == 0) ? "S" : "L");  //show L or S based on length from file
@@ -1310,7 +1310,7 @@ public class ImportExportPreferences {
         }
 
         int j=0;
-        for (String rosterName : rosterNameEntries) {
+        for (String ignoredRosterName : rosterNameEntries) {
             HashMap<String, String> hm = mainapp.rosterFullList.get(j);
             String rosterNameString = hm.get("roster_name");
             String rosterAddressString = hm.get("roster_address");
@@ -1362,7 +1362,7 @@ public class ImportExportPreferences {
 
         // now get all the function labels
         j=0;
-        for (String rosterName : rosterNameEntries) {
+        for (String ignoredRosterName : rosterNameEntries) {
             String sAddr = locoAddressToString(recentLocoAddressList.get(j),
                     recentLocoAddressSizeList.get(j), true);
             // one past the actual number of allow throttles

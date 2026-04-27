@@ -26,7 +26,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -93,16 +92,13 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
         listView.setAdapter(adaptor);
 
-        listView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
-                String text = ((TextView) view).getText().toString();
-                builder.setMessage(text);
-                builder.show();
-                mainapp.buttonVibration();
-            }
-        } );
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(LogViewerActivity.this);
+            String text = ((TextView) view).getText().toString();
+            builder.setMessage(text);
+            builder.show();
+            mainapp.buttonVibration();
+        });
 
         //Set the buttons
         Button closeButton = findViewById(R.id.logviewer_button_close);
@@ -124,12 +120,9 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //        saveInfoTV = findViewById(R.id.logviewer_info);
 
         shareButton = findViewById(R.id.logviewer_button_share); // Assuming you added the button with this ID
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainapp.buttonVibration(); // If you want vibration
-                showLogFileSelectionDialog();
-            }
+        shareButton.setOnClickListener(v -> {
+            mainapp.buttonVibration(); // If you want vibration
+            showLogFileSelectionDialog();
         });
 
         showHideSaveButton();
@@ -229,7 +222,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -330,9 +323,6 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     break;
 
                 case message_type.REOPEN_THROTTLE:
-                    endThisActivity();
-                    break;
-
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
                     endThisActivity();
@@ -585,37 +575,32 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }
 
-    public boolean checkHasLogFiles() {
-        mainapp.iplsFileNames = new ArrayList<>();
-        mainapp.iplsNames = new ArrayList<>();
-
-        try {
-            File dir = new File(mainapp.getApplicationContext().getExternalFilesDir(null).getPath());
-            File[] filesList = dir.listFiles();
-            if (filesList != null) {
-                for (File file : filesList) {
-                    String lowercaseFileName = file.getName().toLowerCase();
-                    if ( (lowercaseFileName.startsWith("logcat")) && (lowercaseFileName.endsWith(".txt")) ) {
-                        return true; // got one, so just exit
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.d(threaded_application.applicationName, activityName + ": checkHasLogFiles(): Error trying to find log files");
-        }
-
-        return false;
-    }
+//    public boolean checkHasLogFiles() {
+//        mainapp.iplsFileNames = new ArrayList<>();
+//        mainapp.iplsNames = new ArrayList<>();
+//
+//        try {
+//            File dir = new File(mainapp.getApplicationContext().getExternalFilesDir(null).getPath());
+//            File[] filesList = dir.listFiles();
+//            if (filesList != null) {
+//                for (File file : filesList) {
+//                    String lowercaseFileName = file.getName().toLowerCase();
+//                    if ( (lowercaseFileName.startsWith("logcat")) && (lowercaseFileName.endsWith(".txt")) ) {
+//                        return true; // got one, so just exit
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            Log.d(threaded_application.applicationName, activityName + ": checkHasLogFiles(): Error trying to find log files");
+//        }
+//
+//        return false;
+//    }
 
     public ArrayList<File> getLogFilesForDialog() {
         ArrayList<File> logFiles = new ArrayList<>();

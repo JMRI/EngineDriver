@@ -71,10 +71,10 @@ public class AdvancedConsistTool extends DialogFragment {
         return fragment;
     }
 
-    // Call this method to set the listener from the hosting Activity/Fragment
-    public void setOnConfirmListener(OnConfirmListener listener) {
-        this.listener = listener;
-    }
+//    // Call this method to set the listener from the hosting Activity/Fragment
+//    public void setOnConfirmListener(OnConfirmListener listener) {
+//        this.listener = listener;
+//    }
 
     @NonNull
     @Override

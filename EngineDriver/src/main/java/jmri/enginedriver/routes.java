@@ -20,9 +20,10 @@ package jmri.enginedriver;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -61,7 +62,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -260,7 +260,7 @@ public class routes extends AppCompatActivity
         routes_list.clear();
         for (HashMap<String, String> hm : routesFullList) {
             String userName = hm.get("rt_user_name");
-            if (useAllLocations || userName.startsWith(loc)) {
+            if (useAllLocations || (userName != null) && (userName.startsWith(loc)) ) {
                 @SuppressWarnings("unchecked")
                 HashMap<String, String> hmFilter = (HashMap<String, String>) hm.clone();
                 if (!useAllLocations)
@@ -322,6 +322,7 @@ public class routes extends AppCompatActivity
                     break;
 
                 case message_type.ROUTE_LIST_CHANGED:
+                case message_type.WIT_CON_RECONNECT:
                     refresh_route_view();
                     break;
 
@@ -343,10 +344,6 @@ public class routes extends AppCompatActivity
 
                         witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
                     }
-                    break;
-
-                case message_type.WIT_CON_RECONNECT:
-                    refresh_route_view();
                     break;
 
                 // - - - - - - - - - - - - - - - - - - - - - - - - //
@@ -579,13 +576,9 @@ public class routes extends AppCompatActivity
         routes_lv.setAdapter(routes_list_adapter);
 
         if (mainapp.isDccexProtocol()) {
-            // need to setup a listener so that we can update the buttons states AFTER the list has been fully updated
+            // need to set up a listener so that we can update the buttons states AFTER the list has been fully updated
             ViewTreeObserver viewTreeObserver = routes_lv.getViewTreeObserver();
-            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                public void onGlobalLayout() {
-                    setDccexButtonStates();
-                }
-            });
+            viewTreeObserver.addOnGlobalLayoutListener(() -> setDccexButtonStates());
         }
 
 //        OnTouchListener gestureListener = new ListView.OnTouchListener() {
@@ -611,15 +604,12 @@ public class routes extends AppCompatActivity
             }
         });
         routeEntryEditText.setMainApp(mainapp);
-        routeEntryEditText.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    mainapp.hideSoftKeyboard(v);
-                    return true;
-                } else
-                    return false;
-            }
+        routeEntryEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+                mainapp.hideSoftKeyboard(v);
+                return true;
+            } else
+                return false;
         });
 
         //Set the button callbacks, storing the command to pass for each
@@ -680,7 +670,7 @@ public class routes extends AppCompatActivity
             mVelocityTracker = VelocityTracker.obtain();
         }
 
-        // setup the sort button
+        // set up the sort button
         b = findViewById(R.id.routes_sort);
         SortButtonListener sortButtonListener = new SortButtonListener();
         b.setOnClickListener(sortButtonListener);
@@ -740,7 +730,7 @@ public class routes extends AppCompatActivity
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
@@ -834,7 +824,7 @@ public class routes extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         threaded_application.extendedLogging(activityName + ": onOptionsItemSelected");
 
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         Intent in;
         if ( (item.getItemId() == R.id.throttle_button_mnu )
                 || (item.getItemId() == R.id.throttle_mnu) ) {
@@ -891,23 +881,18 @@ public class routes extends AppCompatActivity
             b.setTitle(R.string.newConnectionTitle);
             b.setMessage(R.string.newConnectionText);
             b.setCancelable(true);
-            b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
+            b.setPositiveButton(R.string.yes, (dialog, id) -> {
+                threaded_application.activityInTransition(activityName);
+
+                mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
+
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
                     threaded_application.activityInTransition(activityName);
-
-                    mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
-
-                    final Handler handler = new Handler(Looper.getMainLooper());
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            threaded_application.activityInTransition(activityName);
-                            Intent in = new Intent().setClass(routes.this, ConnectionActivity.class);
-                            startActivity(in);
-                            ConnectionActivity.overridePendingTransition(routes.this, R.anim.fade_in, R.anim.fade_out);
-                        }
-                    }, 2000);
-                }
+                    Intent in1 = new Intent().setClass(routes.this, ConnectionActivity.class);
+                    startActivity(in1);
+                    ConnectionActivity.overridePendingTransition(routes.this, R.anim.fade_in, R.anim.fade_out);
+                }, 2000);
             });
             b.setNegativeButton(R.string.no, null);
             AlertDialog alert = b.create();
@@ -1027,7 +1012,7 @@ public class routes extends AppCompatActivity
         threaded_application.extendedLogging(activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
-        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the action bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;
             }
@@ -1088,13 +1073,13 @@ public class routes extends AppCompatActivity
         }
     }
 
-    private void gestureCancel(MotionEvent event) {
+    private void gestureCancel(MotionEvent ignoredEvent) {
         if (gestureHandler != null)
             gestureHandler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
     }
 
-    void gestureFailed(MotionEvent event) {
+    void gestureFailed(MotionEvent ignoredEvent) {
         // end the gesture
         gestureInProgress = false;
     }
@@ -1153,7 +1138,7 @@ public class routes extends AppCompatActivity
 
     // common startActivity()
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
-    void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+    void startACoreActivity(Activity activity, Intent in, boolean ignoredSwipe, float deltaX) {
         if (activity != null && in != null) {
             threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -1200,12 +1185,7 @@ public class routes extends AppCompatActivity
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -160,6 +162,7 @@ public class Loco {
     }
 
     //provide description if present, otherwise provide formatted address
+    @NonNull
     @Override
     public String toString() {
         return (this.desc.length() > 0 ? this.desc : this.formatAddr);
@@ -210,7 +213,7 @@ public class Loco {
         return functionLabels;
     }
 
-    public void setFunctionLabelDefaults(threaded_application mainapp, Integer whichThrottle) {
+    public void setFunctionLabelDefaults(threaded_application mainapp, Integer ignoredWhichThrottle) {
         if (mainapp.function_labels != null) {
             functionLabels = new LinkedHashMap<>(mainapp.function_labels_default);
         }

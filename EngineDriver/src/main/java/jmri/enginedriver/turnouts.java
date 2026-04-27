@@ -22,6 +22,8 @@ import static android.text.TextUtils.substring;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -296,7 +298,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         turnouts_list.clear();
         for (HashMap<String, String> hm : turnoutsFullList) {
             String userName = hm.get("to_user_name");
-            if (useAllLocations || userName.startsWith(loc)) {
+            if (useAllLocations || (userName != null) && (userName.startsWith(loc)) ) {
                 HashMap<String, String> hmFilt = (HashMap<String, String>) hm.clone();
                 if (!useAllLocations)
                     hmFilt.put("to_user_name", userName.substring(loc.length()));
@@ -480,7 +482,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 turnoutSource = source_type.ADDRESS;
 
                 boolean reloadRecents = false;
-                if (importExportPreferences.recentTurnoutAddressList.size() > 0) {
+                if (!importExportPreferences.recentTurnoutAddressList.isEmpty()) {
                     if (!turnoutSystemName.equals(importExportPreferences.recentTurnoutAddressList.get(0))) {
                         reloadRecents = true;
                     }
@@ -559,7 +561,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         public void onClick(View v) {
             ViewGroup vg = (ViewGroup) v.getParent();  //start with the list item the button belongs to
             ViewGroup rl = (ViewGroup) vg.getChildAt(0);  //get relativelayout that holds systemName and username
-            TextView source = (TextView) rl.getChildAt(2); // get source from 3nd (hidden) box
+            TextView source = (TextView) rl.getChildAt(2); // get source from 3rd (hidden) box
             TextView snv = (TextView) rl.getChildAt(1); // get systemName text from 2nd box
             TextView unv = (TextView) rl.getChildAt(0); // get username text from 1st box
             turnoutSystemName = snv.getText().toString();
@@ -683,12 +685,9 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
         turnoutEntryEditText.setMainApp(mainapp);
-        turnoutEntryEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                String deviceDescriptor = event.getDevice().getDescriptor();
-                return false;
-            }
+        turnoutEntryEditText.setOnKeyListener((v, keyCode, event) -> {
+            String deviceDescriptor = event.getDevice().getDescriptor();
+            return false;
         });
 
 //        turnoutEntryEditText.setOnEditorActionListener(new OnEditorActionListener() {
@@ -779,7 +778,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         // -------------------------------------------------------------------
 
-        // setup the method radio buttons
+        // set up the method radio buttons
         rbAddress = findViewById(R.id.select_turnout_method_address_button);
         rbRoster = findViewById(R.id.select_turnout_method_roster_button);
         String serverType = mainapp.getServerType();
@@ -789,22 +788,18 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         prefSelectTurnoutsMethod = prefs.getString("prefSelectTurnoutsMethod", WHICH_METHOD_FIRST);
         // if the recent lists are empty make sure the radio button will be pointing to something valid
-        if (((importExportPreferences.recentTurnoutAddressList.size() == 0) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_ADDRESS)))) {
+        if (((importExportPreferences.recentTurnoutAddressList.isEmpty()) && (prefSelectTurnoutsMethod.equals(WHICH_METHOD_ADDRESS)))) {
             prefSelectTurnoutsMethod = WHICH_METHOD_ADDRESS;
         }
 
         showMethod(prefSelectTurnoutsMethod);
 
         RadioGroup rgTurnoutsSelect = findViewById(R.id.select_turnout_method_radio_group);
-        rgTurnoutsSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.select_turnout_method_address_button) {
-                    showMethod(WHICH_METHOD_ADDRESS);
-                } else if (checkedId == R.id.select_turnout_method_roster_button) {
-                    showMethod(WHICH_METHOD_ROSTER);
-                }
+        rgTurnoutsSelect.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.select_turnout_method_address_button) {
+                showMethod(WHICH_METHOD_ADDRESS);
+            } else if (checkedId == R.id.select_turnout_method_roster_button) {
+                showMethod(WHICH_METHOD_ROSTER);
             }
         });
 
@@ -832,12 +827,12 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         // -------------------------------------------------------------------
 
-        // setup the sort button
+        // set up the sort button
         b = findViewById(R.id.turnouts_sort);
         SortButtonListener sortButtonListener = new SortButtonListener();
         b.setOnClickListener(sortButtonListener);
 
-        // setup the recent sort button
+        // set up the recent sort button
         b = findViewById(R.id.turnouts_recent_sort);
         sortButtonListener = new SortButtonListener();
         b.setOnClickListener(sortButtonListener);
@@ -936,7 +931,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (!mainapp.setActivityOrientation(this)) { //set screen orientation based on prefs
@@ -1008,7 +1003,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         Intent in;
         if ( (item.getItemId() == R.id.throttle_button_mnu)
                 || (item.getItemId() == R.id.throttle_mnu) ) {
@@ -1046,22 +1041,20 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             b.setTitle(R.string.newConnectionTitle);
             b.setMessage(R.string.newConnectionText);
             b.setCancelable(true);
-            b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    threaded_application.activityInTransition(activityName);
+            b.setPositiveButton(R.string.yes, (dialog, id) -> {
+                threaded_application.activityInTransition(activityName);
 
-                    mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
+                mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
 
-                    final Handler handler = new Handler(Looper.getMainLooper());
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent in = new Intent().setClass(turnouts.this, ConnectionActivity.class);
-                            startActivity(in);
-                            ConnectionActivity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
-                        }
-                    }, 2000);
-                }
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent in1 = new Intent().setClass(turnouts.this, ConnectionActivity.class);
+                        startActivity(in1);
+                        ConnectionActivity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
+                    }
+                }, 2000);
             });
             b.setNegativeButton(R.string.no, null);
             AlertDialog alert = b.create();
@@ -1419,19 +1412,17 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     public class clearRecentTurnoutsListButton implements AdapterView.OnClickListener {
         public void onClick(View v) {
 
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                //@Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            clearRecentTurnoutsList();
-                            recentTurnoutsListAdapter.notifyDataSetChanged();
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                    mainapp.buttonVibration();
+            //@Override
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        clearRecentTurnoutsList();
+                        recentTurnoutsListAdapter.notifyDataSetChanged();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
                 }
+                mainapp.buttonVibration();
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(turnouts.this);
@@ -1581,7 +1572,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 //        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
-        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the action bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;
             }
@@ -1641,13 +1632,13 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
     }
 
-    private void gestureCancel(MotionEvent event) {
+    private void gestureCancel(MotionEvent ignoredEvent) {
         if (gestureHandler != null)
             gestureHandler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
     }
 
-    void gestureFailed(MotionEvent event) {
+    void gestureFailed(MotionEvent ignoredEvent) {
         // end the gesture
         gestureInProgress = false;
     }
@@ -1705,7 +1696,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
     // common startActivity()
     // used for swipes for the main activities only - Throttle, Turnouts, Routs, Web
-    void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+    void startACoreActivity(Activity activity, Intent in, boolean ignoredSwipe, float deltaX) {
         if (activity != null && in != null) {
             threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -1745,12 +1736,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

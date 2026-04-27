@@ -253,15 +253,18 @@ public class threaded_application extends Application {
 
     public String prefAppIconAction = "throttle";
 
-    public HashMap<String, String> knownDCCEXserverIps = new HashMap<>();
+    public HashMap<String, String> knownDccexServerIps = new HashMap<>();
     private boolean protocolCurrentlyInUseIsDccex = false;  // is a DCC-EX EX-CommandStation  use the methods to set or interrogate this
     public String prefUseDccexProtocol = "Auto";
     public boolean prefAlwaysUseFunctionsFromServer = false;
     public static String dccexVersionString = "";
-    public int DCCEXlistsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
+    public int dccexListsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
     public static boolean dccexScreenIsOpen = false;
     public boolean witScreenIsOpen = false;
+
+    public static double DCCEX_VERSION_MINIMUM_FOR_PAUSE_RESUME = 5.005059;
+    public static double DCCEX_VERSION_MINIMUM_FOR_SERVER_CONSISTS = 5.005058;
 
     public int dccexActionTypeIndex = 0;
     public int [] dccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
@@ -764,11 +767,7 @@ public class threaded_application extends Application {
         dlRosterTask = new DownloadRosterTask();
 
         //use worker thread to initialize default function labels from file so UI can continue
-        new Thread(new Runnable() {
-            public void run() {
-                set_default_function_labels(false);
-            }
-        }, "DefaultFunctionLabels").start();
+        new Thread(() -> set_default_function_labels(false), "DefaultFunctionLabels").start();
 
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
@@ -1338,7 +1337,7 @@ public class threaded_application extends Application {
         dccexVersionString = "";
         dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
-        DCCEXlistsRequested = -1;
+        dccexListsRequested = -1;
         dccexRosterRequested = false;
 //        dccexRosterFullyReceived = false;
 

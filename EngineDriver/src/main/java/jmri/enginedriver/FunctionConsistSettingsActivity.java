@@ -198,7 +198,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
 
     @SuppressLint("MissingSuperCall")
     @Override
-    public void onSaveInstanceState(Bundle saveState) {     //orientation change
+    public void onSaveInstanceState(@NonNull Bundle saveState) {     //orientation change
         move_view_to_settings();        //update settings array so onCreate can use it to initialize
         orientationChange = true;
     }
@@ -239,7 +239,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -334,7 +334,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
     //take data from arrays and update the editing view
     void move_settings_to_view(boolean isReset) {
 
-        if ( (!isSpecial) && (!isReset) ) {   // if it is for DCC-EX only, we don't show the lead/trail etc options so expand the space for the instructions
+        if ( (!isSpecial) && (!isReset) ) {   // if it is for DCC-EX only, we don't show the lead/trail etc. options so expand the space for the instructions
             View v = findViewById(R.id.function_consist_instruction);
             ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
             double newWidth = layoutParams.width * 2.0;
@@ -343,7 +343,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
         }
 
         ViewGroup t = findViewById(R.id.function_consist_table); //table
-        //loop thru input rows, skipping first (headings)
+        //loop through input rows, skipping first (headings)
         int ndx = 0;
         for (int i = 1; i < t.getChildCount(); i++) {
             ViewGroup r = (ViewGroup) t.getChildAt(i);
@@ -356,7 +356,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
 //                if ((!isSpecial) && (mainapp.isDccexProtocol())
                 if ( (!isSpecial)
                         && (!mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL) )
-                ) { // if it is for DCC-EX only, don't show the lead/trail etc options
+                ) { // if it is for DCC-EX only, don't show the lead/trail etc. options
                     sLocos.setVisibility(View.GONE);
                     findViewById(R.id.function_consist_LocosHeader).setVisibility(View.GONE);
                 }
@@ -390,7 +390,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
     void move_view_to_settings() {
         ViewGroup t = findViewById(R.id.function_consist_table); //table
         ViewGroup r;  //row
-        //loop thru each row, Skipping the first one (the headings)  format is "label:function#"
+        //loop through each row, Skipping the first one (the headings)  format is "label:function#"
         int ndx = 0;
         for (int i = 1; i < t.getChildCount(); i++) {
             r = (ViewGroup) t.getChildAt(i);
@@ -505,7 +505,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
             errMsg = except.getMessage();
             Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
-        if (!errMsg.isEmpty())
+        if ( (errMsg != null) && (!errMsg.isEmpty()) )
             mainapp.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
             mainapp.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
@@ -582,12 +582,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

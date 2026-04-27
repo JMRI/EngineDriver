@@ -151,7 +151,7 @@ public class comm_thread extends Thread {
             String ip_address = ip_addresses[0].toString().substring(1);  //use first one, since WiThrottle is only putting one in (for now), and remove leading slash
 
             String key = ip_address+":"+port;
-            mainapp.knownDCCEXserverIps.put(key, serverType);
+            mainapp.knownDccexServerIps.put(key, serverType);
 
             Bundle bundle = new Bundle();
             bundle.putString(alert_bundle_tag_type.HOST_NAME, host_name);
@@ -247,9 +247,9 @@ public class comm_thread extends Thread {
         String server_addr = clientAddr.substring(0, clientAddr.lastIndexOf("."));
         server_addr += ".1";
 
-//        mainapp.knownDCCEXserverIps.put(server_addr, serverType);
+//        mainapp.knownDccexServerIps.put(server_addr, serverType);
         String key = server_addr+":"+entryPort;
-        mainapp.knownDCCEXserverIps.put(key, serverType);
+        mainapp.knownDccexServerIps.put(key, serverType);
 
         Bundle bundle = new Bundle();
         bundle.putString(alert_bundle_tag_type.HOST_NAME, entryName);
@@ -581,7 +581,7 @@ public class comm_thread extends Thread {
     //
     // wifiSend(String msg)
     //
-    //send formatted msg to the socket using multithrottle format
+    //send formatted msg to the socket using multiThrottle format
     //  intermessage gap enforced by requeueing messages as needed
     protected static void wifiSend(String msg) {
         threaded_application.extendedLogging(activityName + ": wifiSend(): message: '" + msg + "'");
@@ -897,7 +897,7 @@ public class comm_thread extends Thread {
                         Log.d(threaded_application.applicationName, activityName + ": send(): WiT reconnection successful.");
                         clearInboundTimeout();
                         heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
-                        mainapp.DCCEXlistsRequested = -1; //invalidate the lists
+                        mainapp.dccexListsRequested = -1; //invalidate the lists
                     }
                 } catch (Exception e) {
                     Log.d(threaded_application.applicationName, activityName + ": send(): WiT xmtr error.");
@@ -995,7 +995,7 @@ public class comm_thread extends Thread {
                 inboundTimeout = true;
                 inboundTimeoutRetryCount = 0;
                 inboundTimeoutRecovery = false;
-                // force a send to start the reconnection process
+                // force a 'send' to start the reconnection process
                 mainapp.commBundleMessageHandler.postDelayed(heart.outboundHeartbeatTimer, 200L);
 
             } else {

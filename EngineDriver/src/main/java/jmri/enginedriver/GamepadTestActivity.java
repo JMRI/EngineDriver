@@ -45,6 +45,7 @@ import android.os.Looper;
 import android.os.Message;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
@@ -120,7 +121,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
     private int[] gamePadKeys_Up =  {0,        0,   KEYCODE_W,  KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private static final int[] BUTTON_ACTION_NUMBERS ={
                                            -1,       9,   5,          7,         8,         6,         0,         1,         3,         2,         4,        10,11,12,13,14,15,-1,-1,-1,-1};
-    private static final int GAMEPAD_KEYS_LENGTH = 21;
+//    private static final int GAMEPAD_KEYS_LENGTH = 21;
 
     private ToneGenerator tg;
 
@@ -304,10 +305,10 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
         }
     }
 
-    private void invalidKeyCode(int keyCode) {
-        tvGamepadKeyCode.setText(String.valueOf(keyCode));
-        tvGamepadKeyFunction.setText(R.string.gamepadTestInvalidKeycode);
-    }
+//    private void invalidKeyCode(int keyCode) {
+//        tvGamepadKeyCode.setText(String.valueOf(keyCode));
+//        tvGamepadKeyFunction.setText(R.string.gamepadTestInvalidKeycode);
+//    }
 
     private void setAllKeyCodes(String sKeyCode, int action) {
 
@@ -426,9 +427,9 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
 
         boolean isExternal = false;
         InputDevice iDev = getDevice(event.getDeviceId());
-        if( iDev.toString().contains("Location: external")) isExternal = true;
+        if ( (iDev != null) && (iDev.toString().contains("Location: external")) ) isExternal = true;
 
-        if (isExternal) { // if has come from the phone itself, don't try to process it here
+        if (isExternal) { // if it has come from the phone itself, don't try to process it here
             if (!prefGamePadType.equals("None")) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 String deviceDescriptor = event.getDevice().getDescriptor();
@@ -733,7 +734,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -808,30 +809,30 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
     }
 
     @Override
-    public boolean onDown(MotionEvent e) {
+    public boolean onDown(@NonNull MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFling(MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
+    public void onLongPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
+    public void onShowPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent e) {
+    public boolean onSingleTapUp(@NonNull MotionEvent e) {
         return false;
     }
 
@@ -851,12 +852,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

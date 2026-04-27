@@ -35,9 +35,9 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
     /* ******************************************************************************************** */
 
-    public static void sendThrottleName(Boolean sendHWID) {
+    public static void sendThrottleName(Boolean ignoredSendHWID) {
 //    Log.d(threaded_application.applicationName, activityName + ": sendThrottleName DCC-EX: <s>");
-        if (mainapp.DCCEXlistsRequested < 0) { // if we haven't received all the lists go ask for them
+        if (mainapp.dccexListsRequested < 0) { // if we haven't received all the lists go ask for them
             comm_thread.wifiSend("<s>");
             sendDccexRequestRoster();
             if (!prefs.getBoolean("prefDccexSequenceItemRequests", false)) {
@@ -48,7 +48,7 @@ public class SendProcessorDccex {
             }
             if (prefs.getBoolean("prefDccexEmergencyStopPauseResume", false))
                 sendDccexRequestEmergencyStopState();
-            mainapp.DCCEXlistsRequested = 0;  // don't ask again
+            mainapp.dccexListsRequested = 0;  // don't ask again
         } else {
             comm_thread.wifiSend("<#>");
         }
@@ -57,7 +57,7 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     // ask for specific loco to be added to a throttle
-    public static void sendAcquireLoco(String addr, String rosterName, int whichThrottle) {
+    public static void sendAcquireLoco(String addr, String ignoredRosterName, int whichThrottle) {
 
         if (!addr.equals("*")) {
             if (whichThrottle < mainapp.maxThrottles) {
@@ -101,19 +101,19 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     public static void sendDccexRequestEmergencyStopState() {
-        if (mainapp.getDccexVersionNumeric() >= 5.005059)
+        if (mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_PAUSE_RESUME)
             comm_thread.wifiSend("<!Q>");
     }
 
     /* ******************************************************************************************** */
 
-    public static void sendReleaseLoco(String addr, int whichThrottle) {
+    public static void sendReleaseLoco(String ignoredAddr, int ignoredWhichThrottle) {
         // DCC-EX has no equivalent
     }
 
     /* ******************************************************************************************** */
 
-    public static void sendEStop(int whichThrottle) {
+    public static void sendEStop(int ignoredWhichThrottle) {
 //        wifiSend("<!>");
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             comm_thread.sendSpeed(throttleIndex, -1); // -1 = EStop
@@ -353,7 +353,7 @@ public class SendProcessorDccex {
 
     /* ******************************************************************************************** */
 
-    public static void sendRoute(String systemName, char action) {
+    public static void sendRoute(String systemName, char ignoredAction) {
         comm_thread.wifiSend("</START " + systemName + ">");
     }
 
@@ -361,7 +361,7 @@ public class SendProcessorDccex {
 
     // action is always ='2' but is currently unused
     @SuppressLint("DefaultLocale")
-    public static void sendDccexAutomation(String systemName, char action, int automationLoco) {
+    public static void sendDccexAutomation(String systemName, char ignoredAction, int automationLoco) {
         //Automation: </START addr id>
         String msgTxt = String.format("</START %d %s>", automationLoco, systemName);
         comm_thread.wifiSend(msgTxt);

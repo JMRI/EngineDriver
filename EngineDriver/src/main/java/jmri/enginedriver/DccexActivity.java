@@ -753,7 +753,6 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
                     }
                     if (foundIndex > 0) {
                         try {
-                            String[] x = dccexCommonCommandsEntryValuesArray[foundIndex].split(" ");
                             int commonCmdElementCount = dccexCommonCommandsEntryValuesArray[foundIndex].trim().split(" ").length;
                             int commonCmdParameterCount = dccexCommonCommandsHasParametersArray[foundIndex];
                             int commandElementsCount = dccexSendCommandValue.trim().split(" ").length;
@@ -1121,12 +1120,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
 
 
         openCvCalculatorDialogButton = findViewById(R.id.dccex_dccex_cv_bit_calculator_button); // Get the button from your layout
-        openCvCalculatorDialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCvBitCalculatorDialog();
-            }
-        });
+        openCvCalculatorDialogButton.setOnClickListener(v -> showCvBitCalculatorDialog());
 
         mainapp.alertCommHandlerWithBundle(message_type.REQUEST_TRACKS);
 
@@ -1291,7 +1285,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -1572,12 +1566,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

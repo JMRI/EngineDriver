@@ -258,7 +258,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
 
     @SuppressLint("MissingSuperCall")
     @Override
-    public void onSaveInstanceState(Bundle saveState) {     //orientation change
+    public void onSaveInstanceState(@NonNull Bundle saveState) {     //orientation change
         move_view_to_settings();        //update settings array so onCreate can use it to initialize
         orientationChange = true;
     }
@@ -297,7 +297,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -386,7 +386,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
     @SuppressLint("SetTextI18n")
     void move_settings_to_view() {
         ViewGroup t = findViewById(R.id.label_func_table); //table
-        //loop thru input rows, skipping first (headings)
+        //loop through input rows, skipping first (headings)
         int ndx = 0;
         for (int i = 1; i < t.getChildCount(); i++) {
             ViewGroup r = (ViewGroup) t.getChildAt(i);
@@ -433,7 +433,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
     void move_view_to_settings() {
         ViewGroup t = findViewById(R.id.label_func_table); //table
         ViewGroup r;  //row
-        //loop thru each row, Skipping the first one (the headings)  format is "label:function#"
+        //loop through each row, Skipping the first one (the headings)  format is "label:function#"
         int ndx = 0;
         for (int i = 1; i < t.getChildCount(); i++) {
             r = (ViewGroup) t.getChildAt(i);
@@ -441,12 +441,12 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
             String label = ((EditText) r.getChildAt(0)).getText().toString();
             label = label.replace("\n", " ");  //remove newlines
             label = label.replace(":", " ");   //   and colons, as they confuse the save format
-            String sfunc = ((EditText) r.getChildAt(1)).getText().toString();
-            if (!label.isEmpty() && !sfunc.isEmpty()) {
+            String functionsString = ((EditText) r.getChildAt(1)).getText().toString();
+            if (!label.isEmpty() && !functionsString.isEmpty()) {
                 //verify function is valid number between 0 and 31
                 int func;
                 try {
-                    func = Integer.parseInt(sfunc);
+                    func = Integer.parseInt(functionsString);
                     if (func >= 0 && func < MAX_FUNCTIONS) {
                         if (aFnc.size() <= ndx) {
                             aLbl.add(label);
@@ -476,7 +476,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
         int ndx = 0;
         for (Integer func : mainapp.function_labels[0].keySet()) {
             String label = mainapp.function_labels[0].get(func);
-            if (!label.isEmpty() && func >= 0 && func < MAX_FUNCTIONS) {
+            if ( (label != null) && (!label.isEmpty()) && (func >= 0) && (func < MAX_FUNCTIONS) ) {
                 if (aFnc.size() <= ndx) {
                     aLbl.add(label);
                     aFnc.add(func);
@@ -586,7 +586,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
             errMsg = except.getMessage();
             Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
-        if (!errMsg.isEmpty())
+        if ( (errMsg != null) && (!errMsg.isEmpty()) )
             mainapp.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
         else
             mainapp.safeToast("Settings Saved.", Toast.LENGTH_SHORT);
@@ -779,12 +779,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

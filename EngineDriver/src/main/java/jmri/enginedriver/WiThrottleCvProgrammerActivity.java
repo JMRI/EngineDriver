@@ -597,7 +597,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
 
         vn = 4;
         try {
-            vn = Float.parseFloat(mainapp.getDccexVersionString());
+            vn = Float.parseFloat(threaded_application.getDccexVersionString());
         } catch (Exception ignored) { } // invalid version
 
         witProgrammingCommonCvsLayout = findViewById(R.id.wit_programmingCommonCvsLayout);
@@ -764,7 +764,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -944,12 +944,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

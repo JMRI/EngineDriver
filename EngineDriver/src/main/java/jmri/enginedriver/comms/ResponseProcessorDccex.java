@@ -795,7 +795,7 @@ public class ResponseProcessorDccex {
                         }
                     }
                 } else {  // individual loco
-                    if (mainapp.DCCEXlistsRequested < 3) {
+                    if (mainapp.dccexListsRequested < 3) {
                         if (mainapp.dccexRosterIDs != null) {
                             for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
                                 if (mainapp.dccexRosterIDs[i] == Integer.parseInt(args[1])) {
@@ -820,7 +820,7 @@ public class ResponseProcessorDccex {
                                 processDccexRosterList();
 
 //                                mainapp.dccexRosterString = "";
-                                mainapp.DCCEXlistsRequested++;
+                                mainapp.dccexListsRequested++;
                                 mainapp.alertActivitiesWithBundle(message_type.RECEIVED_ROSTER_UPDATE);
 
                                 Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
@@ -1047,7 +1047,7 @@ public class ResponseProcessorDccex {
 
                     mainapp.alertActivitiesWithBundle(message_type.REQUEST_REFRESH_THROTTLE, activity_id_type.THROTTLE);
 //                    mainapp.dccexTurnoutString = "";
-                    mainapp.DCCEXlistsRequested++;
+                    mainapp.dccexListsRequested++;
 
                     int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
                     Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts complete. Count: " + count);
@@ -1179,7 +1179,7 @@ public class ResponseProcessorDccex {
                     mainapp.alertActivitiesWithBundle(message_type.REQUEST_REFRESH_THROTTLE, activity_id_type.THROTTLE);
 //                    mainapp.dccexRouteString = "";
                     mainapp.dccexRoutesListReceived = false;
-                    mainapp.DCCEXlistsRequested++;
+                    mainapp.dccexListsRequested++;
 
                     if (mainapp.dccexRouteStatesReceived) { // we received some DCC-EX route states before the list was complete
                         for (int i=0; i<mainapp.dccexRouteIDs.length;i++) {

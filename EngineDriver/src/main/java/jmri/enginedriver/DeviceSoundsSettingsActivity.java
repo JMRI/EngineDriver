@@ -30,6 +30,7 @@ import android.os.Looper;
 import android.os.Message;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
@@ -268,7 +269,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
 
         iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, getApplicationContext());
-        iplsLoader.getIplsList();        //see if there any custom ipls files
+        iplsLoader.getIplsList();        //see if there are any custom ipls files
         int ipslCount = mainapp.iplsNames.size();
         int deviceSoundsCount = this.getResources().getStringArray(R.array.deviceSoundsEntries).length;
         deviceSoundsEntriesArray = new String[deviceSoundsCount + ipslCount];
@@ -516,7 +517,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -592,30 +593,30 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
     }
 
     @Override
-    public boolean onDown(MotionEvent e) {
+    public boolean onDown(@NonNull MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFling(MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
+    public void onLongPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
+    public void onShowPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent e) {
+    public boolean onSingleTapUp(@NonNull MotionEvent e) {
         return false;
     }
 
@@ -659,12 +660,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

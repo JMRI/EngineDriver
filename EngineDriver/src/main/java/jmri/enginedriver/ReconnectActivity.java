@@ -146,12 +146,7 @@ public class ReconnectActivity extends AppCompatActivity {
     }
 
     @SuppressLint("Recycle")
-    private final Runnable delayCloseScreen = new Runnable() {
-        @Override
-        public void run() {
-            endThisActivity();
-        }
-    };
+    private final Runnable delayCloseScreen = this::endThisActivity;
 
     private void endThisActivity() {
         Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
@@ -283,7 +278,7 @@ public class ReconnectActivity extends AppCompatActivity {
 
     // common startActivity()
     // used for swipes for the main activities only - Throttle, Turnouts, Routes, Web
-    protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+    protected void startACoreActivity(Activity activity, Intent in, boolean ignoredSwipe, float ignoredDeltaX) {
         if (activity != null && in != null) {
             threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -303,7 +298,7 @@ public class ReconnectActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.exit_mnu) {
             mainapp.checkAskExit(this, true);
             return true;
