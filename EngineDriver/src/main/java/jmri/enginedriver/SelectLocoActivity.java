@@ -82,7 +82,6 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import java.io.File;
@@ -137,7 +136,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     private RecentSimpleAdapter recentListAdapter;
 
 //    public static final int ACTIVITY_DEVICE_SOUNDS_SETTINGS = 5;
-    public static final int ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE = 6;
+//    public static final int ACTIVITY_SELECT_ROSTER_ENTRY_IMAGE = 6;
 
     // recent consists
     private ArrayList<HashMap<String, String>> recentConsistsList;
@@ -678,9 +677,6 @@ public class SelectLocoActivity extends AppCompatActivity {
 
                 case message_type.TERMINATE_ALL_ACTIVITIES_BAR_CONNECTION:
                 case message_type.LOW_MEMORY:
-                    endThisActivity();
-                    break;
-
                 case message_type.RESTART_APP:
                 case message_type.RELAUNCH_APP:
                 case message_type.DISCONNECT:
@@ -863,7 +859,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
     }
 
-    private void handleConsistEditActivityResult(@NonNull Intent data, int resultCode) {
+    private void handleConsistEditActivityResult(@NonNull Intent data, int ignoredResultCode) {
         Log.d(threaded_application.applicationName, activityName + ": handleConsistEditActivityResult() ");
 
         if (newEngine) {
@@ -1191,7 +1187,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         recentConsistsListView.invalidateViews();
     }
 
-    // save recent consists to file
+    // save 'recent consists' to file
     void saveRecentConsistsList(boolean bUpdateList) {
         if (mainapp.consists == null) return;
 
@@ -1256,7 +1252,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             // check to see if we are still building the consist
             if ((!importExportPreferences.recentConsistLocoAddressList.isEmpty())
                     && (importExportPreferences.recentConsistLocoAddressList.get(0).size() == (tempRecentConsistLocoAddressList_inner.size() - 1))) {
-                // check of the last added one is the same other then the last extra loco
+                // check of the last added one is the same, other than the last extra loco
                 for (int j = 0; j < tempRecentConsistLocoAddressList_inner.size() - 1; j++) {
                     if ((!importExportPreferences.recentConsistLocoAddressList.get(0).get(j).equals(tempRecentConsistLocoAddressList_inner.get(j)))) {
                         isBuilding = false;
@@ -1430,22 +1426,20 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         public void onClick(View v) {
 
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                //@Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.d(threaded_application.applicationName, activityName + ": DownloadRosterButtonListener(): onClick()");
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
+            //@Override
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                Log.d(threaded_application.applicationName, activityName + ": DownloadRosterButtonListener(): onClick()");
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
 //                            downloadRosterToRecents();
-                            importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
-                            importExportPreferences.downloadRosterToRecents(getApplicationContext(),prefs,mainapp);
-                            recreate();
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                    mainapp.buttonVibration();
+                        importExportPreferences.loadRecentLocosListFromFile(getApplicationContext());
+                        importExportPreferences.downloadRosterToRecents(getApplicationContext(),prefs,mainapp);
+                        recreate();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
                 }
+                mainapp.buttonVibration();
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
@@ -1666,20 +1660,18 @@ public class SelectLocoActivity extends AppCompatActivity {
     public class ClearLocoListButtonListener implements AdapterView.OnClickListener {
         public void onClick(View v) {
 
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                //@Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.d(threaded_application.applicationName, activityName + ": ClearLocoListButtonListener(): onClick()");
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            clearList();
-                            recreate();
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                    mainapp.buttonVibration();
+            //@Override
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                Log.d(threaded_application.applicationName, activityName + ": ClearLocoListButtonListener(): onClick()");
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        clearList();
+                        recreate();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
                 }
+                mainapp.buttonVibration();
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
@@ -1694,20 +1686,18 @@ public class SelectLocoActivity extends AppCompatActivity {
     public class ClearConsistsListButtonListener implements AdapterView.OnClickListener {
         public void onClick(View v) {
 
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                //@Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.d(threaded_application.applicationName, activityName + ": ClearConsistsListButtonListener(): onClick()");
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            clearConsistsList();
-                            recreate();
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
-                    }
-                    mainapp.buttonVibration();
+            //@Override
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                Log.d(threaded_application.applicationName, activityName + ": ClearConsistsListButtonListener(): onClick()");
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        clearConsistsList();
+                        recreate();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
                 }
+                mainapp.buttonVibration();
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
@@ -1836,12 +1826,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         rosterListView = findViewById(R.id.roster_list);
         rosterListView.setAdapter(rosterListAdapter);
         rosterListView.setOnItemClickListener(new RosterItemClickListener());
-        rosterListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongRosterListItemClick(pos);
-            }
-        });
+        rosterListView.setOnItemLongClickListener((av, v, pos, id) -> onLongRosterListItemClick(pos));
 
         rosterList.clear();
         rosterOwnersList.clear();
@@ -1865,15 +1850,10 @@ public class SelectLocoActivity extends AppCompatActivity {
         recentListView.setAdapter(recentListAdapter);
         recentListView.setOnTouchListener(recentsSwipeDetector = new SwipeDetector());
         recentListView.setOnItemClickListener(new RecentLocosItemListener());
-        recentListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongRecentListItemClick(pos);
-            }
-        });
+        recentListView.setOnItemLongClickListener((av, v, pos, id) -> onLongRecentListItemClick(pos));
 //        refreshRecentLocosList();
 
-        // Set up a list adapter to allow adding the list of recent consists to the UI.
+        // Set up a list adapter to allow adding the list of 'recent consists' to the UI.
         recentConsistsList = new ArrayList<>();
         recentConsistsListAdapter = new RecentConsistsSimpleAdapter(this, recentConsistsList,
                 R.layout.consist_list_item, new String[]{"consist"},
@@ -1882,12 +1862,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         recentConsistsListView.setAdapter(recentConsistsListAdapter);
         recentConsistsListView.setOnTouchListener(recentConsistsSwipeDetector = new SwipeDetector());
         recentConsistsListView.setOnItemClickListener(new RecentConsistItemListener());
-        recentConsistsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
-                return onLongRecentConsistsListItemClick(pos);
-            }
-        });
+        recentConsistsListView.setOnItemLongClickListener((av, v, pos, id) -> onLongRecentConsistsListItemClick(pos));
 //        refreshRecentConsistsList();
 
         // Set the button listeners.
@@ -1913,15 +1888,12 @@ public class SelectLocoActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-        filterRosterText.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    filterRoster();
-                    return true;
-                } else
-                    return false;
-            }
+        filterRosterText.setOnEditorActionListener((v, actionId, event) -> {
+            if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+                filterRoster();
+                return true;
+            } else
+                return false;
         });
 
         defaultAddressLength = prefs.getString("prefDefaultAddressLength", this
@@ -1956,15 +1928,12 @@ public class SelectLocoActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-        la.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
-                    mainapp.hideSoftKeyboard(v, activityName);
-                    return true;
-                } else
-                    return false;
-            }
+        la.setOnEditorActionListener((v, actionId, event) -> {
+            if ((actionId & EditorInfo.IME_MASK_ACTION) != 0) {
+                mainapp.hideSoftKeyboard(v, activityName);
+                return true;
+            } else
+                return false;
         });
 
         // consist edit button
@@ -2051,12 +2020,12 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         selectMethodLayouts[4] = findViewById(R.id.idngo_layout_group);
 
-        // setup the download button
+        // set up the download button
         rosterDownloadButton = findViewById(R.id.roster_download);
         DownloadRosterButtonListener downloadRosterButtonListener = new DownloadRosterButtonListener();
         rosterDownloadButton.setOnClickListener(downloadRosterButtonListener);
 
-        // setup the sort buttons
+        // set up the sort buttons
         Button b = findViewById(R.id.roster_sort);
         SortRosterButtonListener sortRosterButtonListener = new SortRosterButtonListener();
         b.setOnClickListener(sortRosterButtonListener);
@@ -2070,21 +2039,18 @@ public class SelectLocoActivity extends AppCompatActivity {
         b.setOnClickListener(sortRecentConsistsButtonListener);
 
         selectLocoMethodRadioButtonsGroup = findViewById(R.id.select_loco_method_radio_button_group);
-        selectLocoMethodRadioButtonsGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (prefSelectLocoByRadioButtons) { // otherwise ignore any changes to these
-                    if (checkedId == R.id.select_loco_method_roster_button) {
-                        showMethod(select_loco_method_type.ROSTER);
-                    } else if (checkedId == R.id.select_loco_method_recent_button) {
-                        showMethod(select_loco_method_type.RECENT_LOCOS);
-                    } else if (checkedId == R.id.select_loco_method_address_button) {
-                        showMethod(select_loco_method_type.ADDRESS);
-                    } else if (checkedId == R.id.select_consists_method_recent_button) {
-                        showMethod(select_loco_method_type.RECENT_CONSISTS);
-                    } else if (checkedId == R.id.select_loco_method_idngo) {
-                        showMethod(select_loco_method_type.IDNGO);
-                    }
+        selectLocoMethodRadioButtonsGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (prefSelectLocoByRadioButtons) { // otherwise ignore any changes to these
+                if (checkedId == R.id.select_loco_method_roster_button) {
+                    showMethod(select_loco_method_type.ROSTER);
+                } else if (checkedId == R.id.select_loco_method_recent_button) {
+                    showMethod(select_loco_method_type.RECENT_LOCOS);
+                } else if (checkedId == R.id.select_loco_method_address_button) {
+                    showMethod(select_loco_method_type.ADDRESS);
+                } else if (checkedId == R.id.select_consists_method_recent_button) {
+                    showMethod(select_loco_method_type.RECENT_CONSISTS);
+                } else if (checkedId == R.id.select_loco_method_idngo) {
+                    showMethod(select_loco_method_type.IDNGO);
                 }
             }
         });
@@ -2141,11 +2107,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
     }
 
-    private final Runnable showMethodTask = new Runnable() {
-        public void run() {
-            showMethod(prefSelectLocoMethod);
-        }
-    };
+    private final Runnable showMethodTask = () -> showMethod(prefSelectLocoMethod);
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
@@ -2385,7 +2347,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             TypedValue outValue = new TypedValue();
             if (mainapp.isDccexProtocol()) {
                 mainapp.theme.resolveAttribute(R.attr.ed_dccex_consist_button, outValue, true);
-                if (mainapp.getDccexVersionNumeric() <= 5.005057) menuItem.setVisible(false);
+                 menuItem.setVisible(mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_SERVER_CONSISTS);
             } else {
                 mainapp.theme.resolveAttribute(R.attr.ed_cv19_consist_button, outValue, true);
             }
@@ -2401,7 +2363,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected():");
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -2465,7 +2427,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             }
         }
 
-        // don't allow acquire button if nothing entered
+        // don't allow the 'acquire' button if nothing entered
         if (addr > -1) {
             ba.setEnabled(true);
 
@@ -2484,7 +2446,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     }
 
-    /** @noinspection SameReturnValue*/ // long click handler for the Roster List items.  Shows the details of the enter in a dialog.
+    /** @noinspection SameReturnValue*/ // long click handler for the Roster List items.  Shows the details of the entry in a dialog.
     protected boolean onLongRosterListItemClick(int position) {
         RosterEntry re = null;
         HashMap<String, String> hm = rosterList.get(position);
@@ -2527,40 +2489,34 @@ public class SelectLocoActivity extends AppCompatActivity {
         loadRosterOrRecentImage(rosterNameString, detailsRosterImageView, iconURL);
 
         buttonClose = view.findViewById(R.id.rosterEntryButtonClose);
-        buttonClose.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (newRosterImageSelected) {
-                    writeLocoImageToFile(detailsRosterNameString, detailsRosterImageView);
-                }
-                if (newRosterImageSelected || LocalRosterImageRemoved ) {
-                    rosterListView.invalidateViews();
-                }
-                dialog.dismiss();
-                mainapp.buttonVibration();
+        buttonClose.setOnClickListener(v -> {
+            if (newRosterImageSelected) {
+                writeLocoImageToFile(detailsRosterNameString, detailsRosterImageView);
             }
+            if (newRosterImageSelected || LocalRosterImageRemoved ) {
+                rosterListView.invalidateViews();
+            }
+            dialog.dismiss();
+            mainapp.buttonVibration();
         });
 
         Button buttonSelectRosterImage = view.findViewById(R.id.selectRosterEntryImage);
-        buttonSelectRosterImage.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                detailsRosterNameString = rosterNameString; // store the name for the return result
-                startGallery();
-                mainapp.buttonVibration();
-            }
+        buttonSelectRosterImage.setOnClickListener(v -> {
+            detailsRosterNameString = rosterNameString; // store the name for the return result
+            startGallery();
+            mainapp.buttonVibration();
         });
 
         buttonRemoveRosterImage = view.findViewById(R.id.removeRosterEntryImage);
-        buttonRemoveRosterImage.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (deleteLocoImageFile(rosterNameString)) {
-                    detailsRosterImageView.setVisibility(GONE);
-                    buttonRemoveRosterImage.setVisibility(GONE);
-                    LocalRosterImageRemoved = true;
-                    hasLocalRosterImage = false;
-                    newRosterImageSelected = false;
-                }
-                mainapp.buttonVibration();
+        buttonRemoveRosterImage.setOnClickListener(v -> {
+            if (deleteLocoImageFile(rosterNameString)) {
+                detailsRosterImageView.setVisibility(GONE);
+                buttonRemoveRosterImage.setVisibility(GONE);
+                LocalRosterImageRemoved = true;
+                hasLocalRosterImage = false;
+                newRosterImageSelected = false;
             }
+            mainapp.buttonVibration();
         });
 
         if ((iconURL != null) && (!iconURL.isEmpty())) {
@@ -2869,24 +2825,20 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         dialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.RecentConsistsNameEditTitle));
         dialogBuilder.setMessage(getApplicationContext().getResources().getString(R.string.RecentConsistsNameEditText));
-        dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String rslt = edt.getText().toString();
-                if (!rslt.isEmpty()) {
-                    importExportPreferences.recentConsistNameList.set(pos, rslt);
-                    removingConsistOrForceRewrite = true;
-                    saveRecentConsistsList(true);
-                    refreshRecentConsistsList();
-                    recentConsistsListView.invalidateViews();
-                }
-                mainapp.buttonVibration();
+        dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), (dialog, whichButton) -> {
+            String rslt = edt.getText().toString();
+            if (!rslt.isEmpty()) {
+                importExportPreferences.recentConsistNameList.set(pos, rslt);
+                removingConsistOrForceRewrite = true;
+                saveRecentConsistsList(true);
+                refreshRecentConsistsList();
+                recentConsistsListView.invalidateViews();
             }
+            mainapp.buttonVibration();
         });
-        dialogBuilder.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
-                mainapp.buttonVibration();
-            }
+        dialogBuilder.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel), (dialog, whichButton) -> {
+            //pass
+            mainapp.buttonVibration();
         });
         AlertDialog b = dialogBuilder.create();
         b.show();
@@ -2903,23 +2855,19 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         dialogBuilder.setTitle(getApplicationContext().getResources().getString(R.string.RecentsNameEditTitle));
         dialogBuilder.setMessage(getApplicationContext().getResources().getString(R.string.RecentsNameEditText));
-        dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String rslt = edt.getText().toString();
-                if (!rslt.isEmpty()) {
-                    importExportPreferences.recentLocoNameList.set(pos, rslt);
-                    removingLocoOrForceReload = true;
-                    saveRecentLocosList(true);
-                    refreshRecentLocosList();
-                    mainapp.buttonVibration();
-                }
-            }
-        });
-        dialogBuilder.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //pass
+        dialogBuilder.setPositiveButton(getApplicationContext().getResources().getString(R.string.ok), (dialog, whichButton) -> {
+            String rslt = edt.getText().toString();
+            if (!rslt.isEmpty()) {
+                importExportPreferences.recentLocoNameList.set(pos, rslt);
+                removingLocoOrForceReload = true;
+                saveRecentLocosList(true);
+                refreshRecentLocosList();
                 mainapp.buttonVibration();
             }
+        });
+        dialogBuilder.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel), (dialog, whichButton) -> {
+            //pass
+            mainapp.buttonVibration();
         });
         AlertDialog b = dialogBuilder.create();
         b.show();
@@ -3133,12 +3081,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

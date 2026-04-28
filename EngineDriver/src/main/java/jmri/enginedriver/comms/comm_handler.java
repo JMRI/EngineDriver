@@ -44,7 +44,7 @@ import jmri.enginedriver.type.dccex_protocol_option_type;
 public class comm_handler extends Handler {
    static final String activityName = "comm_handler";
 
-   //All of the work of the communications thread is initiated from this function.
+   //All the work of the communications thread is initiated from this function.
 
    private boolean initialised = false;
    protected threaded_application mainapp;  // hold pointer to mainapp
@@ -76,7 +76,7 @@ public class comm_handler extends Handler {
       Bundle bundle = msg.getData();
       
       switch (msg.what) {
-         // note: if the Throttle is sent in arg1, it is always expected to be a int
+         // note: if the Throttle is sent in arg1, it is always expected to be an int
          // if it is sent in arg0, it will be a string
 
          //Start or Stop jmdns stuff, or add "fake" discovered servers

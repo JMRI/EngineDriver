@@ -476,7 +476,7 @@ public class ResponseProcessorWiThrottle {
         }  //end for
         Log.d(threaded_application.applicationName, activityName + ": processConsistList(): consist header, addr='" + consist_addr
                 + "', name='" + consist_name + "', desc='" + consist_desc + "'");
-        //don't add empty consists to list
+        //don't add empty 'consists' to list
         if (mainapp.consist_entries != null && consist_desc.length() > 0) {
             mainapp.consist_entries.put(consist_addr, consist_desc.toString());
         } else {
@@ -621,7 +621,7 @@ public class ResponseProcessorWiThrottle {
         mainapp.alertActivitiesWithBundle(message_type.ROUTE_LIST_CHANGED);
     }
 
-    public static void processRouteTitles(String responseStr) { //e.g  PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4]\[Unknown}|{0]\[Inconsistent}|{8     only used for wiThrottle
+    public static void processRouteTitles(String responseStr) { //e.g  PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4]\[Unknown}|{0]\[Inconsistent}|{8     only used for WiThrottle
 
         //clear the global variable
         mainapp.routeStateNames = new HashMap<>();

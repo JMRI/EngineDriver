@@ -90,7 +90,7 @@ public class SendProcessorWiThrottle {
     }
 
     @SuppressLint("DefaultLocale")
-    public static void sendFunction(int whichThrottle, String addr, int fn, int fState, boolean force) {
+    public static void sendFunction(int whichThrottle, String addr, int fn, int fState, boolean ignoredForce) {
         if (addr.isEmpty()) addr = "*";
         comm_thread.wifiSend(String.format("M%1$dA%2$s<;>F%3$d%4$d", whichThrottle, addr, fState, fn));
     }

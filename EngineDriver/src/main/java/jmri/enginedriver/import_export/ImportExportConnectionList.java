@@ -93,7 +93,7 @@ public class ImportExportConnectionList {
                             ip_address = parts.get(1);
                             port_str = parts.get(2);
                             ssid_str = "";
-                        } else if (parts.size() == 4) { //new new style, get all 4 parts
+                        } else if (parts.size() == 4) { //newer style, get all 4 parts
                             host_name = parts.get(0);
                             ip_address = parts.get(1);
                             port_str = parts.get(2);

@@ -76,7 +76,6 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -243,7 +242,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     } // end onCreate
 
     @Override
-    public boolean onPreferenceStartScreen(PreferenceFragmentCompat preferenceFragmentCompat,
+    public boolean onPreferenceStartScreen(@NonNull PreferenceFragmentCompat preferenceFragmentCompat,
                                            PreferenceScreen preferenceScreen) {
         Log.d(threaded_application.applicationName, activityName + ": onPreferenceStartScreen(): callback called to attach the preference sub screen");
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -502,22 +501,20 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     public void overwriteFileDialog(final SharedPreferences sharedPreferences, String fileNameAndPath) {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            //@Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
+        //@Override
+        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
 //                        overwriteFile = true;
-                        break;
+                    break;
 
-                    case DialogInterface.BUTTON_NEGATIVE:
+                case DialogInterface.BUTTON_NEGATIVE:
 //                        overwriteFile = false;
-                        break;
-                }
-                fixAndReloadImportExportPreference(sharedPreferences);
-                mainapp.buttonVibration();
+                    break;
             }
+            fixAndReloadImportExportPreference(sharedPreferences);
+            mainapp.buttonVibration();
         };
         AlertDialog.Builder ab = new AlertDialog.Builder(this);
         ab.setMessage(getApplicationContext().getResources().getString(R.string.prefImportExportOverwite).replace("%1$s",fileNameAndPath))
@@ -619,12 +616,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     private void delete_auto_import_settings_files() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File dir = new File(getApplicationContext().getExternalFilesDir(null), ENGINE_DRIVER_DIR);
-            File[] edFiles = dir.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File folder, String name) {
-                    return name.toLowerCase().startsWith("auto_");
-                }
-            });
+            File[] edFiles = dir.listFiles((folder, name) -> name.toLowerCase().startsWith("auto_"));
             if (edFiles != null && edFiles.length > 0){
                 for (File edFile : edFiles) {
                     delete_settings_file(edFile.getName());
@@ -925,7 +917,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(@NonNull MenuItem item) {
-                return true; // Allow expand
+                return true; // Allow 'expand'
             }
 
             @Override
@@ -964,7 +956,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -1219,7 +1211,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("ApplySharedPref")
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 int childCount = group.getChildCount();
                 for (int x = 0; x < childCount; x++) {
                     RadioButton btn = (RadioButton) group.getChildAt(x);
@@ -1445,7 +1437,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         enableDisablePreference(prefScreen, "prefDccexThrownLabel", enable);
         enableDisablePreference(prefScreen, "prefDccexClosedLabel", enable);
 
-        enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= 5.005059))
+        enable = ( ((mainapp.isDccexProtocol()) && (mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_PAUSE_RESUME))
                 || (mainapp.connectedHostName.isEmpty()));
         enableDisablePreference(prefScreen, "prefDccexEmergencyStopPauseResume", enable);
 
@@ -1677,7 +1669,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         }
 
         @Override
-        public boolean onPreferenceTreeClick(Preference preference) {
+        public boolean onPreferenceTreeClick(@NonNull Preference preference) {
             super.onPreferenceTreeClick(preference);
             return false;
         }
@@ -1696,7 +1688,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             Log.d(threaded_application.applicationName, activityName + ": onSharedPreferenceChanged(): key: " + key);
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
-            if (!prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
+            if (!prefForcedRestart) {  // don't do anything if the preference have been loaded, and we are about to reload the app.
                 switch (key) {
                     case "prefThrottleName": {
 //                        String currentValue = parentActivity.mainapp.fixThrottleName(sharedPreferences.getString(key, defaultName).trim());
@@ -2336,7 +2328,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         }
 
         @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
+        public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
         }
 
@@ -2494,7 +2486,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
-            if ((key != null) && !prefForcedRestart) {  // don't do anything if the preference have been loaded and we are about to reload the app.
+            if ((key != null) && !prefForcedRestart) {  // don't do anything if the preference have been loaded, and we are about to reload the app.
                 switch (key) {
                     case "prefImportExport":
                         if (!parentActivity.importExportPreferences.currentlyImporting) {
@@ -2735,12 +2727,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

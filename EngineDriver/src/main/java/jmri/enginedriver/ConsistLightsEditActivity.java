@@ -28,6 +28,7 @@ import android.os.Looper;
 import android.os.Message;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
@@ -40,8 +41,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -163,6 +162,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
 
                 case message_type.RECEIVED_THROTTLE_LOCO_ADDED:
                 case message_type.RECEIVED_THROTTLE_LOCO_REMOVED:
+                case message_type.WIT_CON_RECONNECT:
                     refreshConsistLists();
                     break;
 
@@ -180,10 +180,6 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
 
                         witRetry(bundle.getString(alert_bundle_tag_type.MESSAGE));
                     }
-                    break;
-
-                case message_type.WIT_CON_RECONNECT:
-                    refreshConsistLists();
                     break;
 
                 // - - - - - - - - - - - - - - - - - - - - - - - - //
@@ -274,60 +270,54 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
                 new int[]{R.id.con_loco_name, R.id.con_loco_addr_hidden, R.id.con_loco_light});
         ListView consistLV = findViewById(R.id.consist_lights_list);
         consistLV.setAdapter(consistListAdapter);
-        consistLV.setOnItemClickListener(new OnItemClickListener() {
-            //When an entry is clicked, toggle the lights state for that loco
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ViewGroup vg = (ViewGroup) v; //convert to ViewGroup for clicked row
-                TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
-                String address = addrv.getText().toString();
+        //When an entry is clicked, toggle the lights state for that loco
+        consistLV.setOnItemClickListener((parent, v, position, id) -> {
+            ViewGroup vg = (ViewGroup) v; //convert to ViewGroup for clicked row
+            TextView addressView = (TextView) vg.getChildAt(1); // get address text from 2nd box
+            String address = addressView.getText().toString();
 
-                int light;
-                if (consist.getLeadAddr().equals(address)) { // lead loco is always 'follow'
-                    light = light_follow_type.FOLLOW;
-                } else {
-                    if ((consist.isLight(address) == light_follow_type.UNKNOWN) || (consist.isLight(address) == light_follow_type.FOLLOW)) {
-                        light = light_follow_type.OFF;
-                    } else if (consist.isLight(address) == light_follow_type.OFF) {
-                        light = light_follow_type.ON;
-                    } else {
-                        light = light_follow_type.FOLLOW;
-                    }
-                }
-                try {
-                    consist.setLight(address, light);
-                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d(threaded_application.applicationName, activityName + ": onCreat(): selected engine " + address + " that is not in consist");
-                }
-                mainapp.buttonVibration();
-                refreshConsistLists();
-            }
-        });
-
-        consistLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            //When an entry is long-clicked, toggle the lights state for that loco but don't send the command to the loco
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int pos, long id) {
-                ViewGroup vg = (ViewGroup) v;
-                TextView addrv = (TextView) vg.getChildAt(1); // get address text from 2nd box
-                String address = addrv.getText().toString();
-
-                int light;
-                if ((consist.isLight(address) == light_follow_type.UNKNOWN) | (consist.isLight(address) == light_follow_type.FOLLOW)) {
+            int light;
+            if (consist.getLeadAddr().equals(address)) { // lead loco is always 'follow'
+                light = light_follow_type.FOLLOW;
+            } else {
+                if ((consist.isLight(address) == light_follow_type.UNKNOWN) || (consist.isLight(address) == light_follow_type.FOLLOW)) {
                     light = light_follow_type.OFF;
                 } else if (consist.isLight(address) == light_follow_type.OFF) {
                     light = light_follow_type.ON;
                 } else {
                     light = light_follow_type.FOLLOW;
                 }
-                try {
-                    consist.setLight(address, light);
-                } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d(threaded_application.applicationName, activityName + ": onItemLongClick(): selected engine " + address + " that is not in consist");
-                }
-                refreshConsistLists();
-                return true;
             }
+            try {
+                consist.setLight(address, light);
+            } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                Log.d(threaded_application.applicationName, activityName + ": onCreat(): selected engine " + address + " that is not in consist");
+            }
+            mainapp.buttonVibration();
+            refreshConsistLists();
+        });
+
+        //When an entry is long-clicked, toggle the lights state for that loco but don't send the command to the loco
+        consistLV.setOnItemLongClickListener((parent, v, pos, id) -> {
+            ViewGroup vg = (ViewGroup) v;
+            TextView addressView = (TextView) vg.getChildAt(1); // get address text from 2nd box
+            String address = addressView.getText().toString();
+
+            int light;
+            if ((consist.isLight(address) == light_follow_type.UNKNOWN) | (consist.isLight(address) == light_follow_type.FOLLOW)) {
+                light = light_follow_type.OFF;
+            } else if (consist.isLight(address) == light_follow_type.OFF) {
+                light = light_follow_type.ON;
+            } else {
+                light = light_follow_type.FOLLOW;
+            }
+            try {
+                consist.setLight(address, light);
+            } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
+                Log.d(threaded_application.applicationName, activityName + ": onItemLongClick(): selected engine " + address + " that is not in consist");
+            }
+            refreshConsistLists();
+            return true;
         });
 
 //        OnTouchListener gestureListener = new OnTouchListener() {
@@ -459,7 +449,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
             mainapp.buttonVibration();
@@ -492,30 +482,30 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
     }
 
     @Override
-    public boolean onDown(MotionEvent e) {
+    public boolean onDown(@NonNull MotionEvent e) {
         return false;
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFling(MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent e) {
+    public void onLongPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
 
     @Override
-    public void onShowPress(MotionEvent e) {
+    public void onShowPress(@NonNull MotionEvent e) {
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent e) {
+    public boolean onSingleTapUp(@NonNull MotionEvent e) {
         return false;
     }
 
@@ -555,12 +545,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

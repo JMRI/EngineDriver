@@ -122,7 +122,7 @@ public class FileReceiverActivity extends AppCompatActivity {
                         String currentFileName = getFileName(currentUri, getContentResolver());
                         if (doesFileExist(currentFileName)) {
                             conflictExists = true;
-                            // No need to check further if one conflict is found
+                            // No need to check further if one conflict is found,
                             // but we still need to populate urisList fully
                         }
                     }
@@ -265,7 +265,7 @@ public class FileReceiverActivity extends AppCompatActivity {
         // mainapp.safeToast(getApplicationContext(), errorMessage, Toast.LENGTH_LONG);
     }
 
-    private String doSaveFileToScopedStorage(Uri uri, String filePrefix) {
+    private String doSaveFileToScopedStorage(Uri uri, String ignoredFilePrefix) {
         ContentResolver contentResolver = getContentResolver();
         String originalFileName = getFileName(uri, contentResolver); // Keep original for display/logging
 

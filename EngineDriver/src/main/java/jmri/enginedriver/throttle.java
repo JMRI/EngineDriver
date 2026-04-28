@@ -281,21 +281,7 @@ public class throttle extends AppCompatActivity implements
     protected static int[] targetDirections = {1, 1, 1, 1, 1, 1};
     protected static double[] targetAccelerations = {0, 0, 0, 0, 0, 0};  /// -4=full brake  +1=normal acceleration  0=at target speed
     protected static String[] targetAccelerationsForDisplay = {"", "", "", "", "", ""};  /// -4=full brake  +1=normal acceleration  0=at target speed
-
-//    protected Handler[] semiRealisticTargetSpeedUpdateHandlers = {null, null, null, null, null, null};
-//    protected Handler[] semiRealisticSpeedButtonUpdateHandlers = {null, null, null, null, null, null};
     protected int[] mSemiRealisticAutoIncrementOrDecrement = {0, 0, 0, 0, 0, 0};  //off
-//    protected int[] mSemiRealisticSpeedButtonsAutoIncrementOrDecrement = {0, 0, 0, 0, 0, 0};  //off
-//    protected boolean semiRealisticSpeedButtonLongPressActive = false;
-//    protected ImageView[] airIndicators = {null, null, null, null, null, null};
-//    protected ImageView[] airLineIndicators = {null, null, null, null, null, null};
-//    protected int[] airValues = {100, 100, 100, 100, 100, 100};
-//    protected int[] airLineValues = {100, 100, 100, 100, 100, 100};
-//    protected boolean isAirRecharging = false;
-//    protected boolean isAirLineRecharging = false;
-//    protected int[] previousBrakePosition = {0, 0, 0, 0, 0, 0};
-//    protected Handler[] semiRealisticAirUpdateHandlers = {null, null, null, null, null, null};
-//    protected Handler[] semiRealisticAirLineUpdateHandlers = {null, null, null, null, null, null};
 
     // SPDHT for Speed Id and Direction Button Heights
     protected LinearLayout[] llLocoIdAndSpeedViewGroups;
@@ -938,7 +924,7 @@ public class throttle extends AppCompatActivity implements
                         if (addr.equals(con.getLeadAddr())) {
                             if (dir != curDir) { // lead/consist direction changed from outside of ED
                                 showDirectionRequest(whichThrottle, dir);       // update requested direction indication
-                                setEngineDirection(whichThrottle, dir, true);   // update rest of consist to match new direction
+                                setEngineDirection(whichThrottle, dir, true);   // update rest of the 'consist' to match new direction
                                 // needed for the switching throttle layouts
                                 speedUpdate(whichThrottle,
                                         getSpeedFromCurrentSliderPosition(whichThrottle, false));
@@ -1340,7 +1326,7 @@ public class throttle extends AppCompatActivity implements
         Context mContext;
         mContext = getApplicationContext();
 
-        // Make sure brightness value between 0 to 255
+        // Make sure the brightness value is between 0 and 255
         if (brightnessValue >= 0 && brightnessValue <= 255) {
 
 //            if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
@@ -1681,7 +1667,7 @@ public class throttle extends AppCompatActivity implements
         // increase height of throttle slider (if requested in preferences)
         prefIncreaseSliderHeight = prefs.getBoolean("prefIncreaseSliderHeight", getResources().getBoolean(R.bool.prefIncreaseSliderHeightDefaultValue));
 
-        // decrease height of Loco Id (if requested in preferences)
+        // decrease height of 'Loco Id' (if requested in preferences)
         prefDecreaseLocoNumberHeight = prefs.getBoolean("prefDecreaseLocoNumberHeight", getResources().getBoolean(R.bool.prefDecreaseLocoNumberHeightDefaultValue));
 
         // increase the web view height if the preference is set
@@ -2088,7 +2074,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     /** @noinspection SameReturnValue, SameReturnValue */
-    int getMinSpeed(int whichThrottle) {
+    int getMinSpeed(int ignoredWhichThrottle) {
         return 0;
     }
 
@@ -2613,7 +2599,7 @@ public class throttle extends AppCompatActivity implements
         showDirectionIndication(whichThrottle, direction);
     }
 
-    boolean changeActualOrTargetDirectionIfAllowed(int whichThrottle, int direction, boolean buttonsAreReversed) {
+    boolean changeActualOrTargetDirectionIfAllowed(int whichThrottle, int ignoredDirection, boolean ignoredButtonsAreReversed) {
         boolean result;
         if (!isSemiRealisticThrottle) {
             if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
@@ -2786,7 +2772,7 @@ public class throttle extends AppCompatActivity implements
         }
     }
 
-    private void handleGamepadTestActivityResult(@NonNull Intent data, int resultCode) {
+    private void handleGamepadTestActivityResult(@NonNull Intent data, int ignoredResultCode) {
         Log.d(threaded_application.applicationName, activityName + ": handleGamepadTestActivityResult() ");
 
         String whichGamepadNo = data.getStringExtra("whichGamepadNo");
@@ -3279,7 +3265,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     // work out a) if we need to look for multiple gamepads b) workout which gamepad we received the key event from
-    private int findWhichGamePadEventIsFrom(String eventDeviceDescriptor, String eventDeviceName, int eventKeyCode) {
+    private int findWhichGamePadEventIsFrom(String eventDeviceDescriptor, String eventDeviceName, int ignoredEventKeyCode) {
         int whichGamePad = -2;  // default to the event not from a gamepad
         int whichGamePadDeviceId = -1;
         int j;
@@ -3887,7 +3873,7 @@ public class throttle extends AppCompatActivity implements
             isExternal = true;
         }
 
-        if (isExternal) { // if has come from the phone itself, don't try to process it here
+        if (isExternal) { // if it has come from the phone itself, don't try to process it here
             if (!mainapp.prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
@@ -4335,7 +4321,7 @@ public class throttle extends AppCompatActivity implements
         int foundBrakeLevel = -1;
         for (int i = 0; i <= 2; i++) {  // cycle through the thresholds from low to high
             if (mainapp.esuMc2BrakeLevels[i] >= 0) {  // ignore it if it is set to -1
-                for (int j = 0; j < 5; j++) { // set them to bee turned off
+                for (int j = 0; j < 5; j++) { // set them to be turned off
                     if (mainapp.esuMc2BrakeFunctions[i][j] >= 0) {
                         functionShouldBeOnOff[mainapp.esuMc2BrakeFunctions[i][j]] = 0;
                     }
@@ -4722,10 +4708,10 @@ public class throttle extends AppCompatActivity implements
     /**
      * Toggle the state of the ESU MCII knob
      *
-     * @param activity the requesting activity
+     * @param ignoredActivity the requesting activity
      * @param menu     the menu upon which the entry/button should be updated
      */
-    public void toggleEsuMc2Knob(Activity activity, Menu menu) {
+    public void toggleEsuMc2Knob(Activity ignoredActivity, Menu menu) {
         isEsuMc2KnobEnabled = !isEsuMc2KnobEnabled;
         mainapp.setEsuMc2KnobButton(menu, menu.findItem(R.id.esu_mc2_knob_button), isEsuMc2KnobEnabled);
     }
@@ -5035,7 +5021,7 @@ public class throttle extends AppCompatActivity implements
                 if (isDirectionButtonLongPress) {
 
                     if (isChangeDirectionAllowed(whichThrottle)) { // only respond to the long click if it is ok to change directions
-                        doButtonPress();  //in case the the direction button long clicked is not the current direction change the direction first
+                        doButtonPress();  //in case the direction button long clicked is not the current direction change the direction first
 
                         if (prefSwapForwardReverseButtonsLongPress) {
                             //v.playSoundEffect(SoundEffectConstants.CLICK);
@@ -5075,7 +5061,7 @@ public class throttle extends AppCompatActivity implements
         }
     }
 
-    private int isFunctionLeadTrailFollow(int whichThrottle, int fKey, String lab) {
+    private int isFunctionLeadTrailFollow(int ignoredWhichThrottle, int fKey, String lab) {
         boolean lead = false;
         boolean trail = false;
         boolean followLeadFunction = false;
@@ -5122,13 +5108,13 @@ public class throttle extends AppCompatActivity implements
     protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching, boolean forceSemiRealistic) {
         sendFunctionToConsistLocos(whichThrottle, function, lab, buttonPressMessageType, leadOnly, trailOnly, followLeadFunction, isLatching, forceSemiRealistic, false);
     }
-    protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean trailOnly, boolean followLeadFunction, int isLatching, boolean forceSemiRealistic, boolean forceIsLatching) {
+    protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean ignoredTrailOnly, boolean followLeadFunction, int isLatching, boolean forceSemiRealistic, boolean forceIsLatching) {
         Log.d(threaded_application.applicationName, activityName + ": sendFunctionToConsistLocos(): whichThrottle: " + whichThrottle + " function: " + function + " buttonPressMessageType: " + buttonPressMessageType);
         Consist con;
         con = mainapp.consists[whichThrottle];
 
         String tempPrefConsistFollowRuleStyle = mainapp.prefConsistFollowRuleStyle;
-        // if there is only one loco and we are not forcing the use of the Default Functions, then revert back to the ORIGINAL style
+        // if there is only one loco, and we are not forcing the use of the Default Functions, then revert back to the ORIGINAL style
         if (((mainapp.prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX))
                 || (mainapp.prefConsistFollowRuleStyle.contains(consist_function_rule_style_type.SPECIAL)))
                 && (con.size() == 1)
@@ -5608,7 +5594,7 @@ public class throttle extends AppCompatActivity implements
             @Override
             public void run() {
                 super.run();
-                if (sendDelayedSpeed) {             // if haven't sent the latest speed value
+                if (sendDelayedSpeed) {             // if we haven't sent the latest speed value
                     sendDelayedSpeed = false;       //  then send it now
                     sendSpeedMsgBasic(whichThrottle, speed);
                     pacingDelay();                  // start next delay
@@ -5710,12 +5696,9 @@ public class throttle extends AppCompatActivity implements
         if (prefs.getBoolean("prefThrottlesLocos",getResources().getBoolean(R.bool.prefThrottlesLocosDefaultValue))) {
             threaded_application.showCustomToast(throttle.this, getResources().getString(R.string.prefThrottlesLocosToast), Toast.LENGTH_SHORT, 4);
             final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, getApplicationContext());
-                    setLabels();
-                }
+            handler.postDelayed(() -> {
+                importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, getApplicationContext());
+                setLabels();
             }, 3000);
         }
 
@@ -5800,12 +5783,9 @@ public class throttle extends AppCompatActivity implements
 
         mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() & onResume() completes
         final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mainapp.throttleSwitchAllowed = true;
-                mainapp.displayThrottleSwitchMenuButton(overflowMenu);
-            }
+        handler.postDelayed(() -> {
+            mainapp.throttleSwitchAllowed = true;
+            mainapp.displayThrottleSwitchMenuButton(overflowMenu);
         }, 6000);
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
@@ -6152,7 +6132,7 @@ public class throttle extends AppCompatActivity implements
             }
         }
         webView.setInitialScale((int) (100 * scale));
-        webView.clearCache(true);   // force fresh javascript download on first connection
+        webView.clearCache(true);   // force fresh JavaScript download on first connection
 
         // enable remote debugging of all webviews
         if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
@@ -6227,12 +6207,9 @@ public class throttle extends AppCompatActivity implements
         }
 
         //longPress webview to reload
-        webView.setOnLongClickListener(new WebView.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                reloadWeb();
-                return true;
-            }
+        webView.setOnLongClickListener(v -> {
+            reloadWeb();
+            return true;
         });
 
         // tone generator for feedback sounds
@@ -6247,7 +6224,7 @@ public class throttle extends AppCompatActivity implements
 
         initialiseEsuMc2();
 
-        setupSensor(); // setup the support for shake actions.
+        setupSensor(); // set up the support for shake actions.
 
         tts = new Tts(prefs, mainapp);
 
@@ -6460,7 +6437,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("scale", scale);   // save current scale for next onCreate
         if (webView != null) {
@@ -6468,14 +6445,14 @@ public class throttle extends AppCompatActivity implements
         }
 
         // save the requested throttle direction so we can update the
-        // direction indication immediately in OnCreate following a rotate
+        // direction indication immediately in OnCreate following a 'rotate'
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             outState.putSerializable("dir" + mainapp.throttleIntToChar(throttleIndex), dirs[throttleIndex]);
         }
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (!mainapp.setActivityOrientation(this)) { // set screen orientation based on prefs
@@ -6661,7 +6638,7 @@ public class throttle extends AppCompatActivity implements
                     }
                 }
 
-                // put values in array for indexing in next step
+                // put values in array for indexing in the next step
                 // to do this
                 ArrayList<Integer> aList = new ArrayList<>(function_labels_temp.keySet());
 
@@ -6895,7 +6872,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void releaseThrottles() {
-        //loop thru all throttles and send release to server for any that are active
+        //loop through all throttles and send release to server for any that are active
         for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
             if (getConsist(throttleIndex).isActive()) {
                 releaseLoco(throttleIndex);
@@ -6955,7 +6932,7 @@ public class throttle extends AppCompatActivity implements
 
         setImmersiveMode(webView);
 
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         Intent in;
         if ( (item.getItemId() == R.id.turnouts_mnu)
         || (item.getItemId() == R.id.turnouts_button) ) {
@@ -7020,22 +6997,17 @@ public class throttle extends AppCompatActivity implements
             b.setTitle(R.string.newConnectionTitle);
             b.setMessage(R.string.newConnectionText);
             b.setCancelable(true);
-            b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    mainapp.manualRestartRequested = true;
-                    threaded_application.activityInTransition(activityName);
+            b.setPositiveButton(R.string.yes, (dialog, id) -> {
+                mainapp.manualRestartRequested = true;
+                threaded_application.activityInTransition(activityName);
 //                    mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DISCONNECT, "");
-                    mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
-                    final Handler handler = new Handler(Looper.getMainLooper());
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent in = new Intent().setClass(throttle.this, ConnectionActivity.class);
-                            startActivity(in);
-                            ConnectionActivity.overridePendingTransition(throttle.this, R.anim.fade_in, R.anim.fade_out);
-                        }
-                    }, 2000);
-                }
+                mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
+                final Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(() -> {
+                    Intent in1 = new Intent().setClass(throttle.this, ConnectionActivity.class);
+                    startActivity(in1);
+                    ConnectionActivity.overridePendingTransition(throttle.this, R.anim.fade_in, R.anim.fade_out);
+                }, 2000);
             });
             b.setNegativeButton(R.string.no, null);
             AlertDialog alert = b.create();
@@ -7388,7 +7360,7 @@ public class throttle extends AppCompatActivity implements
                 // process swipe in the direction with the largest change
                 if (absDeltaX >= absDeltaY) {
 
-                    // check if only allow left-right swipe in the tool bar
+                    // check if only allow left-right swipe in the action bar
                     if ((!mainapp.prefFullScreenSwipeArea) // full screen swipe allowed
                             || ((mainapp.prefFullScreenSwipeArea) && (gestureStartY <= toolbarHeight)
                             && ((!mainapp.prefThrottleViewImmersiveModeHideToolbar)
@@ -7467,7 +7439,7 @@ public class throttle extends AppCompatActivity implements
         }
     }
 
-    private void gestureCancel(MotionEvent event) {
+    private void gestureCancel(MotionEvent ignoredEvent) {
 //        Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): gestureCancel");
         if (gestureHandler != null)
             gestureHandler.removeCallbacks(gestureStopped);
@@ -7475,7 +7447,7 @@ public class throttle extends AppCompatActivity implements
         gestureFailed = true;
     }
 
-    void gestureFailed(MotionEvent event) {
+    void gestureFailed(MotionEvent ignoredEvent) {
 //        Log.d(threaded_application.applicationName, activityName + ": gestureEnd gestureFailed");
         // end the gesture
         gestureInProgress = false;
@@ -7531,24 +7503,22 @@ public class throttle extends AppCompatActivity implements
         b.setTitle(R.string.steal_title);
         b.setMessage(getString(R.string.steal_text, addr));
         b.setCancelable(true);
-        b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() { //if yes pressed, tell ta to proceed with steal
-            public void onClick(DialogInterface dialog, int id) {
-                mainapp.exitDoubleBackButtonInitiated = 0;
+        //if yes pressed, tell ta to proceed with steal
+        b.setPositiveButton(R.string.yes, (dialog, id) -> {
+            mainapp.exitDoubleBackButtonInitiated = 0;
 //                mainapp.sendMsg(mainapp.comm_msg_handler, message_type.STEAL, addr, whichThrottle);
-                Bundle dirBundle = new Bundle();
-                dirBundle.putString(alert_bundle_tag_type.LOCO_TEXT, addr);
-                dirBundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
-                mainapp.alertCommHandlerWithBundle(message_type.STEAL, dirBundle);
-                stealPromptActive = false;
-                mainapp.buttonVibration();
-            }
+            Bundle dirBundle = new Bundle();
+            dirBundle.putString(alert_bundle_tag_type.LOCO_TEXT, addr);
+            dirBundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+            mainapp.alertCommHandlerWithBundle(message_type.STEAL, dirBundle);
+            stealPromptActive = false;
+            mainapp.buttonVibration();
         });
-        b.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() { //if no pressed do nothing
-            public void onClick(DialogInterface dialog, int id) {
-                mainapp.exitDoubleBackButtonInitiated = 0;
-                stealPromptActive = false;
-                mainapp.buttonVibration();
-            }
+        //if no pressed do nothing
+        b.setNegativeButton(R.string.no, (dialog, id) -> {
+            mainapp.exitDoubleBackButtonInitiated = 0;
+            stealPromptActive = false;
+            mainapp.buttonVibration();
         });
         AlertDialog alert = b.create();
         alert.show();
@@ -7611,25 +7581,20 @@ public class throttle extends AppCompatActivity implements
         });
 
         alert.setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        mainapp.exitDoubleBackButtonInitiated = 0;
-                        mainapp.hideSoftKeyboard(input);
-                        mainapp.buttonVibration();
-                    }
+                (dialog, which) -> {
+                    mainapp.exitDoubleBackButtonInitiated = 0;
+                    mainapp.hideSoftKeyboard(input);
+                    mainapp.buttonVibration();
                 });
 
         AlertDialog dialog = alert.create();
 
         // Show the keyboard after the dialog is shown
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialogInterface) {
-                input.requestFocus(); // Ensure focus is set
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
-                }
+        dialog.setOnShowListener(dialogInterface -> {
+            input.requestFocus(); // Ensure focus is set
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
             }
         });
         // Alternative method to show keyboard using WindowManager flags (might be more reliable in some cases)
@@ -8239,7 +8204,7 @@ public class throttle extends AppCompatActivity implements
 
     // common startActivity()
     // used for swipes for the main activities only - Throttle, Turnouts, Routes, Web
-    protected void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+    protected void startACoreActivity(Activity activity, Intent in, boolean ignoredSwipe, float deltaX) {
         if (activity != null && in != null) {
             threaded_application.activityInTransition(activityName);
             in.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -8326,12 +8291,7 @@ public class throttle extends AppCompatActivity implements
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

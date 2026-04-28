@@ -77,11 +77,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.util.ArrayList;
@@ -1088,7 +1084,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                             cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
 
                                 @Override
-                                public void onAvailable(Network network) {
+                                public void onAvailable(@NonNull Network network) {
                                     if (Build.VERSION.SDK_INT < 23) {
                                         ConnectivityManager.setProcessDefaultNetwork(network);
                                     } else {
@@ -1419,23 +1415,23 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         }
     }
 
-    //source  https://www.journaldev.com/861/java-copy-file
-    void copyFileUsingStream(File source, File dest) throws IOException {
-        InputStream is = null;
-        OutputStream os = null;
-        try {
-            is = new FileInputStream(source);
-            os = new FileOutputStream(dest);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) {
-                os.write(buffer, 0, length);
-            }
-        } finally {
-            if (is!=null) is.close();
-            if (os!=null) os.close();
-        }
-    }
+//    //source  https://www.journaldev.com/861/java-copy-file
+//    void copyFileUsingStream(File source, File dest) throws IOException {
+//        InputStream is = null;
+//        OutputStream os = null;
+//        try {
+//            is = new FileInputStream(source);
+//            os = new FileOutputStream(dest);
+//            byte[] buffer = new byte[1024];
+//            int length;
+//            while ((length = is.read(buffer)) > 0) {
+//                os.write(buffer, 0, length);
+//            }
+//        } finally {
+//            if (is!=null) is.close();
+//            if (os!=null) os.close();
+//        }
+//    }
 
     public class DccexConnectionOption_listener implements AdapterView.OnItemSelectedListener {
 
@@ -1509,12 +1505,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
 //

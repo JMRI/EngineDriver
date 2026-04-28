@@ -128,7 +128,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 //        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
-        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the tool bar
+        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the action bar
             if (gestureStartY > toolbarHeight) {   // not in the toolbar area
                 return;
             }
@@ -189,13 +189,13 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
         }
     }
 
-    private void gestureCancel(MotionEvent event) {
+    private void gestureCancel(MotionEvent ignoredEvent) {
         if (gestureHandler != null)
             gestureHandler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
     }
 
-    void gestureFailed(MotionEvent event) {
+    void gestureFailed(MotionEvent ignoredEvent) {
         // end the gesture
         gestureInProgress = false;
     }
@@ -356,7 +356,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
         webView.getSettings().setUseWideViewPort(true);        // Enable greater zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         if (!mainapp.firstWebActivity) {
-            webView.clearCache(true);   // force fresh javascript download on first connection
+            webView.clearCache(true);   // force fresh JavaScript download on first connection
             mainapp.firstWebActivity = true;
         }
 
@@ -431,12 +431,9 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
         }
 
         //longPress webview to reload
-        webView.setOnLongClickListener(new WebView.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                webView.reload();
-                return true;
-            }
+        webView.setOnLongClickListener(v -> {
+            webView.reload();
+            return true;
         });
 
         //Set the buttons
@@ -550,7 +547,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (!mainapp.setActivityOrientation(this)) {   //set screen orientation based on prefs
@@ -583,7 +580,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
         mainapp.clearActivityBundleMessageHandler(activity_id_type.WEB);
     }
 
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         if (webView == null) return;
         super.onSaveInstanceState(outState);
         Bundle bundle = new Bundle();
@@ -657,7 +654,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle all of the possible menu actions.
+        // Handle all the possible menu actions.
         Intent in;
         if ( (item.getItemId() == R.id.throttle_button_mnu)
             || (item.getItemId() == R.id.throttle_mnu) ) {
@@ -736,13 +733,13 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
         mainapp.webMenuSelected = savedWebMenuSelected;     // restore flag
     }
 
-    // helper methods to handle navigating away from this activity
-    private void navigateAway() {
-        threaded_application.activityInTransition(activityName);
-        mainapp.webMenuSelected = false;    // not returning so clear flag
-        this.finish();
-        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
-    }
+//    // helper methods to handle navigating away from this activity
+//    private void navigateAway() {
+//        threaded_application.activityInTransition(activityName);
+//        mainapp.webMenuSelected = false;    // not returning so clear flag
+//        this.finish();
+//        ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
+//    }
 
     private void navigateAway(boolean returningToOtherActivity, Class activityClass) {
         Intent in;
@@ -843,7 +840,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 
     // common startActivity()
     // used for swipes for the main activities only - Throttle, Turnouts, Routes, Web
-    void startACoreActivity(Activity activity, Intent in, boolean swipe, float deltaX) {
+    void startACoreActivity(Activity activity, Intent in, boolean ignoredSwipe, float deltaX) {
         if (activity != null && in != null) {
             mainapp.webMenuSelected = false;
             threaded_application.activityInTransition(activityName);
@@ -875,12 +872,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
                 itemChooser.getLayoutParams().height = newHeightAndWidth;
                 itemChooser.getLayoutParams().width = (int) ( (float) newHeightAndWidth * 1.3 );
 
-                itemChooser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onOptionsItemSelected(item);
-                    }
-                });
+                itemChooser.setOnClickListener(v -> onOptionsItemSelected(item));
             }
         }
     }

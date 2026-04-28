@@ -317,6 +317,10 @@ public class ResponseProcessorDccex {
         }
 
         mainapp.withrottle_version = 4.0;  // fudge it
+
+        String [] processorSplit =  responseStr.split("/");
+        threaded_application.dccexProcessorString = processorSplit[1].trim();
+
         String serverDesc = responseStr.substring(2, responseStr.length() - 1);
         mainapp.setServerType("DCC-EX");
         mainapp.setServerDescription(serverDesc); //store the description
@@ -724,7 +728,8 @@ public class ResponseProcessorDccex {
                     }
 
                 } else { // the second argument should be "LOCOID" or "CONSIST", which are a special type of loco id request only used on the CV writing page
-                    if (!(args[2].charAt(0) =='-')) {
+//                    if (!(args[2].charAt(0) =='-')) {
+                    // also allow the fail ("-1") to be pased to the activity for processing
                         Bundle bundle = new Bundle();
                         if (args[1].equals("LOCOID")) {
                             bundle.putString(alert_bundle_tag_type.DECODER_ADDRESS, args[2]);
@@ -733,7 +738,7 @@ public class ResponseProcessorDccex {
                             bundle.putString(alert_bundle_tag_type.CONSIST_ADDRESS, args[2]);
                             mainapp.alertActivitiesWithBundle(message_type.RECEIVED_CONSIST_ADDRESS, bundle, activity_id_type.DCC_EX);
                         }
-                    }
+//                    }
                 }
 
             }  else {// else {} did not succeed
@@ -795,7 +800,7 @@ public class ResponseProcessorDccex {
                         }
                     }
                 } else {  // individual loco
-                    if (mainapp.DCCEXlistsRequested < 3) {
+                    if (mainapp.dccexListsRequested < 3) {
                         if (mainapp.dccexRosterIDs != null) {
                             for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
                                 if (mainapp.dccexRosterIDs[i] == Integer.parseInt(args[1])) {
@@ -820,7 +825,7 @@ public class ResponseProcessorDccex {
                                 processDccexRosterList();
 
 //                                mainapp.dccexRosterString = "";
-                                mainapp.DCCEXlistsRequested++;
+                                mainapp.dccexListsRequested++;
                                 mainapp.alertActivitiesWithBundle(message_type.RECEIVED_ROSTER_UPDATE);
 
                                 Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
@@ -1047,7 +1052,7 @@ public class ResponseProcessorDccex {
 
                     mainapp.alertActivitiesWithBundle(message_type.REQUEST_REFRESH_THROTTLE, activity_id_type.THROTTLE);
 //                    mainapp.dccexTurnoutString = "";
-                    mainapp.DCCEXlistsRequested++;
+                    mainapp.dccexListsRequested++;
 
                     int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
                     Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts complete. Count: " + count);
@@ -1179,7 +1184,7 @@ public class ResponseProcessorDccex {
                     mainapp.alertActivitiesWithBundle(message_type.REQUEST_REFRESH_THROTTLE, activity_id_type.THROTTLE);
 //                    mainapp.dccexRouteString = "";
                     mainapp.dccexRoutesListReceived = false;
-                    mainapp.DCCEXlistsRequested++;
+                    mainapp.dccexListsRequested++;
 
                     if (mainapp.dccexRouteStatesReceived) { // we received some DCC-EX route states before the list was complete
                         for (int i=0; i<mainapp.dccexRouteIDs.length;i++) {
