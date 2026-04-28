@@ -317,6 +317,10 @@ public class ResponseProcessorDccex {
         }
 
         mainapp.withrottle_version = 4.0;  // fudge it
+
+        String [] processorSplit =  responseStr.split("/");
+        threaded_application.dccexProcessorString = processorSplit[1].trim();
+
         String serverDesc = responseStr.substring(2, responseStr.length() - 1);
         mainapp.setServerType("DCC-EX");
         mainapp.setServerDescription(serverDesc); //store the description
@@ -724,7 +728,8 @@ public class ResponseProcessorDccex {
                     }
 
                 } else { // the second argument should be "LOCOID" or "CONSIST", which are a special type of loco id request only used on the CV writing page
-                    if (!(args[2].charAt(0) =='-')) {
+//                    if (!(args[2].charAt(0) =='-')) {
+                    // also allow the fail ("-1") to be pased to the activity for processing
                         Bundle bundle = new Bundle();
                         if (args[1].equals("LOCOID")) {
                             bundle.putString(alert_bundle_tag_type.DECODER_ADDRESS, args[2]);
@@ -733,7 +738,7 @@ public class ResponseProcessorDccex {
                             bundle.putString(alert_bundle_tag_type.CONSIST_ADDRESS, args[2]);
                             mainapp.alertActivitiesWithBundle(message_type.RECEIVED_CONSIST_ADDRESS, bundle, activity_id_type.DCC_EX);
                         }
-                    }
+//                    }
                 }
 
             }  else {// else {} did not succeed

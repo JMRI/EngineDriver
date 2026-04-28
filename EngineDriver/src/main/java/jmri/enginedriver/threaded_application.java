@@ -258,6 +258,7 @@ public class threaded_application extends Application {
     public String prefUseDccexProtocol = "Auto";
     public boolean prefAlwaysUseFunctionsFromServer = false;
     public static String dccexVersionString = "";
+    public static String dccexProcessorString = "";
     public int dccexListsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
     public static boolean dccexScreenIsOpen = false;
@@ -265,6 +266,8 @@ public class threaded_application extends Application {
 
     public static double DCCEX_VERSION_MINIMUM_FOR_PAUSE_RESUME = 5.005059;
     public static double DCCEX_VERSION_MINIMUM_FOR_SERVER_CONSISTS = 5.005058;
+    public static double DCCEX_VERSION_MINIMUM_FOR_WEB_SERVER = 5.005057;
+    public static double DCCEX_VERSION_MINIMUM_FOR_READ_CONSIST_ADDRESS = 5.004046;
 
     public int dccexActionTypeIndex = 0;
     public int [] dccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
@@ -1223,7 +1226,9 @@ public class threaded_application extends Application {
         } else if (serverType.equals("Digitrax")) {
             wifi_send_interval = 200; //increase the interval for LnWi
         } else if (serverType.equals("DCC-EX")) {
-            web_server_port = 80; //hardcode web port for DCC-EX
+            if ( (mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_WEB_SERVER)
+            && ((threaded_application.dccexProcessorString.equals("EXCSB1")) || (threaded_application.dccexProcessorString.equals("ESP32"))) )
+                web_server_port = 80; //hardcode web port for DCC-EX
         }
     }
 

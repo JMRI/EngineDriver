@@ -2,7 +2,7 @@
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
      * Support for the new DCC-EX WiFi commands in the drop list.
-     * Set web port to 80 for DCC-EX.
+     * Set web port to 80 for DCC-EX. (version and processor dependant)
      * Added preferences to customise the Thrown/Closed button labels for DCC-EX.
  * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
@@ -24,7 +24,8 @@
      * Disable the 'stop on phone call' preference if no sim card or don't have READ_PHONE_STATE permission.
      * Gradle upgrade to 9.2.0
      * Continued renaming of some files for consistency.
-     * Linting. Mostly in ConnectionActivity.
+     * Linting.
+     * Rethink of the way ED requests the Consist (CV19) value after requesting the decoder address for DCC-EX.
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
