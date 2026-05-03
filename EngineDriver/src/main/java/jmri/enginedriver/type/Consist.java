@@ -265,7 +265,7 @@ public final class Consist {
     }
 
     public boolean isEmpty() {
-        return con.size() == 0;
+        return con.isEmpty();
     }
 
     public boolean isMulti() {
@@ -308,7 +308,7 @@ public final class Consist {
 
     private String formatConsist() {
         StringBuilder formatCon;
-        if (con.size() > 0) {
+        if (!con.isEmpty()) {
             formatCon = new StringBuilder();
             String sep = "";
             for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
@@ -325,7 +325,7 @@ public final class Consist {
 
     private String formatConsistHtml() {
         StringBuilder formatCon;
-        if (con.size() > 0) {
+        if (!con.isEmpty()) {
             formatCon = new StringBuilder();
             String sep = "";
             for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist
@@ -342,7 +342,7 @@ public final class Consist {
 
     public String formatConsistAddr() {
         StringBuilder formatCon;
-        if (con.size() > 0) {
+        if (!con.isEmpty()) {
             formatCon = new StringBuilder();
             String sep = "";
             for (Map.Entry<String, ConLoco> l : con.entrySet()) {        // loop through locos in consist

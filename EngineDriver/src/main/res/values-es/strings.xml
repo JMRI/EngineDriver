@@ -892,7 +892,7 @@
     <string name="prefBackgroundImageFileNameNoImageSelected">No se seleccionó ninguna imagen</string>
     <string name="prefBackgroundImageFileNameSummary">Introduzca el nombre del archivo de imagen de fondo</string>
     <string name="prefBackgroundImageFileNameTitle">Nombre del archivo de la imagen de fondo</string>
-    <string name="prefBackgroundImageSummary">Mostrar una imagen de fondo en la página del Controlador</string>
+    <string name="prefBackgroundImageSummary">Mostrar una imagen de fondo en la mayoría de las páginas.</string>
     <string name="prefBackgroundImageTitle">Imagen de fondo</string>
     <string name="prefBackgroundImagePositionSummary">Selecciona como se colocará en la pantalla la imagen de fondo</string>
     <string name="prefBackgroundImagePositionTitle">Posición de la imagen de fondo</string>
@@ -1149,8 +1149,8 @@
     <string name="dccexWriteCvValueLabel">Valor</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorar acciones de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccione esto si tiene problemas con el DPAD que produce códigos clave y eventos de joystick</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necesita permisos Read_media_Images para cargar imágenes de fondo.\n\nEngine Driver funcionará sin él.</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necesita permisos READ_MEDIA_VISUAL_USER_SELECTED para cargar imágenes de fondo.</string>
+<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necesita permisos Read_media_Images para cargar imágenes de fondo.\n\nEngine Driver funcionará sin él.</string>-->
+<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necesita permisos READ_MEDIA_VISUAL_USER_SELECTED para cargar imágenes de fondo.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necesita permisos cercanos_wifi_devices para recuperar el SSID WiFi actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necesita permisos de notificación para advertirle cuando empuje en el fondo.</string>
     <string name="prefDccexPreferencesTitle">Preferencias DCC-EX - EX-CommandStation</string>

@@ -2599,7 +2599,7 @@ public class throttle extends AppCompatActivity implements
         showDirectionIndication(whichThrottle, direction);
     }
 
-    boolean changeActualOrTargetDirectionIfAllowed(int whichThrottle, int ignoredDirection, boolean ignoredButtonsAreReversed) {
+    boolean toggleActualOrTargetDirectionIfAllowed(int whichThrottle, int ignoredDirection, boolean ignoredButtonsAreReversed) {
         boolean result;
         if (!isSemiRealisticThrottle) {
             if ((getDirection(whichThrottle) == direction_type.FORWARD)) {
@@ -2613,6 +2613,17 @@ public class throttle extends AppCompatActivity implements
             } else {
                 result = !changeTargetDirectionIfAllowed(whichThrottle, direction_type.FORWARD);
             }
+            showTargetDirectionIndication(whichThrottle);
+        }
+        return result;
+    }
+
+    boolean changeActualOrTargetDirectionIfAllowed(int whichThrottle, int direction, boolean ignoredButtonsAreReversed) {
+        boolean result;
+        if (!isSemiRealisticThrottle) {
+            result = !changeDirectionIfAllowed(whichThrottle, direction);
+        } else {
+            result = !changeTargetDirectionIfAllowed(whichThrottle, direction);
             showTargetDirectionIndication(whichThrottle);
         }
         return result;
@@ -3453,7 +3464,7 @@ public class throttle extends AppCompatActivity implements
                 break;
             }
             case gamepad_or_keyboard_event_type.TOGGLE_DIRECTION: {
-                boolean  dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                boolean  dirChangeFailed = !toggleActualOrTargetDirectionIfAllowed(whichThrottle,
                         getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                         false);
                 playFeedbackSound = (dirChangeFailed ? 2 : 1);
@@ -4231,7 +4242,7 @@ public class throttle extends AppCompatActivity implements
                     Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
                 } else if (prefEsuMc2EndStopDirectionChange) {
                     threaded_application.extendedLogging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Attempting to switch direction");
-                    changeActualOrTargetDirectionIfAllowed(whichVolume,
+                    toggleActualOrTargetDirectionIfAllowed(whichVolume,
                             getDirection(whichVolume) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                             false);
                     speedUpdateAndNotify(whichVolume, 0, false);
@@ -4572,7 +4583,7 @@ public class throttle extends AppCompatActivity implements
                     break;
                 case DIRECTION_TOGGLE:
                     if (!isScreenLocked && (action == ACTION_DOWN) && (repeatCnt == 0)) {
-                        boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+                        boolean dirChangeFailed = !toggleActualOrTargetDirectionIfAllowed(whichThrottle,
                                 getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
                                 gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
                     }

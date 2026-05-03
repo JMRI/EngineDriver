@@ -37,7 +37,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -175,9 +174,9 @@ public class threaded_application extends Application {
     public volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
     //shared variables returned from the withrottle server, stored here for easy access by other activities
     public volatile Consist[] consists;
-    public LinkedHashMap<Integer, String>[] function_labels;  //function#s and labels from roster for throttles
-    public LinkedHashMap<Integer, String> function_labels_default;  //function#s and labels from local settings
-    LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function#s and labels from local settings for roster entries with no function labels
+    public LinkedHashMap<Integer, String>[] function_labels;  //function(s) and labels from roster for throttles
+    public LinkedHashMap<Integer, String> function_labels_default;  //function(s) and labels from local settings
+    LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function(s) and labels from local settings for roster entries with no function labels
     public LinkedHashMap<Integer, String> function_consist_locos; // used for the 'special' consists function label string matching
     public LinkedHashMap<Integer, String> function_consist_latching; // used for the 'special' consists function label string matching
 
@@ -595,7 +594,7 @@ public class threaded_application extends Application {
     /**
      * Display OnGoing Notification that indicates EngineDriver is Running.
      * Should only be called when ED is going into the background.
-     * Currently call this from each activity onPause, passing the current intent
+     * Currently, call this from each activity onPause, passing the current intent
      * to return to when reopening.
      */
 
@@ -1051,10 +1050,10 @@ public class threaded_application extends Application {
 //            Log.d(applicationName, "t_a: Background loading metadata from " + metaUrl);
 //
 //            HttpClient Client = new DefaultHttpClient();
-//            HttpGet httpget = new HttpGet(metaUrl);
+//            HttpGet httpGet = new HttpGet(metaUrl);
 //            ResponseHandler<String> responseHandler = new BasicResponseHandler();
 //            String jsonResponse;
-//            jsonResponse = Client.execute(httpget, responseHandler);
+//            jsonResponse = Client.execute(httpGet, responseHandler);
 //            Log.d(applicationName, "t_a: Raw metadata retrieved: " + jsonResponse);
 //
 //            HashMap<String, String> metadataTemp = new HashMap<>();
@@ -1221,14 +1220,14 @@ public class threaded_application extends Application {
     /* handle server-specific settings here */
     public void setServerType(String serverType) {
         this.serverType = serverType;
-        if (serverType.equals("MRC")) {
-            web_server_port = 80; //hardcode web port for MRC
-        } else if (serverType.equals("Digitrax")) {
-            wifi_send_interval = 200; //increase the interval for LnWi
-        } else if (serverType.equals("DCC-EX")) {
-            if ( (mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_WEB_SERVER)
-            && ((threaded_application.dccexProcessorString.equals("EXCSB1")) || (threaded_application.dccexProcessorString.equals("ESP32"))) )
-                web_server_port = 80; //hardcode web port for DCC-EX
+        switch (serverType) {
+            case "MRC" -> web_server_port = 80; //hardcode web port for MRC
+            case "Digitrax" -> wifi_send_interval = 200; //increase the interval for LnWi
+            case "DCC-EX" -> {
+                if ((mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_WEB_SERVER)
+                        && ((threaded_application.dccexProcessorString.equals("EXCSB1")) || (threaded_application.dccexProcessorString.equals("ESP32"))))
+                    web_server_port = 80; //hardcode web port for DCC-EX
+            }
         }
     }
 
@@ -1327,7 +1326,7 @@ public class threaded_application extends Application {
         to_system_names = null;
         to_user_names = null;
         to_state_names = null;
-        turnout_states = new HashMap<String, String>();
+        turnout_states = new HashMap<>();
         routeStates = null;
         routeSystemNames = null;
         rt_user_names = null;
@@ -1354,9 +1353,6 @@ public class threaded_application extends Application {
         dccexScreenIsOpen = false;
         witScreenIsOpen = false;
 
-//        dccexRosterString = "";
-//        dccexTurnoutString = "";
-//        dccexRouteString = "";
         dccexRosterProcessed = false;
         dccexTurnoutsProcessed = false;
         dccexRoutesListReceived = false;
@@ -1368,15 +1364,15 @@ public class threaded_application extends Application {
 
             for (int i = 0; i < maxThrottles; i++) {
                 consists[i] = new Consist();
-                function_labels[i] = new LinkedHashMap<Integer, String>();
+                function_labels[i] = new LinkedHashMap<>();
                 function_states[i] = new boolean[MAX_FUNCTION_NUMBER+1]; // also allocated in onCreate() ???
 
                 dccexLastKnownSpeed[i] = 0;
                 dccexLastKnownDirection[i] = 1;
             }
 
-            consist_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
-            roster_entries = Collections.synchronizedMap(new LinkedHashMap<String, String>());
+            consist_entries = Collections.synchronizedMap(new LinkedHashMap<>());
+            roster_entries = Collections.synchronizedMap(new LinkedHashMap<>());
         } catch (Exception e) {
             Log.d(applicationName, "t_a: initShared object create exception");
         }
@@ -1388,53 +1384,6 @@ public class threaded_application extends Application {
     //
     // utilities
     //
-
-    /**
-     * ------ copied from jmri util code -------------------
-     * Split a string into an array of Strings, at a particular
-     * divider.  This is similar to the new String.split method,
-     * except that this does not provide regular expression
-     * handling; the divider string is just a string.
-     *
-     * @param input   String to split
-     * @param divider Where to divide the input; this does not appear in output
-     */
-    static public String[] splitByString(String input, String divider) {
-
-        //bail on empty input string, return input as single element
-        if (input == null || input.isEmpty()) return new String[]{input};
-
-        int size = 0;
-        String temp = input;
-
-        // count entries
-        while (!temp.isEmpty()) {
-            size++;
-            int index = temp.indexOf(divider);
-            if (index < 0) break;    // break not found
-            temp = temp.substring(index + divider.length());
-            if (temp.isEmpty()) {  // found at end
-                size++;
-                break;
-            }
-        }
-
-        String[] result = new String[size];
-
-        // find entries
-        temp = input;
-        size = 0;
-        while (!temp.isEmpty()) {
-            int index = temp.indexOf(divider);
-            if (index < 0) break;    // done with all but last
-            result[size] = temp.substring(0, index);
-            temp = temp.substring(index + divider.length());
-            size++;
-        }
-        result[size] = temp;
-
-        return result;
-    }
 
     public void powerStateMenuButton() {
         int newState = 1;
@@ -1496,6 +1445,69 @@ public class threaded_application extends Application {
                 }
             }
         }
+    }
+
+    /**
+     * ------ copied from jmri util code -------------------
+     * Split a string into an array of Strings, at a particular
+     * divider.  This is similar to the new String.split() method,
+     * except that this does not provide regular expression
+     * handling; the divider string is just a string.
+     *
+     * @param input   String to split
+     * @param divider Where to divide the input; this does not appear in output
+     */
+//    static public String[] splitByString(String input, String divider) {
+//
+//        //bail on empty input string, return input as single element
+//        if (input == null || input.isEmpty()) return new String[]{input};
+//
+//        int size = 0;
+//        String temp = input;
+//
+//        // count entries
+//        while (!temp.isEmpty()) {
+//            size++;
+//            int index = temp.indexOf(divider);
+//            if (index < 0) break;    // break not found
+//            temp = temp.substring(index + divider.length());
+//            if (temp.isEmpty()) {  // found at end
+//                size++;
+//                break;
+//            }
+//        }
+//
+//        String[] result = new String[size];
+//
+//        // find entries
+//        temp = input;
+//        size = 0;
+//        while (!temp.isEmpty()) {
+//            int index = temp.indexOf(divider);
+//            if (index < 0) break;    // done with all but last
+//            result[size] = temp.substring(0, index);
+//            temp = temp.substring(index + divider.length());
+//            size++;
+//        }
+//        result[size] = temp;
+//
+//        return result;
+//    }
+
+    static public String[] splitByString(String input, String divider) {
+        String tempInput = input;
+
+        boolean blankAtEnd = false;
+        // Unlike .split() the old splitByString(), that this method replaces, added an additional element if the string ended in the divider. So check and add if necessary.
+        if (input.lastIndexOf(divider) == (input.length()-divider.length())) {
+            blankAtEnd = true;
+            tempInput = input + " ";
+        }
+
+        String[] tempString = tempInput.split(Pattern.quote(divider));
+        if (blankAtEnd) tempString[tempString.length-1] = "";
+
+        return tempString;
     }
 
     /**
@@ -2200,21 +2212,19 @@ public class threaded_application extends Application {
         b.setTitle(R.string.exit_title);
         b.setMessage(R.string.exit_text);
         b.setCancelable(true);
-        b.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Log.d(applicationName, "t_a: checkAskExit(): onClick() ");
-                exitConfirmed = true;
-                if (!forceFastDisconnect) { //trigger disconnect / shutdown sequence
-                    mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN);
+        b.setPositiveButton(R.string.yes, (dialog, id) -> {
+            Log.d(applicationName, "t_a: checkAskExit(): onClick() ");
+            exitConfirmed = true;
+            if (!forceFastDisconnect) { //trigger disconnect / shutdown sequence
+                mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN);
 
-                } else { //trigger fast disconnect / shutdown sequence
+            } else { //trigger fast disconnect / shutdown sequence
 
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(alert_bundle_tag_type.URGENT, 1);
-                    mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN, bundle);
-                }
-                buttonVibration();
+                Bundle bundle = new Bundle();
+                bundle.putInt(alert_bundle_tag_type.URGENT, 1);
+                mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN, bundle);
             }
+            buttonVibration();
         });
         b.setNegativeButton(R.string.no, null);
         AlertDialog alert = b.create();
@@ -2621,12 +2631,7 @@ public class threaded_application extends Application {
         Log.d(applicationName, "t_a: safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
-        h.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), msg_txt, length).show();
-            }
-        });
+        h.post(() -> Toast.makeText(getApplicationContext(), msg_txt, length).show());
     }
 
     public int getMaxThrottlesForScreen(String throttleScreenType) {
@@ -2637,9 +2642,8 @@ public class threaded_application extends Application {
                     -> max_throttles_current_screen_type.VERTICAL;
             case throttle_screen_type.VERTICAL_LEFT, throttle_screen_type.VERTICAL_RIGHT
                     ->  max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
-            case throttle_screen_type.TABLET_VERTICAL_LEFT
-                    -> max_throttles_current_screen_type.VERTICAL_TABLET;
-            case throttle_screen_type.TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS
+            case throttle_screen_type.TABLET_VERTICAL_LEFT,
+                 throttle_screen_type.TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS
                     -> max_throttles_current_screen_type.VERTICAL_TABLET;
             case throttle_screen_type.SWITCHING
                     -> max_throttles_current_screen_type.SWITCHING;
@@ -2959,7 +2963,7 @@ public class threaded_application extends Application {
     public void updateConnectionList(String retrievedServerName) {
         // if I don't have permissions, don't ask, just ignore
 
-//  commented out as I had not ide why this was being done.. Did not seem to achieve anything
+//  commented out as I have no idea why this was being done. Did not seem to achieve anything
 //        if ((context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
 //                && (context.checkCallingOrSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) == PackageManager.PERMISSION_GRANTED) {
 
@@ -3216,8 +3220,8 @@ public class threaded_application extends Application {
         return whichGamepad;
     }
 
-    // work out a) if we need to look for multiple gamepads b) workout which gamepad we received the key event from
-    public int findWhichGamePadEventIsFrom(String eventDeviceDescriptor, String eventDeviceName, int eventKeyCode) {
+    // work out: a) if we need to look for multiple gamepads, b) workout which gamepad we received the key event from
+    public int findWhichGamePadEventIsFrom(String eventDeviceDescriptor, String eventDeviceName, int ignoredEventKeyCode) {
 //    public int findWhichGamePadEventIsFrom(int eventDeviceId, String eventDeviceName, int eventKeyCode) {
         int whichGamePad = -2;  // default to the event not from a gamepad
         int whichGamePadDeviceId = -1;
@@ -3364,9 +3368,8 @@ public class threaded_application extends Application {
         if (dev == null) { // unclear why, but some phones/tables don't seem to return a device for the internal keyboard
             return false;
         }
-        String eventDeviceName = dev.getName();
+//        String eventDeviceName = dev.getName();
         boolean isExternal = false;
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
         InputDevice iDev = getDevice(event.getDeviceId());
         if (iDev != null && iDev.toString().contains("Location: external")) {
             isExternal = true;
@@ -3379,7 +3382,6 @@ public class threaded_application extends Application {
                 }
             }
         }
-//        }
 
         if (isExternal) { // is from a external device (otherwise if it has come from the phone itself, generally don't try to process it here)
             if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
@@ -3830,18 +3832,18 @@ public class threaded_application extends Application {
 //                        Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): keeping: " + pair.first);
                     }
                 }
-                customToastPairList.add(new Pair(message, endTime));
+                customToastPairList.add(new Pair<>(message, endTime));
                 Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
             }
         } else {
             clearCustomToastPairList();
-            customToastPairList.add(new Pair(message, endTime));
+            customToastPairList.add(new Pair<>(message, endTime));
             Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
         }
         tempToastText.append(message);
 
         //adjust the inter-paragraph spacing
-        String text = tempToastText.toString().replace("\n","\n\0");;
+        String text = tempToastText.toString().replace("\n","\n\0");
         Spannable spannable = new SpannableString(text);
         for (int i = 0; i < text.length()-1; i++) {
             if (text.charAt(i) == '\n') {
@@ -3865,7 +3867,7 @@ public class threaded_application extends Application {
         if (!title.isEmpty()) {
             ((TextView) layout.findViewById(R.id.title)).setText(title);
         } else {
-            ((TextView) layout.findViewById(R.id.title)).setVisibility(View.GONE);
+            layout.findViewById(R.id.title).setVisibility(View.GONE);
         }
 //        ((TextView) layout.findViewById(R.id.message)).setText(tempToastText.toString());
         ((TextView) layout.findViewById(R.id.message)).setText(spannable, TextView.BufferType.SPANNABLE);
@@ -3878,38 +3880,28 @@ public class threaded_application extends Application {
         toastPopupWindow.setFocusable(false);
 
         // handle toastPopupWindow click event
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toastPopupWindow.dismiss();
-            }
-        });
+        layout.setOnClickListener(view -> toastPopupWindow.dismiss());
 
         // Use post to ensure the Activity's window is ready and we have a window token
         final View decorView = activity.getWindow().getDecorView();
         if (decorView != null) {
-            decorView.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (!activity.isFinishing() && !activity.isDestroyed()) {
-                        try {
-                            // Use decorView as the parent to provide the window token
-                            toastPopupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, yOffset);
+            decorView.post(() -> {
+                if (!activity.isFinishing() && !activity.isDestroyed()) {
+                    try {
+                        // Use decorView as the parent to provide the window token
+                        toastPopupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, yOffset);
 
-                            // dismiss the popup window after specified period
-                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                public void run() {
-                                    try {
-                                        if (toastPopupWindow.isShowing()) {
-                                            toastPopupWindow.dismiss();
-                                        }
-                                    } catch (Exception ignored) {
-                                    }
+                        // dismiss the popup window after specified period
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                            try {
+                                if (toastPopupWindow.isShowing()) {
+                                    toastPopupWindow.dismiss();
                                 }
-                            }, durationMs);
-                        } catch (Exception e) {
-                            Log.e(threaded_application.applicationName, activityName + ": showCustomToast(): Error showing custom toast: " + e.getMessage());
-                        }
+                            } catch (Exception ignored) {
+                            }
+                        }, durationMs);
+                    } catch (Exception e) {
+                        Log.e(threaded_application.applicationName, activityName + ": showCustomToast(): Error showing custom toast: " + e.getMessage());
                     }
                 }
             });
@@ -3937,7 +3929,6 @@ public class threaded_application extends Application {
     public static int getRgbColorFromThemeAttribute(Context context, int attribute) {
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(attribute, typedValue, true);
-        int color = typedValue.data;
-        return color;
+        return typedValue.data;
     }
 }

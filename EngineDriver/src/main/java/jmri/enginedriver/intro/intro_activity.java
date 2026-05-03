@@ -209,35 +209,35 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
             }
         }
 
-        if (android.os.Build.VERSION.SDK_INT < 33) {
-            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_IMAGES)) {
-                args = new Bundle();
-                args.putString("id", Integer.toString(PermissionsHelper.READ_IMAGES));
-                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_IMAGES));
-                fragment = new intro_permissions();
-                fragment.setArguments(args);
-                addSlide(fragment);
-            }
-        } else if (android.os.Build.VERSION.SDK_INT < 34) {
-            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES)) {
-                args = new Bundle();
-                args.putString("id", Integer.toString(PermissionsHelper.READ_MEDIA_IMAGES));
-                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES));
-                fragment = new intro_permissions();
-                fragment.setArguments(args);
-                addSlide(fragment);
-            }
-        } else { // needed for API 34
-            if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES))
-                && (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED)) ) {
-                args = new Bundle();
-                args.putString("id", Integer.toString(PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED));
-                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED));
-                fragment = new intro_permissions();
-                fragment.setArguments(args);
-                addSlide(fragment);
-            }
-        }
+//        if (android.os.Build.VERSION.SDK_INT < 33) {
+//            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_IMAGES)) {
+//                args = new Bundle();
+//                args.putString("id", Integer.toString(PermissionsHelper.READ_IMAGES));
+//                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_IMAGES));
+//                fragment = new intro_permissions();
+//                fragment.setArguments(args);
+//                addSlide(fragment);
+//            }
+//        } else if (android.os.Build.VERSION.SDK_INT < 34) {
+//            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES)) {
+//                args = new Bundle();
+//                args.putString("id", Integer.toString(PermissionsHelper.READ_MEDIA_IMAGES));
+//                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES));
+//                fragment = new intro_permissions();
+//                fragment.setArguments(args);
+//                addSlide(fragment);
+//            }
+//        } else { // needed for API 34
+//            if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES))
+//                && (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED)) ) {
+//                args = new Bundle();
+//                args.putString("id", Integer.toString(PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED));
+//                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED));
+//                fragment = new intro_permissions();
+//                fragment.setArguments(args);
+//                addSlide(fragment);
+//            }
+//        }
 
 
         if (!MobileControl2.isMobileControl2()) {

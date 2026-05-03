@@ -4,6 +4,7 @@
      * Support for the new DCC-EX WiFi commands in the drop list.
      * Set web port to 80 for DCC-EX. (version and processor dependant)
      * Added preferences to customise the Thrown/Closed button labels for DCC-EX.
+     * Removed need for READ_MEDIA_VISUAL_USER_SELECTED and READ_MEDIA_IMAGES Permissions.
  * Bug Fixes
      * Clock not displaying initially, and not updating consistently.
      * Layout swap button was not refreshing the screen.
@@ -11,6 +12,7 @@
      * Don't query the DCC-EX EStop Pause/Resume state unless the preference is set and the CS version is correct.
      * Recent Locos and Recent consists being duplicated.
      * Locos acquired by Address and Roster not being recorded separately in the Recents.
+     * Keyboard commands for Forward/Reverse acted as a toggle rather than the specified direction.
  * Other
      * Reworking of the custom toast popup.
      * Reworking of most of the images in the intro/wizard
@@ -26,6 +28,7 @@
      * Continued renaming of some files for consistency.
      * Linting.
      * Rethink of the way ED requests the Consist (CV19) value after requesting the decoder address for DCC-EX.
+     * Moved the prefBackgroundImage group to the device section of the preferences as it now impacts more than the throttle screen.
 **Version 2.43.224
  * New Features
      * Added notching on the throttle sliders when using other than 126 or percent options.
@@ -1172,6 +1175,7 @@
  *   TODO: work out when to play the engine shut down sounds
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
+ *   TODO: change the arrays of sound files names to arrays of resource IDs
  * select_loco:
  *   TODO: allow user to specify which loco to get labels from
  *   TODO: manually create roster entries (function labels) and store on device - In Phone Roster

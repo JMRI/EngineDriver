@@ -902,7 +902,7 @@
     <string name="prefBackgroundImageFileNameNoImageSelected">No s\'ha seleccionat cap imatge</string>
     <string name="prefBackgroundImageFileNameSummary">Introduïu el nom de l\'arxiu d\'imatge de fons</string>
     <string name="prefBackgroundImageFileNameTitle">Nom de l\'arxiu de la imatge de fons</string>
-    <string name="prefBackgroundImageSummary">Mostrar una imatge de fons a la pàgina del Controlador</string>
+    <string name="prefBackgroundImageSummary">Mostra una imatge de fons a la majoria de pàgines</string>
     <string name="prefBackgroundImageTitle">Imatge de fons</string>
     <string name="prefBackgroundImagePositionSummary">Selecciona com es col·locarà a la pantalla la imatge de fons</string>
     <string name="prefBackgroundImagePositionTitle">Posició de la imatge de fons</string>
@@ -1159,8 +1159,8 @@
     <string name="dccexWriteCvValueLabel">Valorar</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignora les accions de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccioneu -ho si teniu problemes amb el DPAD produint tant codes com a esdeveniments de joystick</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos READ_MEDIA_IMAGES per carregar imatges de fons.\n\nEngine Driver funcionarà sense ell.</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessita els permisos READ_MEDIA_VISUAL_USER_SELECTED per carregar imatges de fons.</string>
+<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos READ_MEDIA_IMAGES per carregar imatges de fons.\n\nEngine Driver funcionarà sense ell.</string>-->
+<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessita els permisos READ_MEDIA_VISUAL_USER_SELECTED per carregar imatges de fons.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessita els permisos propers_wifi_Devices per recuperar WiFi SSID actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessita permisos de notificació per avisar -vos quan empenyeu -vos al fons.</string>
     <string name="prefDccexPreferencesTitle">preferències DCC-EX - EX-CommandStation</string>

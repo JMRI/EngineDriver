@@ -75,8 +75,11 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -855,11 +858,42 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imgpath = cursor.getString(columnIndex);
+                String imagePath = cursor.getString(columnIndex);
+
+                String outputFileName = "";
+                int cut = imagePath.lastIndexOf('/');
+                if (cut != -1) {
+                    outputFileName = imagePath.substring(cut + 1);
+                }
+
+                String outputFileExt = "";
+                cut = outputFileName.lastIndexOf('.');
+                if (cut != -1) {
+                    outputFileExt = outputFileName.substring(cut + 1);
+                }
+//                String outputFilePart = outputFileName;
+//                cut = outputFileName.lastIndexOf('.');
+//                if (cut != -1) {
+//                    outputFilePart = outputFileName.substring(0, cut);
+//                }
+                outputFileName = "background" + "." + outputFileExt;
+
+                File outputDir = getExternalFilesDir(null);
+                File outputFile = new File(outputDir, outputFileName);
+                String outputFullPath = outputFile.toString();
+
+                // Use ContentResolver to open the stream, which doesn't require storage permissions for picked Uris
+                try (InputStream in = getContentResolver().openInputStream(selectedImage);
+                     OutputStream out = new FileOutputStream(outputFile)) {
+                    if (in != null) {
+                        copyFile(in, out);
+                    }
+                }
+
                 cursor.close();
 
                 SharedPreferences.Editor edit=prefs.edit();
-                edit.putString("prefBackgroundImageFileName",imgpath);
+                edit.putString("prefBackgroundImageFileName",outputFullPath);
                 edit.commit();
 
                 forceRestartAppOnPreferencesClose = true;
@@ -870,6 +904,14 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             }
         } catch (Exception e) {
             Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
+        }
+    }
+
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
         }
     }
 

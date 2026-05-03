@@ -90,7 +90,7 @@ public class GamepadEventHandler {
                                 gamepad_or_keyboard_event_type.STOP_ALL, 0, repeatCnt,
                                 gamepadThrottle, isActive, whichGamePadIsEventFrom);
                     } else if (prefGamePadDoublePressStop.equals(pref_gamepad_button_option_type.FORWARD_REVERSE_TOGGLE)) {
-//                        boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
+//                        boolean dirChangeFailed = !toggleActualOrTargetDirectionIfAllowed(whichThrottle,
 //                                getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD,
 //                                gamepadDirectionButtonsAreCurrentlyReversed(whichThrottle));
                         keyboardNotifierInterface.keyboardEventNotificationHandler(

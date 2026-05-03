@@ -1047,13 +1047,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
                 mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
 
                 final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent in1 = new Intent().setClass(turnouts.this, ConnectionActivity.class);
-                        startActivity(in1);
-                        ConnectionActivity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
-                    }
+                handler.postDelayed(() -> {
+                    Intent in1 = new Intent().setClass(turnouts.this, ConnectionActivity.class);
+                    startActivity(in1);
+                    ConnectionActivity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
                 }, 2000);
             });
             b.setNegativeButton(R.string.no, null);
