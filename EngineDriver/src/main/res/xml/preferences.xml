@@ -49,6 +49,47 @@
             android:summary="@string/prefThemeSummary"
             android:title="@string/prefThemeTitle" />
 
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_background"
+            android:key="prefBackgroundImageGroup"
+            android:layout="@layout/preference_item_common_icon_left"
+            android:persistent="false"
+            android:summary="@string/prefBackgroundImageSummary"
+            android:title="@string/prefBackgroundImagePreferencesTitle">
+
+            <PreferenceCategory
+                android:icon="@drawable/glyph_preference_category_background"
+                android:layout="@layout/preference_category_icon_left"
+                android:title="@string/prefBackgroundImagePreferencesTitle">
+
+                <SwitchPreferenceCompat
+                    android:defaultValue="@bool/prefBackgroundImageDefaultValue"
+                    android:key="prefBackgroundImage"
+                    android:layout="@layout/preference_item_switch_no_icon"
+                    android:summary="@string/prefBackgroundImageSummary"
+                    android:title="@string/prefBackgroundImageTitle" />
+
+                <Preference
+                    android:key="prefBackgroundImageFileNameImagePicker"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefBackgroundImageFileNameSummary"
+                    android:title="@string/prefBackgroundImageFileNameTitle" />
+
+                <ListPreference
+                    android:defaultValue="@string/prefBackgroundImagePositionDefaultValue"
+                    android:entries="@array/prefBackgroundImagePositionEntries"
+                    android:entryValues="@array/prefBackgroundImagePositionEntryValues"
+                    android:key="prefBackgroundImagePosition"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefBackgroundImagePositionSummary"
+                    android:title="@string/prefBackgroundImagePositionTitle" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+
+        <PreferenceCategory
+            android:title="divider"
+            android:layout="@layout/preference_category_divider"/>
+
         <ListPreference
             android:defaultValue="@string/prefLocaleDefaultValue"
             android:entries="@array/prefLocaleEntries"
@@ -58,6 +99,10 @@
             android:icon="?attr/ed_preferences_localisation"
             android:summary="@string/prefLocaleSummary"
             android:title="@string/prefLocaleTitle" />
+
+        <PreferenceCategory
+            android:title="divider"
+            android:layout="@layout/preference_category_divider"/>
 
         <PreferenceScreen
             android:icon="?attr/ed_folder_left_right_swipe"
@@ -139,18 +184,22 @@
             android:summary="@string/prefDoubleBackButtonToExitSummary"
             android:title="@string/prefDoubleBackButtonToExitTitle" />
 
-            <PreferenceScreen
-                android:icon="?attr/ed_folder_hint"
-                android:key="ToastsOptionsPreferences"
-                android:layout="@layout/preference_item_common_icon_left"
-                android:persistent="false"
-                android:summary="@string/ToastsOptionsSummary"
-                android:title="@string/ToastsOptionsTitle">
+        <PreferenceCategory
+            android:title="divider"
+            android:layout="@layout/preference_category_divider"/>
 
-                <PreferenceCategory
-                    android:icon="@drawable/glyph_preference_category_hint"
-                    android:layout="@layout/preference_category_icon_left"
-                    android:title="@string/ToastsOptionsTitle">
+        <PreferenceScreen
+            android:icon="?attr/ed_folder_hint"
+            android:key="ToastsOptionsPreferences"
+            android:layout="@layout/preference_item_common_icon_left"
+            android:persistent="false"
+            android:summary="@string/ToastsOptionsSummary"
+            android:title="@string/ToastsOptionsTitle">
+
+            <PreferenceCategory
+                android:icon="@drawable/glyph_preference_category_hint"
+                android:layout="@layout/preference_category_icon_left"
+                android:title="@string/ToastsOptionsTitle">
 
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefHideInstructionalToastsDefaultValue"
@@ -712,47 +761,6 @@
                     android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefAccelerometerShakeThresholdSummary"
                     android:title="@string/prefAccelerometerShakeThresholdTitle" />
-            </PreferenceCategory>
-        </PreferenceScreen>
-
-        <PreferenceCategory
-            android:title="divider"
-            android:layout="@layout/preference_category_divider"/>
-
-        <PreferenceScreen
-            android:icon="?attr/ed_folder_background"
-            android:key="prefBackgroundImageGroup"
-            android:layout="@layout/preference_item_common_icon_left"
-            android:persistent="false"
-            android:summary="@string/prefBackgroundImageSummary"
-            android:title="@string/prefBackgroundImagePreferencesTitle">
-
-            <PreferenceCategory
-                android:icon="@drawable/glyph_preference_category_background"
-                android:layout="@layout/preference_category_icon_left"
-                android:title="@string/prefBackgroundImagePreferencesTitle">
-
-                <SwitchPreferenceCompat
-                    android:defaultValue="@bool/prefBackgroundImageDefaultValue"
-                    android:key="prefBackgroundImage"
-                    android:layout="@layout/preference_item_switch_no_icon"
-                    android:summary="@string/prefBackgroundImageSummary"
-                    android:title="@string/prefBackgroundImageTitle" />
-
-                <Preference
-                    android:key="prefBackgroundImageFileNameImagePicker"
-                    android:layout="@layout/preference_item_common_no_icon"
-                    android:summary="@string/prefBackgroundImageFileNameSummary"
-                    android:title="@string/prefBackgroundImageFileNameTitle" />
-
-                <ListPreference
-                    android:defaultValue="@string/prefBackgroundImagePositionDefaultValue"
-                    android:entries="@array/prefBackgroundImagePositionEntries"
-                    android:entryValues="@array/prefBackgroundImagePositionEntryValues"
-                    android:key="prefBackgroundImagePosition"
-                    android:layout="@layout/preference_item_common_no_icon"
-                    android:summary="@string/prefBackgroundImagePositionSummary"
-                    android:title="@string/prefBackgroundImagePositionTitle" />
             </PreferenceCategory>
         </PreferenceScreen>
 

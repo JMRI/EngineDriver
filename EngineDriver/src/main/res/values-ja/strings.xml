@@ -370,8 +370,8 @@
 
 
     <string name="permissionsPOST_NOTIFICATIONS">エンジン ドライバーには、バックグラウンドにプッシュされたときに警告を表示する NOTIFICATION 権限が必要です。</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_IMAGES 権限が必要です。\n\nEngineDriver はこれなしでも動作します。</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_VISUAL_USER_SELECTED 権限が必要です。</string>
+<!--    <string name="permissionsREAD_MEDIA_IMAGES">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_IMAGES 権限が必要です。\n\nEngineDriver はこれなしでも動作します。</string>-->
+<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_VISUAL_USER_SELECTED 権限が必要です。</string>-->
 
 
 
@@ -433,7 +433,7 @@
     <string name="prefBackgroundImagePositionSummary">背景画像を画面上にどのように配置するかを選択します。</string>
     <string name="prefBackgroundImagePositionTitle">背景画像の位置</string>
     <string name="prefBackgroundImagePreferencesTitle">背景画像の設定</string>
-    <string name="prefBackgroundImageSummary">スロットルページに背景画像を表示します</string>
+    <string name="prefBackgroundImageSummary">ほとんどのページに背景画像を表示する</string>
     <string name="prefBackgroundImageTitle">背景画像</string>
     <string name="prefCategoryDevicePageTitle">デバイスの設定</string>
     <string name="prefConnectTimeoutMsSummary">初期接続タイムアウトをミリ秒単位で設定します</string>

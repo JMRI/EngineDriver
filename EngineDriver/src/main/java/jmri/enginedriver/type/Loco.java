@@ -165,7 +165,7 @@ public class Loco {
     @NonNull
     @Override
     public String toString() {
-        return (this.desc.length() > 0 ? this.desc : this.formatAddr);
+        return (!this.desc.isEmpty() ? this.desc : this.formatAddr);
     }
 
     private String formatAddress() {
@@ -173,7 +173,7 @@ public class Loco {
     }
 
     public String toHtml() {
-        return (this.desc.length() > 0 ? this.desc : this.formatAddrHtml);
+        return (!this.desc.isEmpty() ? this.desc : this.formatAddrHtml);
     }
 
     private String formatAddressHtml() {
@@ -311,7 +311,7 @@ public class Loco {
             }
 
             // if no matching rule was found, the default rule applies
-            if (functionList.size() == 0) {
+            if (functionList.isEmpty()) {
                 if (((prefConsistFollowDefaultAction.equals(consist_function_action.SAME_F_NUMBER_LEAD))
                         && (isLead))
                         || ((prefConsistFollowDefaultAction.equals(consist_function_action.SAME_F_NUMBER_LEAD_AND_TRAIL))

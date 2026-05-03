@@ -41,8 +41,8 @@ public class PermissionsHelper {
             VIBRATE,
             READ_IMAGES,
 //            NEARBY_WIFI_DEVICES,
-            READ_MEDIA_IMAGES,
-            READ_MEDIA_VISUAL_USER_SELECTED,
+//            READ_MEDIA_IMAGES,
+//            READ_MEDIA_VISUAL_USER_SELECTED,
             POST_NOTIFICATIONS,
             ACCESS_COARSE_LOCATION,
             ACCESS_WIFI_STATE,
@@ -62,11 +62,11 @@ public class PermissionsHelper {
 
 //<!-- needed for API 33 -->
 //    public static final int NEARBY_WIFI_DEVICES = 49;
-    public static final int READ_MEDIA_IMAGES = 50;
+//    public static final int READ_MEDIA_IMAGES = 50;
     public static final int POST_NOTIFICATIONS = 51;
 //<!-- needed for API 33 -->
 //<!-- needed for API 34 -->
-    public static final int READ_MEDIA_VISUAL_USER_SELECTED = 52;
+//    public static final int READ_MEDIA_VISUAL_USER_SELECTED = 52;
 //<!-- needed for API 34 -->
 
     public static final int ACCESS_COARSE_LOCATION = 53;
@@ -153,10 +153,10 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsACCESS_FINE_LOCATION);
             case VIBRATE:
                 return context.getResources().getString(R.string.permissionsVIBRATE);
-            case READ_MEDIA_IMAGES: // needed for API 33
-                return context.getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES);
-            case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
-                return context.getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED);
+//            case READ_MEDIA_IMAGES: // needed for API 33
+//                return context.getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES);
+//            case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
+//                return context.getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED);
 //            case NEARBY_WIFI_DEVICES:
 //                return context.getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
@@ -227,20 +227,20 @@ public class PermissionsHelper {
                             requestCode);
                     break;
 
-                case READ_MEDIA_IMAGES: // needed for API 33
-                    if (Build.VERSION.SDK_INT >= 33) {
-                        activity.requestPermissions(new String[]{
-                                        Manifest.permission.READ_MEDIA_IMAGES},
-                                requestCode);
-                    }
-                    break;
-                case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        activity.requestPermissions(new String[]{
-                                        Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-                                requestCode);
-                    }
-                    break;
+//                case READ_MEDIA_IMAGES: // needed for API 33
+//                    if (Build.VERSION.SDK_INT >= 33) {
+//                        activity.requestPermissions(new String[]{
+//                                        Manifest.permission.READ_MEDIA_IMAGES},
+//                                requestCode);
+//                    }
+//                    break;
+//                case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
+//                    if (Build.VERSION.SDK_INT >= 34) {
+//                        activity.requestPermissions(new String[]{
+//                                        Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
+//                                requestCode);
+//                    }
+//                    break;
 //                case NEARBY_WIFI_DEVICES:
 //                    activity.requestPermissions(new String[]{
 //                                    Manifest.permission.NEARBY_WIFI_DEVICES},
@@ -400,15 +400,15 @@ public class PermissionsHelper {
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
 
 //<!-- needed for API 33 -->
-            case READ_MEDIA_IMAGES:
-                if (Build.VERSION.SDK_INT >= 33) {
-                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
-                }
+//            case READ_MEDIA_IMAGES:
+//                if (Build.VERSION.SDK_INT >= 33) {
+//                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
+//                }
 //<!-- needed for API 34 -->
-            case READ_MEDIA_VISUAL_USER_SELECTED:
-                if (Build.VERSION.SDK_INT >= 34) {
-                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED;
-                }
+//            case READ_MEDIA_VISUAL_USER_SELECTED:
+//                if (Build.VERSION.SDK_INT >= 34) {
+//                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED;
+//                }
 //            case NEARBY_WIFI_DEVICES :
 //                return ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES ) == PackageManager.PERMISSION_GRANTED;
             case POST_NOTIFICATIONS:
@@ -451,14 +451,14 @@ public class PermissionsHelper {
             case WRITE_SETTINGS:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
 
-            case READ_MEDIA_IMAGES:
-                if (Build.VERSION.SDK_INT >= 33) {
-                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
-                }
-            case READ_MEDIA_VISUAL_USER_SELECTED:
-                if (Build.VERSION.SDK_INT >= 34) {
-                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
-                }
+//            case READ_MEDIA_IMAGES:
+//                if (Build.VERSION.SDK_INT >= 33) {
+//                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
+//                }
+//            case READ_MEDIA_VISUAL_USER_SELECTED:
+//                if (Build.VERSION.SDK_INT >= 34) {
+//                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
+//                }
 //            case NEARBY_WIFI_DEVICES:
 //                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.NEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
@@ -494,14 +494,14 @@ public class PermissionsHelper {
                 return Manifest.permission.ACCESS_FINE_LOCATION;
             case WRITE_SETTINGS:
                 return Manifest.permission.WRITE_SETTINGS;
-            case READ_MEDIA_IMAGES:
-                if (Build.VERSION.SDK_INT >= 33) {
-                    return Manifest.permission.READ_MEDIA_IMAGES;
-                } else { return "";}
-            case READ_MEDIA_VISUAL_USER_SELECTED:
-                if (Build.VERSION.SDK_INT >= 34) {
-                    return Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
-                } else { return "";}
+//            case READ_MEDIA_IMAGES:
+//                if (Build.VERSION.SDK_INT >= 33) {
+//                    return Manifest.permission.READ_MEDIA_IMAGES;
+//                } else { return "";}
+//            case READ_MEDIA_VISUAL_USER_SELECTED:
+//                if (Build.VERSION.SDK_INT >= 34) {
+//                    return Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
+//                } else { return "";}
             case POST_NOTIFICATIONS:
                 if (Build.VERSION.SDK_INT >= 33) {
                     return Manifest.permission.POST_NOTIFICATIONS;

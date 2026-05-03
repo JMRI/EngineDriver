@@ -333,8 +333,8 @@
 
 
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver nécessite la permission NOTIFICATION pour vous aviser avec des notifications lorsque l\'application est basculée en arrière plan.</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver nécessite la permission READ_MEDIA_IMAGES pour afficher les images en arrière plan.\n\nEngine Driver fonctionnera sans lui.</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver nécessite la permission READ_MEDIA_VISUAL_USER_SELECTED pour afficher les images en arrière plan.</string>
+<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver nécessite la permission READ_MEDIA_IMAGES pour afficher les images en arrière plan.\n\nEngine Driver fonctionnera sans lui.</string>-->
+<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver nécessite la permission READ_MEDIA_VISUAL_USER_SELECTED pour afficher les images en arrière plan.</string>-->
 
 
 
@@ -394,7 +394,7 @@
     <string name="prefBackgroundImagePositionSummary">Spécifier l\'emplacement de l\'image d\'arrière plan sur l\'écran.</string>
     <string name="prefBackgroundImagePositionTitle">Emplacement de l\'image d\'arrière plan</string>
     <string name="prefBackgroundImagePreferencesTitle">Préférences de l\'image d\'arrière plan</string>
-    <string name="prefBackgroundImageSummary">Afficher une image d\'arrière plan sur l\'écran du régulateur</string>
+    <string name="prefBackgroundImageSummary">Afficher une image de fond sur la plupart des pages</string>
     <string name="prefBackgroundImageTitle">Image d\'arrière plan</string>
     <string name="prefCategoryDevicePageTitle">Préférences de l\'appareil</string>
     <string name="prefConnectTimeoutMsSummary">Delai de connexion initiale par défaut.</string>

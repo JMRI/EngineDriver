@@ -1000,7 +1000,7 @@
     
     <string name="prefBackgroundImagePreferencesTitle">Předvolby obrázku pozadí</string>
     <string name="prefBackgroundImageTitle">Obrázek pozadí</string>
-    <string name="prefBackgroundImageSummary">Zobrazit obrázek pozadí na stránce Ovladače</string>
+    <string name="prefBackgroundImageSummary">Zobrazit obrázek na pozadí na většině stránek</string>
 
     <string name="prefBackgroundImageFileNameTitle">Název souboru obrázku pozadí</string>
     <string name="prefBackgroundImageFileNameSummary">Zadejte název souboru pro obrázek pozadí.</string>
@@ -1248,8 +1248,8 @@
     <string name="dccexWriteCvValueLabel">Hodnota</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorujte akce joysticku</string>
     <string name="prefGamePadIgnoreJoystickSummary">Vyberte to, pokud máte problémy s DPAD produkujícími jak události klíčových kódů, tak joysticků</string>
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver potřebuje read_media_images oprávnění k načtení obrázků na pozadí.\n\nEngine Driver bude fungovat i bez něj.</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver potřebuje READ_MEDIA_VISUAL_USER_SELECTED oprávnění k načtení obrázků na pozadí.</string>
+<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver potřebuje read_media_images oprávnění k načtení obrázků na pozadí.\n\nEngine Driver bude fungovat i bez něj.</string>-->
+<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver potřebuje READ_MEDIA_VISUAL_USER_SELECTED oprávnění k načtení obrázků na pozadí.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver potřebuje oprávnění nedalekých_wifi_devices k načtení aktuálního WiFi SSID.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver potřebuje oprávnění k oznámení, aby vás varovala, když se tlačí na pozadí.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation preference</string>

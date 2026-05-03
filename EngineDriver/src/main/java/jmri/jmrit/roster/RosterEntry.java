@@ -117,7 +117,7 @@ public class RosterEntry {
     }
 
     public String getImagePath() {
-        if ((_imageFilePath != null) && (_imageFilePath.length() > 0))
+        if ((_imageFilePath != null) && (!_imageFilePath.isEmpty()))
             try {
                 return resourcesURL + URLEncoder.encode(_imageFilePath, "UTF-8");
             } catch (UnsupportedEncodingException ignored) {
@@ -126,7 +126,7 @@ public class RosterEntry {
     }
 
     public String getIconPath() {
-        if ((_iconFilePath != null) && (_iconFilePath.length() > 0) && (!_iconFilePath.equals("__noIcon.jpg"))) {
+        if ((_iconFilePath != null) && (!_iconFilePath.isEmpty()) && (!_iconFilePath.equals("__noIcon.jpg"))) {
             try {
                 //decide which icon path to use, path was changed with jetty upgrade, 2.99.5
 //                HashMap<String, String> metadata = threaded_application.jmriMetadata;  //reference global metadata
@@ -191,11 +191,11 @@ public class RosterEntry {
                 _dccAddress = nm.item(k).getNodeValue();
                 continue;
             }
-            if (("imageFilePath".compareTo(nm.item(k).getNodeName()) == 0) && (nm.item(k).getNodeValue().length() > 0)) {
+            if (("imageFilePath".compareTo(nm.item(k).getNodeName()) == 0) && (!nm.item(k).getNodeValue().isEmpty())) {
                 _imageFilePath = nm.item(k).getNodeValue();
                 continue;
             }
-            if (("iconFilePath".compareTo(nm.item(k).getNodeName()) == 0) && (nm.item(k).getNodeValue().length() > 0)) {
+            if (("iconFilePath".compareTo(nm.item(k).getNodeName()) == 0) && (!nm.item(k).getNodeValue().isEmpty())) {
                 _iconFilePath = nm.item(k).getNodeValue();
                 continue;
             }
@@ -305,11 +305,11 @@ public class RosterEntry {
                         lockable = ("true".compareTo(nm.item(k).getNodeValue()) == 0);
                         continue;
                     }
-                    if (("functionImage".compareTo(nm.item(k).getNodeName()) == 0) && (nm.item(k).getNodeValue().length() > 0)) {
+                    if (("functionImage".compareTo(nm.item(k).getNodeName()) == 0) && (!nm.item(k).getNodeValue().isEmpty())) {
                         imOff = nm.item(k).getNodeValue();
                         continue;
                     }
-                    if (("functionImageSelected".compareTo(nm.item(k).getNodeName()) == 0) && (nm.item(k).getNodeValue().length() > 0)) {
+                    if (("functionImageSelected".compareTo(nm.item(k).getNodeName()) == 0) && (!nm.item(k).getNodeValue().isEmpty())) {
                         imOn = nm.item(k).getNodeValue();
                         continue;
                     }
@@ -380,7 +380,7 @@ public class RosterEntry {
     }
 
     public String getFunctionImage(int fn) {
-        if ((functionImages != null) && (functionImages.length > fn) && (functionImages[fn] != null) && (functionImages[fn].length() > 0))
+        if ((functionImages != null) && (functionImages.length > fn) && (functionImages[fn] != null) && (!functionImages[fn].isEmpty()))
             return resourcesURL + functionImages[fn];
         return null;
     }
@@ -394,7 +394,7 @@ public class RosterEntry {
     }
 
     public String getFunctionSelectedImage(int fn) {
-        if ((functionSelectedImages != null) && (functionSelectedImages.length > fn) && (functionSelectedImages[fn] != null) && (functionSelectedImages[fn].length() > 0))
+        if ((functionSelectedImages != null) && (functionSelectedImages.length > fn) && (functionSelectedImages[fn] != null) && (!functionSelectedImages[fn].isEmpty()))
             return resourcesURL + functionSelectedImages[fn];
         return null;
     }

@@ -2760,10 +2760,9 @@
     <!-- only include top level preferences in this list.  Use the 'advancedSubPreferences' list for second level ones-->
     <string-array name="advancedPreferences" translatable="false">
         <!-- Device Preferences -->
-<!--        <item>prefLocale</item>-->
         <item>prefDoubleBackButtonToExit</item>
         <item>ToastsOptionsPreferences</item>
-<!--        <item>prefHideInstructionalToasts</item>-->
+        <item>prefBackgroundImageGroup</item>  <!-- PreferenceScreen -->
         <item>prefLeftRightSwipeChangesSpeed</item>
 
         <!-- Throttle Screen Appearance Preferences -->
@@ -2778,7 +2777,6 @@
         <item>default_function_preferences</item>  <!-- PreferenceScreen -->
         <item>prefHideFunctionButtonsOfNonSelectedThrottle</item>
         <item>prefSimpleThrottleLayoutShowFunctionButtonCount</item>
-<!--        <item>prefBackgroundImageGroup</item>--> <!-- PreferenceScreen -->
         <item>prefCategoryHapticFeedbackScreen</item> <!-- PreferenceScreen -->
 
         <!-- Status Row Preferences -->

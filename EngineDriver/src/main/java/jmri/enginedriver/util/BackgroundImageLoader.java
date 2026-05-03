@@ -28,27 +28,27 @@ public class BackgroundImageLoader {
     }
 
     public void loadBackgroundImage() {
-        if (prefBackgroundImage) {
-            boolean result = false;
-            if (android.os.Build.VERSION.SDK_INT < 33) {
-                if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_IMAGES)) {
-                    result = true;
-                }
-            } else if (android.os.Build.VERSION.SDK_INT < 34) {
-                if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_IMAGES)) {
-                    result = true;
-                }
-            } else {
-                if ((PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED))
-                   || (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED)) ) {
-                    result = true;
-                }
-            }
-            if (result) loadBackgroundImageImpl();
-        }
-    }
-
-    protected void loadBackgroundImageImpl() {
+//        if (prefBackgroundImage) {
+//            boolean result = false;
+//            if (android.os.Build.VERSION.SDK_INT < 33) {
+//                if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_IMAGES)) {
+//                    result = true;
+//                }
+//            } else if (android.os.Build.VERSION.SDK_INT < 34) {
+//                if (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_IMAGES)) {
+//                    result = true;
+//                }
+//            } else {
+//                if ((PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED))
+//                   || (PermissionsHelper.getInstance().isPermissionGranted(mainapp, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED)) ) {
+//                    result = true;
+//                }
+//            }
+//            if (result) loadBackgroundImageImpl();
+//        }
+//    }
+//
+//    protected void loadBackgroundImageImpl() {
         try {
 //            File sdcard_path = Environment.getExternalStorageDirectory();
             File image_file = new File(prefBackgroundImageFileName);

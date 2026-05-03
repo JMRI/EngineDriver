@@ -976,8 +976,8 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="permissionsConnectToServer">Engine Driver需要存储权限来保存最近连接，以及电话权限以在通话时暂停操作。</string>
 
 <!-- needed for API 33 -->
-    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver需要读取媒体图片权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>
-    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver需要读取用户选择的媒体视觉内容权限来加载背景图片。  即使没有此权限，Engine Driver仍可运行。</string>
+<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver需要读取媒体图片权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>-->
+<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver需要读取用户选择的媒体视觉内容权限来加载背景图片。  即使没有此权限，Engine Driver仍可运行。</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver需要通知权限以在应用进入后台时向您发出警告。</string>
 <!-- needed for API 33 -->
 
@@ -1070,7 +1070,7 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <string name="prefBackgroundImagePreferencesTitle">背景图片偏好设置</string>
     <string name="prefBackgroundImageTitle">背景图片</string>
-    <string name="prefBackgroundImageSummary">在节流阀屏幕上显示背景图片</string>
+    <string name="prefBackgroundImageSummary">大多数页面显示背景图片</string>
 
     <string name="prefBackgroundImageFileNameTitle">背景图片文件名</string>
     <string name="prefBackgroundImageFileNameSummary">输入背景图片文件的名称。</string>
