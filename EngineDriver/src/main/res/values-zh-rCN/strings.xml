@@ -963,7 +963,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="timerDialogMessage">密码：</string>
     <string name="timerDialogHint">重启或重置密码</string>
 
-    <string name="permissionsREAD_IMAGES">Engine Driver需要存储权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver需要存储权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>-->
     <string name="permissionsReadPhoneState">Engine Driver需要电话权限以在通话时停止您的机车。\n\n即使没有此权限，Engine Driver仍可运行。如果不需要，请禁用\'通话时停止？\`偏好设置。</string>
     <string name="permissionsWriteSettings">Engine Driver需要允许修改系统设置权限来更改屏幕亮度。</string>
     <string name="permissionsWriteSettingsAdditional">- 点击下方按钮。\n- 授予权限。\n- 点击\'返回\'回到此处。</string>
@@ -976,8 +976,6 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="permissionsConnectToServer">Engine Driver需要存储权限来保存最近连接，以及电话权限以在通话时暂停操作。</string>
 
 <!-- needed for API 33 -->
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver需要读取媒体图片权限来加载背景图片。\n\n即使没有此权限，Engine Driver仍可运行。</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver需要读取用户选择的媒体视觉内容权限来加载背景图片。  即使没有此权限，Engine Driver仍可运行。</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver需要通知权限以在应用进入后台时向您发出警告。</string>
 <!-- needed for API 33 -->
 

@@ -854,7 +854,7 @@
     <string name="dialogResetPreferencesQuestion">Bestätigen Sie, dass Sie alle Präferenzen zurückgesetzen wollen. \n Alle aktuellen Einstellungen gehen verloren.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importeinstellungen</string>
     <string name="dialogImportPreferencesQuestion">Bestätigen Sie, dass Sie Voreinstellungen für den Import möchten. \n Alle aktuellen Einstellungen gehen verloren.</string>
-    <string name="permissionsREAD_IMAGES">Engine Driver muss STORAGE Berechtigungen Last Hintergrundbildern.</string>
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver muss STORAGE Berechtigungen Last Hintergrundbildern.</string>-->
     <string name="prefBackgroundImageFileNameNoImageSelected">Kein Bild ausgewählt wurde</string>
     <string name="prefBackgroundImageFileNameSummary">Wählen Sie den Namen der Hintergrundbilddatei.</string>
     <string name="prefBackgroundImageFileNameTitle">Hintergrund Bilddateinamen</string>
@@ -1111,8 +1111,6 @@
     <string name="dccexWriteCvValueLabel">Wert</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorieren Sie Joystick -Handlungen</string>
     <string name="prefGamePadIgnoreJoystickSummary">Wählen Sie dies aus, wenn Sie Probleme mit dem DPAD haben, der sowohl Schlüsselcodes als auch Joystick -Ereignisse erstellt</string>
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver benötigt Read_Media_images -Berechtigungen, um Hintergrundbilder zu laden.\n\nEngine Driver funktioniert auch ohne.</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver benötigt READ_MEDIA_VISUAL_USER_SELECTED -Berechtigungen, um Hintergrundbilder zu laden.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver benötigt die Berechtigungen in der Nähe_WIFI_Devices, um die aktuelle WLAN -SSID abzurufen.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver benötigt Benachrichtigungsberechtigungen, um Sie zu warnen, wenn Sie in den Hintergrund drücken.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation Einstellungen</string>

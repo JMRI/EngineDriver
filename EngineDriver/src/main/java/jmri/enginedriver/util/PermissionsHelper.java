@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -39,10 +38,8 @@ public class PermissionsHelper {
             WRITE_SETTINGS,
             ACCESS_FINE_LOCATION,
             VIBRATE,
-            READ_IMAGES,
+//            READ_IMAGES,
 //            NEARBY_WIFI_DEVICES,
-//            READ_MEDIA_IMAGES,
-//            READ_MEDIA_VISUAL_USER_SELECTED,
             POST_NOTIFICATIONS,
             ACCESS_COARSE_LOCATION,
             ACCESS_WIFI_STATE,
@@ -58,16 +55,12 @@ public class PermissionsHelper {
     public static final int WRITE_SETTINGS = 41;
     public static final int ACCESS_FINE_LOCATION = 42;
     public static final int VIBRATE = 46;
-    public static final int READ_IMAGES = 47;
+//    public static final int READ_IMAGES = 47;
 
 //<!-- needed for API 33 -->
 //    public static final int NEARBY_WIFI_DEVICES = 49;
-//    public static final int READ_MEDIA_IMAGES = 50;
     public static final int POST_NOTIFICATIONS = 51;
 //<!-- needed for API 33 -->
-//<!-- needed for API 34 -->
-//    public static final int READ_MEDIA_VISUAL_USER_SELECTED = 52;
-//<!-- needed for API 34 -->
 
     public static final int ACCESS_COARSE_LOCATION = 53;
     public static final int ACCESS_WIFI_STATE = 54;
@@ -141,8 +134,8 @@ public class PermissionsHelper {
         // Get the relevant rationale message based on request code
         // All possible request codes should be considered
         switch (requestCode) {
-            case READ_IMAGES:
-                return context.getResources().getString(R.string.permissionsREAD_IMAGES);
+//            case READ_IMAGES:
+//                return context.getResources().getString(R.string.permissionsREAD_IMAGES);
             case READ_PHONE_STATE:
                 return context.getResources().getString(R.string.permissionsReadPhoneState);
 //            case CONNECT_TO_SERVER:
@@ -153,10 +146,6 @@ public class PermissionsHelper {
                 return context.getResources().getString(R.string.permissionsACCESS_FINE_LOCATION);
             case VIBRATE:
                 return context.getResources().getString(R.string.permissionsVIBRATE);
-//            case READ_MEDIA_IMAGES: // needed for API 33
-//                return context.getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES);
-//            case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
-//                return context.getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED);
 //            case NEARBY_WIFI_DEVICES:
 //                return context.getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
@@ -190,10 +179,10 @@ public class PermissionsHelper {
         if (!isDialogOpen) {
             Log.d(threaded_application.applicationName, activityName + ": requestNecessaryPermissions(): Requesting " + getManifestPermissionId(requestCode)+ " permissions");
             switch (requestCode) {
-                case READ_IMAGES:
-                    activity.requestPermissions(new String[]{
-                                    Manifest.permission.READ_EXTERNAL_STORAGE},
-                            requestCode);
+//                case READ_IMAGES:
+//                    activity.requestPermissions(new String[]{
+//                                    Manifest.permission.READ_EXTERNAL_STORAGE},
+//                            requestCode);
 //                    break;
                 case READ_PHONE_STATE:
                     activity.requestPermissions(new String[]{
@@ -227,20 +216,6 @@ public class PermissionsHelper {
                             requestCode);
                     break;
 
-//                case READ_MEDIA_IMAGES: // needed for API 33
-//                    if (Build.VERSION.SDK_INT >= 33) {
-//                        activity.requestPermissions(new String[]{
-//                                        Manifest.permission.READ_MEDIA_IMAGES},
-//                                requestCode);
-//                    }
-//                    break;
-//                case READ_MEDIA_VISUAL_USER_SELECTED: // needed for API 34
-//                    if (Build.VERSION.SDK_INT >= 34) {
-//                        activity.requestPermissions(new String[]{
-//                                        Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED},
-//                                requestCode);
-//                    }
-//                    break;
 //                case NEARBY_WIFI_DEVICES:
 //                    activity.requestPermissions(new String[]{
 //                                    Manifest.permission.NEARBY_WIFI_DEVICES},
@@ -303,27 +278,21 @@ public class PermissionsHelper {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(getMessage(context, requestCode))
-                .setPositiveButton(positiveButtonLabel, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent intent = new Intent();
-                        if (requestCode != WRITE_SETTINGS) {
-                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        } else {
-                            if (Build.VERSION.SDK_INT >= 23) {
-                                intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                            }
+                .setPositiveButton(positiveButtonLabel, (dialogInterface, i) -> {
+                    Intent intent = new Intent();
+                    if (requestCode != WRITE_SETTINGS) {
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    } else {
+                        if (Build.VERSION.SDK_INT >= 23) {
+                            intent.setAction(Settings.ACTION_MANAGE_WRITE_SETTINGS);
                         }
-                        Uri uri = Uri.fromParts("package", context.getApplicationContext().getPackageName(), null);
-                        intent.setData(uri);
-                        context.startActivity(intent);
-                        isDialogOpen = false;
                     }
+                    Uri uri = Uri.fromParts("package", context.getApplicationContext().getPackageName(), null);
+                    intent.setData(uri);
+                    context.startActivity(intent);
+                    isDialogOpen = false;
                 })
-                .setNegativeButton(context.getResources().getString(R.string.permissionsDeclineButton), new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialogInterface, int i) {
-                        isDialogOpen = false;
-                    }
-                }).create().show();
+                .setNegativeButton(context.getResources().getString(R.string.permissionsDeclineButton), (dialogInterface, i) -> isDialogOpen = false).create().show();
     }
 
     /**
@@ -338,29 +307,16 @@ public class PermissionsHelper {
             new AlertDialog.Builder(context)
                     .setTitle(context.getResources().getString(R.string.permissionsRetryTitle))
                     .setMessage(getMessage(context, requestCode))
-                    .setPositiveButton(context.getResources().getString(R.string.permissionsRetryButton), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            isDialogOpen = false;
-                            requestNecessaryPermissions((Activity) context, requestCode);
-                        }
+                    .setPositiveButton(context.getResources().getString(R.string.permissionsRetryButton), (dialogInterface, i) -> {
+                        isDialogOpen = false;
+                        requestNecessaryPermissions((Activity) context, requestCode);
                     })
-                    .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            isDialogOpen = false;
-                        }
-                    }).create().show();
+                    .setNegativeButton(context.getResources().getString(R.string.cancel), (dialogInterface, i) -> isDialogOpen = false).create().show();
         } else {
             new AlertDialog.Builder(context)
                     .setTitle(context.getResources().getString(R.string.permissionsRetryTitle))
                     .setMessage(getMessage(context, requestCode))
-                    .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            isDialogOpen = false;
-                        }
-                    }).create().show();
+                    .setNegativeButton(context.getResources().getString(R.string.cancel), (dialogInterface, i) -> isDialogOpen = false).create().show();
         }
     }
 
@@ -381,8 +337,8 @@ public class PermissionsHelper {
         // Determine which permissions to check based on request code
         // All possible request codes should be considered
         switch (requestCode) {
-            case READ_IMAGES:
-                return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+//            case READ_IMAGES:
+//                return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
             case READ_PHONE_STATE:
 //            case CONNECT_TO_SERVER:
                 return  ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
@@ -399,16 +355,6 @@ public class PermissionsHelper {
             case VIBRATE:
                 return ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED;
 
-//<!-- needed for API 33 -->
-//            case READ_MEDIA_IMAGES:
-//                if (Build.VERSION.SDK_INT >= 33) {
-//                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED;
-//                }
-//<!-- needed for API 34 -->
-//            case READ_MEDIA_VISUAL_USER_SELECTED:
-//                if (Build.VERSION.SDK_INT >= 34) {
-//                    return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED) == PackageManager.PERMISSION_GRANTED;
-//                }
 //            case NEARBY_WIFI_DEVICES :
 //                return ContextCompat.checkSelfPermission(context, Manifest.permission.NEARBY_WIFI_DEVICES ) == PackageManager.PERMISSION_GRANTED;
             case POST_NOTIFICATIONS:
@@ -441,8 +387,8 @@ public class PermissionsHelper {
         // Determine which permission rationales to check based on request code
         // All possible request codes should be considered
         switch (requestCode) {
-            case READ_IMAGES:
-                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
+//            case READ_IMAGES:
+//                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
             case READ_PHONE_STATE:
 //            case CONNECT_TO_SERVER:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_PHONE_STATE);
@@ -451,14 +397,6 @@ public class PermissionsHelper {
             case WRITE_SETTINGS:
                 return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_SETTINGS);
 
-//            case READ_MEDIA_IMAGES:
-//                if (Build.VERSION.SDK_INT >= 33) {
-//                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_IMAGES);
-//                }
-//            case READ_MEDIA_VISUAL_USER_SELECTED:
-//                if (Build.VERSION.SDK_INT >= 34) {
-//                    return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED);
-//                }
 //            case NEARBY_WIFI_DEVICES:
 //                return ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.NEARBY_WIFI_DEVICES);
             case POST_NOTIFICATIONS:
@@ -486,22 +424,14 @@ public class PermissionsHelper {
 
     static public String getManifestPermissionId(@RequestCodes final int requestCode) {
         switch (requestCode) {
-            case READ_IMAGES:
-                return Manifest.permission.READ_EXTERNAL_STORAGE;
+//            case READ_IMAGES:
+//                return Manifest.permission.READ_EXTERNAL_STORAGE;
             case READ_PHONE_STATE:
                 return Manifest.permission.READ_PHONE_STATE;
             case ACCESS_FINE_LOCATION:
                 return Manifest.permission.ACCESS_FINE_LOCATION;
             case WRITE_SETTINGS:
                 return Manifest.permission.WRITE_SETTINGS;
-//            case READ_MEDIA_IMAGES:
-//                if (Build.VERSION.SDK_INT >= 33) {
-//                    return Manifest.permission.READ_MEDIA_IMAGES;
-//                } else { return "";}
-//            case READ_MEDIA_VISUAL_USER_SELECTED:
-//                if (Build.VERSION.SDK_INT >= 34) {
-//                    return Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED;
-//                } else { return "";}
             case POST_NOTIFICATIONS:
                 if (Build.VERSION.SDK_INT >= 33) {
                     return Manifest.permission.POST_NOTIFICATIONS;
