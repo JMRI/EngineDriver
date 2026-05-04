@@ -1,3 +1,4 @@
+**Version 2.43.228
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
