@@ -101,7 +101,7 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     public static void sendDccexRequestEmergencyStopState() {
-        if (mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_PAUSE_RESUME)
+        if (threaded_application.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_PAUSE_RESUME)
             comm_thread.wifiSend("<!Q>");
     }
 
@@ -248,9 +248,7 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     public static void sendDccexRequestTracks() {
-        float dccexVersionNumber = mainapp.getDccexVersionNumeric();
-
-        if (dccexVersionNumber >= 04.002007) {  // need to remove the track manager option
+        if (threaded_application.getDccexVersionNumeric() >= 04.002007) {  // need to remove the track manager option
             String msgTxt = "<=>";
             comm_thread.wifiSend(msgTxt);
 //            Log.d(threaded_application.applicationName, activityName + ": sendDccexRequestTracks() DCC-EX: " + msgTxt);
@@ -415,14 +413,14 @@ public class SendProcessorDccex {
             for (Consist.ConLoco l : con.getLocos()) {
                 int newDir = dir;
                 if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-                String fmt = ( (mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+                String fmt = ( (threaded_application.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
                 msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], newDir);
                 comm_thread.wifiSend(msgTxt);
                 mainapp.dccexLastKnownDirection[whichThrottle] = newDir;
 //                Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
             }
         } else {
-            String fmt = ( (mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
+            String fmt = ( (threaded_application.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
             msgTxt = String.format(fmt, addr.substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], dir);
             comm_thread.wifiSend(msgTxt);
             if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
@@ -443,7 +441,7 @@ public class SendProcessorDccex {
         for (Consist.ConLoco l : con.getLocos()) {
             int newDir = dir;
             if (l.isBackward()) newDir = (dir == 0) ? 1 : 0;
-            String fmt = ((mainapp.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>");
+            String fmt = ((threaded_application.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>");
             if (speed >= 0) { // not Estop
                 msgTxt = String.format(fmt, l.getAddress().substring(1), speed, newDir);
             } else { // Estop

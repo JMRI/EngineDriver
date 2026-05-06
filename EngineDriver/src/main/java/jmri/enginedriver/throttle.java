@@ -7004,7 +7004,7 @@ public class throttle extends AppCompatActivity implements
 
         } else if (item.getItemId() == R.id.connect_menu) {
             final AlertDialog.Builder b = new AlertDialog.Builder(this);
-            b.setIcon(android.R.drawable.ic_dialog_alert);
+            b.setIcon(R.drawable.glyph_warning);
             b.setTitle(R.string.newConnectionTitle);
             b.setMessage(R.string.newConnectionText);
             b.setCancelable(true);
@@ -7510,7 +7510,7 @@ public class throttle extends AppCompatActivity implements
         if (stealPromptActive) return;
         stealPromptActive = true;
         final AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setIcon(android.R.drawable.ic_dialog_alert);
+        b.setIcon(R.drawable.glyph_warning);
         b.setTitle(R.string.steal_title);
         b.setMessage(getString(R.string.steal_text, addr));
         b.setCancelable(true);

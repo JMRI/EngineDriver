@@ -1037,7 +1037,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         } else if (item.getItemId() == R.id.connect_menu) {
             final AlertDialog.Builder b = new AlertDialog.Builder(this);
-            b.setIcon(android.R.drawable.ic_dialog_alert);
+            b.setIcon(R.drawable.glyph_warning);
             b.setTitle(R.string.newConnectionTitle);
             b.setMessage(R.string.newConnectionText);
             b.setCancelable(true);
@@ -1423,6 +1423,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(turnouts.this);
+            ab.setIcon(R.drawable.glyph_warning);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentTurnoutsConfirmClearQuestions))
                     .setPositiveButton(R.string.yes, dialogClickListener)

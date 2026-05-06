@@ -595,10 +595,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
         witCommonCvsSpinner.setOnItemSelectedListener(new commonCvsSpinnerListener());
         witCommonCvsSpinner.setSelection(dccCvsIndex);
 
-        vn = 4;
-        try {
-            vn = Float.parseFloat(threaded_application.getDccexVersionString());
-        } catch (Exception ignored) { } // invalid version
+        vn = threaded_application.getDccexVersionNumeric();
 
         witProgrammingCommonCvsLayout = findViewById(R.id.wit_programmingCommonCvsLayout);
         witProgrammingAddressLayout = findViewById(R.id.wit_programmingAddressLayout);

@@ -1,4 +1,11 @@
 **Version 2.43.228
+ * New Features
+ * Bug Fixes
+ * Other
+     * Linting.
+     * Some code cleanup / refactoring.
+     * Fixed the colour of the alert/warning glyph for some themes.
+     * Rearranged the global variables in t_a into logical groups.
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".

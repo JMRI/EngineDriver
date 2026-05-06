@@ -371,8 +371,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
             dccexInfoStr = "";
             resetTextField(WHICH_ADDRESS);
             mainapp.buttonVibration();
-//            if (vn < 5.004046) {
-            if (mainapp.getDccexVersionNumeric() < threaded_application.DCCEX_VERSION_MINIMUM_FOR_READ_CONSIST_ADDRESS) {
+            if (threaded_application.getDccexVersionNumeric() < threaded_application.DCCEX_VERSION_MINIMUM_FOR_READ_CONSIST_ADDRESS) {
                 mainapp.alertCommHandlerWithBundle(message_type.REQUEST_DECODER_ADDRESS);
             } else {
                 mainapp.alertCommHandlerWithBundle(message_type.READ_DCCEX_LOCO_ADDRESS);
@@ -1027,7 +1026,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         dccexCommonCommandsSpinner.setOnItemSelectedListener(new DccExCommonCommandsSpinnerListener());
         dccexCommonCommandsSpinner.setSelection(dccCmdIndex);
 
-        vn = mainapp.getDccexVersionNumeric();
+        vn = threaded_application.getDccexVersionNumeric();
 
         if (vn <= 04.002007) {  // need to remove the track manager option
             dccexActionTypeEntryValuesArray = new String[3];

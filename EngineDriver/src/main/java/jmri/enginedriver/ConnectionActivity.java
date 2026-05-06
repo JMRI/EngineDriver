@@ -1253,6 +1253,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(ConnectionActivity.this);
+            ab.setIcon(R.drawable.glyph_warning);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentConnectionsConfirmClearQuestions))
                     .setPositiveButton(R.string.yes, dialogClickListener)
