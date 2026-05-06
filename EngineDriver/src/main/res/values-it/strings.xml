@@ -1245,5 +1245,6 @@
     <string name="prefDccexClosedLabelSummary">Personalizza l\'etichetta del pulsante quando lo scambio è \"Chiuso\". Lascia vuoto per l\'impostazione predefinita (\"Lancia\"). È necessaria la riconnessione.</string>
     <string name="prefDccexClosedLabelTitle">Etichetta del pulsante \'Chiuso/Lancia\' di DCC-EX</string>
     <string name="prefDccexThrownLabelTitle">Etichetta del pulsante \'Lanciato/Chiuso\' di DCC-EX</string>
+    <string name="toastConnectFontSizeWarning">La dimensione del carattere del tuo sistema è molto grande! (%1$1.2f)\nAlcuni elementi e testi potrebbero non essere visualizzati correttamente sullo schermo. Ti consigliamo di aprire le impostazioni di sistema di Android e ridurre la dimensione del carattere a meno di 1.5.</string>
 
 </resources>

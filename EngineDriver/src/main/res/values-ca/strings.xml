@@ -1116,6 +1116,7 @@
     <string name="prefDccexEmergencyStopPauseResumeSummary">Feu servir la funció de pausa/reprenguda de l\'aturada d\'emergència del DCC-EX en lloc d\'una simple aturada d\'emergència.</string>
     <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
     <string name="useProtocolDCCEX">Protocol a utilitzar?</string>
+    <string name="toastConnectFontSizeWarning">La mida de la lletra del sistema és molt gran! (%1$1.2f)\nÉs possible que alguns elements i text no càpiguen a la pantalla. Es recomana obrir la configuració del sistema Android i reduir la mida de la lletra a menys d\'1,5.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé (%1$s)</string>
     <string name="useProtocolDccexPlusAutoHint">Protocol a utilitzar?\n<small><small>(\'Automàtic\' cerca \"DCCEX\", \"DCC-EX\" o el port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX.</string>

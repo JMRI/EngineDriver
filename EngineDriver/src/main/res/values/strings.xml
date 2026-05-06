@@ -1023,6 +1023,8 @@
     <string name="toastConnectErrorSavingRecentConnection">Error saving recent connection:</string>
     <string name="toastConnectRemoveDemoHostError">The demo Server can only be removed by modifying the preferences.</string>
     <string name="toastConnectRemoved">Server removed from List.</string>
+    <string name="toastConnectFontSizeWarning">Your System Font Size is very large! (%1$1.2f) Some elements and text may not fit on the screen.\n
+        Recommend opening your Android system settings and reducing the Font Size to less than 1.5.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Auto Preferences Import from Server Succeeded. (%1$s)</string>
     <!--    <string name="toastForcedWiFiFailed">Forced WiFi connection failed. Try again. (This device\'s ip Address: %1$s)</string>-->
     <string name="toastPreferencesChangedForceWiFi">\'Allow Mobile Data\' preference changed.</string>

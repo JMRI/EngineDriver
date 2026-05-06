@@ -439,6 +439,7 @@ public class threaded_application extends Application {
     public boolean shownToastConsistEdit = false;
     public boolean shownToastDeviceSoundsSettings = false;
     public boolean shownToastConsistLightsEdit = false;
+    public static boolean shownFontSizeWarning = false;
 
     // custom toast
     static final List<Pair<String, Double>> customToastPairList = Collections.synchronizedList(new ArrayList<>());

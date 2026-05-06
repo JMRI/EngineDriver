@@ -794,8 +794,17 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         }
 
         mainapp.manualRestartRequested = false;
+
+        if (!threaded_application.shownFontSizeWarning) {
+            threaded_application.shownFontSizeWarning = true;
+            float fontScale = getResources().getConfiguration().fontScale;
+            if (fontScale >= 1.5) {
+                threaded_application.showCustomToast(ConnectionActivity.this, getResources().getString(R.string.toastConnectFontSizeWarning, fontScale), Toast.LENGTH_LONG, 2, true, false);
+            }
+        }
     } // end onStart()
 
+    @SuppressLint("UnsafeIntentLaunch")
     @Override
     public void onResume() {
         Log.d(threaded_application.applicationName, activityName + ": onResume()");

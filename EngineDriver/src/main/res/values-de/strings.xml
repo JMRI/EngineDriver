@@ -1254,5 +1254,6 @@
     <string name="prefDccexClosedLabelSummary">Passen Sie die Schaltflächenbeschriftung an, wenn die Weiche geschlossen ist. Lassen Sie das Feld für die Standardeinstellung („Weiche stellen“) leer. Erneute Verbindung erforderlich.</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX – Beschriftung der Taste „Geschlossen/Auswerfen“</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX – Beschriftung der Taste „Auswerfen/Schließen“</string>
+    <string name="toastConnectFontSizeWarning">Ihre Systemschriftgröße ist sehr groß! (%1$1.2f)\nEinige Elemente und Texte passen möglicherweise nicht auf den Bildschirm. Wir empfehlen, die Schriftgröße in den Android-Systemeinstellungen auf unter 1,5 zu reduzieren.</string>
 
 </resources>

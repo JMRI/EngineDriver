@@ -1,5 +1,6 @@
 **Version 2.43.228
  * New Features
+     * Added a toast warning if the system Font Size is too large.
  * Bug Fixes
  * Other
      * Linting.

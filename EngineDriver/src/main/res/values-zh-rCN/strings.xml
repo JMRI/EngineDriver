@@ -763,6 +763,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="toastConnectErrorReadingRecentConnections">读取最近连接列表时出错：</string>
     <string name="toastConnectErrorSavingRecentConnection">保存最近连接时出错：</string>
     <string name="toastConnectRemoveDemoHostError">演示服务器只能通过修改偏好设置来移除。</string>
+    <string name="toastConnectFontSizeWarning">您的系统字体大小过大！(%1$1.2f)\n部分元素和文本可能无法完整显示在屏幕上。建议您打开 Android 系统设置，将字体大小减小到 1.5 以下。</string>
     <string name="toastPreferencesImportServerAutoSucceeded">从服务器自动导入首选项成功。(%1$s)</string>
     <string name="toastPreferencesChangedForceWiFi">\'允许移动数据\'偏好设置已更改。</string>
 

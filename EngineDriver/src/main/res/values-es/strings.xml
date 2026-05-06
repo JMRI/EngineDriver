@@ -1295,5 +1295,6 @@
     <string name="prefDccexClosedLabelSummary">Personaliza la etiqueta del botón cuando el desvío esté \"Cerrado\". Déjalo en blanco para la opción predeterminada (\"Accionamiento\"). Se requiere reconexión.</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta del botón \'Cerrado/Accionamiento\'</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta del botón \'Arrojar/Cerrar\'</string>
+    <string name="toastConnectFontSizeWarning">El tamaño de fuente de tu sistema es muy grande (%1$1.2f).\nAlgunos elementos y textos podrían no caber en la pantalla. Te recomendamos abrir la configuración de tu sistema Android y reducir el tamaño de fuente a menos de 1.5.</string>
 
 </resources>

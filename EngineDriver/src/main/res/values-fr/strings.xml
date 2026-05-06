@@ -1316,5 +1316,6 @@
     <string name="prefDccexClosedLabelSummary">Personnalisez le libellé du bouton lorsque l\'aiguillage est fermé. Laissez vide pour la valeur par défaut (« Lancer »). Reconnexion requise.</string>
     <string name="prefDccexClosedLabelTitle">Étiquette du bouton « Fermé/Lancer » (DCC-EX)</string>
     <string name="prefDccexThrownLabelTitle">Étiquette du bouton DCC-EX « Lancer/Fermer »</string>
+    <string name="toastConnectFontSizeWarning">La taille de la police de votre système est très élevée (%1$1.2f).\nCertains éléments et textes risquent de ne pas s\'afficher correctement à l\'écran. Nous vous recommandons d\'ouvrir les paramètres système de votre appareil Android et de réduire la taille de la police à moins de 1,5.</string>
 
 </resources>

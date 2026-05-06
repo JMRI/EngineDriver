@@ -1251,4 +1251,5 @@
     <string name="prefDccexClosedLabelSummary">Personalize o rótulo do botão quando o desvio estiver \'Fechado\'. Deixe em branco para o padrão (\'Acionar\'). Reconexão necessária.</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta do botão \'Fechado/Lançar\'</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta do botão \'Arremessar/Fechar\'</string>
+    <string name="toastConnectFontSizeWarning">O tamanho da fonte do seu sistema está muito grande! (%1$1.2f)\nAlguns elementos e textos podem não caber na tela. Recomendamos abrir as configurações do sistema Android e reduzir o tamanho da fonte para menos de 1,5.</string>
 </resources>

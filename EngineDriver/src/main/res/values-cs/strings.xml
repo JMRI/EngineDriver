@@ -713,6 +713,7 @@
     <string name="toastConnectErrorSavingRecentConnection">Chyba při ukládání Nedávných připojení:</string>
     <string name="toastConnectRemoveDemoHostError">Demo Server lze odstranit pouze úpravou předvoleb.</string>
     <string name="toastConnectRemoved">Server odebrán ze seznamu.</string>
+    <string name="toastConnectFontSizeWarning">Velikost písma vašeho systému je velmi velká! (%1$1.2f)\nNěkteré prvky a text se nemusí vejít na obrazovku. Doporučujeme otevřít nastavení systému Android a zmenšit velikost písma na méně než 1,5.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Automatický Import předvoleb ze serveru byl úspěšný. (%1$s)</string>
 
     <!--    Toast messages for the Routes Activity -->

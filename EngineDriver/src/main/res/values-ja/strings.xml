@@ -1062,6 +1062,7 @@
     <string name="toastNumThrottles">選択されたスロットル スクリーン タイプは、それほど多くのスロットルをサポートしていません。 %1$s に削減します。</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">背景の変更に成功しました。</string>
     <string name="toastPreferencesChangedForceWiFi">強制的に WiFi 設定が変更されました。</string>
+    <string name="toastConnectFontSizeWarning">お使いのシステムフォントサイズが非常に大きいです！(%1$1.2f)\n一部の要素やテキストが画面に収まらない可能性があります。Androidのシステム設定を開き、フォントサイズを1.5未満に小さくすることをお勧めします。</string>
     <string name="toastPreferencesImportServerAutoSucceeded">サーバーからの自動設定のインポートが成功しました。 (%1$s)</string>
 
     <string name="toastPreferencesImportServerManualFailed">サーバーからの環境設定のインポートに失敗しました。ファイルが正しいことを確認してください。 (%1$s)</string>
