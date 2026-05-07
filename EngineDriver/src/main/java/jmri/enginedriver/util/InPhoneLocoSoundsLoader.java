@@ -52,7 +52,7 @@ public class InPhoneLocoSoundsLoader {
 
    // details for the currently being loaded IPLS file
    // these are used for temporary storage of the ipls details
-   public String[] iplsLocoSoundsFileName = {"","","","","", "","","","","", "","","","","", "","","","","", "",""};  // idle, 1-16   20 ans 21 are startup and shut down
+   public String[] iplsLocoSoundsFileName = {"","","","","", "","","","","", "","","","","", "","","","","", "",""};  // idle, 1-16   20 and 21 are startup and shut down
    public String[] iplsBellSoundsFileName = {"","",""};  // Start, Loop, End
    public String[] iplsHornSoundsFileName = {"","",""};  // Start, Loop, End
    public String iplsHornShortSoundsFileName = "";
@@ -120,7 +120,7 @@ public class InPhoneLocoSoundsLoader {
          mainapp.soundsLocoCurrentlyPlaying[i] = -1;
       }
 
-      // setup the soundPool for the in device loco sounds
+      // set up the soundPool for the in device loco sounds
 //      if (Build.VERSION.SDK_INT >= 21) {
          AudioAttributes audioAttributes = new AudioAttributes
                  .Builder()
@@ -137,15 +137,12 @@ public class InPhoneLocoSoundsLoader {
 //         mainapp.soundPool = new SoundPool(8,
 //                 AudioManager.STREAM_MUSIC,0);
 //      }
-      mainapp.soundPool.setOnLoadCompleteListener (new SoundPool.OnLoadCompleteListener () {
-         @Override
-         public void onLoadComplete(SoundPool soundPool, int i, int i2) {
-            if (i==soundsCountOfSoundBeingLoaded) {
-               Log.d(threaded_application.applicationName, activityName + ": loadSounds(): Sounds confirmed loaded.");
-                if (mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE] != null) {
-                    mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE].postDelayed(
-                          new LoadSoundCompleteDelayed(1000), 1000);
-               }
+      mainapp.soundPool.setOnLoadCompleteListener ((soundPool, i, i2) -> {
+         if (i==soundsCountOfSoundBeingLoaded) {
+            Log.d(threaded_application.applicationName, activityName + ": loadSounds(): Sounds confirmed loaded.");
+             if (mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE] != null) {
+                 mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE].postDelayed(
+                       new LoadSoundCompleteDelayed(1000), 1000);
             }
          }
       });
@@ -184,7 +181,6 @@ public class InPhoneLocoSoundsLoader {
                mainapp.prefDeviceSoundsCurrentlyLoaded[throttleIndex] = "none";
 
             } else {
-               int sound;
 
                String[] soundArrayNameSuffixes = mainapp.getApplicationContext().getResources().getStringArray(R.array.deviceSoundsEntryValues);
                int soundArrayIndex = -1;
@@ -194,16 +190,16 @@ public class InPhoneLocoSoundsLoader {
                      break;
                   }
                }
-               if (soundArrayIndex<=0) { // none, which it should not be at this point,  or something went seriosly wrong
+               if (soundArrayIndex<=0) { // none, which it should not be at this point,  or something went seriously wrong
                   mainapp.soundsReloadSounds = false;
                   return false;
                }
 
                try {
-                  TypedArray locoSoundsIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_ids);
-                  TypedArray locoSoundsHornIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_horn_ids);
-                  TypedArray locoSoundsHornShortIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_horn_short_ids);
-                  TypedArray locoSoundsBellIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_bell_ids);
+                  TypedArray locoSoundsIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_array_ids);
+                  TypedArray locoSoundsHornIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_horn_array_ids);
+                  TypedArray locoSoundsHornShortIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_horn_short_array_ids);
+                  TypedArray locoSoundsBellIds = mainapp.getApplicationContext().getResources().obtainTypedArray(R.array.loco_sounds_bell_array_ids);
 
                   int locoSoundsId = locoSoundsIds.getResourceId(soundArrayIndex, 0);
                   int locoSoundsHornId = locoSoundsHornIds.getResourceId(soundArrayIndex, 0);
@@ -217,34 +213,44 @@ public class InPhoneLocoSoundsLoader {
 
                   mainapp.prefDeviceSoundsCurrentlyLoaded[throttleIndex] = mainapp.prefDeviceSounds[throttleIndex];
 
-                  String[] locoSounds = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsId);
+                  TypedArray oneLocoSoundsIds = mainapp.getApplicationContext().getResources().obtainTypedArray(locoSoundsId);
                   mainapp.soundsLocoSteps[throttleIndex] = 0;
-                  for (int i = 0; i < locoSounds.length; i++) {
-                     if (!locoSounds[i].isEmpty()) {
-                        sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSounds[i], "raw", context.getApplicationInfo().packageName);
-                        loadSound(sounds_type.LOCO, throttleIndex, i, context, sound);
+                  for (int i = 0; i < oneLocoSoundsIds.length(); i++) {
+                     int soundResourceId = oneLocoSoundsIds.getResourceId(i, 0);
+                     if (soundResourceId != 0) {
+                        loadSound(sounds_type.LOCO, throttleIndex, i, context, soundResourceId);
                         if (i < sounds_type.STARTUP_INDEX)
                            mainapp.soundsLocoSteps[throttleIndex] = i;
                      }
                   }
+                  oneLocoSoundsIds.recycle();
 
-                  String[] locoSoundsHorn = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsHornId);
-                  for (int i = 0; i < locoSoundsHorn.length; i++) {
-                     sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSoundsHorn[i], "raw", context.getApplicationInfo().packageName);
-                     loadSound(sounds_type.HORN, throttleIndex, i, context, sound);
+                  TypedArray oneLocoSoundsHornIds = mainapp.getApplicationContext().getResources().obtainTypedArray(locoSoundsHornId);
+                  for (int i = 0; i < oneLocoSoundsHornIds.length(); i++) {
+                     int soundResourceId = oneLocoSoundsIds.getResourceId(i, 0);
+                     if (soundResourceId != 0) {
+                        loadSound(sounds_type.HORN, throttleIndex, i, context, soundResourceId);
+                     }
                   }
+                  oneLocoSoundsHornIds.recycle();
 
-                  String[] locoSoundsHornShort = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsHornShortId);
-                  for (int i = 0; i < locoSoundsHornShort.length; i++) {
-                     sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSoundsHornShort[i], "raw", context.getApplicationInfo().packageName);
-                     loadSound(sounds_type.HORN_SHORT, throttleIndex, i, context, sound);
+                  TypedArray oneLocoSoundsHornShortIds = mainapp.getApplicationContext().getResources().obtainTypedArray(locoSoundsHornShortId);
+                  for (int i = 0; i < oneLocoSoundsHornShortIds.length(); i++) {
+                     int soundResourceId = oneLocoSoundsIds.getResourceId(i, 0);
+                     if (soundResourceId != 0) {
+                        loadSound(sounds_type.HORN_SHORT, throttleIndex, i, context, soundResourceId);
+                     }
                   }
+                  oneLocoSoundsHornShortIds.recycle();
 
-                  String[] locoSoundsBell = mainapp.getApplicationContext().getResources().getStringArray(locoSoundsBellId);
-                  for (int i = 0; i < locoSoundsBell.length; i++) {
-                     sound = mainapp.getApplicationContext().getResources().getIdentifier(locoSoundsBell[i], "raw", context.getApplicationInfo().packageName);
-                     loadSound(sounds_type.BELL, throttleIndex, i, context, sound);
+                  TypedArray oneLocoSoundsBellIds = mainapp.getApplicationContext().getResources().obtainTypedArray(locoSoundsBellId);
+                  for (int i = 0; i < oneLocoSoundsBellIds.length(); i++) {
+                     int soundResourceId = oneLocoSoundsIds.getResourceId(i, 0);
+                     if (soundResourceId != 0) {
+                        loadSound(sounds_type.BELL, throttleIndex, i, context, soundResourceId);
+                     }
                   }
+                  oneLocoSoundsBellIds.recycle();
 
                } catch (Exception e) {
                   mainapp.soundsReloadSounds = false;

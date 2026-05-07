@@ -3055,7 +3055,7 @@ public class throttle extends AppCompatActivity implements
 
     /*
      * future use: displays the requested function state independent of (in addition to) feedback state
-     * todo: need to handle momentary buttons somehow
+     * TODO: need to handle momentary buttons somehow
      */
     void set_function_request(int whichThrottle, int function, int reqState) {
         // Log.d(threaded_application.applicationName, activityName + ": set_function_request");

@@ -7,6 +7,8 @@
      * Some code cleanup / refactoring.
      * Fixed the colour of the alert/warning glyph for some themes.
      * Rearranged the global variables in t_a into logical groups.
+     * Changed the arrays of sound files names to arrays of resource IDs.
+     * Upgrade to Gradle 9.2.1 + some dependencies.
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
@@ -1160,7 +1162,6 @@
  *   TODO: If server returns Roster with empty function list, don't show the ED defaults, see MRC
  *   TODO: add random speed adjustments (to avoid monotonous sound)
  *   TODO: add voice control
- *   TODO: respect "Max Throttle %" from roster entry. Requires changes to WiThrottle protocol.
  *   TODO: option to show the turnout view instead of the webview, including option for Recents
  *   TODO: option to use 'f' function commands for WiThrottle
  *   TODO: option/button to support DPU "unfenced" mode, relatively adjusting 2nd throttle from first
@@ -1184,7 +1185,6 @@
  *   TODO: work out when to play the engine shut down sounds
  *   TODO: link each loco address to a specific Sound Profile / remember Sound Profile used for each loco address
  *   TODO: load and play the intermediate step/notch engine sounds
- *   TODO: change the arrays of sound files names to arrays of resource IDs
  * select_loco:
  *   TODO: allow user to specify which loco to get labels from
  *   TODO: manually create roster entries (function labels) and store on device - In Phone Roster
@@ -1193,11 +1193,11 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
+ *   TODO: add the ability (somehow) to deslect a loco but stay on the Select Loco screen
+ * recent locos / internal roster
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
- *   TODO: add a 'back' button to allow users to continuing adding to the consist without returning to the throttle screen
- *   TODO: add the ability (somehow) to deslect a loco but stay on the Select Loco screen
+ *   TODO: edit/save/auto-restore 'local' function definitions for individual locos
  * consist edit:
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from
@@ -1216,9 +1216,9 @@
  *   resend roster list when items are added or removed, by adding listeners to WiT
  *   WiT send MT-xxx when commands are received from a client for a loco that is not active.  (to get ED up to date with server after connection loss)
  *   add "available" roster/address list to select_loco_activity (need "in use" indicator from WiT)
+ *   Respect "Max Throttle %" from roster entry.
  *
  * These changes are likely to wait until ED3
  *   allow user to configure side-by-side panels for pads, etc.
  *   allow user to specify multiple web URLs
- *   change Connect to allow to be called from any Activity when needed
  * */
