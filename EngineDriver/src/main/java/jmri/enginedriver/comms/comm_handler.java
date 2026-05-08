@@ -31,6 +31,8 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 
@@ -69,7 +71,7 @@ public class comm_handler extends Handler {
    }
 
    @SuppressLint({"DefaultLocale", "ApplySharedPref", "WebViewApiAvailability"})
-   public void handleMessage(Message msg) {
+   public void handleMessage(@NonNull Message msg) {
 //                Log.d(threaded_application.applicationName, activityName + ": handleMessage(): message: " +msg.what);
       if (!initialised) return;
 

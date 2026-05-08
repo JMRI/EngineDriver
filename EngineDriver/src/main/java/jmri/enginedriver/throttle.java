@@ -215,7 +215,7 @@ public class throttle extends AppCompatActivity implements
 
     private String prefSelectedLocoIndicator = selected_loco_indicator_type.NONE;
 
-    protected String keyboardString = "";
+//    protected String keyboardString = "";
     protected int gamepadOrKeyboardThrottle = -1;
 //    protected boolean keyboardShift = false;
 
@@ -4532,28 +4532,21 @@ public class throttle extends AppCompatActivity implements
             return;
         }
 
-        EsuMc2ButtonAction buttonAction;
-
-        switch (buttonNo) {
-            case MobileControl2.KEYCODE_TOP_LEFT:
-                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonTL",
-                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonTLDefaultValue)));
-                break;
-            case MobileControl2.KEYCODE_BOTTOM_LEFT:
-                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonBL",
-                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonBLDefaultValue)));
-                break;
-            case MobileControl2.KEYCODE_TOP_RIGHT:
-                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonTR",
-                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonTRDefaultValue)));
-                break;
-            case MobileControl2.KEYCODE_BOTTOM_RIGHT:
-                buttonAction = EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonBR",
-                        getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonBRDefaultValue)));
-                break;
-            default:
-                buttonAction = EsuMc2ButtonAction.NO_ACTION;
-        }
+        EsuMc2ButtonAction buttonAction = switch (buttonNo) {
+            case MobileControl2.KEYCODE_TOP_LEFT ->
+                    EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonTL",
+                            getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonTLDefaultValue)));
+            case MobileControl2.KEYCODE_BOTTOM_LEFT ->
+                    EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonBL",
+                            getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonBLDefaultValue)));
+            case MobileControl2.KEYCODE_TOP_RIGHT ->
+                    EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonTR",
+                            getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonTRDefaultValue)));
+            case MobileControl2.KEYCODE_BOTTOM_RIGHT ->
+                    EsuMc2ButtonAction.getAction(prefs.getString("prefEsuMc2ButtonBR",
+                            getApplicationContext().getResources().getString(R.string.prefEsuMc2ButtonBRDefaultValue)));
+            default -> EsuMc2ButtonAction.NO_ACTION;
+        };
 
         if (isActive) {
             switch (buttonAction) {
@@ -8311,9 +8304,9 @@ public class throttle extends AppCompatActivity implements
     int getNotchedSpeed(int newSpeed) {
         if ( (prefDisplaySpeedUnits == -1) || (prefDisplaySpeedUnits >= 126) || (newSpeed == 0)|| (newSpeed == 126) ) return newSpeed;
 
-        double steps = (double) prefDisplaySpeedUnits;
-        double scale = (double) (maxThrottle / steps);
-        double max = (double) maxThrottle;
+        double steps = prefDisplaySpeedUnits;
+        double scale = maxThrottle / steps;
+        double max = maxThrottle;
 
         int newSliderPosition = (int) (Math.round(newSpeed / max * steps) * scale);
 

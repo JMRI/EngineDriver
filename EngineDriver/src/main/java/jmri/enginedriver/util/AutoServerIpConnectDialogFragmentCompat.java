@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
@@ -34,7 +35,7 @@ public class AutoServerIpConnectDialogFragmentCompat extends PreferenceDialogFra
     }
 
     @Override
-    protected void onBindDialogView(View view) {
+    protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
 
         mEditIp = view.findViewById(android.R.id.edit);

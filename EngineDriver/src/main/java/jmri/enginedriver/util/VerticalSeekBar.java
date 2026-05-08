@@ -299,10 +299,10 @@ public class VerticalSeekBar extends SeekBar {
                     float adjustedSteps = tickMarkType - 999; // 1000+1;
                     int tempSteps = tickMarkType - 1000;
 
-                    gridCenter = paddingLeft + (float) (realWidth / 2);
+                    gridCenter = paddingLeft + (realWidth / 2);
                     gridBottom = (float) paddingLeft;
-                    gridTop = (float) (realWidth + paddingLeft);
-                    tickSpacing = (float) (realWidth) / (tempSteps * 2);
+                    gridTop = realWidth + paddingLeft;
+                    tickSpacing = realWidth / (tempSteps * 2);
                     sizeIncrease = endSize / (adjustedSteps * adjustedSteps);
 
                     float tickLength;

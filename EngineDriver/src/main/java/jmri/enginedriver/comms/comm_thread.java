@@ -38,6 +38,8 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -944,7 +946,7 @@ public class comm_thread extends Thread {
 
                             connectivityManager.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
                                 @Override
-                                public void onAvailable(Network network) {
+                                public void onAvailable(@NonNull Network network) {
                                     if (Build.VERSION.SDK_INT < 23) {
                                         ConnectivityManager.setProcessDefaultNetwork(network);
                                     } else {

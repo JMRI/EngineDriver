@@ -68,9 +68,8 @@ public class InPhoneLocoSounds {
         if (!mainapp.soundsSoundsAreBeingReloaded) {
             if (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES) { // only dealing with the first two throttle for now
                 if (!mainapp.prefDeviceSounds[whichThrottle].equals("none")) {
-                    int mSound = -1;
                     if ((mainapp.consists != null) && (mainapp.consists[whichThrottle].isActive())) {
-                        mSound = getLocoSoundStep(whichThrottle, currentSpeed);
+                        int mSound = getLocoSoundStep(whichThrottle, currentSpeed);
 
 //                        Log.d(threaded_application.applicationName, activityName + ": doLocoSound               : (ipls) wt: " + whichThrottle + " snd: " + mSound);
                         if ((mSound >= 0)) {
@@ -119,7 +118,7 @@ public class InPhoneLocoSounds {
         }
     } // end queueNextLocoSound()
 
-    public void scheduleNextLocoSound(int whichThrottle, int mSound, int forcedExpectedEndTime, boolean soundsAreMutedForThisThrottle) {
+    public void scheduleNextLocoSound(int whichThrottle, int ignoredMSound, int forcedExpectedEndTime, boolean ignoredSoundsAreMutedForThisThrottle) {
 //        Log.d(threaded_application.applicationName, activityName + ": scheduleNextLocoSound : (ipls) wt: " + whichThrottle + " snd: " + mSound + " " + mainapp.soundsLocoQueue[whichThrottle].displayQueue());
 
         int expectedEndTime;
@@ -172,16 +171,12 @@ public class InPhoneLocoSounds {
         int isPlaying;
         int soundTypeArrayIndex = soundType - 1;
 
-        switch (soundType) {
-            case sounds_type.BELL: // bell
-            case sounds_type.HORN: // horn
-            case sounds_type.HORN_SHORT: // horn short
-                isPlaying = mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle];
-                break;
-            default:
-                isPlaying = -1;
-                break;
-        }
+        isPlaying = switch (soundType) { // bell
+            // horn
+            case sounds_type.BELL, sounds_type.HORN, sounds_type.HORN_SHORT -> // horn short
+                    mainapp.soundsExtrasCurrentlyPlaying[soundTypeArrayIndex][whichThrottle];
+            default -> -1;
+        };
         return isPlaying;
     } // end soundIsPlaying()
 
@@ -203,7 +198,7 @@ public class InPhoneLocoSounds {
         }
     } // end startBellHornSound()
 
-    public void stopBellHornSound(int soundType, int whichThrottle, boolean soundsAreMutedForThisThrottle) {
+    public void stopBellHornSound(int soundType, int whichThrottle, boolean ignoredSoundsAreMutedForThisThrottle) {
 //        Log.d(threaded_application.applicationName, activityName + ": stopBellHornSound        : soundType:" + soundType + " wt: " + whichThrottle + " playing: " + soundIsPlaying(soundType,whichThrottle));
         int soundTypeArrayIndex = soundType - 1;
 
@@ -279,7 +274,7 @@ public class InPhoneLocoSounds {
 
     public int soundStop(int soundType, int whichThrottle, int mSound, boolean forceStop) {
 //        Log.d(threaded_application.applicationName, activityName + ": soundStop: soundType" + soundType + " wt: " + whichThrottle + " snd: " + mSound);
-        int timesPlayed = 0;
+        int timesPlayed;
         double expectedEndTime = 0;
         int soundTypeArrayIndex = soundType - 1;
 
@@ -400,7 +395,7 @@ public class InPhoneLocoSounds {
                     break;
                 case sounds_type.BELL: // bell
                 case sounds_type.HORN: // horn
-                    int loop = (mSound == sounds_type.BELL_HORN_START) ? sounds_type.REPEAT_INFINITE : sounds_type.REPEAT_NONE; // of 0 now, then we will be playig the lop sound next.
+                    int loop = (mSound == sounds_type.BELL_HORN_START) ? sounds_type.REPEAT_INFINITE : sounds_type.REPEAT_NONE; // of 0 now, then we will be playing the lop sound next.
                     soundStart(soundType, whichThrottle, mSound + 1, loop, soundsAreMutedForThisThrottle);
                     break;
 //                case sounds_type.HORN_SHORT:
@@ -442,19 +437,13 @@ public class InPhoneLocoSounds {
         float volume = 0;
         if ((whichThrottle < mainapp.maxThrottlesCurrentScreen) && (whichThrottle < threaded_application.SOUND_MAX_SUPPORTED_THROTTLES)) {
             if (!soundsAreMutedForThisThrottle) {
-                switch (soundType) {
-                    case sounds_type.BELL: // bell
-                        volume = mainapp.prefDeviceSoundsBellVolume;
-                        break;
-                    case sounds_type.HORN: // horn
-                    case sounds_type.HORN_SHORT: // horn
-                        volume = mainapp.prefDeviceSoundsHornVolume;
-                        break;
-                    case sounds_type.LOCO: // loco
-                    default:
-                        volume = mainapp.prefDeviceSoundsLocoVolume;
-                        break;
-                }
+                volume = switch (soundType) {
+                    case sounds_type.BELL -> // bell
+                            mainapp.prefDeviceSoundsBellVolume; // horn
+                    case sounds_type.HORN, sounds_type.HORN_SHORT -> // horn
+                            mainapp.prefDeviceSoundsHornVolume; // loco
+                    default -> mainapp.prefDeviceSoundsLocoVolume;
+                };
             }
         }
         return volume;

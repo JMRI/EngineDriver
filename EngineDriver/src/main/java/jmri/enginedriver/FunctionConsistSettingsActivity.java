@@ -450,7 +450,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
                     aLbl.set(i, mainapp.function_labels_default.get(i));
                     aFnc.set(i, i);
                     aLocos.set(i, locosDefault);
-                    if ((i<2) || (i>2)) { // make everything other than 'horn' latching by default
+                    if (i != 2) { // make everything other than 'horn' latching by default
                         aLatching.set(i, latchingLightBellDefault);
                     } else {
                         aLatching.set(i, latchingDefault);

@@ -699,6 +699,7 @@ public class ResponseProcessorDccex {
         if (comm_thread.requestLocoIdForWhichThrottleDCCEX!=-1) { // if -1, request came from the CV read/write screen
             if (!(args[1].charAt(0) =='-')) {
 
+                //noinspection NonStrictComparisonCanBeEquality
                 if (args.length<=2) {
 
                     String addrStr = args[1];

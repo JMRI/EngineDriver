@@ -133,35 +133,29 @@ public class PermissionsHelper {
     private String getMessage(final Context context, @RequestCodes final int requestCode) {
         // Get the relevant rationale message based on request code
         // All possible request codes should be considered
-        switch (requestCode) {
-//            case READ_IMAGES:
-//                return context.getResources().getString(R.string.permissionsREAD_IMAGES);
-            case READ_PHONE_STATE:
-                return context.getResources().getString(R.string.permissionsReadPhoneState);
-//            case CONNECT_TO_SERVER:
-//                return context.getResources().getString(R.string.permissionsConnectToServer);
-            case WRITE_SETTINGS:
-                return context.getResources().getString(R.string.permissionsWriteSettings);
-            case ACCESS_FINE_LOCATION:
-                return context.getResources().getString(R.string.permissionsACCESS_FINE_LOCATION);
-            case VIBRATE:
-                return context.getResources().getString(R.string.permissionsVIBRATE);
-//            case NEARBY_WIFI_DEVICES:
-//                return context.getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES);
-            case POST_NOTIFICATIONS:
-                return context.getResources().getString(R.string.permissionsPOST_NOTIFICATIONS);
-//<!-- needed for API 33 -->
-
-            case ACCESS_COARSE_LOCATION:
-                return context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
-            case ACCESS_WIFI_STATE:
-                return context.getResources().getString(R.string.permissionsACCESS_WIFI_STATE);
-            case INTERNET:
-                return context.getResources().getString(R.string.permissionsINTERNET);
-
-            default:
-                return "Unknown permission request: " + requestCode;
-        }
+        return switch (requestCode) {
+//            case READ_IMAGES ->
+//                context.getResources().getString(R.string.permissionsREAD_IMAGES);
+            case READ_PHONE_STATE ->
+                    context.getResources().getString(R.string.permissionsReadPhoneState);
+//            case CONNECT_TO_SERVER ->
+//                context.getResources().getString(R.string.permissionsConnectToServer);
+            case WRITE_SETTINGS ->
+                    context.getResources().getString(R.string.permissionsWriteSettings);
+            case ACCESS_FINE_LOCATION ->
+                    context.getResources().getString(R.string.permissionsACCESS_FINE_LOCATION);
+            case VIBRATE -> context.getResources().getString(R.string.permissionsVIBRATE);
+//            case NEARBY_WIFI_DEVICES ->
+//                context.getResources().getString(R.string.permissionsNEARBY_WIFI_DEVICES);
+            case POST_NOTIFICATIONS ->
+                    context.getResources().getString(R.string.permissionsPOST_NOTIFICATIONS);
+            case ACCESS_COARSE_LOCATION ->
+                    context.getResources().getString(R.string.permissionsACCESS_COARSE_LOCATION);
+            case ACCESS_WIFI_STATE ->
+                    context.getResources().getString(R.string.permissionsACCESS_WIFI_STATE);
+            case INTERNET -> context.getResources().getString(R.string.permissionsINTERNET);
+            default -> "Unknown permission request: " + requestCode;
+        };
     }
 
     /**
