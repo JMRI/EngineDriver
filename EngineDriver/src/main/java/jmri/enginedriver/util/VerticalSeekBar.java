@@ -61,10 +61,6 @@ public class VerticalSeekBar extends SeekBar {
     protected float l;
     protected float r;
     protected float j;
-//    protected float deadZoneUpper;
-//    protected float deadZoneLower;
-
-
 
     // A change listener registering start and stop of tracking. Need an own listener because the listener in SeekBar
     // is private.
@@ -148,11 +144,6 @@ public class VerticalSeekBar extends SeekBar {
     public void setShowNumericValues(boolean requestedShowNumericValues) {
         showNumericValues = requestedShowNumericValues;
     }
-
-//    public void setDeadZones(int requestedDeadZoneUpper, int requestedDeadZoneLower) {
-//        deadZoneUpper = (float) requestedDeadZoneUpper;
-//        deadZoneLower = (float) requestedDeadZoneLower;
-//    }
 
     public void setTitle(String requestedTitle) {
         title = requestedTitle;

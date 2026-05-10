@@ -9,6 +9,7 @@
      * Rearranged the global variables in t_a into logical groups.
      * Changed the arrays of sound files names to arrays of resource IDs.
      * Upgrade to Gradle 9.2.1 + some dependencies.
+     * Tweak muted theme.
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".

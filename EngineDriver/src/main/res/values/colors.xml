@@ -360,8 +360,8 @@
     <color name="muted_sepia_very_light">#a97444</color>
     <color name="muted_sepia_light">#865526</color>
     <color name="muted_sepia">#704214</color>
-    <color name="muted_sepia_dark">#472A0C</color>
-    <color name="muted_sepia_very_dark">#402403</color>
+    <color name="muted_sepia_dark">#643809</color>
+    <color name="muted_sepia_very_dark">#592e00</color>
 
     <color name="muted_sepia_transparent_75">#BF704214</color>
     <color name="muted_sepia_transparent_50">#80704214</color>

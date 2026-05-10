@@ -491,7 +491,7 @@ public class ResponseProcessorWiThrottle {
 
     /* ***********************************  *********************************** */
 
-//    public static int findTurnoutPos(String systemName) {
+//    public static int findTurnoutPosition(String systemName) {
 //        int pos = -1;
 //        for (String sn : mainapp.to_system_names) {
 //            pos++;
