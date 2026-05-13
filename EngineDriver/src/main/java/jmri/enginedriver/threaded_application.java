@@ -18,7 +18,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 // Main java file.
-/* TODO: see changelog-and-todo-list.txt for complete list of project to-do's */
+/* See changelog-and-todo-list.txt for complete list of project to-do's */
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 import static android.view.InputDevice.getDevice;
@@ -149,44 +149,62 @@ import jmri.jmrit.roster.RosterLoader;
 public class threaded_application extends Application {
     public static final String applicationName = "Engine_Driver";
     public static final String activityName = "t_a";
+    public String appVersion = "";
 
-    public boolean manualRestartRequested = false;
+    private final threaded_application mainapp = this;
+    private SharedPreferences prefs;
+    public Resources.Theme theme;
+    public String languageCountry = "en";
+
+    public String deviceId = "";
 
     // it does not matter what these value are as long as they have never been used before (so just add 1)
     public static String INTRO_VERSION = "10";  // set this to a different string to force the intro to run on next startup.
     private static final String LAST_PREFERENCE_NAME_RUN = "3";  // set this to a different string to force the check and rename of the old preferences on next startup.
 
-    private final threaded_application mainapp = this;
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // intra app comms
+
     public comm_thread commThread;
+    //For communication to the comm_thread.
+    public comm_handler commBundleMessageHandler = null;
+    //For communication to each of the activities (set and unset by the activity)
+    public volatile Handler [] activityBundleMessageHandlers = new Handler[activity_id_type.MAX+1];
 
-    public String JMDNS_SERVICE_WITHROTTLE = "_withrottle._tcp.local.";
-    public String JMDNS_SERVICE_JMRI_DCCPP_OVERTCP = "_dccppovertcpserver._tcp.local.";
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // app and activity status
 
-    public volatile String host_ip = null; //The IP address of the WiThrottle server.
-    public volatile String logged_host_ip = null;
-    public volatile int port = 0; //The TCP port that the WiThrottle server is running on
-    public Double withrottle_version = 0.0; //version of withrottle server
-    public volatile int web_server_port = 0; //default port for jmri web server
-    private String serverType = ""; //should be set by server in initial command strings
-    private String serverDescription = ""; //may be set by server in initial command strings
-    public String defaultWebViewURL;
-    public String defaultThrottleWebViewURL;
+    static public int currentActivity = 0;
+
+    public boolean manualRestartRequested = false;
     public volatile boolean doFinish = false;  // when true, tells any Activities that are being created/resumed to finish()
-    //shared variables returned from the withrottle server, stored here for easy access by other activities
-    public volatile Consist[] consists;
-    public LinkedHashMap<Integer, String>[] function_labels;  //function(s) and labels from roster for throttles
-    public LinkedHashMap<Integer, String> function_labels_default;  //function(s) and labels from local settings
-    LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function(s) and labels from local settings for roster entries with no function labels
-    public LinkedHashMap<Integer, String> function_consist_locos; // used for the 'special' consists function label string matching
-    public LinkedHashMap<Integer, String> function_consist_latching; // used for the 'special' consists function label string matching
 
-    public boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles
+    public boolean appIsFinishing = false;
+    public boolean introIsRunning = false;
+
+    static boolean activityVisible = false;
+    static boolean activityInTransition = false;
+    static String lastActivityName = "unknown";
+
+    public long exitDoubleBackButtonInitiated = 0;
+    public boolean exitConfirmed = false;
+    /** @noinspection FieldCanBeLocal*/
+    private ApplicationLifecycleHandler lifecycleHandler;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // Turnouts
+
     public String[] to_system_names;
     public String[] to_user_names;
-//    public String[] to_states;
+    //    public String[] to_states;
     private HashMap<String, String> turnout_states; //includes manual and system
     public HashMap<String, String> to_state_names;
     public int turnoutsOrder = sort_type.NAME;
+    public int turnouts_list_position = 0;                  //remember where user was in item lists
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // Routes
+
     public String[] routeSystemNames;
     public String[] rt_user_names;
     public int routesOrder = sort_type.NAME;
@@ -194,18 +212,46 @@ public class threaded_application extends Application {
     public String[] routeDccexLabels; // only used by the DCC-EX protocol
     public int[] routeDccexStates; // only used by the DCC-EX protocol.   -1 if not DCC-EX
     public HashMap<String, String> routeStateNames; //if not set, routes are not allowed
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // Functions
+
+    public LinkedHashMap<Integer, String>[] function_labels;  //function(s) and labels from roster for throttles
+    public LinkedHashMap<Integer, String> function_labels_default;  //function(s) and labels from local settings
+    LinkedHashMap<Integer, String> function_labels_default_for_roster;  //function(s) and labels from local settings for roster entries with no function labels
+    public LinkedHashMap<Integer, String> function_consist_locos; // used for the 'special' consists function label string matching
+    public LinkedHashMap<Integer, String> function_consist_latching; // used for the 'special' consists function label string matching
+
+    public boolean[][] function_states = {null, null, null, null, null, null};  //current function states for throttles
+
+    public boolean prefAlwaysUseDefaultFunctionLabels = false;
+    public String prefConsistFollowRuleStyle = "original";
+    public boolean prefOverrideWiThrottlesFunctionLatching = false;
+    public boolean prefOverrideRosterWithNoFunctionLabels = false;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // Roster, Consist and Locos
+
     public Map<String, String> roster_entries;  //roster sent by WiThrottle
     public ArrayList<HashMap<String, String>> rosterFullList; // populated by SelectLocoActivity. as different to roster which is populated using XML via the WebServer
     public int rosterOrder = sort_type.NAME;
-    public int recentLocosOrder = sort_type.LAST_USED;
-    public int recentConsistsOrder = sort_type.LAST_USED;
-    public Map<String, String> consist_entries;
+
     public static DownloadRosterTask dlRosterTask = null;
 //    private static DownloadMetaTask dlMetadataTask = null;
     HashMap<String, RosterEntry> rosterJmriWeb;  //roster entries retrieved from /roster/?format=xml (null if not retrieved)
 //    public static HashMap<String, String> jmriMetadata = null;  //metadata values (such as JMRIVERSION) retrieved from web server (null if not retrieved)
 //    ImageDownloader imageDownloader = new ImageDownloader();
     ImageDownloader imageDownloader = new ImageDownloader();
+
+    public int recentLocosOrder = sort_type.LAST_USED;
+    public int recentConsistsOrder = sort_type.LAST_USED;
+
+    public volatile Consist[] consists;
+    public Map<String, String> consist_entries;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // Power and clock
+
     public String power_state;
 
     public int getFastClockFormat() {
@@ -214,25 +260,35 @@ public class threaded_application extends Application {
 
     public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
     public Long fastClockSeconds = 0L;
-//    public int androidVersion = 0;
-    public String appVersion = "";
+
+    public int routes_list_position = 0;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // WiFi, connection, server and phone
+
+    public Double withrottle_version = 0.0; //version of withrottle server
+    public volatile int web_server_port = 0; //default port for jmri web server
+    private String serverType = ""; //should be set by server in initial command strings
+    private String serverDescription = ""; //may be set by server in initial command strings
+
+    public String JMDNS_SERVICE_WITHROTTLE = "_withrottle._tcp.local.";
+    public String JMDNS_SERVICE_JMRI_DCCPP_OVERTCP = "_dccppovertcpserver._tcp.local.";
+
+    public volatile String host_ip = null; //The IP address of the WiThrottle server.
+    public volatile String logged_host_ip = null;
+    public volatile int port = 0; //The TCP port that the WiThrottle server is running on
 
     //all heartbeat values are in milliseconds
     public int heartbeatInterval = 0;                       //WiT heartbeat interval setting (milliseconds)
     public int prefHeartbeatResponseFactor = 90;   //adjustment for inbound and outbound timers as a percent
 
-    public int turnouts_list_position = 0;                  //remember where user was in item lists
-    public int routes_list_position = 0;
-
-    public static int wifi_send_interval = 100;   //minimum desired interval (ms) between messages sent to
-    //  WiThrottle server, can be changed for specific servers
-    //   do not exceed 200, unless slider delay is also changed
-
     public static final int MAX_FUNCTIONS = 32;              // total number of supported functions
     public static final String MAX_FUNCTIONS_TEXT = "32";              // total number of supported functions
     public static final int MAX_FUNCTION_NUMBER = 31;        // maximum number of the function buttons supported.
 
-    public String deviceId = "";
+    public static int wifi_send_interval = 100;   //minimum desired interval (ms) between messages sent to
+    //  WiThrottle server, can be changed for specific servers
+    //   do not exceed 200, unless slider delay is also changed
 
     public static final String DEMO_HOST = "jmri.mstevetodd.com";
     public static final String DEMO_PORT = "44444";
@@ -248,20 +304,32 @@ public class threaded_application extends Application {
     public boolean clientLocationServiceEnabled = false;
     public boolean connectionWarningsShown = false;
 
-    public int whichThrottleLastTouch = 0; // needed in TA so that it can be used in the DCC-EX code
+    @NonNull
+    public String connectedHostName = "";
+    @NonNull
+    public String connectedHostip = "";
+    public int connectedPort = 0;
+    public String connectedSsid = "";
+    public String connectedServiceType = "";
 
-    public String prefAppIconAction = "throttle";
+    public boolean haveForcedWiFiConnection = false;
+    public boolean prefAllowMobileData = false;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // DCC-EX specific
 
     public HashMap<String, String> knownDccexServerIps = new HashMap<>();
     private boolean protocolCurrentlyInUseIsDccex = false;  // is a DCC-EX EX-CommandStation  use the methods to set or interrogate this
     public String prefUseDccexProtocol = "Auto";
     public boolean prefAlwaysUseFunctionsFromServer = false;
-    public static String dccexVersionString = "";
+
+    private static String dccexVersionString = "";  // use setDccexVersion() & getDccexVersionString()
+    private static float dccexVersionNumeric = 0;  // use getDccexVersionNumeric()
     public static String dccexProcessorString = "";
+
     public int dccexListsRequested = -1;  // -1=not requested  0=requested  1,2,3= no. of lists received
 
     public static boolean dccexScreenIsOpen = false;
-    public boolean witScreenIsOpen = false;
 
     public static double DCCEX_VERSION_MINIMUM_FOR_PAUSE_RESUME = 5.005059;
     public static double DCCEX_VERSION_MINIMUM_FOR_SERVER_CONSISTS = 5.005058;
@@ -320,35 +388,19 @@ public class threaded_application extends Application {
     public int[] numericKeyIsPressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
     public int[] numericKeyFunctionStateAtTimePressed = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
-    //For communication to the comm_thread.
-//    public comm_handler comm_msg_handler = null;
-    public comm_handler commBundleMessageHandler = null;
+    public int[] dccexLastKnownSpeed = {0,0,0,0,0,0};
+    public int[] dccexLastKnownDirection = {1,1,1,1,1,1};
+    public long[] dccexLastSpeedCommandSentTime = {0,0,0,0,0,0};
 
-    //For communication to each of the activities (set and unset by the activity)
-    public volatile Handler [] activityBundleMessageHandlers = new Handler[activity_id_type.MAX+1];
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // flashlight
 
     // for handling control of camera flash
     public static Flashlight flashlight;
     public boolean flashState = false;
 
-    static public int currentActivity = 0;
-
-    //these constants are used for onFling
-    public static final int SWIPE_MIN_DISTANCE = 120;
-//    public static final int SWIPE_MAX_OFF_PATH = 250;
-    public static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    public static int min_fling_distance;           // pixel width needed for fling
-    public static int min_fling_velocity;           // velocity needed for fling
-
-    public static DisplayMetrics displayMetrics;
-    public static double displayDiagonalInches;
-    public static String prefToolbarButtonSize = "auto";
-//    public static boolean useSmallToolbarButtonSize = true;
-    public static int toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
-    public static final double MEDIUM_SCREEN_SIZE = 5.5; // inches
-    public static final double LARGE_SCREEN_SIZE = 6.7; // inches
-    public static int toolbarButtonCount = 0;
-    private int initialToolbarHeight = -1;
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // notifications
 
     int notificationLevel = 0; // no notification
     NotificationManager notificationManager;
@@ -357,7 +409,12 @@ public class threaded_application extends Application {
     private Notification.Builder notificationBuilder;
     private static final int ED_NOTIFICATION_ID = 416;  //no significance to 416, just shouldn't be 0
 
-    private SharedPreferences prefs;
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // throttle(s)
+
+    protected int throttleLayoutViewId;
+
+    public int whichThrottleLastTouch = 0; // needed in TA so that it can be used in the DCC-EX code
 
     public boolean EStopActivated = false;  // Has EStop been sent?
 
@@ -368,64 +425,97 @@ public class threaded_application extends Application {
     public boolean throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
     public boolean throttleSwitchWasRequestedOrReinitialiseRequired = false;
 
-    @NonNull
-    public String connectedHostName = "";
-    @NonNull
-    public String connectedHostip = "";
-//    public int getConnectedPort() {
-//        return connectedPort;
-//    }
-    public int connectedPort = 0;
-    public String connectedSsid = "";
-    public String connectedServiceType = "";
-
-    public String languageCountry = "en";
-
-    public boolean appIsFinishing = false;
-    public boolean introIsRunning = false;
-
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // toasts
+
+    public boolean prefHideInstructionalToasts = false;
+
+    // one time toast messages
     public boolean shownToastRecentConsists = false;
     public boolean shownToastRecentLocos = false;
     public boolean shownToastRoster = false;
     public boolean shownToastConsistEdit = false;
     public boolean shownToastDeviceSoundsSettings = false;
     public boolean shownToastConsistLightsEdit = false;
+    public static boolean shownFontSizeWarning = false;
+
+    // custom toast
+    static final List<Pair<String, Double>> customToastPairList = Collections.synchronizedList(new ArrayList<>());
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // menu
 
     public boolean hasRosterTurnouts = false;
     public boolean shownRosterTurnouts = false;
 
     public boolean firstWebActivity = false;
-    public boolean exitConfirmed = false;
-    /** @noinspection FieldCanBeLocal*/
-    private ApplicationLifecycleHandler lifecycleHandler;
-//    public static Context context;
 
-    public long exitDoubleBackButtonInitiated = 0;
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // display, swipes and action bar
+    //these constants are used for onFling
+
+    // swipe
+    public boolean prefSwipeThoughTurnouts = true;
+    public boolean prefSwipeThoughRoutes = true;
+    public boolean prefSwipeThoughWeb = true;
+
+    public boolean prefFullScreenSwipeArea = false;
+    public boolean prefLeftRightSwipeChangesSpeed = false;
+    public int prefSwipeSpeedChangeStep = 8;
+
+    // display
+    public static final int SWIPE_MIN_DISTANCE = 120;
+    //    public static final int SWIPE_MAX_OFF_PATH = 250;
+    public static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    public static int min_fling_distance;           // pixel width needed for fling
+    public static int min_fling_velocity;           // velocity needed for fling
+
+    public static DisplayMetrics displayMetrics;
+    public static double displayDiagonalInches;
+    public static String prefToolbarButtonSize = "auto";
+    //    public static boolean useSmallToolbarButtonSize = true;
+    public static int toolbarButtonSizeToUse = toolbar_button_size_to_use_type.SMALL;
+    public static final double MEDIUM_SCREEN_SIZE = 5.5; // inches
+    public static final double LARGE_SCREEN_SIZE = 6.7; // inches
+
+    //action bar
+    public static int toolbarButtonCount = 0;
+    private int initialToolbarHeight = -1;
 
     public int actionBarIconCountThrottle = 0;
     public int actionBarIconCountRoutes = 0;
     public int actionBarIconCountTurnouts = 0;
 
-    public Resources.Theme theme;
+    public String prefAppIconAction = "throttle";
+    public boolean prefActionBarShowDccExButton = false;
+    public boolean prefActionBarShowThrottleButton = false;
+    public boolean prefActionBarShowTurnoutsButton = false;
+    public boolean prefActionBarShowRoutesButton = false;
+    public boolean prefActionBarShowWebButton = false;
 
-    protected int throttleLayoutViewId;
+    public boolean prefThrottleViewImmersiveModeHideToolbar = true;
+    public boolean prefActionBarShowServerDescription = false;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // web
+
     public boolean webServerNameHasBeenChecked = false;
+    public String defaultWebViewURL;
+    public String defaultThrottleWebViewURL;
 
-    public boolean haveForcedWiFiConnection = false;
-    public boolean prefAllowMobileData = false;
-
-    public boolean prefAlwaysUseDefaultFunctionLabels = false;
-    public String prefConsistFollowRuleStyle = "original";
-    public boolean prefOverrideWiThrottlesFunctionLatching = false;
-    public boolean prefOverrideRosterWithNoFunctionLabels = false;
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // logs
 
     public boolean prefShowTimeOnLogEntry = false;
     public static boolean prefExtendedLogging = false;
     public static boolean prefLogOnNextStartup = false;
     public String logSaveFilename = "";
     public Process logcatProcess;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // haptic feedback
 
     public boolean prefFeedbackOnDisconnect = true;
 
@@ -434,21 +524,12 @@ public class threaded_application extends Application {
     public int prefHapticFeedbackDuration = 250;
     public boolean prefHapticFeedbackButtons = false;
 
-    public boolean prefHideInstructionalToasts = false;
-
-    public boolean prefSwipeThoughTurnouts = true;
-    public boolean prefSwipeThoughRoutes = true;
-    public boolean prefSwipeThoughWeb = true;
-
-    public boolean prefFullScreenSwipeArea = false;
-    public boolean prefLeftRightSwipeChangesSpeed = false;
-    public int prefSwipeSpeedChangeStep = 8;
-    public boolean prefThrottleViewImmersiveModeHideToolbar = true;
-    public boolean prefActionBarShowServerDescription = false;
-
 //    public static final String HAPTIC_FEEDBACK_NONE = "None";
     public static final String HAPTIC_FEEDBACK_SLIDER = "Slider";
     public static final String HAPTIC_FEEDBACK_SLIDER_SCALED = "Scaled";
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // device sounds / IPLS plus tone/beeps
 
     private ToneGenerator tg;
     protected MediaPlayer _mediaPlayer;
@@ -504,6 +585,9 @@ public class threaded_application extends Application {
     public ArrayList<String> iplsNames;
     public ArrayList<String> iplsFileNames;
 
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // gamepad related
+
     // moved from throttle to ta to allow for gamepads to function in other activities
     public static final int MAX_GAMEPADS = 6;
     public static final String WHICH_GAMEPAD_MODE_NONE = "None";
@@ -525,28 +609,18 @@ public class threaded_application extends Application {
     public int prefGamePadFeedbackVolume = 100;
     public int[] gamepadBeepIds;
 
-    public int[] dccexLastKnownSpeed = {0,0,0,0,0,0};
-    public int[] dccexLastKnownDirection = {1,1,1,1,1,1};
-    public long[] dccexLastSpeedCommandSentTime = {0,0,0,0,0,0};
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // WiThrottle PoM
 
-    public boolean prefActionBarShowDccExButton = false;
-    public boolean prefActionBarShowThrottleButton = false;
-    public boolean prefActionBarShowTurnoutsButton = false;
-    public boolean prefActionBarShowRoutesButton = false;
-    public boolean prefActionBarShowWebButton = false;
+    public boolean witScreenIsOpen = false;
 
     public String witCv = "";
     public String witCvValue = "";
     public String witAddress = "";
 
-//    static List<Pair<String, Double>> customToastPairList = new ArrayList<>();
-    static final List<Pair<String, Double>> customToastPairList = Collections.synchronizedList(new ArrayList<>());
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // ESU MC Pro
 
-    static boolean activityVisible = false;
-    static boolean activityInTransition = false;
-    static String lastActivityName = "unknown";
-
-    // ESU MC 2/Pro
     public String prefEsuMc2SliderType = "esu";
     public boolean useEsuMc2DecoderBrakes = false;
     public int [][] esuMc2BrakeFunctions = {{4,0,0,0,0}, {5,0,0,0,0}, {6,0,0,0,0} };
@@ -554,6 +628,8 @@ public class threaded_application extends Application {
     public boolean [][] esuMc2BrakeActive = {{false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}, {false, false, false}};
     public float esuMc2BrakePosition = 0;
     public boolean [] EsuMc2FirstServerUpdate = {false, false, false, false, false, false };
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
     public static boolean isActivityVisible() {
         extendedLogging(activityName + ": isActivityVisible(): " + ((activityVisible || activityInTransition) ? "True" : "False"));
@@ -1224,7 +1300,7 @@ public class threaded_application extends Application {
             case "MRC" -> web_server_port = 80; //hardcode web port for MRC
             case "Digitrax" -> wifi_send_interval = 200; //increase the interval for LnWi
             case "DCC-EX" -> {
-                if ((mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_WEB_SERVER)
+                if ((threaded_application.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_WEB_SERVER)
                         && ((threaded_application.dccexProcessorString.equals("EXCSB1")) || (threaded_application.dccexProcessorString.equals("ESP32"))))
                     web_server_port = 80; //hardcode web port for DCC-EX
             }
@@ -1338,7 +1414,7 @@ public class threaded_application extends Application {
         prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
         mainapp.setIsDccexProtocol( prefUseDccexProtocol.equals("Yes") || mainapp.isDccexProtocol() );   // force it if the preference is set
 
-        dccexVersionString = "";
+        setDccexVersion("");
         dccexEmergencyStopState = dccex_emergency_stop_state_type.RESUMED;
 
         dccexListsRequested = -1;
@@ -1413,7 +1489,7 @@ public class threaded_application extends Application {
 
     public void powerControlNotAllowedDialog(Menu menu) {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
-        b.setIcon(android.R.drawable.ic_dialog_alert);
+        b.setIcon(R.drawable.glyph_warning);
         b.setTitle(getApplicationContext().getResources().getString(R.string.powerWillNotWorkTitle));
         b.setMessage(getApplicationContext().getResources().getString(R.string.powerWillNotWork));
         b.setCancelable(true);
@@ -2208,7 +2284,7 @@ public class threaded_application extends Application {
     public void checkAskExit(final Activity activity, boolean forceFastDisconnect) {
         exitDoubleBackButtonInitiated = 0;
         final AlertDialog.Builder b = new AlertDialog.Builder(activity);
-        b.setIcon(android.R.drawable.ic_dialog_alert);
+        b.setIcon(R.drawable.glyph_warning);
         b.setTitle(R.string.exit_title);
         b.setMessage(R.string.exit_text);
         b.setCancelable(true);
@@ -3041,16 +3117,22 @@ public class threaded_application extends Application {
         return withrottle_version;
     }
 
+    public static void setDccexVersion(String version){
+        dccexVersionString = version;
+        if (dccexVersionString.isEmpty()) {
+            dccexVersionNumeric = 0;
+        } else {
+            dccexVersionNumeric = 4;
+            try {
+                dccexVersionNumeric = Float.parseFloat(dccexVersionString);
+            } catch (Exception ignored) {
+            } // invalid version
+        }
+    }
     public static String getDccexVersionString() {
         return dccexVersionString;
     }
-    public float getDccexVersionNumeric() {
-        float versionNumber = 4;
-        try {
-            versionNumber = Float.parseFloat(dccexVersionString);
-        } catch (Exception ignored) { } // invalid version
-        return versionNumber;
-    }
+    public static float getDccexVersionNumeric() { return dccexVersionNumeric; }
 
     public String getTurnoutState(String turnoutSystemName) {
         if (turnout_states==null) return ""; //avoid npe

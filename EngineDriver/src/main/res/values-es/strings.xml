@@ -888,7 +888,7 @@
     <string name="dialogResetPreferencesQuestion">Confirme que desea restablecer todas las preferencias.\nPerderá todas sus preferencias actuales</string>
     <string name="dialogConfirmImportPreferencesTitle">Importar las preferencias</string>
     <string name="dialogImportPreferencesQuestion">Confirme que desea importar las preferencias.\nPerderá todas sus preferencias actuales</string>
-    <string name="permissionsREAD_IMAGES">Engine Driver necesita permisos de almacenamiento para cargar las imágenes de fondo</string>
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver necesita permisos de almacenamiento para cargar las imágenes de fondo</string>-->
     <string name="prefBackgroundImageFileNameNoImageSelected">No se seleccionó ninguna imagen</string>
     <string name="prefBackgroundImageFileNameSummary">Introduzca el nombre del archivo de imagen de fondo</string>
     <string name="prefBackgroundImageFileNameTitle">Nombre del archivo de la imagen de fondo</string>
@@ -1149,8 +1149,6 @@
     <string name="dccexWriteCvValueLabel">Valor</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorar acciones de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccione esto si tiene problemas con el DPAD que produce códigos clave y eventos de joystick</string>
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necesita permisos Read_media_Images para cargar imágenes de fondo.\n\nEngine Driver funcionará sin él.</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necesita permisos READ_MEDIA_VISUAL_USER_SELECTED para cargar imágenes de fondo.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necesita permisos cercanos_wifi_devices para recuperar el SSID WiFi actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necesita permisos de notificación para advertirle cuando empuje en el fondo.</string>
     <string name="prefDccexPreferencesTitle">Preferencias DCC-EX - EX-CommandStation</string>
@@ -1297,5 +1295,6 @@
     <string name="prefDccexClosedLabelSummary">Personaliza la etiqueta del botón cuando el desvío esté \"Cerrado\". Déjalo en blanco para la opción predeterminada (\"Accionamiento\"). Se requiere reconexión.</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta del botón \'Cerrado/Accionamiento\'</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta del botón \'Arrojar/Cerrar\'</string>
+    <string name="toastConnectFontSizeWarning">El tamaño de fuente de tu sistema es muy grande (%1$1.2f).\nAlgunos elementos y textos podrían no caber en la pantalla. Te recomendamos abrir la configuración de tu sistema Android y reducir el tamaño de fuente a menos de 1.5.</string>
 
 </resources>

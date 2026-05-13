@@ -713,6 +713,7 @@
     <string name="toastConnectErrorSavingRecentConnection">Chyba při ukládání Nedávných připojení:</string>
     <string name="toastConnectRemoveDemoHostError">Demo Server lze odstranit pouze úpravou předvoleb.</string>
     <string name="toastConnectRemoved">Server odebrán ze seznamu.</string>
+    <string name="toastConnectFontSizeWarning">Velikost písma vašeho systému je velmi velká! (%1$1.2f)\nNěkteré prvky a text se nemusí vejít na obrazovku. Doporučujeme otevřít nastavení systému Android a zmenšit velikost písma na méně než 1,5.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Automatický Import předvoleb ze serveru byl úspěšný. (%1$s)</string>
 
     <!--    Toast messages for the Routes Activity -->
@@ -1152,7 +1153,7 @@
     <string name="app_name_device_sounds_settings">V telefonu Loco zvuky</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Doporučujeme zvýšit velikost funkčních tlačítek, nebo nebudete moci přistupovat k zvukovým funkcím Bell / Horn / Mute</string>
     <string name="pauseSpeedButtonLabel">Pauza</string>
-    <string name="permissionsREAD_IMAGES">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver potřebuje oprávnění při dodržení skladovacích obrázků zatížení pozadí.</string>-->
     <string name="prefSpeedButtonsSpeedStepDecrementSummary">Vynutit krok rychlosti, který má být použit, když dlouho stiskněte nižší rychlost na jezdci. n Pokud není zaškrtnuto, rychlost okamžitě přeskočí na dotykovou rychlost.</string>
     <string name="prefSpeedButtonsSpeedStepDecrementTitle">Krok rychlosti na snižování?</string>
     <string name="soundsButtonHornShortDefaultValue">Roh krátký</string>
@@ -1248,8 +1249,6 @@
     <string name="dccexWriteCvValueLabel">Hodnota</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorujte akce joysticku</string>
     <string name="prefGamePadIgnoreJoystickSummary">Vyberte to, pokud máte problémy s DPAD produkujícími jak události klíčových kódů, tak joysticků</string>
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver potřebuje read_media_images oprávnění k načtení obrázků na pozadí.\n\nEngine Driver bude fungovat i bez něj.</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver potřebuje READ_MEDIA_VISUAL_USER_SELECTED oprávnění k načtení obrázků na pozadí.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver potřebuje oprávnění nedalekých_wifi_devices k načtení aktuálního WiFi SSID.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver potřebuje oprávnění k oznámení, aby vás varovala, když se tlačí na pozadí.</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation preference</string>

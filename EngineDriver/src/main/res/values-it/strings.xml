@@ -822,7 +822,7 @@
     <string name="dialogResetPreferencesQuestion">Confermare che si desidera ripristinare tutte le preferenze. \nALL sarà perso preferenze correnti.</string>
     <string name="dialogConfirmImportPreferencesTitle">Importa Preferenze</string>
     <string name="dialogImportPreferencesQuestion">Confermare che si desidera preferenze di importazione. \nALL sarà perso preferenze correnti.</string>
-    <string name="permissionsREAD_IMAGES">Engine Driver ha bisogno di permessi di storage per caricare le immagini di sfondo.</string>
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver ha bisogno di permessi di storage per caricare le immagini di sfondo.</string>-->
     <string name="prefBackgroundImageFileNameNoImageSelected">Nessun immagine è stata selezionata</string>
     <string name="prefBackgroundImageFileNameSummary">Immettere il nome del file di immagine di sfondo.</string>
     <string name="prefBackgroundImageFileNameTitle">Background Image File Name</string>
@@ -1089,8 +1089,6 @@
     <string name="dccexWriteCvValueLabel">Valore</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignora le azioni del joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleziona questo se hai problemi con il DPAD che produce sia i codici chiave che gli eventi del joystick</string>
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita di READ_MEDIA_IMAGES autorizzazioni per caricare le immagini di sfondo.\n\nEngine Driver funzionerà senza di esso.</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessita di READ_MEDIA_VISUAL_USER_SELECTED autorizzazioni per caricare le immagini di sfondo.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver ha bisogno di vicinanze_wifi_devices autorizzazioni per recuperare l\'attuale SSID WiFi.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver ha bisogno di autorizzazioni di notifica per avvertirti quando si spinge in background.</string>
     <string name="prefDccexPreferencesTitle">Preferenze DCC-EX - EX-CommandStation</string>
@@ -1247,5 +1245,6 @@
     <string name="prefDccexClosedLabelSummary">Personalizza l\'etichetta del pulsante quando lo scambio è \"Chiuso\". Lascia vuoto per l\'impostazione predefinita (\"Lancia\"). È necessaria la riconnessione.</string>
     <string name="prefDccexClosedLabelTitle">Etichetta del pulsante \'Chiuso/Lancia\' di DCC-EX</string>
     <string name="prefDccexThrownLabelTitle">Etichetta del pulsante \'Lanciato/Chiuso\' di DCC-EX</string>
+    <string name="toastConnectFontSizeWarning">La dimensione del carattere del tuo sistema è molto grande! (%1$1.2f)\nAlcuni elementi e testi potrebbero non essere visualizzati correttamente sullo schermo. Ti consigliamo di aprire le impostazioni di sistema di Android e ridurre la dimensione del carattere a meno di 1.5.</string>
 
 </resources>

@@ -17,6 +17,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.type;
 
+import androidx.annotation.NonNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -24,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 //
-//EngineDriver simple Consist
+//EngineDriver simple 'Consist'
 //
 //Consist just represents (one or more) Locos assigned to a throttle
 //Locos in a Consist have a "reverse" property that indicates physical orientation with respect to the first loco (original lead loco) entered into the consist:
@@ -297,6 +299,7 @@ public final class Consist {
     }
 
     //create string description of the consist
+    @NonNull
     @Override
     public String toString() {
         return formatConsist();

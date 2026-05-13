@@ -284,7 +284,7 @@ public class PowerActivity extends AppCompatActivity {
             mainapp.alertCommHandlerWithBundle(message_type.REQUEST_TRACKS);
         }
 
-        vn = mainapp.getDccexVersionNumeric();
+        vn = threaded_application.getDccexVersionNumeric();
 
         TypedValue outValue = new TypedValue();
         mainapp.theme.resolveAttribute(R.attr.ed_power_green_button, outValue, true);

@@ -61,10 +61,6 @@ public class VerticalSeekBar extends SeekBar {
     protected float l;
     protected float r;
     protected float j;
-//    protected float deadZoneUpper;
-//    protected float deadZoneLower;
-
-
 
     // A change listener registering start and stop of tracking. Need an own listener because the listener in SeekBar
     // is private.
@@ -148,11 +144,6 @@ public class VerticalSeekBar extends SeekBar {
     public void setShowNumericValues(boolean requestedShowNumericValues) {
         showNumericValues = requestedShowNumericValues;
     }
-
-//    public void setDeadZones(int requestedDeadZoneUpper, int requestedDeadZoneLower) {
-//        deadZoneUpper = (float) requestedDeadZoneUpper;
-//        deadZoneLower = (float) requestedDeadZoneLower;
-//    }
 
     public void setTitle(String requestedTitle) {
         title = requestedTitle;
@@ -299,10 +290,10 @@ public class VerticalSeekBar extends SeekBar {
                     float adjustedSteps = tickMarkType - 999; // 1000+1;
                     int tempSteps = tickMarkType - 1000;
 
-                    gridCenter = paddingLeft + (float) (realWidth / 2);
+                    gridCenter = paddingLeft + (realWidth / 2);
                     gridBottom = (float) paddingLeft;
-                    gridTop = (float) (realWidth + paddingLeft);
-                    tickSpacing = (float) (realWidth) / (tempSteps * 2);
+                    gridTop = realWidth + paddingLeft;
+                    tickSpacing = realWidth / (tempSteps * 2);
                     sizeIncrease = endSize / (adjustedSteps * adjustedSteps);
 
                     float tickLength;

@@ -309,7 +309,7 @@ public class ResponseProcessorDccex {
                 vn = vn +String.format("%03d", Integer.parseInt(pn));
             }
         }
-        threaded_application.dccexVersionString = vn;
+        threaded_application.setDccexVersion(vn);
         if (!threaded_application.getDccexVersionString().equals(old_vn)) { //only if changed
             mainapp.alertActivitiesWithBundle(message_type.CONNECTED, activity_id_type.CONNECTION);
         } else {
@@ -699,6 +699,7 @@ public class ResponseProcessorDccex {
         if (comm_thread.requestLocoIdForWhichThrottleDCCEX!=-1) { // if -1, request came from the CV read/write screen
             if (!(args[1].charAt(0) =='-')) {
 
+                //noinspection NonStrictComparisonCanBeEquality
                 if (args.length<=2) {
 
                     String addrStr = args[1];

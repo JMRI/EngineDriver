@@ -333,7 +333,7 @@ public class ReconnectActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             final AlertDialog.Builder b = new AlertDialog.Builder(thisActivity);
-            b.setIcon(android.R.drawable.ic_dialog_alert);
+            b.setIcon(R.drawable.glyph_warning);
             b.setTitle(R.string.newConnectionTitle);
             b.setMessage(R.string.newConnectionText);
             b.setCancelable(true);

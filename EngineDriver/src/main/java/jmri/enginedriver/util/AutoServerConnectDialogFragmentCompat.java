@@ -3,6 +3,7 @@ package jmri.enginedriver.util;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
@@ -33,7 +34,7 @@ public class AutoServerConnectDialogFragmentCompat extends PreferenceDialogFragm
     }
 
     @Override
-    protected void onBindDialogView(View view) {
+    protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
 
         mEditText = view.findViewById(android.R.id.edit);

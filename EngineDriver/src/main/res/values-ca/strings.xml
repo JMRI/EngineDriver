@@ -898,7 +898,7 @@
     <string name="dialogResetPreferencesQuestion">Confirmeu que voleu restablir totes les preferències.\nPerdreu totes les preferències actuals</string>
     <string name="dialogConfirmImportPreferencesTitle">Importa les preferències</string>
     <string name="dialogImportPreferencesQuestion">Confirmeu que voleu importar les preferències.\nPerdreu totes les preferències actuals</string>
-    <string name="permissionsREAD_IMAGES">Engine Driver necessita permisos d\'emmagatzematge per a carregar les imatges de fons</string>
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver necessita permisos d\'emmagatzematge per a carregar les imatges de fons</string>-->
     <string name="prefBackgroundImageFileNameNoImageSelected">No s\'ha seleccionat cap imatge</string>
     <string name="prefBackgroundImageFileNameSummary">Introduïu el nom de l\'arxiu d\'imatge de fons</string>
     <string name="prefBackgroundImageFileNameTitle">Nom de l\'arxiu de la imatge de fons</string>
@@ -1116,6 +1116,7 @@
     <string name="prefDccexEmergencyStopPauseResumeSummary">Feu servir la funció de pausa/reprenguda de l\'aturada d\'emergència del DCC-EX en lloc d\'una simple aturada d\'emergència.</string>
     <string name="prefDccexTitle">Utilitzeu ordres natives DCC-EX</string>
     <string name="useProtocolDCCEX">Protocol a utilitzar?</string>
+    <string name="toastConnectFontSizeWarning">La mida de la lletra del sistema és molt gran! (%1$1.2f)\nÉs possible que alguns elements i text no càpiguen a la pantalla. Es recomana obrir la configuració del sistema Android i reduir la mida de la lletra a menys d\'1,5.</string>
     <string name="toastPreferencesImportServerAutoSucceeded">Import auto des préférences depuis le serveur réalisé (%1$s)</string>
     <string name="useProtocolDccexPlusAutoHint">Protocol a utilitzar?\n<small><small>(\'Automàtic\' cerca \"DCCEX\", \"DCC-EX\" o el port 2560)</small></small></string>
     <string name="usingProtocolDCCEX">Utilitzant el protocol DCC-EX.</string>
@@ -1159,8 +1160,6 @@
     <string name="dccexWriteCvValueLabel">Valorar</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignora les accions de joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">Seleccioneu -ho si teniu problemes amb el DPAD produint tant codes com a esdeveniments de joystick</string>
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessita els permisos READ_MEDIA_IMAGES per carregar imatges de fons.\n\nEngine Driver funcionarà sense ell.</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessita els permisos READ_MEDIA_VISUAL_USER_SELECTED per carregar imatges de fons.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessita els permisos propers_wifi_Devices per recuperar WiFi SSID actual.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessita permisos de notificació per avisar -vos quan empenyeu -vos al fons.</string>
     <string name="prefDccexPreferencesTitle">preferències DCC-EX - EX-CommandStation</string>

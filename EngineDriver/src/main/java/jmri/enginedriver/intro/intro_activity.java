@@ -96,45 +96,6 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 //        }=
 ////<!-- needed for API 33 -->
 //
-////<!-- needed for API 33 -->
-//        if (android.os.Build.VERSION.SDK_INT < 33) {
-////<!-- needed for API 33 -->
-//            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_IMAGES)) {
-//                SliderPage sliderPage = new SliderPage();
-//                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-//                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_IMAGES));
-//                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBackgroundColor(getResources().getColor(R.color.intro_background));
-//                addSlide(AppIntroFragment.newInstance(sliderPage));
-//                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, slideNumber, false);
-//            }
-////<!-- needed for API 33 -->
-//        } else if (android.os.Build.VERSION.SDK_INT < 34) {
-//            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES)) {
-//                SliderPage sliderPage = new SliderPage();
-//                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-//                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES));
-//                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBackgroundColor(getResources().getColor(R.color.intro_background));
-//                addSlide(AppIntroFragment.newInstance(sliderPage));
-//                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, slideNumber, false);
-//            }
-//        } else { // needed for API 34
-//            if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES))
-//                && (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED)) ) {
-//
-//                SliderPage sliderPage = new SliderPage();
-//                sliderPage.setTitle(getApplicationContext().getResources().getString(R.string.permissionsRequestTitle));
-//                sliderPage.setDescription(getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED));
-//                sliderPage.setImageDrawable(R.drawable.icon_vector);
-//                sliderPage.setBackgroundColor(ContextCompat.getColor(context, R.color.intro_background));
-//                addSlide(AppIntroFragment.newInstance(sliderPage));
-//                slideNumber = slideNumber + 1;
-//                askForPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED}, slideNumber, false);
-//            }
-//        }
 ////<!-- needed for API 34 -->
 //
 //        if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_PHONE_STATE)) {
@@ -208,37 +169,6 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
                 addSlide(fragment);
             }
         }
-
-//        if (android.os.Build.VERSION.SDK_INT < 33) {
-//            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_IMAGES)) {
-//                args = new Bundle();
-//                args.putString("id", Integer.toString(PermissionsHelper.READ_IMAGES));
-//                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_IMAGES));
-//                fragment = new intro_permissions();
-//                fragment.setArguments(args);
-//                addSlide(fragment);
-//            }
-//        } else if (android.os.Build.VERSION.SDK_INT < 34) {
-//            if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES)) {
-//                args = new Bundle();
-//                args.putString("id", Integer.toString(PermissionsHelper.READ_MEDIA_IMAGES));
-//                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_IMAGES));
-//                fragment = new intro_permissions();
-//                fragment.setArguments(args);
-//                addSlide(fragment);
-//            }
-//        } else { // needed for API 34
-//            if ( (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_IMAGES))
-//                && (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED)) ) {
-//                args = new Bundle();
-//                args.putString("id", Integer.toString(PermissionsHelper.READ_MEDIA_VISUAL_USER_SELECTED));
-//                args.putString("label", getApplicationContext().getResources().getString(R.string.permissionsREAD_MEDIA_VISUAL_USER_SELECTED));
-//                fragment = new intro_permissions();
-//                fragment.setArguments(args);
-//                addSlide(fragment);
-//            }
-//        }
-
 
         if (!MobileControl2.isMobileControl2()) {
             if (!PermissionsHelper.getInstance().isPermissionGranted(intro_activity.this, PermissionsHelper.READ_PHONE_STATE)) {

@@ -877,7 +877,7 @@ public class routes extends AppCompatActivity
 
         } else if (item.getItemId() == R.id.connect_menu) {
             final AlertDialog.Builder b = new AlertDialog.Builder(this);
-            b.setIcon(android.R.drawable.ic_dialog_alert);
+            b.setIcon(R.drawable.glyph_warning);
             b.setTitle(R.string.newConnectionTitle);
             b.setMessage(R.string.newConnectionText);
             b.setCancelable(true);

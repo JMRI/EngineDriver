@@ -907,7 +907,7 @@
     <string name="dialogResetPreferencesQuestion">Confirmer la réinitialisation de toutes les préférences.\nTOUTES PREFERENCES REINITIALISEES</string>
     <string name="dialogConfirmImportPreferencesTitle">Préférences pour les imports</string>
     <string name="dialogImportPreferencesQuestion">Confirmer l import des préférences.\nLes préférences actuelles seront affacées</string>
-    <string name="permissionsREAD_IMAGES">Engine Driver a besoin des permission d acces STOCKAGE pour charger les images de fond.</string>
+<!--    <string name="permissionsREAD_IMAGES">Engine Driver a besoin des permission d acces STOCKAGE pour charger les images de fond.</string>-->
     <string name="prefBackgroundImageFileNameNoImageSelected">Aucune image selectionnee</string>
     <string name="prefBackgroundImageFileNameSummary">Entrer le nom de l image d Arriere Plan</string>
     <string name="prefBackgroundImageFileNameTitle">Nom du fichier d Arriere Plan</string>
@@ -1157,8 +1157,6 @@
     <string name="dccexWriteCvValueLabel">Valeur</string>
     <string name="prefGamePadIgnoreJoystickTitle">Ignorer les actions du joystick</string>
     <string name="prefGamePadIgnoreJoystickSummary">A selectionner en cas de probleme si le DPAD cree des codes cles et des evenements Joystick</string>
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">Engine Driver necessite la permission d acces aux IMAGES pour charger celles-ci en arriere plan.\n\nEngineDriver fonctionnera sans lui.</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">Engine Driver necessite la permission d acces aux READ_MEDIA_VISUAL_USER_SELECTED pour charger celles-ci en arriere plan.</string>-->
 <!--    <string name="permissionsNEARBY_WIFI_DEVICES">Engine Driver necessite la permission d acces aux reseaux WiFi proches pour detecter le SSID WiFi.</string>-->
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessite la permission d acces aux NOTIFICATIONS pour indiquer son passage en arriere plan</string>
     <string name="prefDccexPreferencesTitle">Preferences DCC-EX - EX-CommandStation</string>
@@ -1318,5 +1316,6 @@
     <string name="prefDccexClosedLabelSummary">Personnalisez le libellé du bouton lorsque l\'aiguillage est fermé. Laissez vide pour la valeur par défaut (« Lancer »). Reconnexion requise.</string>
     <string name="prefDccexClosedLabelTitle">Étiquette du bouton « Fermé/Lancer » (DCC-EX)</string>
     <string name="prefDccexThrownLabelTitle">Étiquette du bouton DCC-EX « Lancer/Fermer »</string>
+    <string name="toastConnectFontSizeWarning">La taille de la police de votre système est très élevée (%1$1.2f).\nCertains éléments et textes risquent de ne pas s\'afficher correctement à l\'écran. Nous vous recommandons d\'ouvrir les paramètres système de votre appareil Android et de réduire la taille de la police à moins de 1,5.</string>
 
 </resources>

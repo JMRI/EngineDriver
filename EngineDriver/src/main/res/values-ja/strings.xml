@@ -370,11 +370,6 @@
 
 
     <string name="permissionsPOST_NOTIFICATIONS">エンジン ドライバーには、バックグラウンドにプッシュされたときに警告を表示する NOTIFICATION 権限が必要です。</string>
-<!--    <string name="permissionsREAD_MEDIA_IMAGES">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_IMAGES 権限が必要です。\n\nEngineDriver はこれなしでも動作します。</string>-->
-<!--    <string name="permissionsREAD_MEDIA_VISUAL_USER_SELECTED">エンジン ドライバーには、背景画像を読み込むための READ_MEDIA_VISUAL_USER_SELECTED 権限が必要です。</string>-->
-
-
-
     <string name="permissionsReadPhoneState">エンジン ドライバーには、通話中に操作を一時停止するには PHONE 権限が必要です。\n\n必要がない場合は、「通話時に停止しますか?」設定を無効にします。</string>
 
 
@@ -1067,6 +1062,7 @@
     <string name="toastNumThrottles">選択されたスロットル スクリーン タイプは、それほど多くのスロットルをサポートしていません。 %1$s に削減します。</string>
     <string name="toastPreferencesBackgroundChangeSucceeded">背景の変更に成功しました。</string>
     <string name="toastPreferencesChangedForceWiFi">強制的に WiFi 設定が変更されました。</string>
+    <string name="toastConnectFontSizeWarning">お使いのシステムフォントサイズが非常に大きいです！(%1$1.2f)\n一部の要素やテキストが画面に収まらない可能性があります。Androidのシステム設定を開き、フォントサイズを1.5未満に小さくすることをお勧めします。</string>
     <string name="toastPreferencesImportServerAutoSucceeded">サーバーからの自動設定のインポートが成功しました。 (%1$s)</string>
 
     <string name="toastPreferencesImportServerManualFailed">サーバーからの環境設定のインポートに失敗しました。ファイルが正しいことを確認してください。 (%1$s)</string>

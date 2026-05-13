@@ -33,8 +33,8 @@
         <item name="reusable_app_background_highlight_secondary_color">@color/muted_50</item>
         <item name="reusable_app_background_highlight_tertiary_color">@color/muted_light_50</item>
 
-        <item name="reusable_heading_small_start_color">@color/muted_very_dark</item>
-        <item name="reusable_heading_small_center_color">@color/muted_very_dark</item>
+        <item name="reusable_heading_small_start_color">@color/muted_dark</item>
+        <item name="reusable_heading_small_center_color">@color/muted</item>
         <item name="reusable_heading_small_end_color">@color/transparent</item>
 
         <item name="reusable_radio_button_normal_color">@color/grey_dark</item>
@@ -45,14 +45,14 @@
         <item name="reusable_title_background_color">@color/solidBlack</item>
 
         <item name="reusable_small_heading_text_color">@color/solidBlack</item>
-        <item name="reusable_small_heading_text_shadow_color">@color/solidWhite</item>
-        <item name="reusable_list_item_text_color">@color/muted_sepia</item>
+        <item name="reusable_small_heading_text_shadow_color">@color/transparent</item>
+        <item name="reusable_list_item_text_color">@color/muted_sepia_dark</item>
         <item name="reusable_list_item_text_shadow_color">@color/transparent</item>
         <item name="reusable_list_id_text_color">@color/muted_sepia_light</item>
         <item name="reusable_list_extras_text_color">@color/muted_sepia_very_light</item>
 
-        <item name="reusable_floating_text_color">@color/muted_sepia</item>
-        <item name="reusable_floating_text_shadow_color">@color/solidWhite</item>
+        <item name="reusable_floating_text_color">@color/muted_sepia_dark</item>
+        <item name="reusable_floating_text_shadow_color">@color/transparent</item>
         <item name="reusable_popup_floating_text_color">@color/solidBlack</item>
 
         <item name="reusable_button_text_default_color">@color/muted_sepia_dark</item>
@@ -60,7 +60,7 @@
         <item name="reusable_button_text_disabled_color">@color/grey_light</item>
         <item name="reusable_select_button_text_disabled_color">@color/grey_very_dark</item>
         <item name="reusable_button_text_pressed_color">@color/muted_sepia_dark</item>
-        <item name="reusable_button_text_shadow_color">@color/muted_very_light</item>
+        <item name="reusable_button_text_shadow_color">@color/transparent</item>
 
         <item name="reusable_stop_button_text_pressed_color">@color/muted_red</item>
         <item name="reusable_stop_button_active_light_bar_color">@color/muted_red_light</item>

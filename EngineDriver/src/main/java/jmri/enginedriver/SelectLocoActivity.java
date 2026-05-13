@@ -1443,6 +1443,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
+            ab.setIcon(R.drawable.glyph_warning);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogDownloadRosterConfirmQuestion))
                     .setPositiveButton(R.string.yes, dialogClickListener)
@@ -1675,6 +1676,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
+            ab.setIcon(R.drawable.glyph_warning);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentLocoConfirmClearQuestion))
                     .setPositiveButton(R.string.yes, dialogClickListener)
@@ -1701,6 +1703,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             };
 
             AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
+            ab.setIcon(R.drawable.glyph_warning);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentConsistsConfirmClearQuestions))
                     .setPositiveButton(R.string.yes, dialogClickListener)
@@ -2347,7 +2350,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             TypedValue outValue = new TypedValue();
             if (mainapp.isDccexProtocol()) {
                 mainapp.theme.resolveAttribute(R.attr.ed_dccex_consist_button, outValue, true);
-                 menuItem.setVisible(mainapp.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_SERVER_CONSISTS);
+                 menuItem.setVisible(threaded_application.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_SERVER_CONSISTS);
             } else {
                 mainapp.theme.resolveAttribute(R.attr.ed_cv19_consist_button, outValue, true);
             }
