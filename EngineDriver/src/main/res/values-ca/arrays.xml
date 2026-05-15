@@ -198,6 +198,7 @@
         <item>Blau Neó</item>
         <item>Verd neó</item>
         <item>Paper</item>
+        <item>Bronze</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Cap (utilitza només \'v\',\'1\')</item>

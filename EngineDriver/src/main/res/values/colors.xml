@@ -547,5 +547,80 @@
     <color name="ultra_blue_transparent_50">#801ca0ef</color>
     <color name="ultra_blue_transparent_25">#401ca0ef</color>
 
+    <!-- bronze colours -->
+
+    <color name="bronze_bright_mega_dark">#4a3813</color>
+    <color name="bronze_bright_ultra_dark">#66522c</color>
+    <color name="bronze_bright_very_dark">#7f6942</color>
+    <color name="bronze_bright_dark">#9d865d</color>
+    <color name="bronze_bright">#af976d</color>
+    <color name="bronze_bright_light">#c3aa80</color>
+    <color name="bronze_bright_very_light">#d3b98f</color>
+    <color name="bronze_bright_ultra_light">#eed4a8</color>
+
+    <color name="bronze_mega_dark">#140500</color>
+    <color name="bronze_ultra_dark">#180c03</color>
+    <color name="bronze_very_dark">#1b1109</color>
+    <color name="bronze_dark">#201711</color>
+    <color name="bronze">#251c17</color>
+    <color name="bronze_light">#332a25</color>
+    <color name="bronze_very_light">#3b312c</color>
+    <color name="bronze_ultra_light">#433933</color>
+
+    <color name="bronze_mega_dark_50">#80140500</color>
+    <color name="bronze_ultra_dark_50">#80180c03</color>
+    <color name="bronze_very_dark_50">#801b1109</color>
+    <color name="bronze_dark_50">#80201711</color>
+    <color name="bronze_50">#80251c17</color>
+    <color name="bronze_light_50">#80332a25</color>
+    <color name="bronze_very_light_50">#803b312c</color>
+    <color name="bronze_ultra_light_50">#80433933</color>
+
+    <color name="bronze_gold_mega_dark">#593601</color>
+    <color name="bronze_gold_ultra_dark">#724c18</color>
+    <color name="bronze_gold_very_dark">#966123</color>
+    <color name="bronze_gold_dark">#a87328</color>
+    <color name="bronze_gold">#c18f3a</color>
+    <color name="bronze_gold_light">#daac54</color>
+    <color name="bronze_gold_very_light">#ebc775</color>
+    <color name="bronze_gold_ultra_light">#e2ca98</color>
+
+    <color name="bronze_rose_gold_mega_dark">#71433a</color>
+    <color name="bronze_rose_gold_ultra_dark">#7f5147</color>
+    <color name="bronze_rose_gold_very_dark">#95645a</color>
+    <color name="bronze_rose_gold_dark">#a9766c</color>
+    <color name="bronze_rose_gold">#bf8b80</color>
+    <color name="bronze_rose_gold_light">#ca968a</color>
+    <color name="bronze_rose_gold_very_light">#dfa99d</color>
+    <color name="bronze_rose_gold_ultra_light">#f2bbaf</color>
+
+    <color name="bronze_gold_mega_dark_75">#BF593601</color>
+    <color name="bronze_gold_ultra_dark_75">#BF724c18</color>
+    <color name="bronze_gold_very_dark_75">#BF966123</color>
+    <color name="bronze_gold_dark_75">#BFa87328</color>
+    <color name="bronze_gold_75">#BFc18f3a</color>
+    <color name="bronze_gold_light_75">#BFdaac54</color>
+    <color name="bronze_gold_very_light_75">#BFebc775</color>
+    <color name="bronze_gold_ultra_light_75">#BFe2ca98</color>
+
+    <color name="bronze_gold_mega_dark_50">#80593601</color>
+    <color name="bronze_gold_ultra_dark_50">#80724c18</color>
+    <color name="bronze_gold_very_dark_50">#80966123</color>
+    <color name="bronze_gold_dark_50">#80a87328</color>
+    <color name="bronze_gold_50">#80c18f3a</color>
+    <color name="bronze_gold_light_50">#80daac54</color>
+    <color name="bronze_gold_very_light_50">#80ebc775</color>
+    <color name="bronze_gold_ultra_light_50">#80e2ca98</color>
+
+    <color name="bronze_gold_mega_dark_25">#40593601</color>
+    <color name="bronze_gold_ultra_dark_25">#40724c18</color>
+    <color name="bronze_gold_very_dark_25">#40966123</color>
+    <color name="bronze_gold_dark_25">#40a87328</color>
+    <color name="bronze_gold_25">#40c18f3a</color>
+    <color name="bronze_gold_light_25">#40daac54</color>
+    <color name="bronze_gold_very_light_25">#40ebc775</color>
+    <color name="bronze_gold_ultra_light_25">#40e2ca98</color>
+
+    <color name="gold">#fdd408</color>
 
 </resources>

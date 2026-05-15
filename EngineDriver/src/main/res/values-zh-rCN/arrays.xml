@@ -150,6 +150,7 @@
         <item>霓虹蓝</item>
         <item>荧光绿</item>
         <item>纸</item>
+        <item>Bronze</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>无（仅使用“v”、“1”）</item>

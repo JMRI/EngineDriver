@@ -26,6 +26,7 @@
         <item>Neon Blue</item>
         <item>Neon Green</item>
         <item>Paper</item>
+        <item>Bronze</item>
     </string-array>
 
     <string-array name="prefThrottleScreenTypeEntries">  <!-- display version -->

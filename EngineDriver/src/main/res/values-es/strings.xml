@@ -678,7 +678,7 @@
     <string name="toastThreadedAppErrorStartingSocket">Error al iniciar el flujo del socket_WiT: %1$s</string>
     <string name="toastThreadedAppErrorCreatingOutputStream">Error al crear el flujo de salida. Excepción IO: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Error durmiendo el flujo de salida. Excepción interrumpida: %1$s</string>
-    <string name="statusThreadedAppNoResponse">No ha habido respuesta desde el servidor %1$s:%2$s en %3$dms. Verifica que el servidor se está ejecutando.\n\nReintenta</string>
+    <string name="statusThreadedAppNoResponse">No ha habido respuesta desde el servidor %1$s:%2$s en %3$dms. Verifica que el servidor se está ejecutando.\n\nReintenta (%4$d)</string>
     <string name="statusThreadedAppUnableToConnect">No se puede conectar al servidor a %1$s:%2$s de %3$s. Volver a intentar</string>
     <string name="functionButtonLookForWhistle">SILBATO</string>
     <string name="functionButtonLookForHorn">BOZINA</string>

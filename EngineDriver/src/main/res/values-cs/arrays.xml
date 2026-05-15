@@ -391,6 +391,7 @@
         <item>Neonově modrá</item>
         <item>Neonová zelená</item>
         <item>Papír</item>
+        <item>Bronze</item>
     </string-array>
 
     <string-array name="prefSelectedLocoIndicatorEntries">  <!-- display version -->

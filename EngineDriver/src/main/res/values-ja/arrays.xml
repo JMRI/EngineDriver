@@ -159,6 +159,7 @@
         <item>ネオンブルー</item>
         <item>ネオングリーン</item>
         <item>紙</item>
+        <item>Bronze</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>なし (「v」、「1」のみを使用)</item>

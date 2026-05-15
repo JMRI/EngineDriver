@@ -1036,7 +1036,7 @@
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nome della rete inaccessibile. Il rilevamento del server potrebbe essere limitato.</string>
     <string name="statusThreadedAppNotConnected">Non connesso a una rete. Controllare le impostazioni WiFi.\n\n ReTring</string>
     <string name="statusThreadedAppUnableToConnect">Impossibile connettersi al server a %1$s:%2$s da %3$s. Riprovare</string>
-    <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$dms secondi. Verificare che il server sia in esecuzione. Riprovare</string>
+    <string name="statusThreadedAppNoResponse">Nessuna risposta dal server %1$s:%2$s per %3$dms secondi. Verificare che il server sia in esecuzione. Riprovare (%4$d)</string>
     <string name="toastImportExportCouldNotParseAddress">Impossibile analizzare l\'indirizzo\n%1$s</string>
     <string name="toastNumThrottles">Il tipo di schermo dell\'acceleratore scelto non supporta così tante frotte. Ridurre a %1$s.</string>
     <string name="TtsGamepadTestSpeedMax">Max</string>
