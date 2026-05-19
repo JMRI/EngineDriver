@@ -154,6 +154,19 @@
                     android:textSize="16sp"
                     tools:ignore="RtlHardcoded" />
 
+                <RadioButton
+                    android:id="@+id/intro_theme_bronze_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:drawableTop="@drawable/intro_theme_bronze"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center|left"
+                    android:padding="5dp"
+                    android:text="@string/prefThemeDefaultValue"
+                    android:textSize="16sp"
+                    tools:ignore="RtlHardcoded" />
+
             </RadioGroup>
 
         </LinearLayout>

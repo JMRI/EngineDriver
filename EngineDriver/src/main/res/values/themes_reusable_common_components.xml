@@ -424,10 +424,12 @@
 
         <!-- underline under Edit Text -->
 
-        <item name="colorControlActivated">@color/holoBlue</item>
-        <item name="colorControlNormal">@color/grey_light</item>
+<!--        <item name="colorControlActivated">@color/holoBlue</item>-->
+<!--        <item name="colorControlNormal">@color/grey_light</item>-->
         <item name="edit_text_underline_activated">@color/holoBlue</item>
         <item name="edit_text_underline_normal">@color/grey_light</item>
+        <item name="colorControlNormal">?attr/edit_text_underline_normal</item>
+        <item name="colorControlActivated">?attr/edit_text_underline_activated</item>
 
         <!-- switch colors -->
         <item name="reusable_switch_thumb_enabled_checked_color">@color/holoBlue_bright</item>

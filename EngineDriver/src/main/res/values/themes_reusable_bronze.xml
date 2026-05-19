@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      Copyright (C) 2017-2026 M. Steve Todd mstevetodd@gmail.com
+      This program is free software; you can redistribute it and/or modify it
+      under the terms of the GNU General Public License as published by the
+      Free Software Foundation;
+      either version 3 of the License, or (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful, but
+      WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+      or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details. You should have received a copy of the GNU General
+      Public License along with this program; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<resources>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- 'New ultra' theme. -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_bronze" parent="reusable_app_theme_common_components">
+
+        <!-- General theme colours -->
+
+        <item name="reusable_spinner_divider_color">@color/bronze_ultra_light</item>
+        <item name="reusable_spinner_background_color">@color/ultra_very_dark</item>
+
+        <item name="reusable_divider_color">@color/bronze_gold_ultra_dark</item>
+
+        <item name="android:windowBackground">@drawable/wallpaper_metal_bronze_repeating</item>
+        <item name="reusable_app_background_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_app_background_highlight_color">@color/bronze_dark</item>
+        <item name="reusable_app_background_highlight_secondary_color">@color/bronze</item>
+        <item name="reusable_app_background_highlight_tertiary_color">@color/bronze_light</item>
+
+        <item name="reusable_heading_small_start_color">@color/bronze_mega_dark</item>
+        <item name="reusable_heading_small_center_color">@color/bronze_dark</item>
+        <item name="reusable_heading_small_end_color">@color/transparent</item>
+
+        <item name="reusable_radio_button_normal_color">@color/bronze_gold_dark</item>
+        <item name="reusable_radio_button_activate_color">@color/bronze_gold_ultra_light</item>
+        <item name="reusable_title_text_color">@color/bronze_bright</item>
+        <item name="reusable_title_background_color">@color/bronze_very_dark</item>
+        <item name="reusable_small_heading_text_color">@color/bronze_bright_light</item>
+        <item name="reusable_small_heading_text_shadow_color">@color/transparent</item>
+        <item name="reusable_list_item_text_color">@color/bronze_gold_ultra_light</item>
+        <item name="reusable_list_item_text_shadow_color">@color/transparent</item>
+        <item name="reusable_list_id_text_color">@color/bronze_gold_light</item>
+        <item name="reusable_list_extras_text_color">@color/bronze_gold_light</item>
+
+        <item name="reusable_floating_text_color">@color/bronze_bright</item>
+        <item name="reusable_floating_text_shadow_color">@color/solidBlack</item>
+        <item name="reusable_popup_floating_text_color">@color/solidBlack</item>
+
+
+        <!-- buttons -->
+
+        <item name="reusable_button_text_default_color">@color/bronze_very_dark</item>
+        <item name="reusable_button_text_enabled_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_button_text_disabled_color">@color/bronze_bright_ultra_dark</item>
+        <item name="reusable_select_button_text_disabled_color">@color/bronze_bright_very_dark</item>
+        <item name="reusable_button_text_pressed_color">@color/bronze_dark</item>
+        <item name="reusable_button_text_shadow_color">@color/transparent</item>
+
+        <item name="reusable_stop_button_text_pressed_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_stop_button_active_light_bar_color">@color/red</item>
+
+        <item name="reusable_button_edge_highlight_color">@color/bronze_bright_very_light</item>
+        <item name="reusable_button_edge_light_color">@color/bronze_bright</item>
+        <item name="reusable_button_edge_dark_color">@color/bronze_bright_ultra_dark</item>
+        <item name="reusable_button_face_end_color">@color/bronze_bright_very_light</item>
+        <item name="reusable_button_face_center_color">@color/bronze_bright_dark</item>
+        <item name="reusable_button_face_start_color">@color/bronze_bright_ultra_dark</item>
+
+        <!-- function buttons -->
+        <item name="reusable_button_function_edge_highlight_color">@color/bronze_bright_very_light</item>
+        <item name="reusable_button_function_edge_light_color">@color/bronze_bright</item>
+        <item name="reusable_button_function_edge_dark_color">@color/bronze_bright_ultra_dark</item>
+        <item name="reusable_button_function_face_end_color">@color/bronze_bright_very_light</item>
+        <item name="reusable_button_function_face_center_color">@color/bronze_bright_dark</item>
+        <item name="reusable_button_function_face_start_color">@color/bronze_bright_ultra_dark</item>
+
+        <!-- speed buttons -->
+        <item name="reusable_button_2_edge_highlight_color">@color/bronze_gold_ultra_light</item>
+        <item name="reusable_button_2_edge_light_color">@color/bronze_gold_very_light</item>
+        <item name="reusable_button_2_edge_dark_color">@color/bronze_gold_ultra_dark</item>
+        <item name="reusable_button_2_face_end_color">@color/bronze_gold_very_light</item>
+        <item name="reusable_button_2_face_center_color">@color/bronze_gold_light</item>
+        <item name="reusable_button_2_face_start_color">@color/bronze_gold_very_dark</item>
+
+        <!-- stop buttons -->
+        <item name="reusable_button_stop_edge_highlight_color">@color/bronze_rose_gold_light</item>
+        <item name="reusable_button_stop_edge_light_color">@color/bronze_rose_gold</item>
+        <item name="reusable_button_stop_edge_dark_color">@color/bronze_rose_gold_ultra_dark</item>
+        <item name="reusable_button_stop_face_end_color">@color/bronze_rose_gold_light</item>
+        <item name="reusable_button_stop_face_center_color">@color/bronze_rose_gold_dark</item>
+        <item name="reusable_button_stop_face_start_color">@color/bronze_rose_gold_very_dark</item>
+
+        <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
+        <item name="reusable_button_disabled_fill_color">@color/transparent</item>
+
+        <item name="reusable_button_active_light_bar_color">@color/gold</item>
+        <item name="reusable_button_active_light_rim_color">@color/bronze_gold_ultra_light</item>
+        <item name="reusable_button_active_light_rim_2_color">@color/gold</item>
+
+        <item name="reusable_button_glyph_fill_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_preference_glyph_fill_color">@color/bronze_gold</item>
+        <item name="reusable_preference_glyph_stroke_color">@color/bronze_gold_light</item>
+
+        <!-- used for the progress bar on the throttles -->
+        <item name="reusable_progress_bar_fill_75_color">@color/bronze_gold_75</item>
+        <item name="reusable_progress_bar_fill_50_color">@color/bronze_gold_50</item>
+        <item name="reusable_progress_bar_fill_25_color">@color/bronze_gold_25</item>
+
+        <item name="reusable_toolbar_face_end_color">@color/bronze_50</item>
+        <item name="reusable_toolbar_face_center_color">@color/bronze_dark_50</item>
+        <item name="reusable_toolbar_face_start_color">@color/bronze_very_dark_50</item>
+
+        <item name="reusable_overflow_menu_color">@color/bronze_light</item>
+
+        <!-- used for the glyphs in the menus, categories (preferences) and buttons. -->
+        <!-- See the 'reusable colours' for the toolbar glyph colours -->
+        <item name="ed_monochrome_glyph_menu_primary_color">@color/bronze_gold_ultra_dark</item>
+        <item name="ed_monochrome_glyph_button_primary_color">@color/bronze_very_dark</item>
+        <item name="ed_monochrome_glyph_category_primary_color">@color/bronze_ultra_dark</item>
+
+        <item name="ed_text_color_primary">@color/bronze_bright_light</item>
+        <item name="ed_text_shadow_color_primary">@color/bronze_gold_very_dark</item>
+        <item name="ed_text_color_primary_inverted">@color/bronze_gold_mega_dark</item>
+        <item name="ed_text_color_secondary">@color/bronze_bright_ultra_light</item>
+        <item name="ed_text_color_hint">@color/bronze_bright_ultra_dark</item>
+        <item name="ed_text_color_disabled">@color/grey_dark</item>
+
+        <item name="ed_primaryLineColor">@color/bronze_gold_light</item>
+        <item name="ed_secondaryLineColor">@color/bronze_gold_very_dark</item>
+
+        <item name="ed_progressBarBackground">@color/ultra_dark</item>
+        <item name="ed_progressBarSelected">@color/ultra_ultra_light</item>
+
+        <!-- slider colours -->
+        <item name="reusable_thumb_fill_inner_color">@color/ultra</item>
+        <item name="reusable_thumb_stroke_color">@color/bronze_gold_light</item>
+        <item name="reusable_thumb_center_bar_stroke_color">@color/bronze_gold</item>
+        <item name="ed_throttle_tick_mark">@color/bronze_gold_dark</item>
+
+        <item name="ed_toolbar_popup_theme">@style/ActionBarPopup_reusable</item>
+
+        <!-- Theme elements -->
+
+        <item name="preferenceTheme">@style/app_theme_bronze_preferences</item>
+
+        <item name="reusable_button_corner_radius">@dimen/button_corner_radius_bronze</item>
+
+        <item name="ed_dialog_secondary_background_color">@color/bronze_light</item>
+
+        <item name="reusable_popup_background_color">@color/bronze_bright</item>
+
+        <item name="reusable_dialog_background_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_dialog_text_color">@color/bronze_gold_light</item>
+        <item name="reusable_dialog_button_text_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_dialog_button_background_color">@color/grey_dark</item>
+
+        <!-- not sure where this is used -->
+        <item name="android:itemBackground">#ff000000</item>
+
+        <!-- underline under Edit Text -->
+        <item name="edit_text_underline_activated">@color/bronze_gold_light</item>
+        <item name="edit_text_underline_normal">@color/bronze_gold_dark</item>
+
+        <!-- switch colors -->
+        <item name="reusable_switch_thumb_enabled_checked_color">@color/solidYellow</item>
+        <item name="reusable_switch_thumb_enabled_unchecked_color">@color/bronze_bright_ultra_dark</item>
+        <item name="reusable_switch_thumb_disabled_checked_color">@color/bronze_light_50</item>
+        <item name="reusable_switch_thumb_disabled_unchecked_color">@color/transparent</item>
+        <item name="reusable_switch_track_enabled_color">@color/bronze_bright_mega_dark</item>
+        <item name="reusable_switch_track_disabled_color">@color/bronze_light_50</item>
+
+    </style>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Preferences Theme. Used by the 'Bronze' theme -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <style name="app_theme_bronze_preferences" parent="@style/app_theme_bronze">
+        <item name="android:windowBackground">@drawable/reusable_app_background</item>
+
+        <item name="android:divider">@drawable/reusable_divider</item>
+        <item name="android:listDivider">@drawable/reusable_divider</item>
+
+        <item name="android:listSeparatorTextViewStyle">@style/preference_heading_style_reusable</item>
+
+        <item name="ed_monochrome_glyph_button_primary_color">@color/bronze_gold_light</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
+
+        <item name="colorBackgroundFloating">@color/grey_very_dark</item>
+
+        <item name="android:radioButtonStyle">@style/ed_radio_button_style_reusable</item>
+        <item name="radioButtonStyle">@style/ed_radio_button_style_reusable</item>
+
+        <!-- preference categories -->
+        <item name="ed_monochrome_glyph_category_primary_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_preference_heading_text_color">@color/bronze_ultra_dark</item>
+        <item name="reusable_preference_heading_background_color">@color/bronze_gold_light</item>
+    </style>
+
+</resources>

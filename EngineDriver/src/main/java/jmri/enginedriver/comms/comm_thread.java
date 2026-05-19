@@ -863,15 +863,18 @@ public class comm_thread extends Thread {
                 String status;
                 if (mainapp.client_address == null) {
                     status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
-                    Log.d(threaded_application.applicationName, activityName + ": send(): Not Connected: WiT send reconnection attempt.");
+                    Log.d(threaded_application.applicationName, activityName + ": send(): Not Connected: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
                 } else if (inboundTimeout) {
-                    status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, mainapp.host_ip, Integer.toString(mainapp.port), heart.getInboundInterval());
-                    Log.d(threaded_application.applicationName, activityName + ": send(): No Response: WiT receive reconnection attempt.");
+                    status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse,
+                            mainapp.host_ip, Integer.toString(mainapp.port), heart.getInboundInterval(), threaded_application.reconnectAttemptCount);
+                    Log.d(threaded_application.applicationName, activityName + ": send(): No Response: WiT receive reconnection attempt: " + threaded_application.reconnectAttemptCount);
                 } else {
                     status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
-                    Log.d(threaded_application.applicationName, activityName + ": send(): Unable to connect: WiT send reconnection attempt.");
+                    Log.d(threaded_application.applicationName, activityName + ": send(): Unable to connect: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
                 }
                 socketGood = false;
+
+                threaded_application.reconnectAttemptCount++;
 
                 Bundle witBundle = new Bundle();
                 witBundle.putString(alert_bundle_tag_type.MESSAGE, status);
@@ -885,6 +888,8 @@ public class comm_thread extends Thread {
 
             //try to send the message
             if (socketGood) {
+                threaded_application.reconnectAttemptCount = 0;
+
                 try {
                     outputPW.println(msg);
                     outputPW.flush();

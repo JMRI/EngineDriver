@@ -79,6 +79,8 @@ public class intro_theme extends Fragment {
         v.setText(nameEntries[6]);
         v = requireView().findViewById(R.id.intro_theme_muted_name);
         v.setText(nameEntries[7]);
+        v = requireView().findViewById(R.id.intro_theme_bronze_name);
+        v.setText(nameEntries[8]);
 
         RadioGroup radioGroup = getView().findViewById(R.id.intro_throttle_type_radio_group);
 
@@ -91,6 +93,7 @@ public class intro_theme extends Fragment {
         else if (nameEntryValues[5].equals(currentValue)) {radioGroup.check(R.id.intro_theme_neon_name); }
         else if (nameEntryValues[6].equals(currentValue)) {radioGroup.check(R.id.intro_theme_neon_green_name); }
         else if (nameEntryValues[7].equals(currentValue)) {radioGroup.check(R.id.intro_theme_muted_name); }
+        else if (nameEntryValues[8].equals(currentValue)) {radioGroup.check(R.id.intro_theme_bronze_name); }
         radioGroup.jumpDrawablesToCurrentState();
 
         radioGroup.setOnCheckedChangeListener(new
@@ -107,6 +110,7 @@ public class intro_theme extends Fragment {
               else if (checkedId == R.id.intro_theme_neon_name) { Choice = 5; }
               else if (checkedId == R.id.intro_theme_neon_green_name) { Choice = 6; }
               else if (checkedId == R.id.intro_theme_muted_name) { Choice = 7; }
+              else if (checkedId == R.id.intro_theme_bronze_name) { Choice = 8; }
               else { Choice = 0;}
 
               prefs.edit().putString("prefTheme", nameEntryValues[Choice]).commit();

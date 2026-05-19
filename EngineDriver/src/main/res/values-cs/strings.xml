@@ -660,7 +660,7 @@
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Oprávnění ACCESS_FINE_LOCATION nebylo uděleno.</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Název sítě je nedostupný. Zjišťování serveru může být omezené.</string>
     <string name="statusThreadedAppNotConnected">Není připojení k síti.  Zkontrolujte WiFi nastavení.\n\nOpakování</string>
-    <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$dms. Zkontrolujte zdali je server spuštěný.\n\nOpakování</string>
+    <string name="statusThreadedAppNoResponse">Žádná odpověď ze serveru %1$s:%2$s po %3$dms. Zkontrolujte zdali je server spuštěný.\n\nOpakování (%4$d)</string>
     <string name="statusThreadedAppUnableToConnect">Nemohu se připojit na server %1$s:%2$s z %3$s.\n\nOpakování</string>
 
     <!--    Toast messages for the Throttle page-->

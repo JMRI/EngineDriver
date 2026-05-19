@@ -191,6 +191,8 @@ public class threaded_application extends Application {
     /** @noinspection FieldCanBeLocal*/
     private ApplicationLifecycleHandler lifecycleHandler;
 
+    public static int reconnectAttemptCount = 0;
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // Turnouts
 
@@ -2127,6 +2129,7 @@ public class threaded_application extends Application {
                 case "Neon" -> R.style.app_theme_neon_blue;
                 case "Green" -> R.style.app_theme_neon_green;
                 case "Muted" -> R.style.app_theme_muted;
+                case "Bronze" -> R.style.app_theme_bronze;
                 default -> R.style.app_theme;
             };
         } else {
@@ -2143,6 +2146,8 @@ public class threaded_application extends Application {
                         R.style.app_theme_muted_preferences;
                 case "Colorful" ->
                         R.style.app_theme_new_colorful_preferences;
+                case "Bronze" ->
+                        R.style.app_theme_bronze_preferences;
                 default -> R.style.app_theme_preferences;
             };
         }

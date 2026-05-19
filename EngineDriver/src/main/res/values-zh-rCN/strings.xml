@@ -714,7 +714,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">网络名称不可访问。服务器发现功能可能受限。</string>
 
     <string name="statusThreadedAppNotConnected">未连接到网络。请检查WiFi设置。\n\n正在重试</string>
-    <string name="statusThreadedAppNoResponse">服务器%1$s:%2$s %3$dms内无响应。请检查WiThrottle服务器是否正在运行。\n\n正在重试</string>
+    <string name="statusThreadedAppNoResponse">服务器%1$s:%2$s %3$dms内无响应。请检查WiThrottle服务器是否正在运行。\n\n正在重试 (%4$d)</string>
     <string name="statusThreadedAppUnableToConnect">无法从%3$s连接到服务器%1$s:%2$s。正在重试</string>
     <string name="toastDoubleBackButtonToExit">再次按\'返回\'键退出Engine Driver</string>
 

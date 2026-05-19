@@ -81,10 +81,15 @@ public class ReconnectActivity extends AppCompatActivity {
 
                 case message_type.WIT_CON_RETRY: {
                     if ( (bundle != null)
-                            && (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ) {
+                            && ((bundle.containsKey(alert_bundle_tag_type.MESSAGE)) || (bundle.containsKey(alert_bundle_tag_type.COMMAND))) ) {
 
 //                    retryFirst = true;
-                        String command = (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ? bundle.getString(alert_bundle_tag_type.COMMAND) : "";
+                        String command;
+                        if (bundle.containsKey(alert_bundle_tag_type.MESSAGE)) {
+                            command = bundle.getString(alert_bundle_tag_type.MESSAGE);
+                        } else {
+                            command = bundle.getString(alert_bundle_tag_type.COMMAND);
+                        }
                         refresh_reconnect_status(command);
                     }
                     break;

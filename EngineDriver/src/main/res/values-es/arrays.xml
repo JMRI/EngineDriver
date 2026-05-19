@@ -198,6 +198,7 @@
         <item>Azul neón</item>
         <item>Verde neón</item>
         <item>Papel</item>
+        <item>Bronze</item>
     </string-array>
     <string-array name="prefSelectedLocoIndicatorEntries">
         <item>Ninguno (Utiliza solo \'v\',\'1\')</item>

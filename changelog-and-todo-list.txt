@@ -1,7 +1,10 @@
 **Version 2.43.228
  * New Features
      * Added a toast warning if the system Font Size is too large.
+     * New theme 'Bronze'.
  * Bug Fixes
+     * Tick mark text not showing on semi-realistic throttle layout.
+     * Styling problem with the speed buttons.
  * Other
      * Linting.
      * Some code cleanup / refactoring.
@@ -10,6 +13,7 @@
      * Changed the arrays of sound files names to arrays of resource IDs.
      * Upgrade to Gradle 9.2.1 + some dependencies.
      * Tweak muted theme.
+     * Count in the disconnected the loop.
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
