@@ -58,7 +58,7 @@
 
         <item name="reusable_button_text_default_color">@color/bronze_very_dark</item>
         <item name="reusable_button_text_enabled_color">@color/bronze_ultra_dark</item>
-        <item name="reusable_button_text_disabled_color">@color/grey_dark</item>
+        <item name="reusable_button_text_disabled_color">@color/bronze_bright_ultra_dark</item>
         <item name="reusable_select_button_text_disabled_color">@color/bronze_bright_very_dark</item>
         <item name="reusable_button_text_pressed_color">@color/bronze_dark</item>
         <item name="reusable_button_text_shadow_color">@color/transparent</item>
@@ -66,36 +66,36 @@
         <item name="reusable_stop_button_text_pressed_color">@color/bronze_ultra_dark</item>
         <item name="reusable_stop_button_active_light_bar_color">@color/red</item>
 
-        <item name="reusable_button_edge_highlight_color">@color/bronze_bright</item>
-        <item name="reusable_button_edge_light_color">@color/bronze_bright_dark</item>
-        <item name="reusable_button_edge_dark_color">@color/bronze_bright_mega_dark</item>
-        <item name="reusable_button_face_end_color">@color/bronze_bright</item>
+        <item name="reusable_button_edge_highlight_color">@color/bronze_bright_very_light</item>
+        <item name="reusable_button_edge_light_color">@color/bronze_bright</item>
+        <item name="reusable_button_edge_dark_color">@color/bronze_bright_ultra_dark</item>
+        <item name="reusable_button_face_end_color">@color/bronze_bright_very_light</item>
         <item name="reusable_button_face_center_color">@color/bronze_bright_dark</item>
         <item name="reusable_button_face_start_color">@color/bronze_bright_ultra_dark</item>
 
         <!-- function buttons -->
-        <item name="reusable_button_function_edge_highlight_color">@color/bronze_bright_light</item>
+        <item name="reusable_button_function_edge_highlight_color">@color/bronze_bright_very_light</item>
         <item name="reusable_button_function_edge_light_color">@color/bronze_bright</item>
         <item name="reusable_button_function_edge_dark_color">@color/bronze_bright_ultra_dark</item>
-        <item name="reusable_button_function_face_end_color">@color/bronze_bright_light</item>
+        <item name="reusable_button_function_face_end_color">@color/bronze_bright_very_light</item>
         <item name="reusable_button_function_face_center_color">@color/bronze_bright_dark</item>
-        <item name="reusable_button_function_face_start_color">@color/bronze_bright_dark</item>
+        <item name="reusable_button_function_face_start_color">@color/bronze_bright_ultra_dark</item>
 
         <!-- speed buttons -->
         <item name="reusable_button_2_edge_highlight_color">@color/bronze_gold_ultra_light</item>
         <item name="reusable_button_2_edge_light_color">@color/bronze_gold_very_light</item>
-        <item name="reusable_button_2_edge_dark_color">@color/bronze_gold_light</item>
+        <item name="reusable_button_2_edge_dark_color">@color/bronze_gold_ultra_dark</item>
         <item name="reusable_button_2_face_end_color">@color/bronze_gold_very_light</item>
         <item name="reusable_button_2_face_center_color">@color/bronze_gold_light</item>
-        <item name="reusable_button_2_face_start_color">@color/bronze_gold_light</item>
+        <item name="reusable_button_2_face_start_color">@color/bronze_gold_very_dark</item>
 
         <!-- stop buttons -->
         <item name="reusable_button_stop_edge_highlight_color">@color/bronze_rose_gold_light</item>
         <item name="reusable_button_stop_edge_light_color">@color/bronze_rose_gold</item>
-        <item name="reusable_button_stop_edge_dark_color">@color/bronze_rose_gold_dark</item>
+        <item name="reusable_button_stop_edge_dark_color">@color/bronze_rose_gold_ultra_dark</item>
         <item name="reusable_button_stop_face_end_color">@color/bronze_rose_gold_light</item>
         <item name="reusable_button_stop_face_center_color">@color/bronze_rose_gold_dark</item>
-        <item name="reusable_button_stop_face_start_color">@color/bronze_rose_gold_dark</item>
+        <item name="reusable_button_stop_face_start_color">@color/bronze_rose_gold_very_dark</item>
 
         <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
         <item name="reusable_button_disabled_fill_color">@color/transparent</item>
@@ -129,7 +129,7 @@
         <item name="ed_text_shadow_color_primary">@color/bronze_gold_very_dark</item>
         <item name="ed_text_color_primary_inverted">@color/bronze_gold_mega_dark</item>
         <item name="ed_text_color_secondary">@color/bronze_bright_ultra_light</item>
-        <item name="ed_text_color_hint">@color/bronze_bright</item>
+        <item name="ed_text_color_hint">@color/bronze_bright_very_dark</item>
         <item name="ed_text_color_disabled">@color/grey_dark</item>
 
         <item name="ed_primaryLineColor">@color/bronze_gold_light</item>
