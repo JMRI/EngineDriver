@@ -34,8 +34,8 @@
         <item name="reusable_app_background_highlight_secondary_color">@color/bronze</item>
         <item name="reusable_app_background_highlight_tertiary_color">@color/bronze_light</item>
 
-        <item name="reusable_heading_small_start_color">@color/bronze_ultra_dark</item>
-        <item name="reusable_heading_small_center_color">@color/bronze</item>
+        <item name="reusable_heading_small_start_color">@color/bronze_mega_dark</item>
+        <item name="reusable_heading_small_center_color">@color/bronze_dark</item>
         <item name="reusable_heading_small_end_color">@color/transparent</item>
 
         <item name="reusable_radio_button_normal_color">@color/bronze_gold_dark</item>
@@ -129,7 +129,7 @@
         <item name="ed_text_shadow_color_primary">@color/bronze_gold_very_dark</item>
         <item name="ed_text_color_primary_inverted">@color/bronze_gold_mega_dark</item>
         <item name="ed_text_color_secondary">@color/bronze_bright_ultra_light</item>
-        <item name="ed_text_color_hint">@color/bronze_bright_very_dark</item>
+        <item name="ed_text_color_hint">@color/bronze_bright_ultra_dark</item>
         <item name="ed_text_color_disabled">@color/grey_dark</item>
 
         <item name="ed_primaryLineColor">@color/bronze_gold_light</item>
@@ -165,8 +165,8 @@
         <item name="android:itemBackground">#ff000000</item>
 
         <!-- underline under Edit Text -->
-        <item name="colorControlActivated">@color/bronze_gold_light</item>
         <item name="edit_text_underline_activated">@color/bronze_gold_light</item>
+        <item name="edit_text_underline_normal">@color/bronze_gold_dark</item>
 
         <!-- switch colors -->
         <item name="reusable_switch_thumb_enabled_checked_color">@color/solidYellow</item>
