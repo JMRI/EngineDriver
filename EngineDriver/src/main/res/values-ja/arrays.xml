@@ -416,6 +416,7 @@
         <item>中央 - スケーリングなし</item>
         <item>フィット - 縮小のみ</item>
         <item>塗りつぶし - 必要に応じて変形します</item>
+        <item>タイル - 繰り返し</item>
     </string-array>
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
         <item>リードロコ</item>

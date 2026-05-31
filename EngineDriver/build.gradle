@@ -48,14 +48,14 @@ dependencies {
     implementation files('libs/jackson-core-asl-1.9.7.jar')
     implementation files('libs/jackson-mapper-asl-1.9.7.jar')
     implementation files('libs/java-json.jar')
-    implementation files('libs/jmdns-3.5.8.jar')
+    implementation 'org.jmdns:jmdns:3.6.3'
 
     implementation 'io.github.esugmbh:mobilecontrol2-sdk:1.1.7'
 
     implementation 'com.github.AppIntro:appintro:7.0.0-beta02'
 
-    implementation 'org.slf4j:slf4j-api:2.0.17'
-    implementation 'org.slf4j:slf4j-nop:2.0.17'
+    implementation 'org.slf4j:slf4j-api:2.0.18'
+    implementation 'org.slf4j:slf4j-nop:2.0.18'
     implementation 'androidx.exifinterface:exifinterface:1.4.2'
 }
 

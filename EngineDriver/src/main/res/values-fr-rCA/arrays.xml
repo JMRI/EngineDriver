@@ -396,22 +396,16 @@
         <item>Régulateur + Locomotive + Vitesse</item>
     </string-array>
 
-
-
-
-
-
-
-
-
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Adapté - Contraction/Expansion</item>
         <item>Remplir - Recadrer 2 côtés opposés</item>
         <item>Centrer - Pas de mise à l\'échelle</item>
         <item>Ajustement - Rétrécissement uniquement</item>
         <item>Ajustement - Distortion si requis</item>
+        <item>Carreau - Répéter</item>
+
     </string-array>
-    <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
+        <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
         <item>Locomotive de tête</item>
         <item>Locomotive de tête et de queue</item>
         <item>Toutes les locomotives</item>

@@ -2,6 +2,8 @@
  * New Features
      * Added a toast warning if the system Font Size is too large.
      * New theme 'Bronze'.
+     * Support for UDP connection to DCC-EX EX-CommandStations. (Allows greater than the 10 connections for TCP)
+     * Added 'tile' option for background image options.
  * Bug Fixes
      * Tick mark text not showing on semi-realistic throttle layout.
      * Styling problem with the speed buttons.
@@ -13,7 +15,10 @@
      * Changed the arrays of sound files names to arrays of resource IDs.
      * Upgrade to Gradle 9.2.1 + some dependencies.
      * Tweak muted theme.
-     * Count in the disconnected the loop.
+     * Count in the disconnected the loop. Intent is eventually to but a max tries.
+     * Removal of local copy of the jMDNS library so later versions will be used.
+     * Google translations.
+     * AI suggested changes to the mDNS startup so that it immediately checks for services on app restart.
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".

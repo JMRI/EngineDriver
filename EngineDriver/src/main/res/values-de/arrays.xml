@@ -297,6 +297,7 @@
         <item>Zentrum - Keine Skalierung</item>
         <item>Fit - Schrumpf nur</item>
         <item>Fill - Verzerren bei Bedarf</item>
+        <item>Kacheln - Wiederholen</item>
     </string-array>
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->

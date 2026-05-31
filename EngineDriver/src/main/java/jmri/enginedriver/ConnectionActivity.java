@@ -194,20 +194,14 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     }
 
     private void connect() {
-//        navigateToHandler(PermissionsHelper.CONNECT_TO_SERVER);
-//    }
-//
-//    //Request connection to the WiThrottle server.
-//    private void connectImpl() {
-
         threaded_application.extendedLogging(activityName + ": connect()");
 
         Bundle bundle = new Bundle();
         bundle.putString(alert_bundle_tag_type.IP_ADDRESS, connected_hostip);
         bundle.putInt(alert_bundle_tag_type.PORT, connected_port);
+        bundle.putString(alert_bundle_tag_type.SERVICE_TYPE, connected_serviceType);
         mainapp.alertCommHandlerWithBundle(message_type.CONNECT, bundle);
     }
-
 
     private void startThrottleActivity() {
         threaded_application.activityInTransition(activityName);
@@ -263,7 +257,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                         TextView hpv = (TextView) vg.getChildAt(2); // get port from 3rd box
                         connected_port = Integer.parseInt(hpv.getText().toString());
                         connected_ssid = mainapp.client_ssid;
-                        TextView hstv = (TextView) vg.getChildAt(3); // get from 4th box
+                        TextView hstv = (TextView) vg.getChildAt(4); // get from 5th box
                         connected_serviceType = hstv.getText().toString();
                         break;
                 }
@@ -347,6 +341,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             connected_hostname = threaded_application.DUMMY_HOST;
             connected_port = threaded_application.DUMMY_PORT;
             connected_ssid = threaded_application.DUMMY_SSID;
+            connected_serviceType = threaded_application.JMDNS_SERVICE_WITHROTTLE;
 
             Animation anim = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
             anim.setDuration(500);
@@ -474,14 +469,12 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                         for (int index = 0; index < discovery_list.size(); index++) {
                             tm = discovery_list.get(index);
                             if (tm != null) {
-                                String thisIp = tm.get("ip_address");
-                                String thisPort = tm.get("port");
-                                if ( (thisIp != null) && (thisPort != null) ) {
-                                    if ( (thisIp.equals(found_ip_address))
-                                    && (thisPort.equals(found_port))) {
-                                        entryExists = true;
-                                        break;
-                                    }
+                                if ( (tm.get("host_name").equals(found_host_name))
+                                        && (tm.get("ip_address").equals(found_ip_address))
+                                        && (tm.get("port").equals(found_port))
+                                        && (tm.get("service_type").equals(found_service_type)) ) {
+                                    entryExists = true;
+                                    break;
                                 }
                             }
                         }
@@ -620,7 +613,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
         discovery_list = new ArrayList<>();
         discovery_list_adapter = new SimpleAdapter(this, discovery_list, R.layout.connection_list_item,
-                new String[]{"ip_address", "host_name", "port", "ssid", "serverType"},
+                new String[]{"ip_address", "host_name", "port", "ssid", "service_type"},
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label});
         ListView discover_list = findViewById(R.id.discovery_list);
         discover_list.setAdapter(discovery_list_adapter);
@@ -630,7 +623,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         //Set up a list adapter to allow adding the list of recent connections to the UI.
 //            connections_list = new ArrayList<>();
         connection_list_adapter = new SimpleAdapter(this, importExportConnectionList.connections_list, R.layout.connection_list_item,
-                new String[]{"ip_address", "host_name", "port", "ssid", "serverType"},
+                new String[]{"ip_address", "host_name", "port", "ssid", "service_type"},
                 new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label});
         ListView conn_list = findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
@@ -839,8 +832,6 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         setLabels();
 
         mainapp.setActivityOrientation(this);  //set screen orientation based on prefs
-        //start up server discovery listener
-        mainapp.sendMsg(mainapp.commBundleMessageHandler, message_type.SET_LISTENER, "", 1);
 
         Bundle bundle = new Bundle();
         bundle.putInt(alert_bundle_tag_type.ON_OFF, 1);
@@ -852,12 +843,9 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         mainapp.cancelForcingFinish();            // if fresh start or restart after being killed in the bkg, indicate app is running again
         //start up server discovery listener again (after a 1 second delay)
         //TODO: this is a rig, figure out why this is needed for ubuntu servers
-        //	    sendMsgErr(1000, message_type.SET_LISTENER, "", 1, "ERROR in ca.onResume: comm thread not started.") ;
-//        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 1);
-
         bundle = new Bundle();
         bundle.putInt(alert_bundle_tag_type.ON_OFF, 1);
-        mainapp.alertCommHandlerWithBundle(message_type.SET_LISTENER, bundle);
+        mainapp.alertCommHandlerWithBundle(message_type.SET_LISTENER, 1000L, bundle);
 
         if (prefs.getBoolean("prefConnectToFirstServer", false)) {
             connectToFirstDiscoveredServer();

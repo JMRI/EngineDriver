@@ -35,6 +35,7 @@
         <item>Centre - No Scaling</item>
         <item>Fit - Shrink only</item>
         <item>Fill - Distort if needed</item>
+        <item>Tile - Repeat</item>
     </string-array>
 
 </resources>

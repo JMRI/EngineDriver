@@ -296,6 +296,7 @@
         <item>Centra - Sense escalar</item>
         <item>Adapta - Només escapçar</item>
         <item>Omplena - Distorsionar si cal</item>
+        <item>Rajola - Repetició</item>
     </string-array>
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->

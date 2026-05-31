@@ -125,8 +125,10 @@ public class comm_handler extends Handler {
                               //log message, but keep going if this fails
                               Log.d(threaded_application.applicationName, activityName + ": handleMessage(): multicast_lock.acquire() failed");
                            }
-                           commThread.jmdns.addServiceListener(mainapp.JMDNS_SERVICE_WITHROTTLE, commThread.listener);
-                           commThread.jmdns.addServiceListener(mainapp.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, commThread.listener);
+                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_WITHROTTLE, commThread.listener);
+                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, commThread.listener);
+                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP, commThread.listener);
+                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP, commThread.listener);
                            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns listener added");
                         } else {
                            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns not running, didn't start listener");
@@ -146,55 +148,97 @@ public class comm_handler extends Handler {
 
             if ((bundle != null)
                     && (bundle.containsKey(alert_bundle_tag_type.IP_ADDRESS))
-                    && (bundle.containsKey(alert_bundle_tag_type.PORT))) {
+                    && (bundle.containsKey(alert_bundle_tag_type.PORT))
+                    && (bundle.containsKey(alert_bundle_tag_type.SERVICE_TYPE))) {
 
                String new_host_ip = bundle.getString(alert_bundle_tag_type.IP_ADDRESS).trim();
                int new_port = bundle.getInt(alert_bundle_tag_type.PORT);
+               String new_serviceType = bundle.getString(alert_bundle_tag_type.SERVICE_TYPE);
 
-               //avoid duplicate connects, seen when user clicks address multiple times quickly
-               if (comm_thread.socketWiT != null && comm_thread.socketWiT.SocketGood()
-                       && new_host_ip.equals(mainapp.host_ip) && new_port == mainapp.port) {
-                  Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Duplicate CONNECT message received.");
-                  break;
-               }
+               if (new_serviceType.equals(threaded_application.JMDNS_SERVICE_DCC_EX_UDP)) {
 
-               //clear app.thread shared variables so they can be reinitialized
-               mainapp.initShared();
-               mainapp.fastClockSeconds = 0L;
-
-               //store ip and port in global variables
-               mainapp.host_ip = new_host_ip;
-               mainapp.port = new_port;
-               // skip url checking on Play Protect
-               if (Build.VERSION.SDK_INT >= 27) {
-                  WebView.setSafeBrowsingWhitelist(Collections.singletonList(mainapp.host_ip), null);
-               }
-
-               //attempt connection to WiThrottle server
-               comm_thread.socketWiT = new comm_thread.SocketWifi();
-               if (comm_thread.socketWiT.connect()) {
-                  if (mainapp.isDccexProtocol()) {
-                     if (!mainapp.prefHideInstructionalToasts) {
-
-                        bundle = new Bundle();
-                        bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.usingProtocolDCCEX));
-                        bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
-                        mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.CONNECTION);
-                     }
+                  //avoid duplicate connects, seen when user clicks address multiple times quickly
+                  if (comm_thread.socketUdp != null && comm_thread.socketUdp.SocketGood()
+                          && new_host_ip.equals(mainapp.host_ip) && new_port == mainapp.port) {
+                     Log.d("EX_Toolbox", "comm_handler.handleMessage: Duplicate CONNECT message received.");
+                     break;
                   }
 
-                  commThread.sendThrottleName();
-//                  mainapp.sendMsgDelay(mainapp.comm_msg_handler, 5000L, message_type.CONNECTION_COMPLETED_CHECK);
-                  mainapp.alertCommHandlerWithBundle(message_type.CONNECTION_COMPLETED_CHECK, 5000L);
+                  //clear app.thread shared variables so they can be reinitialized
+                  mainapp.initShared();
+                  mainapp.fastClockSeconds = 0L;
 
-                  if (prefs.getBoolean("prefStopOnPhoneCall", mainapp.getResources().getBoolean(R.bool.prefStopOnPhoneCallDefaultValue))) {
-                     commThread.phone = new comm_thread.PhoneListener();
+                  //store ip and port in global variables
+                  mainapp.host_ip = new_host_ip;
+                  mainapp.port = new_port;
+                  // skip url checking on Play Protect
+                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                     WebView.setSafeBrowsingWhitelist(Collections.singletonList(mainapp.host_ip), null);
                   }
+
+                  //attempt connection to server
+                  comm_thread.socketUdp = new SocketUdp(mainapp, prefs, commThread, mainapp.getBaseContext());
+                  if (comm_thread.socketUdp.connect()) {
+
+                     commThread.sendThrottleName();
+
+                     bundle = new Bundle();
+                     bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.usingProtocolDCCEX));
+                     bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                     mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.CONNECTION);
+
+                  } else {
+                     mainapp.host_ip = null;  //clear vars if failed to connect
+                     mainapp.port = 0;
+                  }
+
                } else {
-                  mainapp.host_ip = null;  //clear vars if failed to connect
-                  mainapp.port = 0;
+
+                  //avoid duplicate connects, seen when user clicks address multiple times quickly
+                  if (comm_thread.socketWiT != null && comm_thread.socketWiT.SocketGood()
+                          && new_host_ip.equals(mainapp.host_ip) && new_port == mainapp.port) {
+                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Duplicate CONNECT message received.");
+                     break;
+                  }
+
+                  //clear app.thread shared variables so they can be reinitialized
+                  mainapp.initShared();
+                  mainapp.fastClockSeconds = 0L;
+
+                  //store ip and port in global variables
+                  mainapp.host_ip = new_host_ip;
+                  mainapp.port = new_port;
+                  // skip url checking on Play Protect
+                  if (Build.VERSION.SDK_INT >= 27) {
+                     WebView.setSafeBrowsingWhitelist(Collections.singletonList(mainapp.host_ip), null);
+                  }
+
+                  //attempt connection to WiThrottle server
+                  comm_thread.socketWiT = new SocketWiFi(mainapp, prefs, commThread);
+                  if (comm_thread.socketWiT.connect()) {
+                     if (mainapp.isDccexProtocol()) {
+                        if (!mainapp.prefHideInstructionalToasts) {
+
+                           bundle = new Bundle();
+                           bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.usingProtocolDCCEX));
+                           bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                           mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.CONNECTION);
+                        }
+                     }
+
+                     commThread.sendThrottleName();
+//                  mainapp.sendMsgDelay(mainapp.comm_msg_handler, 5000L, message_type.CONNECTION_COMPLETED_CHECK);
+                     mainapp.alertCommHandlerWithBundle(message_type.CONNECTION_COMPLETED_CHECK, 5000L);
+
+                     if (prefs.getBoolean("prefStopOnPhoneCall", mainapp.getResources().getBoolean(R.bool.prefStopOnPhoneCallDefaultValue))) {
+                        commThread.phone = new comm_thread.PhoneListener();
+                     }
+                  } else {
+                     mainapp.host_ip = null;  //clear vars if failed to connect
+                     mainapp.port = 0;
+                  }
+                  mainapp.soundsReloadSounds = true;
                }
-               mainapp.soundsReloadSounds = true;
             }
             break;
          }

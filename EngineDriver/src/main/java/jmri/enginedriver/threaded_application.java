@@ -114,6 +114,7 @@ import jmri.enginedriver.type.Consist.ConLoco;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.auto_import_export_option_type;
+import jmri.enginedriver.type.connection_type;
 import jmri.enginedriver.type.dccex_emergency_stop_state_type;
 import jmri.enginedriver.type.gamepad_status_type;
 import jmri.enginedriver.type.kids_timer_action_type;
@@ -273,8 +274,10 @@ public class threaded_application extends Application {
     private String serverType = ""; //should be set by server in initial command strings
     private String serverDescription = ""; //may be set by server in initial command strings
 
-    public String JMDNS_SERVICE_WITHROTTLE = "_withrottle._tcp.local.";
-    public String JMDNS_SERVICE_JMRI_DCCPP_OVERTCP = "_dccppovertcpserver._tcp.local.";
+    public static final String JMDNS_SERVICE_WITHROTTLE = "_withrottle._tcp.local.";
+    public static final String JMDNS_SERVICE_JMRI_DCCPP_OVERTCP = "_dccppovertcpserver._tcp.local.";
+    public static final String JMDNS_SERVICE_DCC_EX_TCP = "_dcc-ex._tcp.local.";
+    public static final String JMDNS_SERVICE_DCC_EX_UDP = "_dcc-ex._udp.local.";
 
     public volatile String host_ip = null; //The IP address of the WiThrottle server.
     public volatile String logged_host_ip = null;
@@ -316,6 +319,8 @@ public class threaded_application extends Application {
 
     public boolean haveForcedWiFiConnection = false;
     public boolean prefAllowMobileData = false;
+
+    public int connectionType = connection_type.TCP; // 0=Tcp 1=Udp
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // DCC-EX specific
