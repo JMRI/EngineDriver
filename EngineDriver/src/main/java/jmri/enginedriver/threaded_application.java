@@ -1367,6 +1367,16 @@ public class threaded_application extends Application {
                     s += "DCC-EX";
                 }
             }
+
+            String transport = switch (mainapp.connectedServiceType) {
+                case threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP -> "TCP (JMRI)";
+                case threaded_application.JMDNS_SERVICE_DCC_EX_UDP -> "UDP";
+//                    case threaded_application.JMDNS_SERVICE_DCC_EX_TCP -> "TCP";
+                default -> "TCP";
+            };
+            sHtml += "<small>, Transport: </small><b>" + transport + "</b>";
+            s += ", Transport: " + transport;
+
             sHtml += String.format("<small>, Host: </small><b>%s</b>", getHostIp() );
             sHtml += String.format("<small> Port: </small><b>%s</b>", connectedPort);
             s += String.format(", Host: %s", getHostIp() );

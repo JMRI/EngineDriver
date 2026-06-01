@@ -150,14 +150,17 @@ public class comm_thread extends Thread {
     }
 
     String modifyHostName(String hostName, String serviceType) {
-        String resultHostName = hostName;
-        if (serviceType.equals(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP)) {
-            resultHostName = hostName + " [DCC-EX]";
-        } else if (serviceType.equals(threaded_application.JMDNS_SERVICE_DCC_EX_TCP)) {
-            resultHostName = hostName + " [TCP DCC-EX]";
-        } else if (serviceType.equals(threaded_application.JMDNS_SERVICE_DCC_EX_UDP)) {
-            resultHostName = hostName + " [UDP DCC-EX]";
-        }
+        String resultHostName;
+        resultHostName = switch (serviceType) {
+            case threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP ->
+                    hostName + " [JMRI DCC-EX]";
+            case threaded_application.JMDNS_SERVICE_DCC_EX_TCP ->
+                    hostName + " [TCP DCC-EX]";
+            case threaded_application.JMDNS_SERVICE_DCC_EX_UDP ->
+                    hostName + " [UDP DCC-EX]";
+            default ->
+                    hostName;
+        };
         return resultHostName;
     }
 
