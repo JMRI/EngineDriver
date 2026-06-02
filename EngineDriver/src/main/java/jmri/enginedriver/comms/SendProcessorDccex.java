@@ -38,6 +38,7 @@ public class SendProcessorDccex {
     public static void sendThrottleName(Boolean ignoredSendHWID) {
 //    Log.d(threaded_application.applicationName, activityName + ": sendThrottleName DCC-EX: <s>");
         if (mainapp.dccexListsRequested < 0) { // if we haven't received all the lists go ask for them
+            comm_thread.wifiSend("<#>");
             comm_thread.wifiSend("<s>");
             sendDccexRequestRoster();
             if (!prefs.getBoolean("prefDccexSequenceItemRequests", false)) {

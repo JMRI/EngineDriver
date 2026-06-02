@@ -429,12 +429,15 @@
         <item>否</item>
         <item>自动</item>
     </string-array>
+
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>自适应缩放</item>
         <item>自适应填充</item>
         <item>居中</item>
         <item>自适应仅缩小</item>
         <item>填充 - 必要时进行扭曲</item>
+        <item>平铺 - 重复</item>
+
     </string-array>
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
         <item>头车</item>

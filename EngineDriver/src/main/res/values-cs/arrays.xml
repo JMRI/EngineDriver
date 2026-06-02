@@ -497,6 +497,7 @@
         <item>Centrovat - Bez škálování</item>
         <item>Přizpůsobit - Pouze zmenšit</item>
         <item>Vyplnit - V případě potřeby zkřivit</item>
+        <item>Dlaždice - Opakování</item>
     </string-array>
 
 <!--    <string-array name="prefThrottleSwitchWebViewEntries">  &lt;!&ndash; display version &ndash;&gt;-->

@@ -296,6 +296,7 @@
         <item>Centro - Sin escala</item>
         <item>Montar - Shrink solamente</item>
         <item>Fill - Distorsionar si es necesario</item>
+        <item>Baldosa - Repetir</item>
     </string-array>
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->

@@ -1262,9 +1262,9 @@ public class ResponseProcessorDccex {
                     if (sn != null && sn.equals(args[1])) {
                         foundInMainList = true;
                         if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found, update to new value
-                            if (args[2].charAt(0) != '"') { // <jB id "stuff">
+                            if (args[2].charAt(0) != '"') { // <jB id <state>    state: 0=inactive 1=active 2=hidden 4=disabled
                                 mainapp.routeDccexStates[pos] = Integer.parseInt(args[2]);
-                            } else { // <jB id <state>    state: 0=inactive 1=active 2=hidden
+                            } else { // <jB id "stuff">
                                 mainapp.routeDccexLabels[pos] = args[2].substring(1, args[2].length() - 1);
                             }
                         }

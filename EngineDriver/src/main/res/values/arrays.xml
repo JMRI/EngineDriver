@@ -2581,6 +2581,7 @@
         <item>CENTER</item>
         <item>CENTER_INSIDE</item>
         <item>FIT_XY</item>
+        <item>TILE</item>
     </string-array>
     <string-array name="prefBackgroundImagePositionEntries">  <!-- display version -->
         <item>Fit - Shrink/expand</item>
@@ -2588,6 +2589,7 @@
         <item>Center - No scaling</item>
         <item>Fit - Shrink only</item>
         <item>Fill - Distort if needed</item>
+        <item>Tile - Repeat</item>
     </string-array>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
