@@ -13,7 +13,7 @@
      * Fixed the colour of the alert/warning glyph for some themes.
      * Rearranged the global variables in t_a into logical groups.
      * Changed the arrays of sound files names to arrays of resource IDs.
-     * Upgrade to Gradle 9.2.1 + some dependencies.
+     * Upgrade to Gradle 9.5.1 + some dependencies.
      * Tweak muted theme.
      * Count in the disconnected the loop. Intent is eventually to but a max tries.
      * Removal of local copy of the jMDNS library so later versions will be used.

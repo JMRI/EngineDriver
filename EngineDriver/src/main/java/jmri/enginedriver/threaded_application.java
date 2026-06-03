@@ -1149,15 +1149,15 @@ public class threaded_application extends Application {
 //                    metadataTemp.put(metadataName, metadataValue);
 //                }
 //            } catch (JSONException e) {
-//                Log.d(applicationName, "t_a: exception trying to retrieve json metadata.");
+//                Log.d(applicationName, "t_a: exception trying to retrieve JSON metadata.");
 //            } catch (Exception e) {
 //                throw new IOException();
 //            }
 //            if (metadataTemp.size() == 0) {
-//                Log.d(applicationName, "t_a: did not retrieve any json metadata entries.");
+//                Log.d(applicationName, "t_a: did not retrieve any JSON metadata entries.");
 //            } else {
 //                jmriMetadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
-//                Log.d(applicationName, "t_a: Loaded " + jmriMetadata.size() + " metadata entries from json web server.");
+//                Log.d(applicationName, "t_a: Loaded " + jmriMetadata.size() + " metadata entries from JSON web server.");
 //            }
 //        }
 //    }
@@ -1409,6 +1409,7 @@ public class threaded_application extends Application {
     }
 
     //initialize shared variables
+    @SuppressWarnings("unchecked")
     public void initShared() {
         withrottle_version = 0.0;
         web_server_port = 0;
@@ -2008,9 +2009,9 @@ public class threaded_application extends Application {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - //
 
-    public void sendMessageWithBundle(Handler h, int msgType, Bundle bundle) {
-        sendMessageWithBundleDelay(h, 0, msgType, bundle);
-    }
+//    public void sendMessageWithBundle(Handler h, int msgType, Bundle bundle) {
+//        sendMessageWithBundleDelay(h, 0, msgType, bundle);
+//    }
 
     public void sendMessageWithBundleDelay(Handler h, long delayMs, int msgType, Bundle bundle) {
 //        threaded_application.extendedLogging(activityName + ": sendMessageWithBundleDelay(): " + msgType);
@@ -2055,19 +2056,19 @@ public class threaded_application extends Application {
         return sendMsgDelay(h, 0, msgType, msgBody, msgArg1, msgArg2);
     }
 
-    /** @noinspection UnusedReturnValue*/
-    public boolean sendMsgDelay(Handler h, long delayMs, int msgType, int msgArg1) {
-        return sendMsgDelay(h, delayMs, msgType, "", msgArg1, 0);
-    }
+//    /** @noinspection UnusedReturnValue*/
+//    public boolean sendMsgDelay(Handler h, long delayMs, int msgType, int msgArg1) {
+//        return sendMsgDelay(h, delayMs, msgType, "", msgArg1, 0);
+//    }
 
-    public boolean sendMsgDelay(Handler h, long delayMs, int msgType) {
-        return sendMsgDelay(h, delayMs, msgType, "", 0, 0);
-    }
+//    public boolean sendMsgDelay(Handler h, long delayMs, int msgType) {
+//        return sendMsgDelay(h, delayMs, msgType, "", 0, 0);
+//    }
 
-    /** @noinspection UnusedReturnValue*/
-    public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody) {
-        return sendMsgDelay(h, delayMs, msgType, msgBody, 0, 0);
-    }
+//    /** @noinspection UnusedReturnValue*/
+//    public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody) {
+//        return sendMsgDelay(h, delayMs, msgType, msgBody, 0, 0);
+//    }
 
     public boolean sendMsgDelay(Handler h, long delayMs, int msgType, String msgBody, int msgArg1, int msgArg2) {
         boolean sent = false;
@@ -2129,9 +2130,9 @@ public class threaded_application extends Application {
 //        return uri;
 //    }
 
-    public int getSelectedTheme() {
-        return getSelectedTheme(false);
-    }
+//    public int getSelectedTheme() {
+//        return getSelectedTheme(false);
+//    }
 
     public int getSelectedTheme(boolean isPreferences) {
         String prefTheme = getCurrentTheme();
@@ -2704,17 +2705,17 @@ public class threaded_application extends Application {
             safeToast(msg_txt, length);
         }
     }
-    /** @noinspection SameReturnValue*/
-    public boolean safeToastInstructionalShowOnce(final int resourceId, final int length, boolean shownBefore) {
-        return safeToastInstructionalShowOnce(getApplicationContext().getResources().getString(resourceId), length, shownBefore);
-    }
-    /** @noinspection SameReturnValue*/
-    public boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
-        if ((!prefHideInstructionalToasts) && (!shownBefore)) {
-            safeToast(msg_txt, length);
-        }
-        return true;
-    }
+//    /** @noinspection SameReturnValue*/
+//    public boolean safeToastInstructionalShowOnce(final int resourceId, final int length, boolean shownBefore) {
+//        return safeToastInstructionalShowOnce(getApplicationContext().getResources().getString(resourceId), length, shownBefore);
+//    }
+//    /** @noinspection SameReturnValue*/
+//    public boolean safeToastInstructionalShowOnce(final String msg_txt, final int length, boolean shownBefore) {
+//        if ((!prefHideInstructionalToasts) && (!shownBefore)) {
+//            safeToast(msg_txt, length);
+//        }
+//        return true;
+//    }
 
     //display msg using Toast() safely by ensuring Toast() is called from the UI Thread
     public void safeToast(final int resourceId, final int length) {
@@ -3322,7 +3323,7 @@ public class threaded_application extends Application {
         return whichGamepad;
     }
 
-    // work out: a) if we need to look for multiple gamepads, b) workout which gamepad we received the key event from
+    // work out: a: if we need to look for multiple gamepads, b: workout which gamepad we received the key event from
     public int findWhichGamePadEventIsFrom(String eventDeviceDescriptor, String eventDeviceName, int ignoredEventKeyCode) {
 //    public int findWhichGamePadEventIsFrom(int eventDeviceId, String eventDeviceName, int eventKeyCode) {
         int whichGamePad = -2;  // default to the event not from a gamepad
@@ -3485,7 +3486,7 @@ public class threaded_application extends Application {
             }
         }
 
-        if (isExternal) { // is from a external device (otherwise if it has come from the phone itself, generally don't try to process it here)
+        if (isExternal) { // is from an external device (otherwise if it has come from the phone itself, generally don't try to process it here)
             if (!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) { // respond to the gamepad and keyboard inputs only if the preference is set
                 boolean acceptEvent = true; // default to assuming that we will respond to the event
 
@@ -3689,7 +3690,7 @@ public class threaded_application extends Application {
     }
 
     //parse roster functions list into appropriate app variable array
-    //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncpl]\[BrkRls]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
+    //  //RF29}|{4805(L)]\[Light]\[Bell]\[Horn]\[Air]\[Uncouple]\[BrakeRelease]\[]\[]\[]\[]\[]\[]\[Engine]\[]\[]\[]\[]\[]\[BellSel]\[HornSel]\[]\[]\[]\[]\[]\[]\[]\[]\[
     public static LinkedHashMap<Integer, String> parseFunctionLabels(String responseStr) {
         String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //split into list of labels
 
@@ -3984,7 +3985,7 @@ public class threaded_application extends Application {
         // handle toastPopupWindow click event
         layout.setOnClickListener(view -> toastPopupWindow.dismiss());
 
-        // Use post to ensure the Activity's window is ready and we have a window token
+        // Use post to ensure the Activity's window is ready, and we have a window token
         final View decorView = activity.getWindow().getDecorView();
         if (decorView != null) {
             decorView.post(() -> {
