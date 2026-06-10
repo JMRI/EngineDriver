@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.SeekBar;
@@ -61,6 +63,9 @@ public class VerticalSeekBar extends SeekBar {
     protected float l;
     protected float r;
     protected float j;
+    protected float textVerticalCenter;
+
+    protected Typeface condensedTypeface;
 
     // A change listener registering start and stop of tracking. Need an own listener because the listener in SeekBar
     // is private.
@@ -98,6 +103,7 @@ public class VerticalSeekBar extends SeekBar {
 //        textPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
         tickPaint.setColor(tickColor);
         textPaint.setTextSize(10);
+        condensedTypeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     }
 
     public VerticalSeekBar(final Context context, final AttributeSet attrs) {
@@ -113,6 +119,7 @@ public class VerticalSeekBar extends SeekBar {
         textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint.setColor(tickColor);
         textPaint.setTextSize(32);
+        condensedTypeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     }
 
 
@@ -156,12 +163,19 @@ public class VerticalSeekBar extends SeekBar {
         height = getHeight();
         width = getWidth();
 
-        paddingLeft = getPaddingLeft();
-        paddingRight = getPaddingRight();
+        paddingLeft = getPaddingLeft();  // for vertical, this is actually the top padding
+        paddingRight = getPaddingRight();  // for vertical, this is actually the bottom padding
         realWidth = height - paddingLeft - paddingRight;
 
         int size = (int) Math.round((double) (width) / 12);
         textPaint.setTextSize(size);
+        textPaint.setTypeface(condensedTypeface);
+        Paint.FontMetrics fm = textPaint.getFontMetrics();
+//        float totalLineHeight = Math.abs(fm.ascent) + Math.abs(fm.descent) + Math.abs(fm.leading);
+//        textVerticalCenter = totalLineHeight / 2;
+        Rect bounds = new Rect();
+        textPaint.getTextBounds("9", 0, 1, bounds);
+        textVerticalCenter = (float) bounds.height() / 2;
 
         if (!tickMarksChecked) { // only do this once
             tickMarksChecked = true;
@@ -201,14 +215,13 @@ public class VerticalSeekBar extends SeekBar {
 
             startSize = 10;
 //            float endSize = width/ (float) 2 - 30;
-            endSize = (float) (( (float) height * 0.5) / 2.0);
+            endSize = (float) (( (float) width * 0.4) / 2.0 * (showNumericValues? 0.7 : 1));
             if (width < 150) {
                 startSize = 2;
-//                endSize = width/ (float) 2 - 15;
             }
-            if ( endSize > startSize * 9) {
-                endSize = startSize * 9;
-            }
+//            if ( endSize > startSize * 8) {
+//                endSize = startSize * 8;
+//            }
 
             gridMiddle = width / (float) 2;
 
@@ -239,11 +252,11 @@ public class VerticalSeekBar extends SeekBar {
                         }
                     }
 
-                    if (!title.isEmpty()) {
-                        c.rotate(90, height - paddingLeft + 10, gridMiddle);
-                        c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
-                        c.rotate(-90, height - paddingLeft + 10, gridMiddle);
-                    }
+//                    if (!title.isEmpty()) {
+//                        c.rotate(90, height - paddingLeft + 10, gridMiddle);
+//                        c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
+//                        c.rotate(-90, height - paddingLeft + 10, gridMiddle);
+//                    }
                     break;
                 }
 
@@ -328,12 +341,12 @@ public class VerticalSeekBar extends SeekBar {
                 case tick_type.TICK_0_28:
                 default: { // 8, 10, 28 etc. steps
 //            } else { // 8, 10, 28 etc. steps
-                    if (width < 150) {
-                        startSize = 2;
-                        endSize = width / (float) 2 - 15;
-                    } else if ((endSize) > startSize * 6) {
-                        endSize = startSize * 6;
-                    }
+//                    if (width < 150) {
+//                        startSize = 2;
+//                        endSize = (float) ((width / (float) 2 - 15 ) * (showNumericValues? 0.8 : 1));
+//                    } else if ((endSize) > startSize * 6) {
+//                        endSize = (float) (startSize * 6 * (showNumericValues? 0.8 : 1));
+//                    }
 
                     gridBottom = height - paddingLeft;
                     tickSpacing = (paddingRight - gridBottom) / tickMarkType;
@@ -344,20 +357,27 @@ public class VerticalSeekBar extends SeekBar {
                         d = gridBottom + i * tickSpacing;
                         l = gridMiddle - startSize - sizeIncrease * j * j;
                         r = gridMiddle + startSize + sizeIncrease * j * j;
+                        //        x1,y1, x2, y2
                         c.drawLine(d, l, d, r, tickPaint);
                         if (showNumericValues) {
-                            c.rotate(90, d - 10, r + 10);
+//                            c.rotate(90, d - 6, r + 2);
+//                            String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
+//                            c.drawText(tickMarkText, d - 6, r + 2, textPaint);
+//                            c.rotate(-90, d - 6, r + 2);
+
+                            c.rotate(90, d - textVerticalCenter, r + 2);
                             String tickMarkText = getTickMarkText(steps, i, sliderPurpose);
-                            c.drawText(tickMarkText, d - 10, r + 10, textPaint);
-                            c.rotate(-90, d - 10, r + 10);
+                            c.drawText(tickMarkText, d - textVerticalCenter, r + 2, textPaint);
+                            c.rotate(-90, d - textVerticalCenter, r + 2);
                         }
                     }
 
-                    if (!title.isEmpty()) {
-                        c.rotate(90, height - paddingLeft + 10, gridMiddle);
-                        c.drawText(title, height - paddingLeft + 10, gridMiddle, textPaint);
-                        c.rotate(-90, height - paddingLeft + 10, gridMiddle);
-                    }
+//                    if (!title.isEmpty()) {
+//                        c.rotate(90, height - paddingLeft - 40, gridMiddle - 30);
+//                        c.drawText(title, height - paddingLeft - 40, gridMiddle - 30, textPaint);
+//                        c.rotate(-90, height - paddingLeft - 40, gridMiddle - 30);
+//                        c.drawText(title, ((float) height)/2, 40, textPaint);
+//                    }
                 }
             }
         }
@@ -457,7 +477,12 @@ public class VerticalSeekBar extends SeekBar {
 //            double thisStep = (double) (totalSteps - step) / prefSemiRealisticThrottleNumberOfLoadSteps;
 //            double intermediateLoad = (thisStep * thisStep * (loadMax-100)) + 100;
             double intermediateLoad = getLoadPcnt(step, steps, prefSemiRealisticThrottleMaxLoadPcnt);
-            tickMarkText = String.format("%d%%" , (long) intermediateLoad) ;
+            if (intermediateLoad < 1000) {
+                tickMarkText = String.format("%d%%", (long) intermediateLoad);
+            } else {
+                intermediateLoad = intermediateLoad / 1000;
+                tickMarkText = String.format("%.1fk%%", intermediateLoad);
+            }
         } else {
             tickMarkText = Integer.toString(totalSteps - step);
         }

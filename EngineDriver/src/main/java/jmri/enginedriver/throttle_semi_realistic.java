@@ -1762,35 +1762,41 @@ public class throttle_semi_realistic extends throttle {
         getTheme().resolveAttribute(R.attr.ed_secondaryLineColor, typedValue, true);
         backgroundColor = typedValue.data;
 
+        Paint paint = new Paint();
+        paint.setTextSize(airIndicators[whichThrottle].getWidth());
+        Typeface condensedTypeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+        paint.setTypeface(condensedTypeface);
+
+        float textWidth = paint.measureText(String.format(getString(R.string.airLineShort), 100)) + 10;
+
         float xMax = (float) airIndicators[whichThrottle].getWidth();
         float yMax = (float) airIndicators[whichThrottle].getHeight();
-        float yMaxBar = yMax - 160;
+        float yMaxBar = yMax - textWidth;
         float yScale = yMaxBar / 100;
         Bitmap bitmap = Bitmap.createBitmap(airIndicators[whichThrottle].getWidth(), airIndicators[whichThrottle].getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(Color.TRANSPARENT);
-        Paint paint = new Paint();
 
         paint.setColor(backgroundColor);
         paint.setStyle(Paint.Style.FILL);
         paint.setStrokeWidth(4);
         paint.setAntiAlias(true);
+        // outline
         canvas.drawRect(0, 0, xMax, yMaxBar, paint);
 
+        // fill
         paint.setColor(foregroundColor);
         canvas.drawRect( 0, yMaxBar, xMax, yMaxBar - airValues[whichThrottle] * yScale, paint);
-//        if (!prefs.getString("prefTheme", threaded_application.context.getResources().getString(R.string.prefThemeDefaultValue)).equals("outline")) {
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect( 0, yMaxBar, xMax, yMaxBar - airValues[whichThrottle] * yScale, paint);
-//        }
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawRect(0, 0, xMax, yMaxBar, paint);
 
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        textPaint.setColor(getResources().getColor(R.color.seekBarTickColor));
         int tickColor = threaded_application.getRgbColorFromThemeAttribute(this, R.attr.ed_throttle_tick_mark);
         textPaint.setColor(tickColor);
         textPaint.setTextSize(airIndicators[whichThrottle].getWidth());
+        textPaint.setTypeface(condensedTypeface);
         canvas.rotate(-90, xMax-2, yMax);
         canvas.drawText(String.format(getString(R.string.airReservoirShort), getAirValue(whichThrottle)), xMax-2, yMax, textPaint);
         canvas.rotate(90, xMax -2, yMax);
@@ -1817,35 +1823,41 @@ public class throttle_semi_realistic extends throttle {
         getTheme().resolveAttribute(R.attr.ed_secondaryLineColor, typedValue, true);
         backgroundColor = typedValue.data;
 
+        Paint paint = new Paint();
+        paint.setTextSize(airIndicators[whichThrottle].getWidth());
+        Typeface condensedTypeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
+        paint.setTypeface(condensedTypeface);
+
+        float textWidth = paint.measureText(String.format(getString(R.string.airLineShort), 100)) + 10;
+
         float xMax = (float) airLineIndicators[whichThrottle].getWidth();
         float yMax = (float) airLineIndicators[whichThrottle].getHeight();
-        float yMaxBar = yMax - 160;
+        float yMaxBar = yMax - textWidth;
         float yScale = yMaxBar / 100;
         Bitmap bitmap = Bitmap.createBitmap(airLineIndicators[whichThrottle].getWidth(), airLineIndicators[whichThrottle].getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(Color.TRANSPARENT);
-        Paint paint = new Paint();
 
         paint.setColor(backgroundColor);
         paint.setStyle(Paint.Style.FILL);
         paint.setStrokeWidth(4);
         paint.setAntiAlias(true);
+        // outline
         canvas.drawRect(0, 0, xMax, yMaxBar, paint);
 
+        // fill
         paint.setColor(foregroundColor);
         canvas.drawRect( 0, yMaxBar, xMax, yMaxBar - airLineValues[whichThrottle] * yScale, paint);
-//        if (!prefs.getString("prefTheme", threaded_application.context.getResources().getString(R.string.prefThemeDefaultValue)).equals("outline")) {
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect( 0, yMaxBar, xMax, yMaxBar - airLineValues[whichThrottle] * yScale, paint);
-//        }
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawRect(0, 0, xMax, yMaxBar, paint);
 
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-//        textPaint.setColor(getResources().getColor(R.color.seekBarTickColor));
         int tickColor = threaded_application.getRgbColorFromThemeAttribute(this, R.attr.ed_throttle_tick_mark);
         textPaint.setColor(tickColor);
         textPaint.setTextSize(airLineIndicators[whichThrottle].getWidth());
+        textPaint.setTypeface(condensedTypeface);
         canvas.rotate(-90, xMax-2, yMax);
         canvas.drawText(String.format(getString(R.string.airLineShort), getAirLineValue(whichThrottle)), xMax-2, yMax, textPaint);
         canvas.rotate(90, xMax -2, yMax);
