@@ -98,7 +98,7 @@
         <item name="reusable_button_stop_face_center_color">@color/neon_blue_dark</item>
         <item name="reusable_button_stop_face_start_color">@color/neon_blue_very_dark</item>
 
-        <item name="reusable_button_disabled_stroke_color">@color/grey_very_dark</item>
+        <item name="reusable_button_disabled_stroke_color">@color/ultra_light</item>
         <item name="reusable_button_disabled_fill_color">@color/transparent</item>
 
         <item name="reusable_button_active_light_bar_color">@color/neon_yellow</item>

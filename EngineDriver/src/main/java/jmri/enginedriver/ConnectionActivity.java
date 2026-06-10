@@ -318,7 +318,11 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                 }
                 connected_hostname = connected_hostip; //copy ip to name
                 connected_ssid = mainapp.client_ssid;
+
+                connected_serviceType = threaded_application.JMDNS_SERVICE_WITHROTTLE; // default to WiThrottle
                 checkIfDccexServerName(connected_hostname, connected_port);
+                if (mainapp.isDccexProtocol())
+                    connected_serviceType = threaded_application.JMDNS_SERVICE_DCC_EX_TCP;
                 connect();
             } else {
                 mainapp.safeToastInstructional(R.string.toastConnectEnterAddress, Toast.LENGTH_SHORT);
@@ -390,6 +394,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                             return;
                         }
                         connected_hostname = tm.get("host_name"); //copy ip to name
+                        connected_serviceType = tm.get("service_type"); //copy ip to name
                         connected_ssid = mainapp.client_ssid;
                         checkIfDccexServerName(connected_hostname, connected_port);
                         connect();

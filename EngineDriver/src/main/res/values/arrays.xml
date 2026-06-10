@@ -2124,9 +2124,10 @@
         <item>Start Route/Automation {loco} {id}</item>
         <item>Kill Automations {id|ALL}</item>
         <item>--- Diagnostic Commands ---</item>
-        <item>ACK Limit {mA}</item>
-        <item>ACK Min {µS}</item>
-        <item>ACK Max {µS}</item>
+        <item>PROG Acknowledge Diagnostics {ON|OFF}</item>
+        <item>PROG Acknowledge Limit {mA}</item>
+        <item>PROG Acknowledge Min {µS}</item>
+        <item>PROG Acknowledge Max {µS}</item>
         <item>Reboot/Reset CS</item>
         <item>Reset HAL Devices</item>
         <item>Show All HAL Devices</item>
@@ -2155,6 +2156,7 @@
         <item>/ START</item>
         <item>/ KILL</item>
         <item />
+        <item>D ACK</item>
         <item>D ACK LIMIT</item>
         <item>D ACK MIN</item>
         <item>D ACK MAX</item>
@@ -2186,6 +2188,7 @@
         <item>1</item>  // /START
         <item>1</item>  // /KILL
         <item>0</item>  // delimiter
+        <item>1</item>  // D ACK
         <item>1</item>  // D ACK LIMIT
         <item>1</item>  // D ACK MIN
         <item>1</item>  // D ACK MAX
