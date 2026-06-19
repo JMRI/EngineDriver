@@ -19,7 +19,7 @@
     <string name="exit">Sortir</string>
     <string name="functionDefaultSettings">Fonction par défaut</string>
 <!--    <string name="fb_label">Libellé de  fonction</string>-->
-    <string name="functionLatchingSettings">Paramètres des fonctions de verrouillage</string>
+    <string name="functionLatchingSettings">Paramètres des fonctions (permanente ou temporaire)</string>
     <string name="fb_column_label">Libellé</string>
     <string name="fb_column_function">Fn num.</string>
 <!--    <string name="function_buttons">Touche de fonction</string>-->
@@ -97,7 +97,7 @@
     <string name="powerWillNotWork">JMRI a coupé l alimentation WiThrottle.\nEffacement icone alimentation.\nAffichage Icone alimentation quand JMRI sera actif.</string>
 <!--    <string name="current_locos">Locomotive sélectionnée</string>-->
     <string name="release">Déselection</string>
-    <string name="dispatch">Libérer</string>
+    <string name="dispatch">Expédition</string>
 <!--    <string name="releaseThrottleNumber">Déselection Commande %1$s</string>-->
     <string name="releaseThrottleLocos">Déselection\n %1$s</string>
     <string name="roster_available">Liste Loco (Roster) - Disponible</string>
@@ -181,7 +181,7 @@
     <string name="prefIncreaseWebViewSizeTitle">Augmenter la taille de l affichage Web?</string>
     <string name="prefIncreaseWebViewSizeSummary">Augmenter la taille de l affichage Web de 60% (petits écrans)</string>
     <string name="prefThrottleViewImmersiveModeTitle">Utilisation du régulateur en mode immersif?</string>
-    <string name="prefThrottleViewImmersiveModeSummary">Affichage plein écran</string>
+    <string name="prefThrottleViewImmersiveModeSummary">Afficher le régulateur en mode plein écran</string>
     <string name="prefSwipeUpOptionTitle">Autoriser glisser vers le haut dans l affichage du régulateur?</string>
     <string name="prefSwipeUpOptionSummary">Que se passe-t il si vous faites glisser vers le haut l affichage du régulateur?</string>
     <string name="prefVolumeTitle">Préférences de volume</string>
@@ -309,7 +309,7 @@
     <string name="prefRosterRecentLocosSummary">Inclure le nom du catalogue dans les loco récentes?</string>
     <string name="prefRosterRecentLocoNamesTitle">Afficher le nom du catalogue pour les locos récentes?</string>
     <string name="prefRosterRecentLocoNamesSummary">Inclure les noms de locomotive du catalogue dans les récents si l adresse correspondante est trouvée?</string>
-    <string name="prefLocoSelectHideIplsButtonSummary">Masquer le bouton Sons du téléphone de la locomotive dans l\'écran de sélection de la locomotive</string>
+    <string name="prefLocoSelectHideIplsButtonSummary">Masquer le bouton Sons de la locomotive sur ecran de selection de la loco</string>
     <string name="prefMaximumRecentLocosTitle">Nombre maxi de loco récentes</string>
 
     <string name="prefMaximumRecentLocosSummary">Nombre maxi de loco récentes affiché dans la liste</string>
@@ -327,7 +327,7 @@
 
     <string name="prefInitialWebPageSummary">Page accueil Web [par ex. \'/panel\')</string>
     <string name="prefConnectTitle">Préférences de connexion</string>
-    <string name="prefConnectAdvancedPreferencesSummary">Préférences supplémentaires liées à la connexion technique</string>
+    <string name="prefConnectAdvancedPreferencesSummary">Préférences supplémentaires liées à la connexion</string>
     <string name="prefMaximumRecentConnectionsTitle">Nombre maxi de connexions récentes</string>
 
     <string name="prefMaximumRecentConnectionsSummary">Nombre maxi de connexions récentes affichées en liste</string>
@@ -343,8 +343,8 @@
     <string name="prefScreenBrightnessDimTitle">Pourcentage variation luminosité écran</string>
     <string name="prefScreenBrightnessDimSummary">Pourcentage de variation de la luminosité écran (0%-99%. Desactive réglage auto si présent).</string>
 
-    <string name="deviceSoundsVolumeNotice">La fonction Sons Loco dans le téléphone utilise les paramètres de volume du système « Sonnerie » et non le volume « Média ».</string>
-    <string name="deviceSoundsVolumeWarning">Ce dernier est actuellement limité à %d%%, vous pourriez donc avoir des difficultés à entendre les sons.</string>
+    <string name="deviceSoundsVolumeNotice">Le son via le telephone utilise le reglage sonnerie et pas Media</string>
+    <string name="deviceSoundsVolumeWarning">Le son est réglé à seulement %d%% il peu etre difficile à entendre</string>
     <string name="logViewer">Affichage log</string>
     <string name="clearLocoList">Efface list</string>
     <string name="ClearConnList">Efface liste récente</string>
@@ -454,8 +454,8 @@
 
     <string name="prefAccelerometerTitle">Préférences de l accéléromètre</string>
     <string name="prefAccelerometerSummary">Options liées aux mouvements du terminal sur la page du régulateur.</string>
-    <string name="prefAccelerometerShakeTitle">Action si agité</string>
-    <string name="prefAccelerometerShakeSummary">Options quand le terminal est agité</string>
+    <string name="prefAccelerometerShakeTitle">Action si secoué</string>
+    <string name="prefAccelerometerShakeSummary">Options quand le terminal est secoué</string>
 
     <string name="prefAccelerometerShakeThresholdTitle">Seuil de mouvement</string>
     <string name="prefAccelerometerShakeThresholdSummary">Seuil à partir duquel le mouvement sera pris en compte. (1.5&#8211;3.5)  Une valeur basse correspond à un faible mouvement. \Nécessite un redémarrage d Engine Driver pour prise en compte si modifié.</string>
@@ -540,11 +540,11 @@
     <string name="toastDirectionButtonsSwapped">Les touches de sens de marche sont inversées temporairement. Pour les inverser de manière permanente, modifier les préférences.</string>
     <string name="toastImmersiveModeDisabled">Le mode immersif est temporairement désactivé. Pour le désactiver définitivement, modifier les préférences.</string>
     <string name="toastThrottleScreenUnlocked">Écran déverouillé</string>
-    <string name="toastShakeWebViewHidden">Vue Web cachée. Agiter à nouveau pour la rétablir. Pour la cacher définitivement, modifier les préférences.</string>
+    <string name="toastShakeWebViewHidden">Vue Web cachée. Secouer à nouveau pour la rétablir. Pour la cacher définitivement, modifier les préférences.</string>
     <string name="toastShakeWebViewUnavailable">La vue Web doit etre activée dans les préférences</string>
-    <string name="toastShakeScreenLocked">Ecran verrouillé - Agiter à nouveau pour déverrouiller.</string>
+    <string name="toastShakeScreenLocked">Ecran verrouillé - Secouer à nouveau pour déverrouiller.</string>
     <string name="toastShakeScreenLockedActionNotAllowed">Action non autorisée sur manette verrouillée</string>
-    <string name="toastShakeScreenDimmed">Luminosité réduite. Agiter à nouveau pour augmenter.</string>
+    <string name="toastShakeScreenDimmed">Luminosité réduite. Secouer à nouveau pour augmenter.</string>
     <string name="toastSwipeUpDownScreenLocked">Ecran verrouillé - Faire glisser vers le haut pour deverrouiller.</string>
     <string name="toastSwipeUpDownScreenDimmed">Luminosité réduite. Faire glisser vers le haut pour augmenter.</string>
     <string name="toastSwipeUpViewHidden">Vue Web cachée. Pour la cacher définitivement, modifier les préférences.</string>
@@ -643,7 +643,7 @@
     <string name="prefNumberOfDefaultFunctionLabelsForRosterTitle">Nombre de fonctions par défaut dans le catalogue JMRI.</string>
     <string name="prefNumberOfDefaultFunctionLabelsForRosterSummary">Limitation du nombre de fonctions par défaut pour les locomotives sans libellé de fonction dans JMRI.</string>
 
-    <string name="newConnectionText">Fermez la connexion à ce serveur, puis reconnectez-vous ?</string>
+    <string name="newConnectionText">Se déconnecter puis se reconnecter à ce serveur ?</string>
     <string name="lightsTextOff">Off</string>
     <string name="lightsTextFollow">Sigle Fn Btn</string>
     <string name="lightsTextUnknown">Inconnu</string>
@@ -734,7 +734,7 @@
     <string name="introButtonsSlider">Curseur Seul\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsSliderAndButtons">Curseur + Touches\n(pas possible si \'Big Buttons\')</string>
     <string name="introButtonsNoSlider">Aucun curseur ni bouto, recommandation pour ESU MobileControl Pro ou 2 ESU</string>
-    <string name="introButtonsNoSliderOrButtons">Aucun curseur ni bouto,\nrecommandation pour Mobile Control Pro ou 2 ESU</string>
+    <string name="introButtonsNoSliderOrButtons">Aucun curseur ni bouton,\n recommandé pour ESU MC 2 ou MC Pro</string>
     <string name="introDccexTitle">Options pour station de commande EX</string>
     <string name="introDccexSummary">Engine Driver permet des foncstionnalités supplémentaires, par exemple la programmation directe de CV sur une centrale DCC-EX (et pas via JMRI)
         \n\nSi vous repondez \'Oui\' ci-dessous, Engine Driver utiliserales commandes natives DCC-EX et pas celle de WiThrottle si le nom du serveur contient \'DCC-EX\' or \'DCCEX\'.</string>
@@ -754,9 +754,9 @@
     <string name="prefImportExportErrorReadingFrom">l importation de \'\\Android\\data\\jmri.enginedriver\\files\\ %1$s\' a échoué! Vous n avez peut-être pas encore enregistré les préférences pour cet hôte.</string>
     <string name="prefImportExportErrorNotConnected">Non connecté à un hôte</string>
 
-    <string name="prefActionBarShowRoutesButtonTitle">Bouton Itinéraires ?</string>
-    <string name="prefActionBarShowAdvancedConsistButtonTitle">Bouton Advanced Consist (CV19) ?</string>
-    <string name="prefActionBarShowDccexConsistButtonTitle">Bouton DCC-EX dans la centrale de commande ?</string>
+    <string name="prefActionBarShowRoutesButtonTitle">Bouton itineraires</string>
+    <string name="prefActionBarShowAdvancedConsistButtonTitle">Bouton Unité multiple via CV19?</string>
+    <string name="prefActionBarShowDccexConsistButtonTitle">Bouton DCC-EX via Unité Multiple de la centrale de commande?</string>
     <string name="ConsistEditLabelLead">TETE</string>
     <string name="ConsistEditLabelTrail">QUEUE</string>
     <string name="prefConsistFollowRuleStyleTitle">Fonctions d unités multiples (UM) - respecter la règle</string>
@@ -867,7 +867,7 @@
     <string name="RecentConsistsNameEditText">Entrer un nom d UM</string>
     <string name="RecentConsistsNameEditTitle">UM récents</string>
     <string name="RecentsNameEditText">Entrer un nom pour la loco</string>
-    <string name="toastDccexInvalidRosterId">Nom de liste (roster) invallide \'%1$s\'. celui-ci  (Roster, Aiguilles, itineraires)ne pourra se charger.</string>
+    <string name="toastDccexInvalidRosterId">Nom de liste (roster) invallide \'%1$s\'. celui-ci  (Roster, Aiguilles, itineraires) ne pourra se charger.</string>
     <string name="RecentsNameEditTitle">Dernier nom de locomotive</string>
     <string name="rosterDetailsDialogTitle">Détail Locomotive(s)</string>
     <string name="toastRecentCleared">Loco supprimée de la liste</string>
@@ -899,7 +899,7 @@
     <string name="dialogRecentLocoConfirmClearQuestion">Confirmer la suppression des dernières locomotives utilisées</string>
     <string name="dialogRecentTurnoutsConfirmClearQuestions">Confirmer la suppression des dernières aiguilles utilisées</string>
 
-    <string name="dialogDownloadRosterConfirmQuestion">Confirmer que le téléchargement des entrées du catalogue vers la liste des locomotives récemment utilisées</string>
+    <string name="dialogDownloadRosterConfirmQuestion">Confirmer le téléchargement des entrées du catalogue vers la liste des locomotives récemment utilisées</string>
     <string name="ToastsOptionsTitle">Alertes et conseils pédagogiques</string>
     <string name="prefHideInstructionalToastsTitle">Masquer les conseils instructifs</string>
     <string name="prefHideInstructionalToastsSummary">Masquer l\'aide et les conseils instructifs contextuels </string>
@@ -911,8 +911,8 @@
     <string name="prefBackgroundImageFileNameNoImageSelected">Aucune image selectionnee</string>
     <string name="prefBackgroundImageFileNameSummary">Entrer le nom de l image d Arriere Plan</string>
     <string name="prefBackgroundImageFileNameTitle">Nom du fichier d Arriere Plan</string>
-    <string name="prefBackgroundImageSummary">Afficher une image de fond sur la plupart des pages</string>
-    <string name="prefBackgroundImageTitle">Image d Arriere Plan</string>
+    <string name="prefBackgroundImageSummary">Afficher une image en arrière plan sur la plupart des pages</string>
+    <string name="prefBackgroundImageTitle">Image en Arriere Plan</string>
     <string name="prefBackgroundImagePositionSummary">Choisir position de l Arriere Plan</string>
     <string name="prefBackgroundImagePositionTitle">Position image Arriere Plan</string>
     <string name="prefThrottleSwitchButtonSummary">Affichage du bouton pour changement rapide de l affichage du régulateur</string>
@@ -934,7 +934,7 @@
     <string name="prefBackgroundImagePreferencesTitle">Préférence Image d Arriere Plan</string>
     <string name="prefThrottleSwitchButtonPreferencesTitle">Préférences pour changer Affichage du régulateur</string>
     <string name="edit_consist_menu">Modif UM</string>
-    <string name="gamepad_test_menu">Gamepads/USB</string>
+    <string name="gamepad_test_menu">Manettes de jeu/USB</string>
     <string name="prefSwipeDownOptionSummary">Action à faire sur Glisser Bas</string>
     <string name="prefSwipeDownOptionTitle">Action régulateur sur Glisser Bas</string>
     <string name="prefPauseSpeedButtonTitle">Afficher le bouton \'Pause\'</string>
@@ -956,8 +956,8 @@
     <string name="prefFunctionConsistLatchingDefaultValue">aucun</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">verrouillage</string>
     <string name="prefFunctionConsistLocosDefaultValue">de tete</string>
-    <string name="functionConsistHelpText">Utilisé pour:\na) les locomotives hors liste, ou\n\nb) les options de la fonction de composition «Spéciale».\n\nPour «b», sélectionnez comment le texte de chaque fonction sera recherché dans les étiquettes de fonction de chaque locomotive de la composition.</string>
-    <string name="functionConsistHeader">Actions de fonction hors liste et constantes</string>
+    <string name="functionConsistHelpText">Utilisé pour:\n1. Locos hors inventaire (roster), ou\n\n2. les options de la fonction \'Special\'  Unité Multiples.\n\Pour \'2\' Choisir comment le texte de la fonction sera recherchédans les libellés des locos de l UM.</string>
+    <string name="functionConsistHeader">Fonctions hors inventaire et  hors unité multiple</string>
     <string name="app_name_consist_functions">Parametrage Engine Driver pour les fonctions en UM</string>
     <string name="prefShowTimeOnLogEntryTitle">Afficher horodatage dans la log</string>
     <string name="prefShowTimeOnLogEntrySummary">Afficher horodatage pour toutes les entrees de la logdans la log</string>
@@ -998,8 +998,8 @@
 <!--    <string name="prefSemiRealisticThrottleLoadPcntTitle">Coef multplicateur pour charge du train</string>-->
 <!--    <string name="prefSemiRealisticThrottleLoadPcntSummary">Ajustement du multiplicateur de ratio de charge affectant les changements de vitesse..  &gt;100% = charge additionnelle.</string>-->
     <string name="prefCategoryDevicePageTitle">Préférences du terminal</string>
-    <string name="prefExtendedLoggingSummary">Capturez des journaux supplémentaires et plus détaillés</string>
-    <string name="prefLogOnNextStartupSummary">Lancer automatiquement l\'enregistrement d\'un journal au prochain démarrage du pilote moteur. Cette préférence sera réinitialisée après utilisation.</string>
+    <string name="prefExtendedLoggingSummary">Enregistrer des journaux (logs) plus complètes</string>
+    <string name="prefLogOnNextStartupSummary">Lancer automatique une trace (log) au prochain démarrage Engine Driver. Cette préférence disparaitra ensuite après usage.</string>
     <string name="prefSortOrderRosterTitle">Sens de tri de la liste de locos</string>
     <string name="prefSortOrderRosterSummary">Sens de tri préférentiel pour les locos à l ouverture d Engine Driver</string>
     <string name="prefSortOrderTurnoutsTitle">Sens de tri des aiguillages</string>
@@ -1110,8 +1110,8 @@
     <string name="prefGamePadDoublePressStopTitle">STOP si appuyé 2 Fois</string>
     <string name="prefGamePadDoublePressStopSummary">Choisissez l action suite appui sur bouton STOP</string>
     <string name="prefDccexSummary">Pour toutes les connexions, utilisez les commandes natives DCC-EX plutot que la WiThrottle. PS: cela ne prendra effet qu apres redemarrage Engine Driver et connexion à un serveur.</string>
-    <string name="prefDccexSwapThrowCloseSummary">Inverser les étiquettes d\'ouverture/fermeture de tous les aiguillages DCC-EX. Reconnexion requise.</string>
-    <string name="prefDccexEmergencyStopPauseResumeSummary">Utilisez la fonction d\'arrêt d\'urgence Pause/Reprise du DCC-EX au lieu d\'un simple arrêt d\'urgence.</string>
+    <string name="prefDccexSwapThrowCloseSummary">Inverser les libellés Dévié/Directe pour toutes les aiguilles DCC-EX. Reconnexion nécessaire</string>
+    <string name="prefDccexEmergencyStopPauseResumeSummary">Utiliser fonction Pause/Resume de DCC-EX plutot que Arret d Urgence</string>
     <string name="prefDccexTitle">Utilisez les commandes natives DCC-EX</string>
     <string name="useProtocolDCCEX">Protocole a utiliser?</string>
     <string name="prefPauseAlternateButtonSummary">Bouton pause alternatif</string>
@@ -1127,10 +1127,10 @@
     <string name="dccexSendCommandLabel">DCC-EX Cmd\n<small><small>(exclure \'&lt;\' et \'&gt;\')</small></small></string>
     <string name="dccexClearCommands">Efface</string>
 
-    <string name="dccexCvBitCalculatorButtonLabel">Morceaux</string>
-    <string name="cvBitCalculatorTitle">Calculateur de bits CV</string>
-    <string name="cvBitCalculatorCvValueLabel">Valeur CV (décimal)</string>
-    <string name="cvBitCalculatorCvBitsLabel">Morceaux:</string>
+    <string name="dccexCvBitCalculatorButtonLabel">Bits</string>
+    <string name="cvBitCalculatorTitle">Calcul CV en bit</string>
+    <string name="cvBitCalculatorCvValueLabel">Valeur du CV (décimal)</string>
+    <string name="cvBitCalculatorCvBitsLabel">Bits:</string>
 
     <string name="dccexConnectionOptionTitle">Protocole de connexion</string>
     <string name="dccexFailed">Action echouee</string>
@@ -1161,8 +1161,8 @@
     <string name="permissionsPOST_NOTIFICATIONS">Engine Driver necessite la permission d acces aux NOTIFICATIONS pour indiquer son passage en arriere plan</string>
     <string name="prefDccexPreferencesTitle">Preferences DCC-EX - EX-CommandStation</string>
     <string name="prefDccexPreferencesSummary">Option pour utiliser EX-CommandStation</string>
-    <string name="prefDccexAutomationsAskTitle">DCC-EX - Demander la locomotive automatisée ?</string>
-    <string name="prefDccexAutomationsAskSummary">Pour les systèmes d\'automatisation DCC-EX, veuillez indiquer quelle locomotive envoyer.</string>
+    <string name="prefDccexAutomationsAskTitle">DCC-EX  choix de la loco à ajouter?</string>
+    <string name="prefDccexAutomationsAskSummary">Indiquer quelle loco ajouter aux automatismes DCC-EX</string>
     <string name="prefAlwaysUseFunctionsFromServerTitle">Toujours utiliser des libelles de fonctions depuis le serveur</string>
     <string name="prefAlwaysUseFunctionsFromServerSummary">Si désactivé, EngineDriver utilisera les libellés de fonction par defaut pour les locos choisies par adresse (pas via le catalogue), ignorante ceux par defaut du serveur.</string>
     <string name="dccExFunctionSettings">Reglages DCC-EX</string>
@@ -1248,7 +1248,7 @@
     <string name="introEsuMc2QuestionYes">Oui, utilisation des réglages recommandés</string>
     <string name="prefEsuMc2SliderTypeTitle">Type de curseur</string>
     <string name="prefEsuMc2SliderTypeSummary">Definir action du ciurseur</string>
-    <string name="prefBeepOnAlertToastsTitle">Bip pour les alertes</string>
+    <string name="prefBeepOnAlertToastsTitle">Bip sur Alertes</string>
     <string name="prefToolbarButtonSizeTitle">Bouton sur barre d outils</string>
     <string name="prefToolbarButtonSizeSummary">Definir taille des boutons sur barre d outils (redemarrage necessaire)</string>
     <string name="prefKidsTimerKioskModeTitle">Mode Kiosque ?</string>
@@ -1263,59 +1263,61 @@
     <string name="prefStopButtonLongPressDelaySummary">Duree en millisecondes pour prise en compte arret d urgence par appui long sur STOP</string>
 
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirmer</string>
-    <string name="dccexAutomationTitle">Adresse de la locomotive pour l\'automatisme EXRAIL</string>
+    <string name="dccexAutomationTitle">Adresse loco pour automatisation EXRAIL</string>
+    <string name="dccexButtonCommandLine">Ligne de commande</string>
     <string name="autoServerConnectTitle">Connexion automatique au serveur</string>
     <string name="autoServerConnectLabel">Nom du serveur</string>
-    <string name="autoServerConnectCurrentServerButtonLabel">Obtenir le serveur actuel</string>
-    <string name="prefAutoServerNamedConnectSummary">Se connecter automatiquement à un serveur nommé s\'il est découvert</string>
-    <string name="prefAutoServerNamedConnectTitle">Connexion automatique au serveur nommé</string>
-    <string name="dccexInCv19Consist">La locomotive fait partie d\'un CV19 composé de : %s</string>
-    <string name="dccexNotInCv19Consist">La locomotive n\'est PAS dans une composition CV19</string>
+    <string name="autoServerConnectCurrentServerButtonLabel">Accéder au serveur affiché</string>
+    <string name="prefAutoServerNamedConnectSummary">Se connecter automatiquement à un serveur nommé et trouvé</string>
+    <string name="prefAutoServerNamedConnectTitle">Connexion automatique à serveur nommé</string>
+    <string name="dccexInCv19Consist">La loco fait partie d une unité multiple via CV19: %s</string>
+    <string name="dccexNotInCv19Consist">La loco n est en unité multiple par CV19</string>
 
-    <string name="prefThrottlesLocosTitle">Recharger les dernières locomotives utilisées ?</string>
-    <string name="prefThrottlesLocosSummary">Lors de la connexion, chargez automatiquement les locos que vous aviez acquises lors de la session précédente.</string>
-    <string name="prefThrottlesLocosToast">Les locomotives précédentes seront chargées si elles sont disponibles</string>
+    <string name="prefThrottlesLocosTitle">Recharger les dernières loco utilisées ?</string>
+    <string name="prefThrottlesLocosSummary">A la connexion, chargement automatique des locos utilisées à la session précédente</string>
+    <string name="prefThrottlesLocosToast">Les précédentes locos seront chargée si disponibles</string>
 
-    <string name="prefUseDispatchCommandTitle">Expédier au lieu de libérer</string>
-    <string name="prefUseDispatchCommandSummary">Utilisez la commande WiThrottle \'d\'ispatch au lieu de la commande \'r\'elease lors de la libération d\'une locomotive</string>
-    <string name="prefShowDispatchButtonTitle">Afficher le bouton d\'envoi</string>
-    <string name="prefShowDispatchButtonSummary">Afficher un bouton sur l\'écran Sélectionner une locomotive pour utiliser la commande WiThrottle \'d\'ispatch au lieu de la commande \'r\'elease lors de la libération d\'une locomotive</string>
+    <string name="prefUseDispatchCommandTitle">Dispatch plutot que Release</string>
+    <string name="prefUseDispatchCommandSummary">Utiliser la commande \'d\'ispatch WiThrottle plutot que la commande \'r\'elease lors de la liberation de la loco</string>
+    <string name="prefShowDispatchButtonTitle">Afficher Bouton Dispatch</string>
+    <string name="prefShowDispatchButtonSummary">Afficher bouton sur écran de choix loco pour utiliser la commande \'d\'ispatch WiThrottle plutot que la commande \'r\'elease lors de la liberation de la loco</string>
 
-    <string name="prefAutoServerIpConnectTitle">Connexion automatique à l\'adresse du serveur</string>
-    <string name="advancedConsistToolTitle">Outil de composition avancé (CV19)</string>
-    <string name="advancedConsistToolDccexTitle">Dans l\'outil de composition de la station de commande</string>
-    <string name="advancedConsistToolConsistAddressLabel">Adresse de composition</string>
-    <string name="advancedConsistToolLeadLocoLabel">Adresse de Lead Loco</string>
-    <string name="advancedConsistToolLocoAddressLabel">Adresse Loco</string>
-    <string name="advancedConsistToolLocoFacingLabel">Faire face à l\'avant ?</string>
+    <string name="prefAutoServerIpConnectTitle">Connexion automatique à adresse serveur</string>
+    <string name="advancedConsistToolTitle">Gestion de l Unité Multiple par le CV19</string>
+    <string name="advancedConsistToolDccexTitle">Gestion Unité Multiple par la centrale DCC</string>
+    <string name="advancedConsistToolConsistAddressLabel">Adresse de l unité multiple</string>
+    <string name="advancedConsistToolLeadLocoLabel">Adresse loco de tete</string>
+    <string name="advancedConsistToolLocoAddressLabel">Adresse Locomotive</string>
+    <string name="advancedConsistToolLocoFacingLabel">Cabine en tete?</string>
     <string name="advancedConsistToolAddButtonLabel">Ajouter</string>
-    <string name="advancedConsistToolRemoveButtonLabel">Retirer</string>
-    <string name="advancedConsistToolButtonLabel">Constituants avancés</string>
-    <string name="ToastsOptionsSummary">Options pour les alertes et les messages d\'aide/conseils contextuels de type « toast »</string>
-    <string name="prefBeepOnAlertToastsSummary">Émettre un bip sonore lors de l\'affichage des messages d\'alerte contextuels.</string>
-    <string name="prefActionBarShowThrottleButtonTitle">Bouton d\'accélérateur ?</string>
-    <string name="prefActionBarShowTurnoutsButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des aiguillages</string>
-    <string name="prefActionBarShowTurnoutsButtonTitle">Bouton de dégagement ?</string>
-    <string name="prefActionBarShowThrottleButtonSummary">Afficher le bouton dans la barre d\'action pour passer à l\'écran des gaz</string>
-    <string name="prefActionBarShowRoutesButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran des itinéraires</string>
-    <string name="prefExtendedLoggingTitle">Journalisation étendue ?</string>
-    <string name="prefLocoSelectHideIplsButtonTitle">Masquer le bouton Sons de la locomotive</string>
+    <string name="advancedConsistToolRemoveButtonLabel">Supprimer l unité multiple</string>
+    <string name="advancedConsistToolButtonLabel">Gestion avancee Unité multiple</string>
+    <string name="ToastsOptionsSummary">Options pour les alertes et instruction \'toast'\ des PopUp aide /conseils</string>
+    <string name="prefBeepOnAlertToastsSummary">Bip sonores sur messages Pop-Up d Alerte</string>
+    <string name="prefActionBarShowThrottleButtonTitle">Bouton accelerateur ?</string>
+    <string name="prefActionBarShowTurnoutsButtonSummary">Afficher bouton pour basculer sur ecran des aiguilles</string>
+    <string name="prefActionBarShowTurnoutsButtonTitle">Bouton des aiguilles</string>
+    <string name="prefActionBarShowThrottleButtonSummary">Afficher bouton dans barre d action pour basculer sur l ecran des manettes</string>
+    <string name="prefActionBarShowRoutesButtonSummary">Afficher le bouton dans barre d action pour les itineraires</string>
+    <string name="prefExtendedLoggingTitle">Journalisation étendue ?</string>
+    <string name="prefLocoSelectHideIplsButtonTitle">Masquer le bouton Sons de la locomotive sur ecran de selection de la loco</string>
     <string name="newConnectionTitle">Nouvelle connexion</string>
-    <string name="prefAutoServerIpConnectSummary">Se connecter automatiquement à une adresse de serveur même si elle n\'est pas découverte</string>
-    <string name="prefLogOnNextStartupTitle">Démarrer l\'enregistrement au prochain démarrage ?</string>
-    <string name="prefActionBarShowAdvancedConsistButtonSummary">Afficher le bouton dans la barre d\'actions pour ouvrir l\'écran de composition avancée (CV19)</string>
-    <string name="prefActionBarShowWebButtonSummary">Afficher le bouton dans la barre d\'actions pour passer à l\'écran Web</string>
+    <string name="prefAutoServerIpConnectSummary">Se connecter automatiquement à l adresse d un serveur meme si pas trouvé?</string>
+    <string name="prefLogOnNextStartupTitle">Afficher texte complémentaire au dessous des boutons (déconseillé sur petits ecrans)</string>
+    <string name="prefActionBarShowAdvancedConsistButtonSummary">Afficher le bouton dans la barre d action pour ouvrir l ecran Unité multiple (CV19)</string>
+    <string name="prefActionBarShowWebButtonSummary">Afficher bouton dans barre d action pour basculer sur ecran Web</string>
     <string name="prefActionBarShowWebButtonTitle">Bouton Web ?</string>
-    <string name="prefDccexSwapThrowCloseTitle">DCC-EX - Aiguillages à manœuvrer (ouverture/fermeture)</string>
-    <string name="prefDccexThrownLabelSummary">Personnalisez le libellé du bouton lorsque l\'aiguillage est « Déployé ». Laissez vide pour la valeur par défaut (« Fermé »). Reconnexion requise.</string>
-    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - Utiliser l\'arrêt d\'urgence, la pause et la reprise</string>
-    <string name="prefRosterTitle">Options relatives à la liste des joueurs depuis le serveur</string>
-    <string name="prefConnectAdvancedPreferencesTitle">Préférences de connexion avancées</string>
-    <string name="prefActionBarShowDccexConsistButtonSummary">Afficher le bouton dans la barre d\'actions pour ouvrir l\'écran de composition de la centrale de commande DCC-EX</string>
-    <string name="prefShowAdditionalButtonTextTitle">Afficher le texte supplémentaire du bouton ?</string>
-    <string name="prefDccexClosedLabelSummary">Personnalisez le libellé du bouton lorsque l\'aiguillage est fermé. Laissez vide pour la valeur par défaut (« Lancer »). Reconnexion requise.</string>
-    <string name="prefDccexClosedLabelTitle">Étiquette du bouton « Fermé/Lancer » (DCC-EX)</string>
-    <string name="prefDccexThrownLabelTitle">Étiquette du bouton DCC-EX « Lancer/Fermer »</string>
-    <string name="toastConnectFontSizeWarning">La taille de la police de votre système est très élevée (%1$1.2f).\nCertains éléments et textes risquent de ne pas s\'afficher correctement à l\'écran. Nous vous recommandons d\'ouvrir les paramètres système de votre appareil Android et de réduire la taille de la police à moins de 1,5.</string>
+    <string name="prefDccexSwapThrowCloseTitle">DCC-EX inverser aiguilles Dévié/directes</string>
+    <string name="prefDccexThrownLabelSummary">Libellé personnalisé quand l aiguille est  déviée .  Laisser à blanc pour défaut (voie directe). Reconnexion nécessaire.</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - utiliser ESTop Pause/resume</string>
+    <string name="prefRosterSummary">Options relatives à l inventaire (roster) depuis le serveur</string>
+    <string name="prefRosterTitle">Préférences d inventaires (roster)</string>
+    <string name="prefConnectAdvancedPreferencesTitle">Préférences avancée pour connexion</string>
+    <string name="prefActionBarShowDccexConsistButtonSummary">Afficher le bouton dans la barre d action pour ouvrir l écran de gestion par la centrale DCC de l Unité Multiple</string>
+    <string name="prefShowAdditionalButtonTextTitle">Afficher texte complémentaire du bouton ?</string>
+    <string name="prefDccexClosedLabelSummary">Libelle personnalisé quand l aiguille est  déviée .  Laisser à blanc sur position par défaut (voie directe). Reconnexion nécessaire.</string>
+    <string name="prefDccexClosedLabelTitle">DCC-EX Etiquette du bouton (\'Deviée/Directe\')</string>
+    <string name="prefDccexThrownLabelTitle">DCC-EX Bouton \'Dévié/Direct\'</string>
+    <string name="toastConnectFontSizeWarning">La police utilisée est très grande! (%1$1.2f) et certains textes et éléments ne seront pas visibles. \nIl est conseillé de corriger vos paramètres Systeme Android et reduire la police à moins de 1.5</string>
 
 </resources>
