@@ -956,7 +956,7 @@
     <string name="prefFunctionConsistLatchingDefaultValue">aucun</string>
     <string name="prefFunctionConsistLatchingLightBellDefaultValue">verrouillage</string>
     <string name="prefFunctionConsistLocosDefaultValue">de tete</string>
-    <string name="functionConsistHelpText">Utilisé pour:\n1. Locos hors inventaire (roster), ou\n\n2. les options de la fonction \'Special\'  Unité Multiples.\n\Pour \'2\' Choisir comment le texte de la fonction sera recherchédans les libellés des locos de l UM.</string>
+    <string name="functionConsistHelpText">Utilisé pour:\n1. Locos hors inventaire (roster), ou\n\n2. les options de la fonction \'Special\'  Unité Multiples.\nPour \'2\' Choisir comment le texte de la fonction sera recherchédans les libellés des locos de l UM.</string>
     <string name="functionConsistHeader">Fonctions hors inventaire et  hors unité multiple</string>
     <string name="app_name_consist_functions">Parametrage Engine Driver pour les fonctions en UM</string>
     <string name="prefShowTimeOnLogEntryTitle">Afficher horodatage dans la log</string>
@@ -1292,7 +1292,7 @@
     <string name="advancedConsistToolAddButtonLabel">Ajouter</string>
     <string name="advancedConsistToolRemoveButtonLabel">Supprimer l unité multiple</string>
     <string name="advancedConsistToolButtonLabel">Gestion avancee Unité multiple</string>
-    <string name="ToastsOptionsSummary">Options pour les alertes et instruction \'toast'\ des PopUp aide /conseils</string>
+    <string name="ToastsOptionsSummary">Options pour les alertes et instruction \'toast\' des PopUp aide /conseils</string>
     <string name="prefBeepOnAlertToastsSummary">Bip sonores sur messages Pop-Up d Alerte</string>
     <string name="prefActionBarShowThrottleButtonTitle">Bouton accelerateur ?</string>
     <string name="prefActionBarShowTurnoutsButtonSummary">Afficher bouton pour basculer sur ecran des aiguilles</string>
@@ -1309,7 +1309,7 @@
     <string name="prefActionBarShowWebButtonTitle">Bouton Web ?</string>
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX inverser aiguilles Dévié/directes</string>
     <string name="prefDccexThrownLabelSummary">Libellé personnalisé quand l aiguille est  déviée .  Laisser à blanc pour défaut (voie directe). Reconnexion nécessaire.</string>
-    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - utiliser ESTop Pause/resume</string>
+    <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - utiliser EStop Pause/resume</string>
     <string name="prefRosterSummary">Options relatives à l inventaire (roster) depuis le serveur</string>
     <string name="prefRosterTitle">Préférences d inventaires (roster)</string>
     <string name="prefConnectAdvancedPreferencesTitle">Préférences avancée pour connexion</string>
