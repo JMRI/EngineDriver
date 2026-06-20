@@ -904,7 +904,7 @@
     <string name="reconnect_label">État de la tentative de reconnexion</string>
     <string name="reconnect_success">RECONNEXION RÉUSSIE.  Reprise normale des opérations.</string>
     <string name="release">Libération</string>
-    <string name="dispatch">Libérer</string>
+    <string name="dispatch">Expédition</string>
     <string name="releaseThrottleLocos">Libération\n %1$s</string>
 
     <string name="reverse">Marche Arr.</string>

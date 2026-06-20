@@ -83,7 +83,7 @@
         <item tools:ignore="TypographyDashes">Simple – Recommandé Tablette (1–6)</item>
         <item tools:ignore="TypographyDashes">Switching a gauche tablette (1-6)</item>
         <item tools:ignore="TypographyDashes">Tablette verticale à gauche (1-6)</item>
-        <item tools:ignore="TypographyDashes">Tablette verticale à gauche - deux colonnes de fonctions (1-6)</item>
+        <item tools:ignore="TypographyDashes">Tablette verticale gauche (1-6) - 2 colonnes de fonctions</item>
         <item tools:ignore="TypographyDashes">Semi-réaliste - Gauche (1)</item>
     </string-array>
 
@@ -266,7 +266,7 @@
     </string-array>
 
     <string-array name="prefGamePadFlydigiWee2Labels">
-        <item> </item> //not used
+        <item> </item>
         <item>Touche Select Action</item>
         <item>Touche DPAD Action Haut</item>
         <item>Touche DPAD Action Bas</item>
@@ -281,17 +281,17 @@
         <item>Epaulement Droit</item>
         <item>Gachette Gauche</item>
         <item>Gachette Droite</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used - alternate Stop
-        <item>0</item> //not used - alternate Increase Speed
-        <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </string-array>
 
     <string-array name="prefGamePadMocuteLabels">
-        <item> </item> //not used
+        <item> </item>
         <item>Touche Select Action</item>
         <item>Touche DPAD Action Haut</item>
         <item>Touche DPAD Action Bas</item>
@@ -306,17 +306,17 @@
         <item>Bouton non disponible</item>
         <item>Bouton non disponible</item>
         <item>Bouton non disponible</item>
-        <item>Bouton non disponible</item> //not used
-        <item>Bouton non disponible</item> //not used
-        <item>0</item> //not used - alternate Stop
-        <item>0</item> //not used - alternate Increase Speed
-        <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+        <item>Bouton non disponible</item>
+        <item>Bouton non disponible</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </string-array>
 
     <string-array name="prefGamePadMagicseeR1Labels">
-        <item> </item> //not used
+        <item> </item>
         <item>Touche OK Action</item>
         <item>Touche DPAD Action Haut</item>
         <item>Touche DPAD Action Bas</item>
@@ -327,21 +327,21 @@
         <item>Touche DPAD Action D</item>
         <item>Touche DPAD Action A</item>
         <item>Touche DPAD Action B</item>
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>0</item> //not used - alternate Stop
-        <item>0</item> //not used - alternate Increase Speed
-        <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </string-array>
 
     <string-array name="prefGamePadNoneLabels">
-        <item> </item> //not used
+        <item> </item>
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
@@ -352,21 +352,21 @@
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
         <item>Bouton indisponible</item>
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>Bouton indisponible</item> //not used
-        <item>0</item> //not used - alternate Stop
-        <item>0</item> //not used - alternate Increase Speed
-        <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>Bouton indisponible</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </string-array>
 
     <string-array name="prefGamePadPrefButtonReferences">
-        <item> </item> //not used
+        <item> </item>
         <item>prefGamePadButtonReturn</item>
         <item>prefGamePadButtonUp</item>
         <item>prefGamePadButtonDown</item>
@@ -377,17 +377,17 @@
         <item>prefGamePadButton3</item>
         <item>prefGamePadButton2</item>
         <item>prefGamePadButton4</item>
-        <item>prefGamePadButtonLeftShoulder</item> //not used
-        <item>prefGamePadButtonRightShoulder</item> //not used
-        <item>prefGamePadButtonLeftTrigger</item> //not used
-        <item>prefGamePadButtonRightTrigger</item> //not used
-        <item>prefGamePadButtonLeftThumb</item> //not used
-        <item>prefGamePadButtonRightThumb</item> //not used
-        <item>0</item> //not used - alternate Stop
-        <item>0</item> //not used - alternate Increase Speed
-        <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
+        <item>prefGamePadButtonLeftShoulder</item>
+        <item>prefGamePadButtonRightShoulder</item>
+        <item>prefGamePadButtonLeftTrigger</item>
+        <item>prefGamePadButtonRightTrigger</item>
+        <item>prefGamePadButtonLeftThumb</item>
+        <item>prefGamePadButtonRightThumb</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </string-array>
 
     <string-array name="prefEsuMc2KeyEntries"> <!-- display version -->
@@ -465,7 +465,7 @@
         <item>Recentrer écran</item>
         <item>Ajustement taille écran</item>
         <item>Remplissage taille écran</item>
-        <item>Carreau - Répéter</item>
+        <item>Tuille -Répéter</item>
     </string-array>
 
     <string-array name="prefFunctionConsistLocosEntries">  <!-- display version -->
@@ -495,8 +495,8 @@
     <string-array name="dccExTrackTypeEntries">  <!-- display version -->
         <item>Aucun</item>
         <item>DCC Main</item>
-        <item>DCC Main inversé</item>
-        <item>PROGRAMME DCC</item>
+        <item>DCC principal inversé</item>
+        <item>DCC PROG</item>
         <item>DC</item>
         <item>Inversion polarité DC</item>
         <item>Inversion Auto DCC</item>
@@ -537,7 +537,7 @@
         <item>Aucun</item>
         <item>3 niveaux de freinage</item>
         <item>Luminosité Ecran</item>
-        <item>Utiliser un réglage d\'accélérateur semi-réaliste</item>
+        <item>Utiliser parametrage semi-réaliste du régulateur</item>
     </string-array>
 
     <string-array name="deviceSoundsEntries">  <!-- display version -->
