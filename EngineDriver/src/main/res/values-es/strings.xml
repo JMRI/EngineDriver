@@ -848,6 +848,7 @@
     <string name="RecentConsistsNameEditText">Introduzca un nombre para la Tracción Múltiple</string>
     <string name="RecentConsistsNameEditTitle">Nombres recientes de Tracciones Múltiples</string>
     <string name="RecentsNameEditText">Introduzca un nombre para una Locomotora</string>
+    <string name="toastEndSaveLogFile">Registro detenido. Ver archivo %1$s.</string>
     <string name="infoSaveLogFile">Iniciando sesión en: %s</string>
     <string name="toastDccexInvalidRosterId">ID de lista no válido \'%1$s\'. Es probable que no se carguen todas las listas de listas, desvíos y rutas.</string>
     <string name="RecentsNameEditTitle">Nombres recientes de Locomotoras</string>

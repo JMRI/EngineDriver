@@ -5,7 +5,6 @@ import static android.widget.Toast.LENGTH_SHORT;
 import android.content.SharedPreferences;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -43,7 +42,7 @@ public class ResponseProcessorWiThrottle {
             case 'M': { //handle responses from MultiThrottle function
                 // --- M{throttleId}{command}{locoId}<;>{command}
                 if (responseStr.length() < 5) { //must be at least Mtxs9
-                    Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid response string: '" + responseStr + "'");
+                    threaded_application.logging(activityName + ": processWifiResponse(): invalid response string: '" + responseStr + "'");
                     break;
                 }
                 String sWhichThrottle = responseStr.substring(1, 2);
@@ -72,16 +71,16 @@ public class ResponseProcessorWiThrottle {
                         con.setWhichSource(addr, 1); //entered by address, not roster
                         con.setConfirmed(addr);
                         mainapp.addLocoToRecents(conLoco); // WiT
-                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
+                        threaded_application.logging(activityName + ": processWifiResponse(): loco '" + addr + "' ID'ed on programming track and added to " + whichThrottle);
                     } else {
-                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
+                        threaded_application.logging(activityName + ": processWifiResponse(): loco '" + addr + "' not selected but assigned by server to " + whichThrottle);
                     }
 
                     String consistName = mainapp.getConsistNameFromAddress(addr); //check for a JMRI consist for this address,
                     if (consistName != null) { //if found, request function keys for lead, format MTAS13<;>CL1234
                         String[] cna = threaded_application.splitByString(consistName, "+");
                         String cmd = String.format("M%sA%s<;>C%s", mainapp.throttleIntToString(whichThrottle), addr, mainapp.cvtToLAddr(cna[0]));
-                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): rqsting fkeys for lead loco " + mainapp.cvtToLAddr(cna[0]));
+                        threaded_application.logging(activityName + ": processWifiResponse(): rqsting fkeys for lead loco " + mainapp.cvtToLAddr(cna[0]));
                         comm_thread.wifiSend(cmd);
                     }
 
@@ -92,7 +91,7 @@ public class ResponseProcessorWiThrottle {
 
                 } else if (com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
                     mainapp.consists[whichThrottle].remove(addr);
-                    Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): loco " + addr + " dropped from " + mainapp.throttleIntToString(whichThrottle));
+                    threaded_application.logging(activityName + ": processWifiResponse(): loco " + addr + " dropped from " + mainapp.throttleIntToString(whichThrottle));
 
                     Bundle bundle = new Bundle();
                     bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
@@ -153,7 +152,7 @@ public class ResponseProcessorWiThrottle {
                                 comm_thread.processFunctionState(whichThrottle, Integer.valueOf(ls[1].substring(2)), "1".equals(ls[1].substring(1, 2)));
                             } catch (NumberFormatException |
                                      StringIndexOutOfBoundsException ignore) {
-                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): bad incoming message data, unable to parse '" + responseStr + "'");
+                                threaded_application.logging(activityName + ": processWifiResponse(): bad incoming message data, unable to parse '" + responseStr + "'");
                             }
                             try {
                                 int function = Integer.parseInt(ls[1].substring(2));
@@ -181,7 +180,7 @@ public class ResponseProcessorWiThrottle {
                     }
 
                 } else if (com2 == 'S') { //"MTSL4425<;>L4425" loco is in use, prompt for Steal
-                    Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): rcvd MTS, request prompt for " + addr + " on " + mainapp.throttleIntToString(whichThrottle));
+                    threaded_application.logging(activityName + ": processWifiResponse(): rcvd MTS, request prompt for " + addr + " on " + mainapp.throttleIntToString(whichThrottle));
                     Bundle bundle = new Bundle();
                     bundle.putString(alert_bundle_tag_type.LOCO, addr);
                     bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
@@ -200,7 +199,7 @@ public class ResponseProcessorWiThrottle {
                     try {
                         mainapp.withrottle_version = Double.parseDouble(responseStr.substring(2));
                     } catch (Exception e) {
-                        Log.e(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid WiT version string");
+                        threaded_application.logging('e', activityName + ": processWifiResponse(): invalid WiT version string");
                         mainapp.withrottle_version = 0.0;
                         break;
                     }
@@ -209,14 +208,14 @@ public class ResponseProcessorWiThrottle {
                         if (!mainapp.withrottle_version.equals(old_vn)) { //only if changed
                             mainapp.alertActivitiesWithBundle(message_type.CONNECTED, activity_id_type.CONNECTION);
 //                            } else {
-//                                Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + mainapp.withrottle_version + ", ignoring");
+//                                threaded_application.logging(activityName + ": processWifiResponse(): version already set to " + mainapp.withrottle_version + ", ignoring");
                         }
                     } else {
                         mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppWiThrottleNotSupported, responseStr.substring(2)), LENGTH_SHORT);
                         comm_thread.socketWiT.disconnect(false);
                     }
                 } else {
-                    Log.e(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid WiT version string");
+                    threaded_application.logging('e', activityName + ": processWifiResponse(): invalid WiT version string");
                 }
                 break;
 
@@ -280,7 +279,7 @@ public class ResponseProcessorWiThrottle {
                 try {
                     mainapp.heartbeatInterval = Integer.parseInt(responseStr.substring(1)) * 1000;  //convert to milliseconds
                 } catch (Exception e) {
-                    Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid WiT heartbeat string");
+                    threaded_application.logging(activityName + ": processWifiResponse(): invalid WiT heartbeat string");
                     mainapp.heartbeatInterval = 0;
                 }
                 comm_thread.heart.startHeartbeat(mainapp.heartbeatInterval);
@@ -393,7 +392,7 @@ public class ResponseProcessorWiThrottle {
                                 mainapp.fastClockSeconds = Long.parseLong(ta[0]);
                                 skipDefaultAlertToAllActivities = true;
                             } catch (NumberFormatException e) {
-                                Log.w("Engine_Driver", "unable to extract fastClockSeconds from '" + responseStr + "'");
+                                threaded_application.logging('w', "unable to extract fastClockSeconds from '" + responseStr + "'");
                             }
                             mainapp.alertActivitiesWithBundle(message_type.RECEIVED_TIME_CHANGE);
                         }
@@ -405,7 +404,7 @@ public class ResponseProcessorWiThrottle {
                         try {
                             mainapp.web_server_port = Integer.parseInt(responseStr.substring(2));  //set app variable
                         } catch (Exception e) {
-                            Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): invalid web server port string");
+                            threaded_application.logging(activityName + ": processWifiResponse(): invalid web server port string");
                         }
                         if (oldPort != mainapp.web_server_port) {
 //                                dlMetadataTask.get();           // start background metadata update
@@ -444,7 +443,7 @@ public class ResponseProcessorWiThrottle {
                 try {
                     mainapp.roster_entries.put(tv[0], tv[1] + "(" + tv[2] + ")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
                 } catch (Exception e) {
-                    Log.d(threaded_application.applicationName, activityName + ": processRosterList(): caught Exception");  //ignore any bad stuff in roster entries
+                    threaded_application.logging(activityName + ": processRosterList(): caught Exception");  //ignore any bad stuff in roster entries
                 }
             }
             i++;
@@ -474,13 +473,13 @@ public class ResponseProcessorWiThrottle {
             }  //end if i==0
             i++;
         }  //end for
-        Log.d(threaded_application.applicationName, activityName + ": processConsistList(): consist header, addr='" + consist_addr
+        threaded_application.logging(activityName + ": processConsistList(): consist header, addr='" + consist_addr
                 + "', name='" + consist_name + "', desc='" + consist_desc + "'");
         //don't add empty 'consists' to list
         if (mainapp.consist_entries != null && consist_desc.length() > 0) {
             mainapp.consist_entries.put(consist_addr, consist_desc.toString());
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": processConsistList(): skipping empty consist '" + consist_name + "'");
+            threaded_application.logging(activityName + ": processConsistList(): skipping empty consist '" + consist_name + "'");
         }
     } // end processConsistList()
 
@@ -578,7 +577,7 @@ public class ResponseProcessorWiThrottle {
         }
         if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found
             if (!newState.equals(mainapp.routeStates[pos])) { //route state is changed
-//                Log.d(threaded_application.applicationName, activityName + ": processRouteChange(" + responseStr + ") CHANGED");
+//                threaded_application.logging(activityName + ": processRouteChange(" + responseStr + ") CHANGED");
                 mainapp.routeStates[pos] = newState;
                 mainapp.alertActivitiesWithBundle(message_type.ROUTE_LIST_CHANGED);
 //            } else {

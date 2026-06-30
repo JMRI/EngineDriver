@@ -55,7 +55,6 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -218,7 +217,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     protected final ActivityResultLauncher<Intent> consistEditActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": consistEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": consistEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -230,7 +229,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     protected final ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": galleryLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": galleryLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -245,7 +244,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     // populate the on-screen roster view from global hashmap
     @SuppressLint("DefaultLocale")
     public void refreshRosterList() {
-        Log.d(threaded_application.applicationName, activityName + ": refreshRosterList()");
+        threaded_application.logging(activityName + ": refreshRosterList()");
         // clear and rebuild
         rosterList.clear();  // local list. For UI
         mainapp.rosterFullList.clear(); // full global list
@@ -257,7 +256,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
             //only show this warning once, it will be skipped for each entry below
             if (mainapp.rosterJmriWeb == null) {
-                Log.w(threaded_application.applicationName, activityName + ": refreshRosterList(): xml roster not available");
+                threaded_application.logging('w', activityName + ": refreshRosterList(): xml roster not available");
             }
 
             int position = -1;
@@ -317,10 +316,10 @@ public class SelectLocoActivity extends AppCompatActivity {
                                 if (iconPath != null) {
                                     hm.put("roster_icon", iconPath + "?maxHeight=52");  //include sizing instructions
                                 } else {
-                                    Log.d(threaded_application.applicationName, activityName + ": refreshRosterList(): xml roster entry " + rosterName + " found, but no icon specified.");
+                                    threaded_application.logging(activityName + ": refreshRosterList(): xml roster entry " + rosterName + " found, but no icon specified.");
                                 }
                             } else {
-                                Log.w(threaded_application.applicationName, activityName + ": refreshRosterList(): WiThrottle roster entry " + rosterName + " not found in xml roster.");
+                                threaded_application.logging('w', activityName + ": refreshRosterList(): WiThrottle roster entry " + rosterName + " not found in xml roster.");
                             }
                         }
                         // add temp hashmap to list which view is hooked to
@@ -418,7 +417,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     private String getLocoIconUrlFromRoster(String engineAddress, String engineName) {
-//        Log.d(threaded_application.applicationName, activityName + ": getLocoIconUrlFromRoster()");
+//        threaded_application.logging(activityName + ": getLocoIconUrlFromRoster()");
         if (prefRosterRecentLocoNames) {
             if ((mainapp.roster_entries != null) && (!mainapp.roster_entries.isEmpty()) && (mainapp.rosterJmriWeb != null)) {
                 for (String rosterName : mainapp.roster_entries.keySet()) {  // loop thru roster entries,
@@ -452,7 +451,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     void checkValidMethod(String whichMethod) {
-        Log.d(threaded_application.applicationName, activityName + ": checkValidMethod(): " + whichMethod);
+        threaded_application.logging(activityName + ": checkValidMethod(): " + whichMethod);
         prefSelectLocoMethod = whichMethod;
 
         int val = Integer.parseInt(whichMethod);
@@ -641,7 +640,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                     break;
 
                 case message_type.RECEIVED_ROSTER_UPDATE:
-                    Log.d(threaded_application.applicationName, activityName + ": handleMessage(): RECEIVED_ROSTER_UPDATE");
+                    threaded_application.logging(activityName + ": handleMessage(): RECEIVED_ROSTER_UPDATE");
                     rosterListAdapter.notifyDataSetChanged();
                     setLabels();
                     showMethod(prefSelectLocoMethod);
@@ -687,7 +686,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     private void witRetry(String s) {
-        Log.d(threaded_application.applicationName, activityName + ": witRetry()");
+        threaded_application.logging(activityName + ": witRetry()");
         Intent in = new Intent().setClass(this, ReconnectActivity.class);
         in.putExtra("status", s);
         startActivity(in);
@@ -696,7 +695,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     // request release of specified throttle
     void releaseLoco(int whichThrottle) {
-        Log.d(threaded_application.applicationName, activityName + ": releaseLoco()");
+        threaded_application.logging(activityName + ": releaseLoco()");
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);
         mainapp.consists[whichThrottle].release();
 
@@ -710,7 +709,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
    // request dispatch of specified throttle
     void dispatchLoco(int whichThrottle) {
-        Log.d(threaded_application.applicationName, activityName + ": dispatchLoco()");
+        threaded_application.logging(activityName + ": dispatchLoco()");
         mainapp.storeThrottleLocosForReleaseDCCEX(whichThrottle);  //not relevant to DCC-EX
         mainapp.consists[whichThrottle].release();
 
@@ -726,7 +725,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     boolean newEngine;              // save value across ConsistEditActivity activity
 
     boolean acquireLoco(boolean bUpdateList, int numberInConsist) { // if numberInConsist is greater than -1 it is not from the recent consists list
-        Log.d(threaded_application.applicationName, activityName + ": acquireLoco()");
+        threaded_application.logging(activityName + ": acquireLoco()");
         String roster_name = "";
         String sAddr = importExportPreferences.locoAddressToString(locoAddress, locoAddressSize, true);
         Loco l = new Loco(sAddr);
@@ -743,9 +742,9 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
         if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
             if (mainapp.consists == null)
-                Log.d(threaded_application.applicationName, activityName + ": acquireLoco(): consists is null");
+                threaded_application.logging(activityName + ": acquireLoco(): consists is null");
             else if (mainapp.consists[whichThrottle] == null)
-                Log.d(threaded_application.applicationName, activityName + ": acquireLoco(): consists[" + whichThrottle + "] is null");
+                threaded_application.logging(activityName + ": acquireLoco(): consists[" + whichThrottle + "] is null");
             endThisActivity();
             return false;
         }
@@ -782,7 +781,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 return false;
             }
         }
-        Log.d(threaded_application.applicationName, activityName + ": acquireLoco(): sAddr:'" + sAddr +"'");
+        threaded_application.logging(activityName + ": acquireLoco(): sAddr:'" + sAddr +"'");
 
         if ((!consist.isActive()) && (numberInConsist < 1)) {               // if this is the only loco in consist then just tell WiT and exit
             consist.add(l);
@@ -840,7 +839,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     void processRosterFunctionString(String responseStr, int whichThrottle) {
-        Log.d(threaded_application.applicationName, activityName + ": processRosterFunctionString(): processing function labels for " + mainapp.throttleIntToString(whichThrottle));
+        threaded_application.logging(activityName + ": processRosterFunctionString(): processing function labels for " + mainapp.throttleIntToString(whichThrottle));
         LinkedHashMap<Integer, String> functionLabelsMap = threaded_application.parseFunctionLabels(responseStr);
         mainapp.function_labels[whichThrottle] = functionLabelsMap; //set the appropriate global variable from the temp
     }
@@ -855,12 +854,12 @@ public class SelectLocoActivity extends AppCompatActivity {
             consistEditActivityLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
     private void handleConsistEditActivityResult(@NonNull Intent data, int ignoredResultCode) {
-        Log.d(threaded_application.applicationName, activityName + ": handleConsistEditActivityResult() ");
+        threaded_application.logging(activityName + ": handleConsistEditActivityResult() ");
 
         if (newEngine) {
             saveRecentConsistsList(saveUpdateList);
@@ -885,12 +884,12 @@ public class SelectLocoActivity extends AppCompatActivity {
             galleryLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": startGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
     private void handleGalleryResult(@NonNull Intent data) {
-        Log.d(threaded_application.applicationName, activityName + ": handleGalleryResult() ");
+        threaded_application.logging(activityName + ": handleGalleryResult() ");
 
         // Get the Image from data
         Uri selectedImage = data.getData();
@@ -910,7 +909,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         try {
             image_file = new File(imgpath);
         } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
-            Log.d(threaded_application.applicationName, activityName + ": onActivityResult(): Load image failed : " + imgpath);
+            threaded_application.logging(activityName + ": onActivityResult(): Load image failed : " + imgpath);
         }
         if ( (image_file != null) && (image_file.exists()) ) {
             try {
@@ -980,7 +979,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     private void imageFileFoundButCannotBeLoaded() {
-        Log.d(threaded_application.applicationName, activityName + ": onActivityResult(): load image - image file found but could not loaded");
+        threaded_application.logging(activityName + ": onActivityResult(): load image - image file found but could not loaded");
     }
 
     /** @noinspection SameParameterValue*/ //write the recent locos to a file
@@ -996,8 +995,8 @@ public class SelectLocoActivity extends AppCompatActivity {
             // check if it is already in the list and remove it
             String keepFunctions = "";
             for (int i = 0; i < importExportPreferences.recentLocoAddressList.size(); i++) {
-                Log.d(threaded_application.applicationName, activityName + ": saveRecentLocosList(): vLocoName='"+locoName+"', address="+locoAddress+", size="+locoAddressSize);
-                Log.d(threaded_application.applicationName, activityName + ": saveRecentLocosList(): sLocoName='"+importExportPreferences.recentLocoNameList.get(i)
+                threaded_application.logging(activityName + ": saveRecentLocosList(): vLocoName='"+locoName+"', address="+locoAddress+", size="+locoAddressSize);
+                threaded_application.logging(activityName + ": saveRecentLocosList(): sLocoName='"+importExportPreferences.recentLocoNameList.get(i)
                         + "', address=" + importExportPreferences.recentLocoAddressList.get(i)
                         + ", size="+importExportPreferences.recentLocoAddressSizeList.get(i));
                 if (locoAddress == importExportPreferences.recentLocoAddressList.get(i)
@@ -1008,7 +1007,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                     if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
 
                     importExportPreferences.removeRecentLocoFromList(i);
-                    Log.d(threaded_application.applicationName, activityName + ": saveRecentLocosList(): Loco '"+ locoName + "' removed from Recents");
+                    threaded_application.logging(activityName + ": saveRecentLocosList(): Loco '"+ locoName + "' removed from Recents");
                     break;
                 }
             }
@@ -1016,7 +1015,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             // now append it to the beginning of the list
             importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, locoSource, keepFunctions);
 
-            Log.d(threaded_application.applicationName, activityName + ": saveRecentLocosList(): Loco '"+ locoName + "' added to Recents");
+            threaded_application.logging(activityName + ": saveRecentLocosList(): Loco '"+ locoName + "' added to Recents");
         }
 
         importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
@@ -1024,7 +1023,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     private void refreshRecentLocosList() {
-        Log.d(threaded_application.applicationName, activityName + ": refreshRecentLocosList()");
+        threaded_application.logging(activityName + ": refreshRecentLocosList()");
         importExportPreferences.recentLocoAddressList = new ArrayList<>();
         importExportPreferences.recentLocoAddressSizeList = new ArrayList<>();
         importExportPreferences.recentLocoNameList = new ArrayList<>();
@@ -1117,7 +1116,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
 
     private void refreshRecentConsistsList() {
-        Log.d(threaded_application.applicationName, activityName + ": refreshRecentConsistsList()");
+        threaded_application.logging(activityName + ": refreshRecentConsistsList()");
         RadioButton myRadioButton = findViewById(R.id.select_consists_method_recent_button);
         if (recentConsistsList == null) {  // should never be true
             recentConsistsList = new ArrayList<>();
@@ -1285,7 +1284,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     // listener for the Acquire button when entering a DCC Address
     public class AcquireButtonListener implements View.OnClickListener {
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": AcquireButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": AcquireButtonListener(): onClick()");
             EditText entry = findViewById(R.id.loco_address);
             try {
                 locoAddress = Integer.parseInt(entry.getText().toString());
@@ -1313,7 +1312,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     // listener for the ID 'n' Go button, when clicked, send the id request and return to Throttle
     public class IdngoButtonListener implements View.OnClickListener {
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": IdngoButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": IdngoButtonListener(): onClick()");
             Consist consist = mainapp.consists[whichThrottle];
             consist.setWaitingOnID(true);
 
@@ -1337,7 +1336,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": ReleaseButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": ReleaseButtonListener(): onClick()");
             mainapp.buttonVibration();
 
             releaseLoco(_throttle);
@@ -1352,7 +1351,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         @SuppressLint("ApplySharedPref")
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": DropBeforeButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": DropBeforeButtonListener(): onClick()");
             mainapp.buttonVibration();
 
             prefDropOnAcquire = prefs.getBoolean("prefDropOnAcquire", false);
@@ -1371,7 +1370,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": DispatchButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": DispatchButtonListener(): onClick()");
             mainapp.buttonVibration();
 
             dispatchLoco(_throttle);
@@ -1392,7 +1391,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": EditConsistButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": EditConsistButtonListener(): onClick()");
             mainapp.hideSoftKeyboard(v, activityName);
             startConsistEditActivity(whichThrottle, true);
             mainapp.buttonVibration();
@@ -1409,7 +1408,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": EditConsistLightsButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": EditConsistLightsButtonListener(): onClick()");
             Intent consistLightsEdit = new Intent().setClass(_selectLocoActivity, ConsistLightsEditActivity.class);
             consistLightsEdit.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));
 
@@ -1428,7 +1427,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
             //@Override
             DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                Log.d(threaded_application.applicationName, activityName + ": DownloadRosterButtonListener(): onClick()");
+                threaded_application.logging(activityName + ": DownloadRosterButtonListener(): onClick()");
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
 //                            downloadRosterToRecents();
@@ -1499,7 +1498,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         SortRecentConsistsButtonListener() {}
 
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": SortRecentConsistsButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": SortRecentConsistsButtonListener(): onClick()");
             switch (mainapp.recentConsistsOrder) {
                 case sort_type.NAME:
                     mainapp.recentConsistsOrder=sort_type.ID;
@@ -1526,7 +1525,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-            Log.d(threaded_application.applicationName, activityName + ": DeviceSoundsButtonListener(): onClick()");
+            threaded_application.logging(activityName + ": DeviceSoundsButtonListener(): onClick()");
             Intent deviceSounds = new Intent().setClass(_selectLocoActivity, DeviceSoundsSettingsActivity.class);
             startActivity(deviceSounds);
             ConnectionActivity.overridePendingTransition(_selectLocoActivity, R.anim.fade_in, R.anim.fade_out);
@@ -1541,7 +1540,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     public class RecentLocosItemListener implements AdapterView.OnItemClickListener {
         // When an item is clicked, acquire that engine.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            Log.d(threaded_application.applicationName, activityName + ": RecentLocosItemListener(): onItemClick()");
+            threaded_application.logging(activityName + ": RecentLocosItemListener(): onItemClick()");
             if (position >= recentLocosList.size()) return;
 
             if (recentsSwipeDetector.swipeDetected()) {
@@ -1588,7 +1587,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     public class RecentConsistItemListener implements AdapterView.OnItemClickListener {
         // When an item is clicked, acquire that consist.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            Log.d(threaded_application.applicationName, activityName + ": RecentConsistItemListener(): onItemClick()");
+            threaded_application.logging(activityName + ": RecentConsistItemListener(): onItemClick()");
             if (position >= recentConsistsList.size()) return;
 
             String sAddr;
@@ -1663,7 +1662,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
             //@Override
             DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                Log.d(threaded_application.applicationName, activityName + ": ClearLocoListButtonListener(): onClick()");
+                threaded_application.logging(activityName + ": ClearLocoListButtonListener(): onClick()");
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         clearList();
@@ -1690,7 +1689,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
             //@Override
             DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-                Log.d(threaded_application.applicationName, activityName + ": ClearConsistsListButtonListener(): onClick()");
+                threaded_application.logging(activityName + ": ClearConsistsListButtonListener(): onClick()");
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         clearConsistsList();
@@ -1717,7 +1716,7 @@ public class SelectLocoActivity extends AppCompatActivity {
             AdapterView.OnItemClickListener {
         // When a roster item is clicked, send request to acquire that engine.
         public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            Log.d(threaded_application.applicationName, activityName + ": RosterItemClickListener(): onItemClick()");
+            threaded_application.logging(activityName + ": RosterItemClickListener(): onItemClick()");
             //use clicked position in list to retrieve roster item object from roster_list
             HashMap<String, String> hm = rosterList.get(position);
             String rosterNameString = hm.get("roster_name");
@@ -1772,7 +1771,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     private void filterRoster() {
-        Log.d(threaded_application.applicationName, activityName + ": filterRoster()");
+        threaded_application.logging(activityName + ": filterRoster()");
         prefRosterFilter = filterRosterText.getText().toString().trim();
         prefs.edit().putString("prefRosterFilter", prefRosterFilter).commit();
         refreshRosterList();
@@ -1785,7 +1784,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
 
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
@@ -2072,7 +2071,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 overrideThrottleName = "";
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -2096,12 +2095,12 @@ public class SelectLocoActivity extends AppCompatActivity {
                     getApplicationContext().getResources().getString(R.string.app_name_select_loco),
                     "" );
         }
-        Log.d(threaded_application.applicationName, activityName + ": onCreate() end");
+        threaded_application.logging(activityName + ": onCreate() end");
     } //end OnCreate
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         super.onStart();
 
         if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
@@ -2114,7 +2113,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     @SuppressLint("ApplySharedPref")
     private void showMethod(String whichMethod) {
-        Log.d(threaded_application.applicationName, activityName + ": showMethod(): " + whichMethod);
+        threaded_application.logging(activityName + ": showMethod(): " + whichMethod);
         checkValidMethod(whichMethod);
 
         selectLocoMethodRadioButtonsLayout.setVisibility(prefSelectLocoByRadioButtons ? VISIBLE : GONE);
@@ -2237,7 +2236,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     //Clears recent connection list of locos
     public void clearList() {
-        Log.d(threaded_application.applicationName, activityName + ": clearList()");
+        threaded_application.logging(activityName + ": clearList()");
         File engineListFile = new File(getApplicationContext().getExternalFilesDir(null), "recent_engine_list.txt");
 
         if (engineListFile.exists()) {
@@ -2248,7 +2247,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     } // end clearList()
 
     public void clearConsistsList() {
-        Log.d(threaded_application.applicationName, activityName + ": clearConsistsList()");
+        threaded_application.logging(activityName + ": clearConsistsList()");
         File consists_list_file = new File(getApplicationContext().getExternalFilesDir(null), "recent_consist_list.txt");
 
         if (consists_list_file.exists()) {
@@ -2266,14 +2265,14 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        Log.d(threaded_application.applicationName, activityName + ": onPause():");
+        threaded_application.logging(activityName + ": onPause():");
         super.onPause();
         threaded_application.activityPaused(activityName);
     }
 
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume():");
+        threaded_application.logging(activityName + ": onResume():");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
@@ -2300,12 +2299,12 @@ public class SelectLocoActivity extends AppCompatActivity {
         setLabels();
 
         refreshOverflowMenu();
-        Log.d(threaded_application.applicationName, activityName + ": onResume(): end");
+        threaded_application.logging(activityName + ": onResume(): end");
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        Log.d(threaded_application.applicationName, activityName + ": onWindowFocusChanged():");
+        threaded_application.logging(activityName + ": onWindowFocusChanged():");
         super.onWindowFocusChanged(hasFocus);
 
         // adjust the current locos list if needed
@@ -2315,7 +2314,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy(): called");
+        threaded_application.logging(activityName + ": onDestroy(): called");
         super.onDestroy();
 
         mainapp.clearActivityBundleMessageHandler(activity_id_type.SELECT_LOCO);
@@ -2323,7 +2322,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        Log.d(threaded_application.applicationName, activityName + ": onCreateOptionsMenu()");
+//        threaded_application.logging(activityName + ": onCreateOptionsMenu()");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.select_loco_menu, menu);
         overflowMenu = menu;
@@ -2365,7 +2364,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected():");
+        threaded_application.logging(activityName + ": onOptionsItemSelected():");
         // Handle all the possible menu actions.
         if (item.getItemId() == R.id.emergency_stop_button) {
             mainapp.sendEStopMsg();
@@ -2400,7 +2399,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     // end current activity
     void endThisActivity() {
         threaded_application.activityInTransition(activityName);
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity(): ending SelectLocoActivity normally");
+        threaded_application.logging(activityName + ": endThisActivity(): ending SelectLocoActivity normally");
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", sWhichThrottle.charAt(0));  //pass whichThrottle as an extra
         resultIntent.putExtra("overrideThrottleName", overrideThrottleName);
@@ -2458,7 +2457,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         if (mainapp.rosterJmriWeb != null) {
             re = mainapp.rosterJmriWeb.get(rosterNameString);
             if (re == null) {
-                Log.w("Engine_Driver", "SelectLocoActivity: onLongRosterListItemClick(): Roster entry " + rosterNameString + " not available.");
+                threaded_application.logging('w', "SelectLocoActivity: onLongRosterListItemClick(): Roster entry " + rosterNameString + " not available.");
                 return true;
             }
         }
@@ -2468,7 +2467,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     protected void showRosterDetailsDialog(RosterEntry re, String rosterNameString, String rosterAddressString, String iconURL) {
-//        Log.d(threaded_application.applicationName, activityName + ": showRosterDetailsDialog(): Showing details for roster entry " + rosterNameString);
+//        threaded_application.logging(activityName + ": showRosterDetailsDialog(): Showing details for roster entry " + rosterNameString);
         String res;
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.alert_dialog_style_reusable);
         View view = getLayoutInflater().inflate(R.layout.roster_entry_page, null);
@@ -2547,7 +2546,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 re = mainapp.rosterJmriWeb.get(rosterEntryName);
             }
             if (re == null) {
-                Log.w(threaded_application.applicationName, activityName + ": onLongRecentListItemClick(): Roster entry " + rosterEntryName + " not available.");
+                threaded_application.logging('w', activityName + ": onLongRecentListItemClick(): Roster entry " + rosterEntryName + " not available.");
                 return true;
             }
             showRosterDetailsDialog(re, rosterEntryName, Integer.toString(rosterEntryAddress),"");
@@ -2559,7 +2558,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     //  Clears the entry from the list
     protected void clearRecentLocosListItem(final int onScreenPosition) {
-//        Log.d(threaded_application.applicationName, activityName + ": clearRecentLocosListItem()");
+//        threaded_application.logging(activityName + ": clearRecentLocosListItem()");
         if (onScreenPosition >= recentLocosList.size()) return;
 
         HashMap<String, String> hm = recentLocosList.get(onScreenPosition);
@@ -2601,7 +2600,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
     // Clears the entry from the list
     protected void clearRecentConsistsListItem(final int onScreenPosition) {
-//        Log.d(threaded_application.applicationName, activityName + ": clearRecentConsistsListItem()");
+//        threaded_application.logging(activityName + ": clearRecentConsistsListItem()");
         if (onScreenPosition >= recentConsistsList.size()) return;
 
         HashMap<String, String> hm = recentConsistsList.get(onScreenPosition);
@@ -2648,7 +2647,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
-//            Log.d(threaded_application.applicationName, activityName + ": RosterSimpleAdapter(): getView()");
+//            threaded_application.logging(activityName + ": RosterSimpleAdapter(): getView()");
             if (position < 0 || position >= rosterList.size())
                 return convertView;
 
@@ -2704,7 +2703,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
-//            Log.d(threaded_application.applicationName, activityName + ": RecentSimpleAdapter(): getView()");
+//            threaded_application.logging(activityName + ": RecentSimpleAdapter(): getView()");
             if (position >= recentLocosList.size())
                 return convertView;
 
@@ -2741,7 +2740,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     private void loadRosterOrRecentImage(String engineName, ImageView imageView, String iconURL) {
-//        Log.d(threaded_application.applicationName, activityName + ": loadRosterOrRecentImage()");
+//        threaded_application.logging(activityName + ": loadRosterOrRecentImage()");
         //see if there is a saved file and preload it, even if it gets written over later
         boolean foundSavedImage = false;
         String imgFileName = mainapp.fixFilename(engineName) + ".png";
@@ -2751,7 +2750,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                 imageView.setImageBitmap(BitmapFactory.decodeFile(image_file.getPath()));
                 foundSavedImage = true;
             } catch (Exception e) {
-                Log.d(threaded_application.applicationName, activityName + ": loadRosterOrRecentImage(): recent consists - image file found but could not loaded");
+                threaded_application.logging(activityName + ": loadRosterOrRecentImage(): recent consists - image file found but could not loaded");
             }
         }
         hasLocalRosterImage = foundSavedImage;
@@ -2780,7 +2779,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         @SuppressLint("InflateParams")
         public View getView(int position, View convertView, ViewGroup parent) {
-//            Log.d(threaded_application.applicationName, activityName + ": RecentConsistsSimpleAdapter(): getView()");
+//            threaded_application.logging(activityName + ": RecentConsistsSimpleAdapter(): getView()");
             if (position >= recentConsistsList.size())
                 return convertView;
 
@@ -2891,7 +2890,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     // used to support the gamepad only   DPAD and key events
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent()");
+        threaded_application.logging(activityName + ": dispatchKeyEvent()");
 //        InputDevice iDev = getDevice(event.getDeviceId());
         boolean rslt = mainapp.implDispatchKeyEvent(event);
         if (rslt) {
@@ -2954,11 +2953,11 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     private void unableToSaveLocoImage() {
-        Log.d(threaded_application.applicationName, activityName + ": writeLocoImageToFile(): Unable to save roster loco image");
+        threaded_application.logging(activityName + ": writeLocoImageToFile(): Unable to save roster loco image");
     }
 
     private boolean deleteLocoImageFile(String rosterNameString) {
-//        Log.d(threaded_application.applicationName, activityName + ": deleteLocoImageFile()");
+//        threaded_application.logging(activityName + ": deleteLocoImageFile()");
         try {
             File dir = new File(getApplicationContext().getExternalFilesDir(null), RECENT_LOCO_DIR);
             if (!dir.exists()) {
@@ -2983,7 +2982,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     private void unableToDeleteLocoImage() {
-        Log.d(threaded_application.applicationName, activityName + ": deleteLocoImageFile(): Unable to delete roster loco image");
+        threaded_application.logging(activityName + ": deleteLocoImageFile(): Unable to delete roster loco image");
     }
 
 //    private void cropLocoImage() {
@@ -3028,7 +3027,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         @SuppressLint("ApplySharedPref")
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.d(threaded_application.applicationName, activityName + ": OwnersFilterSpinnerListener(): onItemSelected()");
+            threaded_application.logging(activityName + ": OwnersFilterSpinnerListener(): onItemSelected()");
             Spinner spinner = findViewById(R.id.roster_filter_owner);
             rosterOwnersFilterIndex = spinner.getSelectedItemPosition();
             rosterOwnersFilter = spinner.getSelectedItem().toString();
@@ -3044,7 +3043,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     public class SelectLocoMethodIndexSpinnerListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.d(threaded_application.applicationName, activityName + ": SelectLocoMethodIndexSpinnerListener(): onItemSelected()");
+            threaded_application.logging(activityName + ": SelectLocoMethodIndexSpinnerListener(): onItemSelected()");
             selectLocoMethodIndex = selectLocoMethodSpinner.getSelectedItemPosition();
             showMethod(Integer.toString(selectLocoMethodIndex+1));
         }
@@ -3061,7 +3060,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         }
 
         public void onClick(View v) {
-//            Log.d(threaded_application.applicationName, activityName + ": SelectMethodButtonListener(): onClick()");
+//            threaded_application.logging(activityName + ": SelectMethodButtonListener(): onClick()");
             mainapp.buttonVibration();
             showMethod(myMethod);
             mainapp.hideSoftKeyboard(v, activityName);
@@ -3069,7 +3068,7 @@ public class SelectLocoActivity extends AppCompatActivity {
     }
 
     void reopenThrottlePage() {
-        Log.d(threaded_application.applicationName, activityName + ": reopenThrottlePage()");
+        threaded_application.logging(activityName + ": reopenThrottlePage()");
         endThisActivity();
     }
 

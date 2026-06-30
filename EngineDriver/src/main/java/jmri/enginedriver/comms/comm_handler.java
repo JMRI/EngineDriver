@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -72,7 +71,7 @@ public class comm_handler extends Handler {
 
    @SuppressLint({"DefaultLocale", "ApplySharedPref", "WebViewApiAvailability"})
    public void handleMessage(@NonNull Message msg) {
-//                Log.d(threaded_application.applicationName, activityName + ": handleMessage(): message: " +msg.what);
+//                threaded_application.logging(activityName + ": handleMessage(): message: " +msg.what);
       if (!initialised) return;
 
       Bundle bundle = msg.getData();
@@ -83,7 +82,7 @@ public class comm_handler extends Handler {
 
          //Start or Stop jmdns stuff, or add "fake" discovered servers
          case message_type.SET_LISTENER: {
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SET_LISTENER");
+            threaded_application.logging(activityName + ": handleMessage(): SET_LISTENER");
 
             if ((bundle != null)
                     && (bundle.containsKey(alert_bundle_tag_type.ON_OFF))) {
@@ -92,21 +91,21 @@ public class comm_handler extends Handler {
 
                if (mainapp.client_ssid != null &&
                        mainapp.client_ssid.matches("DCCEX_[0-9a-fA-F]{6}$")) {
-                  Log.d(threaded_application.applicationName, activityName + ": handleMessage(): DCCEX SSID found");
+                  threaded_application.logging(activityName + ": handleMessage(): DCCEX SSID found");
                   //add "fake" discovered server entry for DCCEX: DCCEX_123abc
                   commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "2560", "DCC-EX");
                   mainapp.setIsDccexProtocol( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.YES))
                           || (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO)) );
                } else if (mainapp.client_ssid != null &&
                        mainapp.client_ssid.matches("^Dtx[0-9]{1,2}-.*_[0-9,A-F]{4}-[0-9]{1,3}$")) {
-                  Log.d(threaded_application.applicationName, activityName + ": handleMessage(): LnWi SSID found");
+                  threaded_application.logging(activityName + ": handleMessage(): LnWi SSID found");
                   //add "fake" discovered server entry for Digitrax LnWi: Dtx1-LnServer_0009-7
                   commThread.addFakeDiscoveredServer(mainapp.client_ssid, mainapp.client_address, "12090", "LnWi");
                } else {
                   if (mainapp.client_ssid == null)
-                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SSID is Null!");
+                     threaded_application.logging(activityName + ": handleMessage(): SSID is Null!");
                   else
-                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SSID: " + mainapp.client_ssid);
+                     threaded_application.logging(activityName + ": handleMessage(): SSID: " + mainapp.client_ssid);
 
                   //arg1= 1 to turn on, arg1=0 to turn off
                   if (on_off == 0) {
@@ -123,18 +122,18 @@ public class comm_handler extends Handler {
                               commThread.multicast_lock.acquire();
                            } catch (Exception e) {
                               //log message, but keep going if this fails
-                              Log.d(threaded_application.applicationName, activityName + ": handleMessage(): multicast_lock.acquire() failed");
+                              threaded_application.logging(activityName + ": handleMessage(): multicast_lock.acquire() failed");
                            }
                            commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_WITHROTTLE, commThread.listener);
                            commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, commThread.listener);
                            commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP, commThread.listener);
                            commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP, commThread.listener);
-                           Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns listener added");
+                           threaded_application.logging(activityName + ": handleMessage(): jmdns listener added");
                         } else {
-                           Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns not running, didn't start listener");
+                           threaded_application.logging(activityName + ": handleMessage(): jmdns not running, didn't start listener");
                         }
                      } else {
-                        Log.d(threaded_application.applicationName, activityName + ": handleMessage(): jmdns already running");
+                        threaded_application.logging(activityName + ": handleMessage(): jmdns already running");
                      }
                   }
                }
@@ -144,7 +143,7 @@ public class comm_handler extends Handler {
 
          //Connect to the WiThrottle server.
          case message_type.CONNECT: {
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): CONNECT");
+            threaded_application.logging(activityName + ": handleMessage(): CONNECT");
 
             if ((bundle != null)
                     && (bundle.containsKey(alert_bundle_tag_type.IP_ADDRESS))
@@ -160,7 +159,7 @@ public class comm_handler extends Handler {
                   //avoid duplicate connects, seen when user clicks address multiple times quickly
                   if (comm_thread.socketUdp != null && comm_thread.socketUdp.SocketGood()
                           && new_host_ip.equals(mainapp.host_ip) && new_port == mainapp.port) {
-                     Log.d("EX_Toolbox", "comm_handler.handleMessage: Duplicate CONNECT message received.");
+                     threaded_application.logging(activityName+": handleMessage: Duplicate CONNECT message received.");
                      break;
                   }
 
@@ -197,7 +196,7 @@ public class comm_handler extends Handler {
                   //avoid duplicate connects, seen when user clicks address multiple times quickly
                   if (comm_thread.socketWiT != null && comm_thread.socketWiT.SocketGood()
                           && new_host_ip.equals(mainapp.host_ip) && new_port == mainapp.port) {
-                     Log.d(threaded_application.applicationName, activityName + ": handleMessage(): Duplicate CONNECT message received.");
+                     threaded_application.logging(activityName + ": handleMessage(): Duplicate CONNECT message received.");
                      break;
                   }
 
@@ -358,11 +357,11 @@ public class comm_handler extends Handler {
          }
 
          case message_type.DISCONNECT: {
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): DISCONNECT");
+            threaded_application.logging(activityName + ": handleMessage(): DISCONNECT");
 
             commThread.sendQuit();
 
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): alert all activities to disconnect");
+            threaded_application.logging(activityName + ": handleMessage(): alert all activities to disconnect");
             mainapp.alertActivitiesWithBundle(message_type.DISCONNECT);
             commThread.stoppingConnection();
 
@@ -373,7 +372,7 @@ public class comm_handler extends Handler {
          }
 
          case message_type.SHUTDOWN: {
-            Log.d(threaded_application.applicationName, activityName + ": handleMessage(): SHUTDOWN");
+            threaded_application.logging(activityName + ": handleMessage(): SHUTDOWN");
 
             if (bundle != null) {
 
@@ -386,7 +385,7 @@ public class comm_handler extends Handler {
 
                commThread.sendQuit();
 
-               Log.d(threaded_application.applicationName, activityName + ": handleMessage(): alert all activities to shutdown");
+               threaded_application.logging(activityName + ": handleMessage(): alert all activities to shutdown");
                mainapp.alertActivitiesWithBundle(message_type.SHUTDOWN);     //tell all activities to finish()
                commThread.stoppingConnection();
 

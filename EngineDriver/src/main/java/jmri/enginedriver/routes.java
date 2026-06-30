@@ -39,8 +39,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-//import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -639,7 +637,7 @@ public class routes extends AppCompatActivity
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -683,7 +681,7 @@ public class routes extends AppCompatActivity
     @SuppressLint("ApplySharedPref")
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         super.onStart();
 
         // if it was killed in background, clear the save preferences
@@ -755,7 +753,7 @@ public class routes extends AppCompatActivity
             gestureHandler.removeCallbacksAndMessages(null);
             gestureHandler = null;
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
+            threaded_application.logging(activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
         }
 
         mainapp.clearActivityBundleMessageHandler(activity_id_type.ROUTES);
@@ -780,7 +778,7 @@ public class routes extends AppCompatActivity
     }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
         ConnectionActivity.overridePendingTransition(this, R.anim.push_right_in, R.anim.push_right_out);
@@ -1041,7 +1039,7 @@ public class routes extends AppCompatActivity
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-                // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
+                // threaded_application.logging(activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
@@ -1092,7 +1090,7 @@ public class routes extends AppCompatActivity
     private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
-//            Log.d(applicationName: Runnable");
+//            threaded_application.logging("activityname+": Runnable");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
@@ -1105,7 +1103,7 @@ public class routes extends AppCompatActivity
                     try {
                         routesView.dispatchTouchEvent(event);
                     } catch (IllegalArgumentException e) {
-                        Log.d(threaded_application.applicationName, activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                        threaded_application.logging(activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
                     }
                 }
             }

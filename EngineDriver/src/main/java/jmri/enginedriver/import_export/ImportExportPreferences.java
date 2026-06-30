@@ -27,7 +27,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -94,7 +93,7 @@ public class ImportExportPreferences {
     public ArrayList<String> recentTurnoutServerList;
 
     private void writeExportFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName){
-        Log.d(threaded_application.applicationName, activityName + ": writeExportFile(): Writing export file");
+        threaded_application.logging(activityName + ": writeExportFile(): Writing export file");
         boolean result = false;
         ObjectOutputStream output = null;
 
@@ -105,7 +104,7 @@ public class ImportExportPreferences {
             output.writeObject(sharedPreferences.getAll());
             @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
             mainapp.safeToast(m, Toast.LENGTH_SHORT);
-            Log.d(threaded_application.applicationName, activityName + ": " + m);
+            threaded_application.logging(activityName + ": " + m);
             result = true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,16 +119,16 @@ public class ImportExportPreferences {
             }
         }
         if (!result) {
-            Log.e(threaded_application.applicationName, activityName + ": writeExportFile(): Export Failed");
+            threaded_application.logging('e', activityName + ": writeExportFile(): Export Failed");
             mainapp.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": writeExportFile(): Export succeeded");
+            threaded_application.logging(activityName + ": writeExportFile(): Export succeeded");
 
         }
     }
 
     public void writeSharedPreferencesToFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName) {
-        Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
+        threaded_application.logging(activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
 
         boolean prefImportExportLocoList = sharedPreferences.getBoolean("prefImportExportLocoList", context.getResources().getBoolean(R.bool.prefImportExportLocoListDefaultValue));
         if (prefImportExportLocoList) {
@@ -169,10 +168,10 @@ public class ImportExportPreferences {
         int prefCount;
         if (prefImportExportLocoList) {  // now clean out the preference data
 
-            Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile():  Normal Cleanout of old Recent Locos preferences");
+            threaded_application.logging(activityName + ": writeSharedPreferencesToFile():  Normal Cleanout of old Recent Locos preferences");
             prefCount = removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentLoco", sharedPreferences);
             if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, assume the worst
-                Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile():  Extended Cleanout of old Recent Locos preferences");
+                threaded_application.logging(activityName + ": writeSharedPreferencesToFile():  Extended Cleanout of old Recent Locos preferences");
                 prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentLoco", sharedPreferences);
             }
             removeExtraListDataFromPreferences(0, prefCount,"prefRecentLocoSize", sharedPreferences);
@@ -181,16 +180,16 @@ public class ImportExportPreferences {
 
             prefCount =removeExtraListDataFromPreferences(0,numberOfRecentLocosToWrite+1,"prefRecentConsistName", sharedPreferences);
             if (prefCount == numberOfRecentLocosToWrite+1) {  // if there were that many, look for more
-                Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile():  Extended Cleanout of old Recent Locos preferences");
+                threaded_application.logging(activityName + ": writeSharedPreferencesToFile():  Extended Cleanout of old Recent Locos preferences");
                 prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, numberOfRecentLocosToWrite+20, "prefRecentConsistName", sharedPreferences);
 
                 if (prefCount == numberOfRecentLocosToWrite+20) {  // if there were that many, assume the worst
-                    Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile():  Extended DEEP CLEAN of old Recent Locos preferences");
+                    threaded_application.logging(activityName + ": writeSharedPreferencesToFile():  Extended DEEP CLEAN of old Recent Locos preferences");
                     prefCount = removeExtraListDataFromPreferences(numberOfRecentLocosToWrite+1, 600, "prefRecentConsistName", sharedPreferences);
                 }
             }
 
-            Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile():  Normal Cleanout of old Recent Consist preferences");
+            threaded_application.logging(activityName + ": writeSharedPreferencesToFile():  Normal Cleanout of old Recent Consist preferences");
             for (int i = 0; i < numberOfRecentLocosToWrite; i++) {
                 int subPrefCount = removeExtraListDataFromPreferences(0,10,"prefRecentConsistAddress_"+i, sharedPreferences);
                 removeExtraListDataFromPreferences(0,subPrefCount,"prefRecentConsistSize_"+i, sharedPreferences);
@@ -201,20 +200,20 @@ public class ImportExportPreferences {
             }
 
             if (sharedPreferences.contains("prefRecentTurnoutServer_0")) {  // there should not be any so assume the worst
-                Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile():  Extended Cleanout of old Recent turnouts preferences - these should not exist");
+                threaded_application.logging(activityName + ": writeSharedPreferencesToFile():  Extended Cleanout of old Recent turnouts preferences - these should not exist");
                 prefCount = removeExtraListDataFromPreferences(0, 600, "prefRecentTurnout", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutName", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutSource", sharedPreferences);
                 removeExtraListDataFromPreferences(0, prefCount, "prefRecentTurnoutServer", sharedPreferences);
             }
         }
-        Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): ImportExportPreferences: Saving preferences to file - Finished");
+        threaded_application.logging(activityName + ": writeSharedPreferencesToFile(): ImportExportPreferences: Saving preferences to file - Finished");
     }
 
     @SuppressWarnings("ChainOfInstanceofChecks")
     @SuppressLint({"ApplySharedPref", "StringFormatMatches"})
     public boolean loadSharedPreferencesFromFile(threaded_application mainapp, Context context, SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, boolean ignoredClearRecentsIfNoFile) {
-        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Loading saved preferences from file");
+        threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Loading saved preferences from file");
         currentlyImporting = true;
         boolean res = false;
         boolean srcExists = false;
@@ -257,32 +256,32 @@ public class ImportExportPreferences {
 
                     int i = 0;
                     Map<String, ?> entries = (Map<String, ?>) input.readObject();
-                    Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Key Count:" + entries.size());
+                    threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Key Count:" + entries.size());
                     for (Map.Entry<String, ?> entry : entries.entrySet()) {
                         Object v = entry.getValue();
                         String key = entry.getKey();
 
-//                        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Key Start: " + key);
+//                        threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Key Start: " + key);
 
                         if (v instanceof Boolean) {
-//                            Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - boolean - " + v);
+//                            threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - boolean - " + v);
                             prefEdit.putBoolean(key, (Boolean) v);
                         } else if (v instanceof Float) {
-//                            Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - Float - " + v);
+//                            threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - Float - " + v);
                             prefEdit.putFloat(key, (Float) v);
                         } else if (v instanceof Integer) {
-//                            Log.d(threaded_application.applicationName, activityName + ":  loadSharedPreferencesFromFile(): Key End: " + key + " - Integer - " + v);
+//                            threaded_application.logging(activityName + ":  loadSharedPreferencesFromFile(): Key End: " + key + " - Integer - " + v);
                             prefEdit.putInt(key, (Integer) v);
                         } else if (v instanceof Long) {
-//                            Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - Long - " + v);
+//                            threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - Long - " + v);
                             prefEdit.putLong(key, (Long) v);
                         } else if (v instanceof String) {
-//                            Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - String - " + v);
+//                            threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Key End: " + key + " - String - " + v);
                             prefEdit.putString(key, ((String) v));
                             if (key.equals("prefAndroidId")) { restoredDeviceId = (String) v;}
                         }
 
-                        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Key " + i +" End: " + key + " - " + v);
+                        threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Key " + i +" End: " + key + " - " + v);
                         i++;
                     }
                     res = true;
@@ -312,12 +311,12 @@ public class ImportExportPreferences {
 
                     @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
 
-                    Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + m);
+                    threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): " + m);
                     mainapp.safeToast(m, Toast.LENGTH_SHORT);
 
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
-                    Log.e(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Exception: " + e);
+                    threaded_application.logging('e', activityName + ": loadSharedPreferencesFromFile(): Exception: " + e);
                 } finally {
                     try {
                         if (input != null) {
@@ -325,7 +324,7 @@ public class ImportExportPreferences {
                         }
                     } catch (IOException ex) {
                         ex.printStackTrace();
-                        Log.e(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Exception: " + ex);
+                        threaded_application.logging('e', activityName + ": loadSharedPreferencesFromFile(): Exception: " + ex);
                     }
                 }
                 prefEdit.apply();
@@ -397,12 +396,12 @@ public class ImportExportPreferences {
         }
 
         prefEdit.commit();
-        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): Loading saved preferences from file - Finished");
+        threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): Loading saved preferences from file - Finished");
         return res;
     }
 
     public void loadRecentLocosListFromFile(Context context) {
-        Log.d(threaded_application.applicationName, activityName + ": loadRecentLocosListFromFile()): Loading recent locos list from file");
+        threaded_application.logging(activityName + ": loadRecentLocosListFromFile()): Loading recent locos list from file");
         if (recentLocoAddressList == null) { //make sure arrays are valid
             recentLocoAddressList = new ArrayList<>();
             recentLocoAddressSizeList = new ArrayList<>();
@@ -471,16 +470,16 @@ public class ImportExportPreferences {
                 }
                 list_reader.close();
             }
-            Log.d(threaded_application.applicationName, activityName + ": loadRecentLocosListFromFile(): Read recent locos list from file complete successfully");
+            threaded_application.logging(activityName + ": loadRecentLocosListFromFile(): Read recent locos list from file complete successfully");
 
         } catch (IOException except) {
-            Log.e(threaded_application.applicationName, activityName + ": loadRecentLocosListFromFile(): SelectLocoActivity - Error reading recent loco file. "
+            threaded_application.logging('e', activityName + ": loadRecentLocosListFromFile(): SelectLocoActivity - Error reading recent loco file. "
                     + except.getMessage());
         }
     }
 
     public void writeRecentLocosListToFile(Context context, SharedPreferences sharedPreferences) {
-        Log.d(threaded_application.applicationName, activityName + ": writeRecentLocosListToFile(): Writing recent locos list to file");
+        threaded_application.logging(activityName + ": writeRecentLocosListToFile(): Writing recent locos list to file");
 
         // write it out from the saved preferences to the file
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_ENGINES_FILENAME);
@@ -493,7 +492,7 @@ public class ImportExportPreferences {
             if (maximumRecentLocos > 0) {
                 for (int i = 0; i < recentLocoAddressList.size() && i < maximumRecentLocos; i++) {
 
-//                    Log.d(threaded_application.applicationName, activityName + ": writeRecentLocosListToFile(): checking: " + recentLocoAddressList.get(i));
+//                    threaded_application.logging(activityName + ": writeRecentLocosListToFile(): checking: " + recentLocoAddressList.get(i));
                     // check if loco has already been written
                     boolean alreadyWritten = false;
                     if (i>0) {
@@ -501,7 +500,7 @@ public class ImportExportPreferences {
                             if ((recentLocoAddressList.get(i).equals(recentLocoAddressList.get(j)))
                             && (recentLocoAddressSizeList.get(i).equals(recentLocoAddressSizeList.get(j)))
                             && (recentLocoSourceList.get(i).equals(recentLocoSourceList.get(j))) ) {
-                                Log.d(threaded_application.applicationName, activityName + ": writeRecentLocosListToFile(): already written: " + recentLocoAddressList.get(i));
+                                threaded_application.logging(activityName + ": writeRecentLocosListToFile(): already written: " + recentLocoAddressList.get(i));
                                 alreadyWritten = true;
                                 break;
                             }
@@ -519,21 +518,21 @@ public class ImportExportPreferences {
             }
             list_output.flush();
             list_output.close();
-            Log.d(threaded_application.applicationName, activityName + ": writeRecentLocosListToFile(): Write recent locos list to file complete successfully");
+            threaded_application.logging(activityName + ": writeRecentLocosListToFile(): Write recent locos list to file complete successfully");
         } catch (IOException except) {
-            Log.e(threaded_application.applicationName, activityName + ":  writeRecentLocosListToFile(): caught IOException: "
+            threaded_application.logging('e', activityName + ":  writeRecentLocosListToFile(): caught IOException: "
                             + except.getMessage());
         } catch (NumberFormatException except) {
-            Log.e(threaded_application.applicationName, activityName + ":  writeRecentLocosListToFile(): caught NumberFormatException: "
+            threaded_application.logging('e', activityName + ":  writeRecentLocosListToFile(): caught NumberFormatException: "
                             + except.getMessage());
         } catch (IndexOutOfBoundsException except) {
-            Log.e(threaded_application.applicationName, activityName + ":  writeRecentLocosListToFile(): caught IndexOutOfBoundsException: "
+            threaded_application.logging('e', activityName + ":  writeRecentLocosListToFile(): caught IndexOutOfBoundsException: "
                             + except.getMessage());
         }
     }
 
     public void loadRecentConsistsListFromFile(Context context) {
-        Log.d(threaded_application.applicationName, activityName + ": loadRecentConsistsListFromFile(): Loading recent consists list from file");
+        threaded_application.logging(activityName + ": loadRecentConsistsListFromFile(): Loading recent consists list from file");
 
         recentConsistLocoAddressList = new ArrayList<>();
         recentConsistAddressSizeList = new ArrayList<>();
@@ -640,11 +639,11 @@ public class ImportExportPreferences {
                         }
                     }
                     list_reader.close();
-                    Log.d(threaded_application.applicationName, activityName + ": loadRecentConsistsListFromFile(): Read recent consists list from file completed successfully");
+                    threaded_application.logging(activityName + ": loadRecentConsistsListFromFile(): Read recent consists list from file completed successfully");
                 }
 
             } catch (IOException except) {
-                Log.e(threaded_application.applicationName, activityName + ": loadRecentConsistsListFromFile(): Error reading recent consist file. "
+                threaded_application.logging('e', activityName + ": loadRecentConsistsListFromFile(): Error reading recent consist file. "
                         + except.getMessage());
             }
         }
@@ -681,13 +680,13 @@ public class ImportExportPreferences {
         // check if it is already in the list and remove it
         String functions = "";
         for (int i = 0; i < recentLocoAddressList.size(); i++) {
-            Log.d(threaded_application.applicationName, activityName + ": findRecentLocoEntry(): locoName='"+locoName+"', address=" + locoAddress);
+            threaded_application.logging(activityName + ": findRecentLocoEntry(): locoName='"+locoName+"', address=" + locoAddress);
             if (locoAddress == recentLocoAddressList.get(i)
                     && locoAddressSize == recentLocoAddressSizeList.get(i)
                     && locoName.equals(recentLocoNameList.get(i))) {
 
                 functions = recentLocoFunctionsList.get(i);
-                Log.d(threaded_application.applicationName, activityName + ": findRecentLocoEntry(): Loco '"+ locoName + "' removed from Recents");
+                threaded_application.logging(activityName + ": findRecentLocoEntry(): Loco '"+ locoName + "' removed from Recents");
                 break;
             }
         }
@@ -861,7 +860,7 @@ public class ImportExportPreferences {
 
 
     public void writeRecentConsistsListToFile(Context context, SharedPreferences sharedPreferences, int whichEntryIsBeingUpdated) {
-        Log.d(threaded_application.applicationName, activityName + ": writeRecentConsistsListToFile(): Writing recent consists list to file");
+        threaded_application.logging(activityName + ": writeRecentConsistsListToFile(): Writing recent consists list to file");
 
         // write it out from the saved preferences to the file
         File consist_list_file = new File(context.getExternalFilesDir(null), RECENT_CONSISTS_FILENAME);
@@ -903,16 +902,16 @@ public class ImportExportPreferences {
             }
             list_output.flush();
             list_output.close();
-            Log.d(threaded_application.applicationName, activityName + ": writeRecentConsistsListToFile(): Write recent consists list to file completed successfully");
+            threaded_application.logging(activityName + ": writeRecentConsistsListToFile(): Write recent consists list to file completed successfully");
         } catch (IOException except) {
-            Log.e(threaded_application.applicationName, activityName + ": writeRecentConsistsListToFile(): Error creating a PrintWriter, IOException: "
+            threaded_application.logging('e', activityName + ": writeRecentConsistsListToFile(): Error creating a PrintWriter, IOException: "
                             + except.getMessage());
         }
     }
 
     @SuppressLint("DefaultLocale")
     public void writeThrottlesEnginesListToFile(threaded_application mainapp, Context context, int prefNumThrottles) {
-        Log.d(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Writing throttles engines list to file");
+        threaded_application.logging(activityName + ": writeThrottlesEnginesListToFile(): Writing throttles engines list to file");
 
         File throttles_engines_list_file = new File(context.getExternalFilesDir(null), THROTTLES_ENGINES_FILENAME);
 
@@ -937,15 +936,15 @@ public class ImportExportPreferences {
             }
             list_output.flush();
             list_output.close();
-            Log.d(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Write throttles engines list to file completed successfully");
+            threaded_application.logging(activityName + ": writeThrottlesEnginesListToFile(): Write throttles engines list to file completed successfully");
         } catch (IOException except) {
-            Log.e(threaded_application.applicationName, activityName + ": writeThrottlesEnginesListToFile(): Error creating a PrintWriter, IOException: "
+            threaded_application.logging('e', activityName + ": writeThrottlesEnginesListToFile(): Error creating a PrintWriter, IOException: "
                             + except.getMessage());
         }
     }
 
     public void loadThrottlesEnginesListFromFile(threaded_application mainapp, Context context) {
-        Log.d(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Reading throttles engines list from file");
+        threaded_application.logging(activityName + ": loadThrottlesEnginesListFromFile(): Reading throttles engines list from file");
 
         boolean displayToast = true;
 
@@ -1063,10 +1062,10 @@ public class ImportExportPreferences {
                     }
                 }
                 list_reader.close();
-                Log.d(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Read throttles engines list from file completed successfully");
+                threaded_application.logging(activityName + ": loadThrottlesEnginesListFromFile(): Read throttles engines list from file completed successfully");
 
             } catch(IOException except){
-                Log.e(threaded_application.applicationName, activityName + ": loadThrottlesEnginesListFromFile(): Error reading throttles engines list. "
+                threaded_application.logging('e', activityName + ": loadThrottlesEnginesListFromFile(): Error reading throttles engines list. "
                         + except.getMessage());
             }
         }
@@ -1102,7 +1101,7 @@ public class ImportExportPreferences {
         }
         sharedPreferences.edit().commit();
 
-//        Log.d(threaded_application.applicationName, activityName + ": writeRecentConsistsListToFile(): removeExtraListDataFromPreferences: list: " +listName + " prefCount" + prefCount);
+//        threaded_application.logging(activityName + ": writeRecentConsistsListToFile(): removeExtraListDataFromPreferences: list: " +listName + " prefCount" + prefCount);
 
         return prefCount;
     }
@@ -1153,7 +1152,7 @@ public class ImportExportPreferences {
                 engineAddressString = addressLengthString + addr.toString();  //e.g.  L1009
             }
         } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ":  locoAddressToString() Exception: " + e);
+            threaded_application.logging('e', activityName + ":  locoAddressToString() Exception: " + e);
         }
         return engineAddressString;
     }
@@ -1166,7 +1165,7 @@ public class ImportExportPreferences {
 //            engineAddressHtml = String.format("<span>%s<small>(%s)</small>%s </span>", addr.toString(), addressLengthString, addressSourceString);
             engineAddressHtml = String.format("<span>%s<small>(%s)</small> </span>", addr.toString(), addressLengthString);
         } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ":  locoAddressToHtml() Exception: " + e);
+            threaded_application.logging('e', activityName + ":  locoAddressToHtml() Exception: " + e);
         }
         return engineAddressHtml;
     }
@@ -1175,7 +1174,7 @@ public class ImportExportPreferences {
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void writeRecentTurnoutsListToFile(Context context, SharedPreferences sharedPreferences) {
-//        Log.d(threaded_application.applicationName, activityName + ": writeRecentTurnoutsListToFile(): Writing recent turnouts list to file");
+//        threaded_application.logging(activityName + ": writeRecentTurnoutsListToFile(): Writing recent turnouts list to file");
 
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
 
@@ -1199,29 +1198,29 @@ public class ImportExportPreferences {
             }
             list_output.flush();
             list_output.close();
-            Log.d(threaded_application.applicationName, activityName + ": writeRecentTurnoutsListToFile(): " +
+            threaded_application.logging(activityName + ": writeRecentTurnoutsListToFile(): " +
                     "Write recent turnouts list to file completed successfully with " + recentTurnoutAddressList.size() + " entries.");
         } catch (IOException except) {
-            Log.e(threaded_application.applicationName, activityName + ": writeRecentTurnoutsListToFile(): Error creating a PrintWriter, IOException: "
+            threaded_application.logging('e', activityName + ": writeRecentTurnoutsListToFile(): Error creating a PrintWriter, IOException: "
                             + except.getMessage());
         } catch (IndexOutOfBoundsException except) {
-            Log.e(threaded_application.applicationName, activityName + ": writeRecentTurnoutsListToFile(): Error writing recent turnouts lists, IndexOutOfBoundsException: "
+            threaded_application.logging('e', activityName + ": writeRecentTurnoutsListToFile(): Error writing recent turnouts lists, IndexOutOfBoundsException: "
                             + except.getMessage());
         }
     }
 
     /** @noinspection UnusedReturnValue*/
     public boolean deleteFile(Context context, String filename) {
-        Log.d(threaded_application.applicationName, activityName + ": deleteFile():");
+        threaded_application.logging(activityName + ": deleteFile():");
 
         File file = new File(context.getExternalFilesDir(null), filename);
         if (file.exists()) {
             try {
                 if(!file.delete())
-                    Log.e(threaded_application.applicationName, activityName + ": deleteRecentTurnoutsListFile(): Unable to delete : " + filename);
+                    threaded_application.logging('e', activityName + ": deleteRecentTurnoutsListFile(): Unable to delete : " + filename);
                 return(true);
             } catch (Exception except) {
-                Log.e(threaded_application.applicationName, activityName + ": deleteRecentTurnoutsListFile(): Error deleting : " + filename
+                threaded_application.logging('e', activityName + ": deleteRecentTurnoutsListFile(): Error deleting : " + filename
                                 + except.getMessage());
             }
         }
@@ -1229,7 +1228,7 @@ public class ImportExportPreferences {
     }
 
         public void loadRecentTurnoutsListFromFile(Context context) {
-//        Log.d(threaded_application.applicationName, activityName + ": loadRecentTurnoutsListFromFile(): Loading recent turnouts list from file");
+//        threaded_application.logging(activityName + ": loadRecentTurnoutsListFromFile(): Loading recent turnouts list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in recent_engine_list.txt
@@ -1275,11 +1274,11 @@ public class ImportExportPreferences {
                 }
                 list_reader.close();
             }
-            Log.d(threaded_application.applicationName, activityName + ": loadRecentTurnoutsListFromFile(): " +
+            threaded_application.logging(activityName + ": loadRecentTurnoutsListFromFile(): " +
                     "Read recent turnouts list from file completed successfully with " + recentTurnoutAddressList.size() + " entries.");
 
         } catch (IOException except) {
-            Log.e(threaded_application.applicationName, activityName + ": loadRecentTurnoutsListFromFile(): Error reading recent turnouts file. "
+            threaded_application.logging('e', activityName + ": loadRecentTurnoutsListFromFile(): Error reading recent turnouts file. "
                     + except.getMessage());
         }
     }
@@ -1338,14 +1337,14 @@ public class ImportExportPreferences {
             // check if it is already in the list and remove it
             String keepFunctions = "";
             for (int i = 0; i < recentLocoAddressList.size(); i++) {
-                Log.d(threaded_application.applicationName, activityName + ": downloadRosterToRecents(): locoName='"+locoName+"', address=" + locoAddress);
+                threaded_application.logging(activityName + ": downloadRosterToRecents(): locoName='"+locoName+"', address=" + locoAddress);
                 if (locoAddress == recentLocoAddressList.get(i)
                         && locoAddressSize == recentLocoAddressSizeList.get(i)
                         && locoName.equals(recentLocoNameList.get(i))) {
 
                     keepFunctions = recentLocoFunctionsList.get(i);
                     removeRecentLocoFromList(i);
-                    Log.d(threaded_application.applicationName, activityName + ": downloadRosterToRecents(): Loco '"+ locoName + "' removed from Recents");
+                    threaded_application.logging(activityName + ": downloadRosterToRecents(): Loco '"+ locoName + "' removed from Recents");
                     break;
                 }
             }
@@ -1353,7 +1352,7 @@ public class ImportExportPreferences {
             // now append it to the end of the list
             addRecentLocoToList(locoAddress, locoAddressSize, locoName, source_type.ROSTER, keepFunctions);   // functions are blank for now
 
-            Log.d(threaded_application.applicationName, activityName + ": downloadRosterToRecents(): Loco '"+ locoName + "' added to Recents");
+            threaded_application.logging(activityName + ": downloadRosterToRecents(): Loco '"+ locoName + "' added to Recents");
 
             j++;
         }

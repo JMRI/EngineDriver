@@ -31,8 +31,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
-//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -268,15 +266,15 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
             whichThrottle = mainapp.throttleCharToInt(extras.getChar("whichThrottle"));
             saveConsistsFile = extras.getChar("saveConsistsFile");
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): no bundle - whichThrottle undefined, setting to 0");
+            threaded_application.logging(activityName + ": onCreate(): no bundle - whichThrottle undefined, setting to 0");
             whichThrottle = 0;
         }
 
         if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
             if (mainapp.consists == null)
-                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists is null");
+                threaded_application.logging(activityName + ": onCreate(): consists is null");
             else
-                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists[" + whichThrottle + "] is null");
+                threaded_application.logging(activityName + ": onCreate(): consists[" + whichThrottle + "] is null");
             threaded_application.activityInTransition(activityName);
             this.finish();
             return;
@@ -352,7 +350,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -390,7 +388,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         super.onStart();
 
         if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
@@ -430,7 +428,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
      */
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
         super.onDestroy();
 
         if (saveConsistsFile == 'Y') {
@@ -485,7 +483,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
     }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra
@@ -567,7 +565,7 @@ public class ConsistEditActivity extends AppCompatActivity implements OnGestureL
                 try {
                     consist.setBackward(address, !consist.isBackward(address));
                 } catch (Exception e) {    // isBackward returns null if address is not in consist - should not happen since address was selected from consist list
-                    Log.d(threaded_application.applicationName, activityName + ": locoItemClickListner():  selected engine " + address + " that is not in consist");
+                    threaded_application.logging(activityName + ": locoItemClickListner():  selected engine " + address + " that is not in consist");
                 }
             }
 

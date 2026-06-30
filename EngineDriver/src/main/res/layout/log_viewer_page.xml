@@ -106,11 +106,13 @@
                 style="?attr/ed_normal_button_condensed_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:layout_margin="2dp"
                 android:paddingStart="6dp"
                 android:paddingEnd="6dp"
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
+
                 android:text="@string/logviewerClose"
                 android:textSize="12sp"
                 android:drawablePadding="0dp"

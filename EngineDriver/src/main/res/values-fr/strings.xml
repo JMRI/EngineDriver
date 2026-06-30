@@ -1176,6 +1176,7 @@
     <string name="prefPauseAlternateButtonTitle">Affiche bouton pour reduire ou stopper loco</string>
     <string name="gamepadTestButtonLabelButtonLeftThumb">Pouce gauche</string>
     <string name="gamepadTestButtonLabelButtonRightThumb">Pouce droit</string>
+    <string name="toastEndSaveLogFile">Enregistrement arrêté. Voir le fichier %1$s.</string>
     <string name="infoSaveLogFile">Enregistré dans %s</string>
     <string name="dccexButtonTrackManager">Gestionnaire des voies</string>
     <string name="dccexButtonDefaultFunctions">Fonctions par défaut</string>

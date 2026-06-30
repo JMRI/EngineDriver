@@ -1,7 +1,6 @@
 package jmri.jmrit.roster;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -160,7 +159,7 @@ public class RosterEntry {
         for (int k = 0; k < nm.getLength(); k++) {
             if ("id".compareTo(nm.item(k).getNodeName()) == 0) {
                 _id = nm.item(k).getNodeValue();
-                Log.d(threaded_application.applicationName, activityName + ": adding id " + _id);
+                threaded_application.logging(activityName + ": adding id " + _id);
                 continue;
             }
             if ("fileName".compareTo(nm.item(k).getNodeName()) == 0) {
@@ -218,13 +217,13 @@ public class RosterEntry {
 
             if ("dateUpdated".compareTo(node.getNodeName()) == 0) {
                 _dateUpdated = node.getNodeValue();
-//Log.d(threaded_application.applicationName, activityName + ": Adding date updated "+_dateUpdated+" / text content : "+node.getNodeValue());
+//threaded_application.logging(activityName + ": Adding date updated "+_dateUpdated+" / text content : "+node.getNodeValue());
                 continue;
             }
 /*    		if ( "locoaddress".compareTo(node.getNodeName()) == 0) {
                 _dccAddress = node.getNodeValue();
     			//TODO _isLongAddress=
-    			//Log.d(threaded_application.applicationName, activityName + ": Adding 2nd dcc address "+_dccAddress+" / text content : "+node.getNodeValue());
+    			//threaded_application.logging(activityName + ": Adding 2nd dcc address "+_dccAddress+" / text content : "+node.getNodeValue());
 
     			continue;
     		}
@@ -234,12 +233,12 @@ public class RosterEntry {
                 for (int j = 0; j < nnm.getLength(); j++) {
                     if ("model".compareTo(nnm.item(j).getNodeName()) == 0) {
                         _decoderModel = nnm.item(j).getNodeValue();
-//    					Log.d(threaded_application.applicationName, activityName + ": adding decoder "+_decoderModel);
+//    					threaded_application.logging(activityName + ": adding decoder "+_decoderModel);
                         continue;
                     }
                     if ("family".compareTo(nnm.item(j).getNodeName()) == 0) {
                         _decoderFamily = nnm.item(j).getNodeValue();
-//    					Log.d(threaded_application.applicationName, activityName + ": adding decoder family "+_decoderFamily);
+//    					threaded_application.logging(activityName + ": adding decoder family "+_decoderFamily);
                         continue;
                     }
                     if ("comment".compareTo(nnm.item(j).getNodeName()) == 0) {
@@ -321,7 +320,7 @@ public class RosterEntry {
                         setFunctionImage(num, imOff);
                     if (imOn != null)
                         setFunctionSelectedImage(num, imOn);
-                    Log.d(threaded_application.applicationName, activityName + ": loadFunctions(): Setting function " + num + "(" + val + ") " + lockable + " " + imOff + "/" + imOn);
+                    threaded_application.logging(activityName + ": loadFunctions(): Setting function " + num + "(" + val + ") " + lockable + " " + imOff + "/" + imOn);
                 }
             }
         }
@@ -353,7 +352,7 @@ public class RosterEntry {
         if (fn >= 0 && fn <= getMAXIMUM_FUNCTION_NUMBER()) {
             functionLabels[fn] = label;
         } else {
-            Log.w("Engine_Driver", "RosterEntry: Fn " + fn + " out of range, not added for '" + getId() + "'");
+            threaded_application.logging('w', "RosterEntry: Fn " + fn + " out of range, not added for '" + getId() + "'");
         }
     }
 

@@ -3,7 +3,6 @@ package jmri.enginedriver.util;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.util.Log;
 import android.view.WindowManager;
 
 import java.util.Arrays;
@@ -38,7 +37,7 @@ public class GamePadKeyLoader {
     // setup the appropriate keycodes for the type of gamepad that has been selected in the preferences
     public void loadGamepadKeys() {
         mainapp.prefGamePadType = prefs.getString("prefGamePadType", activity.getApplicationContext().getResources().getString(R.string.prefGamePadTypeDefaultValue));
-        Log.d(threaded_application.applicationName, activityName + ": setGamepadKeys() : prefGamePadType: " + mainapp.prefGamePadType);
+        threaded_application.logging(activityName + ": setGamepadKeys() : prefGamePadType: " + mainapp.prefGamePadType);
 
         // Gamepad button Preferences
         prefGamePadButtons[0] = prefs.getString("prefGamePadButtonStart", activity.getApplicationContext().getResources().getString(R.string.prefGamePadButtonStartDefaultValue));

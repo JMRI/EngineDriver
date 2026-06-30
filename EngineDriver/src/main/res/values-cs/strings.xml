@@ -757,6 +757,7 @@
 <!--    <string name="toastRecentTurnoutsConfirmClear">Potvrďte, že chcete odebrat všechny nedávné Výhybky OPĚTOVNÝM stiskem tlačítka \'Vymazat seznam\'.</string>-->
 <!--    <string name="toastTurnoutsRecentsHelp">Dlouhým stiskem odstraníte záznam.</string>-->
 
+    <string name="toastEndSaveLogFile">Záznam zastaven. Viz soubor %1$s.</string>
     <string name="infoSaveLogFile">Přihlašování do: %s</string>
     <string name="toastDccexInvalidRosterId">Neplatné ID seznamu \'%1$s\'. Pravděpodobně se nepodaří načíst celý seznam, výhybky a seznamy tras.</string>
     <string name="RecentsNameEditTitle">Název nedávné lokomotivy</string>

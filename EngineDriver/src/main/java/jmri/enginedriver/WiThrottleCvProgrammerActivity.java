@@ -32,7 +32,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -613,7 +612,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -707,7 +706,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
     }
     
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         mainapp.witScreenIsOpen = false;
         this.finish();  //end this activity
@@ -882,7 +881,7 @@ public class WiThrottleCvProgrammerActivity extends AppCompatActivity {
                 refreshWitCommandsView();
 
             } catch (Exception e) {
-                Log.e(threaded_application.applicationName, activityName + ": checkCv29(): Error processing cv29: " + e.getMessage());
+                threaded_application.logging('e', activityName + ": checkCv29(): Error processing cv29: " + e.getMessage());
             }
         }
     }

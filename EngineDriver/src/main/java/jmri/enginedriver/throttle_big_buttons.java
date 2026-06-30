@@ -23,7 +23,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,7 @@ public class throttle_big_buttons extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
+        threaded_application.logging(activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -86,7 +85,7 @@ public class throttle_big_buttons extends throttle {
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         if (mainapp.appIsFinishing) return;
 
         sliderType = slider_type.VERTICAL;   // they are not visible
@@ -106,7 +105,7 @@ public class throttle_big_buttons extends throttle {
 
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
+        threaded_application.logging(activityName + ": onResume(): called");
         super.onResume();
         threaded_application.activityResumed(activityName);
 
@@ -167,7 +166,7 @@ public class throttle_big_buttons extends throttle {
     // lookup and set values of various informational text labels and size the
     // screen elements
     protected void setLabels() {
-//        Log.d(threaded_application.applicationName, activityName + ": set_labels() starting");
+//        threaded_application.logging(activityName + ": set_labels() starting");
         super.setLabels();
 
         if (mainapp.appIsFinishing) { return;}
@@ -277,7 +276,7 @@ public class throttle_big_buttons extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d(threaded_application.applicationName, activityName + ": vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            //threaded_application.logging(activityName + ": vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         ImageView myImage = findViewById(R.id.backgroundImgView);
@@ -302,7 +301,7 @@ public class throttle_big_buttons extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-        // Log.d(threaded_application.applicationName, activityName + ": ending set_labels");
+        // threaded_application.logging(activityName + ": ending set_labels");
 
     }
 
@@ -325,7 +324,7 @@ public class throttle_big_buttons extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // Log.d(threaded_application.applicationName, activityName + ": enableDisableButtonsForView() " + newEnabledState);
+        // threaded_application.logging(activityName + ": enableDisableButtonsForView() " + newEnabledState);
 
         if (vg == null) { return;}
         if (mainapp.appIsFinishing) { return;}
@@ -344,7 +343,7 @@ public class throttle_big_buttons extends throttle {
     // update the appearance of all function buttons
     @Override
     void setAllFunctionStates(int whichThrottle) {
-        // Log.d(threaded_application.applicationName, activityName + ": set_function_states()");
+        // threaded_application.logging(activityName + ": set_function_states()");
 
         if (mainapp.appIsFinishing) { return;}
 

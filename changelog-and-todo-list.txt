@@ -1,3 +1,12 @@
+**Version 2.43.229
+ * New Features
+     * When you start logging, it also creates a ..._filtered.txt file that only contains ED log messages
+ * Bug Fixes
+ * Other
+     * All the Log.x() messages have been changed to call a method in t_a that also saves to the ..._filtered.txt file if logging has started.
+     * Starting and Stopping the log now call getAboutInfo() to force the os,app,etc. info into the logs
+     * The warning message about going into background should now be suppressed if using multi-window or the new Android 17 Bubbles
+     * Google translations.
 **Version 2.43.228
  * New Features
      * Added a toast warning if the system Font Size is too large.

@@ -782,6 +782,7 @@
     <string name="RecentConsistsNameEditText">Inserire un nome per il Consist</string>
     <string name="RecentConsistsNameEditTitle">Recenti Consistono Nome</string>
     <string name="RecentsNameEditText">Inserire un nome per il Loco</string>
+    <string name="toastEndSaveLogFile">Registrazione interrotta. Consultare il file %1$s.</string>
     <string name="infoSaveLogFile">Accesso a: %s</string>
     <string name="toastDccexInvalidRosterId">ID elenco non valido \'%1$s\'. È probabile che l\'intero elenco di elenchi, scambi e percorsi non venga caricato.</string>
     <string name="RecentsNameEditTitle">Recenti Nome Loco</string>

@@ -39,7 +39,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -1139,7 +1138,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -1171,7 +1170,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         super.onStart();
 
         if (mainapp.activityBundleMessageHandlers[activity_id_type.DCC_EX] == null)
@@ -1245,7 +1244,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     }
 
         void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         threaded_application.dccexScreenIsOpen = false;
         this.finish();  //end this activity
@@ -1510,7 +1509,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
                         + "</p>" + dccexResponsesStr;
 
             } catch (Exception e) {
-                Log.e(threaded_application.applicationName, activityName + ": checkCv29(): Error processing cv29: " + e.getMessage());
+                threaded_application.logging('e', activityName + ": checkCv29(): Error processing cv29: " + e.getMessage());
             }
         }
     }
@@ -1608,8 +1607,8 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     public void onConfirm(String inputText, List<Boolean> checkboxStates) {
 
         // Handle the data from the dialog here
-        Log.d("DCC_EX_DIALOG", "Input Text: " + inputText);
-        Log.d("DCC_EX_DIALOG", "Checkbox States: " + checkboxStates.toString());
+        threaded_application.logging("DCC_EX_DIALOG: Input Text: " + inputText);
+        threaded_application.logging("DCC_EX_DIALOG: Checkbox States: " + checkboxStates.toString());
 
         etDccexCvValue.setText(inputText);
         dccexCvValue = etDccexCvValue.getText().toString();

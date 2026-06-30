@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -294,7 +293,7 @@ public class CvBitCalculator extends DialogFragment {
             } catch (Exception e) {
                 messageText.setVisibility(View.GONE);
                 messageTextScrollView.setVisibility(View.GONE);
-                Log.e(threaded_application.applicationName, activityName + ": checkCv29(): Error processing cv29: " + e.getMessage());
+                threaded_application.logging('e', activityName + ": checkCv29(): Error processing cv29: " + e.getMessage());
             }
         } else {
             messageText.setVisibility(View.GONE);

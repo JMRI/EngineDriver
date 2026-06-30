@@ -90,11 +90,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -521,6 +524,9 @@ public class threaded_application extends Application {
     public String logSaveFilename = "";
     public Process logcatProcess;
 
+    public static BufferedWriter logFileFiltered;
+    public static String logFileFilteredFileName = "";
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // haptic feedback
 
@@ -779,7 +785,7 @@ public class threaded_application extends Application {
 
 //    private void updateNotification(String updateText) {
 //        if ( (notificationManager == null) || (isActivityVisible()) ) return;
-//        Log.d(applicationName, "Engine Driver:updateNotification()");
+//        threaded_application.logging("Engine Driver:updateNotification()");
 //        notificationLevel = 2;
 //
 //        vibrate(new long[]{1000, 500, 1000, 500});
@@ -810,14 +816,14 @@ public class threaded_application extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(applicationName, "t_a: onCreate()");
+        threaded_application.logging(activityName + " : onCreate()");
         try {
             appVersion = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
 //        androidVersion = android.os.Build.VERSION.SDK_INT;
 
-        Log.i(applicationName, "Engine Driver:" + appVersion + ", SDK:" + android.os.Build.VERSION.SDK_INT);
+        threaded_application.logging('i', "Engine Driver:" + appVersion + ", SDK:" + android.os.Build.VERSION.SDK_INT);
 
 //        context = getApplicationContext();
 
@@ -883,7 +889,7 @@ public class threaded_application extends Application {
 
         @Override
         public void onActivityResumed(@NonNull Activity activity) {
-            Log.d(applicationName, "t_a: ALO/ALH: onActivityResumed(): " + activity.getComponentName() + " : " + (isInBackground ? "Coming out of Background" : "foreground"));
+            threaded_application.logging(activityName + " : ALO/ALH: onActivityResumed(): " + activity.getComponentName() + " : " + (isInBackground ? "Coming out of Background" : "foreground"));
             if (isInBackground) {                           // if coming out of background
                 isInBackground = false;
                 exitConfirmed = false;
@@ -906,7 +912,7 @@ public class threaded_application extends Application {
 
         @Override
         public void onActivityDestroyed(@NonNull Activity activity) {
-            Log.d(applicationName, "t_a: ALO/ALH: onActivityDestroyed(): " + activity.getComponentName());
+            threaded_application.logging(activityName + " : ALO/ALH: onActivityDestroyed(): " + activity.getComponentName());
             if (isInBackground && activity == runningActivity) {
                 removeNotification(runningActivity.getIntent()); // destroyed in background so remove notification
             }
@@ -918,18 +924,19 @@ public class threaded_application extends Application {
 
         @Override
         public void onLowMemory() {
-            Log.d(applicationName, "t_a: ALO/ALH: onLowMemory():");
+            threaded_application.logging(activityName + " : ALO/ALH: onLowMemory():");
         }
 
         @SuppressLint("ApplySharedPref")
         @Override
         public void onTrimMemory(int level) {
-            Log.d(applicationName, "t_a: ALO/ALH: onTrimMemory(): " + level);
+            threaded_application.logging(activityName + " : ALO/ALH: onTrimMemory(): " + level);
             if (exitConfirmed) return;
 
-            Log.d(applicationName, "t_a: ALO/ALH: onTrimMemory(): " + level + " - Not Exiting");
+            threaded_application.logging(activityName + " : ALO/ALH: onTrimMemory(): " + level + " - Not Exiting");
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
-                if (!isInBackground) {                              // if just went into bkg
+                boolean isInMultiWindow = runningActivity != null && runningActivity.isInMultiWindowMode();
+                if (!isInMultiWindow && !isInBackground) {                              // if just went into bkg
                     isInBackground = true;
                     activityPaused();
                     activityNotInTransition();
@@ -941,7 +948,7 @@ public class threaded_application extends Application {
 
                     if (prefs.getBoolean("prefStopOnBackground",
                             mainapp.getResources().getBoolean(R.bool.prefStopOnBackgroundDefaultValue))) {
-                        Log.d(threaded_application.applicationName, activityName + ": onTrimMemory(): Stopping Trains");
+                        threaded_application.logging(activityName + ": onTrimMemory(): Stopping Trains");
                         if (mainapp.consists != null) {
                             Bundle bundle = new Bundle();
                             for (int i = 0; i < mainapp.prefNumThrottles; i++) {
@@ -983,12 +990,12 @@ public class threaded_application extends Application {
 
         @Override
         public void onActivityPreDestroyed(Activity activity) {
-            Log.d(applicationName, "t_a: ALO/ALH: onActivityPreDestroyed(): " + activity.getComponentName());
+            threaded_application.logging(activityName + " : ALO/ALH: onActivityPreDestroyed(): " + activity.getComponentName());
         }
 
         @Override
         public void onActivityPreResumed(Activity activity) {
-            Log.d(applicationName, "t_a: ALO/ALH: onActivityPreResumed(): " + activity.getComponentName());
+            threaded_application.logging(activityName + " : ALO/ALH: onActivityPreResumed(): " + activity.getComponentName());
         }
 
     }
@@ -1087,9 +1094,9 @@ public class threaded_application extends Application {
                 }
             }
         } catch (IOException except) {
-            Log.e(applicationName, activityName + ": Could not read file, error: " + except.getMessage());
+            threaded_application.logging('e', activityName + ": Could not read file, error: " + except.getMessage());
         } catch (NumberFormatException except) {
-            Log.e(threaded_application.applicationName, activityName + ": set_default_function_labels(): NumberFormatException reading function_settings file: " + except.getMessage());
+            threaded_application.logging('e', activityName + ": set_default_function_labels(): NumberFormatException reading function_settings file: " + except.getMessage());
         }
 
     }
@@ -1102,7 +1109,7 @@ public class threaded_application extends Application {
             HashMap<String, RosterEntry> rosterTemp;
             if (rosterUrl == null || rosterUrl.isEmpty() || dl.cancel)
                 return;
-            Log.d(applicationName, "t_a: Background loading roster from " + rosterUrl);
+            threaded_application.logging(activityName + " : Background loading roster from " + rosterUrl);
             int rosterSize;
             try {
                 RosterLoader rl = new RosterLoader(rosterUrl);
@@ -1110,7 +1117,7 @@ public class threaded_application extends Application {
                     return;
                 rosterTemp = rl.parse();
                 if (rosterTemp == null) {
-                    Log.w(applicationName, "t_a: Roster parse failed.");
+                    threaded_application.logging('w', "t_a: Roster parse failed.");
                     return;
                 }
                 rosterSize = rosterTemp.size();     //throws exception if still null
@@ -1119,7 +1126,7 @@ public class threaded_application extends Application {
             } catch (Exception e) {
                 throw new IOException();
             }
-            Log.d(applicationName, "t_a: Loaded " + rosterSize + " entries from /roster/?format=xml.");
+            threaded_application.logging(activityName + " : Loaded " + rosterSize + " entries from /roster/?format=xml.");
         }
     }
 
@@ -1130,14 +1137,14 @@ public class threaded_application extends Application {
 //            String metaUrl = createUrl("json/metadata");
 //            if (metaUrl == null || metaUrl.equals("") || dl.cancel)
 //                return;
-//            Log.d(applicationName, "t_a: Background loading metadata from " + metaUrl);
+//            threaded_application.logging(activityName + " : Background loading metadata from " + metaUrl);
 //
 //            HttpClient Client = new DefaultHttpClient();
 //            HttpGet httpGet = new HttpGet(metaUrl);
 //            ResponseHandler<String> responseHandler = new BasicResponseHandler();
 //            String jsonResponse;
 //            jsonResponse = Client.execute(httpGet, responseHandler);
-//            Log.d(applicationName, "t_a: Raw metadata retrieved: " + jsonResponse);
+//            threaded_application.logging(activityName + " : Raw metadata retrieved: " + jsonResponse);
 //
 //            HashMap<String, String> metadataTemp = new HashMap<>();
 //            try {
@@ -1149,15 +1156,15 @@ public class threaded_application extends Application {
 //                    metadataTemp.put(metadataName, metadataValue);
 //                }
 //            } catch (JSONException e) {
-//                Log.d(applicationName, "t_a: exception trying to retrieve JSON metadata.");
+//                threaded_application.logging(activityName + " : exception trying to retrieve JSON metadata.");
 //            } catch (Exception e) {
 //                throw new IOException();
 //            }
 //            if (metadataTemp.size() == 0) {
-//                Log.d(applicationName, "t_a: did not retrieve any JSON metadata entries.");
+//                threaded_application.logging(activityName + " : did not retrieve any JSON metadata entries.");
 //            } else {
 //                jmriMetadata = (HashMap<String, String>) metadataTemp.clone();  // save the metadata in global variable
-//                Log.d(applicationName, "t_a: Loaded " + jmriMetadata.size() + " metadata entries from JSON web server.");
+//                threaded_application.logging(activityName + " : Loaded " + jmriMetadata.size() + " metadata entries from JSON web server.");
 //            }
 //        }
 //    }
@@ -1175,20 +1182,20 @@ public class threaded_application extends Application {
                 try {
                     runMethod(this);
                     if (!cancel) {
-                        Log.d(applicationName, "t_a: sendMsg - message - RECEIVED_ROSTER_UPDATE");
+                        threaded_application.logging(activityName + " : sendMsg - message - RECEIVED_ROSTER_UPDATE");
                         alertActivitiesWithBundle(message_type.RECEIVED_ROSTER_UPDATE);
                     }
                 } catch (Throwable t) {
-                    Log.d(applicationName, "t_a: Data fetch failed: " + t.getMessage());
+                    threaded_application.logging(activityName + " : Data fetch failed: " + t.getMessage());
                 }
 
                 // background load of Data completed
                 finally {
                     if (cancel) {
-                        Log.d(applicationName, "t_a: Data fetch cancelled");
+                        threaded_application.logging(activityName + " : Data fetch cancelled");
                     }
                 }
-                Log.d(applicationName, "t_a: Data fetch ended");
+                threaded_application.logging(activityName + " : Data fetch ended");
             }
 
             Download() {
@@ -1343,9 +1350,9 @@ public class threaded_application extends Application {
         }
 
         if (client_address_inet4 != null) {
-            sHtml += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", ""));
+            sHtml += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", " - "));
             sHtml += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", ssid, client_type);
-            s += String.format(", IP: %s", client_address_inet4.toString().replaceAll("/", ""));
+            s += String.format(", IP: %s", client_address_inet4.toString().replaceAll("/", " - "));
             s += String.format(", SSID: %s Net: %s", ssid, client_type);
         }
 
@@ -1468,7 +1475,7 @@ public class threaded_application extends Application {
             consist_entries = Collections.synchronizedMap(new LinkedHashMap<>());
             roster_entries = Collections.synchronizedMap(new LinkedHashMap<>());
         } catch (Exception e) {
-            Log.d(applicationName, "t_a: initShared object create exception");
+            threaded_application.logging(activityName + " : initShared object create exception");
         }
         doFinish = false;
         turnouts_list_position = 0;
@@ -1943,7 +1950,7 @@ public class threaded_application extends Application {
             mainapp.alertCommHandlerWithBundle(message_type.ESTOP_ONE_THROTTLE, bundle);
 
             EStopActivated = true;
-            Log.d(applicationName, activityName + ": sendEStopOneThrottleMsg(): EStop sent to server for throttle " + whichThrottle);
+            threaded_application.logging(activityName + ": sendEStopOneThrottleMsg(): EStop sent to server for throttle " + whichThrottle);
         }
     }
 
@@ -2106,7 +2113,7 @@ public class threaded_application extends Application {
         int port = web_server_port;
         if (getServerType().equals("MRC")) {  //special case ignore any url passed-in if connected to MRC, as it does not forward
             defaultUrl = "";
-            Log.d(applicationName, "t_a: ignoring web url for MRC");
+            threaded_application.logging(activityName + " : ignoring web url for MRC");
         }
         if ( (port > 0) || (defaultUrl.toLowerCase().startsWith("http")) ) {
             if (defaultUrl.toLowerCase().startsWith("http")) { //if url starts with http, use it as is
@@ -2181,7 +2188,7 @@ public class threaded_application extends Application {
     public void applyTheme(Activity activity, boolean isPreferences) {
         int selectedTheme = getSelectedTheme(isPreferences);
         activity.setTheme(selectedTheme);
-        Log.d(applicationName, "t_a: applyTheme: " + selectedTheme);
+        threaded_application.logging(activityName + " : applyTheme: " + selectedTheme);
         theme = activity.getTheme();
 
     }
@@ -2247,7 +2254,7 @@ public class threaded_application extends Application {
             else if (to.equals("Portrait") && (co != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT))
                 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } catch (Exception e) {
-            Log.e(applicationName, "t_a: setActivityOrientation: Unable to change Orientation: " + e.getMessage());
+            threaded_application.logging('e', "t_a: setActivityOrientation: Unable to change Orientation: " + e.getMessage());
         }
 
         webMenuSelected = false;  // reset after each check
@@ -2255,7 +2262,7 @@ public class threaded_application extends Application {
     }
 
     public void checkExit(final Activity activity) {
-        Log.d(applicationName, "t_a: checkExit(1): ");
+        threaded_application.logging(activityName + " : checkExit(1): ");
         boolean prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
         if (!prefDoubleBackButtonToExit) {
             checkAskExit(activity, false);
@@ -2276,7 +2283,7 @@ public class threaded_application extends Application {
     }
 
 //    public void checkExit(final Activity activity, boolean forceFastDisconnect) {
-//        Log.d(applicationName, "t_a: checkExit(2): ");
+//        threaded_application.logging(activityName + " : checkExit(2): ");
 //        boolean  prefDoubleBackButtonToExit = prefs.getBoolean("prefDoubleBackButtonToExit", getResources().getBoolean(R.bool.prefDoubleBackButtonToExitDefaultValue));
 //        if (!prefDoubleBackButtonToExit) {
 //            checkAskExit(activity, forceFastDisconnect);
@@ -2310,7 +2317,7 @@ public class threaded_application extends Application {
         b.setMessage(R.string.exit_text);
         b.setCancelable(true);
         b.setPositiveButton(R.string.yes, (dialog, id) -> {
-            Log.d(applicationName, "t_a: checkAskExit(): onClick() ");
+            threaded_application.logging(activityName + " : checkAskExit(): onClick() ");
             exitConfirmed = true;
             if (!forceFastDisconnect) { //trigger disconnect / shutdown sequence
                 mainapp.alertCommHandlerWithBundle(message_type.SHUTDOWN);
@@ -2608,11 +2615,11 @@ public class threaded_application extends Application {
                 break;
             default:
                 val = 0;
-                Log.d(threaded_application.applicationName, "t_a: throttleCharToInt: no match for argument " + cWhichThrottle);
+                threaded_application.logging(activityName + " : throttleCharToInt: no match for argument " + cWhichThrottle);
                 break;
         }
         if (val > maxThrottlesCurrentScreen)
-            Log.d(threaded_application.applicationName, "t_a: throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle);
+            threaded_application.logging(activityName + " : throttleCharToInt: argument exceeds max number of throttles for current screen " + cWhichThrottle);
         return val;
     }
 
@@ -2725,7 +2732,7 @@ public class threaded_application extends Application {
         safeToast(msg_txt, Toast.LENGTH_SHORT);
     }
     public void safeToast(final String msg_txt, final int length) {
-        Log.d(applicationName, "t_a: safeToast: " + msg_txt);
+        threaded_application.logging(activityName + " : safeToast: " + msg_txt);
         //need to do Toast() on the main thread so create a handler
         Handler h = new Handler(Looper.getMainLooper());
         h.post(() -> Toast.makeText(getApplicationContext(), msg_txt, length).show());
@@ -2938,7 +2945,7 @@ public class threaded_application extends Application {
     }
 
     public void writeSharedPreferencesToFileIfAllowed() {
-        Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: start");
+        threaded_application.logging(activityName + " : writeSharedPreferencesToFileIfAllowed: start");
         SharedPreferences sharedPreferences = getSharedPreferences("jmri.enginedriver_preferences", 0);
         String prefAutoImportExport = sharedPreferences.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -2950,7 +2957,7 @@ public class threaded_application extends Application {
                     ImportExportPreferences importExportPreferences = new ImportExportPreferences();
                     importExportPreferences.writeSharedPreferencesToFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName);
                 }
-                Log.d(applicationName, "t_a: writeSharedPreferencesToFileIfAllowed: done");
+                threaded_application.logging(activityName + " : writeSharedPreferencesToFileIfAllowed: done");
             } else {
                 safeToast(R.string.toastConnectUnableToSavePref, Toast.LENGTH_LONG);
             }
@@ -3022,7 +3029,7 @@ public class threaded_application extends Application {
                 if ( (i==0) && (!keepFunctions.isEmpty()) ) { return; } // if it already at the start of the list, don't do anything
 
                 importExportPreferences.removeRecentLocoFromList(i);
-                Log.d(applicationName, "t_a: addLocoToRecents: Loco '" + locoName + "' removed from Recents");
+                threaded_application.logging(activityName + " : addLocoToRecents: Loco '" + locoName + "' removed from Recents");
                 break;
             }
         }
@@ -3034,7 +3041,7 @@ public class threaded_application extends Application {
         importExportPreferences.addRecentLocoToList(0, locoAddress, locoAddressSize, locoName, locoSource, keepFunctions);
 
         importExportPreferences.writeRecentLocosListToFile(getApplicationContext(), prefs);
-        Log.d(applicationName, "t_a: Loco '" + locoName + "' added to Recents");
+        threaded_application.logging(activityName + " : Loco '" + locoName + "' added to Recents");
         importExportPreferences.writeThrottlesEnginesListToFile(mainapp, getApplicationContext(), mainapp.prefNumThrottles);
 
     }
@@ -3049,7 +3056,7 @@ public class threaded_application extends Application {
                     && size.equals(importExportPreferences.recentLocoAddressSizeList.get(i))
                     && name.equals(importExportPreferences.recentLocoNameList.get(i))) {
                 position = i;
-                Log.d(applicationName, "t_a: findLocoInRecents: Loco '" + name + "' found in Recents");
+                threaded_application.logging(activityName + " : findLocoInRecents: Loco '" + name + "' found in Recents");
                 break;
             }
         }
@@ -3088,7 +3095,7 @@ public class threaded_application extends Application {
                 bundle.putInt(alert_bundle_tag_type.RESTART_REASON, restart_reason_type.AUTO_IMPORT);
                 mainapp.alertCommHandlerWithBundle(message_type.RESTART_APP, bundle);
 
-                Log.d(applicationName, "t_a: updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
+                threaded_application.logging(activityName + " : updateConnectionList: Reload of Server Preferences. Restart Requested: " + connectedHostName);
             } else {
                 safeToast(getApplicationContext().getResources().getString(R.string.toastConnectUnableToLoadPref), Toast.LENGTH_LONG);
             }
@@ -3118,7 +3125,7 @@ public class threaded_application extends Application {
             if ((xSpeed - xLastSpeed >= 1) || (xLastSpeed - xSpeed >= 1)
                     || ((xSpeed == 0) && (xLastSpeed != 0))
                     || ((xSpeed == 126) && (xLastSpeed != 126))) {
-//                    Log.d(applicationName, "t_a: haptic_test: " + "beep");
+//                    threaded_application.logging(activityName + " : haptic_test: " + "beep");
                 vibrate(prefHapticFeedbackDuration);
             }
         }
@@ -3257,7 +3264,7 @@ public class threaded_application extends Application {
         hideSoftKeyboard(view, activityName, true);
     }
     public void hideSoftKeyboard(View view, String activityName, boolean activityIsInTransition) {
-        Log.d(applicationName, "t_a: hideSoftKeyboard()");
+        threaded_application.logging(activityName + " : hideSoftKeyboard()");
         if (activityIsInTransition) activityInTransition(activityName);
         // Check if no view has focus:
         if (view != null) {
@@ -3265,13 +3272,13 @@ public class threaded_application extends Application {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             } catch (Exception e) {
-                Log.e(applicationName, "SelectLocoActivity: hideSoftKeyboard(): unable to hide the soft keyboard");
+                threaded_application.logging('e', "SelectLocoActivity: hideSoftKeyboard(): unable to hide the soft keyboard");
             }
         }
     }
 
     public void stopAllSounds() {
-        Log.d(applicationName, "t_a: stopAllSounds (locoSounds)");
+        threaded_application.logging(activityName + " : stopAllSounds (locoSounds)");
         if (soundPool != null) {
             for (int soundType = 0; soundType < 3; soundType++) {
                 for (int throttleIndex = 0; throttleIndex < 2; throttleIndex++) {
@@ -3305,7 +3312,7 @@ public class threaded_application extends Application {
 //                method = s.getMethodName();
 //            }
 //            if (doNext == 2) {
-//                Log.d(applicationName, s.getMethodName() + "->" + method + ": " + label);
+//                threaded_application.logging(s.getMethodName() + "->" + method + ": " + label);
 //                return;
 //            }
 //            if ((s.getMethodName().equals("getStackTrace")) || (doNext>0)) { doNext++; }
@@ -3428,7 +3435,7 @@ public class threaded_application extends Application {
 
     // listener for the joystick events
     public boolean implDispatchGenericMotionEvent(android.view.MotionEvent event) {
-        //Log.d(applicationName, activityName + "implDispatchGenericMotionEvent(): " + event.getAction());
+        //threaded_application.logging(activityName + "implDispatchGenericMotionEvent(): " + event.getAction());
         if ((!prefGamePadType.equals(threaded_application.WHICH_GAMEPAD_MODE_NONE)) && (!mainapp.prefGamePadIgnoreJoystick)) { // respond to the gamepad and keyboard inputs only if the preference is set
 
             int action;
@@ -3749,9 +3756,53 @@ public class threaded_application extends Application {
         }
     }
 
+    // normal logging. replaces Log.d() etc.
+    public static void logging(String logMessage) {
+        logging('d', logMessage, null);
+    }
+    public static void logging(char level, String logMessage) {
+        logging(level, logMessage, null);
+    }
+    public static void logging(char level, String logMessage, Exception e) {
+        switch (level) {
+            case 'v': Log.v(threaded_application.applicationName, logMessage); break;
+            case 'd': Log.d(threaded_application.applicationName, logMessage); break;
+            case 'i': Log.i(threaded_application.applicationName, logMessage); break;
+            case 'w': Log.w(threaded_application.applicationName, logMessage); break;
+            case 'e': {
+                if (e == null) {
+                    Log.e(threaded_application.applicationName, logMessage);
+                } else {
+                Log.e(threaded_application.applicationName, logMessage, e);
+                }
+            } break;
+        }
+
+        // try to write to the Filtered log file if it is open
+        try { if (threaded_application.logFileFiltered != null) {
+            LocalDateTime current = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+            threaded_application.logFileFiltered.write(current.format(formatter) + " ");
+
+            threaded_application.logFileFiltered.write("["+Character.toUpperCase(level)+"] " + logMessage);
+            if (e != null) { // the exception if it is there
+                threaded_application.logFileFiltered.write(" " + e.getMessage());
+            }
+            threaded_application.logFileFiltered.newLine();
+            threaded_application.logFileFiltered.flush(); // Flush instantly to save crashe
+        }
+        } catch (Exception ignored) {}
+    }
+
     public static void extendedLogging(String logMessage) {
-        if (prefExtendedLogging)
-            Log.d(threaded_application.applicationName, logMessage);
+        if (prefExtendedLogging) {
+            logging('d', logMessage + " (extended logging)", null);
+        }
+    }
+    public static void extendedLogging(char level, String logMessage) {
+        if (prefExtendedLogging) {
+            logging(level, logMessage + " (extended logging)", null);
+        }
     }
 
     public void getInitialToolbarSize(Toolbar toolbar) {
@@ -3835,9 +3886,9 @@ public class threaded_application extends Application {
 
                 // Log the key and its value
                 if (value != null) {
-                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: " + value + ", Type: " + value.getClass().getSimpleName());
+                    threaded_application.logging("PreferenceList: Key: " + key + ", Value: " + value + ", Type: " + value.getClass().getSimpleName());
                 } else {
-                    Log.d(threaded_application.applicationName, "PreferenceList: Key: " + key + ", Value: null");
+                    threaded_application.logging("PreferenceList: Key: " + key + ", Value: null");
                 }
             }
         }
@@ -3856,7 +3907,7 @@ public class threaded_application extends Application {
 
         prefs.edit().putString("prefLastPrefRename", LAST_PREFERENCE_NAME_RUN).apply();
 
-        Log.d(threaded_application.applicationName, "PreferenceList: checking for old Preference Names");
+        threaded_application.logging("PreferenceList: checking for old Preference Names");
         String[] preferencesToRename = getResources().getStringArray(R.array.preferencesToRename);
         for (String prefName : preferencesToRename) {
             String[] prefValues = prefName.split(":");
@@ -3885,7 +3936,7 @@ public class threaded_application extends Application {
                     prefs.edit().putLong(newName, (Long) value).apply();
                 }
             }
-            Log.d(threaded_application.applicationName, "PreferenceList: Renamed Key: " + oldName + " To: " + newName);
+            threaded_application.logging("PreferenceList: Renamed Key: " + oldName + " To: " + newName);
 
             prefs.edit().remove(oldName).apply();
         }
@@ -3920,7 +3971,7 @@ public class threaded_application extends Application {
         double endTime = System.currentTimeMillis() + durationMs;
 
         StringBuilder tempToastText = new StringBuilder();
-        Log.d(threaded_application.applicationName, activityName + " : showCustomToast(): clearPrevious : " + clearPrevious);
+        threaded_application.logging(activityName + " : showCustomToast(): clearPrevious : " + clearPrevious);
         if (!clearPrevious) {
             synchronized (customToastPairList) {
                 Iterator<Pair<String, Double>> it = customToastPairList.iterator();
@@ -3928,20 +3979,20 @@ public class threaded_application extends Application {
                     Pair<String, Double> pair = it.next();
                     if ((System.currentTimeMillis() >= pair.second) || (pair.first.equals(message))) {
                         it.remove(); // This is safe during iteration
-                        Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): removing: " + pair.first);
+                        threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): removing: " + pair.first);
 
                     } else {
                         tempToastText.append(pair.first).append("\n");
-//                        Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): keeping: " + pair.first);
+//                        threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): keeping: " + pair.first);
                     }
                 }
                 customToastPairList.add(new Pair<>(message, endTime));
-                Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
+                threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
             }
         } else {
             clearCustomToastPairList();
             customToastPairList.add(new Pair<>(message, endTime));
-            Log.d(threaded_application.applicationName, activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
+            threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
         }
         tempToastText.append(message);
 
@@ -4004,7 +4055,7 @@ public class threaded_application extends Application {
                             }
                         }, durationMs);
                     } catch (Exception e) {
-                        Log.e(threaded_application.applicationName, activityName + ": showCustomToast(): Error showing custom toast: " + e.getMessage());
+                        threaded_application.logging('e', activityName + ": showCustomToast(): Error showing custom toast: " + e.getMessage());
                     }
                 }
             });
@@ -4016,7 +4067,7 @@ public class threaded_application extends Application {
         while (it.hasNext()) {
             Pair<String, Double> pair = it.next();
             it.remove(); // This is safe during iteration
-//            Log.d(threaded_application.applicationName, activityName + ": showCustomToast(): clearCustomToastPairList() removing: " + pair.first);
+//            threaded_application.logging(activityName + ": showCustomToast(): clearCustomToastPairList() removing: " + pair.first);
         }
     }
 
@@ -4025,7 +4076,7 @@ public class threaded_application extends Application {
             mainapp.activityBundleMessageHandlers[activityIndex].removeCallbacksAndMessages(null);
             mainapp.activityBundleMessageHandlers[activityIndex] = null;
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): activityBundleMessageHandlers[" + activityIndex + "] is null. Unable to removeCallbacksAndMessages");
+            threaded_application.logging(activityName + ": onDestroy(): activityBundleMessageHandlers[" + activityIndex + "] is null. Unable to removeCallbacksAndMessages");
         }
     }
 

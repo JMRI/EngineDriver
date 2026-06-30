@@ -55,7 +55,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -76,8 +75,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.util.ArrayList;
@@ -163,7 +165,8 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     protected final ActivityResultLauncher<Intent> preferencesActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": preferencesActivityLauncher callback received. ResultCode: " + result.getResultCode());
+//                threaded_application.logging(activityName + ": preferencesActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": preferencesActivityLauncher callback received. ResultCode: " + result.getResultCode());
                 // fall through to the default onActivityResult();
             }
     );
@@ -577,7 +580,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //    timestamp = SystemClock.uptimeMillis();
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
         mainapp = (threaded_application) this.getApplication();
 
         if (mainapp.activityBundleMessageHandlers[activity_id_type.CONNECTION] == null)
@@ -691,7 +694,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(); Forced Restart Reason: " + prefForcedRestartReason);
+            threaded_application.logging(activityName + ": onCreate(); Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 startPreferencesActivity();
             }
@@ -776,7 +779,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        threaded_application.logging(activityName + ": onStart()");
         super.onStart();
         mainapp.exitConfirmed = false;
         connectionHintShownBefore = false;
@@ -805,7 +808,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     @SuppressLint("UnsafeIntentLaunch")
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume()");
+        threaded_application.logging(activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
@@ -874,7 +877,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(threaded_application.applicationName, activityName + ": onStop()");
+        threaded_application.logging(activityName + ": onStop()");
         //shutdown server discovery listener
 //        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.SET_LISTENER, "", 0);
 
@@ -885,7 +888,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
 
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
         super.onDestroy();
 
         if (!isRestarting) {
@@ -984,7 +987,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     }
 
 //    void getPhoneInfo() {
-//        Log.d(threaded_application.applicationName, activityName + ":  getPhoneInfo()");
+//        threaded_application.logging(activityName + ":  getPhoneInfo()");
 //
 //        PermissionsHelper phi = PermissionsHelper.getInstance();
 //        if (!phi.isPermissionGranted(ConnectionActivity.this, PermissionsHelper.READ_PHONE_STATE)) {
@@ -1010,7 +1013,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
      * retrieve some wifi details, stored in mainapp as client_ssid, client_address and client_address_inet4
      */
     void getWifiInfo() {
-        Log.d(threaded_application.applicationName, activityName + ": getWifiInfo()");
+        threaded_application.logging(activityName + ": getWifiInfo()");
         int intAddr;
         mainapp.client_address_inet4 = null;
         mainapp.client_address = null;
@@ -1051,7 +1054,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
 
             mainapp.client_ssid = wifiinfo.getSSID();
-            Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): SSID: " + mainapp.client_ssid);
+            threaded_application.logging(activityName + ": getWifiInfo(): SSID: " + mainapp.client_ssid);
             if (mainapp.client_ssid != null && mainapp.client_ssid.startsWith("\"") && mainapp.client_ssid.endsWith("\"")) {
                 mainapp.client_ssid = mainapp.client_ssid.substring(1, mainapp.client_ssid.length() - 1);
             }
@@ -1061,7 +1064,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             try {
                 mainapp.clientLocationServiceEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             } catch (Exception except) {
-                Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): unable to determine if the location service is enabled");
+                threaded_application.logging(activityName + ": getWifiInfo(): unable to determine if the location service is enabled");
             }
             if (MobileControl2.isMobileControl2()) {
                 // ESU MC 2/Pro does not have a gps receiver so incorrectly reports that it that the service is disabled
@@ -1079,7 +1082,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                         if (!prefAllowMobileData) {
                             // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
 //                        if (Build.VERSION.SDK_INT >= 21) {
-                            Log.d(threaded_application.applicationName, activityName + ": getWifiInfor(): Builder");
+                            threaded_application.logging(activityName + ": getWifiInfor(): Builder");
                             NetworkRequest.Builder request = new NetworkRequest.Builder();
                             request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
 
@@ -1112,11 +1115,11 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                         mainapp.client_type = "other";
                         break;
                 }
-                Log.d(threaded_application.applicationName, activityName + ": getWifiInfo(): network type=" + nInfo.getType() + " " + mainapp.client_type);
+                threaded_application.logging(activityName + ": getWifiInfo(): network type=" + nInfo.getType() + " " + mainapp.client_type);
             }
 
         } catch (Exception except) {
-            Log.e(threaded_application.applicationName, activityName + ": getWifiInfo(): error getting IP addr: " + except.getMessage());
+            threaded_application.logging('e', activityName + ": getWifiInfo(): error getting IP addr: " + except.getMessage());
         }
 
     }
@@ -1190,7 +1193,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             preferencesActivityLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
@@ -1381,30 +1384,30 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             // Only need to consider relevant request codes initiated by this Activity
 //            switch (requestCode) {
 //                    case PermissionsHelper.CLEAR_CONNECTION_LIST:
-//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
+//                        threaded_application.logging(activityName + ": navigateToHandler(): Got permission for CLEAR_CONNECTION_LIST - navigate to clearConnectionsListImpl()");
 //                        clearConnectionsListImpl();
 //                        break;
 //                    case PermissionsHelper.READ_CONNECTION_LIST:
-//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
+//                        threaded_application.logging(activityName + ": navigateToHandler(): Got permission for READ_CONNECTION_LIST - navigate to getConnectionsListImpl()");
 //                        getConnectionsListImpl(context, "", "");
 //                        break;
 //                    case PermissionsHelper.STORE_PREFERENCES:
-//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_PREFERENCES - navigate to writeSharedPreferencesToFileImpl()");
+//                        threaded_application.logging(activityName + ": navigateToHandler(): Got permission for STORE_PREFERENCES - navigate to writeSharedPreferencesToFileImpl()");
 //                        writeSharedPreferencesToFileImpl();
 //                        break;
 //                    case PermissionsHelper.READ_PREFERENCES:
-//                        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
+//                        threaded_application.logging(activityName + ": navigateToHandler(): Got permission for READ_PREFERENCES - navigate to loadSharedPreferencesFromFileImpl()");
 //                        loadSharedPreferencesFromFileImpl();
 //                        break;
 //                case PermissionsHelper.CONNECT_TO_SERVER:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_PHONE_STATE - navigate to connectImpl()");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for READ_PHONE_STATE - navigate to connectImpl()");
 ////                    connectImpl();
 //                    checkIfDccexServerName(connected_hostname, connected_port);
 //                    connect();
 //                    break;
 //                default:
             // do nothing
-            Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
+            threaded_application.logging(activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }
@@ -1413,7 +1416,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 //        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(ConnectionActivity.this, requestCode, permissions, grantResults, true)) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(ConnectionActivity.this, requestCode, permissions, grantResults)) {
-            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
+            threaded_application.logging(activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -1547,14 +1550,28 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                 mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
                 mainapp.logSaveFilename = logFile.toString();
 
-                threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG, 4, true, true);
+                threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG, 3, true, true);
 
-                Log.d(threaded_application.applicationName, "Logging started to: " + logFile);
-                Log.d(threaded_application.applicationName, mainapp.getAboutInfo());
-                Log.d(threaded_application.applicationName, mainapp.getAboutInfo(false));
+                threaded_application.logging("Auto-startup log: Logging started to: " + logFile);
+                threaded_application.logging(mainapp.getAboutInfo());
+                threaded_application.logging(mainapp.getAboutInfo(false));
                 mainapp.logAllPreference();
             } catch ( IOException e ) {
                 e.printStackTrace();
+            }
+
+            // filtered log file
+            File logFileFiltered = new File(mainapp.getApplicationContext().getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + "_filtered.txt");
+            // if it is open, try closing it
+            try { if (threaded_application.logFileFiltered != null) threaded_application.logFileFiltered.close(); } catch (Exception ignored) {}
+            // now try opening it
+            try {
+                threaded_application.logFileFiltered = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logFileFiltered, true)));
+                threaded_application.logging("Auto-startup log: Also writing filtered log file to: " + logFileFiltered.toString());
+                threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFileFiltered.toString()), Toast.LENGTH_LONG,3, true, false);
+            }
+            catch (Exception ignored) {
+                threaded_application.logging("Auto-startup log: Unable to open filterLogFile for writing: " + logFileFiltered.toString());
             }
         }
     }

@@ -796,6 +796,7 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <!--    Toast messages for the Log Viewer Activity -->
     <string name="toastSaveLogFile">已开始在文件%1$s中记录日志。日志记录将持续到您退出Engine Driver应用。</string>
+    <string name="toastEndSaveLogFile">日志记录已停止。请查看文件 %1$s。</string>
     <string name="infoSaveLogFile">正在记录到：%s</string>
 
     <!--    Toast messages for the Turnouts Activity -->

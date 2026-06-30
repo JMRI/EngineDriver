@@ -4,7 +4,6 @@
 package jmri.enginedriver.util;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -58,13 +57,13 @@ public class SwipeDetector implements View.OnTouchListener {
                 if (Math.abs(deltaX) > MIN_DISTANCE) {
                     // left or right
                     if (deltaX < 0) {
-                        Log.d(threaded_application.applicationName, activityName + ": onTouch(): Swipe Left to Right");
+                        threaded_application.logging(activityName + ": onTouch(): Swipe Left to Right");
 //                        Logger.show(Log.INFO,logTag, "Swipe Left to Right");
                         mSwipeDetected = Action.LR;
                         return true;
                     }
                     if (deltaX > 0) {
-                        Log.d(threaded_application.applicationName, activityName + ": onTouch(): Swipe Right to Left");
+                        threaded_application.logging(activityName + ": onTouch(): Swipe Right to Left");
 //                        Logger.show(Log.INFO,logTag, "Swipe Right to Left");
                         mSwipeDetected = Action.RL;
                         return true;
@@ -75,13 +74,13 @@ public class SwipeDetector implements View.OnTouchListener {
                     if (Math.abs(deltaY) > MIN_DISTANCE) {
                         // top or down
                         if (deltaY < 0) {
-                            Log.d(threaded_application.applicationName, activityName + ": onTouch(): Swipe Top to Bottom");
+                            threaded_application.logging(activityName + ": onTouch(): Swipe Top to Bottom");
 //                            Logger.show(Log.INFO,logTag, "Swipe Top to Bottom");
                             mSwipeDetected = Action.TB;
                             return false;
                         }
                         if (deltaY > 0) {
-                            Log.d(threaded_application.applicationName, activityName + ": onTouch(): Swipe Bottom to Top");
+                            threaded_application.logging(activityName + ": onTouch(): Swipe Bottom to Top");
 //                            Logger.show(Log.INFO,logTag, "Swipe Bottom to Top");
                             mSwipeDetected = Action.BT;
                             return false;

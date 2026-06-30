@@ -48,7 +48,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
+
 import android.view.GestureDetector.OnGestureListener;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -630,7 +630,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -690,7 +690,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
      */
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
 
         if (tg != null) {
             tg.release();
@@ -705,7 +705,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
 
     // end current activity
     void endThisActivity(int passedTest) {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichGamepadNo", whichGamepadNo + passedTest);  //pass whichGamepadNo as an extra - pass/fail/reset
@@ -800,7 +800,7 @@ public class GamepadTestActivity extends AppCompatActivity implements OnGestureL
     }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
 
         Intent resultIntent = new Intent();

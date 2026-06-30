@@ -31,8 +31,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
-//import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -253,9 +251,9 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
 
         if (mainapp.consists == null || mainapp.consists[whichThrottle] == null) {
             if (mainapp.consists == null)
-                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists is null");
+                threaded_application.logging(activityName + ": onCreate(): consists is null");
             else
-                Log.d(threaded_application.applicationName, activityName + ": onCreate(): consists[" + whichThrottle + "] is null");
+                threaded_application.logging(activityName + ": onCreate(): consists[" + whichThrottle + "] is null");
             threaded_application.activityInTransition(activityName);
             this.finish();
             return;
@@ -291,7 +289,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
             try {
                 consist.setLight(address, light);
             } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                Log.d(threaded_application.applicationName, activityName + ": onCreat(): selected engine " + address + " that is not in consist");
+                threaded_application.logging(activityName + ": onCreat(): selected engine " + address + " that is not in consist");
             }
             mainapp.buttonVibration();
             refreshConsistLists();
@@ -314,7 +312,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
             try {
                 consist.setLight(address, light);
             } catch (Exception e) {    // setLight returns null if address is not in consist - should not happen since address was selected from consist list
-                Log.d(threaded_application.applicationName, activityName + ": onItemLongClick(): selected engine " + address + " that is not in consist");
+                threaded_application.logging(activityName + ": onItemLongClick(): selected engine " + address + " that is not in consist");
             }
             refreshConsistLists();
             return true;
@@ -343,7 +341,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -381,7 +379,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         super.onStart();
 
         if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
@@ -419,7 +417,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
      */
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
         super.onDestroy();
 
         importExportPreferences.loadRecentConsistsListFromFile(getApplicationContext());
@@ -472,7 +470,7 @@ public class ConsistLightsEditActivity extends AppCompatActivity implements OnGe
     }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         resultIntent.putExtra("whichThrottle", mainapp.throttleIntToChar(whichThrottle));  //pass whichThrottle as an extra

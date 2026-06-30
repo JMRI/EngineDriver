@@ -25,7 +25,6 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
-import android.util.Log;
 import android.view.Surface;
 import android.widget.Toast;
 
@@ -54,7 +53,7 @@ public abstract class Flashlight {
         // Use Application Context to avoid memory leaks
 //        flashlight.flashlightContext = context.getApplicationContext();
         flashlight.init(context);
-        Log.d(threaded_application.applicationName, activityName + ": newInstance(): Created new " + flashlight.getClass());
+        threaded_application.logging(activityName + ": newInstance(): Created new " + flashlight.getClass());
         return flashlight;
     }
 
@@ -121,10 +120,10 @@ public abstract class Flashlight {
                 camera.setParameters(parameters);
                 camera.setDisplayOrientation(getDisplayOrientation(activity));
                 camera.startPreview();
-                Log.d(threaded_application.applicationName, activityName + ": Flashlight switched on");
+                threaded_application.logging(activityName + ": Flashlight switched on");
                 return true;
             } catch (Exception ex) {
-                Log.e(threaded_application.applicationName, activityName + ": Error switching on flashlight: " + ex.getMessage());
+                threaded_application.logging('e', activityName + ": Error switching on flashlight: " + ex.getMessage());
                 mainapp.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             }
@@ -139,9 +138,9 @@ public abstract class Flashlight {
                     camera.release();
                     camera = null;
                 }
-                Log.d(threaded_application.applicationName, activityName + ": Flashlight switched off");
+                threaded_application.logging(activityName + ": Flashlight switched off");
             } catch (Exception ex) {
-                Log.e(threaded_application.applicationName, activityName + ": Error switching off flashlight: " + ex.getMessage());
+                threaded_application.logging('e', activityName + ": Error switching off flashlight: " + ex.getMessage());
 //                mainapp.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             }
         }
@@ -184,7 +183,7 @@ public abstract class Flashlight {
                     cameraId = cameraManager.getCameraIdList()[0];
                 }
             } catch (CameraAccessException|SecurityException|ArrayIndexOutOfBoundsException ex) {
-                Log.e(threaded_application.applicationName, activityName + ": Error initiating camera manager: " + ex.getMessage());
+                threaded_application.logging('e', activityName + ": Error initiating camera manager: " + ex.getMessage());
             }
         }
 
@@ -198,16 +197,16 @@ public abstract class Flashlight {
             try {
                 if (cameraManager != null && cameraId != null) {
                     cameraManager.setTorchMode(cameraId, true);
-                    Log.d(threaded_application.applicationName, activityName + ": setFlashlightOn(): Flashlight switched on");
+                    threaded_application.logging(activityName + ": setFlashlightOn(): Flashlight switched on");
                     return true;
                 }
                 return false;
             } catch (CameraAccessException ex) {
-                Log.e(threaded_application.applicationName, activityName + ": setFlashlightOn(): Error switching on flashlight: " + ex.getMessage());
+                threaded_application.logging('e', activityName + ": setFlashlightOn(): Error switching on flashlight: " + ex.getMessage());
                 mainapp.safeToast(R.string.toastFlashlightOnFailed, Toast.LENGTH_LONG);
                 return false;
             } catch (IllegalArgumentException ex) {
-                Log.e(threaded_application.applicationName, activityName + ": Problem switching on flashlight:" + ex.getMessage());
+                threaded_application.logging('e', activityName + ": Problem switching on flashlight:" + ex.getMessage());
                 return false;
             }
         }
@@ -217,13 +216,13 @@ public abstract class Flashlight {
             try {
                 if (cameraManager != null && cameraId != null) {
                     cameraManager.setTorchMode(cameraId, false);
-                    Log.d(threaded_application.applicationName, activityName + ": setFlashlightOff(): Flashlight switched off");
+                    threaded_application.logging(activityName + ": setFlashlightOff(): Flashlight switched off");
                 }
             } catch (CameraAccessException ex) {
-                Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Error switching off flashlight: " + ex.getMessage());
+                threaded_application.logging('e', activityName + ": setFlashlightOff(): Error switching off flashlight: " + ex.getMessage());
 //                mainapp.safeToast(R.string.toastFlashlightOffFailed, Toast.LENGTH_LONG);
             } catch (IllegalArgumentException ex) {
-                Log.e(threaded_application.applicationName, activityName + ": setFlashlightOff(): Problem switching off flashlight:" + ex.getMessage());
+                threaded_application.logging('e', activityName + ": setFlashlightOff(): Problem switching off flashlight:" + ex.getMessage());
             }
         }
     }

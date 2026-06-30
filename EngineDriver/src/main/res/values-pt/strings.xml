@@ -784,6 +784,7 @@
     <string name="RecentConsistsNameEditText">Digite um nome para a Consist</string>
     <string name="RecentConsistsNameEditTitle">Recentes Consistem Nome</string>
     <string name="RecentsNameEditText">Digite um nome para o Loco</string>
+    <string name="toastEndSaveLogFile">O registro de logs foi interrompido. Consulte o arquivo %1$s.</string>
     <string name="infoSaveLogFile">Registrando em: %s</string>
     <string name="toastDccexInvalidRosterId">ID de lista inválido \'%1$s\'. Listas inteiras de listas, comparecimentos e rotas provavelmente não serão carregadas.</string>
     <string name="RecentsNameEditTitle">Recentes Nome Loco</string>

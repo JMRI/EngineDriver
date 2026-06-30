@@ -45,16 +45,16 @@ public class GetJsonFromUrl extends AsyncTask<String, String, Void> {
 //            // Read content & Log
 //            inputStream = httpEntity.getContent();
 //        } catch (UnsupportedEncodingException e1) {
-//            Log.e(threaded_application.applicationName, activityName + ": UnsupportedEncodingException: " + e1.toString());
+//            threaded_application.logging('e', activityName + ": UnsupportedEncodingException: " + e1.toString());
 //            e1.printStackTrace();
 //        } catch (ClientProtocolException e2) {
-//            Log.e(threaded_application.applicationName, activityName + ": ClientProtocolException", e2.toString());
+//            threaded_application.logging('e', activityName + ": ClientProtocolException", e2.toString());
 //            e2.printStackTrace();
 //        } catch (IllegalStateException e3) {
-//            Log.e(threaded_application.applicationName, activityName + ": IllegalStateException", e3.toString());
+//            threaded_application.logging('e', activityName + ": IllegalStateException", e3.toString());
 //            e3.printStackTrace();
 //        } catch (IOException e4) {
-//            Log.e(threaded_application.applicationName, activityName + ": IOException", e4.toString());
+//            threaded_application.logging('e', activityName + ": IOException", e4.toString());
 //            e4.printStackTrace();
 //        }
 //        // Convert response to string using String Builder
@@ -73,7 +73,7 @@ public class GetJsonFromUrl extends AsyncTask<String, String, Void> {
 //            mainapp.sendMsg(mainapp.comm_msg_handler, message_type.HTTP_SERVER_NAME_RECEIVED, serverName);  // 2=toggle
 //
 //        } catch (Exception e) {
-//            Log.e(threaded_application.applicationName, activityName + ": StringBuilding & BufferedReader: " + "Error converting result " + e.toString());
+//            threaded_application.logging('e', activityName + ": StringBuilding & BufferedReader: " + "Error converting result " + e.toString());
 //        }
         return null;
     } // protected Void doInBackground(String... params)
@@ -87,7 +87,7 @@ public class GetJsonFromUrl extends AsyncTask<String, String, Void> {
 ////            JSONArray jArray = new JSONArray(oData.getString("name"));
 //            parseResult = oData.getString(which);
 //        } catch (JSONException e) {
-//            Log.e(threaded_application.applicationName, activityName + ": JSONException: Error: " + e.toString());
+//            threaded_application.logging('e', activityName + ": JSONException: Error: " + e.toString());
 //        } // catch (JSONException e)
 //
 //        return parseResult;

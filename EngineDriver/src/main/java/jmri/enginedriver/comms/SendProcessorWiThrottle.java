@@ -3,7 +3,6 @@ package jmri.enginedriver.comms;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -47,7 +46,7 @@ public class SendProcessorWiThrottle {
         }
         // msgTxt will be formatted M0+L1012<;>EACL1012 or M1+S96<;>S96
         String msgTxt = String.format("M%s+%s<;>%s%s", mainapp.throttleIntToString(whichThrottle), addr, rosterNamePrefix, rosterName);  //add requested loco to this throttle
-        Log.d(threaded_application.applicationName, activityName + ": sendAquireLoco(): sendAcquireLoco: addr:'" + addr + " rosterName: '" + rosterName + "' msgTxt: '" + msgTxt + "'");
+        threaded_application.logging(activityName + ": sendAquireLoco(): sendAcquireLoco: addr:'" + addr + " rosterName: '" + rosterName + "' msgTxt: '" + msgTxt + "'");
         comm_thread.wifiSend(msgTxt);
 
         if (comm_thread.heart.getInboundInterval() > 0 && mainapp.withrottle_version > 0.0 && !comm_thread.heart.isHeartbeatSent()) {
@@ -84,7 +83,7 @@ public class SendProcessorWiThrottle {
     }
 
     public static void sendDisconnect() {
-        Log.d(threaded_application.applicationName, activityName + ": sendDisconnect(): ");
+        threaded_application.logging(activityName + ": sendDisconnect(): ");
         comm_thread.wifiSend("Q");
         commThread.shutdown(true);
     }
@@ -96,7 +95,7 @@ public class SendProcessorWiThrottle {
     }
 
     public static void sendTurnout(String systemName, char action) {
-//        Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): cmd=" + cmd);
+//        threaded_application.logging(activityName + ": sendTurnout(): cmd=" + cmd);
         String cs = mainapp.getTurnoutState(systemName);
         if (cs == null) cs = ""; //avoid npe
         //special "toggle" handling for LnWi
@@ -116,7 +115,7 @@ public class SendProcessorWiThrottle {
     }
 
     public static void sendQuit() {
-        Log.d(threaded_application.applicationName, activityName + ": sendQuit(): ");
+        threaded_application.logging(activityName + ": sendQuit(): ");
         if (comm_thread.socketWiT != null && comm_thread.socketWiT.SocketGood())
             comm_thread.wifiSend("Q");
     }

@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import android.util.Log;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -100,12 +99,12 @@ public class PermissionsHelper {
 
             if (!showPermissionRationale(activity, requestCode) && grantResult != PackageManager.PERMISSION_GRANTED) {
                 isRecognised = true;
-                Log.d(threaded_application.applicationName, activityName + ": Permission denied - showAppSettingsDialog");
+                threaded_application.logging(activityName + ": Permission denied - showAppSettingsDialog");
                 showAppSettingsDialog(activity, requestCode);
                 break;
             } else if (grantResult != PackageManager.PERMISSION_GRANTED) {
                 isRecognised = true;
-                Log.d(threaded_application.applicationName, activityName + ": Permission denied - showRetryDialog");
+                threaded_application.logging(activityName + ": Permission denied - showRetryDialog");
                 if (android.os.Build.VERSION.SDK_INT < 34) {
                     showRetryDialog(activity, requestCode);
                 } else {
@@ -114,7 +113,7 @@ public class PermissionsHelper {
                 break;
             } else {
                 isRecognised = true;
-                Log.d(threaded_application.applicationName, activityName + ": Permission granted - navigateToHandler");
+                threaded_application.logging(activityName + ": Permission granted - navigateToHandler");
                 ((PermissionsHelperGrantedCallback) activity).navigateToHandler(requestCode);
             }
         }
@@ -169,9 +168,9 @@ public class PermissionsHelper {
     public void requestNecessaryPermissions(final Activity activity, @RequestCodes final int requestCode) {
         // Request the necessary permissions based on request code
         // All possible request codes should be considered
-        Log.d(threaded_application.applicationName, activityName + ": requestNecessaryPermissions(): isDialogOpen at requestNecessaryPermissions()? " + isDialogOpen);
+        threaded_application.logging(activityName + ": requestNecessaryPermissions(): isDialogOpen at requestNecessaryPermissions()? " + isDialogOpen);
         if (!isDialogOpen) {
-            Log.d(threaded_application.applicationName, activityName + ": requestNecessaryPermissions(): Requesting " + getManifestPermissionId(requestCode)+ " permissions");
+            threaded_application.logging(activityName + ": requestNecessaryPermissions(): Requesting " + getManifestPermissionId(requestCode)+ " permissions");
             switch (requestCode) {
 //                case READ_IMAGES:
 //                    activity.requestPermissions(new String[]{
@@ -214,7 +213,7 @@ public class PermissionsHelper {
 //                    activity.requestPermissions(new String[]{
 //                                    Manifest.permission.NEARBY_WIFI_DEVICES},
 //                            requestCode);
-//                    Log.d(threaded_application.applicationName, activityName + ": Requesting NEARBY_WIFI_DEVICES permissions");
+//                    threaded_application.logging(activityName + ": Requesting NEARBY_WIFI_DEVICES permissions");
 //                    break;
                 case POST_NOTIFICATIONS:
                     if (Build.VERSION.SDK_INT >= 33) {
@@ -243,7 +242,7 @@ public class PermissionsHelper {
             }
 
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": requestNecessaryPermissions(): Permissions dialog is opened - don't ask yet...");
+            threaded_application.logging(activityName + ": requestNecessaryPermissions(): Permissions dialog is opened - don't ask yet...");
         }
     }
 

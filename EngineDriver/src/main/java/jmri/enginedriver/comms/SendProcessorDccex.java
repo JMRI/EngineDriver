@@ -3,7 +3,6 @@ package jmri.enginedriver.comms;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,7 +35,7 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     public static void sendThrottleName(Boolean ignoredSendHWID) {
-//    Log.d(threaded_application.applicationName, activityName + ": sendThrottleName DCC-EX: <s>");
+//    threaded_application.logging(activityName + ": sendThrottleName DCC-EX: <s>");
         if (mainapp.dccexListsRequested < 0) { // if we haven't received all the lists go ask for them
             comm_thread.wifiSend("<#>");
             comm_thread.wifiSend("<s>");
@@ -82,7 +81,7 @@ public class SendProcessorDccex {
                 bundle.putInt(alert_bundle_tag_type.SPEED_STEPS, 1);
                 mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_SET_SPEED_STEP, bundle);
 
-                Log.d(threaded_application.applicationName, activityName + ": sendAcquireLoco(): DCC-EX: " + msgTxt);
+                threaded_application.logging(activityName + ": sendAcquireLoco(): DCC-EX: " + msgTxt);
 
             } else {  // not a valid throttle. related to the roster download
                 sendDccexRequestRosterLocoDetails(addr);
@@ -119,13 +118,13 @@ public class SendProcessorDccex {
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             comm_thread.sendSpeed(throttleIndex, -1); // -1 = EStop
         }
-//        Log.d(threaded_application.applicationName, activityName + ": sendEStop(): DCC-EX: ");
+//        threaded_application.logging(activityName + ": sendEStop(): DCC-EX: ");
     }
 
     /* ******************************************************************************************** */
 
     public static void sendDisconnect() {
-        Log.d(threaded_application.applicationName, activityName + ": sendDisconnect(): ");
+        threaded_application.logging(activityName + ": sendDisconnect(): ");
 
         //no equivalent to a WiThrottle "Q" so just drop all the locos to be tidy
         Consist con;
@@ -208,12 +207,12 @@ public class SendProcessorDccex {
                 for (Consist.ConLoco l : con.getLocos()) {
                     msgTxt = String.format("<F %s %d %d>", l.getAddress().substring(1), fn, newfState);
                     comm_thread.wifiSend(msgTxt);
-//                        Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
+//                        threaded_application.logging(activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
                 }
             } else { // just one address
                 msgTxt = String.format("<F %s %d %d>", addr.substring(1), fn, newfState);
                 comm_thread.wifiSend(msgTxt);
-//                    Log.d(threaded_application.applicationName, activityName + ": sendFunction(): DCC-EX: " + msgTxt);
+//                    threaded_application.logging(activityName + ": sendFunction(): DCC-EX: " + msgTxt);
             }
         }
     }
@@ -225,7 +224,7 @@ public class SendProcessorDccex {
             mainapp.dccexRosterRequested = true;
             String msgTxt = "<JR>";
             comm_thread.wifiSend(msgTxt);
-//            Log.d(threaded_application.applicationName, activityName + ": sendDccexRequestRoster(): DCC-EX: " + msgTxt);
+//            threaded_application.logging(activityName + ": sendDccexRequestRoster(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -235,7 +234,7 @@ public class SendProcessorDccex {
             mainapp.dccexTurnoutsBeingProcessed = false;
             String msgTxt = "<JT>";
             comm_thread.wifiSend(msgTxt);
-//            Log.d(threaded_application.applicationName, activityName + ": sendDccexRequestTurnouts(): DCC-EX: " + msgTxt);
+//            threaded_application.logging(activityName + ": sendDccexRequestTurnouts(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -243,7 +242,7 @@ public class SendProcessorDccex {
         mainapp.dccexRoutesBeingProcessed = false;
         String msgTxt = "<JA>";
         comm_thread.wifiSend(msgTxt);
-//        Log.d(threaded_application.applicationName, activityName + ": sendDccexRequestRoutes(): DCC-EX: " + msgTxt);
+//        threaded_application.logging(activityName + ": sendDccexRequestRoutes(): DCC-EX: " + msgTxt);
     }
 
     /* ******************************************************************************************** */
@@ -252,7 +251,7 @@ public class SendProcessorDccex {
         if (threaded_application.getDccexVersionNumeric() >= 04.002007) {  // need to remove the track manager option
             String msgTxt = "<=>";
             comm_thread.wifiSend(msgTxt);
-//            Log.d(threaded_application.applicationName, activityName + ": sendDccexRequestTracks() DCC-EX: " + msgTxt);
+//            threaded_application.logging(activityName + ": sendDccexRequestTracks() DCC-EX: " + msgTxt);
         }
     }
 
@@ -277,7 +276,7 @@ public class SendProcessorDccex {
             msgTxt = msgTxt + "<= " + track + " " + type + " " + id + ">";
             comm_thread.wifiSend(msgTxt);
         }
-//        Log.d(threaded_application.applicationName, activityName + ": sendTracks() DCC-EX: " + msgTxt);
+//        threaded_application.logging(activityName + ": sendTracks() DCC-EX: " + msgTxt);
     }
 
     public static void sendDccexJoinTracks() {
@@ -316,7 +315,7 @@ public class SendProcessorDccex {
     /* ******************************************************************************************** */
 
     public static void sendTurnout(String systemName, char action) {
-//        Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): cmd=" + cmd);
+//        threaded_application.logging(activityName + ": sendTurnout(): cmd=" + cmd);
         String cs = mainapp.getTurnoutState(systemName);
         if (cs == null) cs = ""; //avoid npe
 
@@ -347,7 +346,7 @@ public class SendProcessorDccex {
         }
         String msgTxt = "<T " + systemName + " " + translatedState + ">";              // format <T id 0|1|T|C>
         comm_thread.wifiSend(msgTxt);
-//            Log.d(threaded_application.applicationName, activityName + ": sendTurnout(): DCC-EX: " + msgTxt);
+//            threaded_application.logging(activityName + ": sendTurnout(): DCC-EX: " + msgTxt);
     }
 
     /* ******************************************************************************************** */
@@ -364,7 +363,7 @@ public class SendProcessorDccex {
         //Automation: </START addr id>
         String msgTxt = String.format("</START %d %s>", automationLoco, systemName);
         comm_thread.wifiSend(msgTxt);
-        Log.d(threaded_application.applicationName, activityName + ": sendDccexAutomation(): DCC-EX: " + msgTxt);
+        threaded_application.logging(activityName + ": sendDccexAutomation(): DCC-EX: " + msgTxt);
     }
 
     /* ******************************************************************************************** */
@@ -381,7 +380,7 @@ public class SendProcessorDccex {
     public static void sendPower(int powerState) {
         String msgTxt = String.format("<%d>", powerState);
         comm_thread.wifiSend(msgTxt);
-//         Log.d(threaded_application.applicationName, activityName + ": sendPower(): DCC-EX: " + msgTxt);
+//         threaded_application.logging(activityName + ": sendPower(): DCC-EX: " + msgTxt);
     }
 
     @SuppressLint("DefaultLocale")
@@ -391,7 +390,7 @@ public class SendProcessorDccex {
         char trackLetter = (char) ('A' + track);
         String msgTxt = String.format("<%d %s>", pState, trackLetter);
         comm_thread.wifiSend(msgTxt);
-//            Log.d(threaded_application.applicationName, activityName + ": sendPower(): DCC-EX: " + msgTxt);
+//            threaded_application.logging(activityName + ": sendPower(): DCC-EX: " + msgTxt);
     }
 
 
@@ -400,7 +399,7 @@ public class SendProcessorDccex {
     public static void sendHeartbeatStart() {
         comm_thread.heart.setHeartbeatSent(true);
         comm_thread.wifiSend("<#>"); // DCC-EX doesn't have heartbeat, so sending a command with a simple response
-//            Log.d(threaded_application.applicationName, activityName + ": sendHeartbeatStart(): DCC-EX: <#>)");
+//            threaded_application.logging(activityName + ": sendHeartbeatStart(): DCC-EX: <#>)");
     }
 
     /* ******************************************************************************************** */
@@ -418,7 +417,7 @@ public class SendProcessorDccex {
                 msgTxt = String.format(fmt, l.getAddress().substring(1), mainapp.dccexLastKnownSpeed[whichThrottle], newDir);
                 comm_thread.wifiSend(msgTxt);
                 mainapp.dccexLastKnownDirection[whichThrottle] = newDir;
-//                Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
+//                threaded_application.logging(activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
             }
         } else {
             String fmt = ( (threaded_application.getDccexVersionNumeric() < 4.0) ? "<t 0 %s %d %d>" : "<t %s %d %d>" );
@@ -427,7 +426,7 @@ public class SendProcessorDccex {
             if (mainapp.getConsist(whichThrottle).getLeadAddr().equals(addr)) {
                 mainapp.dccexLastKnownDirection[whichThrottle] = dir;
             }
-//            Log.d(threaded_application.applicationName, activityName + ": sendDirection(): DCC-EX: " + msgTxt);
+//            threaded_application.logging(activityName + ": sendDirection(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -451,7 +450,7 @@ public class SendProcessorDccex {
             comm_thread.wifiSend(msgTxt);
             mainapp.dccexLastSpeedCommandSentTime[whichThrottle] = Calendar.getInstance().getTimeInMillis();
 
-//                Log.d(threaded_application.applicationName, activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
+//                threaded_application.logging(activityName + ": sendSpeed(): DCC-EX: " + msgTxt);
         }
     }
 
@@ -462,7 +461,7 @@ public class SendProcessorDccex {
         for (Consist.ConLoco l : con.getLocos()) {
             msgTxt = String.format("<t %s>", l.getAddress().substring(1));
             comm_thread.wifiSend(msgTxt);
-//            Log.d(threaded_application.applicationName, activityName + ": sendRequestSpeedAndDir(): DCC-EX: " + msgTxt);
+//            threaded_application.logging(activityName + ": sendRequestSpeedAndDir(): DCC-EX: " + msgTxt);
         }
     }
 

@@ -19,7 +19,6 @@ package jmri.enginedriver.import_export;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -134,11 +133,11 @@ public class ImportExportConnectionList {
                 }
                 list_reader.close();
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": getConnectionsList(): Recent connections not found");
+                threaded_application.logging(activityName + ": getConnectionsList(): Recent connections not found");
             }
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
+            threaded_application.logging('e', activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
             failureReason = errMsg;
 //                    threadedApplication.safeToast(getApplicationContext(), getApplicationContext().getResources().getString(R.string.toastConnectErrorReadingRecentConnections) + " " + errMsg, Toast.LENGTH_SHORT).show();
         }

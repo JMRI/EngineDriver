@@ -26,7 +26,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +49,13 @@ public class intro_permissions extends Fragment {
 
 //    @Override
 //    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        Log.d(threaded_application.applicationName, activityName + ": onActivityCreated()");
+//        threaded_application.logging(activityName + ": onActivityCreated()");
 //        super.onActivityCreated(savedInstanceState);
 //    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");        super.onCreate(savedInstanceState);
+        threaded_application.logging(activityName + ": onCreate()");        super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String id = getArguments().getString("id");
             if (id!=null) {
