@@ -21,6 +21,10 @@
      * Google translations.
      * AI suggested changes to the mDNS startup so that it immediately checks for services on app restart.
      * Cosmetic changes to the tick mark text for the semi-realistic throttle.
+     * All the Log.x() messages have been changed to call a method in t_a that also saves to the filtered.txt file if logging has started.
+     * Starting and Stopping the log now call getAboutInfo() to force the os,app,etc. info into the logs
+     * The warning message about going into background should now be suppressed if using multi-window or the new Android 17 Bubbles
+     * Google translations.
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
