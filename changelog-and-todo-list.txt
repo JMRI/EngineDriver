@@ -5,6 +5,7 @@
      * New theme 'Bronze'.
      * Support for UDP connection to DCC-EX EX-CommandStations. (Allows greater than the 10 connections for TCP)
      * Added 'tile' option for background image options.
+     * When you start logging, it also creates a ..._filtered.txt file that only contains ED log messages
  * Bug Fixes
      * Tick mark text not showing on semi-realistic throttle layout.
      * Styling problem with the speed buttons.
