@@ -5,7 +5,7 @@
      * New theme 'Bronze'.
      * Support for UDP connection to DCC-EX EX-CommandStations. (Allows greater than the 10 connections for TCP)
      * Added 'tile' option for background image options.
-     * When you start logging, it also creates a ..._filtered.txt file that only contains ED log messages
+     * When you start logging, it also creates a ..._filtered.txt file that only contains ED log messages.
  * Bug Fixes
      * Tick mark text not showing on semi-realistic throttle layout.
      * Styling problem with the speed buttons.
@@ -17,15 +17,14 @@
      * Changed the arrays of sound files names to arrays of resource IDs.
      * Upgrade to Gradle 9.5.1 + some dependencies.
      * Tweak muted theme.
-     * Count in the disconnected the loop. Intent is eventually to but a max tries.
+     * Count in the disconnected the loop. Intent is eventually to put in a max tries.
      * Removal of local copy of the jMDNS library so later versions will be used.
      * Google translations.
      * AI suggested changes to the mDNS startup so that it immediately checks for services on app restart.
      * Cosmetic changes to the tick mark text for the semi-realistic throttle.
      * All the Log.x() messages have been changed to call a method in t_a that also saves to the filtered.txt file if logging has started.
-     * Starting and Stopping the log now call getAboutInfo() to force the os,app,etc. info into the logs
-     * The warning message about going into background should now be suppressed if using multi-window or the new Android 17 Bubbles
-     * Google translations.
+     * Starting and Stopping the logging now calls getAboutInfo() to force the os,app,etc. info into the logs.
+     * The warning message about going into background should now be suppressed if using multi-window or the new Android 17 Bubbles.
 **Version 2.43.226
  * New Features
      * New Throttle layout - "Tablet Vertical Left - two function columns (1-6)".
