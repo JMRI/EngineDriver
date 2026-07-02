@@ -30,7 +30,6 @@ import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -103,7 +102,7 @@ class SocketWiFi extends Thread {
                 mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppCantDetermineIp, mainapp.host_ip), LENGTH_SHORT);
                 socketOk = false;
             } catch (Exception except) {
-                Log.d(threaded_application.applicationName, activityName + ": connect(): Unknown error.");
+                threaded_application.logging('e',activityName + ": connect(): Unknown error.", except);
                 socketOk = false;
             }
         }
@@ -112,14 +111,14 @@ class SocketWiFi extends Thread {
         if (socketOk) {
             try {
                 //look for someone to answer on specified socket, and set timeout
-                Log.d(threaded_application.applicationName, activityName + ": SocketWiFi: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
-                Log.d(threaded_application.applicationName, activityName + ": SocketWiFi: Opening socket, ip=" + mainapp.host_ip + "port=" + mainapp.port);
+                threaded_application.logging(activityName + ": SocketWiFi: Opening socket, connectTimeout=" + connectTimeoutMs + " and socketTimeout=" + socketTimeoutMs);
+                threaded_application.logging(activityName + ": SocketWiFi: Opening socket, ip=" + mainapp.host_ip + "port=" + mainapp.port);
                 clientSocket = new Socket();
                 InetSocketAddress sa = new InetSocketAddress(mainapp.host_ip, mainapp.port);
                 clientSocket.connect(sa, connectTimeoutMs);
-                Log.d(threaded_application.applicationName, activityName + ": SocketWiFi: Opening socket: Connect successful.");
+                threaded_application.logging(activityName + ": SocketWiFi: Opening socket: Connect successful.");
                 clientSocket.setSoTimeout(socketTimeoutMs);
-                Log.d(threaded_application.applicationName, activityName + ": SocketWiFi: Opening socket: set timeout successful.");
+                threaded_application.logging(activityName + ": SocketWiFi: Opening socket: set timeout successful.");
             } catch (Exception except) {
                 if (!firstConnect) {
 //                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppCantConnect,
@@ -136,7 +135,7 @@ class SocketWiFi extends Thread {
 
                 }
                 if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) { //show additional message if using mobile data
-                    Log.d(threaded_application.applicationName, activityName + ": SocketWiFi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
+                    threaded_application.logging(activityName + ": SocketWiFi: Opening socket: Using mobile network, not WIFI. Check your WiFi settings and Preferences.");
                     mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI,
                             mainapp.client_type), Toast.LENGTH_LONG);
                 }
@@ -190,7 +189,7 @@ class SocketWiFi extends Thread {
     }
 
     public void disconnect(boolean shutdown, boolean fastShutdown) {
-        Log.d(threaded_application.applicationName, activityName + ": SocketWiFi: disconnect()");
+        threaded_application.logging(activityName + ": SocketWiFi: disconnect()");
         if (shutdown) {
             endRead = true;
             if (!fastShutdown) {
@@ -211,7 +210,7 @@ class SocketWiFi extends Thread {
             try {
                 clientSocket.close();
             } catch (Exception e) {
-                Log.d(threaded_application.applicationName, activityName + ": SocketWiFi(): Error closing the Socket: " + e.getMessage());
+                threaded_application.logging(activityName + ": SocketWiFi(): Error closing the Socket: " + e.getMessage());
             }
         }
     }
@@ -254,7 +253,7 @@ class SocketWiFi extends Thread {
                     socketGood = this.SocketCheck();
                 } catch (IOException e) {
                     if (socketGood) {
-                        Log.d(threaded_application.applicationName, activityName + ": run(): WiT rcvr error.");
+                        threaded_application.logging(activityName + ": run(): WiT rcvr error.");
                         socketGood = false;     //input buffer error so force reconnection on next send
                     }
                 }
@@ -264,7 +263,7 @@ class SocketWiFi extends Thread {
             }
         }
         comm_thread.heart.stopHeartbeat();
-        Log.d(threaded_application.applicationName, activityName + ": run(): SocketWiFi exit.");
+        threaded_application.logging(activityName + ": run(): SocketWiFi exit.");
     }
 
     @SuppressLint("StringFormatMatches")
@@ -275,14 +274,14 @@ class SocketWiFi extends Thread {
             String status;
             if (mainapp.client_address == null) {
                 status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
-                Log.d(threaded_application.applicationName, activityName + ": send(): Not Connected: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
+                threaded_application.logging(activityName + ": send(): Not Connected: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
             } else if (inboundTimeout) {
                 status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse,
                         mainapp.host_ip, Integer.toString(mainapp.port), comm_thread.heart.getInboundInterval(), threaded_application.reconnectAttemptCount);
-                Log.d(threaded_application.applicationName, activityName + ": send(): No Response: WiT receive reconnection attempt: " + threaded_application.reconnectAttemptCount);
+                threaded_application.logging(activityName + ": send(): No Response: WiT receive reconnection attempt: " + threaded_application.reconnectAttemptCount);
             } else {
                 status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
-                Log.d(threaded_application.applicationName, activityName + ": send(): Unable to connect: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
+                threaded_application.logging(activityName + ": send(): Unable to connect: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
             }
             socketGood = false;
 
@@ -313,13 +312,13 @@ class SocketWiFi extends Thread {
 
                     mainapp.alertCommHandlerWithBundle(message_type.WIT_CON_RECONNECT);
 
-                    Log.d(threaded_application.applicationName, activityName + ": send(): WiT reconnection successful.");
+                    threaded_application.logging(activityName + ": send(): WiT reconnection successful.");
                     clearInboundTimeout();
                     comm_thread.heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
                     mainapp.dccexListsRequested = -1; //invalidate the lists
                 }
             } catch (Exception e) {
-                Log.d(threaded_application.applicationName, activityName + ": send(): WiT xmtr error.");
+                threaded_application.logging(activityName + ": send(): WiT xmtr error.");
                 socketGood = false;             //output buffer error so force reconnection on next send
             }
         }
@@ -357,7 +356,7 @@ class SocketWiFi extends Thread {
 //                        if ((Build.VERSION.SDK_INT >= 21)
 //                                && (!mainapp.haveForcedWiFiConnection)) {
                     if (!mainapp.haveForcedWiFiConnection) {
-                        Log.d(threaded_application.applicationName, activityName + ": HaveNetworkConnection(): NetworkRequest.Builder");
+                        threaded_application.logging(activityName + ": HaveNetworkConnection(): NetworkRequest.Builder");
                         NetworkRequest.Builder request = new NetworkRequest.Builder();
                         request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
 
@@ -410,7 +409,7 @@ class SocketWiFi extends Thread {
 
     void InboundTimeout() {
         if (++inboundTimeoutRetryCount >= MAX_INBOUND_TIMEOUT_RETRIES) {
-            Log.d(threaded_application.applicationName, activityName + ": InboundTimeout(): WiT max inbound timeouts");
+            threaded_application.logging(activityName + ": InboundTimeout(): WiT max inbound timeouts");
             inboundTimeout = true;
             inboundTimeoutRetryCount = 0;
             inboundTimeoutRecovery = false;
@@ -418,7 +417,7 @@ class SocketWiFi extends Thread {
             mainapp.commBundleMessageHandler.postDelayed(comm_thread.heart.outboundHeartbeatTimer, 200L);
 
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": InboundTimeout(): WiT inbound timeout " +
+            threaded_application.logging(activityName + ": InboundTimeout(): WiT inbound timeout " +
                     inboundTimeoutRetryCount + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
             // heartbeat should trigger a WiT reply so force that now
             inboundTimeoutRecovery = true;

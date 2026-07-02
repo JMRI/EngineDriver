@@ -3,8 +3,6 @@ Adapted from https://www.geeksforgeeks.org/array-implementation-of-queue-simple/
  */
 package jmri.enginedriver.util;
 
-import android.util.Log;
-
 import jmri.enginedriver.threaded_application;
 
 public final class ArrayQueue {
@@ -28,7 +26,7 @@ public final class ArrayQueue {
         boolean rslt = false;
         // check queue is full or not
         if (capacity == rear) {
-            Log.d(threaded_application.applicationName, activityName + ": enqueue(): Queue is full");
+            threaded_application.logging(activityName + ": enqueue(): Queue is full");
         } else {  // insert element at the rear
             if (data!=lastValueAdded) { // don't add the same value again
                 queue[rear] = data;
@@ -36,7 +34,7 @@ public final class ArrayQueue {
                 lastValueAdded = data;
                 rslt = true;
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": enqueue(): Queue already contains value: "+data);
+                threaded_application.logging(activityName + ": enqueue(): Queue already contains value: "+data);
             }
         }
         return rslt;
@@ -46,7 +44,7 @@ public final class ArrayQueue {
         boolean rslt = false;
         // check queue is full or not
         if (capacity == rear) {
-            Log.d(threaded_application.applicationName, activityName + ": enqueueWithIntermediateSteps(): Queue is full");
+            threaded_application.logging(activityName + ": enqueueWithIntermediateSteps(): Queue is full");
         } else {  // insert element at the rear
             if (data!=lastValueAdded) { // don't add the same value again
                 if (Math.abs(Math.abs(data) - Math.abs(lastValueAdded)) > 1) {
@@ -75,7 +73,7 @@ public final class ArrayQueue {
                     }
                     rslt = true;
 //                } else {
-//                Log.d(threaded_application.applicationName, activityName + ": enqueueWithIntermediateSteps(): Queue already contains value: "+data);
+//                threaded_application.logging(activityName + ": enqueueWithIntermediateSteps(): Queue already contains value: "+data);
                 }
             }
         }
@@ -87,7 +85,7 @@ public final class ArrayQueue {
     public void dequeue() {
         // if queue is empty
         if (front == rear) {
-            Log.d(threaded_application.applicationName, activityName + ": dequeue(): Queue is Empty");
+            threaded_application.logging(activityName + ": dequeue(): Queue is Empty");
         } else { // shift all the elements from index 2 till rear // to the right by one
             if (rear - 1 >= 0) {
                 System.arraycopy(queue, 1, queue, 0, rear - 1);
@@ -131,7 +129,7 @@ public final class ArrayQueue {
     public int frontOfQueue() {
         int rslt = -1;
         if (front == rear) {
-//            Log.d(threaded_application.applicationName, activityName + ": frontOfQueue(): Queue is Empty");
+//            threaded_application.logging(activityName + ": frontOfQueue(): Queue is Empty");
             return rslt;
         }
         rslt = queue[front];
@@ -142,7 +140,7 @@ public final class ArrayQueue {
     public int endOfQueue() {
         int rslt = -1;
         if (front == rear) {
-//            Log.d(threaded_application.applicationName, activityName + ": endOfQueue(): Queue is Empty");
+//            threaded_application.logging(activityName + ": endOfQueue(): Queue is Empty");
             return rslt;
         }
         rslt = queue[rear];

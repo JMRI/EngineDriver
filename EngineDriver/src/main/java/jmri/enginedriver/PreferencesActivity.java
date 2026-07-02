@@ -59,7 +59,6 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -171,7 +170,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     protected final ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": galleryLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": galleryLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -185,7 +184,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
 
             mainapp = (threaded_application) this.getApplication();
         mainapp.applyTheme(this,true);
@@ -214,7 +213,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -247,7 +246,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     @Override
     public boolean onPreferenceStartScreen(@NonNull PreferenceFragmentCompat preferenceFragmentCompat,
                                            PreferenceScreen preferenceScreen) {
-        Log.d(threaded_application.applicationName, activityName + ": onPreferenceStartScreen(): callback called to attach the preference sub screen");
+        threaded_application.logging(activityName + ": onPreferenceStartScreen(): callback called to attach the preference sub screen");
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         SettingsSubScreenFragment fragment = SettingsSubScreenFragment.newInstance("Advanced Settings Subscreen");
         Bundle args = new Bundle();
@@ -270,7 +269,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @Override
     protected void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume()");
+        threaded_application.logging(activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
@@ -281,7 +280,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 //        try {
 //            dismissDialog(PROGRESS_BAR_TYPE);
 //        } catch (Exception e) {
-//            Log.d(threaded_application.applicationName, activityName + ": onResume() no dialog to kill");
+//            threaded_application.logging(activityName + ": onResume() no dialog to kill");
 //        }
 
         if (mainapp.isForcingFinish()) {     //expedite
@@ -305,7 +304,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                     getApplicationContext().getResources().getString(R.string.app_name),
                     getApplicationContext().getResources().getString(R.string.app_name_preferences),
                     "");
-            Log.d(threaded_application.applicationName, activityName + ": onResume(): Set toolbar");
+            threaded_application.logging(activityName + ": onResume(): Set toolbar");
         }
 
         // save some values
@@ -315,7 +314,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @Override
     protected void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
         super.onDestroy();
 
         mainapp.clearActivityBundleMessageHandler(activity_id_type.SETTINGS);
@@ -330,7 +329,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
-        Log.d(threaded_application.applicationName, activityName + ": forceRestartApp() - forcedRestartReason: " + forcedRestartReason);
+        threaded_application.logging(activityName + ": forceRestartApp() - forcedRestartReason: " + forcedRestartReason);
 
         String prefAutoImportExport = prefs.getString("prefAutoImportExport", getApplicationContext().getResources().getString(R.string.prefAutoImportExportDefaultValue));
 
@@ -376,7 +375,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 startActivity(in);
                 ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d(threaded_application.applicationName, activityName + ": startGamepadTestActivity(): Settings: " + ex.getMessage());
+                threaded_application.logging(activityName + ": startGamepadTestActivity(): Settings: " + ex.getMessage());
             }
         }
     }
@@ -407,7 +406,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 }
             }
         } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
+            threaded_application.logging('e', activityName + ": getFilesForDialog(): Error trying to find log files", e);
             mainapp.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
         }
         return logFiles;
@@ -478,13 +477,13 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     public void reload() {
         // restart the activity so all the preferences show correctly based on what was imported / hidden
-        Log.d(threaded_application.applicationName, activityName + ": reload(): Forcing activity to recreate");
+        threaded_application.logging(activityName + ": reload(): Forcing activity to recreate");
         recreate();
     }
 
     @SuppressLint("ApplySharedPref")
     private void writeSharedPreferencesToFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, boolean confirmDialog) {
-//        Log.d(threaded_application.applicationName, activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
+//        threaded_application.logging(activityName + ": writeSharedPreferencesToFile(): Saving preferences to file");
         sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
         if (!exportedPreferencesFileName.equals(".ed")) {
             File dst = new File(getApplicationContext().getExternalFilesDir(null), exportedPreferencesFileName);
@@ -528,7 +527,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @SuppressLint("ApplySharedPref")
     public void fixAndReloadImportExportPreference(SharedPreferences sharedPreferences) {
-        Log.d(threaded_application.applicationName, activityName + ": fixAndReloadImportExportPreference()");
+        threaded_application.logging(activityName + ": fixAndReloadImportExportPreference()");
         sharedPreferences.edit().putString("prefImportExport", import_export_option_type.NONE).commit();  //reset the preference
         sharedPreferences.edit().putString("prefHostImportExport", import_export_option_type.NONE).commit();  //reset the preference
         reload();
@@ -562,7 +561,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     private void loadSharedPreferencesFromFile(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
-        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFile(): " + exportedPreferencesFileName);
+        threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): " + exportedPreferencesFileName);
         boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
@@ -572,7 +571,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     private void resetPreferencesDialog() {
-        Log.d(threaded_application.applicationName, activityName + ": resetPreferencesDialog()");
+        threaded_application.logging(activityName + ": resetPreferencesDialog()");
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             //@Override
@@ -603,7 +602,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         SharedPreferences.Editor prefEdit = prefs.edit();
         prefEdit.clear();
         prefEdit.commit();
-        Log.d(threaded_application.applicationName, activityName + ": resetPreferences(): Reset succeeded");
+        threaded_application.logging(activityName + ": resetPreferences(): Reset succeeded");
         delete_settings_file("function_settings.txt");
         delete_settings_file("connections_list.txt");
         delete_settings_file("recent_engine_list.txt");
@@ -633,9 +632,9 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             File settings_file = new File(getApplicationContext().getExternalFilesDir(null), file_name);
             if (settings_file.exists()) {
                 if (settings_file.delete()) {
-                    Log.d(threaded_application.applicationName, activityName + ": delete_settings_file(): Settings: " + file_name + " deleted");
+                    threaded_application.logging(activityName + ": delete_settings_file(): Settings: " + file_name + " deleted");
                 } else {
-                    Log.e(threaded_application.applicationName, activityName + ": delete_settings_file(): Settings: " + file_name + " NOT deleted");
+                    threaded_application.logging('e', activityName + ": delete_settings_file(): Settings: " + file_name + " NOT deleted");
                 }
             }
         }
@@ -743,14 +742,14 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 //        @SuppressLint("ApplySharedPref")
 //        @Override
 //        protected String doInBackground(String... f_url) {
-//            Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: start");
+//            threaded_application.logging(activityName + ": importFromURL(): Import preferences from Server: start");
 //            int count;
 //            String n_url = f_url[0].trim();
 //
 //            if ((mainapp.connectedHostip != null)) {
 //                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + f_url[0];
 //            } else {
-//                Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: Not currently connected");
+//                threaded_application.logging(activityName + ": importFromURL(): Import preferences from Server: Not currently connected");
 //                return null;
 //            }
 //
@@ -801,7 +800,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 //                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_SUCCESS);
 //
 //            } catch (Exception e) {
-//                Log.e(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server Failed: " + e.getMessage());
+//                threaded_application.logging('e', activityName + ": importFromURL(): Import preferences from Server Failed: " + e.getMessage());
 //                try {
 //                    dismissDialog(PROGRESS_BAR_TYPE);
 //                } catch (Exception ignored) {
@@ -810,7 +809,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 //                mainapp.sendMsgDelay(mainapp.settings_msg_handler, 1000L, message_type.IMPORT_SERVER_MANUAL_FAIL);
 //            }
 //
-//            Log.d(threaded_application.applicationName, activityName + ": importFromURL(): Import preferences from Server: End");
+//            threaded_application.logging(activityName + ": importFromURL(): Import preferences from Server: End");
 //            return null;
 //        }
 //
@@ -836,13 +835,13 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             galleryLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": loadImageFromGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": loadImageFromGallery() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
     @SuppressLint("ApplySharedPref")
     private void handleGalleryResult(Intent data) {
-        Log.d(threaded_application.applicationName, activityName + ": handleGalleryResult() ");
+        threaded_application.logging(activityName + ": handleGalleryResult() ");
 
         try {
             // When an Image is picked
@@ -903,7 +902,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 mainapp.safeToast(R.string.prefBackgroundImageFileNameNoImageSelected, Toast.LENGTH_LONG);
             }
         } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
+            threaded_application.logging('e', activityName + ": onActivityResult(): Loading background image Failed: " + e.getMessage());
         }
     }
 
@@ -916,7 +915,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         setResult(result);
         this.finish();  //end this activity
@@ -925,7 +924,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreateOptionsMenu()");
+        threaded_application.logging(activityName + ": onCreateOptionsMenu()");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.preferences_menu, menu);
         overflowMenu = menu;
@@ -1022,7 +1021,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @SuppressLint("ApplySharedPref")
     protected void limitIntPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
-        Log.d(threaded_application.applicationName, activityName + ": limitIntPrefValue()");
+        threaded_application.logging(activityName + ": limitIntPrefValue()");
         EditTextPreference prefText = prefScreen.findPreference(key);
 
         if (prefText == null) return;
@@ -1051,7 +1050,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     /** @noinspection SameParameterValue, SameParameterValue */
     @SuppressLint("ApplySharedPref")
     protected void limitIntArrayPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, int minVal, int maxVal, String defaultVal) {
-        Log.d(threaded_application.applicationName, activityName + ": limitIntArrayPrefValue()");
+        threaded_application.logging(activityName + ": limitIntArrayPrefValue()");
 
         String prefValue = sharedPreferences.getString(key, defaultVal).trim();
         String[] prefValues = threaded_application.splitByString(prefValue, " ");
@@ -1100,7 +1099,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     /** @noinspection SameParameterValue, SameParameterValue , SameParameterValue */
     @SuppressLint("ApplySharedPref")
     protected void limitFloatPrefValue(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String key, Float minVal, Float maxVal, String defaultVal) {
-        Log.d(threaded_application.applicationName, activityName + ": limitFloatPrefValue()");
+        threaded_application.logging(activityName + ": limitFloatPrefValue()");
         EditTextPreference prefText = prefScreen.findPreference(key);
         if (prefText == null) return;
         try {
@@ -1126,7 +1125,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
     @SuppressLint("ApplySharedPref")
     public void checkThrottleScreenType(SharedPreferences sharedPreferences) {
-        Log.d(threaded_application.applicationName, activityName + ": checkThrottleScreenType()");
+        threaded_application.logging(activityName + ": checkThrottleScreenType()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
 
         if (prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SEMI_REALISTIC)) {
@@ -1172,7 +1171,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
     @SuppressLint("ApplySharedPref")
     public void limitNumThrottles(PreferenceScreen prefScreen, SharedPreferences sharedPreferences, String throttleTypePrefName, String numThrottlesPrefName) {
-        Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles()");
+        threaded_application.logging(activityName + ": limitNumThrottles()");
         int prefNumThrottles = mainapp.Numeralise(sharedPreferences.getString(numThrottlesPrefName, getResources().getString(R.string.prefNumThrottlesDefaultValue)));
         getThrottleScreenType(sharedPreferences, throttleTypePrefName);
 
@@ -1185,7 +1184,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         if ( ((fixed[index] == 1) && (prefNumThrottles != max[index]))
                 || ((fixed[index] == 0) && (prefNumThrottles > max[index])) ) {
-            Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: prefNumThrottles " +  prefNumThrottles + " fixed " + fixed[index] + " max " + max[index]);
+            threaded_application.logging(activityName + ": limitNumThrottles: prefNumThrottles " +  prefNumThrottles + " fixed " + fixed[index] + " max " + max[index]);
 
             sharedPreferences.edit().putString(numThrottlesPrefName, textNumbers[max[index]-1]).commit();
             if (prefNumThrottles > max[index]-1) { // only display the warning if the requested amount is lower than the max or fixed.
@@ -1195,7 +1194,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             ListPreference listPref = prefScreen.findPreference(numThrottlesPrefName);
             if (listPref != null) {
                 ignoreThisThrottleNumChange = true;
-                Log.d(threaded_application.applicationName, activityName + ": limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
+                threaded_application.logging(activityName + ": limitNumThrottles: textNumbers[max[index]-1]: " +  textNumbers[max[index]-1] + " index: " + index);
                 listPref.setValue(textNumbers[max[index]-1]);
                 listPref.setValueIndex(max[index]-1);
             }
@@ -1258,7 +1257,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 for (int x = 0; x < childCount; x++) {
                     RadioButton btn = (RadioButton) group.getChildAt(x);
                     if (btn.getId() == checkedId) {
-                        Log.e(threaded_application.applicationName, activityName + ": selected RadioButton-> " + btn.getText().toString());
+                        threaded_application.logging('e', activityName + ": selected RadioButton-> " + btn.getText().toString());
                         setSharedPreferenceValueString(prefScreen, "prefNumThrottles", entryValueList.get(x));
                     }
                 }
@@ -1270,7 +1269,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     boolean throttleScreenTypeSupportsWebView(SharedPreferences sharedPreferences) {
-        Log.d(threaded_application.applicationName, activityName + ": throttleScreenTypeSupportsWebView()");
+        threaded_application.logging(activityName + ": throttleScreenTypeSupportsWebView()");
         prefThrottleScreenType = sharedPreferences.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         boolean supportsWebView = false;
 
@@ -1288,7 +1287,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         return getThrottleScreenTypeArrayIndex(sharedPreferences,"prefThrottleScreenType");
     }
     int getThrottleScreenTypeArrayIndex(SharedPreferences sharedPreferences, String throttleTypePrefName) {
-        Log.d(threaded_application.applicationName, activityName + ": getThrottleScreenTypeArrayIndex()");
+        threaded_application.logging(activityName + ": getThrottleScreenTypeArrayIndex()");
         String throttleScreenType = getThrottleScreenType(sharedPreferences, throttleTypePrefName);
 
         int index = -1;
@@ -1344,13 +1343,13 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     private void enableDisablePreference(PreferenceScreen prefScreen, String key, boolean enable) {
-//        Log.d(threaded_application.applicationName, activityName + ": enableDisablePreference(): key: " + key);
+//        threaded_application.logging(activityName + ": enableDisablePreference(): key: " + key);
         Preference p = prefScreen.findPreference(key);
         if (p != null) {
             p.setSelectable(enable);
             p.setEnabled(enable);
         } else {
-            Log.w(threaded_application.applicationName, activityName + ": enableDisablePreference(): Preference key '" + key + "' not found, not set to " + enable);
+            threaded_application.logging('w', activityName + ": enableDisablePreference(): Preference key '" + key + "' not found, not set to " + enable);
         }
     }
 
@@ -1497,7 +1496,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     }
 
     private void showHideThrottleSwitchPreferences(PreferenceScreen prefScreen) {
-        Log.d(threaded_application.applicationName, activityName + ": showHideThrottleSwitchPreferences()");
+        threaded_application.logging(activityName + ": showHideThrottleSwitchPreferences()");
         boolean enable = prefThrottleSwitchButtonDisplay;
         enableDisablePreference(prefScreen, "prefThrottleSwitchButtonCycleAll", enable);
         enable = prefThrottleSwitchButtonDisplay & !prefThrottleSwitchButtonCycleAll;
@@ -1603,11 +1602,11 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 }
                 list_reader.close();
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": getConnectionsList(): Recent connections not found");
+                threaded_application.logging(activityName + ": getConnectionsList(): Recent connections not found");
             }
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e(threaded_application.applicationName, activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
+            threaded_application.logging('e', activityName + ": getConnectionsList(): Error reading recent connections list: " + errMsg);
             mainapp.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingList) + " " + errMsg, Toast.LENGTH_SHORT);
         }
 
@@ -1668,7 +1667,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences()");
+            threaded_application.logging(activityName + ": onCreatePreferences()");
                 setPreferencesFromResource(R.xml.preferences, rootKey);
 
             Activity a = getActivity();
@@ -1679,7 +1678,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         @Override
         public void onResume() {
-            Log.d(threaded_application.applicationName, activityName + ": SettingsFragment onResume()");
+            threaded_application.logging(activityName + ": SettingsFragment onResume()");
             super.onResume();
             threaded_application.activityResumed(activityName);
             if (parentActivity != null)
@@ -1729,7 +1728,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         @SuppressLint("ApplySharedPref")
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Log.d(threaded_application.applicationName, activityName + ": onSharedPreferenceChanged(): key: " + key);
+            threaded_application.logging(activityName + ": onSharedPreferenceChanged(): key: " + key);
             boolean prefForcedRestart = sharedPreferences.getBoolean("prefForcedRestart", false);
 
             if (!prefForcedRestart) {  // don't do anything if the preference have been loaded, and we are about to reload the app.
@@ -1959,7 +1958,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         @SuppressLint("ApplySharedPref")
         void setPreferencesUI() {
-            Log.d(threaded_application.applicationName, activityName + ": setPreferencesUI()");
+            threaded_application.logging(activityName + ": setPreferencesUI()");
             prefs = parentActivity.prefs;
             defaultName = parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleNameDefaultValue);
 
@@ -2105,7 +2104,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 //        }
 
         private void showHideThrottleNumberPreference(SharedPreferences sharedPreferences) {
-            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleNumberPreference()");
+            threaded_application.logging(activityName + ": showHideThrottleNumberPreference()");
             boolean enable = true;
             parentActivity.prefThrottleScreenType = prefs.getString("prefThrottleScreenType", parentActivity.getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
             int index = parentActivity.getThrottleScreenTypeArrayIndex(sharedPreferences);
@@ -2119,7 +2118,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         }
 
         private void showHideThrottleWebViewPreferences(SharedPreferences sharedPreferences) {
-            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleWebViewPreferences()");
+            threaded_application.logging(activityName + ": showHideThrottleWebViewPreferences()");
             boolean enable = parentActivity.throttleScreenTypeSupportsWebView(sharedPreferences);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "throttle_webview_preference", enable);
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefWebViewButton", enable);
@@ -2152,7 +2151,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
 
         private void showHideThrottleTypePreferences() {
-            Log.d(threaded_application.applicationName, activityName + ": showHideThrottleTypePreferences()");
+            threaded_application.logging(activityName + ": showHideThrottleTypePreferences()");
             boolean enable = (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SIMPLE)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL))
                     && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_LEFT)) && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.VERTICAL_RIGHT))
                     && (!parentActivity.prefThrottleScreenType.equals(throttle_screen_type.SWITCHING))
@@ -2203,14 +2202,14 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 else //Doesn't have a parent
                     getPreferenceScreen().removePreference(preference);
             } catch (Exception except) {
-                Log.d(threaded_application.applicationName, activityName + ": removePreference(): failed: " + preference);
+                threaded_application.logging(activityName + ": removePreference(): failed: " + preference);
             }
         }
 
         private void hideAdvancedPreferences() {
             if (!prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedPreference1 : advancedPreferences) {
-// //                Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
+// //                threaded_application.logging(activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
                     Preference advancedPreference = findPreference(advancedPreference1);
                     if (advancedPreference != null) {
                         if (!MobileControl2.isMobileControl2()) {
@@ -2221,7 +2220,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                              }
                         }
                     } else {
-                        Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): '" + advancedPreference1 + "' not found.");
+                        threaded_application.logging(activityName + ": hideAdvancedPreferences(): '" + advancedPreference1 + "' not found.");
                     }
                 }
             }
@@ -2321,7 +2320,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
             // rootKey is the name of preference sub screen key name , here--customPrefKey
             setPreferencesFromResource(R.xml.preferences, rootKey); // Call this only ONCE.
-            Log.d(threaded_application.applicationName, activityName + ": onCreatePreferences(): of the sub screen " + rootKey);
+            threaded_application.logging(activityName + ": onCreatePreferences(): of the sub screen " + rootKey);
 
             Activity a = getActivity();
             parentActivity = (PreferencesActivity) a;
@@ -2378,7 +2377,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         @Override
         public void onResume() {
-            Log.d(threaded_application.applicationName, activityName + ": SettingsFragment onResume()");
+            threaded_application.logging(activityName + ": SettingsFragment onResume()");
             super.onResume();
             threaded_application.activityResumed(activityName);
 
@@ -2457,7 +2456,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 else //Doesn't have a parent
                     getPreferenceScreen().removePreference(preference);
             } catch (Exception except) {
-                Log.d(threaded_application.applicationName, activityName + ": removeSubPreference: failed: " + preference);
+                threaded_application.logging(activityName + ": removeSubPreference: failed: " + preference);
             }
         }
 
@@ -2508,19 +2507,19 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         private void hideAdvancedSubPreferences() {
             if (!parentActivity.prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue) ) ) {
                 for (String advancedSubPreference1 : advancedSubPreferences) {
-// //                Log.d(threaded_application.applicationName, activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
+// //                threaded_application.logging(activityName + ": hideAdvancedPreferences(): " + advancedPreference1);
                     Preference advancedSubPreference = findPreference(advancedSubPreference1);
                     if (advancedSubPreference != null) {
                         removeSubPreference(advancedSubPreference);
                     } else {
-                        Log.d(threaded_application.applicationName, activityName + ": hideAdvancedSubPreferences(): '" + advancedSubPreference1 + "' not found.");
+                        threaded_application.logging(activityName + ": hideAdvancedSubPreferences(): '" + advancedSubPreference1 + "' not found.");
                     }
                 }
             }
         }
 
         private void showHideLeftRightSwipePreferences() {
-            Log.d(threaded_application.applicationName, activityName + ": showHideLeftRightSwipePreferences()");
+            threaded_application.logging(activityName + ": showHideLeftRightSwipePreferences()");
             boolean enable = parentActivity.prefs.getBoolean("prefLeftRightSwipeChangesSpeed",
                     getResources().getBoolean(R.bool.prefLeftRightSwipeChangesSpeedDefaultValue));
             parentActivity.enableDisablePreference(getPreferenceScreen(), "prefFullScreenSwipeArea", !enable);

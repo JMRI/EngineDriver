@@ -30,7 +30,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.github.appintro.AppIntro2;
@@ -57,7 +56,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
 
         mainapp = (threaded_application) this.getApplication();
 
@@ -246,26 +245,26 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
-        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
+        threaded_application.logging(activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(this, requestCode);
             }
         } else {
             // do nothing
-            Log.d(threaded_application.applicationName, activityName + ": Unrecognised permissions request code: " + requestCode);
+            threaded_application.logging(activityName + ": Unrecognised permissions request code: " + requestCode);
         }
     }
     @Override
     public void onRequestPermissionsResult(@PermissionsHelper.RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(this, requestCode, permissions, grantResults)) {
-            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
+            threaded_application.logging(activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
         if ( (grantResults.length == 1) && (grantResults[0] == PackageManager.PERMISSION_GRANTED) ) {
-            Log.d(threaded_application.applicationName, activityName + ": Permission Granted");
+            threaded_application.logging(activityName + ": Permission Granted");
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": Permission Denied");
+            threaded_application.logging(activityName + ": Permission Denied");
         }
     }
 
@@ -330,7 +329,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
 
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
 
         mainapp.introIsRunning = false;
         if (!introComplete) {

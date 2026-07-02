@@ -33,7 +33,6 @@ import android.os.Message;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -144,7 +143,7 @@ public class ReconnectActivity extends AppCompatActivity {
                 mainapp.alertCommHandlerWithBundle(message_type.SEND_HEARTBEAT_START);
                 mainapp.activityBundleMessageHandlers[activity_id_type.RECONNECT_STATUS].postDelayed(delayCloseScreen, 500L);
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": reconnected(): handler already null");
+                threaded_application.logging(activityName + ": reconnected(): handler already null");
                 endThisActivity();
             }
         }
@@ -154,7 +153,7 @@ public class ReconnectActivity extends AppCompatActivity {
     private final Runnable delayCloseScreen = this::endThisActivity;
 
     private void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         this.finish();                  //end this activity
 
         threaded_application.activityInTransition(activityName);
@@ -194,7 +193,7 @@ public class ReconnectActivity extends AppCompatActivity {
             try {
                 mediaPlayer.start();
             } catch (Exception e) {
-                Log.d(threaded_application.applicationName, activityName + ": reconnected(): Unable to play notification sound");
+                threaded_application.logging(activityName + ": reconnected(): Unable to play notification sound");
             }
 
             mainapp.vibrate(new long[]{1000, 500, 1000, 500, 1000, 500});
@@ -262,7 +261,7 @@ public class ReconnectActivity extends AppCompatActivity {
      */
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
         super.onDestroy();
 
         mainapp.clearActivityBundleMessageHandler(activity_id_type.RECONNECT_STATUS);

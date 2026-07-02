@@ -68,8 +68,6 @@ import static android.view.KeyEvent.KEYCODE_X;
 import static android.view.KeyEvent.KEYCODE_Z;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 
-import android.util.Log;
-
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.gamepad_or_keyboard_event_type;
 import jmri.enginedriver.type.sounds_type;
@@ -99,7 +97,7 @@ public class KeyboardEventHandler {
                                     boolean isSemiRealisticThrottle,
                                     int whichGamePadIsEventFrom) {
 
-        Log.d(threaded_application.applicationName, activityName + ": handleKeyboardEvent() action: " + action);
+        threaded_application.logging(activityName + ": handleKeyboardEvent() action: " + action);
         int whichThrottle = originalWhichThrottle;
         if ((gamepadOrKeyboardThrottle >= 0) && (gamepadOrKeyboardThrottle != originalWhichThrottle)) {
             whichThrottle = gamepadOrKeyboardThrottle;
@@ -501,7 +499,7 @@ public class KeyboardEventHandler {
     }
 
     void resetKeyboardString() {
-        Log.d(threaded_application.applicationName, activityName + ": resetKeyboardString()");
+        threaded_application.logging(activityName + ": resetKeyboardString()");
         keyboardString = "";
         tempGamepadOrKeyboardThrottle = -1;  //reset it
     }

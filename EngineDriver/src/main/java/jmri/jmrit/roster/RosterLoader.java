@@ -1,7 +1,5 @@
 package jmri.jmrit.roster;
 
-import android.util.Log;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -33,7 +31,7 @@ public class RosterLoader {
         try {
             return rosterUrl.openConnection().getInputStream();
         } catch (IOException e) {
-            Log.e(threaded_application.applicationName, activityName + ": InputStream(): Error retrieving roster xml: " + e.getMessage());
+            threaded_application.logging('e', activityName + ": InputStream(): Error retrieving roster xml: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +52,7 @@ public class RosterLoader {
             }
             rosterStream.close();
         } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ": parse(): Error building hashmap of Roster Entries: " + e.getMessage());
+            threaded_application.logging('e', activityName + ": parse(): Error building hashmap of Roster Entries: " + e.getMessage());
             return null;
         }
         return roster;

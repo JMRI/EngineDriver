@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -60,7 +59,7 @@ public class BackgroundImageLoader {
                 image.setScaleType(ImageView.ScaleType.FIT_XY);
             }
         } catch (Exception e) {
-            Log.d(threaded_application.applicationName, activityName + ": loadBackgroundImageImpl(): failed loading background image");
+            threaded_application.logging(activityName + ": loadBackgroundImageImpl(): failed loading background image");
         }
     }
 }

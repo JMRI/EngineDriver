@@ -19,7 +19,6 @@ package jmri.enginedriver.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
@@ -28,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
+
+import jmri.enginedriver.threaded_application;
 
 /**
  * This helper class download images from the Internet and binds those with the provided ImageView.
@@ -68,7 +69,7 @@ public class ImageDownloader {
         @Override
         public void run() {
             downloadBitmap(sourceUrl, imageView);
-            Log.d(applicationName, activityName + ": downloadBitmapInBackground.run:");
+            threaded_application.logging(activityName + ": downloadBitmapInBackground.run:");
         }
     } // end downloadBitmapInBackground()
 
@@ -87,7 +88,7 @@ public class ImageDownloader {
             }
 
         } catch(Exception e){
-            Log.w("Engine_Driver", "Error while retrieving bitmap from " + sourceUrl, e);
+            threaded_application.logging('w', "Error while retrieving bitmap from " + sourceUrl, e);
         }
     }
 

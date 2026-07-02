@@ -37,7 +37,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -201,7 +200,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 prefNumberOfDefaultFunctionLabels = limitIntEditValue("prefNumberOfDefaultFunctionLabels", et, 0, MAX_FUNCTIONS, threaded_application.MAX_FUNCTIONS_TEXT);
                 prefNumberOfDefaultFunctionLabelsForRoster = limitIntEditValue("prefNumberOfDefaultFunctionLabelsForRoster", etForRoster, 0, MAX_FUNCTIONS, "4");
@@ -265,7 +264,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
 
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
         mainapp.set_default_function_labels(false); // reload the preference in cases the display number is less than the total number
 
         if (!orientationChange) {
@@ -541,7 +540,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
     }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         move_view_to_settings();        //sync settings array to view
         if ( (!settingsCurrent)
                 || (!originalPrefNumberOfDefaultFunctionLabels.equals(prefNumberOfDefaultFunctionLabels))
@@ -584,7 +583,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
             settings_output.close();
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
+            threaded_application.logging('e', activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
         if ( (errMsg != null) && (!errMsg.isEmpty()) )
             mainapp.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
@@ -708,7 +707,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler():" + requestCode);
+        threaded_application.logging(activityName + ": navigateToHandler():" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(FunctionSettingsActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(FunctionSettingsActivity.this, requestCode);
@@ -716,16 +715,16 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
         } else {
 //            switch (requestCode) {
 //                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
 //                    saveSettingsImpl();
 //                    break;
 //                case PermissionsHelper.READ_FUNCTION_SETTINGS:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
 //                    initSettingsImpl();
 //                    break;
 //                default:
             // do nothing
-            Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
+            threaded_application.logging(activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }
@@ -733,7 +732,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(FunctionSettingsActivity.this, requestCode, permissions, grantResults)) {
-            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
+            threaded_application.logging(activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }

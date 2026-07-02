@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.media.ToneGenerator;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -259,7 +258,7 @@ public class ResponseProcessorDccex {
                         mainapp.alertActivitiesWithBundle(message_type.RESPONSE, bundle, activity_id_type.DCC_EX);
                         skipDefaultAlertToAllActivities = true;
 
-                        Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Unable to process valid DCC-EX command: " + responseStr);
+                        threaded_application.logging(activityName + ": processWifiResponse(): Unable to process valid DCC-EX command: " + responseStr);
                     }
                 }
 
@@ -281,7 +280,7 @@ public class ResponseProcessorDccex {
         try {
             vn = String.format("%02d.", Integer.parseInt(vn2[0]));
         } catch (Exception e) {
-            Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): Invalid Version " + threaded_application.getDccexVersionString() + ", ignoring");
+            threaded_application.logging(activityName + ": processWifiResponse(): Invalid Version " + threaded_application.getDccexVersionString() + ", ignoring");
         }
         if (vn2.length>=2) {
             try { vn = vn +String.format("%03d",Integer.parseInt(vn2[1]));
@@ -313,7 +312,7 @@ public class ResponseProcessorDccex {
         if (!threaded_application.getDccexVersionString().equals(old_vn)) { //only if changed
             mainapp.alertActivitiesWithBundle(message_type.CONNECTED, activity_id_type.CONNECTION);
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": processWifiResponse(): version already set to " + threaded_application.getDccexVersionString() + ", ignoring");
+            threaded_application.logging(activityName + ": processWifiResponse(): version already set to " + threaded_application.getDccexVersionString() + ", ignoring");
         }
 
         mainapp.withrottle_version = 4.0;  // fudge it
@@ -670,7 +669,7 @@ public class ResponseProcessorDccex {
                             try {
 //                                fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
                                 fnState = mainapp.bitExtracted(Long.parseLong(args[4]), 1, i + 1);
-                                if (i==0) Log.d(threaded_application.applicationName, activityName + ": processDccexLocos(): function:" + i + " state: " + fnState);
+                                if (i==0) threaded_application.logging(activityName + ": processDccexLocos(): function:" + i + " state: " + fnState);
                                 comm_thread.processFunctionState(whichThrottle, i, (fnState != 0));
                                 Bundle bundle = new Bundle();
                                 bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
@@ -680,7 +679,7 @@ public class ResponseProcessorDccex {
                                 mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_SET_FUNCTION, bundle, activity_id_type.THROTTLE);
 
                             } catch (NumberFormatException e) {
-                                Log.w("Engine_Driver", "unable to parseInt: '" + e.getMessage() + "'");
+                                threaded_application.logging('w', "unable to parseInt: '" + e.getMessage() + "'");
                             }
                         }
                     }
@@ -767,7 +766,7 @@ public class ResponseProcessorDccex {
             try {
                 mainapp.roster_entries.put(mainapp.dccexRosterLocoNames[i], mainapp.dccexRosterIDs[i] + "(" + (mainapp.dccexRosterIDs[i] <= 127 ? "S" : "L") + ")"); //roster name is hashmap key, value is address(L or S), e.g.  2591(L)
             } catch (Exception e) {
-                Log.d(threaded_application.applicationName, activityName + ": processRosterList(): caught Exception");  //ignore any bad stuff in roster entries
+                threaded_application.logging(activityName + ": processRosterList(): caught Exception");  //ignore any bad stuff in roster entries
             }
         }
 
@@ -829,7 +828,7 @@ public class ResponseProcessorDccex {
                                 mainapp.dccexListsRequested++;
                                 mainapp.alertActivitiesWithBundle(message_type.RECEIVED_ROSTER_UPDATE);
 
-                                Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
+                                threaded_application.logging(activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
 
 //                            mainapp.dccexRosterFullyReceived = true;
                                 int count = (mainapp.dccexRosterIDs == null) ? 0 : mainapp.dccexRosterIDs.length;
@@ -867,7 +866,7 @@ public class ResponseProcessorDccex {
                                     if ((mainapp.consists[whichThrottle].isLeadFromRoster()) || (mainapp.prefAlwaysUseFunctionsFromServer)) { // only process the functions if the lead engine from the roster or the override preference is set
 
                                         if (args[3].length() > 2) {
-                                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Processing Functions for lead loco");
+                                            threaded_application.logging(activityName + ": processDccexRoster: Processing Functions for lead loco");
 
                                             if ( (args.length != 4) || (!args[2].equals("\"\"")) ) {
                                                 String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
@@ -894,15 +893,15 @@ public class ResponseProcessorDccex {
                                             comm_thread.processRosterFunctionString(responseStrBuilder.toString(), whichThrottle);
                                             mainapp.consists[whichThrottle].setFunctionLabels(addr_str, responseStrBuilder.toString());
                                         } else {
-                                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Problem Processing Functions for lead loco");
+                                            threaded_application.logging(activityName + ": processDccexRoster: Problem Processing Functions for lead loco");
                                             mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
                                             skipDefaultAlertToAllActivities = false;
                                         }
                                     } else {
-                                        Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Processing Functions -  lead loco is not from the roster");
+                                        threaded_application.logging(activityName + ": processDccexRoster: Processing Functions -  lead loco is not from the roster");
                                     }
                                 } else {
-                                    Log.d(threaded_application.applicationName, activityName + ": processDccexRoster: Processing Functions -  not the lead loco - ignoring");
+                                    threaded_application.logging(activityName + ": processDccexRoster: Processing Functions -  not the lead loco - ignoring");
 
                                 }
 
@@ -951,7 +950,7 @@ public class ResponseProcessorDccex {
                     mainapp.fastClockSeconds = Long.parseLong(args[1]) * 60;
                     mainapp.alertActivitiesWithBundle(message_type.RECEIVED_TIME_CHANGE);
                 } catch (NumberFormatException e) {
-                    Log.w("Engine_Driver", "unable to extract fastClockSeconds from '" + Arrays.toString(args) + "'");
+                    threaded_application.logging('w', "unable to extract fastClockSeconds from '" + Arrays.toString(args) + "'");
                 }
             }
         }
@@ -1056,7 +1055,7 @@ public class ResponseProcessorDccex {
                     mainapp.dccexListsRequested++;
 
                     int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
-                    Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts complete. Count: " + count);
+                    threaded_application.logging(activityName + ": processDccexTurnouts(): Turnouts complete. Count: " + count);
                     mainapp.dccexTurnoutsBeingProcessed = false;
 
                     mainapp.dccexTurnoutsFullyReceived = true;
@@ -1075,7 +1074,7 @@ public class ResponseProcessorDccex {
 
             } else { // turnouts list  <jT id1 id2 id3 ...>
 
-                Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts list received.");
+                threaded_application.logging(activityName + ": processDccexTurnouts(): Turnouts list received.");
                 if (!mainapp.dccexTurnoutsBeingProcessed) {
                     mainapp.dccexTurnoutsBeingProcessed = true;
 //                    if (mainapp.dccexTurnoutString.isEmpty()) {
@@ -1092,7 +1091,7 @@ public class ResponseProcessorDccex {
                         }
 
                         int count = (mainapp.dccexTurnoutIDs == null) ? 0 : mainapp.dccexTurnoutIDs.length;
-                        Log.d(threaded_application.applicationName, activityName + ": processDccexTurnouts(): Turnouts list received. Count: " + count);
+                        threaded_application.logging(activityName + ": processDccexTurnouts(): Turnouts list received. Count: " + count);
                     }
                 }
             }
@@ -1169,7 +1168,7 @@ public class ResponseProcessorDccex {
                     for (int i = 0; i < mainapp.dccexRouteIDs.length; i++) {
                         if (!mainapp.dccexRouteDetailsReceived[i]) {
                             ready = false;
-                            Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes incomplete. Missing: " + mainapp.dccexRouteIDs[i]);
+                            threaded_application.logging(activityName + ": processDccexRoutes(): Routes incomplete. Missing: " + mainapp.dccexRouteIDs[i]);
                             break;
                         }
                     }
@@ -1205,7 +1204,7 @@ public class ResponseProcessorDccex {
                     }
 
                     int count = (mainapp.dccexRouteIDs==null) ? 0 : mainapp.dccexRouteIDs.length;
-                    Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes complete. Count: " + count);
+                    threaded_application.logging(activityName + ": processDccexRoutes(): Routes complete. Count: " + count);
                     mainapp.dccexRoutesBeingProcessed = false;
 
 //                    mainapp.dccexRoutesFullyReceived = true;
@@ -1224,7 +1223,7 @@ public class ResponseProcessorDccex {
 
             } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty
 
-                Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes list received.");
+                threaded_application.logging(activityName + ": processDccexRoutes(): Routes list received.");
                 if (!mainapp.dccexRoutesBeingProcessed) {
                     mainapp.dccexRoutesBeingProcessed = true;
 //                    if (mainapp.dccexRouteString.isEmpty()) {
@@ -1243,7 +1242,7 @@ public class ResponseProcessorDccex {
                         }
 
                         int count = (mainapp.dccexRouteIDs==null) ? 0 : mainapp.dccexRouteIDs.length;
-                        Log.d(threaded_application.applicationName, activityName + ": processDccexRoutes(): Routes list received. Count: " + count);
+                        threaded_application.logging(activityName + ": processDccexRoutes(): Routes list received. Count: " + count);
                     }
                 }
             }

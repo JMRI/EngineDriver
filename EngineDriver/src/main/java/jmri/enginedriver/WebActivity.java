@@ -36,7 +36,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -125,7 +124,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
+//        threaded_application.logging(activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
         if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the action bar
@@ -144,7 +143,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     }
 
     public void gestureMove(MotionEvent event) {
-        // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): action " + event.getAction());
+        // threaded_application.logging(activityName + ": gestureMove(): action " + event.getAction());
         if ( (mainapp != null) && (gestureHandler != null) && (gestureInProgress) ) {
             // stop the gesture timeout timer
             gestureHandler.removeCallbacks(gestureStopped);
@@ -157,7 +156,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-                // Log.d(threaded_application.applicationName, activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
+                // threaded_application.logging(activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
@@ -170,7 +169,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     }
 
     private void gestureEnd(MotionEvent event) {
-        // Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
+        // threaded_application.logging(activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
         if ( (mainapp != null) && (gestureHandler != null) && (gestureInProgress) ) {
             gestureHandler.removeCallbacks(gestureStopped);
 
@@ -220,7 +219,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
                     try {
                         webView.dispatchTouchEvent(event);
                     } catch (IllegalArgumentException e) {
-                        Log.d(threaded_application.applicationName, activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                        threaded_application.logging(activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
                     }
                 }
             }
@@ -333,7 +332,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -445,7 +444,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -478,7 +477,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume()");
+        threaded_application.logging(activityName + ": onResume()");
         mainapp.applyTheme(this);
 
         super.onResume();
@@ -522,7 +521,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 
     @Override
     public void onPause() {
-        Log.d(threaded_application.applicationName, activityName + ": onPause()");
+        threaded_application.logging(activityName + ": onPause()");
         super.onPause();
         threaded_application.activityPaused(activityName);
 
@@ -535,7 +534,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        threaded_application.logging(activityName + ": onStart()");
 
         if (gestureHandler == null)
             gestureHandler = new GestureHandler(Looper.getMainLooper());
@@ -561,7 +560,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
 
         if (webView != null) {
             final ViewGroup webGroup = (ViewGroup) webView.getParent();
@@ -574,7 +573,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
             gestureHandler.removeCallbacksAndMessages(null);
             gestureHandler = null;
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
+            threaded_application.logging(activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
         }
 
         mainapp.clearActivityBundleMessageHandler(activity_id_type.WEB);
@@ -777,7 +776,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
                     getApplicationContext().getResources().getString(R.string.prefInitialWebPageDefaultValue));
             String url = mainapp.createUrl(mainapp.defaultWebViewURL);
             if (url != null) {      // if port is valid
-                Log.d(threaded_application.applicationName, activityName + ": urlRestore(): loading: " +url);
+                threaded_application.logging(activityName + ": urlRestore(): loading: " +url);
                 webView.loadUrl(url);
             }
             else {

@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,15 +40,15 @@ public class intro_write_settings extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
         super.onCreate(savedInstanceState);
     }
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        threaded_application.logging(activityName + ": onStart()");
         super.onStart();
 //    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        Log.d(threaded_application.applicationName, activityName + ":");
+//        threaded_application.logging(activityName + ":");
 //        super.onActivityCreated(savedInstanceState);
 
         Button settingsButton = requireView().findViewById(R.id.intro_write_settings_launch);

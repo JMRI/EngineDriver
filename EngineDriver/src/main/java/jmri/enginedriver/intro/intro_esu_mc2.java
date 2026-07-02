@@ -23,7 +23,6 @@ package jmri.enginedriver.intro;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,15 +43,15 @@ public class intro_esu_mc2 extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
         super.onCreate(savedInstanceState);
     }
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        threaded_application.logging(activityName + ": onStart()");
         super.onStart();
 //    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        Log.d(threaded_application.applicationName, activityName + ":");
+//        threaded_application.logging(activityName + ":");
 //        super.onActivityCreated(savedInstanceState);
 
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);

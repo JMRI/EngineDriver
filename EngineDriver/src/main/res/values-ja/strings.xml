@@ -278,6 +278,7 @@
     <string name="importServerAutoDialog">新しい環境設定ファイルがこのサーバーで見つかりました: (%1$s)。\nインポートしますか?\n\n警告!\n\'フル\' - すべての環境設定が上書きされます。\n\n\ 「部分的」 - テーマと一部のスロットル ページ タイプ設定を除くすべての設定が上書きされます。</string>
     <string name="importServerAutoDialogNeutralButton">部分的</string>
     <string name="importServerAutoDialogPositiveButton">全て</string>
+    <string name="toastEndSaveLogFile">ログ記録が停止しました。ファイル %1$s を参照してください。</string>
     <string name="infoSaveLogFile">ログ記録先: %s</string>
 
 

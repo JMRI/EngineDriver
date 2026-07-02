@@ -20,8 +20,6 @@ package jmri.enginedriver.util;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.ACTION_UP;
 
-import android.util.Log;
-
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.gamepad_or_keyboard_event_type;
 import jmri.enginedriver.type.pref_gamepad_button_option_type;
@@ -68,7 +66,7 @@ public class GamepadEventHandler {
                                     boolean isSemiRealisticThrottle,
                                     int whichGamePadIsEventFrom) {
 
-        Log.d(threaded_application.applicationName, activityName + ": handleGamepadEvent() action: " + action);
+        threaded_application.logging(activityName + ": handleGamepadEvent() action: " + action);
 
         if (prefGamePadButtons[buttonNo].equals(pref_gamepad_button_option_type.ALL_STOP)) {  // All Stop
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {

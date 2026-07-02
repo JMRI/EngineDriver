@@ -24,7 +24,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -114,7 +113,7 @@ public class throttle_switching_left_or_right extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
+        threaded_application.logging(activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -128,7 +127,7 @@ public class throttle_switching_left_or_right extends throttle {
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         if (mainapp.appIsFinishing) return;
 
         if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
@@ -146,7 +145,7 @@ public class throttle_switching_left_or_right extends throttle {
 
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
+        threaded_application.logging(activityName + ": onResume(): called");
         super.onResume();
         threaded_application.activityResumed(activityName);
 
@@ -284,7 +283,7 @@ public class throttle_switching_left_or_right extends throttle {
     // lookup and set values of various informational text labels and size the
     // screen elements
     protected void setLabels() {
-//        Log.d(threaded_application.applicationName, activityName + ": setLabels() starting");
+//        threaded_application.logging(activityName + ": setLabels() starting");
         super.setLabels();
 
         if (mainapp.appIsFinishing) { return;}
@@ -404,7 +403,7 @@ public class throttle_switching_left_or_right extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //Log.d(threaded_application.applicationName, activityName + ": setLabels(): vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            //threaded_application.logging(activityName + ": setLabels(): vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         // save part the screen for webview
@@ -489,7 +488,7 @@ public class throttle_switching_left_or_right extends throttle {
             sliderBottomRightX[throttleIndex] = x + vsbSwitchingSpeeds[throttleIndex].getWidth() - ovx;
             sliderBottomRightY[throttleIndex] = y + vsbSwitchingSpeeds[throttleIndex].getHeight() -ovy;
 
-//            Log.d(threaded_application.applicationName, activityName + ": setLabels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//            threaded_application.logging(activityName + ": setLabels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
         }
 
@@ -498,7 +497,7 @@ public class throttle_switching_left_or_right extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-        // Log.d(threaded_application.applicationName, activityName + ": setLabels() end");
+        // threaded_application.logging(activityName + ": setLabels() end");
 
     }
 
@@ -530,7 +529,7 @@ public class throttle_switching_left_or_right extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // Log.d(threaded_application.applicationName, activityName + ": enableDisableButtonsForView " + newEnabledState);
+        // threaded_application.logging(activityName + ": enableDisableButtonsForView " + newEnabledState);
 
         if (vg == null) { return;}
         if (mainapp.appIsFinishing) { return;}
@@ -549,7 +548,7 @@ public class throttle_switching_left_or_right extends throttle {
     // update the appearance of all function buttons
     @Override
     void setAllFunctionStates(int whichThrottle) {
-        // Log.d(threaded_application.applicationName, activityName + ": set_function_states()");
+        // threaded_application.logging(activityName + ": set_function_states()");
 
         if (mainapp.appIsFinishing) { return;}
 
@@ -565,7 +564,7 @@ public class throttle_switching_left_or_right extends throttle {
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // Log.d(threaded_application.applicationName, activityName + ": set_function_request()");
+        // threaded_application.logging(activityName + ": set_function_request()");
 
         Button b;
         boolean[] fs;   // copy of this throttle's function state array
@@ -602,7 +601,7 @@ public class throttle_switching_left_or_right extends throttle {
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            // Log.d(threaded_application.applicationName, activityName + ": onTouch(): action " + event.getAction());
+            // threaded_application.logging(activityName + ": onTouch(): action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
         }
@@ -616,8 +615,8 @@ public class throttle_switching_left_or_right extends throttle {
             dir = getDirectionFromSliderPosition(newSliderPosition,whichThrottle);
             lastDir = getDirectionFromSliderPosition(lastSliderPosition,whichThrottle);
 
-//            Log.d(threaded_application.applicationName, activityName + ": onProgressChanged(): fromUser: " + fromUser + " touchFromUser: " + vsbSwitchingSpeeds[whichThrottle].touchFromUser + " limitedJump: " + limitedJump);
-//            Log.d(threaded_application.applicationName, activityName + ": onProgressChanged(): isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
+//            threaded_application.logging(activityName + ": onProgressChanged(): fromUser: " + fromUser + " touchFromUser: " + vsbSwitchingSpeeds[whichThrottle].touchFromUser + " limitedJump: " + limitedJump);
+//            threaded_application.logging(activityName + ": onProgressChanged(): isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
             if ((fromUser) || (vsbSwitchingSpeeds[whichThrottle].touchFromUser) ) {
@@ -651,7 +650,7 @@ public class throttle_switching_left_or_right extends throttle {
                         return;
                     }
 
-//                    Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() -- no throttling");
+//                    threaded_application.logging(activityName + ": onProgressChanged() -- no throttling");
 
                     reverseDirectionIfNeeded(dir, whichThrottle);
 
@@ -661,12 +660,12 @@ public class throttle_switching_left_or_right extends throttle {
                     setDisplayedSpeed(whichThrottle, speed);
 
                 } else { // got a touch while processing limitJump
-//                    Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() -- touch while processing limited jump");
+//                    threaded_application.logging(activityName + ": onProgressChanged() -- touch while processing limited jump");
                     newSliderPosition = lastSliderPosition;    //   so suppress multiple touches
                     throttle.setProgress(lastSliderPosition);
                     if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
-//                    Log.d(threaded_application.applicationName, activityName + ": onProgressChange(): fromUser: " + fromUser + " vsbSwitchingSpeeds[wt].touchFromUser: " +vsbSwitchingSpeeds[whichThrottle].touchFromUser + " isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
+//                    threaded_application.logging(activityName + ": onProgressChange(): fromUser: " + fromUser + " vsbSwitchingSpeeds[wt].touchFromUser: " +vsbSwitchingSpeeds[whichThrottle].touchFromUser + " isPauseSpeeds[whichThrottle]: " + isPauseSpeeds[whichThrottle]);
                 }
 
                 // Now update ESU MCII Knob position
@@ -677,13 +676,13 @@ public class throttle_switching_left_or_right extends throttle {
                 setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
 
             } else {
-//                Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() -- lj: " + limitedJump + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed);
+//                threaded_application.logging(activityName + ": onProgressChanged() -- lj: " + limitedJump + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed);
                 if (limitedJump[whichThrottle]) {
 
                     int tempJumpSpeed = jumpSpeed;
                     if (mChangeDirectionAtZero) { tempJumpSpeed = 0; }  // we will need to change directions.  for now just get to zero
 
-//                    Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() -- lj: " + limitedJump[whichThrottle] + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement[whichThrottle] + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed + " tjs: " + tempJumpSpeed);
+//                    threaded_application.logging(activityName + ": onProgressChanged() -- lj: " + limitedJump[whichThrottle] + " d: " + dir + " ld: " + lastDir + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement[whichThrottle] + " cdaZ: " + mChangeDirectionAtZero + " s: " + speed + " js: " + jumpSpeed + " tjs: " + tempJumpSpeed);
 
                     // check if we have hit the jumpSpeed or tempJumpSpeed (zero)
                     boolean hitJumpSpeed = false;
@@ -704,11 +703,11 @@ public class throttle_switching_left_or_right extends throttle {
 
                     if ( hitJumpSpeed) {   // stop when we reach the target
                         if (mChangeDirectionAtZero) { // if change of direction is needed, then we must be at zero now.  need to continue to the final speed.
-                            Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() !!-- Direction change now needed");
+                            threaded_application.logging(activityName + ": onProgressChanged() !!-- Direction change now needed");
                             mChangeDirectionAtZero = false;
                             reverseDirectionIfNeeded(jumpDir, whichThrottle);
                         } else {
-                            Log.d(threaded_application.applicationName, activityName + ": onProgressChanged() !!-- LimitedJump hit jump speed.");
+                            threaded_application.logging(activityName + ": onProgressChanged() !!-- LimitedJump hit jump speed.");
                             limitedJump[whichThrottle] = false;
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                             throttle.setProgress(getNewSliderPositionFromSpeed(jumpSpeed, whichThrottle, false));
@@ -722,13 +721,13 @@ public class throttle_switching_left_or_right extends throttle {
 
         @Override
         public void onStartTrackingTouch(SeekBar sb) {
-//            Log.d(threaded_application.applicationName, activityName + ": onStartTrackingTouch() onProgressChanged");
+//            threaded_application.logging(activityName + ": onStartTrackingTouch() onProgressChanged");
             gestureInProgress = false;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar sb) {
-//            Log.d(threaded_application.applicationName, activityName + ": onStopTrackingTouch() onProgressChanged");
+//            threaded_application.logging(activityName + ": onStopTrackingTouch() onProgressChanged");
             limitedJump[whichThrottle] = false;
             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
             kidsTimerActions(kids_timer_action_type.STARTED,0);
@@ -755,7 +754,7 @@ public class throttle_switching_left_or_right extends throttle {
         if (getDirection(whichThrottle)==direction_type.REVERSE) {  // treat negative as positive
             change = change * -1;
         }
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange(): change: " + change + " lastSliderPosition: " + lastSliderPosition);
+//        threaded_application.logging(activityName + ": speedChange(): change: " + change + " lastSliderPosition: " + lastSliderPosition);
 
         lastScaleSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
         scaleSpeed = lastScaleSpeed + change;
@@ -765,21 +764,21 @@ public class throttle_switching_left_or_right extends throttle {
              scaleSpeed = 0;
          }
 
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
+//        threaded_application.logging(activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
         if (scaleSpeed<0) {
             int dir = getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD;
-//            Log.d(threaded_application.applicationName, activityName + ": speedChange(): auto Reverse - dir:" + dir);
+//            threaded_application.logging(activityName + ": speedChange(): auto Reverse - dir:" + dir);
             dirs[whichThrottle] = dir;
             setEngineDirection(whichThrottle, dir, false);
             showDirectionIndication(whichThrottle, dir);
         }
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange(): change: " + change);
+//        threaded_application.logging(activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
+//        threaded_application.logging(activityName + ": speedChange(): change: " + change);
 
         scaleSpeed = Math.abs(scaleSpeed);
 
         int newSliderPosition = getNewSliderPositionFromSpeed(scaleSpeed, whichThrottle, true);
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange(): newSliderPosition: " + newSliderPosition );
+//        threaded_application.logging(activityName + ": speedChange(): newSliderPosition: " + newSliderPosition );
 
         if (lastScaleSpeed == scaleSpeed) {
             newSliderPosition += Math.round(Math.signum(change));
@@ -791,15 +790,15 @@ public class throttle_switching_left_or_right extends throttle {
         if (newSliderPosition > throttleSwitchingMax[whichThrottle])
             newSliderPosition = throttleSwitchingMax[whichThrottle];
 
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange(): change: " + change);
+//        threaded_application.logging(activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
+//        threaded_application.logging(activityName + ": speedChange(): change: " + change);
 
         switchingThrottleSlider.setProgress(newSliderPosition);
         speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
         setDisplayedSpeed(whichThrottle, speed);
         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
-//        Log.d(threaded_application.applicationName, activityName + ": speedChange():  speed: " + speed + " change: " + change);
+//        threaded_application.logging(activityName + ": speedChange():  speed: " + speed + " change: " + change);
 
 //        speedUpdateAndNotify(whichThrottle, speed);
         return speed;
@@ -823,7 +822,7 @@ public class throttle_switching_left_or_right extends throttle {
         setDisplayedSpeed(whichThrottle, speed);
         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
-//        Log.d(threaded_application.applicationName, activityName + ": speedUpdate():  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
+//        threaded_application.logging(activityName + ": speedUpdate():  sliderPosition: " + sliderPosition + " dir: " + getDirection(whichThrottle) + " Speed: " + speed);
     }
 
     // process WiT speed report
@@ -893,7 +892,7 @@ public class throttle_switching_left_or_right extends throttle {
         } else { // zero - dead zone
             speed = 0;
         }
-//        Log.d(threaded_application.applicationName, activityName + ": getSpeedFromSliderPosition():  scale: " + scale + " sliderPosition: " + sliderPosition + " speed: " + speed );
+//        threaded_application.logging(activityName + ": getSpeedFromSliderPosition():  scale: " + scale + " sliderPosition: " + sliderPosition + " speed: " + speed );
         return speed;
     }
 
@@ -932,7 +931,7 @@ public class throttle_switching_left_or_right extends throttle {
                 newSliderPosition = throttleMidPointDeadZoneLower[whichThrottle] - (int) Math.round( speed / scale );
             }
         }
-//        Log.d(threaded_application.applicationName, activityName + ": getNewSliderPositionFromSpeed():  scale: " + scale + " speed: " + speed + " newSliderPosition: " + newSliderPosition );
+//        threaded_application.logging(activityName + ": getNewSliderPositionFromSpeed():  scale: " + scale + " speed: " + speed + " newSliderPosition: " + newSliderPosition );
 
         return newSliderPosition;
     }
@@ -967,7 +966,7 @@ public class throttle_switching_left_or_right extends throttle {
     protected void limitSpeed(int whichThrottle) {
         int dir = getDirection(whichThrottle);
         int speed = getSpeedFromSliderPosition(vsbSwitchingSpeeds[whichThrottle].getProgress(),whichThrottle, false);
-//                Log.d(threaded_application.applicationName, activityName + ": limitSpeed():  speed: " + speed );
+//                threaded_application.logging(activityName + ": limitSpeed():  speed: " + speed );
 
         isLimitSpeeds[whichThrottle] = !isLimitSpeeds[whichThrottle];
         if (isLimitSpeeds[whichThrottle]) {
@@ -993,7 +992,7 @@ public class throttle_switching_left_or_right extends throttle {
         speedUpdate(whichThrottle,  speed);
         setEngineDirection(whichThrottle, dir, false);
 
-        Log.d(threaded_application.applicationName, activityName + ": limitSpeed():  speed: " + speed );
+        threaded_application.logging(activityName + ": limitSpeed():  speed: " + speed );
         speedChangeAndNotify(whichThrottle,0);
         setActiveThrottle(whichThrottle); // set the throttle the volume keys control depending on the preference
     }

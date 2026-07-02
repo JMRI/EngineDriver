@@ -37,7 +37,7 @@ public class intro_finish extends Fragment {
 
 //    @Override
 //    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        Log.d(threaded_application.applicationName, activityName + ":");
+//        threaded_application.logging(activityName + ":");
 //        super.onActivityCreated(savedInstanceState);
 //    }
 

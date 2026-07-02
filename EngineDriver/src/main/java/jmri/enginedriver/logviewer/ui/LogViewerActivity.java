@@ -19,7 +19,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,9 +33,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -74,7 +76,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     private Toolbar toolbar;
 
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate()");
+        threaded_application.logging(activityName + ": onCreate()");
         super.onCreate(savedInstanceState);
         mainapp = (threaded_application) getApplication();
         if (mainapp.isForcingFinish()) {        // expedite
@@ -138,7 +140,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -170,8 +172,8 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                     "");
         }
 
-        Log.d(threaded_application.applicationName, mainapp.getAboutInfo());
-        Log.d(threaded_application.applicationName, mainapp.getAboutInfo(false));
+        threaded_application.logging(mainapp.getAboutInfo());
+        threaded_application.logging(mainapp.getAboutInfo(false));
 
     } // end onCreate
 
@@ -183,7 +185,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume()");
+        threaded_application.logging(activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
@@ -247,7 +249,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @Override
     protected void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
 
         if (logReaderTask != null ) {
             logReaderTask.stopTask();
@@ -276,7 +278,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //    }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         this.finish();  //end this activity
         ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -352,28 +354,55 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         try {
             Runtime.getRuntime().exec("logcat -c");
             mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
-            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG);
+
+            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG,3, true, true);
+
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();
-            Log.d(threaded_application.applicationName, "Logging started to: " + logFile);
-            Log.d(threaded_application.applicationName, mainapp.getAboutInfo());
-            Log.d(threaded_application.applicationName, mainapp.getAboutInfo(false));
+            threaded_application.logging("Logging started to: " + logFile);
+            threaded_application.logging(mainapp.getAboutInfo());
         } catch ( IOException e ) {
             e.printStackTrace();
         }
 
+        // filtered log file
+        File logFileFiltered = new File(mainapp.getApplicationContext().getExternalFilesDir(null), "logcat" + System.currentTimeMillis() + "_filtered.txt");
+        // if it is open, try closing it
+        try { if (threaded_application.logFileFiltered != null) threaded_application.logFileFiltered.close(); } catch (Exception ignored) {}
+        // now try opening it
+        try {
+            threaded_application.logFileFilteredFileName = logFileFiltered.toString();
+            threaded_application.logFileFiltered = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(logFileFiltered, true)));
+            threaded_application.logging("Also writing filtered log file to: " + logFileFiltered.toString());
+            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFileFiltered.toString()), Toast.LENGTH_LONG,3, true, false);
+        }
+        catch (Exception ignored) {
+            threaded_application.logging("Unable to open filterLogFile for writing: " + logFileFiltered.toString());
+        }
+        threaded_application.logging(mainapp.getAboutInfo(false));
     }
 
     private void stopSaveLogFile() {
+        threaded_application.logging(mainapp.getAboutInfo(false));
+
         if (mainapp.logcatProcess != null) {
             mainapp.logcatProcess.destroy(); // Sends SIGTERM to the process
             mainapp.logcatProcess = null;
-            Log.d(threaded_application.applicationName, "Logcat file recording stopped.");
-            mainapp.safeToast("Logcat recording stopped.", Toast.LENGTH_SHORT);
-            // You might want to update UI or mainapp.logSaveFilename here if needed
+            threaded_application.logging("Logcat file recording stopped.");
+
+            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastEndSaveLogFile, mainapp.logSaveFilename), Toast.LENGTH_LONG,3, true, true);
             mainapp.logSaveFilename = ""; // Or indicate it's no longer active
             showHideSaveButton();
         }
+        // close the filtered log file
+        try {
+            if (threaded_application.logFileFiltered != null) {
+                threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastEndSaveLogFile, threaded_application.logFileFilteredFileName), Toast.LENGTH_LONG,3, true, false);
+                threaded_application.logFileFiltered.close();
+                threaded_application.logFileFilteredFileName = "";
+                threaded_application.logFileFiltered = null;
+            }
+        } catch (Exception ignored) {}
     }
 
     void showHideSaveButton() {
@@ -393,7 +422,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@PermissionsHelper.RequestCodes int requestCode) {
-        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler():" + requestCode);
+        threaded_application.logging(activityName + ": navigateToHandler():" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(LogViewerActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(LogViewerActivity.this, requestCode);
@@ -404,12 +433,12 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             //noinspection SwitchStatementWithTooFewBranches
             switch (requestCode) {
 //                case PermissionsHelper.STORE_LOG_FILES:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_LOG_FILES - navigate to writeSharedPreferencesToFileImpl()");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for STORE_LOG_FILES - navigate to writeSharedPreferencesToFileImpl()");
 //                    saveLogFileImpl();
 //                    break;
                 default:
                     // do nothing
-                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
+                    threaded_application.logging(activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
             }
         }
     }
@@ -417,7 +446,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(LogViewerActivity.this, requestCode, permissions, grantResults)) {
-            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
+            threaded_application.logging(activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -560,7 +589,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             adaptor.add(line);
             adaptor.notifyDataSetChanged();
         } catch (Exception e) {
-            Log.d(threaded_application.applicationName, activityName + ": addLogEntryToView(): addLine: exception: " + e);
+            threaded_application.logging(activityName + ": addLogEntryToView(): addLine: exception: " + e);
         }
     }
 
@@ -596,7 +625,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
 //                }
 //            }
 //        } catch (Exception e) {
-//            Log.d(threaded_application.applicationName, activityName + ": checkHasLogFiles(): Error trying to find log files");
+//            threaded_application.logging(activityName + ": checkHasLogFiles(): Error trying to find log files");
 //        }
 //
 //        return false;
@@ -613,7 +642,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                         String lowercaseFileName = file.getName().toLowerCase();
                         if (lowercaseFileName.startsWith("logcat") && lowercaseFileName.endsWith(".txt")) {
                             logFiles.add(file);
-                            Log.d(threaded_application.applicationName, activityName + ": getFilesForDialog(): Found: " + file.getName());
+                            threaded_application.logging(activityName + ": getFilesForDialog(): Found: " + file.getName());
                         }
                     }
                     // Optional: Sort the files, e.g., by name or date
@@ -621,7 +650,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 }
             }
         } catch (Exception e) {
-            Log.e(threaded_application.applicationName, activityName + ": getFilesForDialog(): Error trying to find log files", e);
+            threaded_application.logging('e', activityName + ": getFilesForDialog(): Error trying to find log files", e);
             mainapp.safeToast("Error accessing log files.", Toast.LENGTH_SHORT);
         }
         return logFiles;

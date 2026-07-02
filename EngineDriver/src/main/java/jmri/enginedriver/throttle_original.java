@@ -23,7 +23,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,7 @@ public class throttle_original extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // Log.d(threaded_application.applicationName, activityName + ": enableDisableButtonsForView() " + newEnabledState);
+        // threaded_application.logging(activityName + ": enableDisableButtonsForView() " + newEnabledState);
 
         if (vg == null) {
             return;
@@ -75,7 +74,7 @@ public class throttle_original extends throttle {
     // update the appearance of all function buttons
     @Override
     void setAllFunctionStates(int whichThrottle) {
-        // Log.d(threaded_application.applicationName, activityName + ": set_function_states()");
+        // threaded_application.logging(activityName + ": set_function_states()");
 
         if (mainapp.appIsFinishing) {
             return;
@@ -92,7 +91,7 @@ public class throttle_original extends throttle {
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // Log.d(threaded_application.applicationName, activityName + ": set_function_request()");
+        // threaded_application.logging(activityName + ": set_function_request()");
 
         if (function > threaded_application.MAX_FUNCTION_NUMBER)
             return; //bail if this function number not supported
@@ -124,7 +123,7 @@ public class throttle_original extends throttle {
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
+        threaded_application.logging(activityName + ": onCreate(): called");
 
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
@@ -140,7 +139,7 @@ public class throttle_original extends throttle {
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
         if (mainapp.appIsFinishing) return;
 
         if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
@@ -152,7 +151,7 @@ public class throttle_original extends throttle {
 
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
+        threaded_application.logging(activityName + ": onResume(): called");
         super.onResume();
         threaded_application.activityResumed(activityName);
 
@@ -200,7 +199,7 @@ public class throttle_original extends throttle {
     // lookup and set values of various informational text labels and size the
     // screen elements
     protected void setLabels() {
-//        Log.d(threaded_application.applicationName, activityName + ": set_labels() starting");
+//        threaded_application.logging(activityName + ": set_labels() starting");
         super.setLabels();
 
         if (mainapp.appIsFinishing) {
@@ -243,7 +242,7 @@ public class throttle_original extends throttle {
         String bLabelPlainText;
 
         if (mainapp.consists == null) {
-            Log.d(threaded_application.applicationName, activityName + ": set_Labels() consists is null");
+            threaded_application.logging(activityName + ": set_Labels() consists is null");
             return;
         }
 
@@ -254,7 +253,7 @@ public class throttle_original extends throttle {
 
             Consist con = mainapp.consists[throttleIndex];
             if (con == null) {
-                Log.d(threaded_application.applicationName, activityName + ": set_Labels() consists[" + throttleIndex + "] is null");
+                threaded_application.logging(activityName + ": set_Labels() consists[" + throttleIndex + "] is null");
             } else {
                 if (con.isActive()) {
                     if (!prefShowAddressInsteadOfName) {
@@ -358,7 +357,7 @@ public class throttle_original extends throttle {
 
 
         if ((screenHeight > throttleMargin) && (mainapp.consists != null)) { // don't do this if height is invalid
-            // Log.d(threaded_application.applicationName, activityName + ": starting screen height adjustments, screenHeight=" + screenHeight);
+            // threaded_application.logging(activityName + ": starting screen height adjustments, screenHeight=" + screenHeight);
             // determine how to split the screen (evenly if all three, 45/45/10 for two, 80/10/10 if only one)
 
             adjustThrottleHeights();
@@ -380,11 +379,11 @@ public class throttle_original extends throttle {
                 sliderBottomRightX[throttleIndex] = x + sbSpeeds[throttleIndex].getWidth() - ovx;
                 sliderBottomRightY[throttleIndex] = y + sbSpeeds[throttleIndex].getHeight() - ovy;
 
-//            Log.d(threaded_application.applicationName, activityName + ": setLabels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
+//            threaded_application.logging(activityName + ": setLabels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
 //                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
             }
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": screen height adjustments skipped, screenHeight=" + screenHeight);
+            threaded_application.logging(activityName + ": screen height adjustments skipped, screenHeight=" + screenHeight);
         }
 
         // update the direction indicators
@@ -395,7 +394,7 @@ public class throttle_original extends throttle {
             setAllFunctionStates(throttleIndex);
         }
 
-        // Log.d(threaded_application.applicationName, activityName + ": setLabels() end");
+        // threaded_application.logging(activityName + ": setLabels() end");
 
     }
 
@@ -507,7 +506,7 @@ public class throttle_original extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = displayMetrics.heightPixels - (int) (titleBar * (displayMetrics.densityDpi / 160.)); // allow for title bar, etc
-            // Log.d(threaded_application.applicationName, activityName + ": vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
+            // threaded_application.logging(activityName + ": vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         double height = screenHeight;

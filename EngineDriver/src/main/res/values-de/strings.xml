@@ -1255,5 +1255,6 @@
     <string name="prefDccexClosedLabelTitle">DCC-EX – Beschriftung der Taste „Geschlossen/Auswerfen“</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX – Beschriftung der Taste „Auswerfen/Schließen“</string>
     <string name="toastConnectFontSizeWarning">Ihre Systemschriftgröße ist sehr groß! (%1$1.2f)\nEinige Elemente und Texte passen möglicherweise nicht auf den Bildschirm. Wir empfehlen, die Schriftgröße in den Android-Systemeinstellungen auf unter 1,5 zu reduzieren.</string>
+    <string name="toastEndSaveLogFile">Protokollierung beendet. Siehe Datei %1$s.</string>
 
 </resources>

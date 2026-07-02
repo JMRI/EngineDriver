@@ -35,7 +35,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -399,7 +398,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 saveNumberEntries();
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
@@ -435,7 +434,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
 
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart()");
+        threaded_application.logging(activityName + ": onStart()");
         super.onStart();
 
         if (prefs.getBoolean("prefBackgroundImage", mainapp.getResources().getBoolean(R.bool.prefBackgroundImageDefaultValue))) {
@@ -471,7 +470,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
      */
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy() called");
+        threaded_application.logging(activityName + ": onDestroy() called");
         iplsLoader.loadSounds();
         super.onDestroy();
 
@@ -489,7 +488,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
 
     // end current activity
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         Intent resultIntent = new Intent();
         setResult(result, resultIntent);
@@ -685,7 +684,7 @@ public class DeviceSoundsSettingsActivity extends AppCompatActivity implements O
                 mainapp.shownToastDeviceSoundsSettings = true;
             }
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": VolumeInfo(displayRingerVolume) :AudioManager not available");
+            threaded_application.logging(activityName + ": VolumeInfo(displayRingerVolume) :AudioManager not available");
         }
     }
 }

@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.PrintWriter;
@@ -68,7 +67,7 @@ class SocketUdp extends Thread {
 
     public boolean connect() {
 
-        Log.d(threaded_application.applicationName, activityName+": <:> connect():");
+        threaded_application.logging(activityName+": <:> connect():");
 
         // Ensure any previous socket is fully closed and null before creating a new one
         if (udpSocket != null) {
@@ -100,7 +99,7 @@ class SocketUdp extends Thread {
         } catch (Exception e) {
             socketOk = false;
             socketGood = false;
-            Log.e(threaded_application.applicationName, activityName+": Socket error: ", e);
+            threaded_application.logging('e', activityName+": Socket error: ", e);
 
         }
 
@@ -118,7 +117,7 @@ class SocketUdp extends Thread {
             firstConnect = true;
         }
 
-        Log.d(threaded_application.applicationName, activityName+": <:> connect(): socket: " + socketOk);
+        threaded_application.logging(activityName+": <:> connect(): socket: " + socketOk);
         return socketOk;
     }
 
@@ -127,7 +126,7 @@ class SocketUdp extends Thread {
     }
 
     public void disconnect(boolean shutdown, boolean fastShutdown) {
-        Log.d(threaded_application.applicationName, activityName+": <:> disconnect():");
+        threaded_application.logging(activityName+": <:> disconnect():");
 
         socketGood = false;
         isRunning = false;
@@ -159,16 +158,16 @@ class SocketUdp extends Thread {
                     // If socket is closed or null, exit the loop
                     socketOk = false;
                     socketGood = false;
-                    Log.e(threaded_application.applicationName, activityName + ": Socket closed unexpectedly: ");
+                    threaded_application.logging('e', activityName + ": Socket closed unexpectedly: ");
                     break;
                 }
                 // Receive Packet
-                Log.d(threaded_application.applicationName, activityName + ": <:> Waiting: ");
+                threaded_application.logging(activityName + ": <:> Waiting: ");
                 DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
                 udpSocket.receive(receivePacket); // Blocks until a packet arrives
 
                 String receivedMessage = new String(receivePacket.getData(), 0, receivePacket.getLength());
-                Log.d(threaded_application.applicationName, activityName + ": <:> Received: " + receivedMessage);
+                threaded_application.logging(activityName + ": <:> Received: " + receivedMessage);
 
                 clearInboundTimeout();
                 processMessage(receivedMessage);
@@ -176,7 +175,7 @@ class SocketUdp extends Thread {
             } catch (Exception e) {
                 socketOk = false;
                 socketGood = false;
-                Log.e(threaded_application.applicationName, activityName + ": Socket error: ", e);
+                threaded_application.logging('e', activityName + ": Socket error: ", e);
             }
         }
     }
@@ -193,9 +192,9 @@ class SocketUdp extends Thread {
                     String oneStr = wholeStr.substring(wholeStr.indexOf("<"), endIdx + 1);
                     String remainder = (endIdx + 2 <= wholeStr.length()) ? wholeStr.substring(endIdx + 2) : "";
 
-                    Log.d(threaded_application.applicationName, activityName+": SocketUdp.read(): whole str »" + wholeStr +"«");
-                    Log.d(threaded_application.applicationName, activityName+": SocketUdp.read(): one str   »" + oneStr +"«");
-                    Log.d(threaded_application.applicationName, activityName+": SocketUdp.read(): remainder »" + remainder +"«\n\n");
+                    threaded_application.logging(activityName+": SocketUdp.read(): whole str »" + wholeStr +"«");
+                    threaded_application.logging(activityName+": SocketUdp.read(): one str   »" + oneStr +"«");
+                    threaded_application.logging(activityName+": SocketUdp.read(): remainder »" + remainder +"«\n\n");
 
                     String[] superCmds = oneStr.split("\n");
 
@@ -226,14 +225,14 @@ class SocketUdp extends Thread {
                     if (remainder.isEmpty()) break;
 
                 } else {
-                    Log.d(threaded_application.applicationName, activityName+": SocketUdp.read(): partial: »" + str + "«");
+                    threaded_application.logging(activityName+": SocketUdp.read(): partial: »" + str + "«");
                     comm_thread.heart.restartInboundInterval();
                     clearInboundTimeout();
                     break;
                 }
             } catch (Exception e) {
                 // Handle disconnected or error
-                Log.d(threaded_application.applicationName, activityName+": SocketUdp.processMessage(): error: " + e.getMessage());
+                threaded_application.logging(activityName+": SocketUdp.processMessage(): error: " + e.getMessage());
                 break;
             }
         }
@@ -243,18 +242,18 @@ class SocketUdp extends Thread {
     void Send(String msg) {
         boolean reconInProg = false;
         //reconnect socket if needed
-        Log.d(threaded_application.applicationName, activityName+": SocketUdp.send(): socket: " + (socketGood ? "good" : "bad") + " inboundTimeout: " + (inboundTimeout ? "true" : "false"));
+        threaded_application.logging(activityName+": SocketUdp.send(): socket: " + (socketGood ? "good" : "bad") + " inboundTimeout: " + (inboundTimeout ? "true" : "false"));
         if ( (!socketGood) || (inboundTimeout)) {
             String status;
             if (mainapp.client_address == null) {
                 status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
-                Log.d(threaded_application.applicationName, activityName+": SocketUdp.send(): [address null] WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
+                threaded_application.logging(activityName+": SocketUdp.send(): [address null] WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
             } else if (inboundTimeout) {
                 status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse, mainapp.host_ip, Integer.toString(mainapp.port), comm_thread.heart.getInboundInterval());
-                Log.d(threaded_application.applicationName, activityName+": SocketUdp.send(): [inboundTimeout] WiT receive reconnection attempt: " + threaded_application.reconnectAttemptCount);
+                threaded_application.logging(activityName+": SocketUdp.send(): [inboundTimeout] WiT receive reconnection attempt: " + threaded_application.reconnectAttemptCount);
             } else {
                 status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
-                Log.d(threaded_application.applicationName, activityName+": SocketUdp.send(): WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
+                threaded_application.logging(activityName+": SocketUdp.send(): WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
             }
             socketGood = false;
 
@@ -284,9 +283,9 @@ class SocketUdp extends Thread {
                         InetAddress serverAddress = InetAddress.getByName(mainapp.host_ip);
                         DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverAddress, mainapp.port);
                         udpSocket.send(sendPacket);
-                        Log.d(threaded_application.applicationName, activityName + ": Sent: " + msg);
+                        threaded_application.logging(activityName + ": Sent: " + msg);
                     } catch (Exception e) {
-                        Log.e(threaded_application.applicationName, activityName + ": Send error: ", e);
+                        threaded_application.logging('e', activityName + ": Send error: ", e);
                     }
                 });
 
@@ -298,9 +297,9 @@ class SocketUdp extends Thread {
 //
 //                        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverAddress, mainapp.port);
 //                        udpSocket.send(sendPacket);
-//                        Log.d(threaded_application.applicationName, activityName+": Sent: " + msg);
+//                        threaded_application.logging(activityName+": Sent: " + msg);
 //                    } catch (Exception e) {
-//                        Log.e(threaded_application.applicationName, activityName+": Send error: ", e);
+//                        threaded_application.logging('e', activityName+": Send error: ", e);
 //                    }
 //                }).start();
 
@@ -312,12 +311,12 @@ class SocketUdp extends Thread {
 
                     mainapp.alertCommHandlerWithBundle(message_type.WIT_CON_RECONNECT);
 
-                    Log.d(threaded_application.applicationName, activityName+": SocketUdp.send(): WiT reconnection successful.");
+                    threaded_application.logging(activityName+": SocketUdp.send(): WiT reconnection successful.");
                     clearInboundTimeout();
                     comm_thread.heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
                 }
             } catch (Exception e) {
-                Log.d(threaded_application.applicationName, activityName+": SocketUdp.send(): WiT xmtr error.");
+                threaded_application.logging(activityName+": SocketUdp.send(): WiT xmtr error.");
                 socketGood = false;             //output buffer error so force reconnection on next send
             }
         }
@@ -333,14 +332,14 @@ class SocketUdp extends Thread {
 
     void InboundTimeout() {
         if (++inboundTimeoutRetryCount >= MAX_INBOUND_TIMEOUT_RETRIES) {
-            Log.d(threaded_application.applicationName, activityName+": SocketUdp.InboundTimeout(): WiT max inbound timeouts");
+            threaded_application.logging(activityName+": SocketUdp.InboundTimeout(): WiT max inbound timeouts");
             inboundTimeout = true;
             inboundTimeoutRetryCount = 0;
             inboundTimeoutRecovery = false;
             // force a 'send' to start the reconnection process
             mainapp.commBundleMessageHandler.postDelayed(comm_thread.heart.outboundHeartbeatTimer, 200L);
         } else {
-            Log.d(threaded_application.applicationName, activityName+": SocketUdp.InboundTimeout(): WiT inbound timeout " +
+            threaded_application.logging(activityName+": SocketUdp.InboundTimeout(): WiT inbound timeout " +
                     inboundTimeoutRetryCount + " of " + MAX_INBOUND_TIMEOUT_RETRIES);
             // heartbeat should trigger a WiT reply so force that now
             inboundTimeoutRecovery = true;

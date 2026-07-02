@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.provider.OpenableColumns;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -91,7 +90,7 @@ public class FileReceiverActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             if (fileUri != null) {
-                Log.d(threaded_application.applicationName, activityName + " Received single file URI: " + fileUri);
+                threaded_application.logging(activityName + " Received single file URI: " + fileUri);
                 String fileName = getFileName(fileUri, getContentResolver());
                 textViewFileNameDisplay.setText(fileName);
                 textViewFileNameDisplay.setVisibility(View.VISIBLE);
@@ -107,7 +106,7 @@ public class FileReceiverActivity extends AppCompatActivity {
                     saveFileAsync(fileUri, "shared_file_");
                 }
             } else {
-                Log.e(threaded_application.applicationName, activityName + " No URI found in SEND action");
+                threaded_application.logging('e', activityName + " No URI found in SEND action");
                 updateUiForError(getResources().getString(R.string.sharedFileNoUriReceived));
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
@@ -129,7 +128,7 @@ public class FileReceiverActivity extends AppCompatActivity {
                 }
 
                 if (!urisList.isEmpty()) {
-                    Log.d(threaded_application.applicationName, "Processing " + urisList.size() + " files.");
+                    threaded_application.logging("Processing " + urisList.size() + " files.");
                     textViewFileNameDisplay.setText(getResources().getString(R.string.sharedFileProcessingCount, urisList.size()));
                     textViewFileNameDisplay.setVisibility(View.VISIBLE);
 
@@ -144,15 +143,15 @@ public class FileReceiverActivity extends AppCompatActivity {
                         saveMultipleFilesAsync(urisList, "shared_multiple_file_");
                     }
                 } else {
-                    Log.e(threaded_application.applicationName, "No valid URIs found in SEND_MULTIPLE parcelable list");
+                    threaded_application.logging('e', "No valid URIs found in SEND_MULTIPLE parcelable list");
                     updateUiForError("Error: No valid file data received for multiple files.");
                 }
             } else {
-                Log.e(threaded_application.applicationName, "No URIs found in SEND_MULTIPLE action or list is empty");
+                threaded_application.logging('e', "No URIs found in SEND_MULTIPLE action or list is empty");
                 updateUiForError(getResources().getString(R.string.sharedFileNoUriReceived));
             }
         } else {
-            Log.w(threaded_application.applicationName, "Activity launched without a valid share intent.");
+            threaded_application.logging('w', "Activity launched without a valid share intent.");
             updateUiForError(getResources().getString(R.string.sharedFileNoShareActionDetected));
         }
     }
@@ -167,7 +166,7 @@ public class FileReceiverActivity extends AppCompatActivity {
     private boolean doesFileExist(String fileName) {
         File outputDir = getExternalFilesDir(null); // Or your specific target directory
         if (outputDir == null) {
-            Log.w(threaded_application.applicationName, activityName + " Cannot get external files dir to check existence.");
+            threaded_application.logging('w', activityName + " Cannot get external files dir to check existence.");
             return false; // Safest to assume no conflict if dir is inaccessible
         }
         File potentialFile = new File(outputDir, fileName);
@@ -195,7 +194,7 @@ public class FileReceiverActivity extends AppCompatActivity {
                     successCount++;
                 } else {
                     errorCount++;
-                    Log.e(threaded_application.applicationName, activityName + "Error saving file " + currentFileNameForDisplay + ": " + resultMessage);
+                    threaded_application.logging('e', activityName + "Error saving file " + currentFileNameForDisplay + ": " + resultMessage);
                 }
             }
 
@@ -271,11 +270,11 @@ public class FileReceiverActivity extends AppCompatActivity {
 
         File outputDir = getExternalFilesDir(null);
         if (outputDir == null) {
-            Log.e(threaded_application.applicationName, activityName + "Failed to get app-specific external storage directory.");
+            threaded_application.logging('e', activityName + "Failed to get app-specific external storage directory.");
             return "Error: Cannot access storage.";
         }
         if (!outputDir.exists() && !outputDir.mkdirs()) {
-            Log.e(threaded_application.applicationName, activityName + "Failed to create app-specific directory.");
+            threaded_application.logging('e', activityName + "Failed to create app-specific directory.");
             return "Error: Cannot create storage directory.";
         }
 
@@ -299,7 +298,7 @@ public class FileReceiverActivity extends AppCompatActivity {
         try (InputStream inputStream = contentResolver.openInputStream(uri);
              OutputStream outputStream = new FileOutputStream(outputFile)) { // outputFile uses finalFileNameToSave or originalFileName
             if (inputStream == null) {
-                Log.e(threaded_application.applicationName, activityName + "Failed to open input stream for URI: " + uri);
+                threaded_application.logging('e', activityName + "Failed to open input stream for URI: " + uri);
                 return "Error: Could not read shared file (" + originalFileName + ").";
             }
             byte[] buffer = new byte[4096];
@@ -307,13 +306,13 @@ public class FileReceiverActivity extends AppCompatActivity {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
             }
-            Log.i(threaded_application.applicationName, activityName + "File saved successfully: " + outputFile.getAbsolutePath());
+            threaded_application.logging('i', activityName + "File saved successfully: " + outputFile.getAbsolutePath());
             return "File saved: " + finalFileNameToSave; // Display the name it was actually saved as
         } catch (IOException e) {
-            Log.e(threaded_application.applicationName, activityName + "Error saving file: " + originalFileName, e);
+            threaded_application.logging('e', activityName + "Error saving file: " + originalFileName, e);
             return "Error saving " + originalFileName + ": " + e.getMessage();
         } catch (SecurityException e) {
-            Log.e(threaded_application.applicationName, activityName + "Security exception, URI permission issue? " + uri, e);
+            threaded_application.logging('e', activityName + "Security exception, URI permission issue? " + uri, e);
             return "Error: Permission denied for " + originalFileName + ".";
         }
     }
@@ -337,7 +336,7 @@ public class FileReceiverActivity extends AppCompatActivity {
                     }
                 }
             } catch (Exception e) {
-                Log.w(threaded_application.applicationName, activityName + "Error getting filename from content URI", e);
+                threaded_application.logging('w', activityName + "Error getting filename from content URI", e);
             }
         }
 

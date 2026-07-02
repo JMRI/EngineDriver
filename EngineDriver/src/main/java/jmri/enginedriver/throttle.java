@@ -78,7 +78,6 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import android.text.InputType;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -593,7 +592,7 @@ public class throttle extends AppCompatActivity implements
     protected final ActivityResultLauncher<Intent> selectLocoActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": selectLocoActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": selectLocoActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -608,7 +607,7 @@ public class throttle extends AppCompatActivity implements
     protected final ActivityResultLauncher<Intent> gamepadTestActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": gamepadTestActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": gamepadTestActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -623,7 +622,7 @@ public class throttle extends AppCompatActivity implements
     protected final ActivityResultLauncher<Intent> consistLightsEditActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": consistLightsEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": consistLightsEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -638,7 +637,7 @@ public class throttle extends AppCompatActivity implements
     protected final ActivityResultLauncher<Intent> consistEditActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": consistEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": consistEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -653,7 +652,7 @@ public class throttle extends AppCompatActivity implements
     protected final ActivityResultLauncher<Intent> deviceSoundsSettingsActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": deviceSoundsSettingsActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": deviceSoundsSettingsActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -665,7 +664,7 @@ public class throttle extends AppCompatActivity implements
     protected final ActivityResultLauncher<Intent> preferencesActivityLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                Log.d(threaded_application.applicationName, activityName + ": preferencesActivityLauncher callback received. ResultCode: " + result.getResultCode());
+                threaded_application.logging(activityName + ": preferencesActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
@@ -696,7 +695,7 @@ public class throttle extends AppCompatActivity implements
 
         @Override
         public void run() {
-//            Log.d(threaded_application.applicationName, activityName + ": RptUpdater: onProgressChanged - mAutoIncrement: " + mAutoIncrement + " mAutoDecrement: " + mAutoDecrement);
+//            threaded_application.logging(activityName + ": RptUpdater: onProgressChanged - mAutoIncrement: " + mAutoIncrement + " mAutoDecrement: " + mAutoDecrement);
             if (mAutoIncrement[whichThrottle]) {
                 incrementSpeed(whichThrottle, speed_commands_from_type.BUTTONS);
                 repeatUpdateHandler.postDelayed(new RptUpdater(whichThrottle, REP_DELAY), REP_DELAY);
@@ -1099,7 +1098,7 @@ public class throttle extends AppCompatActivity implements
                     break;
 
                 case message_type.REQUEST_REFRESH_THROTTLE: {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): REQUEST_REFRESH_THROTTLE");
+                    threaded_application.logging(activityName + ": ThrottleMessageHandler(): REQUEST_REFRESH_THROTTLE");
                     setLabels();
                     break;
                 }
@@ -1129,7 +1128,7 @@ public class throttle extends AppCompatActivity implements
                 }
 
                 case message_type.IMPORT_SERVER_AUTO_AVAILABLE: {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleMessageHandler(): AUTO_IMPORT_URL_AVAILABLE ");
+                    threaded_application.logging(activityName + ": ThrottleMessageHandler(): AUTO_IMPORT_URL_AVAILABLE ");
                     autoImportUrlAskToImport();
                     break;
                 }
@@ -1340,9 +1339,9 @@ public class throttle extends AppCompatActivity implements
                 }
                 try {
                     Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, brightnessValue);
-                    Log.d(threaded_application.applicationName, activityName + ": setScreenBrightness(): screen brightness successfully changed to " + brightnessValue);
+                    threaded_application.logging(activityName + ": setScreenBrightness(): screen brightness successfully changed to " + brightnessValue);
                 } catch (Exception e) {
-                    Log.e(threaded_application.applicationName, activityName + ": setScreenBrightness(): screen brightness was NOT changed to " + brightnessValue);
+                    threaded_application.logging('e', activityName + ": setScreenBrightness(): screen brightness was NOT changed to " + brightnessValue);
                 }
             } else {
                 WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -1565,7 +1564,7 @@ public class throttle extends AppCompatActivity implements
                                     speedUpdate(0);  // update all throttles
                                     applySpeedRelatedOptions();  // update all throttles
                                     if (IS_ESU_MCII) {
-                                        Log.d(threaded_application.applicationName, activityName + ": setupSensor(): ESU_MCII: Move knob request for EStop");
+                                        threaded_application.logging(activityName + ": setupSensor(): ESU_MCII: Move knob request for EStop");
                                         setEsuThrottleKnobPosition(whichVolume, 0);
                                     }
                                 }
@@ -2404,7 +2403,7 @@ public class throttle extends AppCompatActivity implements
             speed_label.setText(Integer.toString(scaleSpeed));
             mainapp.throttleVibration(scaleSpeed, prevScaleSpeed);
         } catch (NumberFormatException | ClassCastException e) {
-            Log.e(threaded_application.applicationName, activityName + ": setDisplayedSpeed(): problem showing speed: " + e.getMessage());
+            threaded_application.logging('e', activityName + ": setDisplayedSpeed(): problem showing speed: " + e.getMessage());
         }
     }
 
@@ -2517,7 +2516,7 @@ public class throttle extends AppCompatActivity implements
                         mainapp.alertCommHandlerWithBundle(message_type.DIRECTION, dirBundle);
                     } catch (
                             Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
-                        Log.d(threaded_application.applicationName, activityName + ": " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
+                        threaded_application.logging(activityName + ": " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
                     }
                 }
             }
@@ -2726,12 +2725,12 @@ public class throttle extends AppCompatActivity implements
             selectLocoActivityLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startSelectLocoActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": startSelectLocoActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
     private void handleSelectLocoActivityResult(@NonNull Intent data, int resultCode) {
-        Log.d(threaded_application.applicationName, activityName + ": handleSelectLocoActivityResult() " );
+        threaded_application.logging(activityName + ": handleSelectLocoActivityResult() " );
 
         if (resultCode == activity_outcome_type.RESULT_LOCO_EDIT) {
             activityConsistUpdate(data.getExtras());
@@ -2742,7 +2741,7 @@ public class throttle extends AppCompatActivity implements
             newThrottle = mainapp.throttleCharToInt(data.getCharExtra("whichThrottle", ' '));
             overrideThrottleNames[newThrottle] = data.getStringExtra("overrideThrottleName");
         } catch (RuntimeException e) {
-            Log.e(threaded_application.applicationName, activityName + ": handleSelectLocoActivityResult failed: " + e.getMessage());
+            threaded_application.logging('e', activityName + ": handleSelectLocoActivityResult failed: " + e.getMessage());
         }
 
         if ((getConsist(newThrottle) != null) && (!getConsist(newThrottle).isActive())) {
@@ -2776,7 +2775,7 @@ public class throttle extends AppCompatActivity implements
                 gamepadTestActivityLauncher.launch(intent);
                 ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d(threaded_application.applicationName, activityName + ": startGamepadTestActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+                threaded_application.logging(activityName + ": startGamepadTestActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
             }
         } else { // don't bother doing the test if the preference is set not to
             mainapp.gamePadDeviceIdsTested[gamepadNo] = gamepad_status_type.GOOD;
@@ -2784,7 +2783,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void handleGamepadTestActivityResult(@NonNull Intent data, int ignoredResultCode) {
-        Log.d(threaded_application.applicationName, activityName + ": handleGamepadTestActivityResult() ");
+        threaded_application.logging(activityName + ": handleGamepadTestActivityResult() ");
 
         String whichGamepadNo = data.getStringExtra("whichGamepadNo");
         if (whichGamepadNo != null) {
@@ -2815,7 +2814,7 @@ public class throttle extends AppCompatActivity implements
                     tts.speakWords(tts_msg_type.GAMEPAD_GAMEPAD_TEST_RESET);
                     break;
                 default:
-                    Log.e(threaded_application.applicationName, activityName + ": OnActivityResult(ACTIVITY_GAMEPAD_TEST) invalid result!");
+                    threaded_application.logging('e', activityName + ": OnActivityResult(ACTIVITY_GAMEPAD_TEST) invalid result!");
             }
         }
     }
@@ -2829,13 +2828,13 @@ public class throttle extends AppCompatActivity implements
                 consistLightsEditActivityLauncher.launch(intent);
                 ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
             } catch (Exception ex) {
-                Log.d(threaded_application.applicationName, activityName + ": startConsistLightsEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+                threaded_application.logging(activityName + ": startConsistLightsEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
             }
         }
     }
 
     private void handleConsistLightsEditActivityResult() {
-        Log.d(threaded_application.applicationName, activityName + ": handleConsistLightsEditActivityResult() ");
+        threaded_application.logging(activityName + ": handleConsistLightsEditActivityResult() ");
         // nothing to do
     }
 
@@ -2846,12 +2845,12 @@ public class throttle extends AppCompatActivity implements
             consistEditActivityLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
     private void handleConsistEditActivityResult(@NonNull Intent data, int resultCode) {
-        Log.d(threaded_application.applicationName, activityName + ": handleConsistEditActivityResult() ");
+        threaded_application.logging(activityName + ": handleConsistEditActivityResult() ");
 
         if (resultCode == activity_outcome_type.RESULT_CON_EDIT)
             activityConsistUpdate(data.getExtras());
@@ -2867,12 +2866,12 @@ public class throttle extends AppCompatActivity implements
             deviceSoundsSettingsActivityLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": startConsistEditActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
     private void handleDeviceSoundsSettingsActivityResult() {
-        Log.d(threaded_application.applicationName, activityName + ": handleDeviceSoundsSettingsActivityResult() ");
+        threaded_application.logging(activityName + ": handleDeviceSoundsSettingsActivityResult() ");
 
         loadSounds();
     }
@@ -2883,12 +2882,12 @@ public class throttle extends AppCompatActivity implements
             preferencesActivityLauncher.launch(intent);
             ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
         } catch (Exception ex) {
-            Log.d(threaded_application.applicationName, activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
+            threaded_application.logging(activityName + ": startPreferencesActivity() failed. " + ((ex.getMessage() != null) ? ex.getMessage() : "") );
         }
     }
 
     private void handlePreferencesActivityResult(int resultCode) {
-        Log.d(threaded_application.applicationName, activityName + ": handlePreferencesActivityResult() " );
+        threaded_application.logging(activityName + ": handlePreferencesActivityResult() " );
 
         if (resultCode == activity_outcome_type.RESULT_GAMEPAD) { // gamepad pref changed
             // update tone generator volume
@@ -2898,7 +2897,7 @@ public class throttle extends AppCompatActivity implements
                     tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                             threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
                 } catch (RuntimeException e) {
-                    Log.e(threaded_application.applicationName, activityName + ": onActivityResult(): new ToneGenerator failed. Runtime Exception, OS " + Build.VERSION.SDK_INT + " Message: " + e);
+                    threaded_application.logging('e', activityName + ": onActivityResult(): new ToneGenerator failed. Runtime Exception, OS " + Build.VERSION.SDK_INT + " Message: " + e);
                 }
             }
             // update GamePad Support
@@ -3058,7 +3057,7 @@ public class throttle extends AppCompatActivity implements
      * TODO: need to handle momentary buttons somehow
      */
     void set_function_request(int whichThrottle, int function, int reqState) {
-        // Log.d(threaded_application.applicationName, activityName + ": set_function_request");
+        // threaded_application.logging(activityName + ": set_function_request");
         Button b;
         b = functionMaps[whichThrottle].get(function);
         if (b != null) {
@@ -4041,7 +4040,7 @@ public class throttle extends AppCompatActivity implements
                         return true; // stop processing this key
                     default:
                         // Unrecognised key - do nothing
-                        Log.d(threaded_application.applicationName, activityName + ": dispatchKeyEvent(): ESU_MCII: Unrecognised keyCode: " + keyCode);
+                        threaded_application.logging(activityName + ": dispatchKeyEvent(): ESU_MCII: Unrecognised keyCode: " + keyCode);
 
                 }
             }
@@ -4239,7 +4238,7 @@ public class throttle extends AppCompatActivity implements
             threaded_application.extendedLogging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob button down for throttle " + whichVolume);
             if (!isScreenLocked) {
                 if (!isEsuMc2KnobEnabled) {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
+                    threaded_application.logging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Knob disabled - direction change ignored");
                 } else if (prefEsuMc2EndStopDirectionChange) {
                     threaded_application.extendedLogging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Attempting to switch direction");
                     toggleActualOrTargetDirectionIfAllowed(whichVolume,
@@ -4247,11 +4246,11 @@ public class throttle extends AppCompatActivity implements
                             false);
                     speedUpdateAndNotify(whichVolume, 0, false);
                 } else {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Direction change option disabled - do nothing");
+                    threaded_application.logging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Direction change option disabled - do nothing");
                     speedUpdateAndNotify(whichVolume, 0, false);
                 }
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Screen locked - do nothing");
+                threaded_application.logging(activityName + ": ThrottleListener(): onButtonDown(): ESU_MCII: Screen locked - do nothing");
             }
         }
 
@@ -4265,8 +4264,8 @@ public class throttle extends AppCompatActivity implements
             int speed;
             if (!isScreenLocked) {
                 if (!isEsuMc2KnobEnabled) {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged(): ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Nothing updated");
+                    threaded_application.logging(activityName + ": ThrottleListener(): onPositionChanged(): ESU_MCII: Disabled knob position moved for throttle " + whichVolume);
+                    threaded_application.logging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Nothing updated");
                 } else if (getConsist(whichVolume).isActive() && !isEsuMc2Stopped) {
                     speed = esuThrottleScales[whichVolume].positionToStep(knobPos);
                     threaded_application.extendedLogging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Knob position changed for throttle " + whichVolume);
@@ -4280,16 +4279,16 @@ public class throttle extends AppCompatActivity implements
                         stopSemiRealisticThrottleSpeedButtonRepeater(whichVolume);
                         mSemiRealisticAutoIncrementOrDecrement[whichVolume] = auto_increment_or_decrement_type.OFF;
                         setTargetSpeed(whichVolume, vSpeed);
-//                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: SRT  speed: " + speed);
-//                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: SRT vSpeed: " + vSpeed);
+//                        threaded_application.logging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: SRT  speed: " + speed);
+//                        threaded_application.logging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: SRT vSpeed: " + vSpeed);
                     }
                 } else {
                     // Ignore knob movements for stopped or inactive throttles
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Nothing updated");
+                    threaded_application.logging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Knob position moved for " + (isEsuMc2Stopped ? "stopped" : "inactive") + " throttle " + whichVolume);
+                    threaded_application.logging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Nothing updated");
                 }
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Screen locked - do nothing");
+                threaded_application.logging(activityName + ": ThrottleListener(): onPositionChanged():ESU_MCII: Screen locked - do nothing");
             }
         }
 
@@ -4297,7 +4296,7 @@ public class throttle extends AppCompatActivity implements
         @Override
         public void onPhysicalSliderPositionChanged(int position) {
             float pcntPos = Math.round((((float) position) / 255 * 100));
-            Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
+            threaded_application.logging(activityName + ": ThrottleListener(): onPhysicalSliderPositionChanged(): position:" + position +  "Pcnt: " + pcntPos);
             if (mainapp.esuMc2BrakePosition != pcntPos) {
                 mainapp.esuMc2BrakePosition = pcntPos;
                 if (mainapp.prefEsuMc2SliderType.equals("dim")) {
@@ -4379,14 +4378,14 @@ public class throttle extends AppCompatActivity implements
         @Override
         public void onStopButtonDown() {
             if (!getConsist(whichVolume).isActive()) {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onStopButton(): ESU_MCII: Stop button down for inactive throttle " + whichVolume);
+                threaded_application.logging(activityName + ": ThrottleListener(): onStopButton(): ESU_MCII: Stop button down for inactive throttle " + whichVolume);
                 return;
             }
-            Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onStopButton(): ESU_MCII: Stop button down for throttle " + whichVolume);
+            threaded_application.logging(activityName + ": ThrottleListener(): onStopButton(): ESU_MCII: Stop button down for throttle " + whichVolume);
             if (!isEsuMc2Stopped) {
                 origSpeed = getSpeed(whichVolume);
                 timePressed = System.currentTimeMillis();
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): onStopButton(): ESU_MCII: Speed value was: " + origSpeed);
+                threaded_application.logging(activityName + ": ThrottleListener(): onStopButton(): ESU_MCII: Speed value was: " + origSpeed);
             }
             // Toggle press status
             isEsuMc2Stopped = !isEsuMc2Stopped;
@@ -4426,19 +4425,19 @@ public class throttle extends AppCompatActivity implements
                 buttonTimer.cancel();
             }
             if (!getConsist(whichVolume).isActive()) {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button up for inactive throttle " + whichVolume);
+                threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button up for inactive throttle " + whichVolume);
                 return;
             }
             if (fromTimer) {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button timer finished for throttle " + whichVolume);
+                threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button timer finished for throttle " + whichVolume);
             } else {
-                Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button up for throttle " + whichVolume);
+                threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button up for throttle " + whichVolume);
             }
             if (isEsuMc2Stopped) {
                 if (fromTimer || System.currentTimeMillis() - timePressed > delay) {
                     // It's a long initial press so record this
                     wasLongPress = true;
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was long - long flash Red LED");
+                    threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was long - long flash Red LED");
                     esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.LONG_FLASH);
                     esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                     // Set all throttles to zero
@@ -4451,12 +4450,12 @@ public class throttle extends AppCompatActivity implements
                 } else {
                     wasLongPress = false;
                     if (prefEsuMc2StopButtonShortPress) {
-                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was short - short flash Red LED");
+                        threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was short - short flash Red LED");
                         esuMc2Led.setState(EsuMc2Led.RED, EsuMc2LedState.QUICK_FLASH);
                         esuMc2Led.setState(EsuMc2Led.GREEN, EsuMc2LedState.OFF);
                         setEnabledEsuMc2ThrottleScreenButtons(whichVolume, false);
                     } else {
-                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was short but action disabled");
+                        threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was short but action disabled");
                         isEsuMc2Stopped = !isEsuMc2Stopped;
                         esuMc2Led.revertLEDStates();
                     }
@@ -4464,15 +4463,15 @@ public class throttle extends AppCompatActivity implements
             } else {
                 if (!wasLongPress) {
                     if (prefEsuMc2StopButtonShortPress) {
-                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): SU_MCII: Revert speed value to: " + origSpeed);
+                        threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): SU_MCII: Revert speed value to: " + origSpeed);
                         setStopButton(whichVolume, false);
                         speedUpdateAndNotify(whichVolume, origSpeed);
                         setEnabledEsuMc2ThrottleScreenButtons(whichVolume, true);
                     } else {
-                        Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was short but revert action disabled");
+                        threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Stop button press was short but revert action disabled");
                     }
                 } else {
-                    Log.d(threaded_application.applicationName, activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Resume control without speed revert");
+                    threaded_application.logging(activityName + ": ThrottleListener(): doStopButtonUp(): ESU_MCII: Resume control without speed revert");
                     origSpeed = 0;
                     for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                         setStopButton(throttleIndex, false);
@@ -4490,19 +4489,19 @@ public class throttle extends AppCompatActivity implements
     protected void setEsuThrottleKnobPosition(int whichThrottle, int speed) {
         if (!IS_ESU_MCII) return;
 
-        Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Request to update knob position for throttle " + whichThrottle);
+        threaded_application.logging(activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Request to update knob position for throttle " + whichThrottle);
         if (whichThrottle == whichVolume) {
             int knobPos;
             knobPos = esuThrottleScales[whichThrottle].stepToPosition(speed);
-            Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
-            Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: New knob position: " + knobPos + " ; speedStep: " + speed);
+            threaded_application.logging(activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Update knob position for throttle " + mainapp.throttleIntToString(whichThrottle));
+            threaded_application.logging(activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: New knob position: " + knobPos + " ; speedStep: " + speed);
             try {
                 esuThrottleFragment.moveThrottle(knobPos);
             } catch (IllegalArgumentException ex) {
-                Log.e(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Problem moving throttle " + ex.getMessage());
+                threaded_application.logging('e', activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: Problem moving throttle " + ex.getMessage());
             }
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: This throttle not selected for control by knob");
+            threaded_application.logging(activityName + ": setEsuThrottleKnobPosition(): ESU_MCII: This throttle not selected for control by knob");
         }
     }
 
@@ -4510,7 +4509,7 @@ public class throttle extends AppCompatActivity implements
         if (!IS_ESU_MCII) return;
 
         int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
-        Log.d(threaded_application.applicationName, activityName + ": updateEsuMc2ZeroTrim(): ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
+        threaded_application.logging(activityName + ": updateEsuMc2ZeroTrim(): ESU_MCII: Update zero trim for throttle to: " + zeroTrim);
 
         if (esuThrottleFragment == null) return; // not initialised yet
 
@@ -4524,10 +4523,10 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void performEsuMc2ButtonAction(int buttonNo, int action, boolean isActive, int whichThrottle, int repeatCnt) {
-        Log.d(threaded_application.applicationName, activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Button no: " + buttonNo);
+        threaded_application.logging(activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Button no: " + buttonNo);
 
         if (isEsuMc2Stopped) {
-            Log.d(threaded_application.applicationName, activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Device button presses whilst stopped ignored");
+            threaded_application.logging(activityName + ": performEsuMc2ButtonAction(): ESU_MCII: Device button presses whilst stopped ignored");
             mainapp.safeToast(R.string.toastEsuMc2NoButtonPresses, Toast.LENGTH_SHORT);
             return;
         }
@@ -5050,7 +5049,7 @@ public class throttle extends AppCompatActivity implements
                 isDirectionButtonLongPress = true;
                 directionButtonLongPressHandler.postDelayed(run, prefDirectionButtonLongPressDelay);
 
-                // Log.d(threaded_application.applicationName, activityName + ": onTouch(): direction " + function + " action " +
+                // threaded_application.logging(activityName + ": onTouch(): direction " + function + " action " +
 
                 v.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
 
@@ -5113,7 +5112,7 @@ public class throttle extends AppCompatActivity implements
         sendFunctionToConsistLocos(whichThrottle, function, lab, buttonPressMessageType, leadOnly, trailOnly, followLeadFunction, isLatching, forceSemiRealistic, false);
     }
     protected void sendFunctionToConsistLocos(int whichThrottle, int function, String lab, int buttonPressMessageType, boolean leadOnly, boolean ignoredTrailOnly, boolean followLeadFunction, int isLatching, boolean forceSemiRealistic, boolean forceIsLatching) {
-        Log.d(threaded_application.applicationName, activityName + ": sendFunctionToConsistLocos(): whichThrottle: " + whichThrottle + " function: " + function + " buttonPressMessageType: " + buttonPressMessageType);
+        threaded_application.logging(activityName + ": sendFunctionToConsistLocos(): whichThrottle: " + whichThrottle + " function: " + function + " buttonPressMessageType: " + buttonPressMessageType);
         Consist con;
         con = mainapp.consists[whichThrottle];
 
@@ -5271,7 +5270,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     void doDeviceButtonSound(int whichThrottle, int soundType) {
-        Log.d(threaded_application.applicationName, activityName + ": doDeviceButtonSound (locoSounds): wt: " + whichThrottle + " soundType: " + soundType);
+        threaded_application.logging(activityName + ": doDeviceButtonSound (locoSounds): wt: " + whichThrottle + " soundType: " + soundType);
         int soundTypeArrayIndex = soundType - 1;
 
         if ((mainapp.consists != null)
@@ -5326,7 +5325,7 @@ public class throttle extends AppCompatActivity implements
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             mainapp.exitDoubleBackButtonInitiated = 0;
-            // Log.d(threaded_application.applicationName, activityName + ": onTouch(): func " + function + " action " +
+            // threaded_application.logging(activityName + ": onTouch(): func " + function + " action " +
 
             // make the click sound once
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -5349,7 +5348,7 @@ public class throttle extends AppCompatActivity implements
         }
 
         private void handleAction(int action) {
-//            Log.d(threaded_application.applicationName, activityName + ": handleAction(): action: " + action );
+//            threaded_application.logging(activityName + ": handleAction(): action: " + action );
             int isLatching = consist_function_latching_type.NA;  // only used for the special consist function matching
 
             switch (action) {
@@ -5425,7 +5424,7 @@ public class throttle extends AppCompatActivity implements
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             mainapp.exitDoubleBackButtonInitiated = 0;
-//             Log.d(threaded_application.applicationName, activityName + ": ThrottleSeekBarListener: onTouch: Throttle action " + event.getAction());
+//             threaded_application.logging(activityName + ": ThrottleSeekBarListener: onTouch: Throttle action " + event.getAction());
             // consume event if gesture is in progress, otherwise pass it to the SeekBar onProgressChanged()
             return (gestureInProgress);
         }
@@ -5438,7 +5437,7 @@ public class throttle extends AppCompatActivity implements
             if (vsbSpeeds != null) {
                 touchFromUser = vsbSpeeds[whichThrottle].touchFromUser;
             }
-//                Log.d(threaded_application.applicationName, activityName + ": onProgressChanged(): lj: " + limitedJump[whichThrottle] + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " s: " + speed + " js: " + jumpSpeed);
+//                threaded_application.logging(activityName + ": onProgressChanged(): lj: " + limitedJump[whichThrottle] + " ai: " + mAutoIncrement[whichThrottle] + " ad: " + mAutoDecrement + " s: " + speed + " js: " + jumpSpeed);
 
             // limit speed change if change was initiated by a user slider touch (prevents "bouncing")
             if ((fromUser) || (touchFromUser)) {
@@ -5457,7 +5456,7 @@ public class throttle extends AppCompatActivity implements
 
                     if (dif > max_throttle_change) { // if jump is too large then limit it
 
-                        // Log.d(threaded_application.applicationName, activityName + ": onProgressChanged(): throttling change");
+                        // threaded_application.logging(activityName + ": onProgressChanged(): throttling change");
 
                         if (adjustedSpeed < lastSpeed) { // going down
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
@@ -5624,7 +5623,7 @@ public class throttle extends AppCompatActivity implements
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility", "ApplySharedPref"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(threaded_application.applicationName, activityName + ": onCreate(): called");
+        threaded_application.logging(activityName + ": onCreate(): called");
         mainapp = (threaded_application) this.getApplication();
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         mainapp.applyTheme(this);
@@ -5646,7 +5645,7 @@ public class throttle extends AppCompatActivity implements
                         dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
                 }
             } catch (Exception ignored) {              // log the error, but otherwise keep going.
-                Log.d(threaded_application.applicationName, activityName + ": onCreate(): Restore of saved instance state failed " + android.os.Build.VERSION.SDK_INT);
+                threaded_application.logging(activityName + ": onCreate(): Restore of saved instance state failed " + android.os.Build.VERSION.SDK_INT);
             }
         }
 
@@ -5676,7 +5675,7 @@ public class throttle extends AppCompatActivity implements
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 if (!isScreenLocked) {
                     if (webViewIsOn && webView.canGoBack() && !clearHistory) {
                         webView.goBack();
@@ -5733,7 +5732,7 @@ public class throttle extends AppCompatActivity implements
     @SuppressLint("ApplySharedPref")
     @Override
     public void onStart() {
-        Log.d(threaded_application.applicationName, activityName + ": onStart(): called");
+        threaded_application.logging(activityName + ": onStart(): called");
 
         mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
 
@@ -5778,7 +5777,7 @@ public class throttle extends AppCompatActivity implements
     @SuppressLint("ApplySharedPref")
     @Override
     public void onResume() {
-        Log.d(threaded_application.applicationName, activityName + ": onResume(): called");
+        threaded_application.logging(activityName + ": onResume(): called");
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
@@ -5894,7 +5893,7 @@ public class throttle extends AppCompatActivity implements
             prefs.edit().putBoolean("prefForcedRestart", false).commit();
 
             int prefForcedRestartReason = prefs.getInt("prefForcedRestartReason", restart_reason_type.NONE);
-            Log.d(threaded_application.applicationName, activityName + ": onResume(): connection: Forced Restart Reason: " + prefForcedRestartReason);
+            threaded_application.logging(activityName + ": onResume(): connection: Forced Restart Reason: " + prefForcedRestartReason);
             if (mainapp.prefsForcedRestart(prefForcedRestartReason)) {
                 startPreferencesActivity();
             }
@@ -5903,7 +5902,7 @@ public class throttle extends AppCompatActivity implements
 
     @SuppressLint({"ClickableViewAccessibility", "SetJavaScriptEnabled"})
     void initialiseUiElements() {
-        Log.d(threaded_application.applicationName, activityName + ": initialiseUiElements(): start");
+        threaded_application.logging(activityName + ": initialiseUiElements(): start");
 
         throttleOverlay = findViewById(R.id.throttle_overlay);
         throttleOverlay.addOnGestureListener(this);
@@ -5974,7 +5973,7 @@ public class throttle extends AppCompatActivity implements
                 bLeftSpeeds[throttleIndex].setOnClickListener(arrowSpeedButtonTouchListener);
 
             } catch (Exception ex) {
-                Log.d(threaded_application.applicationName, activityName + ": onCreate(): Exception: " + ex.getMessage());
+                threaded_application.logging(activityName + ": onCreate(): Exception: " + ex.getMessage());
             }
 
             // set listeners for 3 direction buttons for each throttle
@@ -6221,7 +6220,7 @@ public class throttle extends AppCompatActivity implements
             tg = new ToneGenerator(AudioManager.STREAM_NOTIFICATION,
                     threaded_application.getIntPrefValue(prefs, "prefGamePadFeedbackVolume", getApplicationContext().getResources().getString(R.string.prefGamePadFeedbackVolumeDefaultValue)));
         } catch (RuntimeException e) {
-            Log.e(threaded_application.applicationName, activityName + ": onCreate(): new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
+            threaded_application.logging('e', activityName + ": onCreate(): new ToneGenerator failed. Runtime Exception, OS " + android.os.Build.VERSION.SDK_INT + " Message: " + e);
         }
         // set GamePad Support
         if (gamePadKeyLoader!=null) setGamepadKeys();
@@ -6288,7 +6287,7 @@ public class throttle extends AppCompatActivity implements
     } // end initialiseUiElements()
 
     private void initialiseArrays() {
-        Log.d(threaded_application.applicationName, activityName + ": initialiseArrays(): called");
+        threaded_application.logging(activityName + ": initialiseArrays(): called");
 
         bSelects = new Button[mainapp.maxThrottlesCurrentScreen];
         tvbSelectsLabels = new TextView[mainapp.maxThrottlesCurrentScreen];
@@ -6346,13 +6345,13 @@ public class throttle extends AppCompatActivity implements
     // initialise ESU MCII/PRO
     private void initialiseEsuMc2() {
         if (IS_ESU_MCII) {
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialise fragments...");
+            threaded_application.logging(activityName + ": onCreate(): ESU_MCII: Initialise fragments...");
             int zeroTrim = threaded_application.getIntPrefValue(prefs, "prefEsuMc2ZeroTrim", getApplicationContext().getResources().getString(R.string.prefEsuMc2ZeroTrimDefaultValue));
             esuThrottleFragment = ThrottleFragment.newInstance(zeroTrim);
             esuThrottleFragment.setOnThrottleListener(esuOnThrottleListener);
             esuStopButtonFragment = StopButtonFragment.newInstance();
             esuStopButtonFragment.setOnStopButtonListener(esuOnStopButtonListener);
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: ...fragments initialised");
+            threaded_application.logging(activityName + ": onCreate(): ESU_MCII: ...fragments initialised");
 
             getSupportFragmentManager().beginTransaction()
                     .add(esuThrottleFragment, "mc2:throttle")
@@ -6363,13 +6362,13 @@ public class throttle extends AppCompatActivity implements
 
             // Now apply knob zero trim
             updateEsuMc2ZeroTrim();
-            Log.d(threaded_application.applicationName, activityName + ": onCreate(): ESU_MCII: Initialisation complete");
+            threaded_application.logging(activityName + ": onCreate(): ESU_MCII: Initialisation complete");
         }
     }
 
     private void showHideConsistMenus() {
         if (mainapp.consists == null) {
-            Log.d(threaded_application.applicationName, activityName + ": showHideConsistMenu(): consists[] is null");
+            threaded_application.logging(activityName + ": showHideConsistMenu(): consists[] is null");
             return;
         }
 
@@ -6380,7 +6379,7 @@ public class throttle extends AppCompatActivity implements
             for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
                 Consist con = mainapp.consists[throttleIndex];
                 if (con == null) {
-                    Log.d(threaded_application.applicationName, activityName + ": showHideConsistMenu(): consists[" + throttleIndex + "] is null");
+                    threaded_application.logging(activityName + ": showHideConsistMenu(): consists[" + throttleIndex + "] is null");
                     break;
                 }
                 boolean isMulti = con.isMulti();
@@ -6469,7 +6468,7 @@ public class throttle extends AppCompatActivity implements
 
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy() called");
+        threaded_application.logging(activityName + ": onDestroy() called");
         super.onDestroy();
 
         kidsTimerActions(kids_timer_action_type.ENDED, 0);
@@ -6500,7 +6499,7 @@ public class throttle extends AppCompatActivity implements
             gestureHandler.removeCallbacksAndMessages(null);
             gestureHandler = null;
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
+            threaded_application.logging(activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
         }
 
         mainapp.clearActivityBundleMessageHandler(activity_id_type.THROTTLE);
@@ -6757,7 +6756,7 @@ public class throttle extends AppCompatActivity implements
         refreshOverflowMenu();
 
         vThrottleScreenWrap.invalidate();
-        // Log.d(threaded_application.applicationName, activityName + ": setLabels(): end");
+        // threaded_application.logging(activityName + ": setLabels(): end");
     }
 
     private void refreshOverflowMenu() {
@@ -7051,7 +7050,7 @@ public class throttle extends AppCompatActivity implements
                 speedUpdate(0);  // update all throttles
                 applySpeedRelatedOptions();  // update all throttles
                 if (IS_ESU_MCII && !isSemiRealisticThrottle) {
-                    Log.d(threaded_application.applicationName, activityName + ": onOptionsItemSelected(): ESU_MCII: Move knob request for EStop");
+                    threaded_application.logging(activityName + ": onOptionsItemSelected(): ESU_MCII: Move knob request for EStop");
                     setEsuThrottleKnobPosition(whichVolume, 0);
                 }
             }
@@ -7202,7 +7201,7 @@ public class throttle extends AppCompatActivity implements
     // touch events outside the GestureOverlayView get caught here
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-//        Log.d(threaded_application.applicationName, activityName + ": onTouchEvent(): action: " + event.getAction());
+//        threaded_application.logging(activityName + ": onTouchEvent(): action: " + event.getAction());
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 gestureStart(event);
@@ -7221,16 +7220,16 @@ public class throttle extends AppCompatActivity implements
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-//        Log.d(threaded_application.applicationName, activityName + ": dispatchTouchEvent():");
+//        threaded_application.logging(activityName + ": dispatchTouchEvent():");
         // if screen is locked
         if (isScreenLocked) {
             // check if we have a swipe up
             if (ev.getAction() == ACTION_DOWN) {
-//                Log.d(threaded_application.applicationName, activityName + ": dispatchTouchEvent(): ACTION_DOWN" );
+//                threaded_application.logging(activityName + ": dispatchTouchEvent(): ACTION_DOWN" );
                 gestureStart(ev);
             }
             if (ev.getAction() == ACTION_UP) {
-//                Log.d(threaded_application.applicationName, activityName + ": dispatchTouchEvent(): ACTION_UP" );
+//                threaded_application.logging(activityName + ": dispatchTouchEvent(): ACTION_UP" );
                 gestureEnd(ev);
             }
             // otherwise ignore the event
@@ -7271,7 +7270,7 @@ public class throttle extends AppCompatActivity implements
     private void gestureStart(MotionEvent event) {
         gestureStartX = event.getX();
         gestureStartY = event.getY();
-//        Log.d(threaded_application.applicationName, activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
+//        threaded_application.logging(activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
 
         toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine, screenNameLine);
 
@@ -7298,7 +7297,7 @@ public class throttle extends AppCompatActivity implements
                         )
                 )
                 ) {
-//                    Log.d(threaded_application.applicationName, activityName + ": gestureStart() exit on slider: " + gestureStartX + ", " + gestureStartY);
+//                    threaded_application.logging(activityName + ": gestureStart() exit on slider: " + gestureStartX + ", " + gestureStartY);
                     return;
                 }
             }
@@ -7312,12 +7311,12 @@ public class throttle extends AppCompatActivity implements
         if (gestureHandler != null) {
             gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
         } else {
-            Log.d(threaded_application.applicationName, activityName + ": gestureStart(): Can't start gesture timer");
+            threaded_application.logging(activityName + ": gestureStart(): Can't start gesture timer");
         }
     }
 
     public void gestureMove(MotionEvent event) {
-//        Log.d(threaded_application.applicationName, activityName + ": gestureMove(): action " + event.getAction() + " eventTime: " + event.getEventTime() );
+//        threaded_application.logging(activityName + ": gestureMove(): action " + event.getAction() + " eventTime: " + event.getEventTime() );
         if (gestureInProgress) {
             // stop the gesture timeout timer
             if (gestureHandler != null)
@@ -7331,18 +7330,18 @@ public class throttle extends AppCompatActivity implements
                 velocityTracker.computeCurrentVelocity(1000);
                 int velocityX = (int) velocityTracker.getXVelocity();
                 int velocityY = (int) velocityTracker.getYVelocity();
-//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
+//                threaded_application.logging(activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
                 if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
                     gestureFailed(event);
                 }
             }
 //            else {
-//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): event.getEventTime(): " +event.getEventTime()   + " gestureLastCheckTime: " + gestureLastCheckTime + " gestureCheckRate: " + gestureCheckRate);
-//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): event.getEventTime() - gestureLastCheckTime: " + (event.getEventTime() - gestureLastCheckTime) + " gestureCheckRate: " + gestureCheckRate);
+//                threaded_application.logging(activityName + ": gestureMove(): event.getEventTime(): " +event.getEventTime()   + " gestureLastCheckTime: " + gestureLastCheckTime + " gestureCheckRate: " + gestureCheckRate);
+//                threaded_application.logging(activityName + ": gestureMove(): event.getEventTime() - gestureLastCheckTime: " + (event.getEventTime() - gestureLastCheckTime) + " gestureCheckRate: " + gestureCheckRate);
 //            }
             if (gestureInProgress) {
                 // restart the gesture timeout timer
-//                Log.d(threaded_application.applicationName, activityName + ": gestureMove(): restart gesture timer");
+//                threaded_application.logging(activityName + ": gestureMove(): restart gesture timer");
                 if (gestureHandler != null)
                     gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
             }
@@ -7350,7 +7349,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void gestureEnd(MotionEvent event) {
-//        Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
+//        threaded_application.logging(activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
         if ((mainapp != null) && (gestureHandler != null) && (gestureInProgress)) {
             gestureHandler.removeCallbacks(gestureStopped);
 
@@ -7444,7 +7443,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void gestureCancel(MotionEvent ignoredEvent) {
-//        Log.d(threaded_application.applicationName, activityName + ": gestureEnd(): gestureCancel");
+//        threaded_application.logging(activityName + ": gestureEnd(): gestureCancel");
         if (gestureHandler != null)
             gestureHandler.removeCallbacks(gestureStopped);
         gestureInProgress = false;
@@ -7452,7 +7451,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     void gestureFailed(MotionEvent ignoredEvent) {
-//        Log.d(threaded_application.applicationName, activityName + ": gestureEnd gestureFailed");
+//        threaded_application.logging(activityName + ": gestureEnd gestureFailed");
         // end the gesture
         gestureInProgress = false;
         gestureFailed = true;
@@ -7466,14 +7465,14 @@ public class throttle extends AppCompatActivity implements
     private final Runnable gestureStopped = new Runnable() {
         @Override
         public void run() {
-//            Log.d(threaded_application.applicationName, activityName + ": gestureStopped()");
+//            threaded_application.logging(activityName + ": gestureStopped()");
             if (gestureInProgress) {
                 // end the gesture
                 gestureInProgress = false;
                 gestureFailed = true;
                 // create a MOVE event to trigger the underlying control
                 if (vThrottleScreen != null) {
-//                    Log.d(threaded_application.applicationName, activityName + ": gestureStopped vThrottleScreen != null");
+//                    threaded_application.logging(activityName + ": gestureStopped vThrottleScreen != null");
                     // use uptimeMillis() rather than 0 for time in
                     // MotionEvent.obtain() call in throttle gestureStopped:
                     MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, gestureStartX,
@@ -7481,7 +7480,7 @@ public class throttle extends AppCompatActivity implements
                     try {
                         vThrottleScreen.dispatchTouchEvent(event);
                     } catch (IllegalArgumentException e) {
-                        Log.d(threaded_application.applicationName, activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
+                        threaded_application.logging(activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
                     }
                 }
             }
@@ -7560,7 +7559,7 @@ public class throttle extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int whichButton) {
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 passwordText = input.getText().toString();
-                Log.d(threaded_application.applicationName, activityName + ": showTimerPasswordDialog(): onClick(): Password Value : " + passwordText);
+                threaded_application.logging(activityName + ": showTimerPasswordDialog(): onClick(): Password Value : " + passwordText);
 
                 if (passwordText.equals(prefKidsTimerResetPassword)) { //reset
                     kidsTimerActions(kids_timer_action_type.ENDED, 0);
@@ -7618,17 +7617,17 @@ public class throttle extends AppCompatActivity implements
                 // App is not yet pinned.
                 // You can start screen pinning. The user will typically see a confirmation dialog.
                 try {
-                    Log.d(threaded_application.applicationName, activityName + "Attempting to start screen pinning.");
+                    threaded_application.logging(activityName + "Attempting to start screen pinning.");
                     startLockTask(); // This is the call to request pinning for the current task
                 } catch (Exception e) {
-                    Log.e(threaded_application.applicationName, activityName + "Error starting screen pinning: " + e.getMessage());
+                    threaded_application.logging('e', activityName + "Error starting screen pinning: " + e.getMessage());
                     // Handle cases where pinning might fail (e.g., policy disallows it)
                     // You might want to inform the user or log this.
                 }
             } else if (activityManager != null) {
-                Log.d(threaded_application.applicationName, activityName + "Screen pinning is already active or in a non-NONE state: " + activityManager.getLockTaskModeState());
+                threaded_application.logging(activityName + "Screen pinning is already active or in a non-NONE state: " + activityManager.getLockTaskModeState());
             } else {
-                Log.e(threaded_application.applicationName, activityName + "ActivityManager is null, cannot check or start screen pinning.");
+                threaded_application.logging('e', activityName + "ActivityManager is null, cannot check or start screen pinning.");
             }
         }
     }
@@ -7638,15 +7637,15 @@ public class throttle extends AppCompatActivity implements
             ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             if (activityManager != null && activityManager.getLockTaskModeState() != ActivityManager.LOCK_TASK_MODE_NONE) {
                 try {
-                    Log.d(threaded_application.applicationName, activityName + "Attempting to stop screen pinning.");
+                    threaded_application.logging(activityName + "Attempting to stop screen pinning.");
                     stopLockTask(); // This is the call to stop pinning
                 } catch (Exception e) {
-                    Log.e(threaded_application.applicationName, activityName + "Error stopping screen pinning: " + e.getMessage());
+                    threaded_application.logging('e', activityName + "Error stopping screen pinning: " + e.getMessage());
                 }
             } else if (activityManager != null) {
-                Log.d(threaded_application.applicationName, activityName + "Screen pinning is not currently active.");
+                threaded_application.logging(activityName + "Screen pinning is not currently active.");
             } else {
-                Log.e(threaded_application.applicationName, activityName + "ActivityManager is null, cannot check or stop screen pinning.");
+                threaded_application.logging('e', activityName + "ActivityManager is null, cannot check or stop screen pinning.");
             }
         }
     }
@@ -7654,7 +7653,7 @@ public class throttle extends AppCompatActivity implements
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
+        threaded_application.logging(activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);
@@ -7664,16 +7663,16 @@ public class throttle extends AppCompatActivity implements
             // Only need to consider relevant request codes initiated by this Activity
             //            switch (requestCode) {
 //                case PermissionsHelper.READ_SERVER_AUTO_PREFERENCES:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_SERVER_AUTO_PREFERENCES");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for READ_SERVER_AUTO_PREFERENCES");
 //                    autoImportUrlAskToImportImpl();
 //                    break;
 //                case PermissionsHelper.STORE_SERVER_AUTO_PREFERENCES:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_SERVER_AUTO_PREFERENCES");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for STORE_SERVER_AUTO_PREFERENCES");
 //                    autoImportFromURLImpl();
 //                    break;
 //                default:
                     // do nothing
-                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
+                    threaded_application.logging(activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }
@@ -7681,7 +7680,7 @@ public class throttle extends AppCompatActivity implements
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(throttle.this, requestCode, permissions, grantResults)) {
-            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
+            threaded_application.logging(activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
@@ -7695,7 +7694,7 @@ public class throttle extends AppCompatActivity implements
         // Importing file in background thread
         @SuppressLint("ApplySharedPref")
         public void run() {
-            Log.d(threaded_application.applicationName, activityName + ": Import preferences from Server: start");
+            threaded_application.logging(activityName + ": Import preferences from Server: start");
             int count;
             String n_url;
 
@@ -7714,14 +7713,14 @@ public class throttle extends AppCompatActivity implements
             try {
                 urlPreferencesFileName = "auto_" + mainapp.connectedHostName.replaceAll("[^A-Za-z0-9_]", "_") + ".ed";
                 urlPreferencesFilePath = getApplicationContext().getExternalFilesDir(null) + "/" + urlPreferencesFileName;
-                Log.d(threaded_application.applicationName, activityName + ": Import preferences from Server: linkg for: " + urlPreferencesFilePath);
+                threaded_application.logging(activityName + ": Import preferences from Server: linkg for: " + urlPreferencesFilePath);
                 url = new URL(n_url);
 
                 connection = url.openConnection();
                 connection.connect();
 
             } catch (Exception e) {
-                Log.d(threaded_application.applicationName, activityName + ": Auto import preferences from Server Failed: " + e.getMessage());
+                threaded_application.logging(activityName + ": Auto import preferences from Server Failed: " + e.getMessage());
                 return;
             }
 
@@ -7736,10 +7735,10 @@ public class throttle extends AppCompatActivity implements
                     localDate = new Date(timestamp);
 
                     if (localDate.compareTo(urlDate) >= 0) {
-                        Log.d(threaded_application.applicationName, activityName + ": Auto Import preferences from Server: Local file is up-to-date: " + localFile);
+                        threaded_application.logging(activityName + ": Auto Import preferences from Server: Local file is up-to-date: " + localFile);
                         return;
 //                    } else {
-//                        Log.d(threaded_application.applicationName, activityName + ": Import preferences from Server: Local file is newer. Date " + localDate.toString());
+//                        threaded_application.logging(activityName + ": Import preferences from Server: Local file is newer. Date " + localDate.toString());
                     }
                 }
 
@@ -7764,10 +7763,10 @@ public class throttle extends AppCompatActivity implements
                 mainapp.alertActivitiesWithBundle(message_type.IMPORT_SERVER_AUTO_AVAILABLE, activity_id_type.THROTTLE);
 
             } catch (Exception e) {
-                Log.e(threaded_application.applicationName, activityName + ": Auto import preferences from Server Failed: " + e.getMessage());
+                threaded_application.logging('e', activityName + ": Auto import preferences from Server Failed: " + e.getMessage());
             }
 
-            Log.d(threaded_application.applicationName, activityName + ": Auto Import preferences from Server: End");
+            threaded_application.logging(activityName + ": Auto Import preferences from Server: End");
         }
     }
 
@@ -7812,7 +7811,7 @@ public class throttle extends AppCompatActivity implements
     // restart the app so that the new preferences can be applied
     // note: should verify that permissions have been granted before calling this method since it will try to read the preference file
     private void loadSharedPreferencesFromFileImpl(SharedPreferences sharedPreferences, String exportedPreferencesFileName, String deviceId, int forceRestartReason) {
-        Log.d(threaded_application.applicationName, activityName + ": loadSharedPreferencesFromFileImpl(): Loading saved preferences from file: " + exportedPreferencesFileName);
+        threaded_application.logging(activityName + ": loadSharedPreferencesFromFileImpl(): Loading saved preferences from file: " + exportedPreferencesFileName);
         boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
@@ -7823,7 +7822,7 @@ public class throttle extends AppCompatActivity implements
 
     @SuppressLint("ApplySharedPref")
     public void forceRestartApp(int forcedRestartReason) {
-        Log.d(threaded_application.applicationName, activityName + ": forceRestartApp() ");
+        threaded_application.logging(activityName + ": forceRestartApp() ");
 
         Bundle bundle = new Bundle();
         bundle.putInt(alert_bundle_tag_type.RESTART_REASON, forcedRestartReason);
@@ -7832,7 +7831,7 @@ public class throttle extends AppCompatActivity implements
 
     @SuppressLint("ApplySharedPref")
     public void forceReLaunchApp(int forcedRestartReason) {
-        Log.d(threaded_application.applicationName, activityName + ": forceRelaunchApp() ");
+        threaded_application.logging(activityName + ": forceRelaunchApp() ");
 
         this.finish();
         ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
@@ -7869,10 +7868,10 @@ public class throttle extends AppCompatActivity implements
 
     @SuppressLint("ApplySharedPref")
     protected void switchThrottleScreenType() {
-        Log.d(threaded_application.applicationName, activityName + ": switchThrottleScreenType() ");
+        threaded_application.logging(activityName + ": switchThrottleScreenType() ");
 
         if(!mainapp.throttleSwitchAllowed) return;
-        Log.d(threaded_application.applicationName, activityName + ": switchThrottleScreenType() Allowed");
+        threaded_application.logging(activityName + ": switchThrottleScreenType() Allowed");
 
         mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
 
@@ -8098,7 +8097,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     private void handleDeviceButtonAction(int whichThrottle, int buttonType, int soundType, int action) {
-        Log.d(threaded_application.applicationName, activityName + ": handleDeviceButtonAction(): handleAction - action: " + action);
+        threaded_application.logging(activityName + ": handleDeviceButtonAction(): handleAction - action: " + action);
 
         if ((buttonType == sounds_type.BUTTON_BELL) && (!mainapp.prefDeviceSoundsBellIsMomentary)) {
             boolean rslt = !mainapp.soundsDeviceButtonStates[whichThrottle][buttonType];
@@ -8198,7 +8197,7 @@ public class throttle extends AppCompatActivity implements
     }
 
     protected void loadSounds() {
-        Log.d(threaded_application.applicationName, activityName + ": loadSounds(): (ipls)" );
+        threaded_application.logging(activityName + ": loadSounds(): (ipls)" );
         if (ipls == null) ipls = new InPhoneLocoSounds(mainapp, prefs);
         if (iplsLoader == null) iplsLoader = new InPhoneLocoSoundsLoader(mainapp, prefs, getApplicationContext());
         mainapp.soundsReloadSounds = true;
@@ -8256,7 +8255,7 @@ public class throttle extends AppCompatActivity implements
             whichThrottle = WhichThrottle;
             stepMultiplier = StepMultiplier;
 
-            Log.d(threaded_application.applicationName, activityName + ": SemiRealisticGamepadRptUpdater(): WhichThrottle: " + whichThrottle
+            threaded_application.logging(activityName + ": SemiRealisticGamepadRptUpdater(): WhichThrottle: " + whichThrottle
                     + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
                     + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
             );

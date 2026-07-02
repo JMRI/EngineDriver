@@ -33,7 +33,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -144,7 +143,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(threaded_application.applicationName, activityName + ": handleOnBackPressed()");
+                threaded_application.logging(activityName + ": handleOnBackPressed()");
                 mainapp.exitDoubleBackButtonInitiated = 0;
                 if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                     getSupportFragmentManager().popBackStack();
@@ -205,7 +204,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
 
     @Override
     public void onDestroy() {
-        Log.d(threaded_application.applicationName, activityName + ": onDestroy()");
+        threaded_application.logging(activityName + ": onDestroy()");
         mainapp.set_default_function_labels(false); // reload the preference in cases the display number is less than the total number
 
         if (!orientationChange) {
@@ -464,7 +463,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
     }
 
     void endThisActivity() {
-        Log.d(threaded_application.applicationName, activityName + ": endThisActivity()");
+        threaded_application.logging(activityName + ": endThisActivity()");
         threaded_application.activityInTransition(activityName);
         move_view_to_settings();        //sync settings array to view
         if (!settingsCurrent)
@@ -503,7 +502,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
             settings_output.close();
         } catch (IOException except) {
             errMsg = except.getMessage();
-            Log.e(threaded_application.applicationName, activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
+            threaded_application.logging('e', activityName + ": saveSettings(): Error creating a PrintWriter, IOException: " + errMsg);
         }
         if ( (errMsg != null) && (!errMsg.isEmpty()) )
             mainapp.safeToast("Save Settings Failed." + errMsg, Toast.LENGTH_LONG);
@@ -521,7 +520,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
 
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
-        Log.d(threaded_application.applicationName, activityName + ": navigateToHandler:" + requestCode);
+        threaded_application.logging(activityName + ": navigateToHandler:" + requestCode);
         if (!PermissionsHelper.getInstance().isPermissionGranted(FunctionConsistSettingsActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
                 PermissionsHelper.getInstance().requestNecessaryPermissions(FunctionConsistSettingsActivity.this, requestCode);
@@ -529,16 +528,16 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
         } else {
 //            switch (requestCode) {
 //                case PermissionsHelper.STORE_FUNCTION_SETTINGS:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for STORE_FUNCTION_SETTINGS - navigate to saveSettingsImpl()");
 //                    saveSettingsImpl();
 //                    break;
 //                case PermissionsHelper.READ_FUNCTION_SETTINGS:
-//                    Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
+//                    threaded_application.logging(activityName + ": navigateToHandler(): Got permission for READ_FUNCTION_SETTINGS - navigate to initSettingsImpl()");
 //                    initSettingsImpl();
 //                    break;
 //                default:
             // do nothing
-            Log.d(threaded_application.applicationName, activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
+            threaded_application.logging(activityName + ": navigateToHandler(): Unrecognised permissions request code: " + requestCode);
 //            }
         }
     }
@@ -546,7 +545,7 @@ public class FunctionConsistSettingsActivity extends AppCompatActivity implement
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (!PermissionsHelper.getInstance().processRequestPermissionsResult(FunctionConsistSettingsActivity.this, requestCode, permissions, grantResults)) {
-            Log.d(threaded_application.applicationName, activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
+            threaded_application.logging(activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
