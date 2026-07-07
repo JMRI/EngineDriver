@@ -1,4 +1,4 @@
-**Version 2.44.232
+**Version 2.44.234
 **Version 2.43.228
  * New Features
      * Added a toast warning if the system Font Size is too large.
