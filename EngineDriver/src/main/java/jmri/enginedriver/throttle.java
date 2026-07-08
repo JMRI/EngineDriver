@@ -5898,6 +5898,9 @@ public class throttle extends AppCompatActivity implements
                 startPreferencesActivity();
             }
         }
+
+        // continue showing any toasts from other Activities
+        threaded_application.showCustomToast(throttle.this, "", "<null>", Toast.LENGTH_LONG, 4, false, false);
     } // end onResume()
 
     @SuppressLint({"ClickableViewAccessibility", "SetJavaScriptEnabled"})

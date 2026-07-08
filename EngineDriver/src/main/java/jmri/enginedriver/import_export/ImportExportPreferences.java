@@ -20,6 +20,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver.import_export;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.LENGTH_SHORT;
 import static java.lang.Math.min;
 
@@ -102,8 +103,15 @@ public class ImportExportPreferences {
         try {
             output = new ObjectOutputStream(new FileOutputStream(dst));
             output.writeObject(sharedPreferences.getAll());
+
             @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportExportSucceeded,exportedPreferencesFileName);
-            mainapp.safeToast(m, Toast.LENGTH_SHORT);
+//            mainapp.safeToast(m, Toast.LENGTH_SHORT);
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.MESSAGE, m);
+            bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_LONG);
+            bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, false);
+            mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, threaded_application.currentActivity);
+
             threaded_application.logging(activityName + ": " + m);
             result = true;
         } catch (IOException e) {
@@ -120,7 +128,12 @@ public class ImportExportPreferences {
         }
         if (!result) {
             threaded_application.logging('e', activityName + ": writeExportFile(): Export Failed");
-            mainapp.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
+//            mainapp.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
+            Bundle bundle = new Bundle();
+            @SuppressLint("StringFormatMatches") String mFailed = mainapp.getResources().getString(R.string.toastImportExportExportFailed, exportedPreferencesFileName);
+            bundle.putString(alert_bundle_tag_type.MESSAGE, mFailed);
+            bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_LONG);
+            mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, threaded_application.currentActivity);
         } else {
             threaded_application.logging(activityName + ": writeExportFile(): Export succeeded");
 
@@ -160,7 +173,11 @@ public class ImportExportPreferences {
         if (!exportedPreferencesFileName.equals(".ed")) {
             writeExportFile(mainapp, context, sharedPreferences, exportedPreferencesFileName);
         } else {
-            mainapp.safeToast(R.string.toastImportExportExportFailed, Toast.LENGTH_LONG);
+//            mainapp.safeToast(R.string.toastImportExportExportFailed, LENGTH_LONG);
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getResources().getString(R.string.toastImportExportExportFailed));
+            bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_LONG);
+            mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, threaded_application.currentActivity);
         }
 
         int numberOfRecentLocosToWrite = getIntPrefValue(sharedPreferences, "prefMaximumRecentLocos", context.getResources().getString(R.string.prefMaximumRecentLocosDefaultValue));
@@ -310,9 +327,13 @@ public class ImportExportPreferences {
                     prefEdit.putString("prefPreferencesImportAll", pref_import_type.ALL_RESET); // reset the preference
 
                     @SuppressLint("StringFormatMatches") String m = context.getResources().getString(R.string.toastImportExportImportSucceeded, exportedPreferencesFileName);
-
                     threaded_application.logging(activityName + ": loadSharedPreferencesFromFile(): " + m);
-                    mainapp.safeToast(m, Toast.LENGTH_SHORT);
+
+//                    mainapp.safeToast(m, Toast.LENGTH_SHORT);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(alert_bundle_tag_type.MESSAGE, m);
+                    bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                    mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, threaded_application.currentActivity);
 
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
@@ -383,16 +404,19 @@ public class ImportExportPreferences {
             }
 
             if (!res) {
+                Bundle bundle = new Bundle();
                 if (srcExists) {
-                    mainapp.safeToast(context.getResources().getString(R.string.toastImportExportImportFailed,
-                                                        exportedPreferencesFileName), Toast.LENGTH_LONG);
+//                    mainapp.safeToast(context.getResources().getString(R.string.toastImportExportImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG);
+                    bundle.putString(alert_bundle_tag_type.MESSAGE, context.getResources().getString(R.string.toastImportExportImportFailed, exportedPreferencesFileName));
                 } else {
-                    mainapp.safeToast(context.getResources().getString(R.string.toastImportExportServerImportFailed,
-                                                        exportedPreferencesFileName), Toast.LENGTH_LONG);
+//                    mainapp.safeToast(context.getResources().getString(R.string.toastImportExportServerImportFailed, exportedPreferencesFileName), Toast.LENGTH_LONG);
+                    bundle.putString(alert_bundle_tag_type.MESSAGE, context.getResources().getString(R.string.toastImportExportServerImportFailed, exportedPreferencesFileName));
                 }
+                bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_LONG);
+                mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, threaded_application.currentActivity);
             }
         } else {
-            mainapp.safeToast(R.string.toastImportExportCannotImport, Toast.LENGTH_LONG);
+            mainapp.safeToast(R.string.toastImportExportCannotImport, LENGTH_LONG);
         }
 
         prefEdit.commit();
@@ -1013,7 +1037,7 @@ public class ImportExportPreferences {
                                             bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.toastLocoAlreadySelected,  locoAddress));
                                             bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
                                             bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, false);
-                                            mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
+                                            mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, threaded_application.currentActivity);
 
                                             String rosterName = consist.getLoco(locoAddress).getRosterName();
 

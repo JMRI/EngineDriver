@@ -72,7 +72,7 @@
     <color name="buttonCommonFillGradiantLight_original">#C3C3C3</color>
     <color name="buttonCommonFillGradiantCenter_original">#9B9B9B</color>
     <color name="buttonCommonFillGradiantDark_original">#616060</color>
-    <color name="buttonCommonFillGradiantVeryDark_original">#3C3C3C</color> //
+    <color name="buttonCommonFillGradiantVeryDark_original">#3C3C3C</color>
     <color name="buttonCommonFillGradiantUltraDark_original">#2E2E2E</color>
     <color name="buttonCommonFillGradiantUltraUltraDark_original">#1A1A1A</color>
 

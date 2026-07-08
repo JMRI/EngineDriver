@@ -465,11 +465,12 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                             && (bundle.containsKey(alert_bundle_tag_type.SSID))
                             && (bundle.containsKey(alert_bundle_tag_type.SERVICE_TYPE)) ) {
 
-                        String found_host_name = bundle.getString(alert_bundle_tag_type.HOST_NAME);
-                        String found_ip_address = bundle.getString(alert_bundle_tag_type.IP_ADDRESS);
-                        String found_port = bundle.getString(alert_bundle_tag_type.PORT);
-                        String found_ssid = bundle.getString(alert_bundle_tag_type.SSID);
-                        String found_service_type = bundle.getString(alert_bundle_tag_type.SERVICE_TYPE);
+                        String found_host_name = bundle.getString(alert_bundle_tag_type.HOST_NAME, "");
+                        String found_ip_address = bundle.getString(alert_bundle_tag_type.IP_ADDRESS, "");
+                        String found_port = bundle.getString(alert_bundle_tag_type.PORT, "");
+                        String found_ssid = bundle.getString(alert_bundle_tag_type.SSID, "");
+                        String found_service_type = bundle.getString(alert_bundle_tag_type.SERVICE_TYPE, "");
+                        if ( (!found_service_type.isEmpty()) && (found_service_type.charAt(0)=='.') ) found_service_type = found_service_type.substring(1);
                         boolean entryExists = false;
 
                         //stop if new address is already in the list
@@ -591,6 +592,8 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         mainapp.connectedPort = 0;
         mainapp.logged_host_ip = null;
         mainapp.connectionWarningsShown = false;
+
+        connectionHintShownBefore = false;
 
         mainapp.roster_entries = null;
         mainapp.consist_entries = null;
@@ -782,7 +785,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         threaded_application.logging(activityName + ": onStart()");
         super.onStart();
         mainapp.exitConfirmed = false;
-        connectionHintShownBefore = false;
+        mainapp.appIsFinishing = false;
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.prefExtendedLogging = prefs.getBoolean("prefExtendedLogging",
@@ -812,7 +815,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         super.onResume();
         threaded_application.activityResumed(activityName);
         mainapp.removeNotification(this.getIntent());
-        threaded_application.clearCustomToastPairList();
+//        threaded_application.clearCustomToastPairList();
 
         mainapp.applyTheme(this);
 
@@ -849,11 +852,11 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         getConnectionsList();
         setLabels();
         mainapp.cancelForcingFinish();            // if fresh start or restart after being killed in the bkg, indicate app is running again
-        //start up server discovery listener again (after a 1 second delay)
-        //TODO: this is a rig, figure out why this is needed for ubuntu servers
-        bundle = new Bundle();
-        bundle.putInt(alert_bundle_tag_type.ON_OFF, 1);
-        mainapp.alertCommHandlerWithBundle(message_type.SET_LISTENER, 1000L, bundle);
+//        //start up server discovery listener again (after a 1 second delay)
+//        //TODO: this is a rig, figure out why this is needed for ubuntu servers
+//        bundle = new Bundle();
+//        bundle.putInt(alert_bundle_tag_type.ON_OFF, 1);
+//        mainapp.alertCommHandlerWithBundle(message_type.SET_LISTENER, 1000L, bundle);
 
         if (prefs.getBoolean("prefConnectToFirstServer", false)) {
             connectToFirstDiscoveredServer();
@@ -1292,7 +1295,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                     if (((importExportConnectionList.foundDemoHost)
                             && (importExportConnectionList.connections_list.size() > 1)) || (!importExportConnectionList.connections_list.isEmpty())) {
                         if (!connectionHintShownBefore)
-                            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG, 5, true, true);
+                            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastConnectionsListHelp), Toast.LENGTH_LONG, 5, true, false);
                         connectionHintShownBefore = true;
                     }
                 }
@@ -1550,7 +1553,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                 mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
                 mainapp.logSaveFilename = logFile.toString();
 
-                threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG, 3, true, true);
+                threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG, 3, true, false);
 
                 threaded_application.logging("Auto-startup log: Logging started to: " + logFile);
                 threaded_application.logging(mainapp.getAboutInfo());

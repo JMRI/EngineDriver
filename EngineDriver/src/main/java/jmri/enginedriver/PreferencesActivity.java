@@ -17,6 +17,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 
 import android.annotation.SuppressLint;
@@ -310,6 +311,9 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         // save some values
         prefConsistFollowRuleStyle = prefs.getString("prefConsistFollowRuleStyle", getApplicationContext().getResources().getString(R.string.prefConsistFollowRuleStyleDefaultValue));
         priorPrefConsistFollowRuleStyle = prefConsistFollowRuleStyle;
+
+        threaded_application.showCustomToast(PreferencesActivity.this, "", "<null>", Toast.LENGTH_LONG, 4, false, false);
+
     }
 
     @Override
@@ -565,7 +569,8 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         boolean result = importExportPreferences.loadSharedPreferencesFromFile(mainapp, getApplicationContext(), sharedPreferences, exportedPreferencesFileName, deviceId, false);
 
         if (!result) {
-            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG);
+//            mainapp.safeToast(getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG);
+            threaded_application.showCustomToast(PreferencesActivity.this, "", getApplicationContext().getResources().getString(R.string.prefImportExportErrorReadingFrom, exportedPreferencesFileName), Toast.LENGTH_LONG, 4, false, false);
         }
         forceRestartApp(forceRestartReason);
     }
@@ -653,8 +658,8 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         @Override
         public void handleMessage(Message msg) {
-//            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
-//            Bundle bundle = msg.getData();
+            threaded_application.extendedLogging(activityName + ": BundleMessageHandler.handleMessage() what: " + msg.what );
+            Bundle bundle = msg.getData();
 
             switch (msg.what) {
                 case message_type.RECEIVED_POWER_STATE_CHANGE:
@@ -666,6 +671,20 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
                     if (overflowMenu != null)
                         mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.CUSTOM_TOAST_MESSAGE:
+                    if ( (bundle != null)
+                            && (bundle.containsKey(alert_bundle_tag_type.MESSAGE))
+                            && (bundle.containsKey(alert_bundle_tag_type.DURATION)) ) {
+
+                        String message = bundle.getString(alert_bundle_tag_type.MESSAGE);
+                        int duration = bundle.getInt(alert_bundle_tag_type.DURATION);
+                        boolean instructional = false;
+                        if (bundle.containsKey(alert_bundle_tag_type.INSTRUCTIONAL))
+                            instructional = bundle.getBoolean(alert_bundle_tag_type.INSTRUCTIONAL);
+                        threaded_application.showCustomToast(PreferencesActivity.this, "", message, duration, 4, instructional, false);
+                    }
                     break;
 
                 // - - - - - - - - - - - - - - - - - - - - - - - - //

@@ -1164,7 +1164,7 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowAdvancedConsistButtonDefaultValue"
-            android:icon="@drawable/reusable_toolbar_button_cv19_consist_states"
+            android:icon="@drawable/reusable_toolbar_button_cv19_consist"
             android:key="prefActionBarShowAdvancedConsistButton"
             android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowAdvancedConsistButtonSummary"
@@ -1172,7 +1172,7 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="@bool/prefActionBarShowAdvancedConsistButtonDefaultValue"
-            android:icon="@drawable/reusable_toolbar_button_dccex_consist_states"
+            android:icon="@drawable/reusable_toolbar_button_dccex_consist"
             android:key="prefActionBarShowDccexConsistButton"
             android:layout="@layout/preference_item_switch_icon_left"
             android:summary="@string/prefActionBarShowDccexConsistButtonSummary"

@@ -5,8 +5,8 @@
       android:state_enabled="false"
       android:drawable="@drawable/glyph_preferences_empty" />
 
+  <!-- default -->
   <item
-      android:state_enabled="true"
       android:drawable="@drawable/reusable_toolbar_button_cv19_consist" />
 
 </selector>
