@@ -48,7 +48,6 @@ import java.util.Map;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Loco;
-import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.address_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.direction_type;

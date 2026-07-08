@@ -17,7 +17,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 package jmri.enginedriver;
 
-import static android.widget.Toast.LENGTH_LONG;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 
 import android.annotation.SuppressLint;
