@@ -227,7 +227,9 @@
     <dimen name="reusable_thumb_stroke_width">1dip</dimen>
     <dimen name="reusable_thumb_shadow_width">5dp</dimen>
 
-    <dimen name="reusable_toolbar_button_outline_stroke_width">0</dimen> // don't add dp or dip. default is 0=don't show
+    <!-- don't add dp or dip. default is 0=don't show -->
+    <dimen name="reusable_toolbar_button_outline_stroke_width">0</dimen>
+    <!-- don't add dp or dip. default is 0=don't show -->
 
     <!-- use in the dialogs of the three original themes -->
 
@@ -245,7 +247,9 @@
 
     <!-- outline theme -->
 
-    <dimen name="reusable_toolbar_button_outline_stroke_width_outline">20</dimen> // don't add dp or dip.
+    <!-- don't add dp or dip. default is 0=don't show -->
+    <dimen name="reusable_toolbar_button_outline_stroke_width_outline">20</dimen>
+    <!-- don't add dp or dip. default is 0=don't show -->
 
     <!-- Bronze theme -->
 

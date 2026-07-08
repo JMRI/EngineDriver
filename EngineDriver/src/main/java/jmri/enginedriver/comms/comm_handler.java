@@ -113,25 +113,14 @@ public class comm_handler extends Handler {
                   } else {
                      //show message if using mobile data
                      if ((!mainapp.client_type.equals("WIFI")) && (mainapp.prefAllowMobileData)) {
-                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, mainapp.client_type), Toast.LENGTH_LONG);
+//                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, mainapp.client_type), Toast.LENGTH_LONG);
+                        bundle = new Bundle();
+                        bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppNotWIFI, mainapp.client_type));
+                        bundle.putInt(alert_bundle_tag_type.DURATION, Toast.LENGTH_LONG);
+                        mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.CONNECTION);
                      }
-                     if (commThread.jmdns == null) {   //start jmdns if not started
+                     if ( (commThread.jmdns == null) && (commThread.nsdManager == null) ) {   //start jmdns if not started
                         commThread.startJmdns();
-                        if (commThread.jmdns != null) {  //don't bother if jmdns didn't start
-                           try {
-                              commThread.multicast_lock.acquire();
-                           } catch (Exception e) {
-                              //log message, but keep going if this fails
-                              threaded_application.logging(activityName + ": handleMessage(): multicast_lock.acquire() failed");
-                           }
-                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_WITHROTTLE, commThread.listener);
-                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, commThread.listener);
-                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP, commThread.listener);
-                           commThread.jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP, commThread.listener);
-                           threaded_application.logging(activityName + ": handleMessage(): jmdns listener added");
-                        } else {
-                           threaded_application.logging(activityName + ": handleMessage(): jmdns not running, didn't start listener");
-                        }
                      } else {
                         threaded_application.logging(activityName + ": handleMessage(): jmdns already running");
                      }

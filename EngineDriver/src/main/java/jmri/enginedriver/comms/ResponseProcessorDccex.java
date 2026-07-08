@@ -795,7 +795,12 @@ public class ResponseProcessorDccex {
                                 mainapp.dccexRosterDetailsReceived[i] = false;
                                 comm_thread.wifiSend("<JR " + args[i + 1] + ">");
                             } catch (Exception e) {
-                                mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]), Toast.LENGTH_LONG);
+//                                mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]), Toast.LENGTH_LONG);
+                                Bundle bundle = new Bundle();
+                                bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.toastDccexInvalidRosterId, args[i + 1]));
+                                bundle.putInt(alert_bundle_tag_type.DURATION, Toast.LENGTH_LONG);
+                                mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
+
                             }
                         }
                     }
@@ -833,8 +838,6 @@ public class ResponseProcessorDccex {
 //                            mainapp.dccexRosterFullyReceived = true;
                                 int count = (mainapp.dccexRosterIDs == null) ? 0 : mainapp.dccexRosterIDs.length;
                                 if (count > 0 ) {
-//                                    mainapp.safeToastInstructional(R.string.roster_available, LENGTH_SHORT);
-
                                     Bundle bundle = new Bundle();
                                     bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.roster_available));
                                     bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);

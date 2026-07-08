@@ -355,7 +355,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
             Runtime.getRuntime().exec("logcat -c");
             mainapp.logcatProcess = Runtime.getRuntime().exec("logcat -f " + logFile);
 
-            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG,3, true, true);
+            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastSaveLogFile, logFile.toString()), Toast.LENGTH_LONG,3, true, false);
 
             mainapp.logSaveFilename = logFile.toString();
             showHideSaveButton();

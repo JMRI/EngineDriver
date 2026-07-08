@@ -281,6 +281,11 @@ public class threaded_application extends Application {
     public static final String JMDNS_SERVICE_JMRI_DCCPP_OVERTCP = "_dccppovertcpserver._tcp.local.";
     public static final String JMDNS_SERVICE_DCC_EX_TCP = "_dcc-ex._tcp.local.";
     public static final String JMDNS_SERVICE_DCC_EX_UDP = "_dcc-ex._udp.local.";
+    // NsdManager typically expects service type without the ".local." suffix and it is VERY picky about this.
+    public static final String WT_TYPE = "_withrottle._tcp";
+    public static final String JMRI_TYPE = "_dccppovertcpserver._tcp";
+    public static final String DCCEX_TCP_TYPE = "_dcc-ex._tcp";
+    public static final String DCCEX_UDP_TYPE = "_dcc-ex._udp";
 
     public volatile String host_ip = null; //The IP address of the WiThrottle server.
     public volatile String logged_host_ip = null;
@@ -453,6 +458,8 @@ public class threaded_application extends Application {
 
     // custom toast
     static final List<Pair<String, Double>> customToastPairList = Collections.synchronizedList(new ArrayList<>());
+    private static PopupWindow currentToastPopupWindow = null;
+    private static Activity currentToastActivity = null;
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // menu
@@ -913,6 +920,9 @@ public class threaded_application extends Application {
         @Override
         public void onActivityDestroyed(@NonNull Activity activity) {
             threaded_application.logging(activityName + " : ALO/ALH: onActivityDestroyed(): " + activity.getComponentName());
+            if (activity == currentToastActivity) {
+                dismissCustomToast();
+            }
             if (isInBackground && activity == runningActivity) {
                 removeNotification(runningActivity.getIntent()); // destroyed in background so remove notification
             }
@@ -935,7 +945,11 @@ public class threaded_application extends Application {
 
             threaded_application.logging(activityName + " : ALO/ALH: onTrimMemory(): " + level + " - Not Exiting");
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
-                boolean isInMultiWindow = runningActivity != null && runningActivity.isInMultiWindowMode();
+                boolean isInMultiWindow = false;
+                if (Build.VERSION.SDK_INT >= 24) {
+                    isInMultiWindow = runningActivity != null && runningActivity.isInMultiWindowMode();
+                }
+
                 if (!isInMultiWindow && !isInBackground) {                              // if just went into bkg
                     isInBackground = true;
                     activityPaused();
@@ -2021,7 +2035,7 @@ public class threaded_application extends Application {
 //    }
 
     public void sendMessageWithBundleDelay(Handler h, long delayMs, int msgType, Bundle bundle) {
-//        threaded_application.extendedLogging(activityName + ": sendMessageWithBundleDelay(): " + msgType);
+        threaded_application.extendedLogging(activityName + ": sendMessageWithBundleDelay(): " + msgType + " delay: " + delayMs);
 
         boolean sent = false;
         if (h != null) {
@@ -3959,9 +3973,10 @@ public class threaded_application extends Application {
         showCustomToast(activity, title, message, length, yOffsetSixthOfScreen, instructional, false);
     }
     public static void showCustomToast(final Activity activity,  String title, String message, int length, int yOffsetSixthOfScreen, boolean instructional, boolean clearPrevious) {
+        threaded_application.logging(activityName + " : showCustomToast(): message: «" + message + "»");
 
-        if (activity == null || activity.isFinishing() || activity.isDestroyed()
-        || (message.isEmpty()) ) return;
+        if (activity == null || activity.isFinishing() || activity.isDestroyed() ) return;
+//        || (message.isEmpty()) ) return;
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         boolean prefHideInstructionalToasts = sharedPreferences.getBoolean("prefHideInstructionalToasts", false);
@@ -3972,29 +3987,43 @@ public class threaded_application extends Application {
 
         StringBuilder tempToastText = new StringBuilder();
         threaded_application.logging(activityName + " : showCustomToast(): clearPrevious : " + clearPrevious);
+        int count = 0;
         if (!clearPrevious) {
             synchronized (customToastPairList) {
                 Iterator<Pair<String, Double>> it = customToastPairList.iterator();
                 while (it.hasNext()) {
                     Pair<String, Double> pair = it.next();
-                    if ((System.currentTimeMillis() >= pair.second) || (pair.first.equals(message))) {
+                    if ((System.currentTimeMillis() > pair.second) || (pair.first.equals(message))) {
                         it.remove(); // This is safe during iteration
                         threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): removing: " + pair.first);
 
                     } else {
+                        count ++;
                         tempToastText.append(pair.first).append("\n");
 //                        threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + pair.second + ": showCustomToast(): keeping: " + pair.first);
                     }
                 }
-                customToastPairList.add(new Pair<>(message, endTime));
-                threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
+                if (!message.equals("<null>")) {
+                    count ++;
+                    customToastPairList.add(new Pair<>(message, endTime));
+                    threaded_application.logging(activityName + " : " + System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
+                }
             }
         } else {
-            clearCustomToastPairList();
-            customToastPairList.add(new Pair<>(message, endTime));
-            threaded_application.logging(activityName + " : " +System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
+            if (!message.equals("<null>")) {
+                count++;
+                clearCustomToastPairList();
+                customToastPairList.add(new Pair<>(message, endTime));
+                threaded_application.logging(activityName + " : " + System.currentTimeMillis() + ":" + endTime + ": showCustomToast(): adding: " + message);
+            }
         }
-        tempToastText.append(message);
+        if (!message.equals("<null>"))
+            tempToastText.append(message);
+
+        threaded_application.logging(activityName + " : showCustomToast(): count : " + count);
+        if (count <= 0) return;
+
+        threaded_application.extendedLogging(activityName + " : showCustomToast(): tempToastText: «" + tempToastText + "»");
 
         //adjust the inter-paragraph spacing
         String text = tempToastText.toString().replace("\n","\n\0");
@@ -4004,6 +4033,8 @@ public class threaded_application extends Application {
                 spannable.setSpan(new RelativeSizeSpan(1.3f), i+1, i+2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
+
+        threaded_application.extendedLogging(activityName + " : showCustomToast(): text: «" + text + "»");
 
         // inflate your xml layout
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -4034,7 +4065,16 @@ public class threaded_application extends Application {
         toastPopupWindow.setFocusable(false);
 
         // handle toastPopupWindow click event
-        layout.setOnClickListener(view -> toastPopupWindow.dismiss());
+        layout.setOnClickListener(view -> {
+            try {
+                toastPopupWindow.dismiss();
+                if (currentToastPopupWindow == toastPopupWindow) {
+                    currentToastPopupWindow = null;
+                    currentToastActivity = null;
+                }
+            } catch (Exception ignored) {
+            }
+        });
 
         // Use post to ensure the Activity's window is ready, and we have a window token
         final View decorView = activity.getWindow().getDecorView();
@@ -4042,14 +4082,22 @@ public class threaded_application extends Application {
             decorView.post(() -> {
                 if (!activity.isFinishing() && !activity.isDestroyed()) {
                     try {
+                        dismissCustomToast();
+
                         // Use decorView as the parent to provide the window token
                         toastPopupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, yOffset);
+                        currentToastPopupWindow = toastPopupWindow;
+                        currentToastActivity = activity;
 
                         // dismiss the popup window after specified period
                         new Handler(Looper.getMainLooper()).postDelayed(() -> {
                             try {
                                 if (toastPopupWindow.isShowing()) {
                                     toastPopupWindow.dismiss();
+                                    if (currentToastPopupWindow == toastPopupWindow) {
+                                        currentToastPopupWindow = null;
+                                        currentToastActivity = null;
+                                    }
                                 }
                             } catch (Exception ignored) {
                             }
@@ -4059,6 +4107,19 @@ public class threaded_application extends Application {
                     }
                 }
             });
+        }
+    }
+
+    public static void dismissCustomToast() {
+        if (currentToastPopupWindow != null) {
+            try {
+                if (currentToastPopupWindow.isShowing()) {
+                    currentToastPopupWindow.dismiss();
+                }
+            } catch (Exception ignored) {
+            }
+            currentToastPopupWindow = null;
+            currentToastActivity = null;
         }
     }
 
