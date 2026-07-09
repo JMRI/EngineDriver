@@ -197,6 +197,8 @@ public class threaded_application extends Application {
 
     public static int reconnectAttemptCount = 0;
 
+    public static int wasInBackgroundWarningShownCount = 0;
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // Turnouts
 
@@ -901,6 +903,10 @@ public class threaded_application extends Application {
                 isInBackground = false;
                 exitConfirmed = false;
                 removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
+
+                if (wasInBackgroundWarningShownCount<3)  // limit the number of times this toast warning is shown
+                    threaded_application.showCustomToast(runningActivity, getApplicationContext().getResources().getString(R.string.toastWasInBackgroundTitle), Toast.LENGTH_LONG,3);
+                wasInBackgroundWarningShownCount++;
             }
             runningActivity = activity;                 // save most recently resumed activity
         }

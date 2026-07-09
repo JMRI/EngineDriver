@@ -55,6 +55,7 @@
     <string name="gamepad5_test">Test gamepadu 5</string>
     <string name="gamepad6_test">Test gamepadu 6</string>
 
+    <string name="toastWasInBackgroundTitle">Ovladač Engine není navržen tak, aby běžel na pozadí, a systém ho může kdykoli ukončit.\\nPokud ho opravdu potřebujete spustit na pozadí, ujistěte se, že máte povolenou možnost \\\'Nastavení systému Android->Aplikace->Ovladač Engine->Využití baterie aplikací->Povolit používání na pozadí\\\'</string>
     <string name="notificationInBackgroundTitle">Engine Driver na pozadí</string>
     <string name="notificationInBackgroundText">☠️Android jej může kdykoli bez varování zabít. Klepnutím znovu otevřete</string>
     <string name="notificationInBackgroundTextLowMemory">☠️Málo paměti. Engine Driver může být brzy zabit. Klepnutím znovu otevřete</string>

@@ -51,6 +51,7 @@
     <string name="gamepad5_test">Prueba 5 de gamepad</string>
     <string name="gamepad6_test">Prueba 6 de gamepad</string>
 
+    <string name="toastWasInBackgroundTitle">Engine Driver no está diseñado para seguir ejecutándose en segundo plano y el sistema puede cerrarlo en cualquier momento.\\nSi realmente necesita intentar ejecutarlo en segundo plano, asegúrese de habilitar la opción \'Ajustes del sistema Android -> Aplicaciones -> Engine Driver -> Uso de la batería de la aplicación -> Permitir uso en segundo plano\'.</string>
     <string name="notificationInBackgroundTitle">Engine Driver en segundo plano</string>
     <string name="notificationInBackgroundText">☠️Android puede cerrarlo en cualquier momento sin previo aviso. Toca para volver a abrir.</string>
     <string name="notificationInBackgroundTextLowMemory">☠️Memoria baja. Engine Driver podría ser eliminado pronto. Pulsa para volver a abrir.</string>
