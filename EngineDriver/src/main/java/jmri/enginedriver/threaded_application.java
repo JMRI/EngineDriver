@@ -1370,9 +1370,9 @@ public class threaded_application extends Application {
         }
 
         if (client_address_inet4 != null) {
-            sHtml += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replaceAll("/", " - "));
+            sHtml += String.format("<small>, IP: </small><b>%s</b>", client_address_inet4.toString().replace("/", " - "));
             sHtml += String.format("<small>, SSID: </small><b>%s</b> <small>Net: </small><b>%s</b>", ssid, client_type);
-            s += String.format(", IP: %s", client_address_inet4.toString().replaceAll("/", " - "));
+            s += String.format(", IP: %s", client_address_inet4.toString().replace("/", " - "));
             s += String.format(", SSID: %s Net: %s", ssid, client_type);
         }
 
@@ -1867,9 +1867,7 @@ public class threaded_application extends Application {
         if (flashlightButtonMenuItem == null) {
             refreshRequired = true;
             final Handler handler = new Handler(Looper.getMainLooper());
-            handler.postDelayed(() -> {
-                alertActivitiesWithBundle(message_type.REFRESH_OVERFLOW_MENU);
-            }, 100);
+            handler.postDelayed(() -> alertActivitiesWithBundle(message_type.REFRESH_OVERFLOW_MENU), 100);
         } else {
             setFlashlightActionViewButton(menu, flashlightButtonMenuItem);
         }
@@ -1880,9 +1878,7 @@ public class threaded_application extends Application {
         if (powerLayoutButtonMenuItem == null) {
             if (!refreshRequired) { // don't bother if we already requested it for the flashlight
                 final Handler handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(() -> {
-                    alertActivitiesWithBundle(message_type.REFRESH_OVERFLOW_MENU);
-                }, 100);
+                handler.postDelayed(() -> alertActivitiesWithBundle(message_type.REFRESH_OVERFLOW_MENU), 100);
             }
         } else {
             setPowerStateActionViewButton(menu, powerLayoutButtonMenuItem);
@@ -3809,7 +3805,7 @@ public class threaded_application extends Application {
                 threaded_application.logFileFiltered.write(" " + e.getMessage());
             }
             threaded_application.logFileFiltered.newLine();
-            threaded_application.logFileFiltered.flush(); // Flush instantly to save crashe
+            threaded_application.logFileFiltered.flush(); // Flush instantly to save crash
         }
         } catch (Exception ignored) {}
     }

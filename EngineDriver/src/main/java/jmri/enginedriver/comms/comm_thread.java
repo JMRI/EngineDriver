@@ -31,6 +31,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.net.Inet4Address;
@@ -374,24 +375,59 @@ public class comm_thread extends Thread {
                     new Thread(() -> {
                         try {
                             if (jmdns != null) {
-                                threaded_application.logging(activityName + ": startJmdns(): query JMDNS_SERVICE_WITHROTTLE");
+                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_WITHROTTLE");
                                 jmdns.list(threaded_application.JMDNS_SERVICE_WITHROTTLE);
-                                threaded_application.logging(activityName + ": startJmdns(): query JMDNS_SERVICE_JMRI_DCCPP_OVERTCP");
+                            }
+                        } catch (Exception ignored) {}
+                    }, "JmDNS-Query-withrottle").start();
+
+                    new Thread(() -> {
+                        try {
+                            if (jmdns != null) {
+                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_JMRI_DCCPP_OVERTCP");
                                 jmdns.list(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP);
-                                threaded_application.logging(activityName + ": startJmdns(): query JMDNS_SERVICE_DCC_EX_TCP");
+                            }
+                        } catch (Exception ignored) {}
+                    }, "JmDNS-Query-JMRI-TCP").start();
+
+                    new Thread(() -> {
+                        try {
+                            if (jmdns != null) {
+                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_DCC_EX_TCP");
                                 jmdns.list(threaded_application.JMDNS_SERVICE_DCC_EX_TCP);
-                                threaded_application.logging(activityName + ": startJmdns(): query JMDNS_SERVICE_DCC_EX_UDP");
+                            }
+                        } catch (Exception ignored) {}
+                    }, "JmDNS-Query-DCC-EX-TCP").start();
+
+                    new Thread(() -> {
+                        try {
+                            if (jmdns != null) {
+                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_DCC_EX_UDP");
                                 jmdns.list(threaded_application.JMDNS_SERVICE_DCC_EX_UDP);
                             }
                         } catch (Exception ignored) {}
-                    }, "JmDNS-Query").start();
+                    }, "JmDNS-Query-DCC-EX-UDP").start();
 
+//                    new Thread(() -> {
+//                        try {
+//                            if (jmdns != null) {
+//                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_WITHROTTLE");
+//                                jmdns.list(threaded_application.JMDNS_SERVICE_WITHROTTLE);
+//                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_JMRI_DCCPP_OVERTCP");
+//                                jmdns.list(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP);
+//                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_DCC_EX_TCP");
+//                                jmdns.list(threaded_application.JMDNS_SERVICE_DCC_EX_TCP);
+//                                Log.d(threaded_application.applicationName, activityName + ": startJmdns(): query JMDNS_SERVICE_DCC_EX_UDP");
+//                                jmdns.list(threaded_application.JMDNS_SERVICE_DCC_EX_UDP);
+//                            }
+//                        } catch (Exception ignored) {}
+//                    }, "JmDNS-Query").start();
                 }
                 
-                // On many Android 7/8 devices, JmDNS fails to bind port 5353. 
+                // On many Android 5-9 devices, JmDNS fails to bind port 5353.
                 // We always try NsdManager as a fallback (or in parallel if JmDNS starts but finds nothing)
                 // For now, if JmDNS failed OR we are on a problematic version, start NsdManager.
-                if (jmdns == null || Build.VERSION.SDK_INT <= 25) {
+                if (jmdns == null || Build.VERSION.SDK_INT <= 28) {
                     threaded_application.logging(activityName + ": startJmdns(): JmDNS failed or SDK<=25, starting NsdManager fallback/parallel");
                     startNsdFallback();
                 }
