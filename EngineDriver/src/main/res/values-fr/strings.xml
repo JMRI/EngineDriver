@@ -52,6 +52,7 @@
     <string name="gamepad5_test">Gamepad 5 Test</string>
     <string name="gamepad6_test">Gamepad 6 Test</string>
 
+    <string name="toastWasInBackgroundTitle">Engine Driver n\'est pas conçu pour fonctionner en arrière-plan et peut être arrêté par le système à tout moment. Si vous devez absolument l\'exécuter en arrière-plan, assurez-vous d\'activer l\'option « Paramètres système Android > Applications > Engine Driver > Utilisation de la batterie > Autoriser l\'exécution en arrière-plan ».</string>
     <string name="notificationInBackgroundTitle">Engine Driver en arriere-plan</string>
     <string name="notificationInBackgroundText">☠️Android peux tuer a tout moment sans avertir. Appuyer por rouvrir</string>
     <string name="notificationInBackgroundTextLowMemory">☠️Memoire saturee, Android peux tuer Engine Driver, appuyer pour reactiver</string>

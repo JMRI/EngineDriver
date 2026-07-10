@@ -66,6 +66,7 @@
     <string name="gamepad5_test">游戏手柄/USB 5测试</string>
     <string name="gamepad6_test">游戏手柄/USB 6测试</string>
 
+    <string name="toastWasInBackgroundTitle">引擎驱动程序并非设计用于在后台持续运行，系统随时可能将其终止。\\n如果您确实需要在后台运行它，请确保启用“Android 系统设置->应用->引擎驱动程序->应用电池使用情况->允许后台使用”。</string>
     <string name="notificationInBackgroundTitle">EngineDriver 后台通知</string>
     <string name="notificationInBackgroundText">Android 系统可能会随时终止程序，恕不另行通知。点击重新打开</string>
     <string name="notificationInBackgroundTextLowMemory">内存不足。Engine Driver 进程可能很快会被终止。点击重新打开</string>

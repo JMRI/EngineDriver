@@ -74,6 +74,7 @@
     <string name="gamepad5_test">Gamepad\/USB 5 Test</string>
     <string name="gamepad6_test">Gamepad\/USB 6 Test</string>
 
+    <string name="toastWasInBackgroundTitle">Engine Driver is not designed to continue running while in background and may be killed by the system at any time.\nIf you really need to try to run it in background, make sure to enable the \'Android System Setting->Apps->Engine Driver->App Battery Usage->Allow Background Usage\'</string>
     <string name="notificationInBackgroundTitle">Engine Driver in Background</string>
     <string name="notificationInBackgroundText">☠️Android may kill it at any time without warning. Tap to reopen</string>
     <string name="notificationInBackgroundTextLowMemory">☠️Memory low. Engine Driver may be killed soon. Tap to reopen</string>

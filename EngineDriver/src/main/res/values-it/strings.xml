@@ -51,6 +51,7 @@
     <string name="gamepad5_test">Test Gamepad 5</string>
     <string name="gamepad6_test">Test Gamepad 6</string>
 
+    <string name="toastWasInBackgroundTitle">Engine Driver non è progettato per continuare a funzionare in background e potrebbe essere terminato dal sistema in qualsiasi momento. Se proprio devi provare a eseguirlo in background, assicurati di abilitare l\'opzione \"Impostazioni di sistema Android -> App -> Engine Driver -> Utilizzo batteria app -> Consenti utilizzo in background\".</string>
     <string name="notificationInBackgroundTitle">Engine Driver in background</string>
     <string name="notificationInBackgroundText">☠️Android potrebbe interromperlo in qualsiasi momento senza preavviso. Tocca per riaprire</string>
     <string name="notificationInBackgroundTextLowMemory">☠️Memoria insufficiente. Engine Driver potrebbe essere chiuso a breve. Tocca per riaprire</string>

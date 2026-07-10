@@ -49,6 +49,7 @@
     <string name="gamepad5_test">Teste Gamepad 5</string>
     <string name="gamepad6_test">Teste Gamepad 6</string>
 
+    <string name="toastWasInBackgroundTitle">O Engine Driver não foi projetado para continuar em execução em segundo plano e pode ser encerrado pelo sistema a qualquer momento.\\nSe você realmente precisar executá-lo em segundo plano, certifique-se de ativar a opção \"Configurações do sistema Android -> Aplicativos -> Engine Driver -> Uso da bateria do aplicativo -> Permitir uso em segundo plano\".</string>
     <string name="notificationInBackgroundTitle">EngineDriver em segundo plano</string>
     <string name="notificationInBackgroundText">☠️O Android pode desativá-lo a qualquer momento, sem aviso prévio. Toque para reabrir</string>
     <string name="notificationInBackgroundTextLowMemory">☠️Memória baixa. O EngineDriver pode ser desativado em breve. Toque para reabrir.</string>

@@ -9,6 +9,7 @@
       * Moved most of the longer toast messages to the custom Toast.
       * AI rework of the customToast to avoid memory leaks.
       * Persist toast messages, where appropriate, if you close a window.
+      * Added toast message on returning from background to explain the issue with running in background.
 **Version 2.43.228
  * New Features
      * Added a toast warning if the system Font Size is too large.
