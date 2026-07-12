@@ -1158,6 +1158,7 @@
  *   TODO: Improve the way it deals with multiple DCC-EX commands on single line. Really needs to be read char by char.
  *   TODO: Continue converting the three old style themes/styles to the reusable format.
  *   TODO: Move most, if not all, toasts to the custom toast. Especially the longer ones.  This is largely done now.
+ *   TODO: BUG. The application action does not work correctly in the secondary screens.
  * intro
  *   TODO: if saved preferences found, prompt for import and shortcircuit intro. This is unlikely as the folder is not created till the app runs the first time, so you can't pre load the saved preferences in the folder.
  * web
@@ -1222,8 +1223,8 @@
  *   TODO: disconnect connections made by roster stuff
  *   TODO: simplify select_loco by removing handler
  *   TODO: for "auto" handle the Digitrax numbering, i.e. 1-128 is short
- *   TODO: add the ability (somehow) to deslect a loco but stay on the Select Loco screen
- *   TODO: Work out why the function buttons sometime disappear when selecting a recent loco.
+ *   TODO: add the ability (somehow) to deslect a loco but stay on the Select Loco screen.  Largly done with the'Return' button consist edit screen.
+ *   TODO: BUG. Work out why the function buttons sometime disappear when selecting a recent loco.
  * recent locos / internal roster
  *   TODO: allow downloading of filtered roster list
  *   TODO: download the images when you download the full roster
@@ -1232,10 +1233,9 @@
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from
  * DCC-EX screen
- *   TODO: Look into adding an 'Unjoin' button
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  * preferences:
- *
+ *   TODO: work out why reusable_toolbar_button_cv19_consist_states and reusable_toolbar_button_dccex_consist_states cause crashes in older version of Android. And remove the workaround currently in place
  * children's timer:
  *   TODO: Alternate version.  Allow the selection of locos, but only from the filtered roster.  Unlimited time. Routes and Points would be available.
  * log_viewer:
