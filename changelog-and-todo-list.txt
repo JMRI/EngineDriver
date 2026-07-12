@@ -1,10 +1,12 @@
 **Version 2.44.234
 * New Features
       * mDNS is now far more agressive in trying to find servers.
+      * Disable the DCC-EX Id-n-Go and service mode programming if no PROG track.
 * Bug Fixes
       * AI fix for the mDNS not working on 'some' older version of Android. Now tries four different ways to start the service. Including NSD in parallel on older versions, or if mDNS fails.
       * Fix for the warning message multi-window or the new Android 17 Bubbles crashing the app on older versions of Android.
       * Two of the buttons in the preferences could cause older version of Android to crash.  Still no understanding of why, but have worked around it.
+      * Bug Fix for the 'COMPLEX' Consist Function Follow feature on DCC-EX systems.
 * Other
       * Moved most of the longer toast messages to the custom Toast.
       * AI rework of the customToast to avoid memory leaks.

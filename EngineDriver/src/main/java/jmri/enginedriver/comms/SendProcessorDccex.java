@@ -146,6 +146,7 @@ public class SendProcessorDccex {
 
     @SuppressLint("DefaultLocale")
     public static void sendFunction(int whichThrottle, String addr, int fn, int fState, boolean force) {
+        threaded_application.extendedLogging(activityName + ": sendFunction(): throttle:" + whichThrottle + " addr: " + addr +" fn: " + fn + " state: " + fState + " force: " + force);
 
         String msgTxt;
 
@@ -158,9 +159,11 @@ public class SendProcessorDccex {
         if (mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] != null) {  //  we have a roster specific latching for this
             if (fn < mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle].length) {
                 isLatching = mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][fn] ? LATCHING_DEFAULT : "none";
+                threaded_application.extendedLogging(activityName + ": sendFunction(): addr: " + addr +" fn: " + fn + " is latching");
             }
         } else {   // no roster entry. go look at the DCC-EX/consist defaults
             isLatching = mainapp.function_consist_latching.get(fn);
+            threaded_application.extendedLogging(activityName + ": sendFunction(): addr: " + addr +" fn: " + fn + " no roster - using default latching");
         }
 
         if (isLatching == null) isLatching = LATCHING_DEFAULT;

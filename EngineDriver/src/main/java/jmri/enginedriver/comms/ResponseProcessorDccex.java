@@ -32,7 +32,7 @@ public class ResponseProcessorDccex {
     static threaded_application mainapp;
     static comm_thread commThread;
 
-    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "PROG"};
+    static final String[] TRACK_TYPES = {"NONE", "MAIN", "MAIN_INV", "PROG", "DC", "DCX", "AUTO", "EXT", "BOOST"};
     static final boolean[] TRACK_TYPES_NEED_ID = {false, false, false, false, true, true, false, false, false};
 
     public static void initialise(threaded_application mainapp, SharedPreferences prefs, comm_thread commThread) {
@@ -544,9 +544,13 @@ public class ResponseProcessorDccex {
 //        if (args.length>=2) {
         trackNo = args[1].charAt(0)-65;
         if ( (trackNo>=0) && (trackNo<= threaded_application.DCCEX_MAX_TRACKS) ) {
+            mainapp.dccexHasProgTrack = false;
             int trackTypeIndex = -1;
             boolean needsId = false;
             for (int i=0; i<TRACK_TYPES.length; i++) {
+                if (type.equals("PROG")) {
+                    mainapp.dccexHasProgTrack = true;
+                }
                 if (type.equals(TRACK_TYPES[i])) {
                     trackTypeIndex = i;
                     needsId = TRACK_TYPES_NEED_ID[i];
@@ -863,53 +867,48 @@ public class ResponseProcessorDccex {
                             int whichThrottle = mainapp.getWhichThrottleFromAddress(addr_str, throttleIndex);
                             if (whichThrottle >= 0) {
 
+                                if ((args.length != 4) || (!args[2].equals("\"\"")) || (!args[2].equals("\"\""))) {
+                                    String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
+                                    mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
+                                    responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
+                                    for (int i = 0; i < fnArgs.length; i++) {
+                                        if (fnArgs[i].isEmpty()) {
+                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
+                                        } else {
+                                            if (fnArgs[i].charAt(0) == '*') { // is NOT latching
+                                                responseStrBuilder.append(fnArgs[i].substring(1));
+                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
+                                            } else {
+                                                responseStrBuilder.append(fnArgs[i]);
+                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
+                                            }
+                                        }
+                                        if (i < fnArgs.length - 1) {
+                                            responseStrBuilder.append("]\\[");
+                                        }
+                                    }
+                                }
+
                                 found = true;
                                 String lead = mainapp.consists[whichThrottle].getLeadAddr();
                                 if (lead.equals(addr_str)) { // only process the functions for lead engine in consist
                                     if ((mainapp.consists[whichThrottle].isLeadFromRoster()) || (mainapp.prefAlwaysUseFunctionsFromServer)) { // only process the functions if the lead engine from the roster or the override preference is set
-
                                         if (args[3].length() > 2) {
-                                            threaded_application.logging(activityName + ": processDccexRoster: Processing Functions for lead loco");
-
-                                            if ( (args.length != 4) || (!args[2].equals("\"\"")) ) {
-                                                String[] fnArgs = args[3].substring(1, args[3].length() - 1).split("/", 999);
-                                                mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = new boolean[args[3].length()];
-                                                responseStrBuilder.append("RF29}|{1234(L)]\\[");  //prepend some stuff to match old-style
-                                                for (int i = 0; i < fnArgs.length; i++) {
-                                                    if (fnArgs[i].isEmpty()) {
-                                                        mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
-                                                    } else {
-                                                        if (fnArgs[i].charAt(0) == '*') { // is NOT latching
-                                                            responseStrBuilder.append(fnArgs[i].substring(1));
-                                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = false;
-                                                        } else {
-                                                            responseStrBuilder.append(fnArgs[i]);
-                                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle][i] = true;
-                                                        }
-                                                    }
-                                                    if (i < fnArgs.length - 1) {
-                                                        responseStrBuilder.append("]\\[");
-                                                    }
-                                                }
-                                            }
-
                                             comm_thread.processRosterFunctionString(responseStrBuilder.toString(), whichThrottle);
                                             mainapp.consists[whichThrottle].setFunctionLabels(addr_str, responseStrBuilder.toString());
-                                        } else {
-                                            threaded_application.logging(activityName + ": processDccexRoster: Problem Processing Functions for lead loco");
-                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
                                             skipDefaultAlertToAllActivities = false;
+                                        } else {
+                                            mainapp.throttleFunctionIsLatchingDCCEX[whichThrottle] = null;
                                         }
                                     } else {
                                         threaded_application.logging(activityName + ": processDccexRoster: Processing Functions -  lead loco is not from the roster");
                                     }
                                 } else {
                                     threaded_application.logging(activityName + ": processDccexRoster: Processing Functions -  not the lead loco - ignoring");
-
                                 }
 
                                 Consist con = mainapp.consists[whichThrottle];
-                                if (con.getLoco(addr_str) != null) { //loco was added to consist in SelectLocoActivity
+                                if (con.getLoco(addr_str) != null) { //loco was added to consist in select_loco
                                     con.setConfirmed(addr_str);
                                     con.setWhichSource(addr_str, source_type.ROSTER); //entered by address, not roster
 //                                    con.setFunctionLabels(addr_str, threaded_application.parseFunctionLabels(responseStrBuilder.toString()));
