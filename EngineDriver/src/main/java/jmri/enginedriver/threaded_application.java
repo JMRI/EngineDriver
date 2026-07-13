@@ -356,6 +356,7 @@ public class threaded_application extends Application {
     public int dccexActionTypeIndex = 0;
     public int [] dccexTrackType = {1, 2, 0, 0, 0, 0, 0, 0};
     public int [] dccexTrackPower = {-1, -1, -1, -1, -1, -1, -1, -1};
+    public boolean dccexHasProgTrack = false;
     public boolean [] dccexTrackAvailable = {false, false, false, false, false, false, false, false};
     public String [] dccexTrackId = {"", "", "", "", "", "", "", ""};
     public final static int DCCEX_MAX_TRACKS = 8;
@@ -2988,7 +2989,7 @@ public class threaded_application extends Application {
 
     /* only DCC-EX supports the "Request Loco ID" feature at this time */
     public boolean supportsIDnGo() {
-        return serverType.equals("DCC-EX");
+        return serverType.equals("DCC-EX") && dccexHasProgTrack;
     }
 
     public boolean supportsRoster() {

@@ -5199,7 +5199,7 @@ public class throttle extends AppCompatActivity implements
 //                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, buttonPressMessageType);
                         mainapp.setFunction(whichThrottle, con.getLeadAddr(), function, buttonPressMessageType, false);
 
-                    } else {
+                    } else { // DCC-EX
                         newFnState = fnState ? 0 : 1;
 //                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.FORCE_FUNCTION, mainapp.throttleIntToString(whichThrottle) + con.getLeadAddr(), function, newFnState);
                         mainapp.setFunction(whichThrottle, con.getLeadAddr(), function, newFnState, true);
@@ -5227,18 +5227,21 @@ public class throttle extends AppCompatActivity implements
                         for (int i = 0; i < functionList.size(); i++) {
                             if ((tempPrefConsistFollowRuleStyle.equals(consist_function_rule_style_type.COMPLEX))
                                     || (isLatching == consist_function_latching_type.NA)) {
+//                                threaded_application.extendedLogging(activityName + ": sendFunctionToConsistLocos(): :<>: COMPLEX or latching: NA");
                                 if (buttonPressMessageType == button_press_message_type.TOGGLE) {
                                     mainapp.toggleFunction(whichThrottle, l.getAddress(), functionList.get(i));
                                 } else {
                                     if (mainapp.isWiThrottleProtocol()) {
                                         mainapp.setFunction(whichThrottle, l.getAddress(), functionList.get(i), buttonPressMessageType, false);
-
-                                    } else {
-                                        mainapp.setFunction(whichThrottle, l.getAddress(), functionList.get(i), buttonPressMessageType, true);
+                                    
+                                    } else { // DCC-EX
+                                        newFnState = fnState ? 0 : 1;
+                                        mainapp.setFunction(whichThrottle, l.getAddress(), functionList.get(i), newFnState, true);
                                     }
                                 }
                             } else {
                                 if ((isLatching == consist_function_latching_type.YES) && (buttonPressMessageType == button_press_message_type.UP)) {
+//                                    threaded_application.extendedLogging(activityName + ": sendFunctionToConsistLocos(): :<>: Not COMPLEX - latching - UP");
                                     if (mainapp.isWiThrottleProtocol()) {
                                         mainapp.setFunction(whichThrottle, l.getAddress(), functionList.get(i), button_press_message_type.DOWN, false);
                                         mainapp.setFunction(whichThrottle, l.getAddress(), functionList.get(i), button_press_message_type.UP, false);
@@ -5247,6 +5250,7 @@ public class throttle extends AppCompatActivity implements
                                         mainapp.setFunction(whichThrottle, l.getAddress(), functionList.get(i), newFnState, false);
                                     }
                                 } else if (isLatching == consist_function_latching_type.NO) {
+//                                    threaded_application.extendedLogging(activityName + ": sendFunctionToConsistLocos(): :<>: Not COMPLEX - not latching");
                                     mainapp.setFunction(whichThrottle, l.getAddress(), functionList.get(i), buttonPressMessageType, false);
                                 }
                             }
