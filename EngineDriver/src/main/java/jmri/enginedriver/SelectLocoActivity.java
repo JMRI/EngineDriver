@@ -467,7 +467,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
         if (((recentConsistsList.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_CONSISTS)))
                 | ((importExportPreferences.recentLocoAddressList.isEmpty()) && (prefSelectLocoMethod.equals(select_loco_method_type.RECENT_LOCOS)))
-                | (!mainapp.supportsIDnGo() && prefSelectLocoMethod.equals(select_loco_method_type.IDNGO))) {
+                | ((!mainapp.supportsIDnGo() || (!mainapp.dccexHasProgTrack)) && prefSelectLocoMethod.equals(select_loco_method_type.IDNGO))) {
             prefSelectLocoMethod = select_loco_method_type.ADDRESS;
         }
 
@@ -632,6 +632,11 @@ public class SelectLocoActivity extends AppCompatActivity {
                 case message_type.RECEIVED_DCCEX_ESTOP_RESUMED:
                     if (overflowMenu != null)
                         mainapp.setEmergencyStopStateActionViewButton(overflowMenu, overflowMenu.findItem(R.id.emergency_stop_button));
+                    break;
+
+                case message_type.RECEIVED_DCCEX_TRACKS: // may have lost the PROG track
+                    setLabels();
+                    showMethod(prefSelectLocoMethod);
                     break;
 
                 case message_type.RECEIVED_THROTTLE_LOCO_ADDED:
@@ -2123,6 +2128,8 @@ public class SelectLocoActivity extends AppCompatActivity {
         if (mainapp.supportsIDnGo()) {
             rbIDnGo.setVisibility(VISIBLE);
             selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO) - 1].setVisibility(VISIBLE);
+            selectMethodButton[Integer.parseInt(select_loco_method_type.IDNGO) - 1].setEnabled(mainapp.dccexHasProgTrack);
+            selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO) - 1].setEnabled(mainapp.dccexHasProgTrack);
         } else {
             rbIDnGo.setVisibility(GONE);
             selectMethodButtonLayout[Integer.parseInt(select_loco_method_type.IDNGO) - 1].setVisibility(GONE);
