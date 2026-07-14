@@ -713,9 +713,9 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     private void showHideButtons() {
 
         if (mainapp.dccexHasProgTrack) {
-            dccexCvProgrammerProgTrackButton.setVisibility(VISIBLE);
+            dccexCvProgrammerProgTrackButton.setEnabled(true);
         } else {
-            dccexCvProgrammerProgTrackButton.setVisibility(GONE);
+            dccexCvProgrammerProgTrackButton.setEnabled(false);
             if (mainapp.dccexActionTypeIndex == PROGRAMMING_TRACK) {
                 mainapp.dccexActionTypeIndex = PROGRAMMING_ON_MAIN;
                 dccActionTypeSpinner.setSelection(PROGRAMMING_ON_MAIN);

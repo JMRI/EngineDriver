@@ -2989,7 +2989,7 @@ public class threaded_application extends Application {
 
     /* only DCC-EX supports the "Request Loco ID" feature at this time */
     public boolean supportsIDnGo() {
-        return serverType.equals("DCC-EX") && dccexHasProgTrack;
+        return serverType.equals("DCC-EX");
     }
 
     public boolean supportsRoster() {
