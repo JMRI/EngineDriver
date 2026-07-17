@@ -19,6 +19,7 @@ package jmri.enginedriver.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.ImageView;
 
 import java.io.InputStream;
@@ -121,7 +122,7 @@ public class ImageDownloader {
     private final static ConcurrentHashMap<String, SoftReference<Bitmap>> sSoftBitmapCache =
             new ConcurrentHashMap<>(HARD_CACHE_CAPACITY / 2);
 
-    private final Handler purgeHandler = new Handler();
+    private final Handler purgeHandler = new Handler(Looper.getMainLooper());
 
     private final Runnable purger = new Runnable() {
         public void run() {

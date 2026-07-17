@@ -81,11 +81,14 @@ public class VerticalSeekBar extends SeekBar {
     public boolean touchFromUser = false;
     public boolean realTouch = true;
 
+    protected Rect bounds;
+
     public threaded_application mainapp;  // hold pointer to mainapp
 
     public VerticalSeekBar(final Context context) {
         super(context);
         mainapp = (threaded_application) context.getApplicationContext();
+        bounds = new Rect();
     }
 
     public VerticalSeekBar(final Context context, final AttributeSet attrs, final int defStyle) {
@@ -93,6 +96,7 @@ public class VerticalSeekBar extends SeekBar {
         mainapp = (threaded_application) context.getApplicationContext();
         prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
         tickMarksChecked = false;
+        bounds = new Rect();
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //        tickPaint.setColor(context.getResources().getColor(R.color.seekBarTickColor));
@@ -111,6 +115,7 @@ public class VerticalSeekBar extends SeekBar {
         mainapp = (threaded_application) context.getApplicationContext();
         prefs = context.getSharedPreferences("jmri.enginedriver_preferences", 0);
         tickMarksChecked = false;
+        bounds = new Rect();
 
         tickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         int tickColor = threaded_application.getRgbColorFromThemeAttribute(context, R.attr.ed_throttle_tick_mark);
@@ -173,7 +178,7 @@ public class VerticalSeekBar extends SeekBar {
         Paint.FontMetrics fm = textPaint.getFontMetrics();
 //        float totalLineHeight = Math.abs(fm.ascent) + Math.abs(fm.descent) + Math.abs(fm.leading);
 //        textVerticalCenter = totalLineHeight / 2;
-        Rect bounds = new Rect();
+//        Rect bounds = new Rect();
         textPaint.getTextBounds("9", 0, 1, bounds);
         textVerticalCenter = (float) bounds.height() / 2;
 

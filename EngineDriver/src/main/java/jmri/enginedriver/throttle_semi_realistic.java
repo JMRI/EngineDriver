@@ -31,6 +31,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -432,14 +433,14 @@ public class throttle_semi_realistic extends throttle {
 
         // set up the handlers for the semi-realistic throttle updates
         for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
-            semiRealisticTargetSpeedUpdateHandlers[i] = new Handler();
-            semiRealisticSpeedButtonUpdateHandlers[i] = new Handler();
+            semiRealisticTargetSpeedUpdateHandlers[i] = new Handler(Looper.getMainLooper());
+            semiRealisticSpeedButtonUpdateHandlers[i] = new Handler(Looper.getMainLooper());
         }
 
         // set up the handlers for the semi-realistic air updates
         for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
-            semiRealisticAirUpdateHandlers[i] = new Handler();
-            semiRealisticAirLineUpdateHandlers[i] = new Handler();
+            semiRealisticAirUpdateHandlers[i] = new Handler(Looper.getMainLooper());
+            semiRealisticAirLineUpdateHandlers[i] = new Handler(Looper.getMainLooper());
         }
 
         for (int i = 0; i < mainapp.maxThrottlesCurrentScreen; i++) {
