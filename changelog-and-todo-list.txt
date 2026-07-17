@@ -12,6 +12,8 @@
       * AI rework of the customToast to avoid memory leaks.
       * Persist toast messages, where appropriate, if you close a window.
       * Added toast message on returning from background to explain the issue with running in background.
+      * Linting - Mostly in throttle.java
+      * Gradle update from 9.2.1 to 9.3.1
 **Version 2.43.228
  * New Features
      * Added a toast warning if the system Font Size is too large.

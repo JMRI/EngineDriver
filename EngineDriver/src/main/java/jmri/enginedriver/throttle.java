@@ -76,6 +76,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 
 import android.text.InputType;
 import android.util.TypedValue;
@@ -399,7 +400,7 @@ public class throttle extends AppCompatActivity implements
 
     protected int sliderType = slider_type.HORIZONTAL;
 
-    protected Handler repeatUpdateHandler = new Handler();
+    protected Handler repeatUpdateHandler = new Handler(Looper.getMainLooper());
     protected boolean[] mAutoIncrement = {false, false, false, false, false, false};
     protected boolean[] mAutoDecrement = {false, false, false, false, false, false};
 
@@ -457,7 +458,7 @@ public class throttle extends AppCompatActivity implements
     private float externalGamepadXAxis2;
     private float externalGamepadYAxis2;
 
-    int keyboardStopCount = 0;
+//    int keyboardStopCount = 0;
 
 //    protected MediaPlayer _mediaPlayer;
 
@@ -469,17 +470,17 @@ public class throttle extends AppCompatActivity implements
     //                              none     NextThr  Speed+    Speed-     Fwd        Rev        All Stop   F2         F1         F0         Stop
     private int[] gamePadKeys = {0, 0, KEYCODE_W, KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
     private int[] gamePadKeys_Up = {0, 0, KEYCODE_W, KEYCODE_X, KEYCODE_A, KEYCODE_D, KEYCODE_V, KEYCODE_T, KEYCODE_N, KEYCODE_R, KEYCODE_F, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    private static final int GAMEPAD_KEYS_LENGTH = 21;
+//    private static final int GAMEPAD_KEYS_LENGTH = 21;
     private static final int[] BUTTON_ACTION_NUMBERS = {
             -1, 9, 5, 7, 8, 6, 0, 1, 3, 2, 4, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1};
 
     Tts tts;
 
     private ToneGenerator tg;
-    protected Handler gamepadRepeatUpdateHandler = new Handler();
+    protected Handler gamepadRepeatUpdateHandler = new Handler(Looper.getMainLooper());
     protected boolean mGamepadAutoIncrement = false;
     protected boolean mGamepadAutoDecrement = false;
-    protected Handler volumeKeysRepeatUpdateHandler = new Handler();
+    protected Handler volumeKeysRepeatUpdateHandler = new Handler(Looper.getMainLooper());
     protected boolean mVolumeKeysAutoIncrement = false;
     protected boolean mVolumeKeysAutoDecrement = false;
     protected boolean prefDisableVolumeKeys = false;
@@ -515,17 +516,17 @@ public class throttle extends AppCompatActivity implements
     protected String[] dirLeftIndicationText = {"", "", "", "", "", ""};
     protected String[] dirRightIndicationText = {"", "", "", "", "", ""};
 
-    private static final String GAMEPAD_FUNCTION_PREFIX = "Function ";
+//    private static final String GAMEPAD_FUNCTION_PREFIX = "Function ";
 
     protected String prefLeftDirectionButtons = DIRECTION_BUTTON_LEFT_TEXT;
     protected String prefRightDirectionButtons = DIRECTION_BUTTON_RIGHT_TEXT;
     protected int prefDirectionButtonLongPressDelay = 1000;
     private boolean isDirectionButtonLongPress;
-    Handler directionButtonLongPressHandler = new Handler();
+    Handler directionButtonLongPressHandler = new Handler(Looper.getMainLooper());
 
     protected int prefStopButtonLongPressDelay = 1000;
     private boolean isStopButtonLongPress;
-    Handler stopButtonLongPressHandler = new Handler();
+    Handler stopButtonLongPressHandler = new Handler(Looper.getMainLooper());
 
     // The following are used for the shake detection
     private SensorManager sensorManager;
@@ -559,7 +560,7 @@ public class throttle extends AppCompatActivity implements
     private ThrottleFragment esuThrottleFragment;
     private StopButtonFragment esuStopButtonFragment;
     private final EsuMc2LedControl esuMc2Led = new EsuMc2LedControl();
-    private final Handler esuButtonRepeatUpdateHandler = new Handler();
+    private final Handler esuButtonRepeatUpdateHandler = new Handler(Looper.getMainLooper());
     private boolean esuButtonAutoIncrement = false;
     private boolean esuButtonAutoDecrement = false;
     private boolean prefEsuMc2EndStopDirectionChange = true;
@@ -862,7 +863,7 @@ public class throttle extends AppCompatActivity implements
                             && (bundle.containsKey(alert_bundle_tag_type.COMMAND)) ) {
 
                         String command = bundle.getString(alert_bundle_tag_type.COMMAND);
-                        if (command.length() < 2)
+                        if ( (command == null) || (command.length() < 2) )
                             break;  //bail if too short, to avoid crash
                         char com0 = command.charAt(0);
 
@@ -961,6 +962,7 @@ public class throttle extends AppCompatActivity implements
 
                         int whichThrottle = bundle.getInt(alert_bundle_tag_type.THROTTLE);
                         String addr = bundle.getString(alert_bundle_tag_type.LOCO);
+                        if (addr == null) addr = "";
                         int function = bundle.getInt(alert_bundle_tag_type.FUNCTION);
                         int action = bundle.getInt(alert_bundle_tag_type.FUNCTION_ACTION);
 
@@ -1408,27 +1410,17 @@ public class throttle extends AppCompatActivity implements
 
         if ((prefThrottleViewImmersiveMode) || (forceOn)) {   // if the preference is set use Immersive mode
 
-            if (webView!=null) {
-                webView.setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                );
+            WindowInsetsControllerCompat windowInsetsController =
+                    WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+
+            windowInsetsController.setSystemBarsBehavior(
+                    WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            );
+            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+
+            if (webView != null) {
                 webView.postInvalidate();
             }
-
-            View windowView = getWindow().getDecorView();
-            windowView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            );
 
             if (prefThrottleViewImmersiveModeHideToolbar) {
                 screenNameLine.setVisibility(View.GONE);
@@ -1442,7 +1434,7 @@ public class throttle extends AppCompatActivity implements
             systemStatusRowHeight = 0;
             systemNavigationRowHeight = 0;
 
-            windowView.postInvalidate();
+            getWindow().getDecorView().postInvalidate();
         }
     }
 
@@ -1450,12 +1442,14 @@ public class throttle extends AppCompatActivity implements
 
         if ((!prefThrottleViewImmersiveMode) || (forceOff)) {   // if the preference is set to not use Immersive mode
 
-            if (webView!=null) {
-                webView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            WindowInsetsControllerCompat windowInsetsController =
+                    WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+
+            windowInsetsController.show(WindowInsetsCompat.Type.systemBars());
+
+            if (webView != null) {
                 webView.postInvalidate();
             }
-            View windowView = getWindow().getDecorView();
-            windowView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
 
             screenNameLine.setVisibility(VISIBLE);
             toolbar.setVisibility(VISIBLE);
@@ -1469,7 +1463,7 @@ public class throttle extends AppCompatActivity implements
 
             immersiveModeIsOn = false;
 
-            windowView.postInvalidate();
+            getWindow().getDecorView().postInvalidate();
         }
     }
 
@@ -2496,28 +2490,31 @@ public class throttle extends AppCompatActivity implements
     // if skipLead is true, the direction is not set for the lead engine
     void setEngineDirection(int whichThrottle, int direction, boolean skipLead) {
         Consist con;
-        if ((mainapp.consists != null) && (dirs != null)) {
-            con = mainapp.consists[whichThrottle];
-            dirs[whichThrottle] = direction;
+        if ((mainapp.consists == null) || (dirs == null)) return;
 
-            String leadAddr = con.getLeadAddr();
-            for (String addr : con.getList()) { // loop through each engine in consist
-                if (!skipLead || (addr != null && !addr.equals(leadAddr))) {
-                    int locoDir = direction;
-                    try {
-                        if (con.isReverseOfLead(addr)) // if engine faces opposite of lead loco
-                            locoDir ^= 1; // then reverse the commanded direction
+        con = mainapp.consists[whichThrottle];
+        if (con == null) return;
+
+        dirs[whichThrottle] = direction;
+
+        String leadAddr = con.getLeadAddr();
+        if (leadAddr == null) leadAddr = ""; // should not happen
+        for (String addr : con.getList()) { // loop through each engine in consist
+            if (!skipLead || (addr != null && !addr.equals(leadAddr))) {
+                int locoDir = direction;
+                try {
+                    if (con.isReverseOfLead(addr)) // if engine faces opposite of lead loco
+                        locoDir ^= 1; // then reverse the commanded direction
 //                        mainapp.sendMsg(mainapp.comm_msg_handler, message_type.DIRECTION, addr, whichThrottle, locoDir);
 
-                        Bundle dirBundle = new Bundle();
-                        dirBundle.putString(alert_bundle_tag_type.LOCO_TEXT, addr);
-                        dirBundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
-                        dirBundle.putInt(alert_bundle_tag_type.DIRECTION, locoDir);
-                        mainapp.alertCommHandlerWithBundle(message_type.DIRECTION, dirBundle);
-                    } catch (
-                            Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
-                        threaded_application.logging(activityName + ": " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
-                    }
+                    Bundle dirBundle = new Bundle();
+                    dirBundle.putString(alert_bundle_tag_type.LOCO_TEXT, addr);
+                    dirBundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+                    dirBundle.putInt(alert_bundle_tag_type.DIRECTION, locoDir);
+                    mainapp.alertCommHandlerWithBundle(message_type.DIRECTION, dirBundle);
+                } catch (
+                        Exception e) { // isReverseOfLead returns null if addr is not in con - should never happen since we are walking through consist list
+                    threaded_application.logging(activityName + ": " + mainapp.throttleIntToString(whichThrottle) + " direction change for unselected loco " + addr);
                 }
             }
         }
@@ -3056,18 +3053,18 @@ public class throttle extends AppCompatActivity implements
      * future use: displays the requested function state independent of (in addition to) feedback state
      * TODO: need to handle momentary buttons somehow
      */
-    void set_function_request(int whichThrottle, int function, int reqState) {
-        // threaded_application.logging(activityName + ": set_function_request");
-        Button b;
-        b = functionMaps[whichThrottle].get(function);
-        if (b != null) {
-            if (reqState != 0) {
-                b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
-            } else {
-                b.setTypeface(null, Typeface.NORMAL);
-            }
-        }
-    }
+//    void set_function_request(int whichThrottle, int function, int reqState) {
+//        // threaded_application.logging(activityName + ": set_function_request");
+//        Button b;
+//        b = functionMaps[whichThrottle].get(function);
+//        if (b != null) {
+//            if (reqState != 0) {
+//                b.setTypeface(null, Typeface.ITALIC + Typeface.BOLD);
+//            } else {
+//                b.setTypeface(null, Typeface.NORMAL);
+//            }
+//        }
+//    }
 
     boolean canChangeVolumeIndicatorOnTouch(boolean isSpeedButtonOrSlider) {
         // implemented in derived class, but called from this class
@@ -3933,7 +3930,7 @@ public class throttle extends AppCompatActivity implements
                         mainapp.whichThrottleLastTouch = whichThrottle;
                     }
 
-                    boolean isActive = getConsist(whichThrottle).isActive();
+//                    boolean isActive = getConsist(whichThrottle).isActive();
 
                     if (keyCode != 0) {
                         threaded_application.extendedLogging(activityName + ": dispatchKeyEvent(): keycode " + keyCode + " action " + action + " repeat " + repeatCnt);
@@ -4784,75 +4781,6 @@ public class throttle extends AppCompatActivity implements
         }
     }
 
-//    protected class StopButtonClickListener implements View.OnClickListener, View.OnLongClickListener {
-//        int whichThrottle;
-//
-//        protected StopButtonClickListener(int newWhichThrottle) {
-//            whichThrottle = newWhichThrottle;
-//        }
-//
-//        @Override
-//        public void onClick(View view) {
-//            // if gesture in progress, skip button processing
-//            if (gestureInProgress) {
-//                return;
-//            }
-//            view.playSoundEffect(SoundEffectConstants.CLICK);
-//            mainapp.buttonVibration();
-//
-//            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
-//
-//            setStopButton(whichThrottle, true);
-//
-//            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
-//                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
-//            } else if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_RETURN) {
-//                isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
-//            } else if ((getSpeed(whichThrottle) == 0)
-//                    && (isPauseSpeeds[whichThrottle] == pause_speed_type.ZERO)) {
-//                disablePauseSpeed(whichThrottle);
-//            }
-//
-//            speedUpdateAndNotify(whichThrottle, 0);
-//            setStopButton(whichThrottle, false);
-//        }
-//
-//        @Override
-//        public boolean onLongClick(View view) {
-//            // if gesture in progress, skip button processing
-//            if (gestureInProgress) {
-//                return (true);
-//            }
-//
-//            view.playSoundEffect(SoundEffectConstants.CLICK);
-//            mainapp.buttonVibration();
-//
-//            setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
-//
-//            setStopButton(whichThrottle, true);
-//
-//            if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_ZERO) {
-//                isPauseSpeeds[whichThrottle] = pause_speed_type.ZERO;
-//            } else if (isPauseSpeeds[whichThrottle] == pause_speed_type.TO_RETURN) {
-//                isPauseSpeeds[whichThrottle] = pause_speed_type.INACTIVE;
-//            } else if ((getSpeed(whichThrottle) == 0)
-//                    && (isPauseSpeeds[whichThrottle] == pause_speed_type.ZERO)) {
-//                disablePauseSpeed(whichThrottle);
-//            }
-//
-//            if (prefStopButtonEStopOnLongPress) {
-//                mainapp.sendEStopOneThrottleMsg(whichThrottle);
-//            } else {
-//                speedUpdateAndNotify(whichThrottle, 0);
-//            }
-//
-//            speedUpdateAndNotify(whichThrottle, 0);
-//            setStopButton(whichThrottle, false);
-//
-//            return false;
-//        }
-//    }
-
     // Listeners for the Select Loco buttons
 //    protected class SelectFunctionButtonTouchListener implements View.OnClickListener, View.OnTouchListener, View.OnLongClickListener {
     protected class SelectFunctionButtonTouchListener implements View.OnClickListener, View.OnLongClickListener {
@@ -5640,13 +5568,18 @@ public class throttle extends AppCompatActivity implements
         onCreateSavedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
 
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
         if (savedInstanceState != null) {
             try {
                 // restore the requested throttle direction so we can update the
                 // direction indication while we wait for an update from WiT
                 for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-                    if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex)) != null)
-                        dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
+//                    if (savedInstanceState.getSerializable("dir" + mainapp.throttleIntToString(throttleIndex)) != null)
+//                        dirs[throttleIndex] = (int) savedInstanceState.getSerializable("dir" + throttleIndex);
+                    String key = "dir" + mainapp.throttleIntToString(throttleIndex);
+                    if (savedInstanceState.containsKey(key))
+                        dirs[throttleIndex] = savedInstanceState.getInt(key);
                 }
             } catch (Exception ignored) {              // log the error, but otherwise keep going.
                 threaded_application.logging(activityName + ": onCreate(): Restore of saved instance state failed " + android.os.Build.VERSION.SDK_INT);
@@ -6137,9 +6070,11 @@ public class throttle extends AppCompatActivity implements
         // zoom-out
         webView.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         if (onCreateSavedInstanceState != null) {
-            if (onCreateSavedInstanceState.getSerializable("scale") != null) {
-                scale = (float) onCreateSavedInstanceState.getSerializable(("scale"));
-            }
+//            if (onCreateSavedInstanceState.getSerializable("scale") != null) {
+//                scale = (float) onCreateSavedInstanceState.getSerializable(("scale"));
+//            }
+            if (onCreateSavedInstanceState.containsKey("scale"))
+                scale = (float) onCreateSavedInstanceState.getFloat(("scale"));
         }
         webView.setInitialScale((int) (100 * scale));
         webView.clearCache(true);   // force fresh JavaScript download on first connection
@@ -6648,8 +6583,7 @@ public class throttle extends AppCompatActivity implements
                     }
                 }
 
-                // put values in array for indexing in the next step
-                // to do this
+                // put values in array for indexing in the next step.
                 ArrayList<Integer> aList = new ArrayList<>(function_labels_temp.keySet());
 
                 if (tv != null) {
@@ -7705,12 +7639,10 @@ public class throttle extends AppCompatActivity implements
             int count;
             String n_url;
 
-            if ((mainapp.connectedHostip != null)) {
-                n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port
+            if (mainapp.connectedHostip.isEmpty()) return; // not currently connected
+
+            n_url = "http://" + mainapp.connectedHostip + ":" + mainapp.web_server_port
                         + "/" + SERVER_ENGINE_DRIVER_DIR + "/" + EXTERNAL_PREFERENCES_IMPORT_FILENAME;
-            } else {
-                return; // not currently connected
-            }
 
             String urlPreferencesFileName;
             String urlPreferencesFilePath;

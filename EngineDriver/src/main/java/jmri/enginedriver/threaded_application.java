@@ -94,6 +94,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.net.Inet4Address;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -192,7 +193,7 @@ public class threaded_application extends Application {
 
     public long exitDoubleBackButtonInitiated = 0;
     public boolean exitConfirmed = false;
-    /** @noinspection FieldCanBeLocal*/
+
     private ApplicationLifecycleHandler lifecycleHandler;
 
     public static int reconnectAttemptCount = 0;
@@ -462,7 +463,7 @@ public class threaded_application extends Application {
     // custom toast
     static final List<Pair<String, Double>> customToastPairList = Collections.synchronizedList(new ArrayList<>());
     private static PopupWindow currentToastPopupWindow = null;
-    private static Activity currentToastActivity = null;
+    private static WeakReference<Activity> currentToastActivityRef = new WeakReference<>(null);
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // menu
@@ -885,9 +886,16 @@ public class threaded_application extends Application {
 
     } // end onCreate()
 
+    public Activity getRunningActivity() {
+        if (lifecycleHandler != null) {
+            return lifecycleHandler.runningActivityRef.get();
+        }
+        return null;
+    }
+
     public class ApplicationLifecycleHandler implements Application.ActivityLifecycleCallbacks, ComponentCallbacks2 {
         private boolean isInBackground = true;
-        private Activity runningActivity = null;
+        private WeakReference<Activity> runningActivityRef = new WeakReference<>(null);
 
         @Override
         public void onActivityCreated(@NonNull Activity activity, Bundle bundle) {
@@ -903,13 +911,14 @@ public class threaded_application extends Application {
             if (isInBackground) {                           // if coming out of background
                 isInBackground = false;
                 exitConfirmed = false;
+                Activity runningActivity = runningActivityRef.get();
                 removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
 
                 if (wasInBackgroundWarningShownCount<3)  // limit the number of times this toast warning is shown
                     threaded_application.showCustomToast(runningActivity, getApplicationContext().getResources().getString(R.string.toastWasInBackgroundTitle), Toast.LENGTH_LONG,3);
                 wasInBackgroundWarningShownCount++;
             }
-            runningActivity = activity;                 // save most recently resumed activity
+            runningActivityRef = new WeakReference<>(activity);                 // save most recently resumed activity
         }
 
         @Override
@@ -927,9 +936,10 @@ public class threaded_application extends Application {
         @Override
         public void onActivityDestroyed(@NonNull Activity activity) {
             threaded_application.logging(activityName + " : ALO/ALH: onActivityDestroyed(): " + activity.getComponentName());
-            if (activity == currentToastActivity) {
+            if (activity == currentToastActivityRef.get()) {
                 dismissCustomToast();
             }
+            Activity runningActivity = runningActivityRef.get();
             if (isInBackground && activity == runningActivity) {
                 removeNotification(runningActivity.getIntent()); // destroyed in background so remove notification
             }
@@ -953,6 +963,7 @@ public class threaded_application extends Application {
             threaded_application.logging(activityName + " : ALO/ALH: onTrimMemory(): " + level + " - Not Exiting");
             if (level >= ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {   // if in background
                 boolean isInMultiWindow = false;
+                Activity runningActivity = runningActivityRef.get();
                 if (Build.VERSION.SDK_INT >= 24) {
                     isInMultiWindow = runningActivity != null && runningActivity.isInMultiWindowMode();
                 }
@@ -986,6 +997,7 @@ public class threaded_application extends Application {
             || (level == ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE) ) {
                 if (!isActivityVisible()) {   // double check it is in background
 //                        updateNotification(getResources().getString(R.string.notificationInBackgroundTextLowMemory));
+                    Activity runningActivity = runningActivityRef.get();
                     if (runningActivity != null) {
                         removeNotification(runningActivity.getIntent());
                         addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
@@ -4073,7 +4085,7 @@ public class threaded_application extends Application {
                 toastPopupWindow.dismiss();
                 if (currentToastPopupWindow == toastPopupWindow) {
                     currentToastPopupWindow = null;
-                    currentToastActivity = null;
+                    currentToastActivityRef = new WeakReference<>(null);
                 }
             } catch (Exception ignored) {
             }
@@ -4090,7 +4102,7 @@ public class threaded_application extends Application {
                         // Use decorView as the parent to provide the window token
                         toastPopupWindow.showAtLocation(decorView, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, yOffset);
                         currentToastPopupWindow = toastPopupWindow;
-                        currentToastActivity = activity;
+                        currentToastActivityRef = new WeakReference<>(activity);
 
                         // dismiss the popup window after specified period
                         new Handler(Looper.getMainLooper()).postDelayed(() -> {
@@ -4099,7 +4111,7 @@ public class threaded_application extends Application {
                                     toastPopupWindow.dismiss();
                                     if (currentToastPopupWindow == toastPopupWindow) {
                                         currentToastPopupWindow = null;
-                                        currentToastActivity = null;
+                                        currentToastActivityRef = new WeakReference<>(null);
                                     }
                                 }
                             } catch (Exception ignored) {
@@ -4122,7 +4134,7 @@ public class threaded_application extends Application {
             } catch (Exception ignored) {
             }
             currentToastPopupWindow = null;
-            currentToastActivity = null;
+            currentToastActivityRef = new WeakReference<>(null);
         }
     }
 

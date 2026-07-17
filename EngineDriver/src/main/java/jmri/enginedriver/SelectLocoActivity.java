@@ -2070,7 +2070,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         overrideThrottleName = "";
 
         setLabels();
-        Handler handler = new Handler();
+        Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(showMethodTask, 500);  // show or hide the correct panel after a short delay   Needed due to timing issues
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
