@@ -3,6 +3,8 @@
 * Bug Fixes
       * Enabling of the PROG type buttons would not work unless PROG was the last track
 * Other
+      * Disable the DCC-EX 'Set' button if no valid DC address entered. (for DC/DCX tracks)
+      * Hint for the DC Address
 **Version 2.44.234
 * New Features
       * mDNS is now far more agressive in trying to find servers.
