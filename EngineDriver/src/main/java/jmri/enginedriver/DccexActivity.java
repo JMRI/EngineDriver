@@ -804,9 +804,22 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
 
                 dccexDccexWriteInfoLayout.setVisibility(GONE);
 
+                boolean allHaveValidIds = true;
                 for (int i = 0; i < threaded_application.DCCEX_MAX_TRACKS; i++) {
                     dccexTrackTypeIdEditText[i].setVisibility(TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]] ? VISIBLE : GONE);
+                    if (TRACK_TYPES_NEED_ID[dccexTrackTypeIndex[i]]) {
+                        try {
+                            int id = Integer.parseInt(dccexTrackTypeIdEditText[i].getText().toString());
+                            if (id <= 0) {
+                                allHaveValidIds = false;
+                            }
+                        } catch (Exception e) {
+                            allHaveValidIds = false;
+                        }
+                    }
                 }
+                writeTracksButton.setVisibility(allHaveValidIds ? VISIBLE : GONE);
+
                 joinTracksButton.setEnabled(hasProgTrack);
             }
             break;
@@ -1104,6 +1117,11 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
             dccexTrackPowerButton[i] = findViewById(dccex_track_power_button_ids.getResourceId(i,0));
             dccexTrackTypeSpinner[i] = findViewById(dccex_track_type_ids.getResourceId(i,0));
             dccexTrackTypeIdEditText[i] = findViewById(dccex_track_id_ids.getResourceId(i,0));
+            dccexTrackTypeIdEditText[i].addTextChangedListener(new TextWatcher() {
+                public void afterTextChanged(Editable s) { readTextField(WHICH_CV_VALUE); showHideButtons(); }
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            });
 
             ArrayAdapter<?> track_type_spinner_adapter = ArrayAdapter.createFromResource(this, R.array.dccExTrackTypeEntries, android.R.layout.simple_spinner_item);
             track_type_spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

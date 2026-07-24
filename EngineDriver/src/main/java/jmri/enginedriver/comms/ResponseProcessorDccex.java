@@ -544,13 +544,9 @@ public class ResponseProcessorDccex {
 //        if (args.length>=2) {
         trackNo = args[1].charAt(0)-65;
         if ( (trackNo>=0) && (trackNo<= threaded_application.DCCEX_MAX_TRACKS) ) {
-            mainapp.dccexHasProgTrack = false;
             int trackTypeIndex = -1;
             boolean needsId = false;
             for (int i=0; i<TRACK_TYPES.length; i++) {
-                if (type.equals("PROG")) {
-                    mainapp.dccexHasProgTrack = true;
-                }
                 if (type.equals(TRACK_TYPES[i])) {
                     trackTypeIndex = i;
                     needsId = TRACK_TYPES_NEED_ID[i];
@@ -567,6 +563,15 @@ public class ResponseProcessorDccex {
             }
             mainapp.dccexTrackAvailable[trackNo] = true;
         }
+
+        // check if one  is still PROG
+        mainapp.dccexHasProgTrack = false;
+        for (int i =0; i<threaded_application.DCCEX_MAX_TRACKS; i++) {
+            if (mainapp.dccexTrackType[i] == 3) {
+                mainapp.dccexHasProgTrack = true;
+            }
+        }
+
         mainapp.alertActivitiesWithBundle(message_type.RECEIVED_DCCEX_TRACKS);
 //        }
     }
