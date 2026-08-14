@@ -2058,7 +2058,8 @@ public class threaded_application extends Application {
 //    }
 
     public void sendMessageWithBundleDelay(Handler h, long delayMs, int msgType, Bundle bundle) {
-        threaded_application.extendedLogging(activityName + ": sendMessageWithBundleDelay(): " + msgType + " delay: " + delayMs);
+        if (msgType != message_type.LOG_ENTRY_RECEIVED) // don't bother about log entries
+            threaded_application.extendedLogging(activityName + ": sendMessageWithBundleDelay(): " + msgType + " delay: " + delayMs);
 
         boolean sent = false;
         if (h != null) {

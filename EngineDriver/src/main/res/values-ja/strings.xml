@@ -1234,9 +1234,9 @@
     <string name="rosterDecoderInfoDecoderComment">デコーダーのコメント:</string>
     <string name="rosterDecoderInfoRosterEntry">名簿エントリー</string>
     <string name="prefSemiRealisticMaximumBrakePcntTitle">最大ブレーキ率</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">最大負荷パーセンテージ</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">ロード スライダの最大パーセンテージを調整します。 (100-20000%) 100% = ロコのみ</string>
     <string name="airReservoirShort">空気抵抗 %d%%</string>
     <string name="prefOverrideWiThrottlesFunctionLatchingSummary">WiThrottle によって提供されるデフォルトではなく、非ロスター ロックに対してエンジン ドライバーのデフォルト ラッチを使用します。</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">機能のない名簿エントリにデフォルトを使用する</string>

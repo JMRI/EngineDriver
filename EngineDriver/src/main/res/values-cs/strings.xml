@@ -1318,9 +1318,9 @@
     <string name="rosterDecoderInfoDecoderComment">Komentář k dekodéru:</string>
     <string name="rosterDecoderInfoRosterEntry">Vstup na soupisku</string>
     <string name="prefSemiRealisticMaximumBrakePcntTitle">Maximální brzdné procento</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">Upravte maximální procento posuvníku Load. (100-20000 %) 100 % = samotná lokomotiva</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">Upravte maximální procento posuvníku Load. (100-20000%) 100% = samotná lokomotiva</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximální procento zatížení</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Upravte maximální procento posuvníku Load. (100-20000 %) 100 % = samotná lokomotiva</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">Upravte maximální procento posuvníku Load. (100-20000%) 100% = samotná lokomotiva</string>
     <string name="airReservoirShort">Rozlišení vzduchu %d%%</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Použít výchozí hodnoty pro záznamy seznamu bez funkcí</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Akce tlačítka Stop</string>

@@ -30,12 +30,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.SystemClock;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,13 +41,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -90,8 +88,7 @@ import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
 
-//public class turnouts extends AppCompatActivity implements OnGestureListener {
-public class turnouts extends AppCompatActivity implements android.gesture.GestureOverlayView.OnGestureListener {
+public class turnouts extends AppCompatActivity implements GestureDetector.OnGestureListener {
     static final String activityName = "turnouts";
 
     private threaded_application mainapp;  // hold pointer to mainapp
@@ -105,9 +102,7 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private static String location = null;
     private Spinner locationSpinner;
 
-    //    private GestureDetector myGesture;
     private Menu overflowMenu;
-    volatile Handler gestureHandler;
 
     private static final String WHICH_METHOD_FIRST = "0"; // first time the app has been used
     private static final String WHICH_METHOD_ADDRESS = "1";
@@ -153,14 +148,10 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     private int toolbarHeight;
 
     protected View turnoutsView;
-    protected GestureOverlayView turnoutsOverlayView;
-    // these are used for gesture tracking
-    private float gestureStartX = 0;
-    private float gestureStartY = 0;
-    protected boolean gestureInProgress = false; // gesture is in progress
-    private long gestureLastCheckTime; // time in milliseconds that velocity was last checked
-    private static final long gestureCheckRate = 200; // rate in milliseconds to check velocity
-    private VelocityTracker mVelocityTracker;
+
+    private GestureDetector mGestureDetector;
+    private static final int SWIPE_THRESHOLD = 100;
+    private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
     private InterceptEditText turnoutEntryEditText;
 
@@ -619,8 +610,8 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
 
         setContentView(R.layout.turnouts_page);
 
-        if (gestureHandler == null)
-            gestureHandler = new GestureHandler(Looper.getMainLooper());
+        // Initialise the memory-based touch processing engine
+        mGestureDetector = new GestureDetector(this, this);
 
         //put pointer to this activity's handler in main app's shared variable (If needed)
         if (mainapp.activityBundleMessageHandlers[activity_id_type.TURNOUTS] == null)
@@ -816,13 +807,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         }
 
         turnoutsView = findViewById(R.id.select_turnout_screen);
-        // enable swipe/fling detection if enabled in Prefs
-        turnoutsOverlayView = findViewById(R.id.turnouts_overlay);
-        turnoutsOverlayView.addOnGestureListener(this);
-        turnoutsOverlayView.setEventsInterceptionEnabled(true);
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain();
-        }
 
         // -------------------------------------------------------------------
 
@@ -948,14 +932,6 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
     public void onDestroy() {
         //threaded_application.logging(activityName + ": onDestroy()");
         super.onDestroy();
-
-        if (gestureHandler != null) {
-            gestureHandler.removeCallbacks(gestureStopped);
-            gestureHandler.removeCallbacksAndMessages(null);
-            gestureHandler = null;
-        } else {
-            threaded_application.logging(activityName + ": onDestroy(): gestureHandler is null. Unable to removeCallbacksAndMessages");
-        }
 
         mainapp.clearActivityBundleMessageHandler(activity_id_type.TURNOUTS);
     }
@@ -1535,138 +1511,117 @@ public class turnouts extends AppCompatActivity implements android.gesture.Gestu
         bToggle.setText(currentStateDesc);
     }
 
-    static class GestureHandler extends Handler {
+    /**
+     * MASTER TOUCH ROUTER: This intercepts ALL touches on the screen before any layout can.
+     * It checks if the user is swiping, but lets clean taps fall through onto buttons.
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        // Send the raw screen coordinates to our gesture math engine first
+        mGestureDetector.onTouchEvent(ev);
 
-        public GestureHandler(Looper looper) {
-            super(looper);
+        // Crucial: Pass the touch through to the standard Android pipeline.
+        // This ensures buttons get clicked and the list scrolls natively!
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * THE FLING PROCESSOR: This replaces the old gesture drawing code.
+     * It parses horizontal and vertical motion sweeps across the whole page.
+     */
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (e1 == null || e2 == null) return false;
+
+        // 1. Get the screen's Y-coordinate where the user's finger first touched down
+        float startingY = e1.getRawY();
+
+        // 2. Determine the physical height bounds of the Action Bar + Status Bar area
+        int actionBarHeight = 0;
+        if (getSupportActionBar() != null) {
+            actionBarHeight = getSupportActionBar().getHeight();
         }
-    }
 
-    @Override
-    public void onGesture(GestureOverlayView arg0, MotionEvent event) {
-        gestureMove(event);
-    }
+        // Modern Android (13-17) status bars average roughly 24dp to 48dp depending on the notch.
+        // We convert resource metrics to real screen pixels to get an accurate total target area.
+        int statusAndActionBarTotalHeight = actionBarHeight + dpToPx(40); // 40dp buffer for status bar
 
-    @Override
-    public void onGestureCancelled(GestureOverlayView overlay, MotionEvent event) {
-        gestureCancel(event);
-    }
+        // 3. Flag whether the swipe began within the upper boundary area
+        boolean wasOverActionBar = startingY <= statusAndActionBarTotalHeight;
 
-    // determine if the action was long enough to be a swipe
-    @Override
-    public void onGestureEnded(GestureOverlayView overlay, MotionEvent event) {
-        gestureEnd(event);
-    }
+        float diffX = e2.getX() - e1.getX();
+        float diffY = e2.getY() - e1.getY();
 
-    @Override
-    public void onGestureStarted(GestureOverlayView overlay, MotionEvent event) {
-        gestureStart(event);
-    }
-
-    private void gestureStart(MotionEvent event) {
-        gestureStartX = event.getX();
-        gestureStartY = event.getY();
-//        threaded_application.logging(activityName + ": gestureStart(): x=" + gestureStartX + " y=" + gestureStartY);
-
-        toolbarHeight = mainapp.getToolbarHeight(toolbar, statusLine,  screenNameLine);
-        if (mainapp.prefFullScreenSwipeArea) {  // only allow swipe in the action bar
-            if (gestureStartY > toolbarHeight) {   // not in the toolbar area
-                return;
-            }
-        }
-        gestureInProgress = true;
-        gestureLastCheckTime = event.getEventTime();
-        mVelocityTracker.clear();
-
-        // start the gesture timeout timer
-        if (gestureHandler != null)
-            gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
-    }
-
-    public void gestureMove(MotionEvent event) {
-        // threaded_application.logging(activityName + ": gestureMove(): action " + event.getAction());
-        if (mainapp!=null && gestureHandler!=null && gestureInProgress) {
-            // stop the gesture timeout timer
-            gestureHandler.removeCallbacks(gestureStopped);
-
-            mVelocityTracker.addMovement(event);
-            if ((event.getEventTime() - gestureLastCheckTime) > gestureCheckRate) {
-                // monitor velocity and fail gesture if it is too low
-                gestureLastCheckTime = event.getEventTime();
-                final VelocityTracker velocityTracker = mVelocityTracker;
-                velocityTracker.computeCurrentVelocity(1000);
-                int velocityX = (int) velocityTracker.getXVelocity();
-                int velocityY = (int) velocityTracker.getYVelocity();
-                // threaded_application.logging(activityName + ": gestureMove(): gestureVelocity vel " + velocityX);
-                if ((Math.abs(velocityX) < threaded_application.min_fling_velocity) && (Math.abs(velocityY) < threaded_application.min_fling_velocity)) {
-                    gestureFailed(event);
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffX > 0) {
+                    // Pass the boundary flag directly to your custom swipe triggers
+                    onSwipeRight(wasOverActionBar);
+                } else {
+                    onSwipeLeft(wasOverActionBar);
                 }
+                return true;
             }
-            if (gestureInProgress) {
-                // restart the gesture timeout timer
-                gestureHandler.postDelayed(gestureStopped, gestureCheckRate);
-            }
-        }
-    }
-
-    private void gestureEnd(MotionEvent event) {
-        // threaded_application.logging(activityName + ": gestureEnd(): action " + event.getAction() + " inProgress? " + gestureInProgress);
-        if ( (mainapp!=null) && (gestureHandler != null) && (gestureInProgress)) {
-            gestureHandler.removeCallbacks(gestureStopped);
-
-            float deltaX = (event.getX() - gestureStartX);
-            float absDeltaX =  Math.abs(deltaX);
-            if (absDeltaX > threaded_application.min_fling_distance) { // only process left/right swipes
-                // valid gesture. Change the event action to CANCEL so that it isn't processed by any control below the gesture overlay
-                event.setAction(MotionEvent.ACTION_CANCEL);
-                // process swipe in the direction with the largest change
-                Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.TURNOUTS, deltaX);
-                startACoreActivity(this, nextScreenIntent, true, deltaX);
-            } else {
-                // gesture was not long enough
-                gestureFailed(event);
-            }
-        }
-    }
-
-    private void gestureCancel(MotionEvent ignoredEvent) {
-        if (gestureHandler != null)
-            gestureHandler.removeCallbacks(gestureStopped);
-        gestureInProgress = false;
-    }
-
-    void gestureFailed(MotionEvent ignoredEvent) {
-        // end the gesture
-        gestureInProgress = false;
-    }
-
-    //
-    // GestureStopped runs when more than gestureCheckRate milliseconds
-    // elapse between onGesture events (i.e. press without movement).
-    //
-    @SuppressLint("Recycle")
-    private final Runnable gestureStopped = new Runnable() {
-        @Override
-        public void run() {
-            if (gestureInProgress) {
-                // end the gesture
-                gestureInProgress = false;
-                // create a MOVE event to trigger the underlying control
-                if (turnoutsView != null) {
-                    // use uptimeMillis() rather than 0 for time in
-                    // MotionEvent.obtain() call in throttle gestureStopped:
-                    MotionEvent event = MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, gestureStartX,
-                            gestureStartY, 0);
-                    try {
-                        turnoutsView.dispatchTouchEvent(event);
-                    } catch (IllegalArgumentException e) {
-                        threaded_application.logging(activityName + ": gestureStopped trigger IllegalArgumentException, OS " + android.os.Build.VERSION.SDK_INT);
-                    }
+        } else {
+            // Vertical swipes logic
+            if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffY > 0) {
+                    onSwipeDown();
+                } else {
+                    onSwipeUp();
                 }
+                return true;
             }
         }
-    };
+        return false;
+    }
 
+    // Helper method to convert density independent pixels (dp) to screen pixels (px) accurately
+    private int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round((float) dp * density);
+    }
+
+
+    // --- Swipe actions ---
+    private void onSwipeLeft(boolean overActionBar) {
+        threaded_application.extendedLogging(activityName + ": onSwipeLeft()");
+
+        if ( (!mainapp.prefFullScreenSwipeArea) || (overActionBar) ) {
+            Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.TURNOUTS, -1);
+            startACoreActivity(this, nextScreenIntent, true, -1);
+        }
+    }
+
+    private void onSwipeRight(boolean overActionBar) {
+        threaded_application.extendedLogging(activityName + ": onSwipeRight()");
+        if ( (!mainapp.prefFullScreenSwipeArea) || (overActionBar) ) {
+            Intent nextScreenIntent = mainapp.getNextIntentInSwipeSequence(screen_swipe_index_type.TURNOUTS, 1);
+            startACoreActivity(this, nextScreenIntent, true, 1);
+        }
+    }
+
+    private void onSwipeUp() {
+        threaded_application.extendedLogging(activityName + ": onSwipeUp()");
+        // Execute optional feature code here
+    }
+
+    private void onSwipeDown() {
+        threaded_application.extendedLogging(activityName + ": onSwipeDown()");
+        // Execute optional feature code here
+    }
+
+    // --- MANDATORY STUB METHOD OVERRIDES ---
+    @Override
+    public boolean onDown(MotionEvent e) { return false; }
+    @Override
+    public void onShowPress(MotionEvent e) {}
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) { return false; }
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) { return false; }
+    @Override
+    public void onLongPress(MotionEvent e) {}
 
     // listener for the joystick events
     @Override

@@ -1166,9 +1166,9 @@
     <string name="rosterDecoderInfoDecoderComment">Commento sul decodificatore:</string>
     <string name="rosterDecoderInfoRosterEntry">Iscrizione all\'elenco</string>
     <string name="prefSemiRealisticMaximumBrakePcntTitle">Percentuale massima di frenata</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">Regola la percentuale massima del cursore Carica. (100-20000%) 100% = sola locomotiva</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">Regola la percentuale massima del cursore Carica. (100-20000%) 100% = sola locomotiva</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Percentuale di carico massima</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Regola la percentuale massima del cursore Carica. (100-20000%) 100% = sola locomotiva</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">Regola la percentuale massima del cursore Carica. (100-20000%) 100% = sola locomotiva</string>
     <string name="airReservoirShort">Linea aerea %d%%</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Utilizza impostazioni predefinite per le voci dell\'elenco senza funzioni</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Interrompi l\'azione del pulsante</string>

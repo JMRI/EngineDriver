@@ -1232,9 +1232,9 @@
     <string name="rosterDecoderInfoDecoderComment">Comentari del descodificador:</string>
     <string name="rosterDecoderInfoRosterEntry">Entrada de la llista</string>
     <string name="prefSemiRealisticMaximumBrakePcntTitle">Percentatge màxim de fre</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">Ajusteu el percentatge màxim del control lliscant de càrrega. (100-20000%) 100% = loco sol</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">Ajusteu el percentatge màxim del control lliscant de càrrega. (100-20000%) 100% = loco sol</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Percentatge de càrrega màxima</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajusteu el percentatge màxim del control lliscant de càrrega. (100-20000%) 100% = loco sol</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">Ajusteu el percentatge màxim del control lliscant de càrrega. (100-20000%) 100% = loco sol</string>
     <string name="airReservoirShort">Res a l\'aire %d%%</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Utilitzeu els valors per defecte per a les entrades de la llista sense funcions</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Acció del botó Stop</string>

@@ -39,7 +39,7 @@
     <Button
         android:id="@+id/turnout_throw"
         style="?attr/ed_list_button_style"
-        android:layout_width="18sp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
         android:layout_gravity="center_vertical"
@@ -48,7 +48,7 @@
     <Button
         android:id="@+id/turnout_close"
         style="?attr/ed_list_button_style"
-        android:layout_width="18sp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.25"
         android:layout_gravity="center_vertical"

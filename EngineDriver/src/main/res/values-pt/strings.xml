@@ -1172,9 +1172,9 @@
     <string name="rosterDecoderInfoDecoderComment">Comentário do decodificador:</string>
     <string name="rosterDecoderInfoRosterEntry">Entrada na lista</string>
     <string name="prefSemiRealisticMaximumBrakePcntTitle">Porcentagem máxima de freio</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">Ajuste a porcentagem máxima do controle deslizante Carga. (100-20000%) 100% = apenas loco</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">Ajuste a porcentagem máxima do controle deslizante Carga. (100-20000%) 100% = apenas loco</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Porcentagem máxima de carga</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajuste a porcentagem máxima do controle deslizante Carga. (100-20000%) 100% = apenas loco</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">Ajuste a porcentagem máxima do controle deslizante Carga. (100-20000%) 100% = apenas loco</string>
     <string name="airReservoirShort">Res. Ar %d%%</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Use padrões para entradas de lista sem funções</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Ação do botão Parar</string>

@@ -1180,7 +1180,7 @@
     <string name="prefSemiRealisticMaximumBrakePcntTitle">Maximaler Bremsprozentsatz</string>
     <string name="prefSemiRealisticMaximumBrakePcntSummary">Passen Sie den maximalen Prozentsatz des Load-Schiebereglers an. (100-20000%) 100% = Lok allein</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximaler Lastprozentsatz</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Passen Sie den maximalen Prozentsatz des Load-Schiebereglers an. (100-20000%) 100% = Lok allein</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">Passen Sie den maximalen Prozentsatz des Load-Schiebereglers an. (100-20000%) 100% = Lok allein</string>
     <string name="airReservoirShort">Luftwiderstand %d%%</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Standardwerte bei Loks ohne Funktionen verwenden</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Aktion der Stopptaste</string>

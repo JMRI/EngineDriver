@@ -1238,9 +1238,9 @@
     <string name="rosterDecoderInfoDecoderComment">Commentaire decodeur:</string>
     <string name="rosterDecoderInfoRosterEntry">Entree inventaire (roster)</string>
     <string name="prefSemiRealisticMaximumBrakePcntTitle">Pourcentage pour freinage maxi</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">Ajustez le pourcentage maximum du curseur de freinage. (5-100%) 100% = 0 immédiat</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">Ajustez le pourcentage maximum du curseur de freinage. (5-100%) 100% = 0 immédiat</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Pourcentage pour charge maximale</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Ajustez le pourcentage maximum du curseur de charge. (5-100%) 100% = loco seule</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">Ajustez le pourcentage maximum du curseur de charge. (5-100%) 100% = loco seule</string>
     <string name="airReservoirShort">Res air %d%%</string>
     <string name="prefOverrideRosterWithNoFunctionLabelsTitle">Utilisation des valeurs par defaut pour les loco de la liste sans aucune fonction</string>
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Action du bouton STOP</string>

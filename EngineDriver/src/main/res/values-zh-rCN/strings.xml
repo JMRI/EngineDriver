@@ -1137,10 +1137,10 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">激活高功能的制动百分比</string>
 
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">最大负载百分比</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">调整负载滑块的最大百分比。（100-20000%）100% = 单独机车</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">调整负载滑块的最大百分比。（100-20000%）100% = 单独机车</string>
 
     <string name="prefSemiRealisticMaximumBrakePcntTitle">最大制动百分比</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">调整制动滑块的最大百分比。（5-100%）100% = 立即停车</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">调整制动滑块的最大百分比。（5-100%）100% = 立即停车</string>
 
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">停止按钮操作</string>
     <string name="prefSemiRealisticThrottleStopButtonActionSummary">选择停止按钮的功能</string>

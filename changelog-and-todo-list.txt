@@ -6,14 +6,18 @@
       * Enabling of the PROG type buttons would not work unless PROG was the last track.
       * Long Press ESTOP option would stop all throttles.
       * Speed Step buttons did not work fully with the 'Limit Speed' button in the non-shunting/switching layouts.
-      * Setting the Auto connect to IP preference would cause the app to crash/
+      * Setting the Auto connect to IP preference would cause the app to crash.
+      * Rewrite of the gesture handling on the Turnouts and Routes pages, to resolve a 'bouncing' problem on some devices
 * Other
       * Disable the DCC-EX 'Set' button if no valid DC address entered. (for DC/DCX tracks)
       * Added Hint for the DC Address on the DCC-EX Track Manager page.
-      * Upgrade gradle to 9.3.1
       * Disable the background warning when using setting the system permission.
       * Disable the background warning when using the image picker to choose a background image.
       * Disable the DCC-EX custom Turnout/Point label preferences if the prefTurnoutsShowThrowCloseButtons preference is enabled.
+      * Upgrade gradle to 9.7.0.
+        Had to suppress an evironment variable ANDROID_PREFS_ROOT
+        (fatal conflict between ANDROID_PREFS_ROOT and ANDROID_USER_HOME.)
+      * some linting.
 **Version 2.44.234
 * New Features
       * mDNS is now far more agressive in trying to find servers.
@@ -1182,6 +1186,7 @@
  * web
  *   TODO: allow user to specify initial zoom-level of each web view
  *   TODO: allow zoom out more than the page width. ??? Not sure what this means.
+ *   TODO: move to the new way to detect swipes (see routes.java and turnouts.java). Previous attempt disabled swipes entirely.
  * routes
  *   TODO: shrink button text if longer than x. - Fixed for later versions of Android.  Need to work out why it doesn't work for early versions.
  *   TODO: determine why double-click needed sometimes
@@ -1221,6 +1226,7 @@
  *   TODO: re-arrangeable function buttons
  *   TODO: add preference to set throttles to zero when track power is turned off
  *   TODO: option to show roster images above each throttle
+ *   TODO: move to the new way to detect swipes (see routes.java and turnouts.java)
  * Gamepads (throttle):
  *   TODO: move code to a separate class. This is now partly done.
  *   TODO: support Routes on keyboards.

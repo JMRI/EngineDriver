@@ -1530,11 +1530,11 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuDefaultValue" translatable="false">98</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleMaxLoadPcntTitle">Maximum Load Percentage</string>
-    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary">Adjust the maximum percentage of the Load slider. (100-20000%) 100% = loco alone</string>
+    <string name="prefSemiRealisticThrottleMaxLoadPcntSummary" formatted="false">Adjust the maximum percentage of the Load slider. (100-20000%) 100% = loco alone</string>
     <string name="prefSemiRealisticThrottleMaxLoadPcntDefaultValue" translatable="false">1000</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticMaximumBrakePcntTitle">Maximum Brake Percentage</string>
-    <string name="prefSemiRealisticMaximumBrakePcntSummary">Adjust the maximum percentage of the Brake slider. (5-100%) 100% = immediate zero</string>
+    <string name="prefSemiRealisticMaximumBrakePcntSummary" formatted="false">Adjust the maximum percentage of the Brake slider. (5-100%) 100% = immediate zero</string>
     <string name="prefSemiRealisticMaximumBrakePcntDefaultValue" translatable="false">70</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefSemiRealisticThrottleStopButtonActionTitle">Stop Button Action</string>
