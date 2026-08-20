@@ -495,14 +495,14 @@ public class VerticalSeekBar extends SeekBar {
         return tickMarkText;
     }
 
-    // WARNING: a related calculation is also in the throttle_semi_realistic class
+    // WARNING: a related calculation is also in the ThrottleActivitySemiRealistic class
     static double getBrakeDecimalPcnt(double step, double steps, double maxBrakePcnt ) {
         double maxBrakeDecimal = maxBrakePcnt/100;
         double max = Math.sqrt(steps) * steps * maxBrakeDecimal;
         return (Math.sqrt(step) * step * maxBrakeDecimal / max * maxBrakeDecimal) * 100;
     }
 
-    // WARNING: a related calculation is also in the throttle_semi_realistic class
+    // WARNING: a related calculation is also in the ThrottleActivitySemiRealistic class
     static double getLoadPcnt(double step, double steps, double maxLoadPcnt ) {
         double load = (steps - step) / steps;
         return (load * load * (maxLoadPcnt-100)) + 100;

@@ -664,15 +664,15 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 
         } else if ( (item.getItemId() == R.id.turnouts_mnu)
             || (item.getItemId() == R.id.turnouts_button) ) {
-//                navigateAway(true, turnouts.class);
-            in = new Intent().setClass(this, turnouts.class);
+//                navigateAway(true, TurnoutsActivity.class);
+            in = new Intent().setClass(this, TurnoutsActivity.class);
             startACoreActivity(this, in, false, 0);
             return true;
 
         } else if ( (item.getItemId() == R.id.routes_mnu)
             || (item.getItemId() == R.id.routes_button) ) {
-//                navigateAway(true, routes.class);
-            in = new Intent().setClass(this, routes.class);
+//                navigateAway(true, RoutesActivity.class);
+            in = new Intent().setClass(this, RoutesActivity.class);
             startACoreActivity(this, in, false, 0);
             return true;
 

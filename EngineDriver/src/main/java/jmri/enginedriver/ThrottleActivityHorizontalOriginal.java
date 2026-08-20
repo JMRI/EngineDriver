@@ -37,8 +37,8 @@ import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
-public class throttle_original extends throttle {
-    static final String activityName = "throttle_original";
+public class ThrottleActivityHorizontalOriginal extends ThrottleActivity {
+    static final String activityName = "ThrottleActivityHorizontalOriginal";
 
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.DEFAULT;
 

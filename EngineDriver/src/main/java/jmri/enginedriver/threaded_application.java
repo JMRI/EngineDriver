@@ -1448,9 +1448,9 @@ public class threaded_application extends Application {
 
     //reinitialize statics in activities as required to be ready for next launch
     public static void reinitStatics() {
-        throttle.initStatics();
-        throttle_original.initStatics();
-        throttle_simple.initStatics();
+        ThrottleActivity.initStatics();
+        ThrottleActivityHorizontalOriginal.initStatics();
+        ThrottleActivityVerticalSimple.initStatics();
         WebActivity.initStatics();
     }
 
@@ -1689,7 +1689,7 @@ public class threaded_application extends Application {
     }
 
     /**
-     * for menu passed in, hide or show the routes menu
+     * for menu passed in, hide or show the RoutesActivity menu
      *
      * @param menu - menu object that will be adjusted
      */
@@ -2809,22 +2809,22 @@ public class threaded_application extends Application {
         appIsFinishing = false;
         throttle = switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
             case throttle_screen_type.SIMPLE
-                    -> new Intent().setClass(this, throttle_simple.class);
+                    -> new Intent().setClass(this, ThrottleActivityVerticalSimple.class);
             case throttle_screen_type.VERTICAL, throttle_screen_type.VERTICAL_LEFT,
                  throttle_screen_type.VERTICAL_RIGHT, throttle_screen_type.TABLET_VERTICAL_LEFT,
                  throttle_screen_type.TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS
-                    -> new Intent().setClass(this, throttle_vertical_left_or_right.class);
+                    -> new Intent().setClass(this, ThrottleActivityVertical.class);
             case throttle_screen_type.SWITCHING, throttle_screen_type.SWITCHING_LEFT,
                  throttle_screen_type.SWITCHING_RIGHT, throttle_screen_type.TABLET_SWITCHING_LEFT
-                    -> new Intent().setClass(this, throttle_switching_left_or_right.class);
+                    -> new Intent().setClass(this, ThrottleActivityVerticalSwitching.class);
             case throttle_screen_type.SWITCHING_HORIZONTAL
-                    -> new Intent().setClass(this, throttle_switching_horizontal.class);
+                    -> new Intent().setClass(this, ThrottleActivityHorizontalSwitching.class);
             case throttle_screen_type.BIG_LEFT, throttle_screen_type.BIG_RIGHT
-                    -> new Intent().setClass(this, throttle_big_buttons.class);
+                    -> new Intent().setClass(this, ThrottleActivityBigButtons.class);
             case throttle_screen_type.SEMI_REALISTIC_LEFT
-                    -> new Intent().setClass(this, throttle_semi_realistic.class);
+                    -> new Intent().setClass(this, ThrottleActivitySemiRealistic.class);
             default
-                    -> new Intent().setClass(this, throttle_original.class);
+                    -> new Intent().setClass(this, ThrottleActivityHorizontalOriginal.class);
         };
         return throttle;
     }
@@ -2908,8 +2908,8 @@ public class threaded_application extends Application {
         }
 
         return switch (nextScreen) {
-            case screen_swipe_index_type.ROUTES -> new Intent().setClass(this, routes.class);
-            case screen_swipe_index_type.TURNOUTS -> new Intent().setClass(this, turnouts.class);
+            case screen_swipe_index_type.ROUTES -> new Intent().setClass(this, RoutesActivity.class);
+            case screen_swipe_index_type.TURNOUTS -> new Intent().setClass(this, TurnoutsActivity.class);
             case screen_swipe_index_type.WEB -> new Intent().setClass(this, WebActivity.class);
             default -> getThrottleIntent();
         };

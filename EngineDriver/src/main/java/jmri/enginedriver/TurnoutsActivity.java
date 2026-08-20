@@ -88,8 +88,8 @@ import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 import jmri.enginedriver.type.source_type;
 
-public class turnouts extends AppCompatActivity implements GestureDetector.OnGestureListener {
-    static final String activityName = "turnouts";
+public class TurnoutsActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
+    static final String activityName = "TurnoutsActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
     private SharedPreferences prefs;
@@ -145,7 +145,6 @@ public class turnouts extends AppCompatActivity implements GestureDetector.OnGes
     private Toolbar toolbar;
     private LinearLayout statusLine;
     /** @noinspection FieldCanBeLocal*/
-    private int toolbarHeight;
 
     protected View turnoutsView;
 
@@ -837,7 +836,7 @@ public class turnouts extends AppCompatActivity implements GestureDetector.OnGes
                 } else {
                     threaded_application.activityInTransition(activityName);
                     Intent in = mainapp.getThrottleIntent();
-                    startACoreActivity(turnouts.this, in, false, 0);
+                    startACoreActivity(TurnoutsActivity.this, in, false, 0);
                 }
             }
         };
@@ -987,7 +986,7 @@ public class turnouts extends AppCompatActivity implements GestureDetector.OnGes
             return true;
         } else if ( (item.getItemId() == R.id.routes_mnu)
                 || (item.getItemId() == R.id.routes_button) ) {
-            in = new Intent().setClass(this, routes.class);
+            in = new Intent().setClass(this, RoutesActivity.class);
             startACoreActivity(this, in, false, 0);
             return true;
         } else if ( (item.getItemId() == R.id.web_mnu)
@@ -1023,9 +1022,9 @@ public class turnouts extends AppCompatActivity implements GestureDetector.OnGes
 
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(() -> {
-                    Intent in1 = new Intent().setClass(turnouts.this, ConnectionActivity.class);
+                    Intent in1 = new Intent().setClass(TurnoutsActivity.this, ConnectionActivity.class);
                     startActivity(in1);
-                    ConnectionActivity.overridePendingTransition(turnouts.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(TurnoutsActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }, 2000);
             });
             b.setNegativeButton(R.string.no, null);
@@ -1397,7 +1396,7 @@ public class turnouts extends AppCompatActivity implements GestureDetector.OnGes
                 mainapp.buttonVibration();
             };
 
-            AlertDialog.Builder ab = new AlertDialog.Builder(turnouts.this);
+            AlertDialog.Builder ab = new AlertDialog.Builder(TurnoutsActivity.this);
             ab.setIcon(R.drawable.glyph_warning);
             ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogRecentTurnoutsConfirmClearQuestions))

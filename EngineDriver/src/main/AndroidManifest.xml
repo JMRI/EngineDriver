@@ -86,7 +86,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_original"
+            android:name=".ThrottleActivityHorizontalOriginal"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
@@ -95,7 +95,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_switching_horizontal"
+            android:name=".ThrottleActivityHorizontalSwitching"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
@@ -104,7 +104,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_simple"
+            android:name=".ThrottleActivityVerticalSimple"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
@@ -113,7 +113,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_vertical_left_or_right"
+            android:name=".ThrottleActivityVertical"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
@@ -122,7 +122,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_switching_left_or_right"
+            android:name=".ThrottleActivityVerticalSwitching"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
@@ -131,7 +131,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_big_buttons"
+            android:name=".ThrottleActivityBigButtons"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
@@ -140,7 +140,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".throttle_semi_realistic"
+            android:name=".ThrottleActivitySemiRealistic"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
@@ -163,7 +163,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".turnouts"
+            android:name=".TurnoutsActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name_turnouts"
             android:launchMode="singleTop"
@@ -171,7 +171,7 @@
             android:theme="@style/app_theme_black" >
         </activity>
         <activity
-            android:name=".routes"
+            android:name=".RoutesActivity"
             android:label="@string/app_name_routes_long"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTop"

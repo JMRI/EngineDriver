@@ -1228,7 +1228,7 @@ public class ResponseProcessorDccex {
                         SendProcessorDccex.sendDccexRequestTracks();
                 }
 
-            } else { // routes list   <jA id1 id2 id3 ...>   or <jA> for empty
+            } else { // RoutesActivity list   <jA id1 id2 id3 ...>   or <jA> for empty
 
                 threaded_application.logging(activityName + ": processDccexRoutes(): Routes list received.");
                 if (!mainapp.dccexRoutesBeingProcessed) {

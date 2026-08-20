@@ -44,8 +44,8 @@ import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
-public class throttle_switching_left_or_right extends throttle {
-    static final String activityName = "throttle_switching_left_or_right";
+public class ThrottleActivityVerticalSwitching extends ThrottleActivity {
+    static final String activityName = "ThrottleActivityVerticalSwitching";
 
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SWITCHING;
     protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = max_throttles_current_screen_type.SWITCHING_LEFT_OR_RIGHT;

@@ -1197,7 +1197,7 @@ public class ImportExportPreferences {
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void writeRecentTurnoutsListToFile(Context context, SharedPreferences sharedPreferences) {
-//        threaded_application.logging(activityName + ": writeRecentTurnoutsListToFile(): Writing recent turnouts list to file");
+//        threaded_application.logging(activityName + ": writeRecentTurnoutsListToFile(): Writing recent TurnoutsActivity list to file");
 
         File engine_list_file = new File(context.getExternalFilesDir(null), RECENT_TURNOUTS_FILENAME);
 
@@ -1251,7 +1251,7 @@ public class ImportExportPreferences {
     }
 
         public void loadRecentTurnoutsListFromFile(Context context) {
-//        threaded_application.logging(activityName + ": loadRecentTurnoutsListFromFile(): Loading recent turnouts list from file");
+//        threaded_application.logging(activityName + ": loadRecentTurnoutsListFromFile(): Loading recent TurnoutsActivity list from file");
         try {
             // Populate the List with the recent engines saved in a file. This
             // will be stored in recent_engine_list.txt

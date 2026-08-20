@@ -44,8 +44,8 @@ import jmri.enginedriver.util.HorizontalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
-public class throttle_switching_horizontal extends throttle {
-    static final String activityName = "throttle_switching_horizontal";
+public class ThrottleActivityHorizontalSwitching extends ThrottleActivity {
+    static final String activityName = "ThrottleActivityHorizontalSwitching";
 
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SWITCHING_HORIZONTAL;
 

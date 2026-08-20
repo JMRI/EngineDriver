@@ -60,8 +60,8 @@ import jmri.enginedriver.type.web_view_location_type;
 import jmri.enginedriver.type.speed_commands_from_type;
 import jmri.enginedriver.type.stop_button_type;
 
-public class throttle_semi_realistic extends throttle {
-    static final String activityName = "throttle_semi_realistic";
+public class ThrottleActivitySemiRealistic extends ThrottleActivity {
+    static final String activityName = "ThrottleActivitySemiRealistic";
 
     protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.SEMI_REALISTIC;
 

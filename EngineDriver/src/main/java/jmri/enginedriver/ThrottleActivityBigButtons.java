@@ -19,7 +19,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 package jmri.enginedriver;
 
 import android.annotation.SuppressLint;
-import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
@@ -35,21 +34,16 @@ import android.widget.ScrollView;
 import java.util.LinkedHashMap;
 
 import jmri.enginedriver.type.max_throttles_current_screen_type;
-import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.util.VerticalSeekBar;
 import jmri.enginedriver.type.slider_type;
 import jmri.enginedriver.type.web_view_location_type;
 
-public class throttle_vertical_left_or_right extends throttle {
-    static final String activityName = "throttle_vertical_left_or_right";
+public class ThrottleActivityBigButtons extends ThrottleActivity {
+    static final String activityName = "ThrottleActivityBigButtons";
 
-    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.VERTICAL;
-    protected static final int MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT = max_throttles_current_screen_type.VERTICAL_LEFT_OR_RIGHT;
-    protected static final int  MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT = max_throttles_current_screen_type.VERTICAL_TABLET;
+    protected static final int MAX_SCREEN_THROTTLES = max_throttles_current_screen_type.BIG_BUTTONS;
 
     private LinearLayout[] lThrottles;
-    private LinearLayout[] lUppers;
-    private LinearLayout[] lLowers;
     private ScrollView[] svFunctionButtons;
 
     protected void removeLoco(int whichThrottle) {
@@ -60,34 +54,18 @@ public class throttle_vertical_left_or_right extends throttle {
 
     protected void setScreenDetails() {
         mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-        mainapp.currentScreenSupportsWebView = true;
-        sliderType = slider_type.VERTICAL;
+        mainapp.currentScreenSupportsWebView = false;
 
-        prefThrottleScreenType = prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault));
         switch (prefs.getString("prefThrottleScreenType", getApplicationContext().getResources().getString(R.string.prefThrottleScreenTypeDefault))) {
-            case "Vertical":
-                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES;
-                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear;
+            case "Big Right":
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_big_buttons_right;
                 break;
-            case "Vertical Right":
-                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_right;
-                break;
-            case "Tablet Vertical Left":
-                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_tablet_left;
-                break;
-            case "Tablet Vertical Left - two function columns":
-                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_VERTICAL_TABLET_LEFT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_tablet_left_two_function_columns;
-                break;
-            case "Vertical Left":
+            case "Big Left":
             default:
-                mainapp.maxThrottlesCurrentScreen = MAX_SCREEN_THROTTLES_LEFT_OR_RIGHT;
-                mainapp.throttleLayoutViewId = R.layout.throttle_page_vertical_linear_left;
+                mainapp.throttleLayoutViewId = R.layout.throttle_page_big_buttons_left;
                 break;
         }
-    }
+    } // end setScreen()
 
     @SuppressLint({"Recycle", "SetJavaScriptEnabled", "ClickableViewAccessibility"})
     @Override
@@ -100,6 +78,7 @@ public class throttle_vertical_left_or_right extends throttle {
         mainapp.throttleSwitchAllowed = false; // used to prevent throttle switches until the previous onStart() completes
 
         setScreenDetails();
+
         super.onCreate(savedInstanceState);
 
     } // end of onCreate()
@@ -107,8 +86,9 @@ public class throttle_vertical_left_or_right extends throttle {
     @Override
     public void onStart() {
         threaded_application.logging(activityName + ": onStart(): called");
-
         if (mainapp.appIsFinishing) return;
+
+        sliderType = slider_type.VERTICAL;   // they are not visible
 
         if(mainapp.throttleSwitchWasRequestedOrReinitialiseRequired) {
             setScreenDetails();
@@ -132,7 +112,7 @@ public class throttle_vertical_left_or_right extends throttle {
         if (mainapp.appIsFinishing) { return;}
 
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            if (throttleIndex < mainapp.prefNumThrottles) {
+            if( throttleIndex < mainapp.prefNumThrottles) {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.VISIBLE);
             } else {
                 lThrottles[throttleIndex].setVisibility(LinearLayout.GONE);
@@ -145,69 +125,48 @@ public class throttle_vertical_left_or_right extends throttle {
     void initialiseUiElements() {
         super.initialiseUiElements();
 
-        TypedArray function_buttons_table_resource_ids = getResources().obtainTypedArray(R.array.function_buttons_table_resource_ids);
-
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            functionButtonViewGroups[throttleIndex] = findViewById(function_buttons_table_resource_ids.getResourceId(throttleIndex,0));
+            //noinspection SwitchStatementWithTooFewBranches
+            switch (throttleIndex) {
+                case 0:
+                    functionButtonViewGroups[throttleIndex] = findViewById(R.id.function_buttons_table_0);
+                    break;
+            }
+
         }
 
         lThrottles = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         llSetSpeeds = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
         svFunctionButtons = new ScrollView[mainapp.maxThrottlesCurrentScreen];
         vsbSpeeds = new VerticalSeekBar[mainapp.maxThrottlesCurrentScreen];
-        lUppers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
-        lLowers = new LinearLayout[mainapp.maxThrottlesCurrentScreen];
 
-        TypedArray throttle_resource_ids = getResources().obtainTypedArray(R.array.throttle_resource_ids);
-        TypedArray loco_upper_resource_ids = getResources().obtainTypedArray(R.array.loco_upper_resource_ids);
-        TypedArray loco_lower_resource_ids = getResources().obtainTypedArray(R.array.loco_lower_resource_ids);
-        TypedArray throttle_set_speed_resource_ids = getResources().obtainTypedArray(R.array.throttle_set_speed_resource_ids);
-        TypedArray speed_resource_ids = getResources().obtainTypedArray(R.array.speed_resource_ids);
-        TypedArray function_buttons_scroller_resource_ids = getResources().obtainTypedArray(R.array.function_buttons_scroller_resource_ids);
-        TypedArray button_pause_resource_ids = getResources().obtainTypedArray(R.array.button_pause_resource_ids);
+        lThrottles[0] = findViewById(R.id.throttle_0);
+        llSetSpeeds[0] = findViewById(R.id.throttle_0_set_speed);
+        vsbSpeeds[0] = findViewById(R.id.speed_0);
+        svFunctionButtons[0] = findViewById(R.id.function_buttons_scroller_0);
+        bPauses[0] = findViewById(R.id.button_pause_0);
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            lThrottles[throttleIndex] = findViewById(throttle_resource_ids.getResourceId(throttleIndex,0));
-            lUppers[throttleIndex] = findViewById(loco_upper_resource_ids.getResourceId(throttleIndex,0));
-            lLowers[throttleIndex] = findViewById(loco_lower_resource_ids.getResourceId(throttleIndex,0));
-            llSetSpeeds[throttleIndex] = findViewById(throttle_set_speed_resource_ids.getResourceId(throttleIndex,0));
-            vsbSpeeds[throttleIndex] = findViewById(speed_resource_ids.getResourceId(throttleIndex,0));
-            svFunctionButtons[throttleIndex] = findViewById(function_buttons_scroller_resource_ids.getResourceId(throttleIndex,0));
-            bPauses[throttleIndex] = findViewById(button_pause_resource_ids.getResourceId(throttleIndex,0));
+        PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(0);
+        bPauses[0].setOnTouchListener(pauseSpeedButtonTouchListener);
 
-//            vsbSpeeds[throttleIndex].setTickType(tick_type.TICK_0_100);
-            vsbSpeeds[throttleIndex].setTickType(prefDisplaySpeedUnits);
-            vsbSpeeds[throttleIndex].setShowNumericValues(false);
+        setAllFunctionLabelsAndListeners();
 
-            PauseSpeedButtonTouchListener pauseSpeedButtonTouchListener = new PauseSpeedButtonTouchListener(throttleIndex);
-            bPauses[throttleIndex].setOnTouchListener(pauseSpeedButtonTouchListener);
-        }
-
-        function_buttons_table_resource_ids.recycle();
-        throttle_resource_ids.recycle();
-        loco_upper_resource_ids.recycle();
-        loco_lower_resource_ids.recycle();
-        throttle_set_speed_resource_ids.recycle();
-        speed_resource_ids.recycle();
-        function_buttons_scroller_resource_ids.recycle();
-        button_pause_resource_ids.recycle();
-
-    }
+    } // end initialiseUiElements()
 
     @Override
     protected void getDirectionButtonPrefs() {
         super.getDirectionButtonPrefs();
-        super.DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsShortDefaultValue);
-        super.DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue);
+        super.DIRECTION_BUTTON_LEFT_TEXT = getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue);
+        super.DIRECTION_BUTTON_RIGHT_TEXT = getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue);
 
-        super.prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsShortDefaultValue)).trim();
-        super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtonsShort", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsShortDefaultValue)).trim();
+        super.prefLeftDirectionButtons = prefs.getString("prefLeftDirectionButtons", getApplicationContext().getResources().getString(R.string.prefLeftDirectionButtonsDefaultValue)).trim();
+        super.prefRightDirectionButtons = prefs.getString("prefRightDirectionButtons", getApplicationContext().getResources().getString(R.string.prefRightDirectionButtonsDefaultValue)).trim();
     }
 
     // lookup and set values of various informational text labels and size the
     // screen elements
     protected void setLabels() {
-//        threaded_application.logging(activityName + ": setLabels(): starting");
+//        threaded_application.logging(activityName + ": set_labels() starting");
         super.setLabels();
 
         if (mainapp.appIsFinishing) { return;}
@@ -241,14 +200,15 @@ public class throttle_vertical_left_or_right extends throttle {
                     bLabelPlainText = bLabel;
                 }
                 bLabel = mainapp.locoAndConsistNamesCleanupHtml(bLabel);
-                tvbSelectsLabels[throttleIndex].setVisibility(View.GONE);
 
+                tvbSelectsLabels[throttleIndex].setVisibility(View.GONE);
             } else {
                 bLabel = getApplicationContext().getResources().getString(R.string.locoPressToSelect);
                 bLabelPlainText = bLabel;
+                // whichVolume = 'S'; //set the next throttle to use volume control
                 tvbSelectsLabels[throttleIndex].setVisibility(View.VISIBLE);
-            }
 
+            }
             double textScale = 1.0;
             int bWidth = b.getWidth(); // scale text if required to fit the textView
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, conNomTextSize);
@@ -264,10 +224,7 @@ public class throttle_vertical_left_or_right extends throttle {
                         textScale = minTextScale;
                 }
             }
-            int textSize = (int) (conNomTextSize * textScale * 0.95);
-            if (!prefThrottleScreenType.equals(throttle_screen_type.VERTICAL)) {
-                textSize = (int) (conNomTextSize * textScale);
-            }
+            int textSize = (int) (conNomTextSize * textScale);
             b.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
 //            b.setText(bLabel);
             b.setText(Html.fromHtml(bLabel));
@@ -287,21 +244,25 @@ public class throttle_vertical_left_or_right extends throttle {
         // update the direction indicators
         showDirectionIndications();
 
+
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         // Get the screen's density scale
         final float denScale = dm.density;
 
-
         int screenWidth = vThrottleScreenWrap.getWidth(); // get the width of usable area
-        int throttleWidth = screenWidth / mainapp.prefNumThrottles;
+        int throttleWidth = (screenWidth - (int) (denScale * 6)) / mainapp.prefNumThrottles;
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             lThrottles[throttleIndex].getLayoutParams().height = LinearLayout.LayoutParams.MATCH_PARENT;
             lThrottles[throttleIndex].getLayoutParams().width = throttleWidth;
             lThrottles[throttleIndex].requestLayout();
+
+            llSetSpeeds[throttleIndex].getLayoutParams().width = throttleWidth - svFunctionButtons[throttleIndex].getWidth();
             llSetSpeeds[throttleIndex].requestLayout();
         }
 
         setImmersiveMode(webView);
+        if ( (systemStatusRowHeightKeep==0) || (systemNavigationRowHeightKeep==0) ) return; // not ready yet
+
         int screenHeight = vThrottleScreenWrap.getHeight(); // get the Height of usable area
         screenHeight = screenHeight - systemStatusRowHeight - systemNavigationRowHeight; // cater for immersive mode
         int fullScreenHeight = screenHeight;
@@ -315,96 +276,32 @@ public class throttle_vertical_left_or_right extends throttle {
         if (screenHeight == 0) {
             // throttle screen hasn't been drawn yet, so use display metrics for now
             screenHeight = dm.heightPixels - (int) (titleBar * (dm.densityDpi / 160.)); // allow for title bar, etc
-            //threaded_application.logging(activityName + ": setLabels(): vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
-        }
-
-        // save part the screen for webview
-        if (prefWebViewLocation.equals(web_view_location_type.TOP) || prefWebViewLocation.equals(web_view_location_type.BOTTOM)) {
-            webViewIsOn = true;
-            if (!prefIncreaseWebViewSize) {
-                screenHeight = (int) Math.round(screenHeight * 0.5); // save half the screen
-            } else {
-                screenHeight = (int) Math.round(screenHeight * 0.6); // save 60% of the screen for web view
-            }
-            LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,fullScreenHeight - titleBar - screenHeight);
-            webView.setLayoutParams(webViewParams);
+            //threaded_application.logging(activityName + ": vThrottleScreenWrap.getHeight()=0, new screenHeight=" + screenHeight);
         }
 
         ImageView myImage = findViewById(R.id.backgroundImgView);
         myImage.getLayoutParams().height = screenHeight;
 
-        int speedButtonHeight = (int) (50 * denScale);
-
-        LinearLayout.LayoutParams stopButtonParams;
-        stopButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-        int prefVerticalStopButtonMargin = threaded_application.getIntPrefValue(prefs, "prefVerticalStopButtonMargin", "0");
-        stopButtonParams.topMargin = Math.max(prefVerticalStopButtonMargin, (int) (speedButtonHeight * 0.5));
-        stopButtonParams.bottomMargin = prefVerticalStopButtonMargin;
-        stopButtonParams.height = speedButtonHeight;
-
-        if (prefs.getBoolean("prefHideSlider", getResources().getBoolean(R.bool.prefHideSliderDefaultValue))) {
-            speedButtonHeight = (int) ((screenHeight
-                    - stopButtonParams.topMargin
-                    - stopButtonParams.bottomMargin
-                    - (220 * denScale)) / 2);
-        }
-
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            //show speed buttons based on pref
-            if (prefs.getBoolean("prefDisplaySpeedButtons", false)) {
-                bLeftSpeeds[throttleIndex].setVisibility(View.VISIBLE);
-                bRightSpeeds[throttleIndex].setVisibility(View.VISIBLE);
-
-                bLeftSpeeds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                bLeftSpeeds[throttleIndex].getLayoutParams().height = speedButtonHeight;
-                bLeftSpeeds[throttleIndex].requestLayout();
-                bRightSpeeds[throttleIndex].getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                bRightSpeeds[throttleIndex].getLayoutParams().height = speedButtonHeight;
-                bRightSpeeds[throttleIndex].requestLayout();
+        // save part the screen for webview
+        if (!prefWebViewLocation.equals(web_view_location_type.NONE)) {
+            webViewIsOn = true;
+            if (!prefIncreaseWebViewSize) {
+                screenHeight = (int) Math.round(screenHeight * 0.5); // save half the screen
             } else {
-                bLeftSpeeds[throttleIndex].setVisibility(View.GONE);
-                bRightSpeeds[throttleIndex].setVisibility(View.GONE);
+                screenHeight = (int) Math.round(screenHeight * 0.4); // save 60% of the screen for web view
             }
-
-//            bStops[throttleIndex].getLayoutParams().height = (int) (speedButtonHeight * 0.8);
-            bStops[throttleIndex].setLayoutParams(stopButtonParams);
+            LinearLayout.LayoutParams webViewParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,fullScreenHeight - titleBar - screenHeight);
+            webView.setLayoutParams(webViewParams);
         }
 
-        for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
-            // set height of each function button area
-            svFunctionButtons[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
-            svFunctionButtons[throttleIndex].requestLayout();
-            lLowers[throttleIndex].getLayoutParams().height = screenHeight - lUppers[throttleIndex].getHeight();
-            lLowers[throttleIndex].requestLayout();
-
-            int[] location = new int[2];
-            throttleOverlay.getLocationOnScreen(location);
-            int ovx = location[0];
-            int ovy = location[1];
-
-            location = new int[2];
-            vsbSpeeds[throttleIndex].getLocationOnScreen(location);
-            int x = location[0];
-            int y = location[1];
-
-            sliderTopLeftX[throttleIndex] = x - ovx;
-            sliderTopLeftY[throttleIndex] = y - ovy;
-            sliderBottomRightX[throttleIndex] = x + vsbSpeeds[throttleIndex].getWidth() - ovx;
-            sliderBottomRightY[throttleIndex] = y + vsbSpeeds[throttleIndex].getHeight() - ovy;
-
-//            threaded_application.logging(activityName + ": setLabels(): slider: " + throttleIndex + " Top: " + sliderTopLeftX[throttleIndex] + ", " + sliderTopLeftY[throttleIndex]
-//                    + " Bottom: " + sliderBottomRightX[throttleIndex] + ", " + sliderBottomRightY[throttleIndex]);
-
-        }
-
-
+//        int speedButtonHeight = (int) (50 * denScale);
 
 //        // update the state of each function button based on shared variable
         for (int throttleIndex = 0; throttleIndex < mainapp.maxThrottlesCurrentScreen; throttleIndex++) {
             setAllFunctionStates(throttleIndex);
         }
 
-        // threaded_application.logging(activityName + ": setLabels() end");
+        // threaded_application.logging(activityName + ": ending set_labels");
 
     }
 
@@ -427,7 +324,7 @@ public class throttle_vertical_left_or_right extends throttle {
     // helper function to enable/disable all children for a group
     @Override
     void enableDisableButtonsForView(ViewGroup vg, boolean newEnabledState) {
-        // threaded_application.logging(activityName + ": enableDisableButtonsForView " + newEnabledState);
+        // threaded_application.logging(activityName + ": enableDisableButtonsForView() " + newEnabledState);
 
         if (vg == null) { return;}
         if (mainapp.appIsFinishing) { return;}
@@ -458,11 +355,10 @@ public class throttle_vertical_left_or_right extends throttle {
         }
     }
 
-
     // update a function button appearance based on its state
     @Override
     void set_function_state(int whichThrottle, int function) {
-        // threaded_application.logging(activityName + ": set_function_request()");
+        if (whichThrottle > mainapp.maxThrottlesCurrentScreen) return;
 
         Button b;
         boolean[] fs;   // copy of this throttle's function state array

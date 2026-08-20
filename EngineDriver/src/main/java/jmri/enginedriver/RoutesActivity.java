@@ -78,9 +78,9 @@ import jmri.enginedriver.util.InterceptEditText;
 import jmri.enginedriver.util.LocaleHelper;
 import jmri.enginedriver.type.sort_type;
 
-public class routes extends AppCompatActivity
+public class RoutesActivity extends AppCompatActivity
         implements GestureDetector.OnGestureListener, DccexAutomation.OnConfirmListener {
-    static final String activityName = "routes";
+    static final String activityName = "RoutesActivity";
 
     private threaded_application mainapp;  // hold pointer to mainapp
 
@@ -101,7 +101,6 @@ public class routes extends AppCompatActivity
     private LinearLayout screenNameLine;
     private Toolbar toolbar;
     private LinearLayout statusLine;
-    private int toolbarHeight;
 
     ListView routes_lv;
     protected View routesView;
@@ -665,7 +664,7 @@ public class routes extends AppCompatActivity
                 } else {
                     threaded_application.activityInTransition(activityName);
                     Intent in = mainapp.getThrottleIntent();
-                    startACoreActivity(routes.this, in, false, 0);
+                    startACoreActivity(RoutesActivity.this, in, false, 0);
                 }
             }
         };
@@ -838,7 +837,7 @@ public class routes extends AppCompatActivity
             return true;
         } else if ( (item.getItemId() == R.id.turnouts_mnu)
                 || (item.getItemId() == R.id.turnouts_button) ) {
-            in = new Intent().setClass(this, turnouts.class);
+            in = new Intent().setClass(this, TurnoutsActivity.class);
             startACoreActivity(this, in, false, 0);
             return true;
         } else if ( (item.getItemId() == R.id.web_mnu)
@@ -893,9 +892,9 @@ public class routes extends AppCompatActivity
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(() -> {
                     threaded_application.activityInTransition(activityName);
-                    Intent in1 = new Intent().setClass(routes.this, ConnectionActivity.class);
+                    Intent in1 = new Intent().setClass(RoutesActivity.this, ConnectionActivity.class);
                     startActivity(in1);
-                    ConnectionActivity.overridePendingTransition(routes.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(RoutesActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }, 2000);
             });
             b.setNegativeButton(R.string.no, null);

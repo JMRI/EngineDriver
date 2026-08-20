@@ -182,7 +182,7 @@ import jmri.enginedriver.type.accelerometer_action_type;
 import jmri.enginedriver.type.direction_type;
 import jmri.enginedriver.type.gamepad_status_type;
 
-public class throttle extends AppCompatActivity implements
+public class ThrottleActivity extends AppCompatActivity implements
         android.gesture.GestureOverlayView.OnGestureListener,
         PermissionsHelper.PermissionsHelperGrantedCallback,
         KeyboardNotifierInterface,
@@ -1255,7 +1255,7 @@ public class throttle extends AppCompatActivity implements
                         boolean instructional = false;
                         if (bundle.containsKey(alert_bundle_tag_type.INSTRUCTIONAL))
                             instructional = bundle.getBoolean(alert_bundle_tag_type.INSTRUCTIONAL);
-                        threaded_application.showCustomToast(throttle.this, "", message, duration, 4, instructional);
+                        threaded_application.showCustomToast(ThrottleActivity.this, "", message, duration, 4, instructional);
                     }
                     break;
 
@@ -1334,9 +1334,9 @@ public class throttle extends AppCompatActivity implements
 
                 setScreenBrightnessMode(SCREEN_BRIGHTNESS_MODE_MANUAL);
 
-                if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
+                if (!PermissionsHelper.getInstance().isPermissionGranted(ThrottleActivity.this, PermissionsHelper.WRITE_SETTINGS)) {
                     if (Build.VERSION.SDK_INT >= 23) {
-                        PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                        PermissionsHelper.getInstance().requestNecessaryPermissions(ThrottleActivity.this, PermissionsHelper.WRITE_SETTINGS);
                     }
                 }
                 try {
@@ -1370,9 +1370,9 @@ public class throttle extends AppCompatActivity implements
 
 //        if (mainapp.androidVersion >= mainapp.minScreenDimNewMethodVersion) {
             if (brightnessModeValue >= 0 && brightnessModeValue <= 1) {
-                if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, PermissionsHelper.WRITE_SETTINGS)) {
+                if (!PermissionsHelper.getInstance().isPermissionGranted(ThrottleActivity.this, PermissionsHelper.WRITE_SETTINGS)) {
                     if (Build.VERSION.SDK_INT >= 23) {
-                        PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, PermissionsHelper.WRITE_SETTINGS);
+                        PermissionsHelper.getInstance().requestNecessaryPermissions(ThrottleActivity.this, PermissionsHelper.WRITE_SETTINGS);
                     }
                 }
                 try {
@@ -2050,6 +2050,9 @@ public class throttle extends AppCompatActivity implements
     // get the current speed of the throttle from the slider
     int getSpeed(int whichThrottle) {
         return getThrottleSlider(whichThrottle).getProgress();
+//        int result = getThrottleSlider(whichThrottle).getProgress();
+//        threaded_application.extendedLogging(activityName + ": getSpeed():  speed: " + result);
+//        return result;
     }
 
     private int getScaleSpeed(int whichThrottle) {
@@ -2060,6 +2063,9 @@ public class throttle extends AppCompatActivity implements
             speed = 0;
         }
         return (int) Math.round(speed * speedScale) - 1;
+//        int result = (int) Math.round(speed * speedScale) - 1;
+//        threaded_application.extendedLogging(activityName + ": getSpeed():  scalespeed: " + result);
+//        return result;
     }
 
     int getMaxSpeed(int whichThrottle) {
@@ -3475,18 +3481,18 @@ public class throttle extends AppCompatActivity implements
             case gamepad_or_keyboard_event_type.INCREASE_SPEED_START: {
                 mGamepadAutoIncrement = true;
                 if (!isSemiRealisticThrottle) {
-                    gamepadRepeatUpdateHandler.post(new throttle.GamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.GamepadRptUpdater(whichThrottle, 1));
                 } else { // semi-realistic throttle variant
-                    gamepadRepeatUpdateHandler.post(new throttle.SemiRealisticGamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.SemiRealisticGamepadRptUpdater(whichThrottle, 1));
                 }
                 break;
             }
             case gamepad_or_keyboard_event_type.DECREASE_SPEED_START: {
                 mGamepadAutoDecrement = true;
                 if (!isSemiRealisticThrottle) {
-                    gamepadRepeatUpdateHandler.post(new throttle.GamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.GamepadRptUpdater(whichThrottle, 1));
                 } else { // semi-realistic throttle variant
-                    gamepadRepeatUpdateHandler.post(new throttle.SemiRealisticGamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.SemiRealisticGamepadRptUpdater(whichThrottle, 1));
                 }
                 break;
             }
@@ -5381,13 +5387,17 @@ public class throttle extends AppCompatActivity implements
             if ((fromUser) || (touchFromUser)) {
 
                 int adjustedSpeed = getNotchedSpeed(speed);
-                if (adjustedSpeed != speed)
+                threaded_application.extendedLogging(activityName + ": onProgressChanged():  speed: " + speed + " adjustedSpeed: " + adjustedSpeed);
+
+                if (adjustedSpeed != speed) {
                     throttle.setProgress(adjustedSpeed);
+                    speed = adjustedSpeed;
+                }
 
                 if ((!limitedJump[whichThrottle])         // touch generates multiple onProgressChanged events, skip processing after first limited jump
                         && (sliderType != slider_type.SWITCHING)) {
 
-                    int dif = adjustedSpeed - lastSpeed;
+                    int dif = speed - lastSpeed;
                     if (prefSpeedButtonsSpeedStepDecrement) {  // don't limit the decrement speed if the preference is not set
                         dif = (Math.abs(speed - lastSpeed));
                     }
@@ -5396,25 +5406,28 @@ public class throttle extends AppCompatActivity implements
 
                         // threaded_application.logging(activityName + ": onProgressChanged(): throttling change");
 
-                        if (adjustedSpeed < lastSpeed) { // going down
+                        if (speed < lastSpeed) { // going down
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.DECREMENT);
                         } else { // going up
                             setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.INCREMENT);
                         }
                         jumpSpeed = adjustedSpeed;      // save ultimate target value
                         limitedJump[whichThrottle] = true;
+//                        threaded_application.extendedLogging(activityName + ": onProgressChanged():  setProgress() 1 lastSpeed: " + lastSpeed);
                         throttle.setProgress(lastSpeed);
 
                         repeatUpdateHandler.post(new RptUpdater(whichThrottle, 0));
 
                         return;
                     }
+//                    threaded_application.extendedLogging(activityName + ": onProgressChanged():  sendSpeedMsg() speed: " + speed);
                     sendSpeedMsg(whichThrottle, speed);
                     setDisplayedSpeed(whichThrottle, speed);
                     if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
                 } else {                      // got a touch while processing limitJump
                     speed = lastSpeed;    //   so suppress multiple touches
+//                    threaded_application.extendedLogging(activityName + ": onProgressChanged():  setProgress() 2 lastSpeed: " + lastSpeed);
                     throttle.setProgress(lastSpeed);
                     if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
                 }
@@ -5431,6 +5444,7 @@ public class throttle extends AppCompatActivity implements
                             || ((mAutoDecrement[whichThrottle]) && (speed <= jumpSpeed))) {
                         setAutoIncrementOrDecrement(whichThrottle, auto_increment_or_decrement_type.OFF);
                         limitedJump[whichThrottle] = false;
+//                        threaded_application.extendedLogging(activityName + ": onProgressChanged():  setProgress() jumpSpeed: " + jumpSpeed);
                         throttle.setProgress(jumpSpeed);
                         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
                     }
@@ -5458,6 +5472,7 @@ public class throttle extends AppCompatActivity implements
 
     // send a throttle speed message to WiT with message pacing
     public void sendSpeedMsg(int whichThrottle, int speed) {
+//        threaded_application.extendedLogging(activityName + ": sendSpeedMsg() speed: " + speed);
         if (!speedMessagePacingTimers[whichThrottle].isDelayInProgress()) {
             sendSpeedMsgBasic(whichThrottle, speed);
             speedMessagePacingTimers[whichThrottle].pacingDelay();
@@ -5626,7 +5641,7 @@ public class throttle extends AppCompatActivity implements
                     } else {
                         setImmersiveMode(webView);
                         if (mainapp.activityBundleMessageHandlers[activity_id_type.THROTTLE] != null) {
-                            mainapp.checkExit(throttle.this);
+                            mainapp.checkExit(ThrottleActivity.this);
                         } else { // something has gone wrong and the activity did not shut down properly so force it
                             shutdown();
                         }
@@ -5640,7 +5655,7 @@ public class throttle extends AppCompatActivity implements
 
         // only do this in onCreate
         if (prefs.getBoolean("prefThrottlesLocos",getResources().getBoolean(R.bool.prefThrottlesLocosDefaultValue))) {
-            threaded_application.showCustomToast(throttle.this, getResources().getString(R.string.prefThrottlesLocosToast), Toast.LENGTH_SHORT, 4);
+            threaded_application.showCustomToast(ThrottleActivity.this, getResources().getString(R.string.prefThrottlesLocosToast), Toast.LENGTH_SHORT, 4);
             final Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(() -> {
                 importExportPreferences.loadThrottlesEnginesListFromFile(mainapp, getApplicationContext());
@@ -5843,7 +5858,7 @@ public class throttle extends AppCompatActivity implements
         }
 
         // continue showing any toasts from other Activities
-        threaded_application.showCustomToast(throttle.this, "", "<null>", Toast.LENGTH_LONG, 4, false, false);
+        threaded_application.showCustomToast(ThrottleActivity.this, "", "<null>", Toast.LENGTH_LONG, 4, false, false);
     } // end onResume()
 
     @SuppressLint({"ClickableViewAccessibility", "SetJavaScriptEnabled"})
@@ -6886,13 +6901,13 @@ public class throttle extends AppCompatActivity implements
         Intent in;
         if ( (item.getItemId() == R.id.turnouts_mnu)
         || (item.getItemId() == R.id.turnouts_button) ) {
-            in = new Intent().setClass(this, turnouts.class);
+            in = new Intent().setClass(this, TurnoutsActivity.class);
             startACoreActivity(this, in, false, 0);
             return true;
 
         } else if ( (item.getItemId() == R.id.routes_mnu)
         || (item.getItemId() == R.id.routes_button) ) {
-            in = new Intent().setClass(this, routes.class);
+            in = new Intent().setClass(this, RoutesActivity.class);
             startACoreActivity(this, in, false, 0);
             return true;
 
@@ -6954,9 +6969,9 @@ public class throttle extends AppCompatActivity implements
                 mainapp.alertCommHandlerWithBundle(message_type.DISCONNECT);
                 final Handler handler = new Handler(Looper.getMainLooper());
                 handler.postDelayed(() -> {
-                    Intent in1 = new Intent().setClass(throttle.this, ConnectionActivity.class);
+                    Intent in1 = new Intent().setClass(ThrottleActivity.this, ConnectionActivity.class);
                     startActivity(in1);
-                    ConnectionActivity.overridePendingTransition(throttle.this, R.anim.fade_in, R.anim.fade_out);
+                    ConnectionActivity.overridePendingTransition(ThrottleActivity.this, R.anim.fade_in, R.anim.fade_out);
                 }, 2000);
             });
             b.setNegativeButton(R.string.no, null);
@@ -7601,9 +7616,9 @@ public class throttle extends AppCompatActivity implements
     @SuppressLint("SwitchIntDef")
     public void navigateToHandler(@RequestCodes int requestCode) {
         threaded_application.logging(activityName + ": navigateToHandler:" + requestCode);
-        if (!PermissionsHelper.getInstance().isPermissionGranted(throttle.this, requestCode)) {
+        if (!PermissionsHelper.getInstance().isPermissionGranted(ThrottleActivity.this, requestCode)) {
             if (Build.VERSION.SDK_INT >= 23) {
-                PermissionsHelper.getInstance().requestNecessaryPermissions(throttle.this, requestCode);
+                PermissionsHelper.getInstance().requestNecessaryPermissions(ThrottleActivity.this, requestCode);
             }
         } else {
             // Go to the correct handler based on the request code.
@@ -7626,7 +7641,7 @@ public class throttle extends AppCompatActivity implements
 
     @Override
     public void onRequestPermissionsResult(@RequestCodes int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(throttle.this, requestCode, permissions, grantResults)) {
+        if (!PermissionsHelper.getInstance().processRequestPermissionsResult(ThrottleActivity.this, requestCode, permissions, grantResults)) {
             threaded_application.logging(activityName + ": onRequestPermissionsResult(): Unrecognised request - send up to super class");
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -7745,7 +7760,7 @@ public class throttle extends AppCompatActivity implements
             }
         };
 
-        AlertDialog.Builder ab = new AlertDialog.Builder(throttle.this);
+        AlertDialog.Builder ab = new AlertDialog.Builder(ThrottleActivity.this);
         ab.setMessage(getApplicationContext().getResources().getString(R.string.importServerAutoDialog, mainapp.connectedHostName))
                 .setPositiveButton(R.string.importServerAutoDialogPositiveButton, dialogClickListener)
                 .setNegativeButton(R.string.no, dialogClickListener)
