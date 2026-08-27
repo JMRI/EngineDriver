@@ -2802,6 +2802,7 @@
         <item>prefActionBarShowRoutesButton</item>
         <item>prefActionBarShowWebButton</item>
         <item>prefActionBarShowAdvancedConsistButton</item>
+        <item>prefActionBarShowDccexConsistButton</item>
 <!--        <item>prefDeviceSoundsButton</item>-->
 
         <!-- Throttle Control Preferences -->
@@ -2815,6 +2816,7 @@
         <item>prefSpeedButtonsSpeedStepDecrement</item>
         <item>prefLimitSpeedButtonPreferences</item>  <!-- PreferenceScreen -->
         <item>consist_follow_preferences</item>  <!-- PreferenceScreen -->
+        <item>prefStopButtonEStopOnLongPress</item>  <!-- PreferenceScreen -->
 
         <!-- Additional Throttle Control Preferences -->
         <item>gamepad_preferences</item>  <!-- PreferenceScreen -->
