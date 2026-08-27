@@ -144,6 +144,7 @@ public class comm_handler extends Handler {
                String new_serviceType = bundle.getString(alert_bundle_tag_type.SERVICE_TYPE);
 
                if (new_serviceType.equals(threaded_application.JMDNS_SERVICE_DCC_EX_UDP)) {
+                  mainapp.setIsDccexProtocol(true);
 
                   //avoid duplicate connects, seen when user clicks address multiple times quickly
                   if (comm_thread.socketUdp != null && comm_thread.socketUdp.SocketGood()

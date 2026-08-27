@@ -26,11 +26,11 @@
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Porcentagem</item>
         <item>Auto passos velocidade</item>
-        <item>8 passos</item>
-        <item>10 passos</item>
-        <item>14 passos</item>
-        <item>28 passos</item>
-        <item>128 passos</item>
+        <item>8 passos (0–8)</item>
+        <item>10 passos (0–10)</item>
+        <item>14 passos (0–14)</item>
+        <item>28 passos (0–28)</item>
+        <item>128 passos (0–126)</item>
     </string-array>
 
     <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->

@@ -35,11 +35,11 @@
    <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Procenta</item>
         <item>Automaticky rychlostní kroky</item>
-        <item>8 kroků</item>
-        <item>10 kroků</item>
-        <item>14 kroků</item>
-        <item>28 kroků</item>
-        <item>128 kroků</item>
+        <item>8 kroků (0–8)</item>
+        <item>10 kroků (0–10)</item>
+        <item>14 kroků (0–14)</item>
+        <item>28 kroků (0–28)</item>
+        <item>128 kroků (0–126)</item>
     </string-array>
 
     <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->

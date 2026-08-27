@@ -28,11 +28,11 @@
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Pourcentage</item>
         <item>Crans de vitesse automatiques</item>
-        <item>8 crans</item>
-        <item>10 crans</item>
-        <item>14 crans</item>
-        <item>28 crans</item>
-        <item>128 crans</item>
+        <item>8 crans (0–8)</item>
+        <item>10 crans (0–10)</item>
+        <item>14 crans (0–14)</item>
+        <item>28 crans (0–28)</item>
+        <item>128 crans (0–126)</item>
     </string-array>
 
     <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->

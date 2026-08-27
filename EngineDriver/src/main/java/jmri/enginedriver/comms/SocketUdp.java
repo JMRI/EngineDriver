@@ -16,6 +16,8 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.type.alert_bundle_tag_type;
@@ -187,19 +189,44 @@ class SocketUdp extends Thread {
                 if (str.toString().isEmpty()) break;
                 if ( (str.toString().contains("<")) && (str.toString().contains(">")) ) {
 
-                    String wholeStr = str.toString();
+                    String wholeStr = replaceAnglesInQuotes(str.toString());
                     int endIdx = wholeStr.indexOf(">");
                     String oneStr = wholeStr.substring(wholeStr.indexOf("<"), endIdx + 1);
                     String remainder = (endIdx + 2 <= wholeStr.length()) ? wholeStr.substring(endIdx + 2) : "";
 
-                    threaded_application.logging(activityName+": SocketUdp.read(): whole str »" + wholeStr +"«");
-                    threaded_application.logging(activityName+": SocketUdp.read(): one str   »" + oneStr +"«");
-                    threaded_application.logging(activityName+": SocketUdp.read(): remainder »" + remainder +"«\n\n");
+                    threaded_application.logging(activityName+": <:> SocketUdp.read(): whole str »" + wholeStr +"«");
+                    threaded_application.logging(activityName+": <:> SocketUdp.read(): one str   »" + oneStr +"«");
+                    threaded_application.logging(activityName+": <:> SocketUdp.read(): remainder »" + remainder +"«\n\n");
 
-                    String[] superCmds = oneStr.split("\n");
+                    if ( oneStr.split("\n")[0].contains(">")) {
+                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): single line response: »" + oneStr + "«");
 
-                    for (int j = 0; j < superCmds.length; j++) {
-                        String[] cmds = superCmds[j].split("><");
+                        String[] superCmds = oneStr.split("\n");
+
+                        for (int j = 0; j < superCmds.length; j++) {
+                            String[] cmds = superCmds[j].split("><");
+                            if (cmds.length == 1) { // multiple concatenated commands
+                                comm_thread.processWifiResponse(cmds[0]);
+                            } else {
+                                for (int i = 0; i < cmds.length; i++) {
+                                    if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                                        comm_thread.processWifiResponse(cmds[i]);
+                                    } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
+                                        comm_thread.processWifiResponse(cmds[i] + ">");
+                                    } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                                        comm_thread.processWifiResponse("<" + cmds[i]);
+                                    } else {
+                                        comm_thread.processWifiResponse("<" + cmds[i] + ">");
+                                    }
+                                }
+                            }
+                        }
+                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): single line response end: »" + oneStr + "«");
+
+                    } else { // multi-line response
+                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): multi-line response: »" + oneStr + "«");
+
+                        String[] cmds = oneStr.split("><");
                         if (cmds.length == 1) { // multiple concatenated commands
                             comm_thread.processWifiResponse(cmds[0]);
                         } else {
@@ -215,6 +242,7 @@ class SocketUdp extends Thread {
                                 }
                             }
                         }
+                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): multi-line response end: »" + oneStr + "«");
                     }
                     str.setLength(0);
                     if (!remainder.isEmpty()) str.append(remainder);
@@ -225,14 +253,14 @@ class SocketUdp extends Thread {
                     if (remainder.isEmpty()) break;
 
                 } else {
-                    threaded_application.logging(activityName+": SocketUdp.read(): partial: »" + str + "«");
+                    threaded_application.logging(activityName+": <:> SocketUdp.read(): partial: »" + str + "«");
                     comm_thread.heart.restartInboundInterval();
                     clearInboundTimeout();
                     break;
                 }
             } catch (Exception e) {
                 // Handle disconnected or error
-                threaded_application.logging(activityName+": SocketUdp.processMessage(): error: " + e.getMessage());
+                threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): error: " + e.getMessage());
                 break;
             }
         }
@@ -352,5 +380,23 @@ class SocketUdp extends Thread {
         inboundTimeout = false;
         inboundTimeoutRecovery = false;
         inboundTimeoutRetryCount = 0;
+    }
+
+    public static String replaceAnglesInQuotes(String input) {
+        // Matches anything inside double quotes, handling escaped quotes \"
+        Pattern pattern = Pattern.compile("\"([^\"\\\\]|\\\\.)*\"");
+        Matcher matcher = pattern.matcher(input);
+        StringBuffer sb = new StringBuffer();
+
+        while (matcher.find()) {
+            String match = matcher.group();
+            // Replace < and > only within the matched quoted string
+            String replaced = match.replace("<", "‹").replace(">", "›");
+            // Use Matcher.quoteReplacement to safely handle special characters
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(replaced));
+        }
+        matcher.appendTail(sb);
+
+        return sb.toString();
     }
 }
