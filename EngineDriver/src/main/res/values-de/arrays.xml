@@ -26,11 +26,11 @@
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Prozentsatz</item>
         <item>Auto Geschwindigkeitsstufen</item>
-        <item>8 Stufen</item>
-        <item>10 Stufen</item>
-        <item>14 Stufen</item>
-        <item>28 Stufen</item>
-        <item>128 Stufen</item>
+        <item>8 Stufen (0–8)</item>
+        <item>10 Stufen (0–10)</item>
+        <item>14 Stufen (0–14)</item>
+        <item>28 Stufen (0–28)</item>
+        <item>128 Stufen (0–126)</item>
     </string-array>
 
     <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">  <!-- display version -->

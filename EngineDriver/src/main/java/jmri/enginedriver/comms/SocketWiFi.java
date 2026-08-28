@@ -44,6 +44,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -53,7 +55,7 @@ import jmri.enginedriver.type.connection_type;
 import jmri.enginedriver.type.message_type;
 
 class SocketWiFi extends Thread {
-    public static final String activityName = "SocketUdp";
+    public static final String activityName = "SocketWiFi";
     InetAddress host_address;
     Socket clientSocket = null;
     BufferedReader inputBR = null;
@@ -218,6 +220,8 @@ class SocketWiFi extends Thread {
     //read the input buffer
     public void run() {
         String str;
+        StringBuilder multiLineStr = new StringBuilder();
+        String tempStr = "";
         //continue reading until signaled to exit by endRead
         while (!endRead) {
             if (socketGood) {        //skip read when the socket is down
@@ -230,21 +234,35 @@ class SocketWiFi extends Thread {
                             if (mainapp.isWiThrottleProtocol()) {
                                 comm_thread.processWifiResponse(str);
                             } else {
-                                String [] cmds = str.split("><");
-                                if (cmds.length == 1) { // multiple concatenated commands
-                                    comm_thread.processWifiResponse(str);
-                                } else {
-                                    for (int i=0; i< cmds.length; i++) {
-                                        if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                            comm_thread.processWifiResponse(cmds[i]);
-                                        } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
-                                            comm_thread.processWifiResponse(cmds[i] + ">");
-                                        } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                            comm_thread.processWifiResponse("<" + cmds[i]);
-                                        } else {
-                                            comm_thread.processWifiResponse("<" + cmds[i] + ">");
+                                if (str.contains(">")) {
+                                    if (multiLineStr.length() > 0) {
+                                        multiLineStr.append(str);
+                                        tempStr = multiLineStr.toString();
+                                        multiLineStr = new StringBuilder();
+                                    } else {
+                                        tempStr = str;
+                                    }
+                                    tempStr = replaceAnglesInQuotes(tempStr);
+
+                                    String[] cmds = tempStr.split("><");
+                                    if (cmds.length == 1) { // multiple concatenated commands
+                                        comm_thread.processWifiResponse(tempStr);
+                                    } else {
+                                        for (int i = 0; i < cmds.length; i++) {
+                                            if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                                                comm_thread.processWifiResponse(cmds[i]);
+                                            } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
+                                                comm_thread.processWifiResponse(cmds[i] + ">");
+                                            } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                                                comm_thread.processWifiResponse("<" + cmds[i]);
+                                            } else {
+                                                comm_thread.processWifiResponse("<" + cmds[i] + ">");
+                                            }
                                         }
                                     }
+                                } else { // multi-line response
+                                    multiLineStr.append(str);
+                                    multiLineStr.append("\n");
                                 }
                             }
                         }
@@ -430,5 +448,23 @@ class SocketWiFi extends Thread {
         inboundTimeout = false;
         inboundTimeoutRecovery = false;
         inboundTimeoutRetryCount = 0;
+    }
+
+    public static String replaceAnglesInQuotes(String input) {
+        // Matches anything inside double quotes, handling escaped quotes \"
+        Pattern pattern = Pattern.compile("\"([^\"\\\\]|\\\\.)*\"");
+        Matcher matcher = pattern.matcher(input);
+        StringBuffer sb = new StringBuffer();
+
+        while (matcher.find()) {
+            String match = matcher.group();
+            // Replace < and > only within the matched quoted string
+            String replaced = match.replace("<", "‹").replace(">", "›");
+            // Use Matcher.quoteReplacement to safely handle special characters
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(replaced));
+        }
+        matcher.appendTail(sb);
+
+        return sb.toString();
     }
 }

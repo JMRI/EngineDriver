@@ -73,11 +73,11 @@
     <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>Percentage</item>
         <item>Auto speed steps</item>
-        <item>8 steps</item>
-        <item>10 steps</item>
-        <item>14 steps</item>
-        <item>28 steps</item>
-        <item>128 steps</item>
+        <item>8 steps (0–8)</item>
+        <item>10 steps (0–10)</item>
+        <item>14 steps (0–14)</item>
+        <item>28 steps (0–28)</item>
+        <item>128 steps (0–126)</item>
     </string-array>
     <string-array name="DisplaySpeedUnitEntryValues" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>100</item>
@@ -2802,6 +2802,7 @@
         <item>prefActionBarShowRoutesButton</item>
         <item>prefActionBarShowWebButton</item>
         <item>prefActionBarShowAdvancedConsistButton</item>
+        <item>prefActionBarShowDccexConsistButton</item>
 <!--        <item>prefDeviceSoundsButton</item>-->
 
         <!-- Throttle Control Preferences -->
@@ -2815,6 +2816,7 @@
         <item>prefSpeedButtonsSpeedStepDecrement</item>
         <item>prefLimitSpeedButtonPreferences</item>  <!-- PreferenceScreen -->
         <item>consist_follow_preferences</item>  <!-- PreferenceScreen -->
+        <item>prefStopButtonEStopOnLongPress</item>  <!-- PreferenceScreen -->
 
         <!-- Additional Throttle Control Preferences -->
         <item>gamepad_preferences</item>  <!-- PreferenceScreen -->

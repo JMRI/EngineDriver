@@ -1,7 +1,8 @@
 **Version 2.44.236
 * New Features
       * Shrink Route long button labels.  (Doesn't work on early versions of Android.)
-      * Added 'Help' button and menu item on the Connection Screen.
+      * Added 'Help' button and menu item on the Connection Screen. (Hidden if no internet access.)
+      * Handle multi line responses from DCC-EX.
 * Bug Fixes
       * Enabling of the PROG type buttons would not work unless PROG was the last track.
       * Long Press ESTOP option would stop all throttles.
@@ -19,7 +20,9 @@
         Had to suppress an evironment variable ANDROID_PREFS_ROOT
         (fatal conflict between ANDROID_PREFS_ROOT and ANDROID_USER_HOME.)
       * some linting.
-      * continuation of renaming the files for consistency.
+      * Continuation of renaming the files for consistency.
+      * Force use of the DCC-EX Native Protocol if the server selected by the UDP mDNS server entry.
+      * Support '<' and '>' inside object names for DCC-EX. Accidentally already worked for TCP. More reliable solution added for TCP and UDP.
 **Version 2.44.234
 * New Features
       * mDNS is now far more agressive in trying to find servers.

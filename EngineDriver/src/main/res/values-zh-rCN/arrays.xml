@@ -9,14 +9,14 @@
         <item>短地址</item>
         <item>长地址</item>
     </string-array>
-    <string-array name="DisplaySpeedUnitsEntries">
+    <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>百分比</item>
         <item>自动速度级</item>
-        <item>8步</item>
-        <item>10步</item>
-        <item>14步</item>
-        <item>28步</item>
-        <item>128步</item>
+        <item>8步 (0–8)</item>
+        <item>10步 (0–10)</item>
+        <item>14步 (0–14)</item>
+        <item>28步 (0–28)</item>
+        <item>128步 (0–126)</item>
     </string-array>
     <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">
         <item>百分比</item>

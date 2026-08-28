@@ -887,7 +887,10 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         String currentTime = sdf.format(new Date());
 
         if (inbound) {
-            dccexResponsesListHtml.add("<small><small>" + currentTime + " </small></small> ◄ : <b>" + Html.escapeHtml(msg) + "</b><br />");
+            String multiLineMsg = msg.replace("\n", "!!BR!!");
+            multiLineMsg = Html.escapeHtml(multiLineMsg);
+            multiLineMsg = multiLineMsg.replace("!!BR!!", "<br/>");
+            dccexResponsesListHtml.add("<small><small>" + currentTime + " </small></small> ◄ : <b>" + multiLineMsg + "</b><br />");
         } else {
 //            DccexSendsListHtml.add("<small><small>" + currentTime + " </small></small> ► : &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <i>" + Html.escapeHtml(msg) + "</i><br />");
             dccexSendsListHtml.add("<small><small>" + currentTime + " </small></small> ► : <i>" + Html.escapeHtml(msg) + "</i><br />");

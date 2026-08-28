@@ -1147,7 +1147,24 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         mainapp.setFlashlightActionViewButton(overflowMenu, overflowMenu.findItem(R.id.flashlight_button));
         overflowMenu.findItem(R.id.intro_button).setVisible(!mainapp.prefHideInstructionalToasts);
         overflowMenu.findItem(R.id.settings_button).setVisible(!mainapp.prefHideInstructionalToasts);
-        overflowMenu.findItem(R.id.help_button).setVisible(!mainapp.prefHideInstructionalToasts);
+
+        boolean showHelpButton = !mainapp.prefHideInstructionalToasts;
+        if ( showHelpButton && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ) { // API 23+
+            final ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            showHelpButton = false;
+
+            Network activeNetwork = cm.getActiveNetwork();
+            if (activeNetwork != null) {
+                NetworkCapabilities capabilities = cm.getNetworkCapabilities(activeNetwork);
+                if (capabilities != null) {
+                    // NET_CAPABILITY_INTERNET = Connected to a network that can reach the internet
+                    // NET_CAPABILITY_VALIDATED = Android successfully pinged a server and verified access
+                    showHelpButton = capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED);
+                }
+            }
+        }
+        overflowMenu.findItem(R.id.help_button).setVisible(showHelpButton);
 
         adjustToolbarSize(overflowMenu);
     }

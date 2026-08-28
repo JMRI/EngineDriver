@@ -26,14 +26,14 @@
         <item>ショート</item>
         <item>ロング</item>
     </string-array>
-    <string-array name="DisplaySpeedUnitsEntries">
+    <string-array name="DisplaySpeedUnitsEntries">  <!-- display version -->
         <item>パーセンテージ</item>
         <item>自動速度ステップ</item>
-        <item>8ステップ</item>
-        <item>10ステップ</item>
-        <item>14ステップ</item>
-        <item>28ステップ</item>
-        <item>128ステップ</item>
+        <item>8ステップ (0–8)</item>
+        <item>10ステップ (0–10)</item>
+        <item>14ステップ (0–14)</item>
+        <item>28ステップ (0–28)</item>
+        <item>128ステップ (0–126)</item>
     </string-array>
     <string-array name="prefDisplaySemiRealisticThrottleNotchesEntries">
         <item>パーセンテージ</item>
