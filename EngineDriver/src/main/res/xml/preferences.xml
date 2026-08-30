@@ -2550,6 +2550,20 @@
                     android:summary="@string/prefDccexSequenceItemRequestsSummary"
                     android:title="@string/prefDccexSequenceItemRequestsTitle" />
 
+                <SwitchPreferenceCompat
+                    android:defaultValue="@bool/prefDccexHideDccexServersDefaultValue"
+                    android:key="prefDccexHideDccexServers"
+                    android:layout="@layout/preference_item_switch_no_icon"
+                    android:summary="@string/prefDccexHideDccexServersSummary"
+                    android:title="@string/prefDccexHideDccexServersTitle" />
+
+                <SwitchPreferenceCompat
+                    android:defaultValue="@bool/prefDccexHideUdpServersDefaultValue"
+                    android:key="prefDccexHideUdpServers"
+                    android:layout="@layout/preference_item_switch_no_icon"
+                    android:summary="@string/prefDccexHideUdpServersSummary"
+                    android:title="@string/prefDccexHideUdpServersTitle" />
+
             </PreferenceCategory>
 
         </PreferenceScreen>

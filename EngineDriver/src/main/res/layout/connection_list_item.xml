@@ -43,15 +43,14 @@
         android:id="@+id/ssid_item_label"
         style="?attr/list_extras_style"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_toLeftOf="@id/serverType_simple_item_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingStart="10dp"
         android:paddingRight="0dp"
         android:text="ssid"
-        tools:ignore="HardcodedText,RtlHardcoded"
-        android:layout_alignParentEnd="true" />
+        tools:ignore="HardcodedText,RtlHardcoded"/>
 
     <TextView
         android:id="@+id/serverType_item_label"
@@ -63,6 +62,19 @@
         android:paddingLeft="0dp"
         android:text=""
         android:visibility="gone"
+        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/serverType_simple_item_label"
+        style="?attr/list_id_style"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:text="(WiThrottle)"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry"
         android:layout_alignParentEnd="true" />
 

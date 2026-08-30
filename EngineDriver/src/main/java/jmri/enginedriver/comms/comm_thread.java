@@ -279,10 +279,10 @@ public class comm_thread extends Thread {
                     hostName + " [JMRI DCC-EX]";
             case threaded_application.JMDNS_SERVICE_DCC_EX_TCP,
                  threaded_application.DCCEX_TCP_TYPE ->
-                    hostName + " [TCP DCC-EX]";
+                    hostName + " [TCP]";
             case threaded_application.JMDNS_SERVICE_DCC_EX_UDP,
                  threaded_application.DCCEX_UDP_TYPE ->
-                    hostName + " [UDP DCC-EX]";
+                    hostName + " [UDP]";
             default ->
                     hostName;
         };
@@ -296,6 +296,8 @@ public class comm_thread extends Thread {
             return;
         }
 
+        boolean prefDccexHideDccexServers = prefs.getBoolean("prefDccexHideDccexServers", mainapp.getResources().getBoolean(R.bool.prefDccexHideDccexServersDefaultValue));
+        boolean prefDccexHideUdpServers = prefs.getBoolean("prefDccexHideUdpServers", mainapp.getResources().getBoolean(R.bool.prefDccexHideUdpServersDefaultValue));
 
         //Set up to find a WiThrottle service via ZeroConf
         try {
@@ -367,8 +369,10 @@ public class comm_thread extends Thread {
 
                     jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_WITHROTTLE, listener);
                     jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, listener);
-                    jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP, listener);
-                    jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP, listener);
+                    if (!prefDccexHideDccexServers)
+                        jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP, listener);
+                    if (!prefDccexHideUdpServers)
+                            jmdns.addServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP, listener);
                     threaded_application.logging(activityName + ": startJmdns(): jmdns listeners added");
                     
                     // Trigger a query for all services immediately in a separate thread as list() is blocking
@@ -457,17 +461,24 @@ public class comm_thread extends Thread {
             nsdManager = (NsdManager) mainapp.getSystemService(Context.NSD_SERVICE);
         }
 
+        boolean prefDccexHideDccexServers = prefs.getBoolean("prefDccexHideDccexServers", mainapp.getResources().getBoolean(R.bool.prefDccexHideDccexServersDefaultValue));
+        boolean prefDccexHideUdpServers = prefs.getBoolean("prefDccexHideUdpServers", mainapp.getResources().getBoolean(R.bool.prefDccexHideUdpServersDefaultValue));
+
         withrottleDiscoveryListener = new NsdDiscoveryListener(threaded_application.JMDNS_SERVICE_WITHROTTLE);
         jmriDccexDiscoveryListener = new NsdDiscoveryListener(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP);
-        dccexTcpDiscoveryListener = new NsdDiscoveryListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP);
-        dccexUdpDiscoveryListener = new NsdDiscoveryListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP);
+        if (!prefDccexHideDccexServers)
+            dccexTcpDiscoveryListener = new NsdDiscoveryListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP);
+        if (!prefDccexHideUdpServers)
+            dccexUdpDiscoveryListener = new NsdDiscoveryListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP);
 
         try {
             threaded_application.logging(activityName + ": startNsdFallback(): starting NsdManager discovery for WiThrottle, JMRI and DCC-EX...");
             nsdManager.discoverServices(threaded_application.WT_TYPE, NsdManager.PROTOCOL_DNS_SD, withrottleDiscoveryListener);
             nsdManager.discoverServices(threaded_application.JMRI_TYPE, NsdManager.PROTOCOL_DNS_SD, jmriDccexDiscoveryListener);
-            nsdManager.discoverServices(threaded_application.DCCEX_TCP_TYPE, NsdManager.PROTOCOL_DNS_SD, dccexTcpDiscoveryListener);
-            nsdManager.discoverServices(threaded_application.DCCEX_UDP_TYPE, NsdManager.PROTOCOL_DNS_SD, dccexUdpDiscoveryListener);
+            if (!prefDccexHideDccexServers)
+                nsdManager.discoverServices(threaded_application.DCCEX_TCP_TYPE, NsdManager.PROTOCOL_DNS_SD, dccexTcpDiscoveryListener);
+            if (!prefDccexHideUdpServers)
+                nsdManager.discoverServices(threaded_application.DCCEX_UDP_TYPE, NsdManager.PROTOCOL_DNS_SD, dccexUdpDiscoveryListener);
         } catch (Exception e) {
             threaded_application.logging(activityName + ": startNsdFallback(): Exception starting NsdManager: " + e.getMessage());
         }
@@ -509,6 +520,9 @@ public class comm_thread extends Thread {
         final JmDNS localJmdns = jmdns;
         final WithrottleListener localListener = listener;
 
+        boolean prefDccexHideDccexServers = prefs.getBoolean("prefDccexHideDccexServers", mainapp.getResources().getBoolean(R.bool.prefDccexHideDccexServersDefaultValue));
+        boolean prefDccexHideUdpServers = prefs.getBoolean("prefDccexHideUdpServers", mainapp.getResources().getBoolean(R.bool.prefDccexHideUdpServersDefaultValue));
+
         jmdns = null; // Set to null immediately so a new one can be started if needed
         listener = null;
         endingJmdns = true;
@@ -521,8 +535,10 @@ public class comm_thread extends Thread {
                     localJmdns.unregisterAllServices();
                     localJmdns.removeServiceListener(threaded_application.JMDNS_SERVICE_WITHROTTLE, localListener);
                     localJmdns.removeServiceListener(threaded_application.JMDNS_SERVICE_JMRI_DCCPP_OVERTCP, localListener);
-                    localJmdns.removeServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP, localListener);
-                    localJmdns.removeServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP, localListener);
+                    if (!prefDccexHideDccexServers)
+                        localJmdns.removeServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_TCP, localListener);
+                    if (!prefDccexHideUdpServers)
+                        localJmdns.removeServiceListener(threaded_application.JMDNS_SERVICE_DCC_EX_UDP, localListener);
 
                 } catch (Exception e) {
                     threaded_application.logging(activityName + ": endJmdns(): exception in jmdns unregister/removeListener: " + e.getMessage());

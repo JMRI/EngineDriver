@@ -80,12 +80,13 @@ public class intro_dccex extends Fragment {
             public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 if (checkedId == R.id.intro_dccex_no) {
                     dccexYes = false;
-                    prefs.edit().putString("prefUseDccexProtocol","No").commit();
+//                    prefs.edit().putString("prefUseDccexProtocol","No").commit();
                 } else if (checkedId == R.id.intro_dccex_yes) {
                     dccexYes = true;
-                    prefs.edit().putString("prefUseDccexProtocol","Auto").commit();
+//                    prefs.edit().putString("prefUseDccexProtocol","Auto").commit();
                 }
-                prefs.edit().putBoolean("prefDccexConnectionOption", dccexYes).commit();
+                prefs.edit().putString("prefUseDccexProtocol","Auto").commit();  // always reset to auto
+//                prefs.edit().putBoolean("prefDccexConnectionOption", dccexYes).commit();
                 prefs.edit().putBoolean("prefActionBarShowDccExButton", dccexYes).commit();
          }
         });
