@@ -471,19 +471,12 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                         String found_port = bundle.getString(alert_bundle_tag_type.PORT, "");
                         String found_ssid = bundle.getString(alert_bundle_tag_type.SSID, "");
                         String found_service_type = bundle.getString(alert_bundle_tag_type.SERVICE_TYPE, "");
-                        String found_service_type_simple = "";
                         if ( (!found_service_type.isEmpty()) && (found_service_type.charAt(0)=='.') ) {
                             found_service_type = found_service_type.substring(1);
                         }
-                        if (!found_service_type.isEmpty()) {
-                            found_service_type_simple = found_service_type.substring(1, found_service_type.indexOf('.'));
-                            if ( ((found_host_name.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*") || (found_port.equals("2560"))))
-                            && found_service_type_simple.equals("withrottle") ) {
-                                found_service_type_simple = "dcc-ex+withrottle";
-                            }
-                            found_service_type_simple = "("+found_service_type_simple+")";
 
-                        }
+                        String found_service_type_simple = getSimpleServiceType(found_host_name, found_port, found_service_type);
+
                         boolean entryExists = false;
 
                         //stop if new address is already in the list
@@ -1538,6 +1531,22 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
 
         mainapp.setIsDccexProtocol( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
                 && ((serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) || (serverPort==2560)) );
+    }
+
+    String getSimpleServiceType(String hostName, String hostPort,  String serviceType) {
+        if (serviceType.isEmpty()) return "";
+
+        String simpleServiceType;
+        simpleServiceType = serviceType.substring(1, serviceType.indexOf('.'));
+        if (((hostName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*") || (hostPort.equals("2560"))))
+                && simpleServiceType.equals("withrottle")) {
+            simpleServiceType = "dcc-ex+withrottle";
+        } else if (simpleServiceType.equals("dccppovertcpserver")) {
+            simpleServiceType = "dcc-ex";
+        }
+        simpleServiceType = "(" + simpleServiceType + ")";
+
+        return simpleServiceType;
     }
 
     void adjustToolbarSize(Menu menu) {
