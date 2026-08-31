@@ -473,6 +473,7 @@
     <string name="prefDccexConnectionOptionSummary">接続画面で wiThrottle プロトコルと DCC-EX プロトコルを切り替えるオプションを表示します。</string>
     <string name="prefDccexSequenceItemRequestsTitle">連続したアイテムリクエスト</string>
     <string name="prefDccexSequenceItemRequestsSummary">あるタイプのアイテム (名簿、投票所、ルート、トラック) がすべて取得されるまで待ってから、次のタイプをすべて要求します。</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStationsはTCPとUDPの両方のサービスを提供します。UDPはTCPよりも多くの接続をサポートします。このオプションを有効にすると、UDPサービスが非表示になります。再起動が必要です。</string>
     <string name="prefDccexConnectionOptionTitle">プロトコルオプションを表示</string>
     <string name="prefDccexPreferencesSummary">EX-CommandStation を使用するためのオプション</string>
     <string name="prefDccexPreferencesTitle">DCC-EX - EX-CommandStation の設定</string>
@@ -1320,5 +1321,8 @@
     <string name="prefDccexClosedLabelSummary">分岐器が「閉じている」ときのボタンラベルをカスタマイズします。デフォルト（「投げる」）の場合は空白のままにしてください。再接続が必要です。</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX - 「閉じた/投げる」ボタンのラベル</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX - 「投げられた/閉じる」ボタンのラベル</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStationsは、WiThrottleサーバーとDCC-EXサーバーをアドバタイズします。WiThrottleサービスは、WiThrottleとDCC-EXのネイティブプロトコルの両方をサポートしています。このオプションを有効にすると、DCC-EX専用サービスが非表示になります。再起動が必要です。</string>
+    <string name="prefDccexHideDccexServersTitle">mDNS DCC-EX専用サーバーを非表示にしますか？</string>
+    <string name="prefDccexHideUdpServersTitle">mDNS UDPサーバーを非表示にしますか？</string>
 
 </resources>

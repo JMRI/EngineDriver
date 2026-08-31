@@ -1122,6 +1122,7 @@
     <string name="prefDccexConnectionOptionSummary">Afficher l option pour basculer entre les protocoles WiThrottle ou DCC-EX sur l ecran de connexion.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Choix type d elements</string>
     <string name="prefDccexSequenceItemRequestsSummary">Attendre que tous les élements d un type (roster, routes, aiguilles, voies) soient recupéres avant de passer au type suivant</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations annonce les services TCP et UDP. UDP prend en charge plus de connexions que TCP. Activez cette option pour masquer le service UDP. Redémarrage requis.</string>
     <string name="prefDccexConnectionOptionTitle">Afficher les choix de protocoles</string>
     <string name="prefActionBarShowDccExButtonSummary">Afficher le bouton pour acceder a l ecran DCC-EX (uniquement pour connexions natives DCC-EX)</string>
     <string name="prefActionBarShowDccExButtonTitle">Bouton DCC-EX ?</string>
@@ -1322,5 +1323,8 @@
     <string name="prefDccexClosedLabelTitle">DCC-EX Etiquette du bouton (\'Deviée/Directe\')</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX Bouton \'Dévié/Direct\'</string>
     <string name="toastConnectFontSizeWarning">La police utilisée est très grande! (%1$1.2f) et certains textes et éléments ne seront pas visibles. \nIl est conseillé de corriger vos paramètres Systeme Android et reduire la police à moins de 1.5</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations propose des serveurs WiThrottle et DCC-EX. Le service WiThrottle prend en charge les protocoles natifs WiThrottle et DCC-EX. Activez cette option pour masquer le service DCC-EX uniquement. Un redémarrage est nécessaire.</string>
+    <string name="prefDccexHideDccexServersTitle">Masquer les serveurs mDNS DCC-EX uniquement ?</string>
+    <string name="prefDccexHideUdpServersTitle">Masquer les serveurs UDP mDNS ?</string>
 
 </resources>

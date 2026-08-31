@@ -1302,6 +1302,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefAlwaysUseFunctionsFromServerSummary">禁用时，对按地址（而非名册）选择的机车使用 EngineDriver 默认标签，忽略服务器默认标签。</string>
     <string name="prefDccexSequenceItemRequestsTitle">排序项目请求</string>
     <string name="prefDccexSequenceItemRequestsSummary">请等待检索完一种类型的所有项目（名册、道岔、路线和轨道）后，再请求检索下一种类型的所有项目。</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations 同时提供 TCP 和 UDP 服务。UDP 支持的连接数比 TCP 多。启用此选项可隐藏 UDP 服务。需要重启。</string>
     <string name="prefDccexConnectionOptionTitle">显示协议选项</string>
     <string name="prefDccexConnectionOptionSummary">在连接屏幕中显示切换 wiThrottle 和 DCC-EX 协议的选项。</string>
     <string name="prefDirectionButtonLongPressDelayTitle">方向键长按延迟</string>
@@ -1411,6 +1412,9 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefDccexClosedLabelSummary">当道岔处于“关闭”状态时，可自定义按钮标签。留空则使用默认值（“抛掷”）。需要重新连接。</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX - “抛掷/关闭”按钮标签</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX - “关闭/抛掷”按钮标签</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations 会发布 WiThrottle 和 DCC-EX 服务器。WiThrottle 服务同时支持 WiThrottle 和 DCC-EX 原生协议。启用此选项可隐藏仅支持 DCC-EX 的服务。启用后需要重启。</string>
+    <string name="prefDccexHideDccexServersTitle">隐藏仅限 mDNS DCC-EX 的服务器？</string>
+    <string name="prefDccexHideUdpServersTitle">隐藏 mDNS UDP 服务器？</string>
 
 </resources>
 

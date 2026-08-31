@@ -1115,6 +1115,7 @@
     <string name="prefDccexConnectionOptionSummary">Mostrar opción para cambiar entre los protocolos Withrottle y DCC-EX en la pantalla de conexión.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Solicitudes de artículos secuenciadas</string>
     <string name="prefDccexSequenceItemRequestsSummary">Espere a que se recuperen todos los elementos de un tipo (lista, desvíos, rutas y recorridos) antes de solicitar todos los del siguiente tipo.</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations anuncia servicios TCP y UDP. UDP admite más conexiones que TCP. Active esta opción para ocultar el servicio UDP. Se requiere reiniciar.</string>
     <string name="prefDccexConnectionOptionTitle">Opción de protocolo Mostrar</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostrar el botón en la barra de acción para acceder a la pantalla DCC-EX. (Solo para conexiones nativas de DCC-EX).</string>
     <string name="prefActionBarShowDccExButtonTitle">¿Botón DCC-EX?</string>
@@ -1299,5 +1300,8 @@
     <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta del botón \'Cerrado/Accionamiento\'</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta del botón \'Arrojar/Cerrar\'</string>
     <string name="toastConnectFontSizeWarning">El tamaño de fuente de tu sistema es muy grande (%1$1.2f).\nAlgunos elementos y textos podrían no caber en la pantalla. Te recomendamos abrir la configuración de tu sistema Android y reducir el tamaño de fuente a menos de 1.5.</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations anuncia servidores WiThrottle y DCC-EX. El servicio WiThrottle admite los protocolos nativos WiThrottle y DCC-EX. Active esta opción para ocultar el servicio exclusivo de DCC-EX. Se requiere reiniciar.</string>
+    <string name="prefDccexHideDccexServersTitle">¿Ocultar servidores que solo admiten mDNS DCC-EX?</string>
+    <string name="prefDccexHideUdpServersTitle">¿Ocultar servidores mDNS UDP?</string>
 
 </resources>

@@ -1076,6 +1076,7 @@
     <string name="prefDccexConnectionOptionSummary">Option anzeigen, um zwischen Withrottle und DCC-EX-Protokollen im Verbindungsbildschirm zu wechseln.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Sequenzierte Artikelanfragen</string>
     <string name="prefDccexSequenceItemRequestsSummary">Warten Sie, bis alle Elemente eines Typs (Dienstplan, Weichen, Routen und Gleise) abgerufen wurden, bevor Sie nach allen Elementen des nächsten Typs fragen.</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations bietet sowohl TCP- als auch UDP-Dienste an. UDP unterstützt mehr Verbindungen als TCP. Aktivieren Sie diese Option, um den UDP-Dienst auszublenden. Neustart erforderlich.</string>
     <string name="prefDccexConnectionOptionTitle">Protokolloption anzeigen</string>
     <string name="prefActionBarShowDccExButtonSummary">Sehen Sie die Schaltfläche in Aktionsleiste an, um auf den DCC-EX-Bildschirm zuzugreifen. (Nur für native DCC-EX-Verbindungen.)</string>
     <string name="prefActionBarShowDccExButtonTitle">DCC-EX-Taste?</string>
@@ -1258,5 +1259,8 @@
     <string name="prefDccexThrownLabelTitle">DCC-EX – Beschriftung der Taste „Auswerfen/Schließen“</string>
     <string name="toastConnectFontSizeWarning">Ihre Systemschriftgröße ist sehr groß! (%1$1.2f)\nEinige Elemente und Texte passen möglicherweise nicht auf den Bildschirm. Wir empfehlen, die Schriftgröße in den Android-Systemeinstellungen auf unter 1,5 zu reduzieren.</string>
     <string name="toastEndSaveLogFile">Protokollierung beendet. Siehe Datei %1$s.</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations wirbt für WiThrottle- und DCC-EX-Server. Der WiThrottle-Dienst unterstützt sowohl das WiThrottle- als auch das DCC-EX-Protokoll. Aktivieren Sie diese Option, um den reinen DCC-EX-Dienst auszublenden. Neustart erforderlich.</string>
+    <string name="prefDccexHideDccexServersTitle">Nur mDNS DCC-EX-Server ausblenden?</string>
+    <string name="prefDccexHideUdpServersTitle">mDNS-UDP-Server ausblenden?</string>
 
 </resources>

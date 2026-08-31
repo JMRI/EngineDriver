@@ -1215,6 +1215,7 @@
     <string name="prefDccexConnectionOptionSummary">Zobrazit možnost přepínat mezi protokoly Withrottle a DCC-EX-Ex-na obrazovce připojení.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Sekvenční požadavky na položky</string>
     <string name="prefDccexSequenceItemRequestsSummary">Počkejte, než se načtou všechny položky jednoho typu (rozpiska, výhybky, cesty a stopy), než se zeptáte na všechny další typy.</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations inzeruje služby TCP i UDP. UDP podporuje více připojení než TCP. Povolením této možnosti skryjete službu UDP. Vyžadován restart.</string>
     <string name="prefDccexConnectionOptionTitle">Zobrazit možnost protokolu</string>
     <string name="prefActionBarShowDccExButtonSummary">Zobrazit tlačítko v akčním panelu pro přístup na obrazovku DCC-EX. (Pouze pro nativní připojení DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Tlačítko DCC-EX?</string>
@@ -1398,5 +1399,8 @@
     <string name="prefDccexThrownLabelTitle">DCC-EX – Popisek tlačítka „Vyvoláno/Zavřít“</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX – Štítek tlačítka „Zavřeno/Vyhodit“</string>
     <string name="prefDccexClosedLabelSummary">Upravte popisek tlačítka, když je výhybka „Zavřeno“. Pro výchozí nastavení („Hodit“) ponechte prázdné. Vyžaduje se opětovné připojení.</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations inzeruje servery WiThrottle a DCC-EX. Služby WiThrottle podporují nativní protokoly WiThrottle i DCC-EX. Povolením této možnosti skryjete službu pouze DCC-EX. Vyžadován restart.</string>
+    <string name="prefDccexHideDccexServersTitle">Skrýt servery mDNS pouze pro DCC-EX?</string>
+    <string name="prefDccexHideUdpServersTitle">Skrýt UDP servery mDNS?</string>
 
 </resources>

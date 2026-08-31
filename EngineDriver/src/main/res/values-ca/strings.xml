@@ -1126,6 +1126,7 @@
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opció de canviar entre protocols amb WithRottle i DCC-EX a la pantalla de connexió.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Sol·licituds d\'elements seqüenciades</string>
     <string name="prefDccexSequenceItemRequestsSummary">Espereu que es recuperin tots els elements d\'un tipus (Llista, desviacions, rutes i pistes) abans de demanar el següent tipus.</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations anuncia serveis TCP i UDP. UDP admet més connexions que TCP. Activeu aquesta opció per ocultar el servei UDP. Cal reiniciar.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opció de protocol</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostra el botó a la barra d’acció per accedir a la pantalla DCC-EX. (Només per a connexions natives DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botó DCC-EX?</string>
@@ -1312,5 +1313,8 @@
     <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta del botó \'Llançar/Tanca\'</string>
     <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta del botó \'Tancat/Llançar\'</string>
     <string name="prefDccexClosedLabelSummary">Personalitza l\'etiqueta del botó quan el desviament estigui \"Tancat\". Deixa-ho en blanc per al valor per defecte (\"Llançar\"). Cal reconnexió.</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations anuncia els servidors WiThrottle i DCC-EX. Els serveis WiThrottle admeten els protocols nadius WiThrottle i DCC-EX. Activeu aquesta opció per ocultar el servei només DCC-EX. Cal reiniciar.</string>
+    <string name="prefDccexHideDccexServersTitle">Voleu amagar els servidors mDNS només DCC-EX?</string>
+    <string name="prefDccexHideUdpServersTitle">Voleu amagar els servidors UDP de mDNS?</string>
 
 </resources>
