@@ -1055,6 +1055,7 @@
     <string name="prefDccexConnectionOptionSummary">Mostra l\'opzione per passare tra i protocolli Withrottle e DCC-EX nella schermata di connessione.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Richieste di articoli in sequenza</string>
     <string name="prefDccexSequenceItemRequestsSummary">Attendere che tutti gli elementi di un tipo (Elenchi, Scambi, Percorsi e Tracciati) vengano recuperati prima di richiedere tutti quelli del tipo successivo.</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations pubblicizza sia i servizi TCP che UDP. UDP supporta più connessioni rispetto a TCP. Abilitare questa opzione per nascondere il servizio UDP. È necessario riavviare il sistema.</string>
     <string name="prefDccexConnectionOptionTitle">Mostra l\'opzione protocollo</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostra il pulsante nella barra di azione per accedere allo schermo DCC-EX. (Solo per connessioni DCC-Ex native.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Pulsante DCC-EX?</string>
@@ -1249,5 +1250,8 @@
     <string name="prefDccexClosedLabelTitle">Etichetta del pulsante \'Chiuso/Lancia\' di DCC-EX</string>
     <string name="prefDccexThrownLabelTitle">Etichetta del pulsante \'Lanciato/Chiuso\' di DCC-EX</string>
     <string name="toastConnectFontSizeWarning">La dimensione del carattere del tuo sistema è molto grande! (%1$1.2f)\nAlcuni elementi e testi potrebbero non essere visualizzati correttamente sullo schermo. Ti consigliamo di aprire le impostazioni di sistema di Android e ridurre la dimensione del carattere a meno di 1.5.</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations pubblicizza i server WiThrottle e DCC-EX. Il servizio WiThrottle supporta entrambi i protocolli nativi WiThrottle e DCC-EX. Abilitare questa opzione per nascondere il servizio che supporta solo DCC-EX. È necessario riavviare il sistema.</string>
+    <string name="prefDccexHideDccexServersTitle">Nascondere i server mDNS solo DCC-EX?</string>
+    <string name="prefDccexHideUdpServersTitle">Nascondere i server mDNS UDP?</string>
 
 </resources>

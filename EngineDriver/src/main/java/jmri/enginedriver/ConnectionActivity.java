@@ -471,7 +471,12 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                         String found_port = bundle.getString(alert_bundle_tag_type.PORT, "");
                         String found_ssid = bundle.getString(alert_bundle_tag_type.SSID, "");
                         String found_service_type = bundle.getString(alert_bundle_tag_type.SERVICE_TYPE, "");
-                        if ( (!found_service_type.isEmpty()) && (found_service_type.charAt(0)=='.') ) found_service_type = found_service_type.substring(1);
+                        if ( (!found_service_type.isEmpty()) && (found_service_type.charAt(0)=='.') ) {
+                            found_service_type = found_service_type.substring(1);
+                        }
+
+                        String found_service_type_simple = getSimpleServiceType(found_host_name, found_port, found_service_type);
+
                         boolean entryExists = false;
 
                         //stop if new address is already in the list
@@ -495,6 +500,7 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                             hm.put("host_name", found_host_name);
                             hm.put("ssid", found_ssid);
                             hm.put("service_type", found_service_type);
+                            hm.put("service_type_simple", found_service_type_simple);
 
                             discovery_list.add(hm);
                             discovery_list_adapter.notifyDataSetChanged();
@@ -625,8 +631,8 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
         discovery_list = new ArrayList<>();
         discovery_list_adapter = new SimpleAdapter(this, discovery_list, R.layout.connection_list_item,
-                new String[]{"ip_address", "host_name", "port", "ssid", "service_type"},
-                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label});
+                new String[]{"ip_address", "host_name", "port", "ssid", "service_type", "service_type_simple"},
+                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label, R.id.serverType_simple_item_label});
         ListView discover_list = findViewById(R.id.discovery_list);
         discover_list.setAdapter(discovery_list_adapter);
         discover_list.setOnItemClickListener(new ConnectItemListener(server_list_type.DISCOVERED_SERVER));
@@ -635,8 +641,8 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         //Set up a list adapter to allow adding the list of recent connections to the UI.
 //            connections_list = new ArrayList<>();
         connection_list_adapter = new SimpleAdapter(this, importExportConnectionList.connections_list, R.layout.connection_list_item,
-                new String[]{"ip_address", "host_name", "port", "ssid", "service_type"},
-                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label});
+                new String[]{"ip_address", "host_name", "port", "ssid", "service_type", "service_type_simple"},
+                new int[]{R.id.ip_item_label, R.id.host_item_label, R.id.port_item_label, R.id.ssid_item_label, R.id.serverType_item_label, R.id.serverType_simple_item_label});
         ListView conn_list = findViewById(R.id.connections_list);
         conn_list.setAdapter(connection_list_adapter);
         conn_list.setOnTouchListener(connectionsListSwipeDetector = new SwipeDetector());
@@ -1525,6 +1531,22 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
 
         mainapp.setIsDccexProtocol( (mainapp.prefUseDccexProtocol.equals(dccex_protocol_option_type.AUTO))
                 && ((serverName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*")) || (serverPort==2560)) );
+    }
+
+    String getSimpleServiceType(String hostName, String hostPort,  String serviceType) {
+        if (serviceType.isEmpty()) return "";
+
+        String simpleServiceType;
+        simpleServiceType = serviceType.substring(1, serviceType.indexOf('.'));
+        if (((hostName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*") || (hostPort.equals("2560"))))
+                && simpleServiceType.equals("withrottle")) {
+            simpleServiceType = "dcc-ex+withrottle";
+        } else if (simpleServiceType.equals("dccppovertcpserver")) {
+            simpleServiceType = "dcc-ex";
+        }
+        simpleServiceType = "(" + simpleServiceType + ")";
+
+        return simpleServiceType;
     }
 
     void adjustToolbarSize(Menu menu) {

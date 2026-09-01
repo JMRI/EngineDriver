@@ -80,6 +80,7 @@ public class ImportExportConnectionList {
                     int port = 0;
                     String ssid_str;
                     String service_type = "";
+                    String service_type_simple = "";
                     List<String> parts = Arrays.asList(line.split(":", 5)); //split record from file, max of 4 parts
                     if (parts.size() > 1) {  //skip if not split
                         if (parts.size() == 2) {  //old style, use part 1 for ip and host
@@ -103,6 +104,7 @@ public class ImportExportConnectionList {
                             port_str = parts.get(2);
                             ssid_str = parts.get(3);
                             service_type = parts.get(4);
+                            service_type_simple = getSimpleServiceType(host_name, port_str, service_type);
                         }
                         try {  //attempt to convert port to integer
                             port = Integer.decode(port_str);
@@ -123,6 +125,7 @@ public class ImportExportConnectionList {
                                     hm.put("port", Integer.toString(port));
                                     hm.put("ssid", ssid_str);
                                     hm.put("service_type", service_type);
+                                    hm.put("service_type_simple", service_type_simple);
                                     if (!connections_list.contains(hm)) {    // suppress duplicates
                                         connections_list.add(hm);
                                     }
@@ -293,4 +296,21 @@ public class ImportExportConnectionList {
                 mainapp.safeToast(mainapp.getResources().getString(R.string.toastConnectErrorSavingRecentConnection) + " " + errMsg, Toast.LENGTH_SHORT);
         }
     }
+
+    String getSimpleServiceType(String hostName, String hostPort,  String serviceType) {
+        if (serviceType.isEmpty()) return "";
+
+        String simpleServiceType;
+        simpleServiceType = serviceType.substring(1, serviceType.indexOf('.'));
+        if (((hostName.matches("\\S*(DCCEX|dccex|DCC-EX|dcc-ex)\\S*") || (hostPort.equals("2560"))))
+                && simpleServiceType.equals("withrottle")) {
+            simpleServiceType = "dcc-ex+withrottle";
+        } else if (simpleServiceType.equals("dccppovertcpserver")) {
+            simpleServiceType = "dcc-ex";
+        }
+        simpleServiceType = "(" + simpleServiceType + ")";
+
+        return simpleServiceType;
+    }
+
 }

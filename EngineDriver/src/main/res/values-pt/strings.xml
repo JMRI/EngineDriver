@@ -1063,6 +1063,7 @@
     <string name="prefDccexConnectionOptionSummary">Mostre a opção para alternar entre os protocolos Withrottle e DCC-EX na tela de conexão.</string>
     <string name="prefDccexSequenceItemRequestsTitle">Solicitações de itens sequenciados</string>
     <string name="prefDccexSequenceItemRequestsSummary">Aguarde até que todos os itens de um tipo (Roster, Turnouts, Routes e Tracks) sejam recuperados antes de solicitar todos os itens do próximo tipo.</string>
+    <string name="prefDccexHideUdpServersSummary">O EX-CommandStations anuncia serviços TCP e UDP. O UDP suporta mais conexões que o TCP. Habilite esta opção para ocultar o serviço UDP. Requer reinicialização.</string>
     <string name="prefDccexConnectionOptionTitle">Mostrar opção de protocolo</string>
     <string name="prefActionBarShowDccExButtonSummary">Mostrar botão na barra de ação para acessar a tela DCC-EX. (Somente para conexões nativas do DCC-EX.)</string>
     <string name="prefActionBarShowDccExButtonTitle">Botão dcc-ex?</string>
@@ -1255,4 +1256,7 @@
     <string name="prefDccexClosedLabelTitle">DCC-EX - Etiqueta do botão \'Fechado/Lançar\'</string>
     <string name="prefDccexThrownLabelTitle">DCC-EX - Etiqueta do botão \'Arremessar/Fechar\'</string>
     <string name="toastConnectFontSizeWarning">O tamanho da fonte do seu sistema está muito grande! (%1$1.2f)\nAlguns elementos e textos podem não caber na tela. Recomendamos abrir as configurações do sistema Android e reduzir o tamanho da fonte para menos de 1,5.</string>
+    <string name="prefDccexHideDccexServersSummary">O EX-CommandStations anuncia servidores WiThrottle e DCC-EX. O serviço WiThrottle suporta os protocolos nativos WiThrottle e DCC-EX. Habilite esta opção para ocultar o serviço somente DCC-EX. Requer reinicialização.</string>
+    <string name="prefDccexHideDccexServersTitle">Ocultar servidores mDNS somente DCC-EX?</string>
+    <string name="prefDccexHideUdpServersTitle">Ocultar servidores UDP mDNS?</string>
 </resources>

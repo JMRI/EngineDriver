@@ -104,6 +104,8 @@
     <bool name="prefFeedbackOnDisconnectDefaultValue">true</bool>
     <bool name="prefFeedbackWhenGoingToBackgroundDefaultValue">true</bool>
     <bool name="prefDccexConnectionOptionDefaultValue">false</bool>
+    <bool name="prefDccexHideDccexServersDefaultValue">true</bool>
+    <bool name="prefDccexHideUdpServersDefaultValue">false</bool>
     <bool name="prefDccexSequenceItemRequestsDefaultValue">false</bool>
     <bool name="prefDccexAutomationsAskDefaultValue">false</bool>
     <bool name="prefDccexSwapThrowCloseDefaultValue">false</bool>

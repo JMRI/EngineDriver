@@ -1615,6 +1615,12 @@
     <string name="prefDccexSequenceItemRequestsTitle">Sequenced item requests</string>
     <string name="prefDccexSequenceItemRequestsSummary">Wait for all items of one type (Roster, Turnouts, Routes and Tracks) are retrieved before asking for all the next type.</string>
 
+    <string name="prefDccexHideDccexServersTitle">Hide mDNS DCC-EX only servers?</string>
+    <string name="prefDccexHideDccexServersSummary">EX-CommandStations advertises WiThrottle and DCC-EX servers. The WiThrottle services supports both the WiThrottle and DCC-EX Native Protocols. Enable this option to hide the DCC-EX only service. Restart required.</string>
+
+    <string name="prefDccexHideUdpServersTitle">Hide mDNS UDP servers?</string>
+    <string name="prefDccexHideUdpServersSummary">EX-CommandStations advertises both TCP and UDP services. UDP supports more connections than TCP. Enable this option to hide the UDP service. Restart required.</string>
+
     <string name="prefDccexConnectionOptionTitle">Show protocol option</string>
     <string name="prefDccexConnectionOptionSummary">Show option to switch between WiThrottle and DCC-EX protocols in the Connection Screen.</string>
     <string name="dccexConnectionOptionTitle">Connection Protocol</string>
