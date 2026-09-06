@@ -1036,7 +1036,9 @@ public class ThrottleActivity extends AppCompatActivity implements
 
                         int whichThrottle = bundle.getInt(alert_bundle_tag_type.THROTTLE);
                         set_function_labels_and_listeners_for_view(whichThrottle);
-                        enableDisableButtonsForView(functionButtonViewGroups[whichThrottle], true);
+                        if (whichThrottle < functionButtonViewGroups.length) {
+                            enableDisableButtonsForView(functionButtonViewGroups[whichThrottle], true);
+                        }
                         soundsShowHideDeviceSoundsButton(whichThrottle);
                         showHideSpeedLimitAndPauseButtons(whichThrottle);
                         setLabels();
@@ -2996,7 +2998,7 @@ public class ThrottleActivity extends AppCompatActivity implements
         boolean newEnabledState = false;
         // avoid index and null crashes
         if (mainapp.consists == null || whichThrottle >= mainapp.consists.length
-                || bForwards[whichThrottle] == null) {
+                || whichThrottle >= bForwards.length || bForwards[whichThrottle] == null) {
             return;
         }
         if (!forceDisable) { // avoid index crash, but may simply push to next line
@@ -6564,8 +6566,8 @@ public class ThrottleActivity extends AppCompatActivity implements
 
 //        // implemented in derived class, but called from this class
 
-        if (functionButtonViewGroups != null) { // if it is null it probably because the Throttle Screen Type does not have Functions Buttons
-            if (functionButtonViewGroups[0] != null) {
+        if (functionButtonViewGroups != null && whichThrottle < functionButtonViewGroups.length) { // if it is null it probably because the Throttle Screen Type does not have Functions Buttons
+            if (functionButtonViewGroups[whichThrottle] != null) {
                 ViewGroup tv; // group
                 ViewGroup r; // row
                 FunctionButtonTouchListener functionButtonTouchListener;
