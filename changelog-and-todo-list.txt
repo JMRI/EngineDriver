@@ -11,6 +11,7 @@
       * Setting the Auto connect to IP preference would cause the app to crash.
       * Rewrite of the gesture handling on the Turnouts and Routes pages, to resolve a 'bouncing' problem on some devices.
       * 28 step (and likely 8 and 14 step) would not always set zero speed when using the seekbar.
+      * Download Roster would crash the app. Modified the code to be more select about how it loads.
 * Other
       * Disable the DCC-EX 'Set' button if no valid DC address entered. (for DC/DCX tracks)
       * Added Hint for the DC Address on the DCC-EX Track Manager page.

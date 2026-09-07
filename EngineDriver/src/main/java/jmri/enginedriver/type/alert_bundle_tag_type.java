@@ -19,6 +19,7 @@ package jmri.enginedriver.type;
 
 public interface alert_bundle_tag_type {
     String THROTTLE = "throt";
+    String FORCE_DROP = "force_drop";
     String CONSIST = "con";
     String CONSIST_TEXT = "con_txt";
     String CONSIST_NAME = "con_name";

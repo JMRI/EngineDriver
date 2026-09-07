@@ -1448,7 +1448,7 @@ public class SelectLocoActivity extends AppCompatActivity {
 
             AlertDialog.Builder ab = new AlertDialog.Builder(SelectLocoActivity.this);
             ab.setIcon(R.drawable.glyph_warning);
-            ab.setTitle(getApplicationContext().getResources().getString(R.string.dialogConfirmClearTitle))
+            ab.setTitle(getApplicationContext().getResources().getString(R.string.FilterRosterListDownloadLabel))
                     .setMessage(getApplicationContext().getResources().getString(R.string.dialogDownloadRosterConfirmQuestion))
                     .setPositiveButton(R.string.yes, dialogClickListener)
                     .setNegativeButton(R.string.cancel, dialogClickListener);

@@ -1392,6 +1392,7 @@ public class ImportExportPreferences {
             Bundle bundle = new Bundle();
             bundle.putString(alert_bundle_tag_type.LOCO_TEXT, sAddr);
             bundle.putInt(alert_bundle_tag_type.THROTTLE, mainapp.maxThrottles);
+            bundle.putBoolean(alert_bundle_tag_type.FORCE_DROP, true);
             mainapp.alertCommHandlerWithBundle(message_type.REQUEST_LOCO_BY_ADDRESS, bundle);
 
             j++;
