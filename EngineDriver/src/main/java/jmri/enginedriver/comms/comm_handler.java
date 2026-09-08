@@ -398,14 +398,19 @@ public class comm_handler extends Handler {
                     && (bundle.containsKey(alert_bundle_tag_type.THROTTLE)) ) {
 
                final String addr = bundle.getString(alert_bundle_tag_type.LOCO_TEXT);
+
                String rosterName = "";
                if (bundle.containsKey(alert_bundle_tag_type.ROSTER_NAME)) {
                   rosterName = bundle.getString(alert_bundle_tag_type.ROSTER_NAME);
                }
                final int whichThrottle = bundle.getInt(alert_bundle_tag_type.THROTTLE);
 
-               if (prefs.getBoolean("prefDropOnAcquire",
-                       mainapp.getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) {
+               boolean forceDrop = false;
+               if (bundle.containsKey(alert_bundle_tag_type.FORCE_DROP)) {
+                  forceDrop = bundle.getBoolean(alert_bundle_tag_type.FORCE_DROP);
+               }
+
+               if ( ( forceDrop) || (prefs.getBoolean("prefDropOnAcquire",mainapp.getResources().getBoolean(R.bool.prefDropOnAcquireDefaultValue))) ) {
                   commThread.sendReleaseLoco("*", whichThrottle);
 
                }

@@ -51,7 +51,9 @@ public class ResponseProcessorWiThrottle {
                 String[] ls = threaded_application.splitByString(responseStr, "<;>");    //drop off separator
                 String addr = ls[0].substring(3);
                 char com2 = responseStr.charAt(2);
-                //loco was successfully added to a throttle
+
+                // if greater than max, skip most responses as this was used to download the roster
+                if ( (sWhichThrottle.equals("6")) && (com2 != '+') && (com2 != 'L') ) return true;
 
                 if (com2 == '+') {  //"MT+L2591<;>"  loco was added
                     Consist con = mainapp.consists[whichThrottle];
@@ -84,10 +86,12 @@ public class ResponseProcessorWiThrottle {
                         comm_thread.wifiSend(cmd);
                     }
 
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
-                    mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_LOCO_ADDED, bundle);
-                    skipDefaultAlertToAllActivities = true;
+                    if (!sWhichThrottle.equals("6")) {  // if greater than max, skip as this was used to download the roster
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+                        mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_LOCO_ADDED, bundle);
+                        skipDefaultAlertToAllActivities = true;
+                    }
 
                 } else if (com2 == '-') { //"MS-L6318<;>"  loco removed from throttle
                     mainapp.consists[whichThrottle].remove(addr);
@@ -99,8 +103,8 @@ public class ResponseProcessorWiThrottle {
                     skipDefaultAlertToAllActivities = true;
 
                 } else if (com2 == 'L') { //list of function buttons
-                    if ( (mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
-                            || (mainapp.prefAlwaysUseFunctionsFromServer) ) { // unless overridden by the preference
+                    if ((mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
+                            || (mainapp.prefAlwaysUseFunctionsFromServer)) { // unless overridden by the preference
                         String lead = mainapp.consists[whichThrottle].getLeadAddr();
                         if (lead.equals(addr)) {                        //*** temp - only process if for lead engine in consist
                             comm_thread.processRosterFunctionString("RF29}|{1234(L)" + ls[1], whichThrottle);  //prepend some stuff to match old-style
@@ -110,13 +114,16 @@ public class ResponseProcessorWiThrottle {
                     // save them in recents regardless
                     if (mainapp.consists[whichThrottle].getLoco(addr) != null) {
                         Consist.ConLoco loco = mainapp.consists[whichThrottle].getLoco(addr);
-                        LinkedHashMap<Integer, String> functonMap =  threaded_application.parseFunctionLabels("RF29}|{1234(L)" + ls[1]);
+                        LinkedHashMap<Integer, String> functonMap = threaded_application.parseFunctionLabels("RF29}|{1234(L)" + ls[1]);
                         mainapp.addLocoToRecents(loco, functonMap); // WiT
                         loco.setFunctionLabels("RF29}|{1234(L)" + ls[1]);
                     }
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
-                    mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_FUNCTION_LABELS_UPDATE, bundle);
+
+                    if (!sWhichThrottle.equals("6")) {  // if greater than max, skip as this was used to download the roster
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+                        mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_FUNCTION_LABELS_UPDATE, bundle);
+                    }
                     skipDefaultAlertToAllActivities = true;
 
                 } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
@@ -191,7 +198,6 @@ public class ResponseProcessorWiThrottle {
                 break;
             }
 
-            // WiThrottle protocol only
             case 'V': // WiThrottle Protocol Version
                 // --- VN{Version#}
                 if (responseStr.startsWith("VN")) {
