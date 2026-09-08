@@ -153,6 +153,7 @@ public class ImportExportConnectionList {
             hm.put("port", threaded_application.DEMO_PORT);
             hm.put("ssid", "");
             hm.put("service_type", "_withrottle._tcp.local.");
+            hm.put("service_type_simple", "(withrottle)");
             connections_list.add(hm);
         }
 //        connection_list_adapter.notifyDataSetChanged();
@@ -299,6 +300,7 @@ public class ImportExportConnectionList {
 
     String getSimpleServiceType(String hostName, String hostPort,  String serviceType) {
         if (serviceType.isEmpty()) return "";
+        if (serviceType.indexOf('.') <= 0) return "";
 
         String simpleServiceType;
         simpleServiceType = serviceType.substring(1, serviceType.indexOf('.'));
