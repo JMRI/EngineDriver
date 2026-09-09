@@ -415,6 +415,11 @@ public class threaded_application extends Application {
     public int[] dccexLastKnownDirection = {1,1,1,1,1,1};
     public long[] dccexLastSpeedCommandSentTime = {0,0,0,0,0,0};
 
+    // used to remember some of the valuse on the CV programming page
+    public String dccexAddress = "";
+    public String dccexCv = "";
+    public String dccexCvValue = "";
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // flashlight
 

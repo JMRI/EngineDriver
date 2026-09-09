@@ -130,6 +130,8 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     Button writeAddressButton;
     Button readCvButton;
     Button writeCvButton;
+    Button cvValueIncrementButton;
+    Button cvValueDecrementButton;
     Button sendCommandButton;
     ImageButton previousCommandButton;
     ImageButton nextCommandButton;
@@ -485,6 +487,40 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         }
     }
 
+
+    public class CvValueNudgeButtonListener implements View.OnClickListener {
+        int myNudgeAmount = 1;
+
+        public CvValueNudgeButtonListener(int nudgeAmount) {
+            myNudgeAmount = nudgeAmount;
+        }
+
+        public void onClick(View v) {
+            String cvValueStr = etDccexCvValue.getText().toString();
+
+            if (cvValueStr.isEmpty()) {
+                etDccexCvValue.setText("1");
+
+            } else {
+                try {
+                    int cvValue = Integer.decode(cvValueStr);
+                    cvValue = cvValue + myNudgeAmount;
+
+                    if (cvValue < 0) cvValue = 0;
+                    if (cvValue > 256) cvValue = 256;
+
+                    etDccexCvValue.setText(Integer.toString(cvValue));
+
+                } catch (Exception e) {
+                    return; // do nothing
+                }
+            }
+
+            refreshDccexView();
+            mainapp.hideSoftKeyboard(v);
+        }
+    }
+
     public class SendCommandButtonListener implements View.OnClickListener {
         public void onClick(View v) {
             dccexInfoStr = "";
@@ -674,7 +710,23 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         ConnectionActivity.overridePendingTransition(this, R.anim.fade_in, R.anim.fade_out);
     }
 
+    private void restorePomValues() {
+        threaded_application.logging(activityName + ": restorePomValues() called");
+
+        dccexAddress = mainapp.dccexAddress;
+        etDccexWriteAddressValue.setText(dccexAddress);
+
+        dccexCv = mainapp.dccexCv;
+        etDccexCv.setText(dccexCv);
+
+        dccexCvValue = mainapp.dccexCvValue;
+        etDccexCvValue.setText(dccexCvValue);
+
+    }
+
     private void resetTextField(int which) {
+        threaded_application.logging(activityName + ": resetTextField() called for " + which);
+
         switch (which) {
             case WHICH_ADDRESS:
                 dccexAddress = "";
@@ -698,12 +750,18 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         switch (which) {
             case WHICH_ADDRESS:
                 dccexAddress = etDccexWriteAddressValue.getText().toString();
+                if ( (mainapp.dccexActionTypeIndex == PROGRAMMING_ON_MAIN) && (!dccexAddress.isEmpty()) )
+                    mainapp.dccexAddress = dccexAddress;
                 break;
             case WHICH_CV:
                 dccexCv = etDccexCv.getText().toString();
+                if ( (mainapp.dccexActionTypeIndex == PROGRAMMING_ON_MAIN) && (!dccexCv.isEmpty()) )
+                    mainapp.dccexCv = dccexCv;
                 break;
             case WHICH_CV_VALUE:
                 dccexCvValue = etDccexCvValue.getText().toString();
+                if ( (mainapp.dccexActionTypeIndex == PROGRAMMING_ON_MAIN) && (!dccexCvValue.isEmpty()) )
+                    mainapp.dccexCvValue = dccexCvValue;
                 break;
             case WHICH_COMMAND:
                 dccexSendCommandValue = dccexSendCommandValueEditText.getText().toString();
@@ -975,6 +1033,14 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         writeCvButton = findViewById(R.id.dccex_dccex_write_cv_button);
         WriteCvButtonListener writeCvButtonListener = new WriteCvButtonListener();
         writeCvButton.setOnClickListener(writeCvButtonListener);
+
+        cvValueIncrementButton = findViewById(R.id.dccex_dccex_cv_value_increment_button);
+        CvValueNudgeButtonListener cvValueIncrementButtonListener = new CvValueNudgeButtonListener(1);
+        cvValueIncrementButton.setOnClickListener(cvValueIncrementButtonListener);
+
+        cvValueDecrementButton = findViewById(R.id.dccex_dccex_cv_value_decrement_button);
+        CvValueNudgeButtonListener cvValueDecrementButtonListener = new CvValueNudgeButtonListener(-1);
+        cvValueDecrementButton.setOnClickListener(cvValueDecrementButtonListener);
 
         etDccexCv = findViewById(R.id.dccex_dccex_cv_edit_text);
         etDccexCv.setText("");
@@ -1424,10 +1490,16 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            Spinner spinner = findViewById(R.id.dccex_dccex_action_type_list);
-            mainapp.dccexActionTypeIndex = spinner.getSelectedItemPosition();
-            resetTextField(WHICH_CV);
-            resetTextField(WHICH_CV_VALUE);
+            threaded_application.logging(activityName + ": onItemSelected position: " + position + " PROGRAMMING_ON_MAIN: " + PROGRAMMING_ON_MAIN + " (POM is 1)");
+            mainapp.dccexActionTypeIndex = position;
+            if (position == PROGRAMMING_ON_MAIN) {
+                threaded_application.extendedLogging(activityName + ": executing POM code");
+                restorePomValues();
+            } else {
+                threaded_application.extendedLogging(activityName + ": executing ELSE code");
+                resetTextField(WHICH_CV);
+                resetTextField(WHICH_CV_VALUE);
+            }
             dccexInfoStr = "";
 
             InputMethodManager imm =
