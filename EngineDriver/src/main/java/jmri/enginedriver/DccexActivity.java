@@ -131,7 +131,10 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     Button readCvButton;
     Button writeCvButton;
     Button cvValueIncrementButton;
+    Button cvValueIncrement10Button;
     Button cvValueDecrementButton;
+    Button cvValueDecrement10Button;
+    ImageButton cvValueClearButton;
     Button sendCommandButton;
     ImageButton previousCommandButton;
     ImageButton nextCommandButton;
@@ -144,6 +147,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     private LinearLayout dccexProgrammingCommonCvsLayout;
     private LinearLayout dccexProgrammingAddressLayout;
     private LinearLayout dccexProgrammingCvLayout;
+    private LinearLayout dccexProgrammingCvNudgeLayout;
     //    private final LinearLayout[] dexcDccexTrackLayout = {null, null, null, null, null, null, null, null};
     private LinearLayout dccexDccexTracksLayout;
     Spinner dccexCommonCvsSpinner;
@@ -487,6 +491,14 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         }
     }
 
+    public class CvValueClearButtonListener implements View.OnClickListener {
+
+        public void onClick(View v) {
+            resetTextField(WHICH_ADDRESS);
+            resetTextField(WHICH_CV);
+            resetTextField(WHICH_CV_VALUE);
+        }
+    }
 
     public class CvValueNudgeButtonListener implements View.OnClickListener {
         int myNudgeAmount = 1;
@@ -495,11 +507,12 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
             myNudgeAmount = nudgeAmount;
         }
 
+        @SuppressLint("SetTextI18n")
         public void onClick(View v) {
             String cvValueStr = etDccexCvValue.getText().toString();
 
-            if (cvValueStr.isEmpty()) {
-                etDccexCvValue.setText("1");
+            if ( (cvValueStr.isEmpty()) && (myNudgeAmount>0) ) {
+                    etDccexCvValue.setText(Integer.toString(myNudgeAmount));
 
             } else {
                 try {
@@ -788,6 +801,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
 
                 dccexProgrammingAddressLayout.setVisibility(VISIBLE);
                 dccexProgrammingCvLayout.setVisibility(VISIBLE);
+                dccexProgrammingCvNudgeLayout.setVisibility(VISIBLE);
 
                 dccexDccexTracksLayout.setVisibility(GONE);
 
@@ -810,6 +824,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
 
                 dccexProgrammingAddressLayout.setVisibility(GONE);
                 dccexProgrammingCvLayout.setVisibility(GONE);
+                dccexProgrammingCvNudgeLayout.setVisibility(GONE);
 
                 dccexDccexTracksLayout.setVisibility(GONE);
 
@@ -855,6 +870,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
 
                 dccexProgrammingAddressLayout.setVisibility(GONE);
                 dccexProgrammingCvLayout.setVisibility(GONE);
+                dccexProgrammingCvNudgeLayout.setVisibility(GONE);
 
                 dccexDccexTracksLayout.setVisibility(VISIBLE);
 
@@ -1038,9 +1054,21 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         CvValueNudgeButtonListener cvValueIncrementButtonListener = new CvValueNudgeButtonListener(1);
         cvValueIncrementButton.setOnClickListener(cvValueIncrementButtonListener);
 
+        cvValueIncrement10Button = findViewById(R.id.dccex_dccex_cv_value_increment_10_button);
+        CvValueNudgeButtonListener cvValueIncrement10ButtonListener = new CvValueNudgeButtonListener(10);
+        cvValueIncrement10Button.setOnClickListener(cvValueIncrement10ButtonListener);
+
         cvValueDecrementButton = findViewById(R.id.dccex_dccex_cv_value_decrement_button);
         CvValueNudgeButtonListener cvValueDecrementButtonListener = new CvValueNudgeButtonListener(-1);
         cvValueDecrementButton.setOnClickListener(cvValueDecrementButtonListener);
+
+        cvValueDecrement10Button = findViewById(R.id.dccex_dccex_cv_value_decrement_10_button);
+        CvValueNudgeButtonListener cvValueDecrement10ButtonListener = new CvValueNudgeButtonListener(-10);
+        cvValueDecrement10Button.setOnClickListener(cvValueDecrement10ButtonListener);
+
+        cvValueClearButton = findViewById(R.id.dccex_dccex_cv_value_clear_button);
+        CvValueClearButtonListener cvValueClearButtonListener = new CvValueClearButtonListener();
+        cvValueClearButton.setOnClickListener(cvValueClearButtonListener);
 
         etDccexCv = findViewById(R.id.dccex_dccex_cv_edit_text);
         etDccexCv.setText("");
@@ -1166,6 +1194,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
         dccexProgrammingCommonCvsLayout = findViewById(R.id.dccex_dccex_programming_common_cvs_layout);
         dccexProgrammingAddressLayout = findViewById(R.id.dccex_dccex_programming_address_layout);
         dccexProgrammingCvLayout = findViewById(R.id.dccex_dccex_programming_cv_layout);
+        dccexProgrammingCvNudgeLayout = findViewById(R.id.dccex_dccex_programming_cv_nudge_layout);
         dccexDccexTracksLayout = findViewById(R.id.dccex_dccex_tracks_layout);
         
         dccexDccexCommandLineLayout = findViewById(R.id.dccex_dccex_command_line_layout);
