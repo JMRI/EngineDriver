@@ -1142,6 +1142,7 @@
     <string name="witPomMaxValueWarning">El valor \'%1$s\' excede el máximo admitido (\'%2$s\')</string>
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">CMD comunes</string>
+    <string name="toastDangerousCVsWarning">No se recomienda escribir en los CV 1, 17, 18 y 29 usando Programación en el Main (PoM).\n¡Úselo con extrema precaución!</string>
     <string name="dccexSetTrackButtonLabel">Colocar</string>
     <string name="dccexSucceeded">Acción tuvo éxito</string>
     <string name="dccexTurnoutClosed">Cerrado</string>

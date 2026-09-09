@@ -1242,6 +1242,7 @@
     <string name="witPomMaxValueWarning">Hodnota \'%1$s\' překračuje maximální podporovanou hodnotu (\'%2$s\')</string>
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">Běžné CMD</string>
+    <string name="toastDangerousCVsWarning">Zápis do CV 1, 17, 18 a 29 pomocí programování na hlavním serveru (PoM) se nedoporučuje.\nPoužívejte s maximální opatrností!</string>
     <string name="dccexSetTrackButtonLabel">Soubor</string>
     <string name="dccexSucceeded">Akce uspěla</string>
     <string name="dccexTurnoutClosed">ZAVŘENO</string>
