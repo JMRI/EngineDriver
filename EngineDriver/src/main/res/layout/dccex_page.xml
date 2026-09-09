@@ -460,7 +460,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/dccex_dccex_programming_cv_layout"
+                        android:id="@+id/dccex_dccex_programming_cv_nudge_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
@@ -468,6 +468,17 @@
                         android:background="#00000000"
                         android:orientation="horizontal"
                         android:gravity="center_horizontal">
+
+                        <ImageButton
+                            android:id="@+id/dccex_dccex_cv_value_clear_button"
+                            style="?attr/ed_small_button_style"
+                            android:layout_width="40dp"
+                            android:layout_height="26dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
+                            app:srcCompat="?attr/ed_clear_list_glyph"
+                            android:padding="0dp"
+                            tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
 
                         <Button
                             android:id="@+id/dccex_dccex_cv_value_decrement_button"
@@ -478,7 +489,19 @@
                             android:padding="0dp"
                             android:layout_marginRight="6dp"
                             android:layout_marginEnd="6dp"
-                            android:text="@string/minus"
+                            android:text="@string/minus1"
+                            tools:ignore="RtlSymmetry" />
+
+                        <Button
+                            android:id="@+id/dccex_dccex_cv_value_decrement_10_button"
+                            style="?attr/ed_small_button_style"
+                            android:textStyle="bold"
+                            android:layout_width="40dp"
+                            android:layout_height="26dp"
+                            android:padding="0dp"
+                            android:layout_marginRight="6dp"
+                            android:layout_marginEnd="6dp"
+                            android:text="@string/minus10"
                             tools:ignore="RtlSymmetry" />
 
                         <Button
@@ -488,7 +511,19 @@
                             android:layout_width="40dp"
                             android:layout_height="26dp"
                             android:padding="0dp"
-                            android:text="@string/plus"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/plus1"
+                            tools:ignore="RtlSymmetry" />
+
+                        <Button
+                            android:id="@+id/dccex_dccex_cv_value_increment_10_button"
+                            style="?attr/ed_small_button_style"
+                            android:textStyle="bold"
+                            android:layout_width="40dp"
+                            android:layout_height="26dp"
+                            android:padding="0dp"
+                            android:text="@string/plus10"
                             tools:ignore="RtlSymmetry" />
 
                         <Button
@@ -496,8 +531,8 @@
                             style="?attr/ed_small_button_condensed_text_style"
                             android:layout_width="40dp"
                             android:layout_height="26dp"
-                            android:layout_marginStart="60dp"
-                            android:layout_marginLeft="60dp"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginLeft="40dp"
                             android:padding="2sp"
                             android:text="@string/dccexCvBitCalculatorButtonLabel" />
 
