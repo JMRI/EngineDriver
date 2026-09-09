@@ -1269,6 +1269,7 @@
  *   TODO: add swipe action or other action to change the lights and remove the Consist Lights edit page entirely
  *   TODO: let user explicitly choose the loco to pull function labels from
  * DCC-EX screen
+ *   TODO: look at adding the DCC-EX screen to the lefr/right swipe.
  *   TODO: the number of tracks/outputs is not refreshed when the app is closed, opened again, and connected to a CS that has a different number of outputs
  * preferences:
  *   TODO: work out why reusable_toolbar_button_cv19_consist_states and reusable_toolbar_button_dccex_consist_states cause crashes in older version of Android. And remove the workaround currently in place
