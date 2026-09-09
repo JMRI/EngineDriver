@@ -1769,5 +1769,9 @@
     <string name="rosterDecoderInfoDecoderComment">Decoder Comment:</string>
     <string name="rosterDecoderInfoRosterEntry">Roster Entry:</string>
 
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+<!--    <string name="minusEmoji">➖</string>-->
+<!--    <string name="plusEmoji">➕</string>-->
 </resources>
 
