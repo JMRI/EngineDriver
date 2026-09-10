@@ -55,6 +55,7 @@ import android.widget.LinearLayout;
 //import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     private String dccexCvValue = "";
     private EditText etDccexCv;
     private EditText etDccexCvValue;
+    private boolean dangerousCVsWarningShown = false;
 
     private String dccexAddress = "";
     private EditText etDccexWriteAddressValue;
@@ -501,7 +503,7 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
     }
 
     public class CvValueNudgeButtonListener implements View.OnClickListener {
-        int myNudgeAmount = 1;
+        int myNudgeAmount;
 
         public CvValueNudgeButtonListener(int nudgeAmount) {
             myNudgeAmount = nudgeAmount;
@@ -768,8 +770,19 @@ public class DccexActivity extends AppCompatActivity implements CvBitCalculator.
                 break;
             case WHICH_CV:
                 dccexCv = etDccexCv.getText().toString();
-                if ( (mainapp.dccexActionTypeIndex == PROGRAMMING_ON_MAIN) && (!dccexCv.isEmpty()) )
+                if ( (mainapp.dccexActionTypeIndex == PROGRAMMING_ON_MAIN) && (!dccexCv.isEmpty()) ) {
                     mainapp.dccexCv = dccexCv;
+
+                    try {
+                        int cv = Integer.parseInt(etDccexCv.getText().toString());
+                        if ( ( !dangerousCVsWarningShown) && ( (cv==1) || (cv==17) || (cv==18) || (cv==29)) ) {
+                            threaded_application.showCustomToast(this, getApplicationContext().getResources().getString(R.string.toastDangerousCVsWarning), Toast.LENGTH_LONG, 5, true, false);
+                            dangerousCVsWarningShown = true;
+                        }
+                    } catch (Exception ignored) {
+                    }
+
+                }
                 break;
             case WHICH_CV_VALUE:
                 dccexCvValue = etDccexCvValue.getText().toString();

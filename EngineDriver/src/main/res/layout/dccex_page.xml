@@ -279,6 +279,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:background="#00000000"
+                        android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:weightSum="1">
 
@@ -357,7 +358,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:background="#00000000"
-                        android:orientation="horizontal"
+                        android:baselineAligned="false" android:orientation="horizontal"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -531,8 +532,8 @@
                             style="?attr/ed_small_button_condensed_text_style"
                             android:layout_width="40dp"
                             android:layout_height="26dp"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginLeft="40dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
                             android:padding="2sp"
                             android:text="@string/dccexCvBitCalculatorButtonLabel" />
 
@@ -1425,31 +1426,35 @@
 
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/dcc_ex_bottom_button_layout"
+                    android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:layout_margin="0sp"
                     android:layout_weight=".06"
                     android:paddingLeft="6dp"
-                    android:paddingRight="6dp" >
+                    android:paddingRight="6dp"
+                    android:gravity="end" >
 
                     <Button
                         android:id="@+id/dcc_ex_clearCommandsButton"
                         style="?attr/ed_normal_button_condensed_style"
                         android:layout_height="40dp"
-                        android:layout_centerHorizontal="true"
                         android:text="@string/dccexClearCommands"
                         app:drawableStartCompat="?attr/ed_clear_list_glyph"
                         android:padding="0dp"
                         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
                     <Button
                         android:id="@+id/dcc_ex_button_close"
                         style="?attr/ed_normal_button_condensed_style"
                         android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
                         android:paddingLeft="8dp"
                         android:paddingStart="8dp"
                         android:text="@string/logviewerClose"
@@ -1465,7 +1470,7 @@
                     <!--                android:layout_alignParentEnd="true"-->
                     <!--                android:layout_alignParentRight="true" />-->
 
-                </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

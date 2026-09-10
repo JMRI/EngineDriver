@@ -106,6 +106,7 @@
     <string name="dccexRouteHandoff">渡す</string>
     <string name="dccexRouteSet">セット</string>
     <string name="dccexSendCommandButtonLabel">送信</string>
+    <string name="toastDangerousCVsWarning">プログラミング・オン・ザ・メイン（PoM）を使用してCV 1、17、18、29に書き込むことは推奨されません。\n細心の注意を払って使用してください！</string>
     <string name="dccexSetTrackButtonLabel">セット</string>
     <string name="dccexSucceeded">アクションが成功しました</string>
     <string name="dccexTurnoutClosed">定位(直進)</string>

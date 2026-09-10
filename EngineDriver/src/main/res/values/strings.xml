@@ -1717,6 +1717,8 @@
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">Common CMDs</string>
 
+    <string name="toastDangerousCVsWarning">Writing to CVs 1,17,18 and 29 using Programming on the Main (PoM) is not recommended.\nUse with extreme caution!</string>
+
     <string name="dccexSetTrackButtonLabel">Set</string>
     <string name="dccexJoinTrackButtonLabel">Join</string>
 

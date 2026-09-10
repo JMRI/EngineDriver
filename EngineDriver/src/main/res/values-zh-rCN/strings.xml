@@ -1234,6 +1234,7 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="dccexCommonCvsLabel">NMRA CV参数</string>
     <string name="dccexCommonCommandsLabel" >常用命令</string>
 
+    <string name="toastDangerousCVsWarning">不建议使用主程序编程 (PoM) 向 CV 1、17、18 和 29 写入数据。\n务必谨慎使用！</string>
     <string name="dccexSetTrackButtonLabel">设置</string>
     <string name="dccexJoinTrackButtonLabel">加入</string>
 
