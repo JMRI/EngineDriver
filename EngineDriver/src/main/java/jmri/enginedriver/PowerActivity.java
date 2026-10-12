@@ -88,8 +88,7 @@ public class PowerActivity extends AppCompatActivity {
                     break;
 
                 case message_type.RECEIVED_POWER_STATE_CHANGE:
-                    if ((bundle != null)
-                            && (bundle.containsKey(alert_bundle_tag_type.TRACK))) {
+                    if (bundle != null) {
 
                         refresh_power_control_view();
                         if (bundle.containsKey(alert_bundle_tag_type.TRACK)) {

@@ -268,11 +268,14 @@ public class threaded_application extends Application {
     public String power_state;
 
     public int getFastClockFormat() {
-        return fastClockFormat;
+        return threaded_application.fastClockFormat;
     }
 
-    public int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
-    public Long fastClockSeconds = 0L;
+    public static int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
+    public static Long fastClockSeconds = 0L;
+    public static Double fastClockRatio = 0.0;
+    public static Handler fastTimeUpdateHandler = new Handler(Looper.getMainLooper());
+    public static final Long FAST_TIME_INTERMEDIATE_UPDATE_PERIOD = 20000L; // millseconds
 
     public int routes_list_position = 0;
 
@@ -2253,14 +2256,14 @@ public class threaded_application extends Application {
      */
     public String getFastClockTime() {
         String f = "";
-        if (fastClockFormat == 2) {
+        if (threaded_application.fastClockFormat == 2) {
             f = "HH:mm"; // display in 24 hr format
-        } else if (fastClockFormat == 1) {
+        } else if (threaded_application.fastClockFormat == 1) {
             f = "h:mm a"; // display in 12 hr format
         }
         SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date date = new java.util.Date((fastClockSeconds * 1000L));
+        Date date = new java.util.Date((threaded_application.fastClockSeconds * 1000L));
         return sdf.format(date);
     }
 

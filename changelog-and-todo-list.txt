@@ -12,6 +12,7 @@
       * Rewrite of the gesture handling on the Turnouts and Routes pages, to resolve a 'bouncing' problem on some devices.
       * 28 step (and likely 8 and 14 step) would not always set zero speed when using the seekbar.
       * Download Roster would crash the app. Modified the code to be more select about how it loads.
+      * Power button on the power screen not updating. Bug was for WiThrottle only.
 * Other
       * Disable the DCC-EX 'Set' button if no valid DC address entered. (for DC/DCX tracks)
       * Added Hint for the DC Address on the DCC-EX Track Manager page.
@@ -30,6 +31,7 @@
       * Always set the protocol option to 'Auto' even if DCC-EX is not selected in the wizard.
       * Displays the protocol capabilities of the servers in the connections list.
       * Enhancements to the DCC-EX PoM Page.
+      * Intermediate updating of the fastclock if not received every minute.
 **Version 2.44.234
 * New Features
       * mDNS is now far more agressive in trying to find servers.
@@ -1275,6 +1277,8 @@
  *   TODO: work out why reusable_toolbar_button_cv19_consist_states and reusable_toolbar_button_dccex_consist_states cause crashes in older version of Android. And remove the workaround currently in place
  * children's timer:
  *   TODO: Alternate version.  Allow the selection of locos, but only from a filtered roster.  Unlimited time. Routes and Points would be available.
+ * Fast Clock
+ *   TODO: Interpolate the time changes between the responses received from the server
  * log_viewer:
  *
  *
