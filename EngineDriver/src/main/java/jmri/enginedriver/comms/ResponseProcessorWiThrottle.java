@@ -19,6 +19,7 @@ import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.FastTimeUpdater;
 
 public class ResponseProcessorWiThrottle {
     static final String activityName = "ResponseProcessorWiThrottle";
@@ -392,15 +393,35 @@ public class ResponseProcessorWiThrottle {
                     case 'F':  //FastClock message: PFT1581530521<;>2.0
                         //extracts and sets shared fastClockSeconds
                         if (responseStr.startsWith("PFT")) {
-                            mainapp.fastClockSeconds = 0L;
+                            threaded_application.fastClockSeconds = 0L;
                             String[] ta = threaded_application.splitByString(responseStr.substring(3), "<;>"); //get the number between "PFT" and the "<;>"
                             try {
-                                mainapp.fastClockSeconds = Long.parseLong(ta[0]);
+                                threaded_application.fastClockSeconds = Long.parseLong(ta[0]);
                                 skipDefaultAlertToAllActivities = true;
                             } catch (NumberFormatException e) {
-                                threaded_application.logging('w', "unable to extract fastClockSeconds from '" + responseStr + "'");
+                                threaded_application.logging('w', activityName + ": unable to extract fastClockSeconds from '" + responseStr + "'");
                             }
+
+                            threaded_application.fastClockRatio = 1.0;
+                            if (ta.length == 2) {
+                                try {
+                                    threaded_application.fastClockRatio = Double.parseDouble(ta[1]);
+                                } catch (NumberFormatException e) {
+                                    threaded_application.logging('w', activityName + ": unable to extract fastClockRatio from '" + responseStr + "'");
+                                }
+                            }
+
                             mainapp.alertActivitiesWithBundle(message_type.RECEIVED_TIME_CHANGE);
+
+                            // start the incremental updater
+                            if (threaded_application.fastTimeUpdateHandler != null) {
+                                threaded_application.fastTimeUpdateHandler.removeCallbacks(null);
+                                threaded_application.fastTimeUpdateHandler.removeCallbacksAndMessages(null);
+                            }
+                            threaded_application.fastTimeUpdateHandler.postDelayed(new FastTimeUpdater(mainapp), threaded_application.FAST_TIME_INTERMEDIATE_UPDATE_PERIOD);
+
+
+                            threaded_application.logging(activityName + ": processsWifiResponse(): :PFT: fastClockSeconds: " + threaded_application.fastClockSeconds + " fastClockRatio: " + threaded_application.fastClockRatio);
                         }
                         break;
 

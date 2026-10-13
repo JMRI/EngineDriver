@@ -1820,9 +1820,9 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
                     case "prefClockDisplayType":
                         try {
-                            mainapp.fastClockFormat = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefClockDisplayType", "0")));
+                            threaded_application.fastClockFormat = Integer.parseInt(Objects.requireNonNull(prefs.getString("prefClockDisplayType", "0")));
                         } catch (NumberFormatException e) {
-                            mainapp.fastClockFormat = 0;
+                            threaded_application.fastClockFormat = 0;
                         }
                         mainapp.alertActivitiesWithBundle(message_type.RECEIVED_TIME_CHANGE);
                         break;
