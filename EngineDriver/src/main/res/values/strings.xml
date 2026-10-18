@@ -585,6 +585,7 @@
     <string name="deviceSoundsVolumeWarning">This is currently only at %d%% so you may have difficulty hearing the sounds.</string>
 
     <string name="helpMenu">Help (Web)</string>
+    <string name="wifiMenu">Android WiFi</string>
 
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
@@ -807,6 +808,11 @@
 
     <string name="limitSpeedButtonLabel">Limit Speed</string>
     <string name="pauseSpeedButtonLabel">Pause</string>
+
+    <string name="dccexAllRoutes">All Routes:</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="kill">Kill</string>
 
     <string name="functionButton00DefaultValue">Light</string>
     <string name="functionButton01DefaultValue">Bell</string>

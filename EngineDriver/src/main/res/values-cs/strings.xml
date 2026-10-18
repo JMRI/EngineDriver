@@ -591,6 +591,7 @@
 
     <string name="limitSpeedButtonLabel">Omezení rychlosti</string>
 
+    <string name="kill">Zabít</string>
     <string name="functionButton00DefaultValue">Světlo</string>
     <string name="functionButton01DefaultValue">Zvon</string>
     <string name="functionButton02DefaultValue">Houkačka</string>
@@ -1403,5 +1404,8 @@
     <string name="prefDccexHideDccexServersSummary">EX-CommandStations inzeruje servery WiThrottle a DCC-EX. Služby WiThrottle podporují nativní protokoly WiThrottle i DCC-EX. Povolením této možnosti skryjete službu pouze DCC-EX. Vyžadován restart.</string>
     <string name="prefDccexHideDccexServersTitle">Skrýt servery mDNS pouze pro DCC-EX?</string>
     <string name="prefDccexHideUdpServersTitle">Skrýt UDP servery mDNS?</string>
+    <string name="dccexAllRoutes">Všechny trasy:</string>
+    <string name="pause">Pauza</string>
+    <string name="resume">Pauza</string>
 
 </resources>

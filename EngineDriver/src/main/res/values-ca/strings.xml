@@ -463,6 +463,7 @@
     <string name="prefAccelerometerShakeThresholdTitle">Llindar de sacseig</string>
     <string name="prefAccelerometerShakeThresholdSummary">Llindar al qual es registrarà el sacseig. (1.5&#8211;3.5) Un valor més baix respondrà a una acció suau.\nRequereix el reinici del Engine Driver després de canviar-ho per tenir efecte</string>
 
+    <string name="kill">Matar</string>
     <string name="functionButton00DefaultValue">Llums</string>
     <string name="functionButton01DefaultValue">Campana</string>
     <string name="functionButton02DefaultValue">Xiulet</string>
@@ -1317,5 +1318,8 @@
     <string name="prefDccexHideDccexServersSummary">EX-CommandStations anuncia els servidors WiThrottle i DCC-EX. Els serveis WiThrottle admeten els protocols nadius WiThrottle i DCC-EX. Activeu aquesta opció per ocultar el servei només DCC-EX. Cal reiniciar.</string>
     <string name="prefDccexHideDccexServersTitle">Voleu amagar els servidors mDNS només DCC-EX?</string>
     <string name="prefDccexHideUdpServersTitle">Voleu amagar els servidors UDP de mDNS?</string>
+    <string name="dccexAllRoutes">Totes les rutes:</string>
+    <string name="pause">Pausa</string>
+    <string name="resume">Pausa</string>
 
 </resources>

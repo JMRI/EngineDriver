@@ -439,6 +439,19 @@ public class comm_handler extends Handler {
             break;
          }
 
+         case message_type.DCCEX_ROUTES_PAUSE: { // DCC-EX only
+            SendProcessorDccex.sendDccexRoutesPause();
+            break;
+         }
+         case message_type.DCCEX_ROUTES_RESUME: { // DCC-EX only
+            SendProcessorDccex.sendDccexRoutesResume();
+            break;
+         }
+         case message_type.DCCEX_ROUTES_KILL: { // DCC-EX only
+            SendProcessorDccex.sendDccexRoutesKill();
+            break;
+         }
+
          case message_type.WRITE_TRACK: { // DCC-EX only
             if ((bundle != null)
                     && (bundle.containsKey(alert_bundle_tag_type.TRACK_CHAR))

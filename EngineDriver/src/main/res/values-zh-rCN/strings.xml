@@ -629,6 +629,7 @@
     <string name="limitSpeedButtonLabel">限制速度</string>
     <string name="pauseSpeedButtonLabel">暂停</string>
 
+    <string name="kill">杀</string>
     <string name="functionButton00DefaultValue">灯光</string>
     <string name="functionButton01DefaultValue">铃声</string>
     <string name="functionButton02DefaultValue">喇叭</string>
@@ -1416,6 +1417,9 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefDccexHideDccexServersSummary">EX-CommandStations 会发布 WiThrottle 和 DCC-EX 服务器。WiThrottle 服务同时支持 WiThrottle 和 DCC-EX 原生协议。启用此选项可隐藏仅支持 DCC-EX 的服务。启用后需要重启。</string>
     <string name="prefDccexHideDccexServersTitle">隐藏仅限 mDNS DCC-EX 的服务器？</string>
     <string name="prefDccexHideUdpServersTitle">隐藏 mDNS UDP 服务器？</string>
+    <string name="dccexAllRoutes">所有路线：</string>
+    <string name="pause">暂停</string>
+    <string name="resume">暂停</string>
 
 </resources>
 

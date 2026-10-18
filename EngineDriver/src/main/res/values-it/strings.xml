@@ -492,6 +492,7 @@
     <string name="prefAccelerometerShakeTitle">Azione Scuotiento</string>
     <string name="prefAccelerometerShakeSummary">Opzioni per scuotimento del dispositivo.</string>
 
+    <string name="kill">Uccisione</string>
     <string name="functionButton00DefaultValue">Luce</string>
     <string name="functionButton01DefaultValue">Campana</string>
     <string name="functionButton02DefaultValue">Fischio</string>
@@ -1254,5 +1255,8 @@
     <string name="prefDccexHideDccexServersSummary">EX-CommandStations pubblicizza i server WiThrottle e DCC-EX. Il servizio WiThrottle supporta entrambi i protocolli nativi WiThrottle e DCC-EX. Abilitare questa opzione per nascondere il servizio che supporta solo DCC-EX. È necessario riavviare il sistema.</string>
     <string name="prefDccexHideDccexServersTitle">Nascondere i server mDNS solo DCC-EX?</string>
     <string name="prefDccexHideUdpServersTitle">Nascondere i server mDNS UDP?</string>
+    <string name="dccexAllRoutes">Tutti i percorsi:</string>
+    <string name="pause">Pausa</string>
+    <string name="resume">Pausa</string>
 
 </resources>

@@ -51,6 +51,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -1192,6 +1193,11 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
             threaded_application.inBackgroundForImageOrPermission = true;
             String url = "https://enginedriver.mstevetodd.com/operation/index.html";
             in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(in);
+            return true;
+        } else if ( (item.getItemId() == R.id.wifi_mnu) || (item.getItemId() == R.id.wifi_button) ) {
+            threaded_application.inBackgroundForImageOrPermission = true;
+            in = new Intent(Settings.ACTION_WIFI_SETTINGS);
             startActivity(in);
             return true;
         } else if (item.getItemId() == R.id.about_mnu) {

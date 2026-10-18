@@ -462,6 +462,7 @@
     <string name="prefAccelerometerShakeThresholdTitle">Seuil de mouvement</string>
     <string name="prefAccelerometerShakeThresholdSummary">Seuil à partir duquel le mouvement sera pris en compte. (1.5&#8211;3.5)  Une valeur basse correspond à un faible mouvement. \Nécessite un redémarrage d Engine Driver pour prise en compte si modifié.</string>
 
+    <string name="kill">Tuer</string>
     <string name="functionButton00DefaultValue">Lampes</string>
     <string name="functionButton01DefaultValue">Cloche</string>
     <string name="functionButton02DefaultValue">Klaxon</string>
@@ -1327,5 +1328,8 @@
     <string name="prefDccexHideDccexServersSummary">EX-CommandStations propose des serveurs WiThrottle et DCC-EX. Le service WiThrottle prend en charge les protocoles natifs WiThrottle et DCC-EX. Activez cette option pour masquer le service DCC-EX uniquement. Un redémarrage est nécessaire.</string>
     <string name="prefDccexHideDccexServersTitle">Masquer les serveurs mDNS DCC-EX uniquement ?</string>
     <string name="prefDccexHideUdpServersTitle">Masquer les serveurs UDP mDNS ?</string>
+    <string name="dccexAllRoutes">Tous les itinéraires :</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Pause</string>
 
 </resources>

@@ -442,6 +442,7 @@
     <string name="prefAccelerometerShakeThresholdTitle">Schütteln Schwellwert</string>
     <string name="prefAccelerometerShakeThresholdSummary">Schwellwert bei dem Schütteln erkannt wird. (1.5&#8211;3.5) Kleiner Wert reagiert auf eine leichte Bewegung.\n Erfordert Neustart von Engine Driver nach Änderung um wirksam zu werden.</string>
 
+    <string name="kill">Töten</string>
     <string name="functionButton00DefaultValue">Licht</string>
     <string name="functionButton01DefaultValue">Glocke</string>
     <string name="functionButton02DefaultValue">Horn</string>
@@ -1263,5 +1264,8 @@
     <string name="prefDccexHideDccexServersSummary">EX-CommandStations wirbt für WiThrottle- und DCC-EX-Server. Der WiThrottle-Dienst unterstützt sowohl das WiThrottle- als auch das DCC-EX-Protokoll. Aktivieren Sie diese Option, um den reinen DCC-EX-Dienst auszublenden. Neustart erforderlich.</string>
     <string name="prefDccexHideDccexServersTitle">Nur mDNS DCC-EX-Server ausblenden?</string>
     <string name="prefDccexHideUdpServersTitle">mDNS-UDP-Server ausblenden?</string>
+    <string name="dccexAllRoutes">Alle Strecken:</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Pause</string>
 
 </resources>

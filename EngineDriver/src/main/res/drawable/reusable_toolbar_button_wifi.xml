@@ -1,0 +1,47 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="171.33dp"
+    android:height="171.33dp"
+    android:viewportWidth="607.09"
+    android:viewportHeight="607.09">
+
+  <path
+      android:pathData="M102.36,4.23L505.2,4.23A98.13,98.13 135,0 1,603.33 102.36L603.33,505.2A98.13,98.13 135,0 1,505.2 603.33L102.36,603.33A98.13,98.13 135,0 1,4.23 505.2L4.23,102.36A98.13,98.13 45,0 1,102.36 4.23z"
+      android:strokeWidth="3.87">
+    <aapt:attr name="android:fillColor">
+      <gradient
+          android:startX="36.28"
+          android:startY="34.69"
+          android:endX="456.32"
+          android:endY="451.85"
+          android:type="linear">
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_wizard_face_end_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_wizard_face_start_color"/>
+      </gradient>
+    </aapt:attr>
+    <aapt:attr name="android:strokeColor">
+      <gradient
+          android:startX="36.28"
+          android:startY="34.69"
+          android:endX="400"
+          android:endY="400"
+          android:type="linear">
+        <item android:offset="0" android:color="?attr/reusable_toolbar_button_wizard_edge_highlight_color"/>
+        <item android:offset="1" android:color="?attr/reusable_toolbar_button_wizard_edge_dark_color"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+
+  <path
+      android:pathData="m259.21,495.92q-17.58,-17.58 -17.58,-43.04 0,-25.46 17.58,-43.04 17.58,-17.58 43.04,-17.58 25.46,0 43.04,17.58 17.58,17.58 17.58,43.04 -0,25.46 -17.58,43.04 -17.58,17.58 -43.04,17.58 -25.46,0 -43.04,-17.58zM165.24,376.49 L114.31,324.35q35.77,-35.77 83.97,-56.68 48.2,-20.92 103.97,-20.92 55.77,0 103.97,21.22 48.2,21.22 83.97,57.59l-50.92,50.92q-26.67,-26.67 -61.84,-41.83 -35.16,-15.16 -75.17,-15.16 -40.01,-0 -75.17,15.16 -35.16,15.16 -61.84,41.83zM62.17,273.42l-50.92,-50.92q55.77,-56.99 130.34,-89.12 74.57,-32.13 160.66,-32.13 86.09,0 160.66,32.13 74.57,32.13 130.34,89.12l-50.92,50.92q-46.68,-46.68 -108.22,-73.05Q372.57,174 302.25,174 231.92,174 170.39,200.37 108.86,226.74 62.17,273.42Z"
+      android:strokeWidth="0.61"
+      android:fillColor="?attr/reusable_button_glyph_fill_color"
+      android:strokeColor="#00000000"/>
+
+  <path
+      android:pathData="M108.54,13.54L498.54,13.54A95,95 60.16,0 1,593.54 108.54L593.54,498.54A95,95 110.95,0 1,498.54 593.54L108.54,593.54A95,95 105.45,0 1,13.54 498.54L13.54,108.54A95,95 0,0 1,108.54 13.54z"
+      android:strokeWidth="?attr/reusable_toolbar_button_outline_stroke_width_dimen"
+      android:strokeColor="?attr/reusable_toolbar_button_outline_stroke_color">
+  </path>
+
+</vector>
