@@ -32,6 +32,12 @@
         app:showAsAction="always"
         android:visible="true" />
 
+    <item android:id="@+id/wifi_button"
+        app:actionLayout="@layout/toolbar_button_wifi"
+        android:title="@string/wifiMenu"
+        app:showAsAction="always"
+        android:visible="true" />
+
     <item android:id="@+id/flashlight_button"
         app:actionLayout="@layout/toolbar_button_flashlight_off"
         android:title="@string/flashlightAction"
@@ -58,6 +64,10 @@
             <item android:id="@+id/help_mnu"
                 android:icon="?attr/ed_help_glyph"
                 android:title="@string/helpMenu" />
+
+            <item android:id="@+id/wifi_mnu"
+                android:icon="?attr/ed_wifi_glyph"
+                android:title="@string/wifiMenu" />
 
             <item android:id="@+id/logviewer_menu"
                 android:icon="?attr/ed_history_glyph"

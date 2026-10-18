@@ -179,6 +179,7 @@
     <string name="forward">前進</string>
     <string name="fs_edit_notice">警告: デフォルトファンクション設定への変更は終了時に失われます - SD カードが見つかりません。</string>
 
+    <string name="kill">殺す</string>
     <string name="functionButton00DefaultValue">前照灯</string>
 
     <string name="functionButton01DefaultValue">ベル</string>
@@ -1325,5 +1326,8 @@
     <string name="prefDccexHideDccexServersSummary">EX-CommandStationsは、WiThrottleサーバーとDCC-EXサーバーをアドバタイズします。WiThrottleサービスは、WiThrottleとDCC-EXのネイティブプロトコルの両方をサポートしています。このオプションを有効にすると、DCC-EX専用サービスが非表示になります。再起動が必要です。</string>
     <string name="prefDccexHideDccexServersTitle">mDNS DCC-EX専用サーバーを非表示にしますか？</string>
     <string name="prefDccexHideUdpServersTitle">mDNS UDPサーバーを非表示にしますか？</string>
+    <string name="dccexAllRoutes">全ルート：</string>
+    <string name="pause">一時停止</string>
+    <string name="resume">一時停止</string>
 
 </resources>

@@ -136,8 +136,58 @@
                         android:id="@+id/routes_list"
                         style="?attr/ed_list_view_style"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
+                    <LinearLayout
+                        android:id="@+id/routes_dccex_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp">
+
+                        <TextView
+                            style="?attr/list_item_style"
+                            android:fontFamily="sans-serif-condensed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/dccexAllRoutes" />
+
+                        <Button
+                            android:id="@+id/routes_dccex_pause"
+                            style="?attr/ed_small_button_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            app:drawableStartCompat="?attr/ed_pause_glyph"
+                            android:padding="0dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/pause"
+                            tools:ignore="RtlSymmetry" />
+
+                        <Button
+                            android:id="@+id/routes_dccex_resume"
+                            style="?attr/ed_small_button_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="32sp"
+                            app:drawableStartCompat="?attr/ed_resume_glyph"
+                            android:padding="0dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/resume"
+                            tools:ignore="RtlSymmetry" />
+
+                        <Button
+                            android:id="@+id/routes_dccex_kill"
+                            style="?attr/ed_small_button_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            app:drawableStartCompat="?attr/ed_stop_glyph"
+                            android:padding="0dp"
+                            android:text="@string/kill"
+                            tools:ignore="RtlSymmetry" />
+
+
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

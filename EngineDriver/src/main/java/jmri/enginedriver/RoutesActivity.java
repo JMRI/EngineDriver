@@ -102,6 +102,14 @@ public class RoutesActivity extends AppCompatActivity
     private Toolbar toolbar;
     private LinearLayout statusLine;
 
+    private LinearLayout dccexRoutesControls;
+    private Button dccexPause;
+    private Button dccexResume;
+    private Button dccexKill;
+    static final int PAUSE = 0;
+    static final int RESUME = 1;
+    static final int KILL = 2;
+
     ListView routes_lv;
     protected View routesView;
 
@@ -509,6 +517,29 @@ public class RoutesActivity extends AppCompatActivity
         }
     }
 
+    public class DccexRoutesControlButtonListener implements View.OnClickListener {
+        private int action;
+
+        DccexRoutesControlButtonListener(int action) {
+            this.action = action;
+        }
+
+        public void onClick(View v) {
+            switch (action) {
+                case PAUSE:
+                    mainapp.alertCommHandlerWithBundle(message_type.DCCEX_ROUTES_PAUSE);
+                    break;
+                case RESUME:
+                    mainapp.alertCommHandlerWithBundle(message_type.DCCEX_ROUTES_RESUME);
+                    break;
+                case KILL:
+                default:
+                    mainapp.alertCommHandlerWithBundle(message_type.DCCEX_ROUTES_KILL);
+            }
+            mainapp.buttonVibration();
+        }
+    }
+
     //handle click for each route's state toggle button
     public class route_state_button_listener implements View.OnClickListener {
 
@@ -688,6 +719,22 @@ public class RoutesActivity extends AppCompatActivity
 
         mainapp.prefFullScreenSwipeArea = prefs.getBoolean("prefFullScreenSwipeArea",
                 getResources().getBoolean(R.bool.prefFullScreenSwipeAreaDefaultValue));
+
+        // set up the DCC-EX Controls
+        dccexRoutesControls = findViewById(R.id.routes_dccex_controls);
+        dccexRoutesControls.setVisibility(mainapp.isDccexProtocol() ? View.VISIBLE : View.GONE);
+
+        b = findViewById(R.id.routes_dccex_pause);
+        DccexRoutesControlButtonListener dccexRoutesControlButtonListener = new DccexRoutesControlButtonListener(PAUSE);
+        b.setOnClickListener(dccexRoutesControlButtonListener);
+
+        b = findViewById(R.id.routes_dccex_resume);
+        dccexRoutesControlButtonListener = new DccexRoutesControlButtonListener(RESUME);
+        b.setOnClickListener(dccexRoutesControlButtonListener);
+
+        b = findViewById(R.id.routes_dccex_kill);
+        dccexRoutesControlButtonListener = new DccexRoutesControlButtonListener(KILL);
+        b.setOnClickListener(dccexRoutesControlButtonListener);
 
     } // end onCreate
 

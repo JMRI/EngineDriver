@@ -49,6 +49,7 @@
         <item name="ed_help_button">@drawable/reusable_toolbar_button_help</item>
         <item name="ed_preferences_button">@drawable/reusable_toolbar_button_preferences</item>
         <item name="ed_wizard_button">@drawable/reusable_toolbar_button_wizard</item>
+        <item name="ed_wifi_button">@drawable/reusable_toolbar_button_wifi</item>
         <item name="ed_throttle_button">@drawable/reusable_toolbar_button_throttle</item>
         <item name="ed_web_button">@drawable/reusable_toolbar_button_web</item>
         <item name="ed_turnouts_button">@drawable/reusable_toolbar_button_turnouts</item>
@@ -141,6 +142,9 @@
 
         <item name="ed_download_glyph">@drawable/glyph_button_download_states</item>
         <item name="ed_sort_glyph">@drawable/glyph_button_sort</item>
+        <item name="ed_pause_glyph">@drawable/glyph_button_pause</item>
+        <item name="ed_resume_glyph">@drawable/glyph_button_resume</item>
+        <item name="ed_stop_glyph">@drawable/glyph_button_stop</item>
         <item name="ed_clear_list_glyph">@drawable/glyph_button_clear_list</item>
         <item name="ed_tick_glyph_large">@drawable/glyph_tick_large</item>
         <item name="ed_cross_glyph">@drawable/glyph_button_cross</item>
@@ -165,6 +169,7 @@
         <item name="ed_read_glyph">@drawable/glyph_button_read_states</item>
         <item name="ed_preferences_glyph">@drawable/glyph_menu_preferences</item>
         <item name="ed_help_glyph">@drawable/glyph_menu_help</item>
+        <item name="ed_wifi_glyph">@drawable/glyph_menu_wifi</item>
         <item name="ed_menu_glyph">@drawable/glyph_menu_overflow_menu_dark_background</item>
         <item name="ed_wizard_glyph">@drawable/glyph_menu_wizard</item>
         <item name="ed_blank_glyph">@drawable/glyph_blank</item>

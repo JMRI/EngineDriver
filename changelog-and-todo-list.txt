@@ -1,4 +1,9 @@
 **Version 2.44.238
+* New Features
+      * WiFi Toolbar button and menu item on the connection screen. Takes you to the Android WiFi setup page
+      * Buttons on the Routes page to pause/resume/kill all DCC-EX (only) routes/automations
+* Bug Fixes
+* Other
 **Version 2.44.236
 * New Features
       * Shrink Route long button labels.  (Doesn't work on early versions of Android.)

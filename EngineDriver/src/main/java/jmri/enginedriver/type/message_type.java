@@ -126,6 +126,10 @@ public interface message_type {
 
     int CUSTOM_TOAST_MESSAGE = 103;
 
+    int DCCEX_ROUTES_PAUSE = 104;
+    int DCCEX_ROUTES_RESUME = 105;
+    int DCCEX_ROUTES_KILL = 106;
+
     // split from the old RESPONSE
 
     int RECEIVED_THROTTLE_LOCO_ADDED = 201;

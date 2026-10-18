@@ -464,6 +464,7 @@
     <string name="prefAccelerometerShakeThresholdTitle">Límite al agitar</string>
     <string name="prefAccelerometerShakeThresholdSummary">Umbral al que se registrará al agitar. (1.5&#8211;3.5) Un valor más bajo responderá a una acción suave.\nRequiere el reinicio del Engine Driver tras cambiarlo para tener efecto</string>
 
+    <string name="kill">Matar</string>
     <string name="functionButton00DefaultValue">Luces</string>
     <string name="functionButton01DefaultValue">Campana</string>
     <string name="functionButton02DefaultValue">Bocina</string>
@@ -1304,5 +1305,8 @@
     <string name="prefDccexHideDccexServersSummary">EX-CommandStations anuncia servidores WiThrottle y DCC-EX. El servicio WiThrottle admite los protocolos nativos WiThrottle y DCC-EX. Active esta opción para ocultar el servicio exclusivo de DCC-EX. Se requiere reiniciar.</string>
     <string name="prefDccexHideDccexServersTitle">¿Ocultar servidores que solo admiten mDNS DCC-EX?</string>
     <string name="prefDccexHideUdpServersTitle">¿Ocultar servidores mDNS UDP?</string>
+    <string name="dccexAllRoutes">Todas las rutas:</string>
+    <string name="pause">Pausa</string>
+    <string name="resume">Pausa</string>
 
 </resources>

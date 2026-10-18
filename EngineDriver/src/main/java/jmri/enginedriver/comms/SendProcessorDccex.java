@@ -248,6 +248,22 @@ public class SendProcessorDccex {
 //        threaded_application.logging(activityName + ": sendDccexRequestRoutes(): DCC-EX: " + msgTxt);
     }
 
+    public static void sendDccexRoutesPause() {
+        String msgTxt = "</ PAUSE>";
+        comm_thread.wifiSend(msgTxt);
+//        threaded_application.logging(activityName + ": sendDccexRoutesPause(): DCC-EX: " + msgTxt);
+    }
+    public static void sendDccexRoutesResume() {
+        String msgTxt = "</ RESUME>";
+        comm_thread.wifiSend(msgTxt);
+//        threaded_application.logging(activityName + ": sendDccexRoutesPause(): DCC-EX: " + msgTxt);
+    }
+    public static void sendDccexRoutesKill() {
+        String msgTxt = "</ KILL ALL>";
+        comm_thread.wifiSend(msgTxt);
+//        threaded_application.logging(activityName + ": sendDccexRoutesPause(): DCC-EX: " + msgTxt);
+    }
+
     /* ******************************************************************************************** */
 
     public static void sendDccexRequestTracks() {

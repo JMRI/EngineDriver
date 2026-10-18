@@ -50,6 +50,7 @@
 
     <attr name="ed_throttle_switch_button" format="reference" />
     <attr name="ed_wizard_button" format="reference" />
+    <attr name="ed_wifi_button" format="reference" />
     <attr name="ed_help_button" format="reference" />
     <attr name="ed_preferences_button" format="reference" />
     <attr name="ed_throttle_button" format="reference" />
@@ -208,6 +209,9 @@
     <attr name="ed_select_loco_glyph_ipls" format="reference" />
 
     <attr name="ed_sort_glyph" format="reference" />
+    <attr name="ed_pause_glyph" format="reference" />
+    <attr name="ed_resume_glyph" format="reference" />
+    <attr name="ed_stop_glyph" format="reference" />
     <attr name="ed_download_glyph" format="reference" />
     <attr name="ed_clear_list_glyph" format="reference" />
     <attr name="ed_tick_glyph_large" format="reference" />
@@ -217,6 +221,7 @@
     <attr name="ed_read_glyph" format="reference" />
     <attr name="ed_preferences_glyph" format="reference" />
     <attr name="ed_help_glyph" format="reference" />
+    <attr name="ed_wifi_glyph" format="reference" />
     <attr name="ed_menu_glyph" format="reference" />
     <attr name="ed_wizard_glyph" format="reference" />
     <attr name="ed_blank_glyph" format="reference" />
