@@ -37,7 +37,7 @@ public interface gamepad_or_keyboard_event_type {
     int SRT_LOAD_INCREASE            = 16;
     int SRT_LOAD_DECREASE            = 17;
     int IPLS_MUTE                    = 18;
-    int IPLS_BELL_TOGGLE             = 29;
+    int IPLS_BELL_TOGGLE             = 19;
     int IPLS_HORN_START              = 20;
     int IPLS_HORN_END                = 21;
     int IPLS_HORN_SHORT_START        = 22;
@@ -46,7 +46,7 @@ public interface gamepad_or_keyboard_event_type {
     int PAUSE_SPEED_TOGGLE           = 26;
     int SPEAK_SPEED                  = 27;
     int FUNCTION_START               = 28;
-    int FUNCTION_END                 = 39;
+    int FUNCTION_END                 = 29;
     int FUNCTION_FORCED_LATCH_START  = 30;
     int FUNCTION_FORCED_LATCH_END    = 31;
     int SPEED                        = 32;
@@ -54,4 +54,12 @@ public interface gamepad_or_keyboard_event_type {
     int TURNOUT_THROW                = 33;
     int TURNOUT_CLOSE                = 34;
     int TURNOUT_TOGGLE               = 35;
+
+    int POWER_TOGGLE                 = 36;
+    int POWER_ON                     = 37;
+    int POWER_OFF                    = 38;
+
+    int POWER_DCCEX_TRACK_TOGGLE     = 39;
+    int POWER_DCCEX_TRACK_ON         = 40;
+    int POWER_DCCEX_TRACK_OFF        = 41;
 }
