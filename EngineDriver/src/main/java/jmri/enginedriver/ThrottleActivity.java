@@ -1553,6 +1553,7 @@ public class ThrottleActivity extends AppCompatActivity implements
                             case accelerometer_action_type.ALL_STOP:
                                 GamepadFeedbackSound(false);
                                 speedUpdateAndNotify(0);         // update all throttles
+                                break;
                             case accelerometer_action_type.E_STOP:
                                 GamepadFeedbackSound(false);
                                 mainapp.sendEStopMsg();
@@ -1564,6 +1565,7 @@ public class ThrottleActivity extends AppCompatActivity implements
                                         setEsuThrottleKnobPosition(whichVolume, 0);
                                     }
                                 }
+                                break;
                         }
                     }
                 });
@@ -3585,6 +3587,7 @@ public class ThrottleActivity extends AppCompatActivity implements
                 pauseSpeed(whichThrottle);
                 break;
             }
+
             case gamepad_or_keyboard_event_type.SPEAK_SPEED: {
                 tts.speakWords(tts_msg_type.GAMEPAD_CURRENT_SPEED, whichThrottle, true
                         , whichThrottle
@@ -3595,6 +3598,47 @@ public class ThrottleActivity extends AppCompatActivity implements
                         , getConsistAddressString(whichThrottle));
                 break;
             }
+
+            case gamepad_or_keyboard_event_type.POWER_TOGGLE: {
+                int newState = 1;
+                if (mainapp.power_state.equals("1")) { //toggle to opposite value 0=off, 1=on
+                    newState = 0;
+                }
+                doSendPowerStateChange(newState);
+                break;
+            }
+            case gamepad_or_keyboard_event_type.POWER_ON: {
+                doSendPowerStateChange(1);
+                break;
+            }
+            case gamepad_or_keyboard_event_type.POWER_OFF: {
+                doSendPowerStateChange(0);
+                break;
+            }
+
+            case gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_TOGGLE: {
+                if (mainapp.isDccexProtocol()) {
+                    int newState = 1;
+                    if (mainapp.dccexTrackPower[val] == 1) { //toggle to opposite value 0=off, 1=on
+                        newState = 0;
+                    }
+                    doSendDccexPowerStateChange(val, newState);
+                }
+                break;
+            }
+            case gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_ON: {
+                if (mainapp.isDccexProtocol()) {
+                    doSendDccexPowerStateChange(val, 1);
+                }
+                break;
+            }
+            case gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_OFF: {
+                if (mainapp.isDccexProtocol()) {
+                    doSendDccexPowerStateChange(val, 0);
+                }
+                break;
+            }
+
             case gamepad_or_keyboard_event_type.FUNCTION_START: {
                 if (mainapp.isDccexProtocol()) {
                     lastGamepadFunction = val;
@@ -3663,11 +3707,29 @@ public class ThrottleActivity extends AppCompatActivity implements
         }
     }
 
+    void doSendPowerStateChange(int newState) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(alert_bundle_tag_type.POWER_STATE, newState);
+        mainapp.alertCommHandlerWithBundle(message_type.POWER_CONTROL, bundle);
+    }
+
+    void doSendDccexPowerStateChange(int track, int newState) {
+        Bundle bundle = new Bundle();
+        bundle.putChar(alert_bundle_tag_type.TRACK_CHAR, (char) ('A' + track));
+        if (newState == 1) {
+            bundle.putInt(alert_bundle_tag_type.POWER_STATE, 1);
+        } else {
+            bundle.putInt(alert_bundle_tag_type.POWER_STATE, 0);
+        }
+        bundle.putInt(alert_bundle_tag_type.POWER_STATE, newState);
+        mainapp.alertCommHandlerWithBundle(message_type.WRITE_TRACK_POWER, bundle);
+    }
+
     void doGamepadFunction(int fKey, int action, boolean isActive, int whichThrottle, int repeatCnt) {
         doGamepadFunction(fKey, action, isActive, whichThrottle, repeatCnt, false);
     }
     void doGamepadFunction(int fKey, int action, boolean isActive, int whichThrottle, int repeatCnt, boolean forceIsLatching) {
-//        threaded_application.extendedLogging(activityName + ": doGamepadFunction(): :<>: fn: " + fKey + " action: " + action + " isActive: " + isActive);
+        threaded_application.extendedLogging(activityName + ": doGamepadFunction(): :<>: fn: " + fKey + " action: " + action + " isActive: " + isActive);
         if (isActive && (repeatCnt == 0)) {
             String lab = mainapp.function_labels[whichThrottle].get(fKey);
             if (lab != null) {

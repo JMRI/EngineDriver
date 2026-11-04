@@ -645,6 +645,9 @@ public class threaded_application extends Application {
     public int prefGamePadFeedbackVolume = 100;
     public int[] gamepadBeepIds;
 
+    // BT or USB keyboard
+    public static Handler waitToSendUpUpdateHandler = new Handler(Looper.getMainLooper());
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // WiThrottle PoM
 
@@ -1362,7 +1365,10 @@ public class threaded_application extends Application {
             case "Digitrax" -> wifi_send_interval = 200; //increase the interval for LnWi
             case "DCC-EX" -> {
                 if ((threaded_application.getDccexVersionNumeric() >= threaded_application.DCCEX_VERSION_MINIMUM_FOR_WEB_SERVER)
-                        && ((threaded_application.dccexProcessorString.equals("EXCSB1")) || (threaded_application.dccexProcessorString.equals("ESP32"))))
+                        && ( (threaded_application.dccexProcessorString.equals("EXCSB1"))
+                            || (threaded_application.dccexProcessorString.contains("ESP32"))
+                            || (threaded_application.dccexProcessorString.contains("NUCLEO")) )
+                        )
                     web_server_port = 80; //hardcode web port for DCC-EX
             }
         }

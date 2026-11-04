@@ -30,6 +30,7 @@ import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
 import static android.view.KeyEvent.KEYCODE_DPAD_LEFT;
 import static android.view.KeyEvent.KEYCODE_DPAD_RIGHT;
 import static android.view.KeyEvent.KEYCODE_DPAD_UP;
+import static android.view.KeyEvent.KEYCODE_E;
 import static android.view.KeyEvent.KEYCODE_EQUALS;
 import static android.view.KeyEvent.KEYCODE_F;
 import static android.view.KeyEvent.KEYCODE_F1;
@@ -38,6 +39,7 @@ import static android.view.KeyEvent.KEYCODE_F11;
 import static android.view.KeyEvent.KEYCODE_G;
 import static android.view.KeyEvent.KEYCODE_H;
 import static android.view.KeyEvent.KEYCODE_I;
+import static android.view.KeyEvent.KEYCODE_K;
 import static android.view.KeyEvent.KEYCODE_L;
 import static android.view.KeyEvent.KEYCODE_LEFT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_M;
@@ -47,6 +49,8 @@ import static android.view.KeyEvent.KEYCODE_MINUS;
 import static android.view.KeyEvent.KEYCODE_MOVE_END;
 import static android.view.KeyEvent.KEYCODE_MOVE_HOME;
 import static android.view.KeyEvent.KEYCODE_N;
+import static android.view.KeyEvent.KEYCODE_NUMPAD_0;
+import static android.view.KeyEvent.KEYCODE_NUMPAD_9;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_ADD;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_SUBTRACT;
 import static android.view.KeyEvent.KEYCODE_O;
@@ -55,6 +59,7 @@ import static android.view.KeyEvent.KEYCODE_PAGE_DOWN;
 import static android.view.KeyEvent.KEYCODE_PAGE_UP;
 import static android.view.KeyEvent.KEYCODE_PERIOD;
 import static android.view.KeyEvent.KEYCODE_PLUS;
+import static android.view.KeyEvent.KEYCODE_R;
 import static android.view.KeyEvent.KEYCODE_RIGHT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_S;
 import static android.view.KeyEvent.KEYCODE_SEMICOLON;
@@ -64,7 +69,9 @@ import static android.view.KeyEvent.KEYCODE_V;
 import static android.view.KeyEvent.KEYCODE_VOLUME_DOWN;
 import static android.view.KeyEvent.KEYCODE_VOLUME_MUTE;
 import static android.view.KeyEvent.KEYCODE_VOLUME_UP;
+import static android.view.KeyEvent.KEYCODE_W;
 import static android.view.KeyEvent.KEYCODE_X;
+import static android.view.KeyEvent.KEYCODE_Y;
 import static android.view.KeyEvent.KEYCODE_Z;
 import static jmri.enginedriver.threaded_application.MAX_FUNCTIONS;
 
@@ -82,6 +89,13 @@ public class KeyboardEventHandler {
     int tempKeyboardTurnout = -1;
     int keyboardStopCount = 0;
     int MAX_SCREEN_THROTTLES = 1;
+
+    long waitToSendUpFunctionDelay = 0;
+    long [] waitToSendUpFunctionPeriods = {
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0};
 
     public KeyboardEventHandler(threaded_application mainapp, KeyboardNotifierInterface keyboardNotifierInterface, int maxScreenThrottles) {
         this.keyboardNotifierInterface = keyboardNotifierInterface;
@@ -115,6 +129,7 @@ public class KeyboardEventHandler {
                         whichThrottle,   isActive, whichGamePadIsEventFrom);
                 resetKeyboardString();
             }
+
         } else if ((keyCode == KEYCODE_X) || (keyCode == KEYCODE_MOVE_HOME)) {  // Stop
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 keyboardStopCount++;
@@ -137,6 +152,7 @@ public class KeyboardEventHandler {
                 }
                 resetKeyboardString();
             }
+
         } else if (keyCode == KEYCODE_N) {  // Next Throttle
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 keyboardNotifierInterface.keyboardEventNotificationHandler(
@@ -294,6 +310,13 @@ public class KeyboardEventHandler {
                 resetKeyboardString();
             }
 
+        } else if (keyCode == KEYCODE_E) {  // toggle power
+            if (action == ACTION_DOWN) {
+                keyboardNotifierInterface.keyboardEventNotificationHandler(
+                        gamepad_or_keyboard_event_type.POWER_TOGGLE, 0, repeatCnt,
+                        whichThrottle, isActive, whichGamePadIsEventFrom);
+            }
+
         } else if (keyCode == KEYCODE_V) {  // Speak speed
             if (action == ACTION_DOWN) {
                 keyboardNotifierInterface.keyboardEventNotificationHandler(
@@ -333,11 +356,33 @@ public class KeyboardEventHandler {
                 keyboardString = "O";
                 tempKeyboardTurnout = -1;  //reset it
             }
+
+        } else if (keyCode == KEYCODE_R) {  // Start of a power state change
+            if (action == ACTION_DOWN) {
+                keyboardString = "R";
+            }
+        } else if (keyCode == KEYCODE_Y) {  // Start of a DCC-EX track power state toggle
+            if (action == ACTION_DOWN) {
+                keyboardString = "Y";
+            }
+        } else if (keyCode == KEYCODE_K) {  // Start of a DCC-EX track power state change
+            if (action == ACTION_DOWN) {
+                keyboardString = "K";
+            }
+
+        } else if (keyCode == KEYCODE_W) {  // Start of a wait to sent Up specification
+            if (action == ACTION_DOWN) {
+                keyboardString = "W";
+                waitToSendUpFunctionDelay = 0;  //reset it
+            }
         } else if (((keyCode >= KEYCODE_0) && (keyCode <= KEYCODE_9))
-                || ((keyCode >= KEYCODE_F1) && (keyCode <= KEYCODE_F10))) {  // Start of a Function, Speed, or Throttle command
+                || ((keyCode >= KEYCODE_NUMPAD_0) && (keyCode <= KEYCODE_NUMPAD_9))
+                || ((keyCode >= KEYCODE_F1) && (keyCode <= KEYCODE_F10))) {  // Start of a Function, Speed, Throttle or Wait command
             String num;
             if ((keyCode >= KEYCODE_0) && (keyCode <= KEYCODE_9)) {
                 num = Integer.toString(keyCode - KEYCODE_0);
+            } else if ((keyCode >= KEYCODE_NUMPAD_0) && (keyCode <= KEYCODE_NUMPAD_9)) {
+                num = Integer.toString(keyCode - KEYCODE_NUMPAD_0);
             } else {
                 if (keyCode != KEYCODE_F10) {
                     num = Integer.toString(keyCode - KEYCODE_F1 + 1);
@@ -346,6 +391,8 @@ public class KeyboardEventHandler {
                 }
             }
 
+            threaded_application.extendedLogging(activityName + ": :<>: num: " + num);
+
             if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'F')) {  // Function
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
@@ -353,18 +400,27 @@ public class KeyboardEventHandler {
                 if (keyboardString.length() == 3) {  // have a two digit function number now
                     int fKey = Integer.parseInt(keyboardString.substring(1, 3));
                     if (fKey < MAX_FUNCTIONS) {
-                        if (action == ACTION_DOWN) {
-                            keyboardNotifierInterface.keyboardEventNotificationHandler(
-                                    gamepad_or_keyboard_event_type.FUNCTION_START, fKey, repeatCnt,
-                                    whichThrottle, isActive, whichGamePadIsEventFrom);
+                        if ( (waitToSendUpFunctionDelay <= 0) && (waitToSendUpFunctionPeriods[fKey] <= 0) ) {
+                            if (action == ACTION_DOWN) {
+                                keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                        gamepad_or_keyboard_event_type.FUNCTION_START, fKey, repeatCnt,
+                                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                            } else {
+                                if (waitToSendUpFunctionPeriods[fKey] <= 0) {
+                                    keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                            gamepad_or_keyboard_event_type.FUNCTION_END, fKey, repeatCnt,
+                                            whichThrottle, isActive, whichGamePadIsEventFrom);
+                                }
+                                resetKeyboardString();
+                            }
                         } else {
-                            keyboardNotifierInterface.keyboardEventNotificationHandler(
-                                    gamepad_or_keyboard_event_type.FUNCTION_END, fKey, repeatCnt,
-                                    whichThrottle, isActive, whichGamePadIsEventFrom);
-                            resetKeyboardString();
+                            if (action == ACTION_DOWN)
+                                waitToSendFunctionUp(fKey, repeatCnt, whichThrottle, isActive,  whichGamePadIsEventFrom);
+                            // ignore up
                         }
                     }
                 }
+
             } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'G')) {  // Forced Latching Function
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
@@ -377,9 +433,11 @@ public class KeyboardEventHandler {
                                     gamepad_or_keyboard_event_type.FUNCTION_FORCED_LATCH_START, fKey, repeatCnt,
                                     whichThrottle, isActive, whichGamePadIsEventFrom);
                         } else {
-                            keyboardNotifierInterface.keyboardEventNotificationHandler(
-                                    gamepad_or_keyboard_event_type.FUNCTION_FORCED_LATCH_END, fKey, repeatCnt,
-                                    whichThrottle, isActive, whichGamePadIsEventFrom);
+                            if (waitToSendUpFunctionPeriods[fKey] <= 0) {
+                                keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                        gamepad_or_keyboard_event_type.FUNCTION_FORCED_LATCH_END, fKey, repeatCnt,
+                                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                            }
                             resetKeyboardString();
                         }
                     }
@@ -435,6 +493,7 @@ public class KeyboardEventHandler {
                         resetKeyboardString();
                     }
                 }
+
             } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'O')) {  // CLOSE Turnout/Point
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
@@ -462,14 +521,80 @@ public class KeyboardEventHandler {
                         if (tempGamepadOrKeyboardThrottle > MAX_SCREEN_THROTTLES) {
                             tempGamepadOrKeyboardThrottle = -1;
                         }
+                        threaded_application.extendedLogging(activityName + ": throttle: " + tempGamepadOrKeyboardThrottle);
                     }
                 } else {
                     keyboardString = "";
                 }
+
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'R')) {    // specify the power state
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                }
+                if (action == ACTION_DOWN) {
+                    if (keyboardString.length() == 2) {  // we have a complete value
+                        int newState = Integer.parseInt(keyboardString.substring(1, 2));
+                        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                newState==1 ? gamepad_or_keyboard_event_type.POWER_ON : gamepad_or_keyboard_event_type.POWER_OFF,
+                                0, 0,
+                                0, isActive, whichGamePadIsEventFrom);
+
+                        keyboardString = "";
+                    }
+                } // ignore up
+
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'Y')) {    // specify the track for a power toggle for DCC-EX
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                }
+                if (action == ACTION_DOWN) {
+                    if (keyboardString.length() == 2) {  // we have a complete value
+                        int track = Integer.parseInt(keyboardString.substring(1, 2));
+                        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_TOGGLE,
+                                track, 0,
+                                0, isActive, whichGamePadIsEventFrom);
+
+                        keyboardString = "";
+                    }
+                } // ignore up
+
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'K')) {    // specify the track and power state for DCC-EX
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                }
+                if (action == ACTION_DOWN) {
+                    if (keyboardString.length() == 3) {  // we have a complete value
+                        int track = Integer.parseInt(keyboardString.substring(1, 2));
+                        int newState = Integer.parseInt(keyboardString.substring(2, 3));
+                        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                newState==1 ? gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_ON : gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_OFF,
+                                track, 0,
+                                0, isActive, whichGamePadIsEventFrom);
+
+                        keyboardString = "";
+                    }
+                } // ignore up
+
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'W')) {    // specify wait period to Send Up
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                }
+                if (action == ACTION_DOWN) {
+                    if (keyboardString.length() == 5) {  // we have a complete wait period
+                        waitToSendUpFunctionDelay = Integer.parseInt(keyboardString.substring(1, 5));
+
+                        threaded_application.extendedLogging(activityName + ": :<>: wait: " + waitToSendUpFunctionDelay);
+                        keyboardString = "";
+                    }
+                } // ignore up
+
             } else if (keyboardString.isEmpty()) {  // direct function 0-9
                 int fKey;
                 if ((keyCode >= KEYCODE_0) && (keyCode <= KEYCODE_9)) {
                     fKey = keyCode - KEYCODE_0;
+                } else if ((keyCode >= KEYCODE_NUMPAD_0) && (keyCode <= KEYCODE_NUMPAD_9)) {
+                    fKey = keyCode - KEYCODE_NUMPAD_0;
                 } else {
                     if (keyCode != KEYCODE_F10) {
                         fKey = keyCode - KEYCODE_F1 + 1;
@@ -477,18 +602,39 @@ public class KeyboardEventHandler {
                         fKey = 0;
                     }
                 }
+
+                threaded_application.extendedLogging(activityName + ": :<>: fKey: " + fKey);
+
                 if (fKey < 10) { // special case for attached keyboards keys 0-9
                     mainapp.numericKeyIsPressed[fKey] = action;
                     if (action == ACTION_DOWN) {
                         mainapp.numericKeyFunctionStateAtTimePressed[fKey] = ((mainapp.function_states[whichThrottle][fKey]) ? 1 : 0);
                     }
                 }
-                keyboardNotifierInterface.keyboardEventNotificationHandler(
-                        (action == ACTION_DOWN) ? gamepad_or_keyboard_event_type.FUNCTION_START : gamepad_or_keyboard_event_type.FUNCTION_END,
-                        fKey, repeatCnt,
-                        whichThrottle, isActive, whichGamePadIsEventFrom);
-                if (action == ACTION_UP) {
-                    resetKeyboardString();
+//                if (waitToSendUpFunctionDelay <= 0) { // immediate send of up if needed
+                if ( (waitToSendUpFunctionDelay <= 0) && ( waitToSendUpFunctionPeriods[fKey] <= 0) ) {
+                    if (action == ACTION_DOWN ) {
+                            keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                    gamepad_or_keyboard_event_type.FUNCTION_START,
+                                    fKey, repeatCnt,
+                                    whichThrottle, isActive, whichGamePadIsEventFrom);
+
+                    } else {
+                        if ( waitToSendUpFunctionPeriods[fKey] <= 0) {
+                            keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                    gamepad_or_keyboard_event_type.FUNCTION_END,
+                                    fKey, repeatCnt,
+                                    whichThrottle, isActive, whichGamePadIsEventFrom);
+                         }
+                    }
+                    if (action == ACTION_UP) {
+                        resetKeyboardString();
+                    }
+
+                } else { // delayed send of Up
+                    if (action == ACTION_DOWN) {
+                        waitToSendFunctionUp(fKey, repeatCnt, whichThrottle, isActive, whichGamePadIsEventFrom);
+                    }
                 }
             }
         }
@@ -498,11 +644,42 @@ public class KeyboardEventHandler {
         }
     }
 
+    void waitToSendFunctionUp(int fKey, int repeatCnt, int whichThrottle, boolean isActive, int whichGamePadIsEventFrom) {
+        threaded_application.extendedLogging(activityName + ": waitToSendFunctionUp(): :<>: Function: " + fKey + " down  Delay: " + waitToSendUpFunctionDelay);
+        // down event
+        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                gamepad_or_keyboard_event_type.FUNCTION_FORCED_LATCH_START,
+                fKey, 0,
+                whichThrottle, isActive, whichGamePadIsEventFrom);
+        keyboardNotifierInterface.keyboardEventNotificationHandler(
+                gamepad_or_keyboard_event_type.FUNCTION_FORCED_LATCH_END,
+                fKey, 0,
+                whichThrottle, isActive, whichGamePadIsEventFrom);
+        waitToSendUpFunctionPeriods[fKey] = waitToSendUpFunctionDelay;
+
+        threaded_application.waitToSendUpUpdateHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                threaded_application.extendedLogging(activityName + ": waitToSendFunctionUp(): Function: " + fKey + " up");
+                keyboardNotifierInterface.keyboardEventNotificationHandler(
+                        gamepad_or_keyboard_event_type.FUNCTION_FORCED_LATCH_START,
+                        fKey, 0,
+                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                keyboardNotifierInterface.keyboardEventNotificationHandler(
+                        gamepad_or_keyboard_event_type.FUNCTION_FORCED_LATCH_END,
+                        fKey, 0,
+                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                waitToSendUpFunctionPeriods[fKey] = 0;
+            }
+        }, waitToSendUpFunctionDelay);
+
+        waitToSendUpFunctionDelay = 0;
+        resetKeyboardString();
+    }
+
     void resetKeyboardString() {
         threaded_application.logging(activityName + ": resetKeyboardString()");
         keyboardString = "";
         tempGamepadOrKeyboardThrottle = -1;  //reset it
     }
-
 }
-
