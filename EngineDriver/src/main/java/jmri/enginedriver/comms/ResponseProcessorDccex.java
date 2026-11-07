@@ -275,6 +275,10 @@ public class ResponseProcessorDccex {
     public static void processDccexCommandStationInfoResponse(String [] args, String responseStr) { // <iDCCEX version / microprocessorType / MotorControllerType / buildNumber>
         String old_vn = threaded_application.getDccexVersionString();
         String [] vn1 = args[1].split("-");
+        if (vn1.length < 2) {
+            threaded_application.logging(activityName + ": processWifiResponse(): Invalid Server Info response - ignoring");
+            return;
+        }
         String [] vn2 = vn1[1].split("\\.");
         String vn = "4.";
         try {
@@ -790,7 +794,16 @@ public class ResponseProcessorDccex {
                 if (prefs.getBoolean("prefDccexSequenceItemRequests", false))
                     SendProcessorDccex.sendDccexRequestTurnouts();
             } else {
-                if ((args.length < 3) || (args[2].charAt(0) != '"')) {  // loco list
+                if ((args.length == 1)) {  // loco list - no locos
+                    if (!mainapp.dccexRosterProcessed) {
+                        mainapp.dccexRosterIDs = null;
+                        mainapp.dccexRosterLocoNames = null;
+                        mainapp.dccexRosterLocoFunctions = null;
+                        mainapp.dccexRosterDetailsReceived = null;
+                        mainapp.dccexRosterProcessed = true;
+                    }
+
+                } else if ((args.length < 3) || (args[2].charAt(0) != '"')) {  // loco list
 //                    if (mainapp.dccexRosterString.isEmpty()) {
 //                        mainapp.dccexRosterString = "";
                     if (!mainapp.dccexRosterProcessed) {
@@ -813,6 +826,50 @@ public class ResponseProcessorDccex {
                             }
                         }
                     }
+
+                } else if ((args.length == 3) || (args[2].equals("X") )) { // server has responded that the loco was not in the roster
+                    // <jR id X>
+                    if (mainapp.dccexRosterIDs != null) {
+                        for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+                            if (mainapp.dccexRosterIDs[i] == Integer.parseInt(args[1])) {
+                                mainapp.dccexRosterLocoNames[i] = "X";  // unknown on the server
+                                mainapp.dccexRosterLocoFunctions[i] = ""; // ignore this
+                                mainapp.dccexRosterDetailsReceived[i] = true;
+                                break;
+                            }
+                        }
+
+                        // check if we have all of them
+                        boolean ready = true;
+                        for (int i = 0; i < mainapp.dccexRosterIDs.length; i++) {
+                            if (!mainapp.dccexRosterDetailsReceived[i]) {
+                                ready = false;
+                                break;
+                            }
+                        }
+                        if (ready) {
+                            processDccexRosterList();
+                            mainapp.dccexListsRequested++;
+                            mainapp.alertActivitiesWithBundle(message_type.RECEIVED_ROSTER_UPDATE);
+
+                            threaded_application.logging(activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
+
+                            int count = (mainapp.dccexRosterIDs == null) ? 0 : mainapp.dccexRosterIDs.length;
+                            if (count > 0 ) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(alert_bundle_tag_type.MESSAGE, mainapp.getApplicationContext().getResources().getString(R.string.roster_available));
+                                bundle.putInt(alert_bundle_tag_type.DURATION, LENGTH_SHORT);
+                                bundle.putBoolean(alert_bundle_tag_type.INSTRUCTIONAL, true);
+                                mainapp.alertActivitiesWithBundle(message_type.CUSTOM_TOAST_MESSAGE, bundle, activity_id_type.THROTTLE);
+                            }
+
+                            if (prefs.getBoolean("prefDccexSequenceItemRequests", false))
+                                SendProcessorDccex.sendDccexRequestTurnouts();
+                        }
+                    }
+
+
+
                 } else {  // individual loco
                     if (mainapp.dccexListsRequested < 3) {
                         if (mainapp.dccexRosterIDs != null) {
@@ -834,17 +891,12 @@ public class ResponseProcessorDccex {
                                 }
                             }
                             if (ready) {
-//                                mainapp.dccexRosterString = getRosterString();
-//                                processRosterList(mainapp.dccexRosterString);
                                 processDccexRosterList();
-
-//                                mainapp.dccexRosterString = "";
                                 mainapp.dccexListsRequested++;
                                 mainapp.alertActivitiesWithBundle(message_type.RECEIVED_ROSTER_UPDATE);
 
                                 threaded_application.logging(activityName + ": processDccexRoster: Roster complete. Count: " + mainapp.dccexRosterIDs.length);
 
-//                            mainapp.dccexRosterFullyReceived = true;
                                 int count = (mainapp.dccexRosterIDs == null) ? 0 : mainapp.dccexRosterIDs.length;
                                 if (count > 0 ) {
                                     Bundle bundle = new Bundle();
