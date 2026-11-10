@@ -208,6 +208,10 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
             fragment = new intro_esu_mc2();
             addSlide(fragment);
         }
+        if ( (mainapp.manufacturer.equals("alps")) && (mainapp.model.equals("M30")) ) {
+            fragment = new intro_alps();
+            addSlide(fragment);
+        }
         fragment = new intro_throttle_type();
         addSlide(fragment);
         fragment = new intro_buttons();

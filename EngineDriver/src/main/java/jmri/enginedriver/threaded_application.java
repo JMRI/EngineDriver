@@ -161,6 +161,10 @@ public class threaded_application extends Application {
     public Resources.Theme theme;
     public String languageCountry = "en";
 
+    public String brand = "";
+    public String manufacturer = "";
+    public String model = "";
+
     public String deviceId = "";
 
     // it does not matter what these value are as long as they have never been used before (so just add 1)
@@ -847,16 +851,17 @@ public class threaded_application extends Application {
             appVersion = "v" + getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
-//        androidVersion = android.os.Build.VERSION.SDK_INT;
-
         threaded_application.logging('i', "Engine Driver:" + appVersion + ", SDK:" + android.os.Build.VERSION.SDK_INT);
-
-//        context = getApplicationContext();
 
         prefs = getSharedPreferences("jmri.enginedriver_preferences", 0);
         renamePreferencesToNewFormat();
 
         commThread = new comm_thread(mainapp, prefs);
+
+        // Retrieve individual properties
+        brand = Build.BRAND;
+        manufacturer = Build.MANUFACTURER;
+        model = Build.MODEL;
 
         flashlight = Flashlight.newInstance(getApplicationContext());
 

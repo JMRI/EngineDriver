@@ -26,8 +26,10 @@ public interface gamepad_or_keyboard_event_type {
     int REVERSE                      =  5;
     int TOGGLE_DIRECTION             =  6;
     int INCREASE_SPEED_START         =  7;
+    int INCREASE_SPEED               =  8;
 //    int INCREASE_SPEED_END           =  8;
     int DECREASE_SPEED_START         =  9;
+    int DECREASE_SPEED               =  10;
 //    int DECREASE_SPEED_END           = 10;
     int NEXT_THROTTLE                = 11;
 //    int CHANGE_THROTTLE              = 12;
