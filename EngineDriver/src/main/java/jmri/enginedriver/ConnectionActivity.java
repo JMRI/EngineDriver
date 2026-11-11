@@ -87,6 +87,7 @@ import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Locale;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import jmri.enginedriver.type.activity_id_type;
@@ -510,8 +511,8 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                                 connectToFirstDiscoveredServer();
                             }
 
-                            String prefAutoServerNamedConnect = prefs.getString("prefAutoServerNamedConnect", "").toLowerCase();
-                            if ((!prefAutoServerNamedConnect.isEmpty()) && (found_host_name != null) && (found_host_name.toLowerCase().equals(prefAutoServerNamedConnect))) {
+                            String prefAutoServerNamedConnect = prefs.getString("prefAutoServerNamedConnect", "").toLowerCase(Locale.ROOT);
+                            if ((!prefAutoServerNamedConnect.isEmpty()) && (found_host_name != null) && (found_host_name.toLowerCase(Locale.ROOT).equals(prefAutoServerNamedConnect))) {
                                 connectToFirstDiscoveredServer();
                             }
                         }

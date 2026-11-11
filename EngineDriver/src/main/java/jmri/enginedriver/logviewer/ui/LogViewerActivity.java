@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Locale;
 
 import jmri.enginedriver.ConnectionActivity;
 import jmri.enginedriver.R;
@@ -639,7 +640,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
                 File[] filesList = dir.listFiles();
                 if (filesList != null) {
                     for (File file : filesList) {
-                        String lowercaseFileName = file.getName().toLowerCase();
+                        String lowercaseFileName = file.getName().toLowerCase(Locale.ROOT);
                         if (lowercaseFileName.startsWith("logcat") && lowercaseFileName.endsWith(".txt")) {
                             logFiles.add(file);
                             threaded_application.logging(activityName + ": getFilesForDialog(): Found: " + file.getName());

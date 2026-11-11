@@ -97,6 +97,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Locale;
 
 import jmri.enginedriver.type.Consist;
 import jmri.enginedriver.type.Consist.ConLoco;
@@ -293,7 +294,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                     if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0) ) {
                         includeInList = true;
                     } else if ((!prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex==0)) {
-                         if (rosterName.toUpperCase().contains(prefRosterFilter.toUpperCase())) {
+                         if (rosterName.toUpperCase(Locale.ROOT).contains(prefRosterFilter.toUpperCase(Locale.ROOT))) {
                             includeInList = true;
                          }
                     } else if ((prefRosterFilter.isEmpty()) && (rosterOwnersFilterIndex > 0)) {
@@ -301,7 +302,7 @@ public class SelectLocoActivity extends AppCompatActivity {
                             includeInList = true;
                         }
                     } else { // if ((prefRosterFilter.length() > 0) && (rosterOwnersFilterIndex > 0)) {
-                        if ( (rosterName.toUpperCase().contains(prefRosterFilter.toUpperCase()))
+                        if ( (rosterName.toUpperCase(Locale.ROOT).contains(prefRosterFilter.toUpperCase(Locale.ROOT)))
                             && owner.equals(rosterOwnersList.get(rosterOwnersFilterIndex)) ) {
                             includeInList = true;
                         }
@@ -367,8 +368,8 @@ public class SelectLocoActivity extends AppCompatActivity {
                         default:
                             s0 = arg0.get("roster_name");
                             s1 = arg1.get("roster_name");
-                            s0 = (s0 != null) ? s0.replaceAll("_", " ").toLowerCase() : "";
-                            s1 = (s1 != null) ? s1.replaceAll("_", " ").toLowerCase() : "";
+                            s0 = (s0 != null) ? s0.replaceAll("_", " ").toLowerCase(Locale.ROOT) : "";
+                            s1 = (s1 != null) ? s1.replaceAll("_", " ").toLowerCase(Locale.ROOT) : "";
                             break;
                     }
                     rslt = s0.compareTo(s1);
@@ -1086,9 +1087,9 @@ public class SelectLocoActivity extends AppCompatActivity {
                         switch (mainapp.recentLocosOrder) {
                             case sort_type.NAME: {
                                 if (arg0.get("engine") != null)
-                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("engine")).replaceAll("_", " ").toLowerCase());
+                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("engine")).replaceAll("_", " ").toLowerCase(Locale.ROOT));
                                 if (arg1.get("engine") != null)
-                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("engine")).replaceAll("_", " ").toLowerCase());
+                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("engine")).replaceAll("_", " ").toLowerCase(Locale.ROOT));
                                 break;
                             }
                             case sort_type.ID: {
@@ -1157,9 +1158,9 @@ public class SelectLocoActivity extends AppCompatActivity {
                         switch (mainapp.recentConsistsOrder) {
                             case sort_type.NAME: {
                                 if (arg0.get("consist") != null)
-                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("consist")).replaceAll("_", " ").toLowerCase());
+                                    s0 = threaded_application.formatNumberInName(Objects.requireNonNull(arg0.get("consist")).replaceAll("_", " ").toLowerCase(Locale.ROOT));
                                 if (arg1.get("consist") != null)
-                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("consist")).replaceAll("_", " ").toLowerCase());
+                                    s1 = threaded_application.formatNumberInName(Objects.requireNonNull(arg1.get("consist")).replaceAll("_", " ").toLowerCase(Locale.ROOT));
                                 break;
                             }
                             case sort_type.ID: {

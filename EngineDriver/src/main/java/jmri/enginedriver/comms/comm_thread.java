@@ -37,6 +37,7 @@ import android.widget.Toast;
 import java.net.Inet4Address;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.Locale;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -144,7 +145,7 @@ public class comm_thread extends Thread {
                     String host_name = modifyHostName(resolvedServiceInfo.getServiceName(), appServiceType);
                     
                     String serverType = ""; 
-                    if (resolvedServiceInfo.getServiceName().toLowerCase().contains("jmri")) serverType = "JMRI";
+                    if (resolvedServiceInfo.getServiceName().toLowerCase(Locale.ROOT).contains("jmri")) serverType = "JMRI";
 
                     String key = ip_address + ":" + port;
                     mainapp.knownDccexServerIps.put(key, serverType);
@@ -263,7 +264,7 @@ public class comm_thread extends Thread {
             bundle.putString(alert_bundle_tag_type.SERVICE_TYPE, event.getInfo().getType());
             mainapp.alertActivitiesWithBundle(message_type.SERVICE_RESOLVED, bundle);
 
-            threaded_application.logging(activityName + ": " + String.format("serviceResolved(): %s(%s):%d -- %s",
+            threaded_application.logging(activityName + ": " + String.format(Locale.ROOT, "serviceResolved(): %s(%s):%d -- %s",
                     host_name, ip_address, port,
                     event.toString().replace(Objects.requireNonNull(System.getProperty("line.separator")), " ")));
 
@@ -351,7 +352,7 @@ public class comm_thread extends Thread {
                         }
                     } catch (Exception e) {
                         threaded_application.logging(activityName + ": startJmdns(): attempt " + attempts + " failed: " + e.getMessage());
-                        String errMsg = (e.getMessage() != null) ? e.getMessage().toUpperCase() : "";
+                        String errMsg = (e.getMessage() != null) ? e.getMessage().toUpperCase(Locale.ROOT) : "";
                         if (errMsg.contains("EADDRINUSE") || errMsg.contains("ADDRESS ALREADY IN USE")) {
                             if (attempts < 3) {
                                 threaded_application.logging(activityName + ": startJmdns(): port in use, will retry...");

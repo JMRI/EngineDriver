@@ -116,6 +116,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Locale;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 import eu.esu.mobilecontrol2.sdk.StopButtonFragment;
@@ -3733,11 +3734,11 @@ public class ThrottleActivity extends AppCompatActivity implements
         if (isActive && (repeatCnt == 0)) {
             String lab = mainapp.function_labels[whichThrottle].get(fKey);
             if (lab != null) {
-                lab = lab.toUpperCase().trim();
+                lab = lab.toUpperCase(Locale.ROOT).trim();
             } else {
                 if ((fKey < prefNumberOfDefaultFunctionLabels)
                         && (mainapp.function_labels_default.get(fKey) != null)) {
-                    lab = mainapp.function_labels_default.get(fKey).toUpperCase().trim();
+                    lab = mainapp.function_labels_default.get(fKey).toUpperCase(Locale.ROOT).trim();
                 } else {
                     lab = "BLANK";
                 }
@@ -5312,7 +5313,7 @@ public class ThrottleActivity extends AppCompatActivity implements
             mainapp.exitDoubleBackButtonInitiated = 0;
             function = new_function;    // store these values for this button
             whichThrottle = new_whichThrottle;
-            lab = funcLabel.toUpperCase().trim();
+            lab = funcLabel.toUpperCase(Locale.ROOT).trim();
             leadOnly = false;
             trailOnly = false;
             followLeadFunction = false;
