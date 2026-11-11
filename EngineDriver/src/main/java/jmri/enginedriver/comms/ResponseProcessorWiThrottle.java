@@ -7,6 +7,7 @@ import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -36,6 +37,10 @@ public class ResponseProcessorWiThrottle {
 
     public static boolean processWifiResponse(String responseStr) {
         boolean skipDefaultAlertToAllActivities = false;
+
+        if (responseStr.length() < 2) { // every message handled here has at least two characters
+            return false;
+        }
 
         switch (responseStr.charAt(0)) {
 
@@ -104,6 +109,10 @@ public class ResponseProcessorWiThrottle {
                     skipDefaultAlertToAllActivities = true;
 
                 } else if (com2 == 'L') { //list of function buttons
+                    if (ls.length < 2) {
+                        threaded_application.logging(activityName + ": processWifiResponse(): function label list without labels: '" + responseStr + "'");
+                        break;
+                    }
                     if ((mainapp.consists[whichThrottle].isLeadFromRoster())  // if not from the roster ignore the function labels that WiT has sent back
                             || (mainapp.prefAlwaysUseFunctionsFromServer)) { // unless overridden by the preference
                         String lead = mainapp.consists[whichThrottle].getLeadAddr();
@@ -128,7 +137,7 @@ public class ResponseProcessorWiThrottle {
                     skipDefaultAlertToAllActivities = true;
 
                 } else if (com2 == 'A') { //process change in function value  MTAL4805<;>F028
-                    if (ls.length >= 2) { //make sure there's a value to parse
+                    if ((ls.length >= 2) && (!ls[1].isEmpty())) { //make sure there's a value to parse
                         char com3 = ls[1].charAt(0);
                         Bundle bundle = new Bundle();
 
@@ -302,6 +311,7 @@ public class ResponseProcessorWiThrottle {
                 switch (responseStr.charAt(1)) {
 
                     case 'C': // Advanced Consist (Multiple Unit) Commands
+                        if (responseStr.length() < 3) break;
                         if (responseStr.charAt(2) == 'C' || responseStr.charAt(2) == 'L') {  //RCC1 or RCL1 (treated the same in ED)
                             clearConsistList();
                         } else if (responseStr.charAt(2) == 'D') {  //RCD}|{88(S)}|{Consist Name]\[2591(L)}|{true]\[3(S)}|{true]\[4805(L)}|{true
@@ -492,8 +502,12 @@ public class ResponseProcessorWiThrottle {
         for (String ts : ta) {
             String[] tv = threaded_application.splitByString(ts, "}|{");  //split header chunk into header, address and name
             if (i == 0) { //first chunk is a "header"
+                if (tv.length < 2) {
+                    threaded_application.logging(activityName + ": processConsistList(): consist header without an address: '" + responseStr + "'");
+                    return;
+                }
                 consist_addr = tv[1];
-                consist_name = tv[2];
+                consist_name = (tv.length >= 3) ? tv[2] : "";
             } else {  //list of locos in consist
                 consist_desc.append(plus).append(tv[0]);
                 plus = "+";
@@ -576,7 +590,7 @@ public class ResponseProcessorWiThrottle {
         for (String ts : ta) {
             if (i > 1) { //skip first 2 chunks
                 String[] tv = threaded_application.splitByString(ts, "}|{");  //split these into value and key
-                mainapp.to_state_names.put(tv[1], tv[0]);
+                if (tv.length >= 2) mainapp.to_state_names.put(tv[1], tv[0]);
             }  //end if i>0
             i++;
         }  //end for
@@ -619,31 +633,36 @@ public class ResponseProcessorWiThrottle {
     public static void processRouteList(String responseStr) {
 
         String[] ta = threaded_application.splitByString(responseStr, "]\\[");  //initial separation
-        //initialize app arrays (skipping first)
-        mainapp.routeSystemNames = new String[ta.length - 1];
-        mainapp.rt_user_names = new String[ta.length - 1];
-        mainapp.routeStates = new String[ta.length - 1];
-        mainapp.routeDccexLabels = new String[ta.length - 1];
-        mainapp.routeDccexStates = new int[ta.length - 1];
-        int i = 0;
-        for (String ts : ta) {
-            if (i > 0) { //skip first chunk, just message id
-                String[] tv = threaded_application.splitByString(ts, "}|{");  //split these into 3 parts, key and value
-                mainapp.routeSystemNames[i - 1] = tv[0];
-                mainapp.rt_user_names[i - 1] = tv[1];
-                mainapp.routeStates[i - 1] = tv[2];
-                if (mainapp.isWiThrottleProtocol()) {
-                    mainapp.routeDccexLabels[i - 1] = "";
-                    mainapp.routeDccexStates[i - 1] = -1;
-                } else {
-                    mainapp.routeDccexLabels[i - 1] = tv[2].equals("4")
-                            ? mainapp.getResources().getString(R.string.dccexRouteHandoff)    // automation
-                            : mainapp.getResources().getString(R.string.dccexRouteSet); // assume "2" = Route
-                    mainapp.routeDccexStates[i - 1] = 0;
-                }
-            }  //end if i>0
-            i++;
-        }  //end for
+        ArrayList<String[]> entries = new ArrayList<>();
+        for (int i = 1; i < ta.length; i++) { //skip first chunk, just message id
+            String[] tv = threaded_application.splitByString(ta[i], "}|{");  //split these into 3 parts, key and value
+            if (tv.length >= 3) {
+                entries.add(tv);
+            } else {
+                threaded_application.logging(activityName + ": processRouteList(): skipping incomplete route entry '" + ta[i] + "'");
+            }
+        }
+        int count = entries.size();
+        mainapp.routeSystemNames = new String[count];
+        mainapp.rt_user_names = new String[count];
+        mainapp.routeStates = new String[count];
+        mainapp.routeDccexLabels = new String[count];
+        mainapp.routeDccexStates = new int[count];
+        for (int i = 0; i < count; i++) {
+            String[] tv = entries.get(i);
+            mainapp.routeSystemNames[i] = tv[0];
+            mainapp.rt_user_names[i] = tv[1];
+            mainapp.routeStates[i] = tv[2];
+            if (mainapp.isWiThrottleProtocol()) {
+                mainapp.routeDccexLabels[i] = "";
+                mainapp.routeDccexStates[i] = -1;
+            } else {
+                mainapp.routeDccexLabels[i] = tv[2].equals("4")
+                        ? mainapp.getResources().getString(R.string.dccexRouteHandoff)    // automation
+                        : mainapp.getResources().getString(R.string.dccexRouteSet); // assume "2" = Route
+                mainapp.routeDccexStates[i] = 0;
+            }
+        }
         mainapp.alertActivitiesWithBundle(message_type.ROUTE_LIST_CHANGED);
     }
 
@@ -658,7 +677,7 @@ public class ResponseProcessorWiThrottle {
         for (String ts : ta) {
             if (i > 1) { //skip first 2 chunks
                 String[] tv = threaded_application.splitByString(ts, "}|{");  //split these into value and key
-                mainapp.routeStateNames.put(tv[1], tv[0]);
+                if (tv.length >= 2) mainapp.routeStateNames.put(tv[1], tv[0]);
             }  //end if i>0
             i++;
         }  //end for

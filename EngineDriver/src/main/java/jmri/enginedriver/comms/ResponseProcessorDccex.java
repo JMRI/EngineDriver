@@ -178,6 +178,11 @@ public class ResponseProcessorDccex {
                     case 'w': { // response from an address write or other CV write
                         // --- <w address>
 
+                        if ((args.length < 2) || (args[1].isEmpty())) {
+                            threaded_application.logging(activityName + ": processWifiResponse(): <w> response without a value: '" + responseStr + "'");
+                            skipDefaultAlertToAllActivities = true;
+                            break;
+                        }
                         responseStr = args[1];
                         Bundle bundle = new Bundle();
                         bundle.putString(alert_bundle_tag_type.RESPONSE, responseStr);
@@ -528,11 +533,15 @@ public class ResponseProcessorDccex {
 
     public static void processDccexTrackManagerResponse(String [] args) {
         int trackNo;
+        if ((args.length < 3) || (args[1].isEmpty()) || (args[2].isEmpty())) { // <= trackLetter type [cab]>
+            threaded_application.logging(activityName + ": processDccexTrackManagerResponse(): incomplete response: " + Arrays.toString(args));
+            return;
+        }
         String type = args[2];
         if (type.charAt(type.length() - 1) == '+') {
             type = type.substring(0, type.length() - 1);
         }
-        if ( (args.length>3) && (args[2].equals("MAIN")) && (args[3].charAt(0)>='A') && (args[3].charAt(0)<='I') ) {
+        if ( (args.length>3) && (args[2].equals("MAIN")) && (!args[3].isEmpty()) && (args[3].charAt(0)>='A') && (args[3].charAt(0)<='I') ) {
             if (args[3].charAt(0) == 'A')
                 type = "AUTO";
             else if(args[3].charAt(0) == 'I')
@@ -543,7 +552,7 @@ public class ResponseProcessorDccex {
 
 //        if (args.length>=2) {
         trackNo = args[1].charAt(0)-65;
-        if ( (trackNo>=0) && (trackNo<= threaded_application.DCCEX_MAX_TRACKS) ) {
+        if ( (trackNo>=0) && (trackNo < threaded_application.DCCEX_MAX_TRACKS) ) {
             int trackTypeIndex = -1;
             boolean needsId = false;
             for (int i=0; i<TRACK_TYPES.length; i++) {
@@ -558,7 +567,7 @@ public class ResponseProcessorDccex {
                 mainapp.dccexTrackType[trackNo] = trackTypeIndex;
                 mainapp.dccexTrackId[trackNo] = "";
             }
-            if ( (needsId) && (args.length>=3) ) {
+            if ( (needsId) && (args.length>=4) ) {
                 mainapp.dccexTrackId[trackNo] = args[3];
             }
             mainapp.dccexTrackAvailable[trackNo] = true;
