@@ -54,19 +54,21 @@ import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.connection_type;
 import jmri.enginedriver.type.message_type;
 
-class SocketWiFi extends Thread {
+class SocketWiFi {
     public static final String activityName = "SocketWiFi";
     InetAddress host_address;
-    Socket clientSocket = null;
-    BufferedReader inputBR = null;
+    private volatile Socket clientSocket = null;
+    private volatile BufferedReader inputBR = null;
     static final int BUFFER_SIZE = 8192;
-    PrintWriter outputPW = null;
+    private volatile PrintWriter outputPW = null;
+    private Thread readerThread = null;                 // reads and processes the inbound messages; a new one for each start
     private volatile boolean endRead = false;           //signals rcvr to terminate
     private volatile boolean socketGood = false;        //indicates socket condition
     private volatile boolean inboundTimeout = false;    //indicates inbound messages are not arriving from WiT
     private boolean firstConnect = false;               //indicates initial socket connection was achieved
     private int connectTimeoutMs = 3000; //connection timeout in milliseconds
     private int socketTimeoutMs = 500; //socket timeout in milliseconds
+    private static final int READER_EXIT_ALLOWANCE_MS = 500;   // extra time allowed for the reader thread to finish on shutdown
 
     /** @noinspection FieldCanBeLocal*/
     private final int MAX_INBOUND_TIMEOUT_RETRIES = 2;
@@ -79,8 +81,6 @@ class SocketWiFi extends Thread {
     static comm_thread commThread;
 
     SocketWiFi(threaded_application mainapp, SharedPreferences prefs, comm_thread commThread) {
-        super("socketWiFi");
-
         SocketWiFi.prefs = prefs;
         SocketWiFi.mainapp = mainapp;
         SocketWiFi.commThread = commThread;
@@ -155,16 +155,13 @@ class SocketWiFi extends Thread {
             }
         }
 
-        //start the SocketWiFi thread.
+        //start the reader thread, unless one is still running from before a reconnection.
+        //A Thread cannot be restarted once it has ended, so a new one is created each time.
         if (socketOk) {
-            if (!this.isAlive()) {
+            if ((readerThread == null) || (!readerThread.isAlive())) {
                 endRead = false;
-                try {
-                    this.start();
-                } catch (IllegalThreadStateException except) {
-                    //ignore "already started" errors
-                    mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorStartingSocket, except.getMessage()), LENGTH_SHORT);
-                }
+                readerThread = new Thread(this::readLoop, "socketWiFi");
+                readerThread.start();
             }
         }
 
@@ -194,31 +191,36 @@ class SocketWiFi extends Thread {
         threaded_application.logging(activityName + ": SocketWiFi: disconnect()");
         if (shutdown) {
             endRead = true;
-            if (!fastShutdown) {
-                for (int i = 0; i < 5 && this.isAlive(); i++) {
-                    try {
-                        Thread.sleep(connectTimeoutMs);     //  give run() a chance to see endRead and exit
-                    } catch (InterruptedException e) {
-                        mainapp.safeToast(mainapp.getApplicationContext().getResources().getString(R.string.toastThreadedAppErrorSleepingThread, e.getMessage()), LENGTH_SHORT);
-                    }
-                }
-            }
         }
 
         socketGood = false;
 
-        //close socket
-        if (clientSocket != null) {
+        //close socket; this also ends any blocked read in the reader thread at once
+        Socket socket = clientSocket;
+        if (socket != null) {
             try {
-                clientSocket.close();
+                socket.close();
             } catch (Exception e) {
                 threaded_application.logging(activityName + ": SocketWiFi(): Error closing the Socket: " + e.getMessage());
+            }
+        }
+
+        // on a full shutdown, give the reader thread a short time to finish
+        Thread reader = readerThread;
+        if (shutdown && !fastShutdown && (reader != null) && (reader != Thread.currentThread())) {
+            try {
+                reader.join(socketTimeoutMs + READER_EXIT_ALLOWANCE_MS);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            if (reader.isAlive()) {
+                threaded_application.logging(activityName + ": SocketWiFi: disconnect(): reader thread still running");
             }
         }
     }
 
     //read the input buffer
-    public void run() {
+    private void readLoop() {
         String str;
         StringBuilder multiLineStr = new StringBuilder();
         String tempStr = "";
@@ -232,7 +234,7 @@ class SocketWiFi extends Thread {
                             comm_thread.heart.restartInboundInterval();
                             clearInboundTimeout();
                             if (mainapp.isWiThrottleProtocol()) {
-                                comm_thread.processWifiResponse(str);
+                                processResponse(str);
                             } else {
                                 if (str.contains(">")) {
                                     if (multiLineStr.length() > 0) {
@@ -246,18 +248,14 @@ class SocketWiFi extends Thread {
 
                                     String[] cmds = tempStr.split("><");
                                     if (cmds.length == 1) { // multiple concatenated commands
-                                        comm_thread.processWifiResponse(tempStr);
+                                        processResponse(tempStr);
                                     } else {
-                                        for (int i = 0; i < cmds.length; i++) {
-                                            if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                                comm_thread.processWifiResponse(cmds[i]);
-                                            } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
-                                                comm_thread.processWifiResponse(cmds[i] + ">");
-                                            } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                                comm_thread.processWifiResponse("<" + cmds[i]);
-                                            } else {
-                                                comm_thread.processWifiResponse("<" + cmds[i] + ">");
-                                            }
+                                        for (String cmd : cmds) {
+                                            if (cmd.isEmpty()) continue;
+                                            String fullCmd = cmd;
+                                            if (fullCmd.charAt(0) != '<') fullCmd = "<" + fullCmd;
+                                            if (fullCmd.charAt(fullCmd.length() - 1) != '>') fullCmd = fullCmd + ">";
+                                            processResponse(fullCmd);
                                         }
                                     }
                                 } else { // multi-line response
@@ -266,6 +264,9 @@ class SocketWiFi extends Thread {
                                 }
                             }
                         }
+                    } else { // end of stream: the server has closed the connection
+                        threaded_application.logging(activityName + ": run(): connection closed by the server.");
+                        socketGood = false;     //force reconnection on next send
                     }
                 } catch (SocketTimeoutException e) {
                     socketGood = this.SocketCheck();
@@ -284,34 +285,22 @@ class SocketWiFi extends Thread {
         threaded_application.logging(activityName + ": run(): SocketWiFi exit.");
     }
 
+    // Process one inbound message. A message that cannot be processed is logged and dropped,
+    // so that it cannot end the reader thread and stop all inbound processing.
+    private void processResponse(String response) {
+        try {
+            comm_thread.processWifiResponse(response);
+        } catch (RuntimeException e) {
+            threaded_application.logging('e', activityName + ": processResponse(): unable to process '" + response + "'", e);
+        }
+    }
+
     @SuppressLint("StringFormatMatches")
     void Send(String msg) {
         boolean reconInProg = false;
         //reconnect socket if needed
         if (!socketGood || inboundTimeout) {
-            String status;
-            if (mainapp.client_address == null) {
-                status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
-                threaded_application.logging(activityName + ": send(): Not Connected: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
-            } else if (inboundTimeout) {
-                status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse,
-                        mainapp.host_ip, Integer.toString(mainapp.port), comm_thread.heart.getInboundInterval(), threaded_application.reconnectAttemptCount);
-                threaded_application.logging(activityName + ": send(): No Response: WiT receive reconnection attempt: " + threaded_application.reconnectAttemptCount);
-            } else {
-                status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
-                threaded_application.logging(activityName + ": send(): Unable to connect: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
-            }
-            socketGood = false;
-
-            threaded_application.reconnectAttemptCount++;
-
-            Bundle witBundle = new Bundle();
-            witBundle.putString(alert_bundle_tag_type.MESSAGE, status);
-            mainapp.alertActivitiesWithBundle(message_type.WIT_CON_RETRY, witBundle);
-
-            //perform the reconnection sequence
-            this.disconnect(false);             //clean up socket but do not shut down the receiver
-            this.connect();                     //attempt to reestablish connection
+            reconnect();
             reconInProg = true;
         }
 
@@ -319,31 +308,83 @@ class SocketWiFi extends Thread {
         if (socketGood) {
             threaded_application.reconnectAttemptCount = 0;
 
-            try {
-                outputPW.println(msg);
-                outputPW.flush();
-                comm_thread.heart.restartOutboundInterval();
+            boolean sent = write(msg);
+            if (!sent && !reconInProg) {
+                // the connection was lost since the last message: reconnect at once and send this message again,
+                // rather than drop it and wait for the next message or heartbeat to notice
+                reconnect();
+                reconInProg = true;
+                sent = socketGood && write(msg);
+            }
 
-                // if we get here without an exception then the socket is ok
-                if (reconInProg) {
+            if (sent && reconInProg) {
 //                        String status = "Connected to WiThrottle Server at " + mainapp.host_ip + ":" + mainapp.port;
 
-                    mainapp.alertCommHandlerWithBundle(message_type.WIT_CON_RECONNECT);
+                mainapp.alertCommHandlerWithBundle(message_type.WIT_CON_RECONNECT);
 
-                    threaded_application.logging(activityName + ": send(): WiT reconnection successful.");
-                    clearInboundTimeout();
-                    comm_thread.heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
-                    mainapp.dccexListsRequested = -1; //invalidate the lists
-                }
-            } catch (Exception e) {
-                threaded_application.logging(activityName + ": send(): WiT xmtr error.");
-                socketGood = false;             //output buffer error so force reconnection on next send
+                threaded_application.logging(activityName + ": send(): WiT reconnection successful.");
+                clearInboundTimeout();
+                comm_thread.heart.restartInboundInterval();     //socket is good so restart inbound heartbeat timer
+                mainapp.dccexListsRequested = -1; //invalidate the lists
             }
         }
 
         if (!socketGood) {
             mainapp.commBundleMessageHandler.postDelayed(comm_thread.heart.outboundHeartbeatTimer, 500L);   //try connection again in 0.5 second
         }
+    }
+
+    // Write one message to the server.
+    // PrintWriter does not throw on I/O errors, so a failed write is found with checkError().
+    // Returns false, and marks the socket bad, if the write failed.
+    private boolean write(String msg) {
+        PrintWriter writer = outputPW;
+        if (writer == null) {
+            socketGood = false;
+            return false;
+        }
+        boolean failed;
+        try {
+            writer.println(msg);
+            failed = writer.checkError();       // also flushes the writer
+        } catch (RuntimeException e) {
+            threaded_application.logging('e', activityName + ": send(): WiT xmtr exception.", e);
+            failed = true;
+        }
+        if (failed) {
+            threaded_application.logging(activityName + ": send(): WiT xmtr error.");
+            socketGood = false;             //output error so force reconnection
+            return false;
+        }
+        comm_thread.heart.restartOutboundInterval();
+        return true;
+    }
+
+    @SuppressLint("StringFormatMatches")
+    private void reconnect() {
+        String status;
+        if (mainapp.client_address == null) {
+            status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNotConnected);
+            threaded_application.logging(activityName + ": send(): Not Connected: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
+        } else if (inboundTimeout) {
+            status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppNoResponse,
+                    mainapp.host_ip, Integer.toString(mainapp.port), comm_thread.heart.getInboundInterval(), threaded_application.reconnectAttemptCount);
+            threaded_application.logging(activityName + ": send(): No Response: WiT receive reconnection attempt: " + threaded_application.reconnectAttemptCount);
+        } else {
+            status = mainapp.getApplicationContext().getResources().getString(R.string.statusThreadedAppUnableToConnect, mainapp.host_ip, Integer.toString(mainapp.port), mainapp.client_address);
+            threaded_application.logging(activityName + ": send(): Unable to connect: WiT send reconnection attempt: " + threaded_application.reconnectAttemptCount);
+        }
+        socketGood = false;
+
+        threaded_application.reconnectAttemptCount++;
+
+        Bundle witBundle = new Bundle();
+        witBundle.putString(alert_bundle_tag_type.MESSAGE, status);
+        mainapp.alertActivitiesWithBundle(message_type.WIT_CON_RETRY, witBundle);
+
+        //perform the reconnection sequence
+        this.disconnect(false);             //clean up socket but do not shut down the receiver
+        this.connect();                     //attempt to reestablish connection
     }
 
     // Attempt to determine if the socket connection is still good.
