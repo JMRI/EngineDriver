@@ -320,7 +320,7 @@ public class intro_activity extends AppIntro2 implements PermissionsHelper.Permi
         threaded_application.currentActivity = activity_id_type.INTRO;
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification(this.getIntent());
+        mainapp.removeNotification();
 
 //        if (this.isFinishing()) {        //if finishing, expedite it
 //            return;

@@ -5802,7 +5802,7 @@ public class ThrottleActivity extends AppCompatActivity implements
         threaded_application.logging(activityName + ": onResume(): called");
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification(this.getIntent());
+        mainapp.removeNotification();
 
         mainapp.applyTheme(this);
 
