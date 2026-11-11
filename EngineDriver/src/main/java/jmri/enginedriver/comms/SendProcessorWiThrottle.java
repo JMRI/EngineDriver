@@ -84,8 +84,8 @@ public class SendProcessorWiThrottle {
 
     public static void sendDisconnect() {
         threaded_application.logging(activityName + ": sendDisconnect(): ");
-        comm_thread.wifiSend("Q");
-        commThread.shutdown(true);
+        sendQuit();
+        commThread.shutdownAfterQueuedMessages();
     }
 
     @SuppressLint("DefaultLocale")
