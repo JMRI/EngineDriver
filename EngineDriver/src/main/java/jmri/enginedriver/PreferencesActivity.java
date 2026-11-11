@@ -84,6 +84,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Locale;
 
 import eu.esu.mobilecontrol2.sdk.MobileControl2;
 
@@ -623,7 +624,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
     private void delete_auto_import_settings_files() {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File dir = new File(getApplicationContext().getExternalFilesDir(null), ENGINE_DRIVER_DIR);
-            File[] edFiles = dir.listFiles((folder, name) -> name.toLowerCase().startsWith("auto_"));
+            File[] edFiles = dir.listFiles((folder, name) -> name.toLowerCase(Locale.ROOT).startsWith("auto_"));
             if (edFiles != null && edFiles.length > 0){
                 for (File edFile : edFiles) {
                     delete_settings_file(edFile.getName());
@@ -2266,7 +2267,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         public void filterPreferences(String query) {
             prefShowAdvancedPreferences = prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue));
-            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase().trim());
+            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase(Locale.ROOT).trim());
         }
 
         private boolean filterRecursive(Preference preference, String query) {
@@ -2291,7 +2292,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 }
 
                 // Now, check the group's own title.
-                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase(Locale.ROOT) : "";
                 boolean selfMatches = !query.isEmpty() && title.contains(query);
                 boolean isDivider = query.isEmpty() && title.startsWith("divider") && prefShowAdvancedPreferences;
                 // A group is visible if it matches or has a visible child.
@@ -2301,8 +2302,8 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             }
 
             // For a leaf preference (not a group).
-            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
-            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase() : "";
+            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase(Locale.ROOT) : "";
+            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase(Locale.ROOT) : "";
             boolean isVisible = query.isEmpty() || title.contains(query) || summary.contains(query);
             try {
                 preference.setVisible(isVisible);
@@ -2500,7 +2501,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
 
         public void filterPreferences(String query) {
             prefShowAdvancedPreferences = parentActivity.prefs.getBoolean("prefShowAdvancedPreferences", parentActivity.getApplicationContext().getResources().getBoolean(R.bool.prefShowAdvancedPreferencesDefaultValue));
-            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase().trim());
+            filterRecursive(getPreferenceScreen(), query == null ? "" : query.toLowerCase(Locale.ROOT).trim());
         }
 
         private boolean filterRecursive(Preference preference, String query) {
@@ -2525,7 +2526,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                 }
 
                 // Now, check the group's own title.
-                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
+                String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase(Locale.ROOT) : "";
                 boolean selfMatches = !query.isEmpty() && title.contains(query);
                 boolean isDivider = query.isEmpty() && title.startsWith("divider") && prefShowAdvancedPreferences;
                 // A group is visible if it matches or has a visible child.
@@ -2535,8 +2536,8 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             }
 
             // For a leaf preference (not a group).
-            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase() : "";
-            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase() : "";
+            String title = preference.getTitle() != null ? preference.getTitle().toString().toLowerCase(Locale.ROOT) : "";
+            String summary = preference.getSummary() != null ? preference.getSummary().toString().toLowerCase(Locale.ROOT) : "";
             boolean isVisible = query.isEmpty() || title.contains(query) || summary.contains(query);
             preference.setVisible(isVisible);
             return isVisible;
