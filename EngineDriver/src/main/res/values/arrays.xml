@@ -967,54 +967,6 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <integer-array name="prefGamePadiCade" translatable="false">  <!-- DO NOT TRANSLATE -->
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>@integer/KeyCode_W</item> //key down   'E' up  <!-- DPAD buttons [0-3] use the down codes.  the other buttons us the up codes -->
-        <item>@integer/KeyCode_X</item> //key down   'Z' up
-        <item>@integer/KeyCode_A</item> //key down   'Q' up
-        <item>@integer/KeyCode_D</item> //key down   'C' up
-        <item>@integer/KeyCode_L</item> //key down   'V' down
-        <item>@integer/KeyCode_Y</item> //key down   'T' down
-        <item>@integer/KeyCode_J</item> //key down   'N' down
-        <item>@integer/KeyCode_H</item> //key down   'R' down
-        <item>@integer/KeyCode_U</item> //key down   'T' down
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used - alternate Stop
-        <item>0</item> //not used - alternate Increase Speed
-        <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
-    </integer-array>
-    <integer-array name="prefGamePadiCade_UpCodes" translatable="false">  <!-- DO NOT TRANSLATE -->
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>@integer/KeyCode_E</item>
-        <item>@integer/KeyCode_Z</item>
-        <item>@integer/KeyCode_Q</item>
-        <item>@integer/KeyCode_C</item>
-        <item>@integer/KeyCode_V</item>
-        <item>@integer/KeyCode_T</item>
-        <item>@integer/KeyCode_N</item>
-        <item>@integer/KeyCode_R</item>
-        <item>@integer/KeyCode_F</item>
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used
-        <item>0</item> //not used - alternate Stop
-        <item>0</item> //not used - alternate Increase Speed
-        <item>0</item> //not used - alternate Decrease Speed
-        <item>0</item> //not used - alternate Increase Speed by specified Amount
-        <item>0</item> //not used - alternate Decrease Speed by specified Amount
-    </integer-array>
     <integer-array name="prefGamePadiCadePlusDpad" translatable="false">  <!-- DO NOT TRANSLATE -->
         <item>0</item> //not used
         <item>0</item> //not used
@@ -3321,15 +3273,6 @@
         <item>@id/EditConsist3_menu</item>
         <item>@id/EditConsist5_menu</item>
         <item>@id/EditConsist5_menu</item>
-    </array>
-
-    <array name="edit_lights_consist_menu_ids">
-        <item>@id/EditLightsConsist0_menu</item>
-        <item>@id/EditLightsConsist1_menu</item>
-        <item>@id/EditLightsConsist2_menu</item>
-        <item>@id/EditLightsConsist3_menu</item>
-        <item>@id/EditLightsConsist5_menu</item>
-        <item>@id/EditLightsConsist5_menu</item>
     </array>
 
     <array name="power_button_state_attr_ids">

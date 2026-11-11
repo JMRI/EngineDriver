@@ -79,7 +79,6 @@
     <string name="stop">Halt</string>
     <string name="forward">Vorwärts</string>
     <string name="reverse">Rückwärts</string>
-    <string name="neutral">Neutral</string>
     <string name="brake">Bremse</string>
     <string name="airLineShort">Luftlinie %d%%</string>
     <string name="load">Laden</string>
@@ -335,7 +334,6 @@
     <string name="helpMenu">Hilfe (Web)</string>
     <string name="logViewer">Log ansehen</string>
     <string name="clearLocoList">Liste leeren</string>
-    <string name="ClearConnList">Liste Letzte leeren</string>
     <string name="prefEmerStopTitle">Not-Stop Knopf anzeigen?</string>
     <string name="prefEmerStopSummary">Zeige Lok Not-Stop Knopf in Aktionszeile?</string>
     <string name="EStop">Not-Stop</string>
@@ -521,7 +519,6 @@
     <string name="toastPreferencesOutsideLimits">Eingegebener Wert liegt außerhalb der Grenzen (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesNotNumeric">Eingegebener Wert ist nicht numerisch (%1$s-%2$s). Zurücksetzen auf %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Voreinstellungen werden auf Standardwerte zurückgesetzt!</string>
-    <string name="toastPreferencesImportServerManualFailed">Präferenzen Import vom Server fehlgeschlagen! Überprüfen Sie, ob die Adresse korrekt ist. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import der Voreinstellungen vom Server erfolgreich. (%1$s)</string>
 <!--    <string name="toastPreferencesImportSucceeded">Voreinstellungen Import aus Datei erfolgreich.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Theme-Wechsel erfolgreich.</string>
@@ -776,7 +773,6 @@
     <string name="rosterEmpty">Im Serververzeichnis konnten keine Einträge gefunden werden.\n\nVerwenden Sie stattdessen entweder die Option „DCC-Adresse“ oder „Zuletzt“.</string>
 <!--    <string name="gamepadTestDeviceName">BT:</string>-->
     <string name="toastThreadedAppNotWIFI">Mit Netzwerk %1$s, nicht WIFI.\nÜberprüfen Ihrer WLAN-Einstellungen.\n</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">Ohne WLAN-Verbindung ist eine Servererkennung nicht möglich!</string>
     <string name="statusThreadedAppServerDiscoveryNoLocationService">Die Android-Systemeinstellung „Standort verwenden“ ist deaktiviert.</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">ACCESS_FINE_LOCATION-Berechtigung nicht erteilt.</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Auf den Netzwerknamen kann nicht zugegriffen werden. Die Servererkennung kann eingeschränkt sein.</string>
@@ -1036,7 +1032,6 @@
     <string name="shareFile">Datei freigeben: %s</string>
     <string name="sharedFileProcessing">Freigegebene Datei(en) werden verarbeitet …</string>
     <string name="sharedFileProcessingCount">%d freigegebene Datei(en) werden verarbeitet …</string>
-    <string name="sharedFileReceivedCount">%d freigegebene Datei(en) empfangen …</string>
     <string name="sharedFileSavingCount">%d Datei(en) werden gespeichert</string>
     <string name="sharedFileSavedCount">%d Datei(en) speichern</string>
     <string name="sharedFileFailedToSaveCount">%d Datei(en) konnten nicht gespeichert werden</string>
@@ -1098,10 +1093,8 @@
     <string name="dccexRouteHandoff">Weiterleiten</string>
     <string name="dccexRouteSet">Satz</string>
     <string name="dccexSendCommandButtonLabel">Senden</string>
-    <string name="witActionTypeLabel">Aktion</string>
     <string name="witWriteAddressLabel">DCC-Adresse</string>
     <string name="witPomWarning">Hinweise: - Dies funktioniert auf einigen DCC-Systemen nicht. - Änderung der Lokadresse wird verhindert – CVs 1, 17 &amp; 18 und Bit 5 von CV 29. \n\nMit Vorsicht verwenden.</string>
-    <string name="witPomMaxValueWarning">Der Wert „%1$s“ überschreitet den maximal unterstützten Wert (‚%2$s‘).</string>
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">Wichtige CMDs</string>
     <string name="toastDangerousCVsWarning">Das Schreiben in die CVs 1, 17, 18 und 29 mittels Programming on the Main (PoM) wird nicht empfohlen.\nVorsicht ist geboten!</string>
@@ -1208,7 +1201,6 @@
 
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Übernehmen</string>
     <string name="dccexAutomationTitle">Welche Lokomotive soll an die Automatisierung übergeben werden?</string>
-    <string name="autoServerConnectTitle">Automatische Serververbindung</string>
     <string name="autoServerConnectLabel">Servername</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Aktuellen Server abrufen</string>
     <string name="prefAutoServerNamedConnectSummary">Automatische Verbindung zu einem benannten Server, wenn dieser erkannt wird</string>
