@@ -335,7 +335,6 @@ public class threaded_application extends Application {
     public String connectedSsid = "";
     public String connectedServiceType = "";
 
-    public boolean haveForcedWiFiConnection = false;
     public boolean prefAllowMobileData = false;
 
     public int connectionType = connection_type.TCP; // 0=Tcp 1=Udp
@@ -867,7 +866,6 @@ public class threaded_application extends Application {
         prefNumThrottles = Numeralise(prefs.getString("prefNumThrottles", getResources().getString(R.string.prefNumThrottlesDefaultValue)));
         throttleLayoutViewId = R.layout.throttle_page_horizontal_linear;
 
-        haveForcedWiFiConnection = false;
 
 //        try {
 //            Map<String, ?> ddd = prefs.getAll();

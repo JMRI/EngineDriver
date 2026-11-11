@@ -1875,7 +1875,6 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                         break;
 
                     case "prefAllowMobileData":
-                        parentActivity.mainapp.haveForcedWiFiConnection = false;
                         parentActivity.forceRestartAppOnPreferencesCloseReason = restart_reason_type.FORCE_WIFI;
                         parentActivity.forceReLaunchAppOnPreferencesClose = true;
                         break;
