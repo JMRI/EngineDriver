@@ -53,6 +53,7 @@ import jmri.enginedriver.R;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.heartbeat_interval_type;
+import jmri.enginedriver.util.FastTimeUpdater;
 
 public class comm_thread extends Thread {
     static final String activityName = "comm_thread";
@@ -602,6 +603,7 @@ public class comm_thread extends Thread {
             phone = null;
         }
         endJmdns();
+        FastTimeUpdater.stop();
 //            dlMetadataTask.stop();
         threaded_application.dlRosterTask.stop();
     }

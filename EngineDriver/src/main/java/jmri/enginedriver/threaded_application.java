@@ -54,6 +54,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import androidx.annotation.NonNull;
@@ -136,6 +137,7 @@ import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.type.function_state_type;
 import jmri.enginedriver.util.ArrayQueue;
+import jmri.enginedriver.util.FastClock;
 import jmri.enginedriver.util.Flashlight;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.ImageDownloader;
@@ -272,10 +274,8 @@ public class threaded_application extends Application {
     }
 
     public static int fastClockFormat = 0; //0=no display, 1=12hr, 2=24hr
-    public static Long fastClockSeconds = 0L;
-    public static Double fastClockRatio = 0.0;
+    public static final FastClock fastClock = new FastClock();
     public static Handler fastTimeUpdateHandler = new Handler(Looper.getMainLooper());
-    public static final Long FAST_TIME_INTERMEDIATE_UPDATE_PERIOD = 20000L; // millseconds
 
     public int routes_list_position = 0;
 
@@ -2256,7 +2256,7 @@ public class threaded_application extends Application {
     }
 
     /**
-     * Return fastClockSeconds as formatted time string
+     * Return the current fast clock time as formatted time string
      *
      * @return a String representation of the time
      */
@@ -2269,7 +2269,7 @@ public class threaded_application extends Application {
         }
         SimpleDateFormat sdf = new SimpleDateFormat(f, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date date = new java.util.Date((threaded_application.fastClockSeconds * 1000L));
+        Date date = new java.util.Date((fastClock.getSeconds(SystemClock.elapsedRealtime()) * 1000L));
         return sdf.format(date);
     }
 
