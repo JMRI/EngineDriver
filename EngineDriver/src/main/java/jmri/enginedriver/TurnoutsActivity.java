@@ -725,7 +725,8 @@ public class TurnoutsActivity extends AppCompatActivity implements GestureDetect
         });
 
 
-        llSelectionGroup = findViewById(R.id.select_turnout_method_radio_group);
+        RadioGroup rgTurnoutsSelect = findViewById(R.id.select_turnout_method_radio_group);
+        llSelectionGroup = rgTurnoutsSelect;
         tvSelectionHeading = findViewById(R.id.turnouts_selection_type_heading);
         llAddress = findViewById(R.id.enter_turnout_address_group);
         llRoster = findViewById(R.id.turnouts_from_roster_group);
@@ -764,7 +765,6 @@ public class TurnoutsActivity extends AppCompatActivity implements GestureDetect
 
         showMethod(prefSelectTurnoutsMethod);
 
-        RadioGroup rgTurnoutsSelect = findViewById(R.id.select_turnout_method_radio_group);
         rgTurnoutsSelect.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.select_turnout_method_address_button) {
                 showMethod(WHICH_METHOD_ADDRESS);
