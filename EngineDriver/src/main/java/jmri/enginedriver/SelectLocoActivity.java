@@ -2282,7 +2282,7 @@ public class SelectLocoActivity extends AppCompatActivity {
         threaded_application.logging(activityName + ": onResume():");
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification(this.getIntent());
+        mainapp.removeNotification();
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.SELECT_LOCO;

@@ -188,7 +188,7 @@ public class LogViewerActivity extends AppCompatActivity implements PermissionsH
         threaded_application.logging(activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification(this.getIntent());
+        mainapp.removeNotification();
 
         mainapp.applyTheme(this);
 

@@ -272,7 +272,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         threaded_application.logging(activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification(this.getIntent());
+        mainapp.removeNotification();
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.SETTINGS;
@@ -1712,7 +1712,7 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             super.onResume();
             threaded_application.activityResumed(activityName);
             if (parentActivity != null)
-                parentActivity.mainapp.removeNotification(parentActivity.getIntent());
+                parentActivity.mainapp.removeNotification();
 
             //noinspection AssignmentToStaticFieldFromInstanceMethod
             threaded_application.currentActivity = activity_id_type.SETTINGS;

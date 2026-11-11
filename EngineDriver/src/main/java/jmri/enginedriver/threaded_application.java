@@ -717,10 +717,17 @@ public class threaded_application extends Application {
     // Notifications
 
 
-    private void createNotificationChannelAndManager(Intent notificationIntent) {
+    // What tapping the notification does: return to the app, as tapping its icon does.
+    // Built from the app's own launch intent, so no intent received from elsewhere is ever relaunched.
+    private PendingIntent notificationContentIntent() {
+        Intent launchIntent = getPackageManager().getLaunchIntentForPackage(getPackageName());
+        return PendingIntent.getActivity(this, ED_NOTIFICATION_ID, launchIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+    }
+
+    private void createNotificationChannelAndManager() {
 
         if (notificationManager == null) {
-            if (notificationIntent == null) return;
             // create it
             notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -740,16 +747,13 @@ public class threaded_application extends Application {
                 boolean prefFeedbackWhenGoingToBackground = prefs.getBoolean("prefFeedbackWhenGoingToBackground", getResources().getBoolean(R.bool.prefFeedbackWhenGoingToBackgroundDefaultValue));
                 String channelId = prefFeedbackWhenGoingToBackground ? NOTIFICATION_CHANNEL_ID_HIGH : NOTIFICATION_CHANNEL_ID_QUIET;
 
-                PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
                 notificationBuilder = new Notification.Builder(getApplicationContext(), channelId);
 
                 notificationBuilder = notificationBuilder
                         .setSmallIcon(R.drawable.icon_notification)
                         .setContentTitle(this.getString(R.string.notificationInBackgroundTitle))
                         .setContentText("")
-                        .setContentIntent(contentIntent)
+                        .setContentIntent(notificationContentIntent())
                         .setOngoing(true)
                         .setOnlyAlertOnce(false);
 
@@ -764,14 +768,12 @@ public class threaded_application extends Application {
                                 .setOnlyAlertOnce(false)
                                 .setPriority(NotificationManager.IMPORTANCE_HIGH);
 
-                PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-                notificationCompatBuilder.setContentIntent(contentIntent);
+                notificationCompatBuilder.setContentIntent(notificationContentIntent());
             }
         }
     }
 
-    private void addNotification(Intent notificationIntent, int level) {
+    private void addNotification(int level) {
         if ( (isActivityVisible()) || (notificationLevel>0) ) return;
         threaded_application.extendedLogging(activityName + ": addNotification()");
         notificationLevel = level;
@@ -784,7 +786,7 @@ public class threaded_application extends Application {
 
         if (!threaded_application.inBackgroundForImageOrPermission)
             vibrate(new long[]{1000, 500, 1000, 500});
-        createNotificationChannelAndManager(notificationIntent);
+        createNotificationChannelAndManager();
 
         if (Build.VERSION.SDK_INT >= 26) {
             notificationBuilder.setContentText(notificationText);
@@ -793,18 +795,12 @@ public class threaded_application extends Application {
             String channelId = (prefFeedbackWhenGoingToBackground && !inBackgroundForImageOrPermission) ? NOTIFICATION_CHANNEL_ID_HIGH : NOTIFICATION_CHANNEL_ID_QUIET;
             notificationBuilder.setChannelId(channelId);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            notificationBuilder.setContentIntent(contentIntent);
             notificationManager.notify(ED_NOTIFICATION_ID, notificationBuilder.build());
 
         } else {
             notificationCompatBuilder.setContentText(notificationText);
             notificationCompatBuilder.setSilent(inBackgroundForImageOrPermission);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(this, ED_NOTIFICATION_ID, notificationIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            notificationCompatBuilder.setContentIntent(contentIntent);
             notificationManager.notify(ED_NOTIFICATION_ID, notificationCompatBuilder.build());
         }
     }
@@ -827,11 +823,11 @@ public class threaded_application extends Application {
 //    }
 
     // Remove notification
-    public void removeNotification(Intent notificationIntent) {
+    // (also removes one left showing by an earlier run of the app)
+    public void removeNotification() {
         threaded_application.extendedLogging(activityName + ": removeNotification()");
-        if (notificationIntent == null) return;
         notificationLevel = 0;
-        createNotificationChannelAndManager(notificationIntent);
+        createNotificationChannelAndManager();
         notificationManager.cancel(ED_NOTIFICATION_ID);
     }
 
@@ -927,7 +923,7 @@ public class threaded_application extends Application {
                 isInBackground = false;
                 exitConfirmed = false;
                 Activity runningActivity = runningActivityRef.get();
-                removeNotification((runningActivity != null) ? runningActivity.getIntent() : null);
+                removeNotification();
 
                 if ( (!inBackgroundForImageOrPermission) && (wasInBackgroundWarningShownCount<3) )  // limit the number of times this toast warning is shown
                     threaded_application.showCustomToast(runningActivity, getApplicationContext().getResources().getString(R.string.toastWasInBackgroundTitle), Toast.LENGTH_LONG,3);
@@ -958,7 +954,7 @@ public class threaded_application extends Application {
             }
             Activity runningActivity = runningActivityRef.get();
             if (isInBackground && activity == runningActivity) {
-                removeNotification(runningActivity.getIntent()); // destroyed in background so remove notification
+                removeNotification(); // destroyed in background so remove notification
             }
         }
 
@@ -990,7 +986,7 @@ public class threaded_application extends Application {
                     activityPaused();
                     activityNotInTransition();
                     if (runningActivity != null)
-                        addNotification(runningActivity.getIntent(), notification_type.APP_PUSHED_TO_BACKGROUND);
+                        addNotification(notification_type.APP_PUSHED_TO_BACKGROUND);
                     prefs.edit().putBoolean("prefForcedRestart", true).commit();
                     if (!manualRestartRequested)
                         prefs.edit().putInt("prefForcedRestartReason", restart_reason_type.APP_PUSHED_TO_BACKGROUND).commit();
@@ -1016,8 +1012,8 @@ public class threaded_application extends Application {
 //                        updateNotification(getResources().getString(R.string.notificationInBackgroundTextLowMemory));
                     Activity runningActivity = runningActivityRef.get();
                     if (runningActivity != null) {
-                        removeNotification(runningActivity.getIntent());
-                        addNotification(runningActivity.getIntent(), notification_type.LOW_MEMORY);
+                        removeNotification();
+                        addNotification(notification_type.LOW_MEMORY);
                         mainapp.alertActivitiesWithBundle(message_type.LOW_MEMORY);
                         // if this is called, assume that we will need to recreate the Throttle Screen
                         mainapp.throttleSwitchWasRequestedOrReinitialiseRequired = true;
