@@ -1649,19 +1649,17 @@ public class threaded_application extends Application {
 //    }
 
     static public String[] splitByString(String input, String divider) {
-        String tempInput = input;
-
-        boolean blankAtEnd = false;
-        // Unlike .split() the old splitByString(), that this method replaces, added an additional element if the string ended in the divider. So check and add if necessary.
-        if (input.lastIndexOf(divider) == (input.length()-divider.length())) {
-            blankAtEnd = true;
-            tempInput = input + " ";
+        // Every piece is kept, including empty ones at the start and end: "a|b|" gives "a", "b", "".
+        // (Same result as the earlier split(Pattern.quote(divider)) version, without compiling a regex on every call.)
+        ArrayList<String> pieces = new ArrayList<>();
+        int start = 0;
+        int index;
+        while ((index = input.indexOf(divider, start)) >= 0) {
+            pieces.add(input.substring(start, index));
+            start = index + divider.length();
         }
-
-        String[] tempString = tempInput.split(Pattern.quote(divider));
-        if (blankAtEnd) tempString[tempString.length-1] = "";
-
-        return tempString;
+        pieces.add(input.substring(start));
+        return pieces.toArray(new String[0]);
     }
 
     /**
@@ -3219,10 +3217,11 @@ public class threaded_application extends Application {
         return turnout_states.get(turnoutSystemName);
     }
 
+    private static final Pattern TURNOUT_NUMBER = Pattern.compile(".T(\\d*)");    // the digits of a system name such as "LT65"
+
     public void putTurnoutState(String turnoutName, String newState) {
         turnout_states.put(turnoutName, newState); //store state by systemName e.g. "LT65"
-        Pattern p = Pattern.compile(".T(\\d*)");  //  also store by digits only "65"
-        Matcher m = p.matcher(turnoutName);
+        Matcher m = TURNOUT_NUMBER.matcher(turnoutName);  //  also store by digits only "65"
         if (m.matches()) {
             turnout_states.put(m.group(1), newState);
         }

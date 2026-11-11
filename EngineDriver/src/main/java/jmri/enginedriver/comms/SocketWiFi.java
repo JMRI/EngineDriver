@@ -44,8 +44,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
@@ -451,20 +449,6 @@ class SocketWiFi extends Thread {
     }
 
     public static String replaceAnglesInQuotes(String input) {
-        // Matches anything inside double quotes, handling escaped quotes \"
-        Pattern pattern = Pattern.compile("\"([^\"\\\\]|\\\\.)*\"");
-        Matcher matcher = pattern.matcher(input);
-        StringBuffer sb = new StringBuffer();
-
-        while (matcher.find()) {
-            String match = matcher.group();
-            // Replace < and > only within the matched quoted string
-            String replaced = match.replace("<", "‹").replace(">", "›");
-            // Use Matcher.quoteReplacement to safely handle special characters
-            matcher.appendReplacement(sb, Matcher.quoteReplacement(replaced));
-        }
-        matcher.appendTail(sb);
-
-        return sb.toString();
+        return DccexText.replaceAnglesInQuotes(input);
     }
 }
