@@ -41,6 +41,7 @@ import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.message_type;
 import jmri.enginedriver.threaded_application;
 import jmri.enginedriver.type.dccex_protocol_option_type;
+import jmri.enginedriver.util.FastTimeUpdater;
 
 public class comm_handler extends Handler {
    static final String activityName = "comm_handler";
@@ -155,7 +156,8 @@ public class comm_handler extends Handler {
 
                   //clear app.thread shared variables so they can be reinitialized
                   mainapp.initShared();
-                  mainapp.fastClockSeconds = 0L;
+                  FastTimeUpdater.stop();
+                  threaded_application.fastClock.reset();
 
                   //store ip and port in global variables
                   mainapp.host_ip = new_host_ip;
@@ -192,7 +194,8 @@ public class comm_handler extends Handler {
 
                   //clear app.thread shared variables so they can be reinitialized
                   mainapp.initShared();
-                  mainapp.fastClockSeconds = 0L;
+                  FastTimeUpdater.stop();
+                  threaded_application.fastClock.reset();
 
                   //store ip and port in global variables
                   mainapp.host_ip = new_host_ip;

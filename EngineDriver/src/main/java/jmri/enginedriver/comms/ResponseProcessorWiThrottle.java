@@ -5,6 +5,7 @@ import static android.widget.Toast.LENGTH_SHORT;
 import android.content.SharedPreferences;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -391,37 +392,32 @@ public class ResponseProcessorWiThrottle {
 
                     // WiThrottle protocol
                     case 'F':  //FastClock message: PFT1581530521<;>2.0
-                        //extracts and sets shared fastClockSeconds
+                        //extracts the fast time and rate into the shared fast clock
                         if (responseStr.startsWith("PFT")) {
-                            threaded_application.fastClockSeconds = 0L;
                             String[] ta = threaded_application.splitByString(responseStr.substring(3), "<;>"); //get the number between "PFT" and the "<;>"
+                            long seconds;
                             try {
-                                threaded_application.fastClockSeconds = Long.parseLong(ta[0]);
-                                skipDefaultAlertToAllActivities = true;
+                                seconds = Long.parseLong(ta[0]);
                             } catch (NumberFormatException e) {
-                                threaded_application.logging('w', activityName + ": unable to extract fastClockSeconds from '" + responseStr + "'");
+                                threaded_application.logging('w', activityName + ": unable to extract fast clock seconds from '" + responseStr + "'");
+                                break;
                             }
+                            skipDefaultAlertToAllActivities = true;
 
-                            threaded_application.fastClockRatio = 1.0;
+                            double rate = 1.0;
                             if (ta.length == 2) {
                                 try {
-                                    threaded_application.fastClockRatio = Double.parseDouble(ta[1]);
+                                    rate = Double.parseDouble(ta[1]);
                                 } catch (NumberFormatException e) {
-                                    threaded_application.logging('w', activityName + ": unable to extract fastClockRatio from '" + responseStr + "'");
+                                    threaded_application.logging('w', activityName + ": unable to extract fast clock rate from '" + responseStr + "'");
                                 }
                             }
+                            threaded_application.fastClock.set(seconds, rate, SystemClock.elapsedRealtime());
 
                             mainapp.alertActivitiesWithBundle(message_type.RECEIVED_TIME_CHANGE);
+                            FastTimeUpdater.start(mainapp);   // redraw as the fast minutes change
 
-                            // start the incremental updater
-                            if (threaded_application.fastTimeUpdateHandler != null) {
-                                threaded_application.fastTimeUpdateHandler.removeCallbacks(null);
-                                threaded_application.fastTimeUpdateHandler.removeCallbacksAndMessages(null);
-                            }
-                            threaded_application.fastTimeUpdateHandler.postDelayed(new FastTimeUpdater(mainapp), threaded_application.FAST_TIME_INTERMEDIATE_UPDATE_PERIOD);
-
-
-                            threaded_application.logging(activityName + ": processsWifiResponse(): :PFT: fastClockSeconds: " + threaded_application.fastClockSeconds + " fastClockRatio: " + threaded_application.fastClockRatio);
+                            threaded_application.logging(activityName + ": processsWifiResponse(): :PFT: fast clock seconds: " + seconds + " rate: " + rate);
                         }
                         break;
 

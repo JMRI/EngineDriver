@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -952,12 +953,12 @@ public class ResponseProcessorDccex {
     public static void processDccexFastClock(String [] args) {
         if (args!=null)  {
             if (args.length == 3) { // <jC mmmm ss>
-                mainapp.fastClockSeconds = 0L;
                 try {
-                    mainapp.fastClockSeconds = Long.parseLong(args[1]) * 60;
+                    // the command station reports each fast minute, so the throttle does not advance the clock itself
+                    threaded_application.fastClock.set(Long.parseLong(args[1]) * 60, 0.0, SystemClock.elapsedRealtime());
                     mainapp.alertActivitiesWithBundle(message_type.RECEIVED_TIME_CHANGE);
                 } catch (NumberFormatException e) {
-                    threaded_application.logging('w', "unable to extract fastClockSeconds from '" + Arrays.toString(args) + "'");
+                    threaded_application.logging('w', "unable to extract fast clock minutes from '" + Arrays.toString(args) + "'");
                 }
             }
         }
