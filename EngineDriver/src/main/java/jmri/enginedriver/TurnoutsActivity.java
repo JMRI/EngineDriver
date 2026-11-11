@@ -725,7 +725,8 @@ public class TurnoutsActivity extends AppCompatActivity implements GestureDetect
         });
 
 
-        llSelectionGroup = findViewById(R.id.select_turnout_method_radio_group);
+        RadioGroup rgTurnoutsSelect = findViewById(R.id.select_turnout_method_radio_group);
+        llSelectionGroup = rgTurnoutsSelect;
         tvSelectionHeading = findViewById(R.id.turnouts_selection_type_heading);
         llAddress = findViewById(R.id.enter_turnout_address_group);
         llRoster = findViewById(R.id.turnouts_from_roster_group);
@@ -738,26 +739,7 @@ public class TurnoutsActivity extends AppCompatActivity implements GestureDetect
         recentTurnoutsList = new ArrayList<>();
         recentTurnoutsListAdapter = new RecentTurnoutsSimpleAdapter(this, recentTurnoutsList, R.layout.turnouts_recent_item,
                 new String[]{"to_recent_user_name", "to_recent_system_name"},
-                new int[]{R.id.to_recent_user_name, R.id.to_recent_system_name}) {
-
-            //set up listener for each Throw state button
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View row = super.getView(position, convertView, parent);
-                if (row != null) {
-
-                    Button b = row.findViewById(R.id.turnout_recent_throw);
-                    b.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_THROW));
-
-                    b = row.findViewById(R.id.turnout_recent_close);
-                    b.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_CLOSE));
-
-                    b = row.findViewById(R.id.turnout_recent_toggle);
-                    b.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_TOGGLE));
-                }
-                return row;
-            }
-        };
+                new int[]{R.id.to_recent_user_name, R.id.to_recent_system_name});
         recentTurnoutsListView = findViewById(R.id.turnouts_recent_list);
         recentTurnoutsListView.setAdapter(recentTurnoutsListAdapter);
 
@@ -783,7 +765,6 @@ public class TurnoutsActivity extends AppCompatActivity implements GestureDetect
 
         showMethod(prefSelectTurnoutsMethod);
 
-        RadioGroup rgTurnoutsSelect = findViewById(R.id.select_turnout_method_radio_group);
         rgTurnoutsSelect.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.select_turnout_method_address_button) {
                 showMethod(WHICH_METHOD_ADDRESS);
@@ -1258,43 +1239,61 @@ public class TurnoutsActivity extends AppCompatActivity implements GestureDetect
         }
 
 
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (position >= recentTurnoutsList.size())
-                return convertView;
+        // The views of one row, found once when the row is created and kept with it for reuse
+        private class RowViews {
+            final TextView userName;
+            final TextView systemName;
+            final TextView source;
+            final Button toggle;
+            final Button throwButton;
+            final Button closeButton;
 
-            HashMap<String, String> hm = recentTurnoutsList.get(position);
-            if (hm == null)
-                return convertView;
-
-            LayoutInflater inflater = (LayoutInflater) cont.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams") LinearLayout view = (LinearLayout) inflater.inflate(R.layout.turnouts_recent_item, null, false);
-
-            String toName = hm.get("turnout_name");
-            if (toName != null) {
-                TextView name = view.findViewById(R.id.to_recent_user_name);
-                name.setText(Html.fromHtml(toName));
+            RowViews(View row) {
+                userName = row.findViewById(R.id.to_recent_user_name);
+                systemName = row.findViewById(R.id.to_recent_system_name);
+                source = row.findViewById(R.id.to_recent_source);
+                toggle = row.findViewById(R.id.turnout_recent_toggle);
+                throwButton = row.findViewById(R.id.turnout_recent_throw);
+                closeButton = row.findViewById(R.id.turnout_recent_close);
+                // the listeners read the turnout from the row's text, so they are set once per row
+                throwButton.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_THROW));
+                closeButton.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_CLOSE));
+                toggle.setOnClickListener(new recentTurnoutStateButtonListener(TURNOUT_TOGGLE));
             }
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // reuse the row the list passes back when it scrolls, rather than inflating a new one each time
+            View view = convertView;
+            RowViews rowViews;
+            if (view == null) {
+                view = LayoutInflater.from(cont).inflate(R.layout.turnouts_recent_item, parent, false);
+                rowViews = new RowViews(view);
+                view.setTag(rowViews);
+            } else {
+                rowViews = (RowViews) view.getTag();
+            }
+
+            HashMap<String, String> hm = (position < recentTurnoutsList.size()) ? recentTurnoutsList.get(position) : null;
+            if (hm == null)
+                return view;
+
+            // every field is set, so nothing is left over from the turnout the row showed before
+            String toName = hm.get("turnout_name");
+            rowViews.userName.setText((toName != null) ? Html.fromHtml(toName) : "");
 
             String toAddress = hm.get("turnout");
-            if (toAddress != null) {
-                TextView secondLine = view.findViewById(R.id.to_recent_system_name);
-                secondLine.setText(toAddress);
-            }
+            rowViews.systemName.setText((toAddress != null) ? toAddress : "");
 
             String str = hm.get("turnout_source");
-            TextView name = view.findViewById(R.id.to_recent_source);
-            name.setText(Html.fromHtml(str));
-//            int i = Integer.parseInt(str);
-
-            Button b = view.findViewById(R.id.turnout_recent_toggle);
-            Button bt = view.findViewById(R.id.turnout_recent_throw);
-            Button bc = view.findViewById(R.id.turnout_recent_close);
+            rowViews.source.setText(Html.fromHtml(str));
 
             String currentState = mainapp.getTurnoutState(toAddress);
             String currentStateDesc = getTurnoutStateDesc(currentState);
-            b.setText(currentStateDesc);
+            rowViews.toggle.setText(currentStateDesc);
 
-            showHideTurnoutButtons(currentStateDesc, b, bt, bc);
+            showHideTurnoutButtons(currentStateDesc, rowViews.toggle, rowViews.throwButton, rowViews.closeButton);
 
             return view;
         }
