@@ -767,7 +767,7 @@ public class comm_handler extends Handler {
          // Request the throttle's speed and direction.
          case message_type.WIT_QUERY_SPEED_AND_DIRECTION: {
             if ((bundle != null)
-                    && (bundle.containsKey(alert_bundle_tag_type.POWER_STATE)) ) {
+                    && (bundle.containsKey(alert_bundle_tag_type.THROTTLE)) ) {
 
                final int whichThrottle = bundle.getInt(alert_bundle_tag_type.THROTTLE);
                comm_thread.sendRequestSpeedAndDir(whichThrottle);
