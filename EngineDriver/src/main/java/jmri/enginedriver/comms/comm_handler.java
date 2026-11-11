@@ -349,8 +349,6 @@ public class comm_handler extends Handler {
          case message_type.DISCONNECT: {
             threaded_application.logging(activityName + ": handleMessage(): DISCONNECT");
 
-            commThread.sendQuit();
-
             threaded_application.logging(activityName + ": handleMessage(): alert all activities to disconnect");
             mainapp.alertActivitiesWithBundle(message_type.DISCONNECT);
             commThread.stoppingConnection();
