@@ -2010,11 +2010,11 @@ public class ThrottleActivity extends AppCompatActivity implements
                 } else {
                     // if it is the first update since acquiring the loco, force the knob abd slider to the retrieved speed
                     if (mainapp.EsuMc2FirstServerUpdate[whichThrottle]) {
-                        mainapp.EsuMc2FirstServerUpdate[whichVolume] = false;
+                        mainapp.EsuMc2FirstServerUpdate[whichThrottle] = false;
                         int vSpeed = (int) ( (float) speedWiT / 126 * (float) getNewSemiRealisticThrottleSliderNotches());
-                        semiRealisticThrottleSliderPositionUpdate(whichVolume,vSpeed);
-                        setTargetSpeed(whichVolume,true);
-                        setEsuThrottleKnobPosition(whichVolume, speedWiT);
+                        semiRealisticThrottleSliderPositionUpdate(whichThrottle, vSpeed);
+                        setTargetSpeed(whichThrottle, true);
+                        setEsuThrottleKnobPosition(whichThrottle, speedWiT); // only moves the knob if this throttle has it
                         showTargetDirectionIndication(whichThrottle);
                     }
                 }
