@@ -61,7 +61,7 @@ public class ResponseProcessorDccex {
                 // remove any escaped double quotes
                 String s = responseStr.replace("\\\"", "'");
                 //split on spaces, with stuff between double quotes treated as one item
-                String[] args = s.substring(1, responseStr.length() - 1).split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", 999);
+                String[] args = DccexText.splitArgs(s.substring(1, responseStr.length() - 1));
 
                 switch (responseStr.charAt(1)) {
 
@@ -659,6 +659,7 @@ public class ResponseProcessorDccex {
                     // only process the direction if it is the lead loco
                     if (con.getLeadAddr().equals(addressStr)) {
                         mainapp.dccexLastKnownDirection[whichThrottle] = dir;
+                        bundle = new Bundle();    // the speed bundle has already been handed to the throttle screen
                         bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
                         bundle.putInt(alert_bundle_tag_type.DIRECTION, dir);
                         bundle.putString(alert_bundle_tag_type.LOCO, addressStr);
@@ -671,26 +672,7 @@ public class ResponseProcessorDccex {
 
                     // only process the functions if it is the lead loco
                     if (con.getLeadAddr().equals(addressStr)) {
-                        threaded_application.extendedLogging(activityName + ": processDccexLocos(): process functions" );
-                        // Process the functions
-                        int fnState;
-                        for (int i = 0; i < threaded_application.MAX_FUNCTIONS; i++) {
-                            try {
-//                                fnState = mainapp.bitExtracted(Integer.parseInt(args[4]), 1, i + 1);
-                                fnState = mainapp.bitExtracted(Long.parseLong(args[4]), 1, i + 1);
-                                if (i==0) threaded_application.logging(activityName + ": processDccexLocos(): function:" + i + " state: " + fnState);
-                                comm_thread.processFunctionState(whichThrottle, i, (fnState != 0));
-                                Bundle bundle = new Bundle();
-                                bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
-                                bundle.putString(alert_bundle_tag_type.LOCO, addressStr);
-                                bundle.putInt(alert_bundle_tag_type.FUNCTION, i);
-                                bundle.putInt(alert_bundle_tag_type.FUNCTION_ACTION, fnState);
-                                mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_SET_FUNCTION, bundle, activity_id_type.THROTTLE);
-
-                            } catch (NumberFormatException e) {
-                                threaded_application.logging('w', "unable to parseInt: '" + e.getMessage() + "'");
-                            }
-                        }
+                        processDccexLocoFunctions(whichThrottle, addressStr, args[4]);
                     }
 
                     //noinspection AssignmentToForLoopParameter
@@ -698,6 +680,32 @@ public class ResponseProcessorDccex {
             }
         }
     } // end processDccexLocos()
+
+    // Apply the function map from a <l> broadcast to a throttle. The command station sends the whole map
+    // with every speed or function change, so only the functions whose state has changed are passed on.
+    static void processDccexLocoFunctions(int whichThrottle, String addressStr, String functionMapArg) {
+        long functionMap;
+        try {
+            functionMap = Long.parseLong(functionMapArg);
+        } catch (NumberFormatException e) {
+            threaded_application.logging('w', activityName + ": processDccexLocoFunctions(): unable to parse function map '" + functionMapArg + "'");
+            return;
+        }
+        boolean[] states = mainapp.function_states[whichThrottle];
+        for (int i = 0; i < threaded_application.MAX_FUNCTIONS; i++) {
+            int fnState = mainapp.bitExtracted(functionMap, 1, i + 1);
+            boolean newState = (fnState != 0);
+            if ((states != null) && (i < states.length) && (states[i] == newState)) continue;   // unchanged
+
+            comm_thread.processFunctionState(whichThrottle, i, newState);
+            Bundle bundle = new Bundle();
+            bundle.putInt(alert_bundle_tag_type.THROTTLE, whichThrottle);
+            bundle.putString(alert_bundle_tag_type.LOCO, addressStr);
+            bundle.putInt(alert_bundle_tag_type.FUNCTION, i);
+            bundle.putInt(alert_bundle_tag_type.FUNCTION_ACTION, fnState);
+            mainapp.alertActivitiesWithBundle(message_type.RECEIVED_THROTTLE_SET_FUNCTION, bundle, activity_id_type.THROTTLE);
+        }
+    }
 
     /* ***********************************  *********************************** */
 
