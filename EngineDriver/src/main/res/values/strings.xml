@@ -290,6 +290,14 @@
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">How much Volume buttons jump throttle speed</string>
     <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefVolumeAccelerationMaximumTitle">Maximum Acceleration</string>
+    <string name="prefVolumeAccelerationMaximumSummary">Speed Step multiplier if the volume button is pressed rapidly. Most useful for a rotary encode.</string>
+    <string name="prefVolumeAccelerationMaximumDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefVolumeAccelerationPeriodTitle">Acceleration Period</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Period to recognise if the volume button is pressed rapidly. (in Milliseconds))</string>
+    <string name="prefVolumeAccelerationPeriodDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
+
     <!--     Gamepad preferences  -->
     <string name="prefGamePadTitle">Gamepad\/USB Preferences</string>
     <string name="prefGamePadSummary">Choose the Gamepad\/USB type and related options</string>

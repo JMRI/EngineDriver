@@ -1289,10 +1289,14 @@ public class ThrottleActivitySemiRealistic extends ThrottleActivity {
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefSpeedButtonsSpeedStep);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
-            case speed_commands_from_type.VOLUME:
-                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefVolumeSpeedButtonsSpeedStep);
+
+            case speed_commands_from_type.VOLUME: {
+                int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
+            }
+
             case speed_commands_from_type.GAMEPAD:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
@@ -1320,10 +1324,14 @@ public class ThrottleActivitySemiRealistic extends ThrottleActivity {
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefSpeedButtonsSpeedStep);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
-            case speed_commands_from_type.VOLUME:
-                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
+
+            case speed_commands_from_type.VOLUME: {
+                int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
+                updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
+            }
+
             case speed_commands_from_type.GAMEPAD:
                 updateSemiRealisticThrottleSliderAndTargetSpeed(whichThrottle, prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;

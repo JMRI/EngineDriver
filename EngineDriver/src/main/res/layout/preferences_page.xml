@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true">
 
     <include layout="@layout/toolbar_screen_name_line" />
     <include layout="@layout/toolbar" />
     <include layout="@layout/toolbar_status_line" />
 
-    <FrameLayout
-        android:id="@+id/settings_preferences_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <RelativeLayout
+        android:id="@+id/dcc_ex_bottom_button_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0sp"
+        android:padding="0dp" >
+
+        <FrameLayout
+            android:id="@+id/settings_preferences_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/preferences_button_close"
+            style="?attr/ed_normal_button_condensed_style"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/logviewerClose"
+            app:drawableStartCompat="?attr/ed_cross_glyph"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    </RelativeLayout>
+
 </LinearLayout>

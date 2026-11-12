@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment;
 
 import jmri.enginedriver.R;
 import jmri.enginedriver.threaded_application;
+import jmri.enginedriver.type.throttle_screen_type;
 import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.toolbar_button_size_type;
 
@@ -66,7 +67,7 @@ public class intro_alps extends Fragment {
 
         radioGroup.setOnCheckedChangeListener(new
             RadioGroup.OnCheckedChangeListener() {
-            @SuppressLint("ApplySharedPref")
+            @SuppressLint({"ApplySharedPref", "CommitPrefEdits"})
             @Override
             public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
                 if (checkedId == R.id.intro_esu_mc2_no) {
@@ -76,15 +77,21 @@ public class intro_alps extends Fragment {
                 } else if (checkedId == R.id.intro_esu_mc2_yes) {
                     alpsYes = true;
                 }
-                prefs.edit().putString("prefVolumeSpeedButtonsSpeedStep","4");
-                prefs.edit().putString("prefToolbarButtonSize", toolbar_button_size_type.SMALL);
-//                prefs.edit().putBoolean("prefDisplaySpeedButtons", !alpsYes).commit();
+                if (alpsYes) {
+                    prefs.edit().putString("prefVolumeSpeedButtonsSpeedStep", "2");
+                    prefs.edit().putString("prefVolumeAccelerationMaximum", "6");
+                    prefs.edit().putString("prefVolumeAccelerationPeriod", "100");
+                    prefs.edit().putString("prefToolbarButtonSize", toolbar_button_size_type.SMALL);
+                    prefs.edit().putBoolean("prefDisplaySpeedButtons", true).commit();
+                    prefs.edit().putString("prefThrottleScreenType", throttle_screen_type.VERTICAL_RIGHT).commit();
+//                    prefs.edit().putString("prefTheme", "Bronze").commit();
+                }
 //                prefs.edit().putBoolean("prefHideSlider", alpsYes).commit();
 //                prefs.edit().putBoolean("prefHideSliderAndSpeedButtons", alpsYes).commit();
 //                prefs.edit().putBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", alpsYes).commit();
 //                prefs.edit().putBoolean("prefVolumeKeysFollowLastTouchedThrottleDefaultValue", alpsYes).commit();
 //                prefs.edit().putBoolean("prefDoubleBackButtonToExit", alpsYes).commit();
-//                prefs.edit().putBoolean("prefThrottleViewImmersiveMode", alpsYes).commit();
+
          }
         });
 

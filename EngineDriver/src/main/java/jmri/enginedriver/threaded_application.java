@@ -463,6 +463,13 @@ public class threaded_application extends Application {
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    // volume button - more relevant to the built in encoder on the Alps M30
+
+    public long volumeButtonLastDownTime = -1;
+//    public long volumeButtonLastUpTime = -1;
+    public int volumeButtonAcceleration = 1;
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // toasts
 
     public boolean prefHideInstructionalToasts = false;
@@ -4188,5 +4195,12 @@ public class threaded_application extends Application {
         TypedValue typedValue = new TypedValue();
         context.getTheme().resolveAttribute(attribute, typedValue, true);
         return typedValue.data;
+    }
+
+    public int getVolumeAcceleratedSpeedChange(int prefVolumeSpeedButtonsSpeedStep) {
+        int speedChange = prefVolumeSpeedButtonsSpeedStep;
+        if (volumeButtonAcceleration > 3) speedChange = (volumeButtonAcceleration-2) *  (volumeButtonAcceleration-2) * prefVolumeSpeedButtonsSpeedStep;
+        threaded_application.extendedLogging(activityName + ": doVolumeButtonAction(): speedChange " + speedChange);
+        return speedChange;
     }
 }

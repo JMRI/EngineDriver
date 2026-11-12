@@ -241,6 +241,11 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
             threaded_application.extendedLogging(activityName + ": onCreate(): Set toolbar");
         }
 
+        //Set the buttons
+        Button closeButton = findViewById(R.id.preferences_button_close);
+        CloseButtonListener closeButtonlistener = new CloseButtonListener();
+        closeButton.setOnClickListener(closeButtonlistener);
+
     } // end onCreate
 
     @Override
@@ -363,6 +368,18 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
         bundle.putInt(alert_bundle_tag_type.RESTART_REASON, forcedRestartReason);
         mainapp.alertCommHandlerWithBundle(message_type.RELAUNCH_APP, bundle);
 
+    }
+
+    public class CloseButtonListener implements View.OnClickListener {
+        public void onClick(View v) {
+            mainapp.buttonVibration();
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                // Go back to the previous PreferenceScreen
+                getSupportFragmentManager().popBackStack();
+            } else {
+                endThisActivity();
+            }
+        }
     }
 
     @SuppressLint("ApplySharedPref")
@@ -2789,6 +2806,16 @@ public class PreferencesActivity extends AppCompatActivity implements Preference
                         break;
                     case "prefExtendedLogging":
                         threaded_application.prefExtendedLogging = parentActivity.prefs.getBoolean("prefExtendedLogging", false);
+                        break;
+
+                    case "prefVolumeSpeedButtonsSpeedStep":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 100, "4");
+                        break;
+                    case "prefVolumeAccelerationMaximum":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 10, "1");
+                        break;
+                    case "prefVolumeAccelerationPeriod":
+                        parentActivity.limitIntPrefValue(getPreferenceScreen(), sharedPreferences, key, 1, 999, "100");
                         break;
 
                 }
