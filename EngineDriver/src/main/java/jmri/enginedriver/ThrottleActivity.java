@@ -3484,20 +3484,34 @@ public class ThrottleActivity extends AppCompatActivity implements
             }
             case gamepad_or_keyboard_event_type.INCREASE_SPEED_START: {
                 mGamepadAutoIncrement = true;
+                int stepMultiplier = Math.max(val, 1);
                 if (!isSemiRealisticThrottle) {
-                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.GamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.GamepadRptUpdater(whichThrottle, stepMultiplier));
                 } else { // semi-realistic throttle variant
-                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.SemiRealisticGamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.SemiRealisticGamepadRptUpdater(whichThrottle, stepMultiplier));
                 }
                 break;
             }
             case gamepad_or_keyboard_event_type.DECREASE_SPEED_START: {
                 mGamepadAutoDecrement = true;
+                int stepMultiplier = Math.max(val, 1);
                 if (!isSemiRealisticThrottle) {
-                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.GamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.GamepadRptUpdater(whichThrottle, stepMultiplier));
                 } else { // semi-realistic throttle variant
-                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.SemiRealisticGamepadRptUpdater(whichThrottle, 1));
+                    gamepadRepeatUpdateHandler.post(new ThrottleActivity.SemiRealisticGamepadRptUpdater(whichThrottle, stepMultiplier));
                 }
+                break;
+            }
+            case gamepad_or_keyboard_event_type.INCREASE_SPEED: { // non-repeating
+                mGamepadAutoIncrement = true;
+                int stepMultiplier = Math.max(val, 1);
+                GamepadIncrementSpeed(whichThrottle, stepMultiplier);
+                break;
+            }
+            case gamepad_or_keyboard_event_type.DECREASE_SPEED: { // non-repeating
+                mGamepadAutoDecrement = true;
+                int stepMultiplier = Math.max(val, 1);
+                GamepadDecrementSpeed(whichThrottle, stepMultiplier);
                 break;
             }
             case gamepad_or_keyboard_event_type.SRT_NEUTRAL: {

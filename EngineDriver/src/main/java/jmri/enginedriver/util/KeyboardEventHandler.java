@@ -24,6 +24,7 @@ import static android.view.KeyEvent.KEYCODE_9;
 import static android.view.KeyEvent.KEYCODE_APOSTROPHE;
 import static android.view.KeyEvent.KEYCODE_B;
 import static android.view.KeyEvent.KEYCODE_BACKSLASH;
+import static android.view.KeyEvent.KEYCODE_BREAK;
 import static android.view.KeyEvent.KEYCODE_COMMA;
 import static android.view.KeyEvent.KEYCODE_D;
 import static android.view.KeyEvent.KEYCODE_DPAD_DOWN;
@@ -44,14 +45,18 @@ import static android.view.KeyEvent.KEYCODE_L;
 import static android.view.KeyEvent.KEYCODE_LEFT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_M;
 import static android.view.KeyEvent.KEYCODE_MEDIA_NEXT;
+import static android.view.KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE;
 import static android.view.KeyEvent.KEYCODE_MEDIA_PREVIOUS;
 import static android.view.KeyEvent.KEYCODE_MINUS;
 import static android.view.KeyEvent.KEYCODE_MOVE_END;
 import static android.view.KeyEvent.KEYCODE_MOVE_HOME;
+import static android.view.KeyEvent.KEYCODE_MUTE;
 import static android.view.KeyEvent.KEYCODE_N;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_0;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_9;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_ADD;
+import static android.view.KeyEvent.KEYCODE_NUMPAD_DIVIDE;
+import static android.view.KeyEvent.KEYCODE_NUMPAD_MULTIPLY;
 import static android.view.KeyEvent.KEYCODE_NUMPAD_SUBTRACT;
 import static android.view.KeyEvent.KEYCODE_O;
 import static android.view.KeyEvent.KEYCODE_P;
@@ -62,6 +67,8 @@ import static android.view.KeyEvent.KEYCODE_PLUS;
 import static android.view.KeyEvent.KEYCODE_R;
 import static android.view.KeyEvent.KEYCODE_RIGHT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_S;
+import static android.view.KeyEvent.KEYCODE_SCROLL_LOCK;
+import static android.view.KeyEvent.KEYCODE_SEARCH;
 import static android.view.KeyEvent.KEYCODE_SEMICOLON;
 import static android.view.KeyEvent.KEYCODE_T;
 import static android.view.KeyEvent.KEYCODE_U;
@@ -199,6 +206,20 @@ public class KeyboardEventHandler {
                         whichThrottle, isActive, whichGamePadIsEventFrom);
                 resetKeyboardString();
             }
+        } else if ((keyCode == KEYCODE_NUMPAD_MULTIPLY)) {  // Increase Speed - non-repeating
+            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+                keyboardNotifierInterface.keyboardEventNotificationHandler(
+                        gamepad_or_keyboard_event_type.INCREASE_SPEED, 1, repeatCnt,
+                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                resetKeyboardString();
+            }
+        } else if ((keyCode == KEYCODE_NUMPAD_DIVIDE)) {  // Decrease Speed - non-repeating
+            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+                keyboardNotifierInterface.keyboardEventNotificationHandler(
+                        gamepad_or_keyboard_event_type.DECREASE_SPEED, 1, repeatCnt,
+                        whichThrottle, isActive, whichGamePadIsEventFrom);
+                resetKeyboardString();
+            }
         } else if ((isSemiRealisticThrottle) && (keyCode == KEYCODE_BACKSLASH)) { // semi-realistic throttle - neutral
             if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
                 keyboardNotifierInterface.keyboardEventNotificationHandler(
@@ -243,6 +264,20 @@ public class KeyboardEventHandler {
                         whichThrottle, isActive, whichGamePadIsEventFrom);
                 resetKeyboardString();
             }
+//        } else if ( (keyCode == KEYCODE_SEARCH) || (keyCode == KEYCODE_BREAK) ) {  // Increase Speed * 4
+//            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+//                keyboardNotifierInterface.keyboardEventNotificationHandler(
+//                        gamepad_or_keyboard_event_type.INCREASE_SPEED_START, 4, repeatCnt,
+//                        whichThrottle, isActive, whichGamePadIsEventFrom);
+//                resetKeyboardString();
+//            }
+//        } else if ( (keyCode == KEYCODE_MEDIA_PLAY_PAUSE) || (keyCode == KEYCODE_SCROLL_LOCK) ) {  // Decrease Speed * 4
+//            if (isActive && (action == ACTION_DOWN) && (repeatCnt == 0)) {
+//                keyboardNotifierInterface.keyboardEventNotificationHandler(
+//                        gamepad_or_keyboard_event_type.DECREASE_SPEED_START, 4, repeatCnt,
+//                        whichThrottle, isActive, whichGamePadIsEventFrom);
+//                resetKeyboardString();
+//            }
         } else if ((keyCode == KEYCODE_VOLUME_MUTE) || (keyCode == KEYCODE_M)) {  // IPLS Sounds - Mute
             if (isActive && (action == ACTION_UP) && (repeatCnt == 0)) {
                 keyboardNotifierInterface.keyboardEventNotificationHandler(

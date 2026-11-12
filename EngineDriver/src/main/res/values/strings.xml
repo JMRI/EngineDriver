@@ -882,13 +882,15 @@
 \nKeyboard Commands
 \n-----------------
 \n Note: all keys are lowercase unless otherwise specified.
-\nUp or \'+\' or \'=\' = Increase Speed
-\nDown or \'-\' = Decrease Speed
-\n►► = Increase Speed * 2
-\n◄◄ = Decrease Speed * 2
+\n\'nUp\', \'+\' or \'=\' = Increase Speed
+\n\'Down\ or \'-\' = Decrease Speed
+\n\'►►\' = Increase Speed * 2
+\n\'◄◄\' = Decrease Speed * 2
+\n\'NumPad *\' = Increase Speed - Non-repeating
+\n\'NumPad /\' = Decrease Speed - Non-repeating
 \n\'x\' or End = Stop
-\nLeft or \'\[\' = Reverse (Fwd if swapped)
-\nRight or \'\]\' = Forward (Ahead) (Rev if swapped)
+\n\'Left\' or \'\[\' = Reverse (Fwd if swapped)
+\n\'Right\' or \'\]\' = Forward (Ahead) (Rev if swapped)
 \n\'d\' = Direction - Toggle Forward/Reverse
 \n\'n\' = Next Throttle
 \n\'z\' or Home = All stop
@@ -896,37 +898,38 @@
 \n\'p\' Pause Speed toggle
 \nSemi-Realistic Throttle Only:
 \n - \'\\\' = Neutral
-\n - PgUp or \' = Decrease Brake
-\n - PgDn or \';\' = Increase Brake
+\n - \'PgUp\' or \' = Decrease Brake
+\n - \'PgDn\' or \';\' = Increase Brake
 \n - \'.\' = Decrease Load
 \n - \',\' = Increase Load
 \n
-\nf00 - f32 = Function (\'f\' + two digits)
+\n\'f\' \'0\' \'0\' - \'f\' \'3\' \'2\' = Function (\'f\' + two digits)
 \n\'0\'-\'9\' = Functions 0-9
 \nWithout a preceding \'f\', \'g\', \'s\', \'u\', \'i\', \'o\', \`r\`, \`y\`, \`k\` or \'w\'
 \n
-\nw0001 - w9999 = Delay \'Up\' of next Function command (\'Up\' + two digits)
+\n\'w\' \'0\' \'0\' \'0\' \'1\' - \'w\' \'9\' \'9\' \'9\' \'9\' = Delay \'Up\' of next Function command (\'Up\' + two digits)
 \n
-\ns000 - s100 = Speed (\'s\' + three digits)
+\n\'s\' \'0\' \'0\' \'0 - \'s\' \'1\' \'0\' \'0\' = Speed (\'s\' + three digits)
 \n\'v\' = Speak Speed
+\n
 \nIn Phone Loco Sounds (IPLS)
 \n\'b\' = Bell
 \n\'h\' = Horn / Whistle
-\nShift + \'h\' = Short Horn
+\n\'Shift\' + \'h\' = Short Horn
 \n\'m\' or Volume Mute = Mute IPLS
 \n
-\nt0 - t5 = Specify a throttle for next command (\'t\' + one digit)
+\n\'t\' \'0\' - \'t\' \'5\' = Specify a throttle for next command (\'t\' + one digit)
 \n
 \nThe following command will be sent to the specified throttle regardless of the currently selected gamepad throttle.
 \n
-\nu000 - u999 = Toggle Turnout\/Point (\'u\' + three digits)
-\ni000 - i999 = Throw Turnout\/Point (\'i\' + three digits)
-\no000 - o999 = Close Turnout\/Point (\'o\' + three digits)
+\n\'u\' \'0\' \'0\' \'0\' - \'u\' \'9\' \'9\' \'9\' = Toggle Turnout\/Point (\'u\' + three digits)
+\n\'i\' \'0\' \'0\' \'0\' - \'i\' \'9\' \'9\' \'\'9 = Throw Turnout\/Point (\'i\' + three digits)
+\n\'o\' \'0\' \'0\' \'0 - \'o\' \'9\' \'9\' \'9\' = Close Turnout\/Point (\'o\' + three digits)
 \n
-\ne = Toggle track power
-\nr1 - r0 Track Power on or off (\'r\' + one digit)
-\ny0 - y7 DCC-EX Toggle Track x Power (\'y\' + one digit)
-\nk01 - k71 DCC-EX Track x Power on / y00 - y70 Track x Power off (\'k\' + two digits)
+\n\'e\' = Toggle track power
+\n\'r\' \'1\' - \'r\' \'0\' Track Power on or off (\'r\' + one digit)
+\n\'y\' 0\' - \'y\' \'7\' DCC-EX Toggle Track x Power (\'y\' + one digit)
+\n\'k\' \'0\' \'1\' - \'k\' \'7\' \'1 DCC-EX Track x Power on / y00 - y70 Track x Power off (\'k\' + two digits)
 \n
 \nAll other keyCodes are ignored
 \n
@@ -1393,9 +1396,12 @@
     <string name="introDccexQuestionNo">No, I will NOT be using an EX-CommandStation</string>
 
     <string name="introEsuMc2Title">ESU MobileControl Pro</string>
-    <string name="introEsuMc2Summary">The ESU MobileControl Pro has limited screen space and the physical controls         make some of Engine Driver\'s on-screen controls redundant.   If you choose \'Yes\' below,         some settings will be altered to make best use of the ESU MC Pro screen.</string>
+    <string name="introEsuMc2Summary">The ESU MobileControl Pro has limited screen space and the physical controls make some of Engine Driver\'s on-screen controls redundant.   If you choose \'Yes\' below,         some settings will be altered to make best use of the ESU MC Pro screen.</string>
     <string name="introEsuMc2QuestionYes">Yes, Use recommended settings</string>
     <string name="introEsuMc2QuestionNo">No, I will choose my own settings</string>
+
+    <string name="introAlpsTitle">Alps M30</string>
+    <string name="introAlpsSummary">The ALPS M30\'s limited screen space and physical control make the default settings less than ideal. If you choose \'Yes\' below, some settings will be altered to make best use of the device.</string>
 
     <string name="introbackButtonPress">Please re-start the Engine Driver app to complete the Introduction</string>
     <string name="edit_consist_menu">Edit Consist</string>
