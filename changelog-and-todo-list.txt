@@ -10,6 +10,7 @@
       * added 'NUCELO' to the DCC-EX server types that show the 'Web' menu option
       * Initial (basic) support for the alps M30.
       * Added a close button to the Preferences Screen.
+      * Small tweak to the way TTS loads
 **Version 2.44.236
 * New Features
       * Shrink Route long button labels.  (Doesn't work on early versions of Android.)

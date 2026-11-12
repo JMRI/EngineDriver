@@ -69,6 +69,8 @@ public class Tts {
                     }
                 });
             }
+        } else {
+            releaseTts();
         }
     }
 
@@ -233,6 +235,14 @@ public class Tts {
                     lastTts = speech;
                 }
             }
+        }
+    }
+
+    public void releaseTts() {
+        if (myTts != null) {
+            myTts.stop();
+            myTts.shutdown();
+            myTts = null;
         }
     }
 
