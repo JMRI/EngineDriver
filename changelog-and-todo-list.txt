@@ -5,10 +5,14 @@
       * New keyboard command - 'w' must be followed by 4 digits. Will cause the next function activation to latch for the period in milliseconds. This actually works on any next function ('0'-'9', 'F10'-'F9' and 'f' '0' '0' - 'f' '3' '1'), even if there are intervening commands. Which means that you can select the next command to go to another throttle (e.g. 't' '1') and the next function command on throttle 1 will have the delay.
       * New keyboard commands for track power - normal - 'e' 'r', DCCEX tracks - 'y' 'k'
       * New keyboard commands for non-repeating speed changes - 'NumPad *' and 'NumPad /'
+      * Added preference for the volume button presses to play sounds at maximum and zero speed
 * Bug Fixes
 * Other
-      * added 'NUCELO' to the DCC-EX server types that show the 'Web' menu option
-      * Initial (basic) support for the alps M30.
+      * added 'NUCLEO' to the DCC-EX server types that show the 'Web' menu option
+      * Initial support for the alps M30.
+      * Added a close button to the Preferences Screen.
+      * Small tweak to the way TTS loads
+      * Add key click to volume button presses
 **Version 2.44.236
 * New Features
       * Shrink Route long button labels.  (Doesn't work on early versions of Android.)

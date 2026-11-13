@@ -98,6 +98,7 @@
     -->
     <bool name="prefBackgroundImageDefaultValue">false</bool>
     <bool name="prefSpeedButtonsSpeedStepDecrementDefaultValue">true</bool>
+    <bool name="prefVolumeKeysSoundsDefaultValue">true</bool>
     <bool name="prefAllowMobileDataDefaultValue">false</bool>
     <bool name="prefShowTimeOnLogEntryDefaultValue">false</bool>
     <bool name="prefExtendedLoggingDefaultValue">false</bool>

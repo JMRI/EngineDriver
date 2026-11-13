@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="engine_driver_preference"
     android:summary="@string/prefSummary"
     android:title="@string/app_name_preferences">
@@ -84,6 +85,14 @@
                     android:summary="@string/prefBackgroundImagePositionSummary"
                     android:title="@string/prefBackgroundImagePositionTitle" />
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceCategory
@@ -174,6 +183,13 @@
 
             </PreferenceCategory>
 
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <SwitchPreferenceCompat
@@ -248,6 +264,13 @@
                     android:title="@string/prefFeedbackOnDisconnectTitle" />
 
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
 
         </PreferenceScreen>
 
@@ -365,6 +388,13 @@
 
             </PreferenceCategory>
 
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -419,6 +449,14 @@
                     android:title="@string/prefHapticFeedbackButtonsTitle" />
 
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -498,7 +536,16 @@
                     android:maxLength="7"
                     android:summary="@string/prefRightDirectionButtonsShortSummary"
                     android:title="@string/prefRightDirectionButtonsShortTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceCategory
@@ -596,7 +643,16 @@
                     android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefNumberOfDefaultFunctionLabelsForRosterSummary"
                     android:title="@string/prefNumberOfDefaultFunctionLabelsForRosterTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <SwitchPreferenceCompat
@@ -662,7 +718,16 @@
                     android:maxLines="1"
                     android:summary="@string/prefInitialThrottleWebPageSummary"
                     android:title="@string/prefInitialThrottleWebPageTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceCategory
@@ -727,7 +792,16 @@
                     android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefScreenBrightnessDimSummary"
                     android:title="@string/prefScreenBrightnessDimTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -761,7 +835,16 @@
                     android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefAccelerometerShakeThresholdSummary"
                     android:title="@string/prefAccelerometerShakeThresholdTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceCategory
@@ -951,7 +1034,16 @@
                     android:title="@string/prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle" />
 
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1085,6 +1177,13 @@
                                     android:title="@string/prefThrottleSwitchWebViewTitle" />
                 -->
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
 
         </PreferenceScreen>
 
@@ -1384,6 +1483,14 @@
                     android:title="@string/prefPauseSpeedStepTitle" />
 
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -1538,7 +1645,16 @@
                     android:layout="@layout/preference_item_common_no_icon"
                     android:summary="@string/prefConsistFollowAction5Summary"
                     android:title="@string/prefConsistFollowAction5Title" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <SwitchPreferenceCompat
@@ -1579,6 +1695,24 @@
                     android:summary="@string/prefVolumeSpeedButtonsSpeedStepSummary"
                     android:title="@string/prefVolumeSpeedButtonsSpeedStepTitle" />
 
+                <EditTextPreference
+                    android:defaultValue="@string/prefVolumeAccelerationMaximumDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
+                    android:dialogTitle="@string/prefVolumeAccelerationMaximumTitle"
+                    android:key="prefVolumeAccelerationMaximum"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefVolumeAccelerationMaximumSummary"
+                    android:title="@string/prefVolumeAccelerationMaximumTitle" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefVolumeAccelerationPeriodDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
+                    android:dialogTitle="@string/prefVolumeAccelerationPeriodTitle"
+                    android:key="prefVolumeAccelerationPeriod"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefVolumeAccelerationPeriodSummary"
+                    android:title="@string/prefVolumeAccelerationPeriodTitle" />
+
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
                     android:key="prefDisableVolumeKeys"
@@ -1592,7 +1726,23 @@
                     android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
                     android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" />
+
+                <SwitchPreferenceCompat
+                    android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
+                    android:key="prefVolumeKeysSounds"
+                    android:layout="@layout/preference_item_switch_no_icon"
+                    android:summary="@string/prefVolumeKeysSoundsSummary"
+                    android:title="@string/prefVolumeKeysSoundsTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -1839,7 +1989,16 @@
                     android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefGamePadIgnoreJoystickSummary"
                     android:title="@string/prefGamePadIgnoreJoystickTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -2035,6 +2194,13 @@
 
             </PreferenceCategory>
 
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <PreferenceScreen
@@ -2103,7 +2269,16 @@
                     android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefTtsGamepadTestKeysSummary"
                     android:title="@string/prefTtsGamepadTestKeysTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
     </PreferenceCategory>
@@ -2387,7 +2562,16 @@
                     android:title="@string/prefDeviceSoundsHideMuteButtonTitle" />
 
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -2487,7 +2671,16 @@
                         android:layout="@layout/preference_item_common_no_icon"
                         android:summary="@string/prefHeartbeatResponseFactorSummary"
                         android:title="@string/prefHeartbeatResponseFactorTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
 
         <SwitchPreferenceCompat
@@ -2565,6 +2758,13 @@
                     android:title="@string/prefDccexHideUdpServersTitle" />
 
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
 
         </PreferenceScreen>
 
@@ -2825,8 +3025,18 @@
                     android:selectable="false"
                     android:summary="@string/prefKidsHelpSummary"
                     android:title="@string/prefKidsHelpTitle" />
+
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -2937,7 +3147,23 @@
                     android:title="@string/prefShareFileNowTitle" />
 
             </PreferenceCategory>
+
+            <!-- Blank spacer at the bottom -->
+            <Preference
+                android:enabled="false"
+                android:selectable="false"
+                app:iconSpaceReserved="false"
+                android:layout_height="34dp"/>
+
         </PreferenceScreen>
+
     </PreferenceCategory>
+
+    <!-- Blank spacer at the bottom -->
+    <Preference
+        android:enabled="false"
+        android:selectable="false"
+        app:iconSpaceReserved="false"
+        android:layout_height="34dp"/>
 
 </PreferenceScreen>

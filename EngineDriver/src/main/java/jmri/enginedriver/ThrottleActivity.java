@@ -112,6 +112,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -366,6 +367,9 @@ public class ThrottleActivity extends AppCompatActivity implements
     static int REP_DELAY = 25;
     protected int prefSpeedButtonsSpeedStep = 4;
     protected int prefVolumeSpeedButtonsSpeedStep = 1;
+    protected int prefVolumeAccelerationMaximum = 1;
+    protected int prefVolumeAccelerationPeriod = 100;
+    protected boolean prefVolumeKeysSounds = true;
     protected int prefGamePadSpeedButtonsSpeedStep = 4;
     protected boolean prefSpeedButtonsSpeedStepDecrement = false;
     protected boolean prefStopButtonEStopOnLongPress = false;
@@ -1715,6 +1719,9 @@ public class ThrottleActivity extends AppCompatActivity implements
         // set speed buttons speed step
         prefSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefSpeedButtonsSpeedStep", "4");
         prefVolumeSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
+        prefVolumeAccelerationMaximum = threaded_application.getIntPrefValue(prefs, "prefVolumeAccelerationMaximum", getApplicationContext().getResources().getString(R.string.prefVolumeAccelerationMaximumDefaultValue));
+        prefVolumeAccelerationPeriod = threaded_application.getIntPrefValue(prefs, "prefVolumeAccelerationPeriod", getApplicationContext().getResources().getString(R.string.prefVolumeAccelerationPeriodDefaultValue));
+        prefVolumeKeysSounds = prefs.getBoolean("prefVolumeKeysSounds", getResources().getBoolean(R.bool.prefVolumeKeysSoundsDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
         prefStopButtonEStopOnLongPress = prefs.getBoolean("prefStopButtonEStopOnLongPress", getResources().getBoolean(R.bool.prefStopButtonEStopOnLongPressDefaultValue));
@@ -2180,6 +2187,7 @@ public class ThrottleActivity extends AppCompatActivity implements
     }
 
     public void decrementSpeed(int whichThrottle, int from, int stepMultiplier, int stepSize) {
+//        threaded_application.extendedLogging(activityName + ": decrementSpeed(): from " + from);
         switch (from) {
             case speed_commands_from_type.BUTTONS:
                 if ((isPauseSpeeds[whichThrottle] == pause_speed_type.INACTIVE)
@@ -2231,10 +2239,21 @@ public class ThrottleActivity extends AppCompatActivity implements
                     }
                 }
                 break;
-            case speed_commands_from_type.VOLUME:
-                speedChangeAndNotify(whichThrottle, -prefVolumeSpeedButtonsSpeedStep);
+
+            case speed_commands_from_type.VOLUME: {
+                vThrottleScreen.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
+                int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
+                if (prefVolumeKeysSounds) {
+                    if (getSpeed(whichThrottle) - speedChangeAmount >= getMaxSpeed(whichThrottle)) {
+                        gamepadBeep(beep_type.NAK);
+                    } else if (getSpeed(whichThrottle) - speedChangeAmount <= 0) {
+                        gamepadBeep(beep_type.ACK);
+                    }
+                }
+                speedChangeAndNotify(whichThrottle, -speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
+            }
             case speed_commands_from_type.GAMEPAD:
                 speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
@@ -2259,6 +2278,7 @@ public class ThrottleActivity extends AppCompatActivity implements
     }
 
     public void incrementSpeed(int whichThrottle, int from, int stepMultiplier, int stepSize) {
+//        threaded_application.extendedLogging(activityName + ": incrementSpeed(): from " + from);
         switch (from) {
             case speed_commands_from_type.BUTTONS:
                 if ((isPauseSpeeds[whichThrottle] == pause_speed_type.INACTIVE)
@@ -2300,10 +2320,21 @@ public class ThrottleActivity extends AppCompatActivity implements
                     }
                 }
                 break;
-            case speed_commands_from_type.VOLUME:
-                speedChangeAndNotify(whichThrottle, prefVolumeSpeedButtonsSpeedStep);
+
+            case speed_commands_from_type.VOLUME: {
+                vThrottleScreen.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
+                int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
+                if (prefVolumeKeysSounds) {
+                    if (getSpeed(whichThrottle) + speedChangeAmount >= getMaxSpeed(whichThrottle)) {
+                        gamepadBeep(beep_type.NAK);
+                    } else if (getSpeed(whichThrottle) + speedChangeAmount <= 0) {
+                        gamepadBeep(beep_type.ACK);
+                    }
+                }
+                speedChangeAndNotify(whichThrottle, speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
+            }
             case speed_commands_from_type.GAMEPAD:
                 speedChangeAndNotify(whichThrottle, prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
@@ -4258,8 +4289,8 @@ public class ThrottleActivity extends AppCompatActivity implements
 
         private VolumeKeysRptUpdater(int WhichThrottle) {
             threaded_application.extendedLogging(activityName + ": VolumeKeysRptUpdater(): WhichThrottle: " + whichThrottle
-                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
-                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+                    + " mVolumeKeysAutoIncrement: " + (mVolumeKeysAutoIncrement ? "True" : "False")
+                    + " mVolumeKeysAutoDecrement: " + (mVolumeKeysAutoDecrement ? "True" : "False")
             );
             whichThrottle = WhichThrottle;
 
@@ -4273,8 +4304,8 @@ public class ThrottleActivity extends AppCompatActivity implements
         @Override
         public void run() {
             threaded_application.extendedLogging(activityName + ": VolumeKeysRptUpdater(): run(): WhichThrottle: " + whichThrottle
-                    + " mGamepadAutoIncrement: " + (mGamepadAutoIncrement ? "True" : "False")
-                    + " mGamepadAutoDecrement: " + (mGamepadAutoDecrement ? "True" : "False")
+                    + " mVolumeKeysAutoIncrement: " + (mVolumeKeysAutoIncrement ? "True" : "False")
+                    + " mVolumeKeysAutoDecrement: " + (mVolumeKeysAutoDecrement ? "True" : "False")
             );
             if (mVolumeKeysAutoIncrement) {
                 incrementSpeed(whichThrottle, speed_commands_from_type.VOLUME);
@@ -6894,6 +6925,13 @@ public class ThrottleActivity extends AppCompatActivity implements
             mVolumeKeysAutoDecrement = false;
         } else {
             if (!prefDisableVolumeKeys) {  // ignore the volume keys if the preference its set
+                if (Calendar.getInstance().getTimeInMillis() <= (mainapp.volumeButtonLastDownTime + prefVolumeAccelerationPeriod) ) {
+                    mainapp.volumeButtonAcceleration++;
+                    if (mainapp.volumeButtonAcceleration > prefVolumeAccelerationMaximum) mainapp.volumeButtonAcceleration = prefVolumeAccelerationMaximum;
+                    threaded_application.extendedLogging(activityName + ": doVolumeButtonAction(): volumeButtonAcceleration " + mainapp.volumeButtonAcceleration);
+                } else {
+                    mainapp.volumeButtonAcceleration = 1;
+                }
                 for (int throttleIndex = 0; throttleIndex < mainapp.prefNumThrottles; throttleIndex++) {
                     if (throttleIndex == whichVolume && (mainapp.consists != null) && (mainapp.consists[throttleIndex] != null)
                             && (mainapp.consists[throttleIndex].isActive())) {
@@ -6911,6 +6949,7 @@ public class ThrottleActivity extends AppCompatActivity implements
                     }
                 }
             }
+            mainapp.volumeButtonLastDownTime = Calendar.getInstance().getTimeInMillis();
         }
     }
 
