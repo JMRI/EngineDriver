@@ -1727,6 +1727,13 @@
                     android:summary="@string/prefVolumeKeysFollowLastTouchedThrottleSummary"
                     android:title="@string/prefVolumeKeysFollowLastTouchedThrottleTitle" />
 
+                <SwitchPreferenceCompat
+                    android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
+                    android:key="prefVolumeKeysSounds"
+                    android:layout="@layout/preference_item_switch_no_icon"
+                    android:summary="@string/prefVolumeKeysSoundsSummary"
+                    android:title="@string/prefVolumeKeysSoundsTitle" />
+
             </PreferenceCategory>
 
             <!-- Blank spacer at the bottom -->

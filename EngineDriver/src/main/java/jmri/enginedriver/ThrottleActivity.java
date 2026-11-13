@@ -369,6 +369,7 @@ public class ThrottleActivity extends AppCompatActivity implements
     protected int prefVolumeSpeedButtonsSpeedStep = 1;
     protected int prefVolumeAccelerationMaximum = 1;
     protected int prefVolumeAccelerationPeriod = 100;
+    protected boolean prefVolumeKeysSounds = true;
     protected int prefGamePadSpeedButtonsSpeedStep = 4;
     protected boolean prefSpeedButtonsSpeedStepDecrement = false;
     protected boolean prefStopButtonEStopOnLongPress = false;
@@ -1720,6 +1721,7 @@ public class ThrottleActivity extends AppCompatActivity implements
         prefVolumeSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefVolumeSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefVolumeAccelerationMaximum = threaded_application.getIntPrefValue(prefs, "prefVolumeAccelerationMaximum", getApplicationContext().getResources().getString(R.string.prefVolumeAccelerationMaximumDefaultValue));
         prefVolumeAccelerationPeriod = threaded_application.getIntPrefValue(prefs, "prefVolumeAccelerationPeriod", getApplicationContext().getResources().getString(R.string.prefVolumeAccelerationPeriodDefaultValue));
+        prefVolumeKeysSounds = prefs.getBoolean("prefVolumeKeysSounds", getResources().getBoolean(R.bool.prefVolumeKeysSoundsDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
         prefStopButtonEStopOnLongPress = prefs.getBoolean("prefStopButtonEStopOnLongPress", getResources().getBoolean(R.bool.prefStopButtonEStopOnLongPressDefaultValue));
@@ -2239,7 +2241,15 @@ public class ThrottleActivity extends AppCompatActivity implements
                 break;
 
             case speed_commands_from_type.VOLUME: {
+                vThrottleScreen.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
                 int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
+                if (prefVolumeKeysSounds) {
+                    if (getSpeed(whichThrottle) - speedChangeAmount >= getMaxSpeed(whichThrottle)) {
+                        gamepadBeep(beep_type.NAK);
+                    } else if (getSpeed(whichThrottle) - speedChangeAmount <= 0) {
+                        gamepadBeep(beep_type.ACK);
+                    }
+                }
                 speedChangeAndNotify(whichThrottle, -speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
@@ -2312,7 +2322,15 @@ public class ThrottleActivity extends AppCompatActivity implements
                 break;
 
             case speed_commands_from_type.VOLUME: {
+                vThrottleScreen.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
                 int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
+                if (prefVolumeKeysSounds) {
+                    if (getSpeed(whichThrottle) + speedChangeAmount >= getMaxSpeed(whichThrottle)) {
+                        gamepadBeep(beep_type.NAK);
+                    } else if (getSpeed(whichThrottle) + speedChangeAmount <= 0) {
+                        gamepadBeep(beep_type.ACK);
+                    }
+                }
                 speedChangeAndNotify(whichThrottle, speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;

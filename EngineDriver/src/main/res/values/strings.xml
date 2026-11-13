@@ -644,6 +644,9 @@
     <string name="prefDisableVolumeKeysTitle">Disable Volume keys?</string>
     <string name="prefDisableVolumeKeysSummary">Disables the hardware Volume keys on the phone/tablet that would otherwise control speed</string>
 
+    <string name="prefVolumeKeysSoundsTitle">Play Sounds</string>
+    <string name="prefVolumeKeysSoundsSummary">play sounds at maximum and zero speed</string>
+
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Volume keys follow touch?</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">The Volume keys speed control will follow the last touched throttle</string>
 
