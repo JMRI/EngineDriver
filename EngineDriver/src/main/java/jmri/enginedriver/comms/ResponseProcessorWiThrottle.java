@@ -593,24 +593,23 @@ public class ResponseProcessorWiThrottle {
     //  PRA<NewState><SystemName>
     //  PRA2LT12
     public static void processRouteChange(String responseStr) {
+        if (responseStr.length() < 5) return;
         String newState = responseStr.substring(3, 4);
         String systemName = responseStr.substring(4);
-        int pos = -1;
-        for (String sn : mainapp.routeSystemNames) {
-            pos++;
-            if (sn != null && sn.equals(systemName)) {
-                break;
+        if ((mainapp.routeSystemNames == null) || (mainapp.routeStates == null)) {
+            threaded_application.logging(activityName + ": processRouteChange(): route list not yet received, ignoring '" + responseStr + "'");
+            return;
+        }
+        for (int pos = 0; pos < mainapp.routeSystemNames.length; pos++) {
+            if (systemName.equals(mainapp.routeSystemNames[pos])) {
+                if (!newState.equals(mainapp.routeStates[pos])) { //route state is changed
+                    mainapp.routeStates[pos] = newState;
+                    mainapp.alertActivitiesWithBundle(message_type.ROUTE_LIST_CHANGED);
+                }
+                return;
             }
         }
-        if (pos >= 0 && pos <= mainapp.routeSystemNames.length) {  //if found
-            if (!newState.equals(mainapp.routeStates[pos])) { //route state is changed
-//                threaded_application.logging(activityName + ": processRouteChange(" + responseStr + ") CHANGED");
-                mainapp.routeStates[pos] = newState;
-                mainapp.alertActivitiesWithBundle(message_type.ROUTE_LIST_CHANGED);
-//            } else {
-//                Log.dthreaded_application.applicationName, activityName + ": processRouteChange(" + responseStr + ") NOT CHANGED");
-            }
-        }
+        threaded_application.logging(activityName + ": processRouteChange(): unknown route '" + systemName + "', ignoring");
     }  //end of processRouteChange
 
     //parse route list into appropriate app variable array
