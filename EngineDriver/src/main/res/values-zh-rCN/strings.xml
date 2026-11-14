@@ -93,9 +93,7 @@
     <string name="stop">停止</string>
     <string name="forward">前进</string>
     <string name="reverse">后退</string>
-    <string name="neutral">空挡</string>
     <string name="brake">制动</string>
-    <string name="air_reservoir">空气储存器</string>
     <string name="airReservoirShort">储气 %d%%</string>
     <string name="airLineShort">空气管路 %d%%</string>
     <string name="load">负载</string>
@@ -460,7 +458,6 @@
     <string name="prefScreenBrightnessDimTitle">屏幕亮度调暗百分比值</string>
     <string name="prefScreenBrightnessDimSummary">调暗屏幕时使用的亮度设置（0%-99%）。设置后将禁用自动或自适应亮度。</string>
 
-    <string name="prefRosterSummary">服务器中与名册相关的选项</string>
     <string name="deviceSoundsMenu">机车声音</string>
 
     <string name="deviceSoundsVolumeNotice">手机本地音效功能使用的是“铃声”系统音量设置，而不是“媒体”音量设置。</string>
@@ -468,7 +465,6 @@
     <string name="helpMenu">帮助（网页版）</string>
     <string name="logViewer">查看日志</string>
     <string name="clearLocoList">清除列表</string>
-    <string name="ClearConnList">清除最近列表</string>
     <string name="prefEmerStopTitle">紧急停止按钮？</string>
     <string name="prefEmerStopSummary">在操作栏中显示机车紧急停止按钮</string>
     <string name="EStop">急停</string>
@@ -710,7 +706,6 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="toastThreadedAppNotWIFI">正在使用%1$s网络，而非WIFI。\n请检查您的WiFi设置和偏好设置。\n</string>
 
     <string name="statusThreadedAppNotconnectedToWifi">未连接到WiFi</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">没有WiFi连接，无法进行服务器发现！</string>
     <string name="statusThreadedAppNoLocationService">无法访问SSID</string>
     <string name="statusThreadedAppServerDiscoveryNoLocationService">使用位置信息 Android系统设置已禁用。</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">未授予\'ACCESS_FINE_LOCATION\'权限。</string>
@@ -745,7 +740,6 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="toastPreferencesOutsideLimits">输入的值超出范围（%1$s-%2$s）。已重置为%3$s。</string>
     <string name="toastPreferencesNotNumeric">输入的值不是数字（%1$s-%2$s）。已重置为%3$s。</string>
     <string name="toastPreferencesResetSucceeded">偏好设置已重置为默认值！</string>
-    <string name="toastPreferencesImportServerManualFailed">从服务器导入偏好设置失败！请检查文件是否正确。（%1$s）</string>
     <string name="toastPreferencesImportServerManualSucceeded">从服务器导入偏好设置成功。（%1$s）</string>
 <!--    <string name="toastPreferencesImportSucceeded">Preferences Import from file succeeded.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">主题更改成功。</string>
@@ -1227,10 +1221,8 @@ T0 - T5 = 为下一个命令指定一个限制
 
     <string name="advancedConsistToolRemoveButtonLabel">移除</string>
     <string name="advancedConsistToolButtonLabel">高级组成</string>
-    <string name="witActionTypeLabel">操作</string>
     <string name="witWriteAddressLabel">DCC地址</string>
     <string name="witPomWarning">注意：- 某些DCC系统可能不支持此功能。- 禁止更改机车地址 - CV 1、17、18以及CV 29的第5位。请谨慎使用。</string>
-    <string name="witPomMaxValueWarning">值\'%1$s\'超过最大支持值（\'%2$s\'）</string>
 
     <string name="dccexCommonCvsLabel">NMRA CV参数</string>
     <string name="dccexCommonCommandsLabel" >常用命令</string>
@@ -1282,7 +1274,6 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="rosterDecoderInfoRosterEntry">名册条目：</string>
     <string name="dccexCvBitCalculatorConfirmButtonLabel">确认</string>
     <string name="dccexAutomationTitle">EXRAIL自动化系统的机车地址</string>
-    <string name="autoServerConnectTitle">自动服务器连接</string>
     <string name="autoServerConnectLabel">服务器名称</string>
     <string name="autoServerConnectCurrentServerButtonLabel">获取当前服务器</string>
     <string name="prefAutoServerNamedConnectSummary">如果发现指定名称的服务器，则自动连接到该服务器。</string>
@@ -1380,7 +1371,6 @@ T0 - T5 = 为下一个命令指定一个限制
     <string name="prefShareFileNowTitle">立刻共享设置文件</string>
     <string name="sharedFileProcessing">文件共享中...</string>
     <string name="sharedFileProcessingCount">%d个文件已共享</string>
-    <string name="sharedFileReceivedCount">%d个文件已接收</string>
     <string name="sharedFileSavingCount">%d个文件保存中</string>
     <string name="sharedFileSavedCount">%d个文件已保存</string>
     <string name="sharedFileFailedToSaveCount">%d个文件保存失败</string>

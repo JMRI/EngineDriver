@@ -76,7 +76,6 @@
     <string name="stop">Atura</string>
     <string name="forward">Endavant</string>
     <string name="reverse">Enrere</string>
-    <string name="neutral">Neutre</string>
     <string name="brake">Fre</string>
     <string name="airLineShort">Línia aèria %d%%</string>
     <string name="load">Carrega</string>
@@ -343,7 +342,6 @@
     <string name="helpMenu">Ajuda (Web)</string>
     <string name="logViewer">Veure Log</string>
     <string name="clearLocoList">Neteja la llista</string>
-    <string name="ClearConnList">Neteja la llista de recents</string>
     <string name="prefEmerStopTitle">Mostra la tecla d\'aturada d\'emergència?</string>
     <string name="prefEmerStopSummary">Mostra la tecla d\'aturada d\'emergència de la Locomotora en la barra superior?</string>
     <string name="EStop">Estop</string>
@@ -532,7 +530,6 @@
     <string name="toastPreferencesOutsideLimits">El valor entrat està fora dels límits (%1$s-%2$s). Reiniciat a %3$s</string>
     <string name="toastPreferencesNotNumeric">El valor entrat no és un valor numèric (%1$s-%2$s). Reiniciat a %3$s</string>
     <string name="toastPreferencesResetSucceeded">¡Reinicia les preferències a valors per defecte!</string>
-    <string name="toastPreferencesImportServerManualFailed">Import des préférences depuis le serveur EN ECHEC! vérifier si le fichier est correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Preferències de la importació des del servidor. (%1$s)</string>
 <!--    <string name="toastPreferencesImportSucceeded">Preferències importar des del fitxer S\'ha superat</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">S\'ha produït un canvi de tema</string>
@@ -1044,7 +1041,6 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Amaga el botó de silenci</string>
     <string name="prefDeviceSoundsButtonSummary">Mostra un botó d\'acció de barra per canviar les opcions del telèfon de Loco sona</string>
     <string name="prefDeviceSoundsButtonTitle">Al botó de sons del telèfon</string>
-    <string name="prefRosterSummary">Opcions relacionades amb la llista del servidor</string>
     <string name="deviceSoundsMenu">Loco sona</string>
     <string name="app_name_device_sounds_settings">Al telèfon sona loco</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomanem que augmenteu la mida de la zona de botons de la funció, o no podreu accedir a les funcions de so de campana / banya / silenci</string>
@@ -1068,7 +1064,6 @@
     <string name="shareFile">Comparteix fitxer: %s</string>
     <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">S\'està processant fitxers compartits...</string>
     <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">S\'estan processant %d fitxers compartits...</string>
-    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">S\'han rebut %d fitxers compartits...</string>
     <string name="sharedFileSavingCount">S\'estan desant %d fitxers</string>
     <string name="sharedFileSavedCount">Desa %d fitxers</string>
     <string name="sharedFileFailedToSaveCount">No s\'han pogut desar %d fitxers</string>
@@ -1100,7 +1095,6 @@
     <string name="prefWebViewButtonTitle">Ukázat/Skrýt tlačítko zobrazit Web?</string>
     <string name="FilterRosterListDownloadLabel">descarregar</string>
     yh<string name="rosterEmpty">No es pot trobar cap entrada a la llista del servidor.\n\nUtilitzeu l\'opció "Adreça DCC" o "Recent".</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">El descobriment del servidor no és possible sense connexió WiFi!</string>
     <string name="statusThreadedAppNoLocationService">No es pot accedir al SSID</string>
     <string name="statusThreadedAppServerDiscoveryNoLocationService">La configuració del sistema Android "Utilitza la ubicació" està desactivada.</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">No s\'ha concedit el permís ACCESS_FINE_LOCATION.</string>
@@ -1148,10 +1142,8 @@
     <string name="dccexRouteHandoff">Mà</string>
     <string name="dccexRouteSet">Conjunt</string>
     <string name="dccexSendCommandButtonLabel">Enviar</string>
-    <string name="witActionTypeLabel">Acció</string>
     <string name="witWriteAddressLabel">Adreça DCC</string>
     <string name="witPomWarning">Notes: - Això no funcionarà en alguns sistemes DCC. - S\'ha impedit el canvi d\'adreça de lloc - CV 1, 17 &amp; 18 i el bit 5 de CV 29. \n\nFeu servir amb precaució.</string>
-    <string name="witPomMaxValueWarning">El valor \'%1$s\' supera el màxim admès (\'%2$s\')</string>
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">CMD comuns</string>
     <string name="toastDangerousCVsWarning">No es recomana escriure als CV 1, 17, 18 i 29 mitjançant la programació principal (PoM).\nUtilitzeu-ho amb molta precaució!</string>
@@ -1200,7 +1192,6 @@
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Mostra sempre els botons Llançar i Tancar per als desviaments, mai el botó Commuta.</string>
     <string name="dccexJoinTrackButtonLabel">Uneix-te</string>
 
-    <string name="air_reservoir">Dipòsit d\'aire</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Tipus de fre del descodificador</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activeu les funcions de fre al descodificador</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Número de funció baix de l\'ESU</string>
@@ -1263,7 +1254,6 @@
 
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirma</string>
     <string name="dccexAutomationTitle">Adreça de la locomotora per a l\'automatisme EXRAIL</string>
-    <string name="autoServerConnectTitle">Connexió automàtica del servidor</string>
     <string name="autoServerConnectLabel">Nom del servidor</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Obteniu el servidor actual</string>
     <string name="prefAutoServerNamedConnectSummary">Connecteu-vos automàticament a un servidor anomenat si es descobreix</string>

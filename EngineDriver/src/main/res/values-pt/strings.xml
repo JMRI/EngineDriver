@@ -372,7 +372,6 @@
     <string name="helpMenu">Ajuda (Web)</string>
     <string name="logViewer">Ver Relatório</string>
     <string name="clearLocoList">Limpar Lista</string>
-    <string name="ClearConnList">Limpar Lista Recente</string>
     <string name="prefEmerStopTitle">Mostrar Botão Parada Emergência?</string>
     <string name="prefEmerStopSummary">Mostrar Botão Parada de Emergência da locomotiva na barra de ação?</string>
     <string name="EStop">Estop</string>
@@ -572,7 +571,6 @@
     <string name="toastPreferencesOutsideLimits">O valor inserido está fora dos limites  (%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesNotNumeric">O valor inserido não é um número.(%1$s-%2$s). Reiniciado para %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferências Reiniciadas a valores Padrão!</string>
-    <string name="toastPreferencesImportServerManualFailed">Preferências de importação do servidor falhou! Verifique se o arquivo está correto. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Preferências Importar do servidor bem-sucedido. (%1$s)</string>
 <!--    <string name="toastPreferencesImportSucceeded">Preferências Importar do arquivo Bem-sucedido.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Mudança de tema é bem-sucedida.</string>
@@ -990,7 +988,6 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Ocultar botão mudo</string>
     <string name="prefDeviceSoundsButtonSummary">Mostrar um botão de barra de ação para alterar as opções de sons de loco no telefone</string>
     <string name="prefDeviceSoundsButtonTitle">No botão de sons do telefone</string>
-    <string name="prefRosterSummary">Opções relacionadas à lista de jogadores do servidor</string>
     <string name="deviceSoundsMenu">Loco sons</string>
     <string name="app_name_device_sounds_settings">Em sons de loco de telefone</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Recomende que você aumente o tamanho da área de botões de função, ou você não poderá acessar as funções de som Bell / Horn / Mudo</string>
@@ -1013,7 +1010,6 @@
     <string name="shareFile">Compartilhar arquivo: %s</string>
     <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Processando arquivo(s) compartilhado(s)...</string>
     <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Processando %d arquivo(s) compartilhado(s)...</string>
-    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Recebeu %d arquivo(s) compartilhado(s)...</string>
     <string name="sharedFileSavingCount">Salvando %d arquivo(s)</string>
     <string name="sharedFileSavedCount">Salvar %d arquivo(s)</string>
     <string name="sharedFileFailedToSaveCount">Falha ao salvar %d arquivo(s)</string>
@@ -1041,7 +1037,6 @@
     <string name="prefTtsGamepadTestKeysTitle">Na tecla de teste gamepad, imprensa</string>
     <string name="prefTtsThrottleSpeedSummary">Quando a velocidade atinge certas velocidades ao usar um gamepad</string>
     <string name="prefTtsThrottleSpeedTitle">Nas velocidades do gamepad</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">A descoberta de servidor não é possível sem uma conexão WiFi!</string>
     <string name="statusThreadedAppServerDiscoveryNoLocationService">A configuração do sistema Android \'Usar localização\' está desativada.</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Permissão ACCESS_FINE_LOCATION não concedida.</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Nome da rede inacessível. A descoberta de servidor pode ser limitada.</string>
@@ -1085,10 +1080,8 @@
     <string name="dccexRouteHandoff">Não interferir</string>
     <string name="dccexRouteSet">Definir</string>
     <string name="dccexSendCommandButtonLabel">Mandar</string>
-    <string name="witActionTypeLabel">Ação</string>
     <string name="witWriteAddressLabel">Endereço DCC</string>
     <string name="witPomWarning">Observações: - Isso não funcionará em alguns sistemas DCC. - A alteração do endereço do Loco é evitada - CVs 1, 17 &amp; 18 e bit 5 do CV 29.\n\nUse com cuidado.</string>
-    <string name="witPomMaxValueWarning">O valor \'%1$s\' excede o máximo suportado (\'%2$s\')</string>
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">TMC comuns</string>
     <string name="toastDangerousCVsWarning">Não é recomendável escrever nos CVs 1, 17, 18 e 29 usando Programação na Atividade Principal (PoM).\nUse com extrema cautela!</string>
@@ -1141,7 +1134,6 @@
     <string name="toastWaitingForConnectionDccEx" tools:ignore="TypographyEllipsis">Tempo limite aguardando mensagem DCC-EX \'iDCCEX...\' de %1$s:%2$s. Desconectando</string>
     <string name="toastAddressExceedsMax">O endereço \'%1$s\' excede o máximo suportado (\'%2$s\')</string>
 
-    <string name="air_reservoir">Reservatório de Ar</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Tipo de freio do decodificador</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activer les fonctions Frein sur le décodeur</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Numéro de fonction faible ESU</string>
@@ -1204,7 +1196,6 @@
 
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirmar</string>
     <string name="dccexAutomationTitle">Endereço da locomotiva para a Automação EXRAIL</string>
-    <string name="autoServerConnectTitle">Conexão automática do servidor</string>
     <string name="autoServerConnectLabel">Nome do servidor</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Obter servidor atual</string>
     <string name="prefAutoServerNamedConnectSummary">Conectar-se automaticamente a um servidor nomeado se descoberto</string>

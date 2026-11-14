@@ -83,7 +83,6 @@
     <string name="stop">Zastavit</string>
     <string name="forward">Vpřed</string>
     <string name="reverse">Vzad</string>
-    <string name="neutral">Neutrální</string>
     <string name="brake">Brzda</string>
     <string name="airLineShort">Letecká linka %d%%</string>
     <string name="load">Zatížení</string>
@@ -435,7 +434,6 @@
     <string name="helpMenu">Nápověda (web)</string>
     <string name="logViewer">Zobrazit protokol</string>
     <string name="clearLocoList">Vymazat seznam</string>
-    <string name="ClearConnList">Vymazat poslední seznam</string>
 <!--    <string name="clearConsistsList">Vymazat seznam Souprav</string>-->
     <string name="prefEmerStopTitle">Zobrazit tlačítko nouzového zastavení?</string>
     <string name="prefEmerStopSummary">Zobrazit tlačítko nouzového zastavení lokomotivy v liště akcí?</string>
@@ -657,7 +655,6 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Chyba vytváření output stream, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Chyba spícího vlákna, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Používáte síť %1$s, není WIFI.\nZkontrolujte nastavení vaší WiFi.\n</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">Server Discovery není možný bez WiFi připojení!</string>
     <string name="statusThreadedAppNoLocationService">Nelze získat přístup k SSID</string>
     <string name="statusThreadedAppServerDiscoveryNoLocationService">Nastavení systému Android „Použít polohu“ je zakázáno.</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Oprávnění ACCESS_FINE_LOCATION nebylo uděleno.</string>
@@ -690,7 +687,6 @@
     <string name="toastPreferencesOutsideLimits">Zadaná hodnota je mimo meze (%1$s-%2$s). Nastavím na %3$s.</string>
     <string name="toastPreferencesNotNumeric">Zadaná hodnota není číslo (%1$s-%2$s). Nastavím na %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Předvolby Nastavení na výchozí hodnoty!</string>
-    <string name="toastPreferencesImportServerManualFailed">Import předvoleb se serveru selhal! Zkontrolujte, že je soubor správný. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import předvoleb ze serveru se zdařil. (%1$s)</string>
 <!--    <string name="toastPreferencesImportSucceeded">Import předvoleb ze souboru se zdařil.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Změna tématu se zdařila.</string>
@@ -1152,7 +1148,6 @@
     <string name="prefDeviceSoundsHideMuteButtonTitle">Tlačítko skrýt ztlumení</string>
     <string name="prefDeviceSoundsButtonSummary">Zobrazte tlačítko ACCE BUNKU pro změnu možností v telefonu Loco Sounds</string>
     <string name="prefDeviceSoundsButtonTitle">V telefonu zvuky</string>
-    <string name="prefRosterSummary">Možnosti týkající se soupisky ze serveru</string>
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="app_name_device_sounds_settings">V telefonu Loco zvuky</string>
     <string name="toastDeviceSoundsSimpleLayoutWarning">Doporučujeme zvýšit velikost funkčních tlačítek, nebo nebudete moci přistupovat k zvukovým funkcím Bell / Horn / Mute</string>
@@ -1177,7 +1172,6 @@
     <string name="shareFile">Sdílet soubor: %s</string>
     <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">Zpracovávání sdílených souborů...</string>
     <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Zpracovávání %d sdílených souborů...</string>
-    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Přijato %d sdílených souborů...</string>
     <string name="sharedFileSavingCount">Ukládání %d souborů</string>
     <string name="sharedFileSavedCount">Uložit %d souborů</string>
     <string name="sharedFileFailedToSaveCount">Nepodařilo se uložit %d soubory</string>
@@ -1237,10 +1231,8 @@
     <string name="dccexRouteHandoff">Ruce pryč</string>
     <string name="dccexRouteSet">Soubor</string>
     <string name="dccexSendCommandButtonLabel">Poslat</string>
-    <string name="witActionTypeLabel">Akce</string>
     <string name="witWriteAddressLabel">Adresa DCC</string>
     <string name="witPomWarning">Poznámky: - Toto nebude fungovat na některých systémech DCC. - Změna adresy lokomotivy je zabráněna - CV 1, 17 &amp; 18 a bit 5 CV 29. \n\nPoužívejte opatrně.</string>
-    <string name="witPomMaxValueWarning">Hodnota \'%1$s\' překračuje maximální podporovanou hodnotu (\'%2$s\')</string>
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">Běžné CMD</string>
     <string name="toastDangerousCVsWarning">Zápis do CV 1, 17, 18 a 29 pomocí programování na hlavním serveru (PoM) se nedoporučuje.\nPoužívejte s maximální opatrností!</string>
@@ -1286,7 +1278,6 @@
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">U výhybek vždy zobrazujte tlačítka Hod i Zavřít, nikdy ne tlačítko Přepnout.</string>
     <string name="dccexJoinTrackButtonLabel">Připojte se</string>
 
-    <string name="air_reservoir">Vzduchová nádrž</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Typ dekodérové ​​brzdy</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Aktivujte brzdové funkce na dekodéru</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Nízké funkční číslo ESU</string>
@@ -1349,7 +1340,6 @@
 
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Potvrdit</string>
     <string name="dccexAutomationTitle">Adresa lokomotivy pro EXRAIL Automatio</string>
-    <string name="autoServerConnectTitle">Automatické připojení k serveru</string>
     <string name="autoServerConnectLabel">Název serveru</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Získejte aktuální server</string>
     <string name="prefAutoServerNamedConnectSummary">V případě zjištění se automaticky připojit k pojmenovanému serveru</string>
