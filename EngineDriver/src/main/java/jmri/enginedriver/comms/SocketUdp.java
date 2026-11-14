@@ -185,84 +185,89 @@ class SocketUdp extends Thread {
     private void processMessage(String message) {
         str.append(message);
         while ( (socketGood) && (!endRead) ) {
-            try {
-                if (str.toString().isEmpty()) break;
-                if ( (str.toString().contains("<")) && (str.toString().contains(">")) ) {
-
-                    String wholeStr = replaceAnglesInQuotes(str.toString());
-                    int endIdx = wholeStr.indexOf(">");
-                    String oneStr = wholeStr.substring(wholeStr.indexOf("<"), endIdx + 1);
-                    String remainder = (endIdx + 2 <= wholeStr.length()) ? wholeStr.substring(endIdx + 2) : "";
-
-                    threaded_application.logging(activityName+": <:> SocketUdp.read(): whole str »" + wholeStr +"«");
-                    threaded_application.logging(activityName+": <:> SocketUdp.read(): one str   »" + oneStr +"«");
-                    threaded_application.logging(activityName+": <:> SocketUdp.read(): remainder »" + remainder +"«\n\n");
-
-                    if ( oneStr.split("\n")[0].contains(">")) {
-                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): single line response: »" + oneStr + "«");
-
-                        String[] superCmds = oneStr.split("\n");
-
-                        for (int j = 0; j < superCmds.length; j++) {
-                            String[] cmds = superCmds[j].split("><");
-                            if (cmds.length == 1) { // multiple concatenated commands
-                                comm_thread.processWifiResponse(cmds[0]);
-                            } else {
-                                for (int i = 0; i < cmds.length; i++) {
-                                    if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                        comm_thread.processWifiResponse(cmds[i]);
-                                    } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
-                                        comm_thread.processWifiResponse(cmds[i] + ">");
-                                    } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                        comm_thread.processWifiResponse("<" + cmds[i]);
-                                    } else {
-                                        comm_thread.processWifiResponse("<" + cmds[i] + ">");
-                                    }
-                                }
-                            }
-                        }
-                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): single line response end: »" + oneStr + "«");
-
-                    } else { // multi-line response
-                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): multi-line response: »" + oneStr + "«");
-
-                        String[] cmds = oneStr.split("><");
-                        if (cmds.length == 1) { // multiple concatenated commands
-                            comm_thread.processWifiResponse(cmds[0]);
-                        } else {
-                            for (int i = 0; i < cmds.length; i++) {
-                                if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                    comm_thread.processWifiResponse(cmds[i]);
-                                } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
-                                    comm_thread.processWifiResponse(cmds[i] + ">");
-                                } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
-                                    comm_thread.processWifiResponse("<" + cmds[i]);
-                                } else {
-                                    comm_thread.processWifiResponse("<" + cmds[i] + ">");
-                                }
-                            }
-                        }
-                        threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): multi-line response end: »" + oneStr + "«");
-                    }
-                    str.setLength(0);
-                    if (!remainder.isEmpty()) str.append(remainder);
-
-                    comm_thread.heart.restartInboundInterval();
-                    clearInboundTimeout();
-
-                    if (remainder.isEmpty()) break;
-
-                } else {
+            String wholeStr = replaceAnglesInQuotes(str.toString());
+            int startIdx = wholeStr.indexOf('<');
+            int endIdx = (startIdx >= 0) ? wholeStr.indexOf('>', startIdx) : -1;
+            if (endIdx < 0) { // no complete command yet
+                // keep only text that can still become a command: from the first '<' onwards
+                str.setLength(0);
+                if (startIdx >= 0) {
+                    str.append(wholeStr.substring(startIdx));
                     threaded_application.logging(activityName+": <:> SocketUdp.read(): partial: »" + str + "«");
                     comm_thread.heart.restartInboundInterval();
                     clearInboundTimeout();
-                    break;
                 }
-            } catch (Exception e) {
-                // Handle disconnected or error
-                threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): error: " + e.getMessage());
                 break;
             }
+            String oneStr = wholeStr.substring(startIdx, endIdx + 1);
+            String remainder = wholeStr.substring(endIdx + 1);
+
+            threaded_application.logging(activityName+": <:> SocketUdp.read(): whole str »" + wholeStr +"«");
+            threaded_application.logging(activityName+": <:> SocketUdp.read(): one str   »" + oneStr +"«");
+
+            // consume the command before processing it, so that a command which cannot be processed
+            // is not left in the buffer to be parsed again ahead of every later message
+            str.setLength(0);
+            str.append(remainder);
+
+            try {
+                dispatchCommand(oneStr);
+            } catch (RuntimeException e) {
+                threaded_application.logging('e', activityName+": <:> SocketUdp.processMessage(): unable to process »" + oneStr + "«", e);
+            }
+
+            comm_thread.heart.restartInboundInterval();
+            clearInboundTimeout();
+        }
+    }
+
+    // pass one complete command (which may hold several concatenated or multi-line responses) to the response processor
+    private void dispatchCommand(String oneStr) {
+        if ( oneStr.split("\n")[0].contains(">")) {
+            threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): single line response: »" + oneStr + "«");
+
+            String[] superCmds = oneStr.split("\n");
+
+            for (int j = 0; j < superCmds.length; j++) {
+                String[] cmds = superCmds[j].split("><");
+                if (cmds.length == 1) { // multiple concatenated commands
+                    comm_thread.processWifiResponse(cmds[0]);
+                } else {
+                    for (int i = 0; i < cmds.length; i++) {
+                        if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                            comm_thread.processWifiResponse(cmds[i]);
+                        } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
+                            comm_thread.processWifiResponse(cmds[i] + ">");
+                        } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                            comm_thread.processWifiResponse("<" + cmds[i]);
+                        } else {
+                            comm_thread.processWifiResponse("<" + cmds[i] + ">");
+                        }
+                    }
+                }
+            }
+            threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): single line response end: »" + oneStr + "«");
+
+        } else { // multi-line response
+            threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): multi-line response: »" + oneStr + "«");
+
+            String[] cmds = oneStr.split("><");
+            if (cmds.length == 1) { // multiple concatenated commands
+                comm_thread.processWifiResponse(cmds[0]);
+            } else {
+                for (int i = 0; i < cmds.length; i++) {
+                    if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                        comm_thread.processWifiResponse(cmds[i]);
+                    } else if ((cmds[i].charAt(0) == '<') && (cmds[i].charAt(cmds[i].length() - 1)) != '>') {
+                        comm_thread.processWifiResponse(cmds[i] + ">");
+                    } else if ((cmds[i].charAt(0) != '<') && (cmds[i].charAt(cmds[i].length() - 1)) == '>') {
+                        comm_thread.processWifiResponse("<" + cmds[i]);
+                    } else {
+                        comm_thread.processWifiResponse("<" + cmds[i] + ">");
+                    }
+                }
+            }
+            threaded_application.logging(activityName+": <:> SocketUdp.processMessage(): multi-line response end: »" + oneStr + "«");
         }
     }
 
