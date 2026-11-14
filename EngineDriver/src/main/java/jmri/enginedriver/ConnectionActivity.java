@@ -36,7 +36,6 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.net.NetworkRequest;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -100,6 +99,7 @@ import jmri.enginedriver.type.restart_reason_type;
 import jmri.enginedriver.type.toolbar_button_size_to_use_type;
 import jmri.enginedriver.type.toolbar_button_size_type;
 import jmri.enginedriver.util.BackgroundImageLoader;
+import jmri.enginedriver.util.LocalNetwork;
 import jmri.enginedriver.util.PermissionsHelper;
 import jmri.enginedriver.util.PermissionsHelper.RequestCodes;
 import jmri.enginedriver.util.SwipeDetector;
@@ -627,7 +627,6 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         setContentView(R.layout.connection_page);
 
 //        boolean prefHideDemoServer = prefs.getBoolean("prefHideDemoServer", getResources().getBoolean(R.bool.prefHideDemoServerDefaultValue));
-        mainapp.haveForcedWiFiConnection = false;
 
         //Set up a list adapter to allow adding discovered WiThrottle servers to the UI.
         discovery_list = new ArrayList<>();
@@ -1083,6 +1082,9 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                 mainapp.clientLocationServiceEnabled = true;
             }
 
+            // use the local network for the app's connections unless mobile data is allowed
+            LocalNetwork.select(mainapp, prefAllowMobileData);
+
             //determine if currently using mobile connection or wifi
             final ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo nInfo = cm.getActiveNetworkInfo();
@@ -1091,26 +1093,6 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
                     case ConnectivityManager.TYPE_WIFI:
                         mainapp.client_type = "WIFI";
 
-                        if (!prefAllowMobileData) {
-                            // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-//                        if (Build.VERSION.SDK_INT >= 21) {
-                            threaded_application.logging(activityName + ": getWifiInfor(): Builder");
-                            NetworkRequest.Builder request = new NetworkRequest.Builder();
-                            request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
-
-                            cm.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
-
-                                @Override
-                                public void onAvailable(@NonNull Network network) {
-                                    if (Build.VERSION.SDK_INT < 23) {
-                                        ConnectivityManager.setProcessDefaultNetwork(network);
-                                    } else {
-                                        cm.bindProcessToNetwork(network);  //API23+
-                                    }
-                                }
-                            });
-//                        }
-                        }
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
                         if ((!mainapp.client_type.equals("WIFI")) && (prefAllowMobileData)) {

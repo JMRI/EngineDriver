@@ -26,13 +26,11 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,6 +51,7 @@ import jmri.enginedriver.type.activity_id_type;
 import jmri.enginedriver.type.alert_bundle_tag_type;
 import jmri.enginedriver.type.connection_type;
 import jmri.enginedriver.type.message_type;
+import jmri.enginedriver.util.LocalNetwork;
 
 class SocketWiFi extends Thread {
     public static final String activityName = "SocketWiFi";
@@ -89,7 +88,9 @@ class SocketWiFi extends Thread {
     public boolean connect() {
 
         //use local socketOk instead of setting socketGood so that the rcvr doesn't resume until connect() is done
-        boolean socketOk = HaveNetworkConnection();
+        //select the network before the socket is opened, so that the first attempt already goes over Wi-Fi
+        mainapp.prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
+        boolean socketOk = LocalNetwork.select(mainapp, mainapp.prefAllowMobileData);
 
         connectTimeoutMs = Integer.parseInt(prefs.getString("prefConnectTimeoutMs", mainapp.getResources().getString(R.string.prefConnectTimeoutMsDefaultValue)));
         socketTimeoutMs = Integer.parseInt(prefs.getString("prefSocketTimeoutMs", mainapp.getResources().getString(R.string.prefSocketTimeoutMsDefaultValue)));
@@ -357,55 +358,13 @@ class SocketWiFi extends Thread {
         return status;
     }
 
-    // temporary - SocketCheck should determine whether socket connection is good however socket flags sometimes do not get updated
+    // SocketCheck should determine whether socket connection is good however socket flags sometimes do not get updated
     // so it doesn't work.  This is better than nothing though?
     private boolean HaveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-        mainapp.prefAllowMobileData = prefs.getBoolean("prefAllowMobileData", false);
-
-        final ConnectivityManager connectivityManager = (ConnectivityManager) mainapp.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = connectivityManager.getAllNetworkInfo();
-        for (NetworkInfo networkInfo : netInfo) {
-            if ("WIFI".equalsIgnoreCase(networkInfo.getTypeName()))
-
-                if (!mainapp.prefAllowMobileData) {
-                    // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-//                        if ((Build.VERSION.SDK_INT >= 21)
-//                                && (!mainapp.haveForcedWiFiConnection)) {
-                    if (!mainapp.haveForcedWiFiConnection) {
-                        threaded_application.logging(activityName + ": HaveNetworkConnection(): NetworkRequest.Builder");
-                        NetworkRequest.Builder request = new NetworkRequest.Builder();
-                        request.addTransportType(NetworkCapabilities.TRANSPORT_WIFI);
-
-                        connectivityManager.registerNetworkCallback(request.build(), new ConnectivityManager.NetworkCallback() {
-                            @Override
-                            public void onAvailable(@NonNull Network network) {
-                                if (Build.VERSION.SDK_INT < 23) {
-                                    ConnectivityManager.setProcessDefaultNetwork(network);
-                                } else {
-                                    connectivityManager.bindProcessToNetwork(network);  //API23+
-                                }
-                            }
-                        });
-                        mainapp.haveForcedWiFiConnection = true;
-                    }
-                }
-
-            if (isNetworkAvailable()) {
-                haveConnectedWifi = true;
-            } else {
-                // attempt to resolve the problem where some devices won't connect over wifi unless mobile data is turned off
-                if (mainapp.prefAllowMobileData) {
-                    haveConnectedWifi = true;
-                }
-            }
-            if ("MOBILE".equalsIgnoreCase(networkInfo.getTypeName()))
-                if ((isNetworkAvailable()) && (mainapp.prefAllowMobileData)) {
-                    haveConnectedMobile = true;
-                }
+        if (mainapp.prefAllowMobileData) {
+            return isNetworkAvailable();
         }
-        return haveConnectedWifi || haveConnectedMobile;
+        return LocalNetwork.find(mainapp) != null;
     }
 
     private Boolean isNetworkAvailable() {
