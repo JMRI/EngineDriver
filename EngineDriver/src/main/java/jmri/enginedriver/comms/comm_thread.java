@@ -606,9 +606,10 @@ public class comm_thread extends Thread {
         threaded_application.dlRosterTask.stop();
     }
 
+    // run the action on this comm thread after the delay
+    // (not the main thread: shutdown waits for the socket reader to finish)
     protected void delayedAction(int action, long delay) {
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
+        mainapp.commBundleMessageHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 switch (action) {
