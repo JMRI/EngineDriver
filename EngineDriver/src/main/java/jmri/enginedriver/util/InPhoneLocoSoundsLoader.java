@@ -372,7 +372,7 @@ public class InPhoneLocoSoundsLoader {
             if (filesList != null) {
                 for (File file : filesList) {
                     String fileName = file.getName();
-                    String lowercaseFileName = file.getName().toLowerCase();
+                    String lowercaseFileName = file.getName().toLowerCase(Locale.ROOT);
                     if (lowercaseFileName.endsWith(".ipls")) {
                         getIplsDetails(fileName);
                         if (!iplsName.isEmpty()) { // if we didn't fine a name, ignore it
@@ -407,7 +407,7 @@ public class InPhoneLocoSoundsLoader {
                if (line!=null) {
                   int splitPos = line.indexOf(':');
                   if (splitPos > 0) {
-                     cmd = line.substring(0, 1).toLowerCase();
+                     cmd = line.substring(0, 1).toLowerCase(Locale.ROOT);
                      try {
                         cmdValueFull = line.substring(splitPos + 1, line.length() - splitPos + 2).trim();
                      } catch (IndexOutOfBoundsException e) {

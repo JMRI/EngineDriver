@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import jmri.enginedriver.threaded_application;
 
@@ -259,7 +260,7 @@ public class Loco {
             // this is not searching the loco's labels
             for (int i = 0; i < prefConsistFollowStrings.size(); i++) {
 //            if (searchLabel.toLowerCase().contains(prefConsistFollowStrings.get(i).toLowerCase())) {
-                if (prefConsistFollowStrings.get(i).toLowerCase().contains(searchLabel.toLowerCase())) {
+                if (prefConsistFollowStrings.get(i).toLowerCase(Locale.ROOT).contains(searchLabel.toLowerCase(Locale.ROOT))) {
                     matchingRule = i;
                     //noinspection AssignmentToForLoopParameter
                     i = 999;
@@ -281,7 +282,7 @@ public class Loco {
                         for (int i = 0; i <= functionLabelsMaxKey; i++) {
                             if (functionLabels.get(i) != null) {
 //                            if (functionLabels.get(i).toLowerCase().contains(prefConsistFollowStrings.get(matchingRule).toLowerCase())) {
-                                if (prefConsistFollowStrings.get(matchingRule).toLowerCase().contains(functionLabels.get(i).toLowerCase())) {
+                                if (prefConsistFollowStrings.get(matchingRule).toLowerCase(Locale.ROOT).contains(functionLabels.get(i).toLowerCase(Locale.ROOT))) {
                                     functionList.add(i);
                                 }
                             }
@@ -326,7 +327,7 @@ public class Loco {
 
         } else {   // Special - Partial or Exact
 
-            String sl = searchLabel.toLowerCase().trim();
+            String sl = searchLabel.toLowerCase(Locale.ROOT).trim();
             if (functionLabels != null) {
                 // cycle through this locos function labels to find the exactly matching string
                 for (int i = 0; i <= functionLabelsMaxKey; i++) {
@@ -357,7 +358,7 @@ public class Loco {
                         }
 
                         if (processThis) {
-                            String fl = functionLabels.get(i).toLowerCase().trim();
+                            String fl = functionLabels.get(i).toLowerCase(Locale.ROOT).trim();
                             if (prefConsistFollowRuleStyle.equals(consist_function_rule_style_type.SPECIAL_EXACT)) {
                                 if (fl.equals(sl)) {
                                     functionList.add(i);
