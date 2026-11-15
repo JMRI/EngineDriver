@@ -78,7 +78,6 @@
     <string name="stop">Arrêt</string>
     <string name="forward">Marche Avant</string>
     <string name="reverse">Marche Arrière</string>
-    <string name="neutral">Neutre</string>
     <string name="brake">Frein</string>
     <string name="airLineShort">Tube air %d%%</string>
     <string name="load">Chargement</string>
@@ -349,7 +348,6 @@
     <string name="helpMenu">Aide (Web)</string>
     <string name="logViewer">Affichage log</string>
     <string name="clearLocoList">Efface list</string>
-    <string name="ClearConnList">Efface liste récente</string>
     <string name="prefEmerStopTitle">Affichage touche Arret Urgence?</string>
     <string name="prefEmerStopSummary">Affichage touche Arret Urgence dans barre de menu?</string>
     <string name="EStop">Urgence</string>
@@ -529,7 +527,6 @@
     <string name="toastThreadedAppErrorCreatingOutputStream">Erreur creation flux de sortie, IOException: %1$s</string>
     <string name="toastThreadedAppErrorSleepingThread">Erreur attente de flux, InterruptedException: %1$s</string>
     <string name="toastThreadedAppNotWIFI">Utilisation réseau %1$s , pas de WIFI.\nVérifier vos paramètres WiFi.\n</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">Impossible de trouver le serveur sans connexion WiFi</string>
     <string name="statusThreadedAppServerDiscoveryNoLocationService">Le parametre \'utiliser localisation\' est inactif</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">Pas d autorisation d acces a la localisation</string>
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">Le nom du reseau est inacessible, la decouverte du serveur est limitee</string>
@@ -838,7 +835,6 @@
     <string name="importServerAutoDialogNeutralButton">Partiel</string>
 
 <!--    <string name="toastThrottleImportServerAutoSucceeded">Import automatique des préférences depuis le Web Serveur JMRI réussi</string>-->
-    <string name="toastPreferencesImportServerManualFailed">import des préférences depuis le serveur EN ECHEC! vérifier si le fichier est correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Import des préférences depuis serveur REUSSI (%1$s)</string>
     <string name="introMenu">Intro/Assistant Setup</string>
     <string name="FilterRosterListDownloadLabel">Télécharger</string>
@@ -1081,7 +1077,6 @@
     <string name="shareFile">Partage fichier: %s</string>
     <string name="sharedFileProcessing">Traitement en cours des fichiers partagés</string>
     <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">Traitement de %d fichier(s) partagé(s)...</string>
-    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">Reçu %d fichier(s) partagé(s)...</string>
     <string name="sharedFileSavingFile">Préférences d\'effectif</string>
     <string name="sharedFileSavingCount">Enregistrement %d fichier(s)</string>
     <string name="sharedFileSavedCount">Enregistré %d fichier(s)</string>
@@ -1144,10 +1139,8 @@
     <string name="dccexRouteHandoff">Passer</string>
     <string name="dccexRouteSet">Poser</string>
     <string name="dccexSendCommandButtonLabel">Send</string>
-    <string name="witActionTypeLabel">Action</string>
     <string name="witWriteAddressLabel">Adresse DCC</string>
     <string name="witPomWarning">"Remarques:\n- Ceci ne fonctionnera pas avec certains systèmes DCC.\n- Le changement d adresse de la locomotive sera bloqué - CV 1, 17 &amp; 18 et le bit 5 du CV 29.\n\nUtiliser avec prudence."</string>
-    <string name="witPomMaxValueWarning">La valeur \'%1$s\' depassee la valeur maxi supportee (\'%2$s\')</string>
     <string name="dccexCommonCvsLabel">CVs NMRA</string>
     <string name="dccexCommonCommandsLabel">Commandes CMD courantes</string>
     <string name="toastDangerousCVsWarning">L\'écriture dans les CV 1, 17, 18 et 29 à l\'aide de la programmation sur le Main (PoM) n\'est pas recommandée.\nÀ utiliser avec une extrême prudence !</string>
@@ -1206,7 +1199,6 @@
     <string name="prefTurnoutsShowThrowCloseButtonsSummary">Toujours afficher les boutons dévié/non dévié pour les aiguillages et pas basculer</string>
     <string name="dccexJoinTrackButtonLabel">Rejoindre</string>
 
-    <string name="air_reservoir">Reservoir d air</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeTitle">Type de décodeur pour le freinage</string>
     <string name="prefDisplaySemiRealisticThrottleDecoderBrakeTypeSummary">Activation des fonctions de freinage sur le décodeur.</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeLowFunctionEsuTitle">Touche de fonction pour freinage leger</string>
@@ -1271,7 +1263,6 @@
     <string name="dccexCvBitCalculatorConfirmButtonLabel">Confirmer</string>
     <string name="dccexAutomationTitle">Adresse loco pour automatisation EXRAIL</string>
     <string name="dccexButtonCommandLine">Ligne de commande</string>
-    <string name="autoServerConnectTitle">Connexion automatique au serveur</string>
     <string name="autoServerConnectLabel">Nom du serveur</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Accéder au serveur affiché</string>
     <string name="prefAutoServerNamedConnectSummary">Se connecter automatiquement à un serveur nommé et trouvé</string>
@@ -1316,7 +1307,6 @@
     <string name="prefDccexSwapThrowCloseTitle">DCC-EX inverser aiguilles Dévié/directes</string>
     <string name="prefDccexThrownLabelSummary">Libellé personnalisé quand l aiguille est  déviée .  Laisser à blanc pour défaut (voie directe). Reconnexion nécessaire.</string>
     <string name="prefDccexEmergencyStopPauseResumeTitle">DCC-EX - utiliser EStop Pause/resume</string>
-    <string name="prefRosterSummary">Options relatives à l inventaire (roster) depuis le serveur</string>
     <string name="prefRosterTitle">Préférences d inventaires (roster)</string>
     <string name="prefConnectAdvancedPreferencesTitle">Préférences avancée pour connexion</string>
     <string name="prefActionBarShowDccexConsistButtonSummary">Afficher le bouton dans la barre d action pour ouvrir l écran de gestion par la centrale DCC de l Unité Multiple</string>

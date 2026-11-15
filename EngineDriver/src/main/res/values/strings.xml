@@ -102,9 +102,7 @@
     <string name="stop">Stop</string>
     <string name="forward">Forward</string>
     <string name="reverse">Reverse</string>
-    <string name="neutral">Neutral</string>
     <string name="brake">Brake</string>
-    <string name="air_reservoir">Air Reservoir</string>
     <string name="airReservoirShort">Air Res %d%%</string>
     <string name="airLineShort">Air Line %d%%</string>
     <string name="load">Load</string>
@@ -210,7 +208,6 @@
     <string name="toastNoAppToShare">No app found to share the file</string>
     <string name="sharedFileProcessing">Processing shared file(s)...</string>
     <string name="sharedFileProcessingCount" tools:ignore="PluralsCandidate">Processing %d shared file(s)...</string>
-    <string name="sharedFileReceivedCount" tools:ignore="PluralsCandidate">Received %d shared file(s)...</string>
     <string name="sharedFileSavingFile">Saving file(s)...</string>
     <!--    <string name="sharedFileSaved">File Saved: %s</string>-->
     <string name="sharedFileSavingCount" tools:ignore="PluralsCandidate">Saving %d file(s)</string>
@@ -586,7 +583,6 @@
     <string name="prefScreenBrightnessDimDefaultValue" translatable="false">5</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefRosterTitle">Roster Preferences</string>
-    <string name="prefRosterSummary">Options related to the Roster from the server</string>
 
     <string name="deviceSoundsMenu">Loco Sounds</string>
     <string name="deviceSoundsVolumeNotice">The In Phone Loco Sounds feature uses the \'Ring\' system volume settings not the \'Media\' volume.</string>
@@ -597,7 +593,6 @@
 
     <string name="logViewer">View Log</string>
     <string name="clearLocoList">Clear List</string>
-    <string name="ClearConnList">Clear Recent List</string>
     <!--    <string name="clearConsistsList">Clear Consists List</string>-->
     <string name="prefEmerStopTitle">Emergency Stop button?</string>
     <string name="prefEmerStopSummary">Show loco Emergency Stop button in action bar</string>
@@ -989,7 +984,6 @@
     <string name="toastThreadedAppNotWIFI">Using %1$s network, not WIFI.\nCheck your WiFi settings and Preferences.\n</string>
 
     <string name="statusThreadedAppNotconnectedToWifi">Not connected to WiFi</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">Server Discovery is not possible without a WiFi connection!</string>
     <string name="statusThreadedAppNoLocationService">Can\'t access SSID</string>
     <string name="statusThreadedAppServerDiscoveryNoLocationService">\'Use Location\' Android system setting is disabled.</string>
     <string name="statusThreadedAppServerDiscoveryAccessFineLocationNotGranted">\'ACCESS_FINE_LOCATION\' permission not granted.</string>
@@ -1025,7 +1019,6 @@
     <string name="toastPreferencesOutsideLimits">Value entered is outside the limits (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesNotNumeric">Value entered is not numeric (%1$s-%2$s). Reset to %3$s.</string>
     <string name="toastPreferencesResetSucceeded">Preferences Reset to defaults!</string>
-    <string name="toastPreferencesImportServerManualFailed">Preferences Import from Server failed! Check the file is correct. (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">Preferences Import from Server succeeded. (%1$s)</string>
     <!--    <string name="toastPreferencesImportSucceeded">Preferences Import from file succeeded.</string>-->
     <string name="toastPreferencesThemeChangeSucceeded">Theme Change succeeded.</string>
@@ -1719,7 +1712,6 @@
 
     <string name="dccexAutomationTitle">Loco Address for the EXRAIL Automation</string>
 
-    <string name="autoServerConnectTitle">Auto Server Connect</string>
     <string name="autoServerConnectLabel">Server name</string>
     <string name="autoServerConnectCurrentServerButtonLabel">Get Current Server</string>
     <string name="prefAutoServerNamedConnectSummary">Connect automatically to a \'named\' server if discovered</string>
@@ -1737,10 +1729,8 @@
     <string name="advancedConsistToolRemoveButtonLabel">Remove</string>
     <string name="advancedConsistToolButtonLabel">Advanced Consists</string>
 
-    <string name="witActionTypeLabel">Action</string>
     <string name="witWriteAddressLabel">DCC Address</string>
     <string name="witPomWarning">Notes: - This will not work on some DCC systems. - Loco Address change is prevented - CVs 1, 17 &amp; 18 and bit 5 of CV 29.           Use with Caution.</string>
-    <string name="witPomMaxValueWarning">Value \'%1$s\' exceeds max supported (\'%2$s\')</string>
 
     <string name="dccexCommonCvsLabel">NMRA CVs</string>
     <string name="dccexCommonCommandsLabel">Common CMDs</string>
@@ -1763,8 +1753,6 @@
     <string name="dccexHeadingCvProgrammerProgTrack">DCC-EX - Programming Track (Service mode)</string>
     <string name="dccexHeadingCvProgrammerPoM">DCC-EX - Programming on Main (Operation mode)</string>
     <string name="dccexHeadingTrackManager">DCC-EX - Track/District Manager</string>
-
-    <string name="witButtonCvProgrammerPoM" translatable="false">CVs PoM</string>
 
     <string name="dccexRequestLocoIdFailed">Request Loco Id Failed</string>
 
@@ -1799,8 +1787,6 @@
     <string name="rosterDecoderInfoDecoderComment">Decoder Comment:</string>
     <string name="rosterDecoderInfoRosterEntry">Roster Entry:</string>
 
-    <string name="minus">-</string>
-    <string name="plus">+</string>
     <string name="minus1">-1</string>
     <string name="plus1">+1</string>
     <string name="minus10">-10</string>

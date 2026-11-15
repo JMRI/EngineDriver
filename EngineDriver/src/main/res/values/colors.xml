@@ -25,7 +25,6 @@
     <color name="grey_dark">#2F2F2F</color>
     <color name="grey_mid_dark">#454545</color>
     <color name="grey">#ff888888</color>
-    <color name="grey_mid_light">#a7a7a7</color>
     <color name="grey_light">#a6a6a6</color>
     <color name="grey_very_light">#bababa</color>
     <color name="grey_ultra_light">#dadada</color>
@@ -68,25 +67,19 @@
 
     <!-- Original Theme -->
 
-    <color name="buttonCommonFillGradiantVeryLight_original">#FFFFFF</color>
     <color name="buttonCommonFillGradiantLight_original">#C3C3C3</color>
     <color name="buttonCommonFillGradiantCenter_original">#9B9B9B</color>
     <color name="buttonCommonFillGradiantDark_original">#616060</color>
     <color name="buttonCommonFillGradiantVeryDark_original">#3C3C3C</color>
     <color name="buttonCommonFillGradiantUltraDark_original">#2E2E2E</color>
-    <color name="buttonCommonFillGradiantUltraUltraDark_original">#1A1A1A</color>
 
     <color name="buttonCommonSelectedStrokeLight_original">#D3D1D1</color>
     <color name="buttonCommonSelectedStrokeMid_original">#878787</color>
     <color name="buttonCommonSelectedStrokeDark_original">#3C3C3C</color>
-    <color name="buttonCommonOutlineStroke_original">#878787</color>
 
     <color name="buttonCommonDisabledStroke_original">#48878787</color>
     <color name="buttonCommonDisabledFill_original">#48878787</color>
 
-    <color name="buttonStopSelectedStrokeLight_original">#AEAEAE</color>
-    <color name="buttonStopSelectedStrokeDark_original">#3C3C3C</color>
-    <color name="buttonStopDisabledStroke_original">#E3AEB0</color>
     <color name="buttonStopDisabledFill_original">#E3AEB0</color>
     <color name="buttonStopSelectedFill_original">#ff0000</color>
     <color name="buttonStopSelectedOutlineStroke_original">#FA3F3F</color>
@@ -138,12 +131,8 @@
     <color name="buttonStopSelectedStroke_black">#d50000</color>
     <color name="buttonStopInsideStroke_black">#ff000000</color>
 
-    <color name="spinner_background_black">#252525</color>
-    <color name="spinner_divider_black">#4A4A4A</color>
-
     <!-- Outline Theme -->
 
-    <color name="buttonLocoSelectText_outline">#ff00b2e1</color>
     <color name="buttonFill_outline">#00000000</color>
     <color name="buttonStroke_outline">#d9d9d9</color>
     <color name="buttonDisabledFill_outline">#00000000</color>
@@ -170,62 +159,16 @@
     <color name="buttonFnSelectedStroke_outline">#ff00b2e1</color>
     <color name="buttonFnSelectedInsideStroke_outline">#ff00b2e1</color>
 
-    <color name="spinner_background_outline">#252525</color>
-    <color name="spinner_divider_outline">#4A4A4A</color>
-
     <!-- Ultra (Dark) Theme -->
 
-    <color name="buttonCommonFillGradiantUltraLight_ultra">#757575</color>
-    <color name="buttonCommonFillGradiantVeryLight_ultra">#5b5b5b</color>
-    <color name="buttonCommonFillGradiantLight_ultra">#3A3A3A</color>
-    <color name="buttonCommonFillGradiantCenter_ultra">#FF2a2a2a</color>
-    <color name="buttonCommonFillGradiantDark_ultra">#1D1D1D</color>
-    <color name="buttonCommonFillGradiantVeryDark_ultra">#FF181818</color>
-    <color name="buttonCommonFillGradiantUltraDark_ultra">#000000</color>
-
-    <color name="ultra_grey_ultra_dark">#000000</color>
-    <color name="ultra_grey_very_dark">#FF181818</color>
     <color name="ultra_grey_dark">#1D1D1D</color>
     <color name="ultra_grey">#FF2a2a2a</color>
-    <color name="ultra_grey_light">#3A3A3A</color>
-    <color name="ultra_grey_very_light">#5b5b5b</color>
-    <color name="ultra_grey_ultra_light">#757575</color>
 
-    <color name="buttonCommonSelectedStroke_ultra">#404040</color>
-
-    <color name="buttonStopDisabledStroke_ultra">#FF2d2d2d</color>
-    <color name="buttonStopDisabledFill_ultra">#00000000</color>
-    <color name="buttonStopSelectedFill_ultra">#FF2d2d2d</color>
-    <color name="buttonStopSelectedText_ultra">#acc20000</color>
-    <color name="buttonStopSelectedInsideStroke_ultra">#46c20000</color>
-
-    <color name="buttonText_ultra">#d9d9d9</color>
-    <color name="buttonLocoSelectText_ultra">#ff00b2e1</color>
-    <color name="buttonDisabledFill_ultra">#00000000</color>
-    <color name="buttonDisabledStroke_ultra">#FF2d2d2d</color>
-    <color name="buttonSelectedText_ultra">#ff00b2e1</color>
-    <color name="buttonSelectedFill_ultra">#FF2d2d2d</color>
-    <color name="buttonSelectedInsideStroke_ultra">#7f0074b3</color>
-    <color name="buttonActivatedHoveredInsideStroke_ultra">#7fffa000</color>
-    <color name="buttonActivatedHoveredInside2Stroke_ultra">#7fffea00</color>
-
-    <color name="buttonFnDisabledFill_ultra">#00000000</color>
-    <color name="buttonFnDisabledStroke_ultra">#FF262626</color>
-    <color name="buttonFnSelectedText_ultra">#ff00b2e1</color>
-    <color name="buttonFnSelectedFill_ultra">#FF262626</color>
-    <color name="buttonFnSelectedInsideStroke_ultra">#7f0074b3</color>
-
-    <color name="spinner_background_ultra">#131313</color>
     <color name="spinner_divider_ultra">#4A4A4A</color>
 
     <!-- Intro Colours - copied from the old colourful theme -->
 
-    <color name="intro_divider">#ffad02</color>
-
     <color name="intro_primary_text">@color/solidBlack</color>
-
-    <color name="heading_colorful">#ffad02</color>
-    <color name="shadow_colorful">#d1ffffff</color>
 
     <color name="windowBackground_colorful">#fffaf6</color>
 
@@ -237,7 +180,6 @@
     <color name="buttonFillGradiantUltraDark_colorful">#954100</color>
     <color name="buttonFillGradiantUltraUltraDark_colorful">#5B2801</color>
 
-    <color name="buttonSelectedStroke_colorful">#404040</color>
     <color name="buttonText_colorful">#0A0A0A</color>
     <color name="buttonTextShadow_colorful">#FFFFFFFF</color>
     <color name="buttonDisabledFill_colorful">#faefe7</color>
@@ -247,12 +189,6 @@
     <color name="buttonActivatedHoveredInside2Stroke_colorful">#f200ff</color>
 
     <color name="buttonFnSelectedText_colorful">#000000</color>
-
-    <color name="background_highlight_black">#994E4E4E</color>
-    <color name="background_highlight_secondary_black">#75363636</color>
-    <color name="background_highlight_tertiary_black">#7F363636</color>
-
-    <color name="background_popup_black">#a7a7a7</color>
 
     <!-- Neon blue colours -->
 
@@ -266,13 +202,10 @@
     <color name="neon_blue_ultra_light">#9DA3FF</color>
     <color name="neon_red">#FF0000</color>
     <color name="neon_red_light">#FF3636</color>
-    <color name="neon_red_very_light">#FF5959</color>
 
     <color name="neon_blue_transparent_75">#BF0000FF</color>
     <color name="neon_blue_transparent_50">#800000FF</color>
     <color name="neon_blue_transparent_25">#400000FF</color>
-
-    <color name="divider_neon">@color/neon_blue</color>
 
 <!--    <color name="buttonCommonFillGradiantVeryLight_neon">@color/neon_blue_very_light</color>-->
 <!--    <color name="buttonCommonFillGradiantLight_neon">@color/neon_blue</color>-->
@@ -316,7 +249,6 @@
     <color name="neon_yellow_very_dark">#616100</color>
     <color name="neon_yellow_dark">#9E9E00</color>
     <color name="neon_yellow">#FFFF00</color>
-    <color name="neon_yellow_light">#FFFF55</color>
 
     <color name="neon_green_mega_dark">#081200</color>
     <color name="neon_green_ultra_dark">#0E1F00</color>
@@ -325,7 +257,6 @@
     <color name="neon_green">#4F9703</color>
     <color name="neon_green_light">#74bb35</color>
     <color name="neon_green_very_light">#89d04b</color>
-    <color name="neon_green_ultra_light">#a3eb64</color>
 
     <color name="neon_green_transparent_75">#BF4F9703</color>
     <color name="neon_green_transparent_50">#804F9703</color>
@@ -333,10 +264,8 @@
 
     <!-- muted colours -->
 
-    <color name="muted_yellow_very_dark">#9a7400</color>
     <color name="muted_yellow_dark">#d5a600</color>
     <color name="muted_yellow">#ffcc01</color>
-    <color name="muted_yellow_light">#ffeb3a</color>
 <!--    <color name="muted_yellow_bright">#FFF303</color>-->
 
     <color name="muted_red">#A63535</color>
@@ -351,30 +280,20 @@
     <color name="muted_light">#ede3d2</color>
     <color name="muted_light_50">#80ede3d2</color>
     <color name="muted_very_light">#f4eee2</color>
-    <color name="muted_ultra_light">#fbf7f0</color>
-
-    <color name="muted_transparent_75">#BFeddcd2</color>
-    <color name="muted_transparent_50">#80eddcd2</color>
-    <color name="muted_transparent_25">#40eddcd2</color>
 
     <color name="muted_sepia_very_light">#a97444</color>
     <color name="muted_sepia_light">#865526</color>
     <color name="muted_sepia">#704214</color>
     <color name="muted_sepia_dark">#643809</color>
-    <color name="muted_sepia_very_dark">#592e00</color>
 
     <color name="muted_sepia_transparent_75">#BF704214</color>
     <color name="muted_sepia_transparent_50">#80704214</color>
     <color name="muted_sepia_transparent_25">#40704214</color>
 
     <color name="muted_green_very_dark">#424237</color>
-    <color name="muted_green_dark">#7c7c68</color>
     <color name="muted_green">#a5a58d</color>
     <color name="muted_green_light">#b7b7a4</color>
     <color name="muted_green_very_light">#b8b8ae</color>
-
-    <color name="muted_green_very_dark_50">#80424237</color>
-    <color name="muted_green_very_dark_25">#40424237</color>
 
     <color name="muted_blue_very_dark">#3b455c</color>
     <color name="muted_blue_dark">#7e88a1</color>
@@ -382,21 +301,12 @@
     <color name="muted_blue_light">#b9c3df</color>
     <color name="muted_blue_very_light">#c9d4f0</color>
 
-    <color name="muted_blue_light_50">#80b9c3df</color>
-
-    <color name="muted_cream_ultra_dark">#FF4C02</color>
     <color name="muted_cream_very_dark">#FB621F</color>
-    <color name="muted_cream_dark">#FF9369</color>
-    <color name="muted_cream">#FFC6B0</color>
-    <color name="muted_cream_light">#FFDCCF</color>
-    <color name="muted_cream_very_light">#FDF4F2</color>
 
     <color name="muted_grey_very_dark">#232323</color>
-    <color name="muted_grey_dark">#838383</color>
     <color name="muted_grey">#A9A9A9</color>
     <color name="muted_grey_light">#D1D1D1</color>
     <color name="muted_grey_very_light">#e6e6e6</color>
-    <color name="muted_grey_50">#80A9A9A9</color>
     <color name="muted_grey_light_50">#80D1D1D1</color>
 
     <color name="muted_mauve_very_dark">#4d3a3a</color>
@@ -405,25 +315,15 @@
     <color name="muted_mauve_light">#e7cfcf</color>
     <color name="muted_mauve_very_light">#fce3e3</color>
 
-    <color name="muted_mauve_very_dark_50">#804d3a3a</color>
     <color name="muted_mauve_very_dark_25">#404d3a3a</color>
 
     <!-- new_colorful colours -->
-
-    <color name="colorful_grey_mega_dark">#242424</color>
-    <color name="colorful_grey_ultra_dark">#424242</color>
-    <color name="colorful_grey_very_dark">#747474</color>
-    <color name="colorful_grey_dark">#747474</color>
-    <color name="colorful_grey">#747474</color>
-    <color name="colorful_grey_light">#DBDBDB</color>
-    <color name="colorful_grey_very_light">#F4F4F4</color>
 
     <color name="colorful_yellow_mega_dark">#492702</color>
     <color name="colorful_yellow_ultra_dark">#814500</color>
     <color name="colorful_yellow_very_dark">#E98713</color>
     <color name="colorful_yellow_dark">#f5971d</color>
     <color name="colorful_yellow">#ffad02</color>
-    <color name="colorful_yellow_light">#ffeb3a</color>
     <color name="colorful_yellow_very_light">#FFF175</color>
     <color name="colorful_yellow_ultra_light">#FFF7B0</color>
 
@@ -433,11 +333,6 @@
     <color name="colorful_50">#80FAD6A7</color>
     <color name="colorful_light">#FDECD5</color>
     <color name="colorful_light_50">#80FDECD5</color>
-    <color name="colorful_very_light">#FFFFFF</color>
-
-    <color name="colorful_transparent_75">#BFFAD6A7</color>
-    <color name="colorful_transparent_50">#80FAD6A7</color>
-    <color name="colorful_transparent_25">#40FAD6A7</color>
 
     <color name="colorful_red_ultra_dark">#3E0704</color>
     <color name="colorful_red_very_dark">#5F0B06</color>
@@ -455,19 +350,13 @@
     <color name="colorful_tan_very_light">#f1cea1</color>
     <color name="colorful_tan_ultra_light">#F4E6D4</color>
 
-    <color name="colorful_tan_ultra_dark_50">#805B2801</color>
     <color name="colorful_tan_ultra_dark_25">#405B2801</color>
 
-    <color name="colorful_tan_50">#80f5971d</color>
-    <color name="colorful_tan_light_50">#80f2b465</color>
-
-    <color name="colorful_blue_ultra_dark">#00263A</color>
     <color name="colorful_blue_very_dark">#013C5D</color>
     <color name="colorful_blue_dark">#026AA8</color>
     <color name="colorful_blue">#1ca0ef</color>
     <color name="colorful_blue_light">#71c2f2</color>
     <color name="colorful_blue_very_light">#a1d3f1</color>
-    <color name="colorful_blue_ultra_light">#C6E3F4</color>
 
     <color name="colorful_blue_transparent_75">#BF1ca0ef</color>
     <color name="colorful_blue_transparent_50">#801ca0ef</color>
@@ -476,11 +365,6 @@
     <color name="colorful_deep_blue_very_dark">#000012</color>
     <color name="colorful_deep_blue_dark">#00004f</color>
     <color name="colorful_deep_blue">#0000ff</color>
-    <color name="colorful_deep_blue_light">#4b27ff</color>
-    <color name="colorful_deep_blue_very_light">#a46aff</color>
-
-    <color name="colorful_mauve_dark">#8c00ff</color>
-    <color name="colorful_mauve">#f200ff</color>
 
     <color name="colorful_cyan_ultra_dark">#062A1F</color>
     <color name="colorful_cyan_very_dark">#0B4937</color>
@@ -488,11 +372,9 @@
     <color name="colorful_cyan">#3ad7ac</color>
     <color name="colorful_cyan_light">#8edac6</color>
     <color name="colorful_cyan_very_light">#c3d9d3</color>
-    <color name="colorful_cyan_ultra_light">#E2EFEB</color>
 
     <color name="colorful_green_dark">#1A2E00</color>
     <color name="colorful_green">#FF2F5100</color>
-    <color name="colorful_green_light">#FFB7FFA5</color>
 
     <color name="colorful_daffodil_dark">#473F00</color>
     <color name="colorful_daffodil">#9D8F02</color>
@@ -501,25 +383,13 @@
     <color name="colorful_aqua_very_dark">#002529</color>
     <color name="colorful_aqua_dark">#FF00343A</color>
     <color name="colorful_aqua">#00aabc</color>
-    <color name="colorful_aqua_light">#FF00E6FF</color>
 
     <color name="colorful_dccex_dark">#00353d</color>
-    <color name="colorful_dccex_light">#00a3b9</color>
     <color name="colorful_dccex_very_light">#69e2f9</color>
 
-    <color name="colorful_pale_pink_very_dark">#ff66c7</color>
-    <color name="colorful_pale_pink_dark">#ff66c7</color>
-    <color name="colorful_pale_pink">#ffa0dc</color>
-    <color name="colorful_pale_pink_light">#ffc3e9</color>
-
-    <color name="colorful_lime_mega_dark">#081200</color>
     <color name="colorful_lime_ultra_dark">#0E1F00</color>
-    <color name="colorful_lime_very_dark">#193700</color>
-    <color name="colorful_lime_dark">#285600</color>
     <color name="colorful_lime">#4F9703</color>
     <color name="colorful_lime_light">#8CFB1D</color>
-    <color name="colorful_lime_very_light">#BEFB7F</color>
-    <color name="colorful_lime_ultra_light">#E1FFBC</color>
 
     <!-- new_ultra colours -->
 
@@ -531,15 +401,10 @@
     <color name="ultra_very_light">#5b5b5b</color>
     <color name="ultra_ultra_light">#757575</color>
 
-    <color name="ultra_red_dark">#46c20000</color>
     <color name="ultra_red">#acc20000</color>
-    <color name="ultra_red_light">#acc20000</color>
 
-    <color name="ultra_yellow_dark">#7fffa000</color>
     <color name="ultra_yellow">#7fffea00</color>
-    <color name="ultra_yellow_light">#ffad02</color>
 
-    <color name="ultra_blue_dark">#7f0074b3</color>
     <color name="ultra_blue">#ff00b2e1</color>
     <color name="ultra_blue_light">#24bbfe</color>
 
@@ -564,17 +429,12 @@
     <color name="bronze_dark">#201711</color>
     <color name="bronze">#251c17</color>
     <color name="bronze_light">#332a25</color>
-    <color name="bronze_very_light">#3b312c</color>
     <color name="bronze_ultra_light">#433933</color>
 
-    <color name="bronze_mega_dark_50">#80140500</color>
-    <color name="bronze_ultra_dark_50">#80180c03</color>
     <color name="bronze_very_dark_50">#801b1109</color>
     <color name="bronze_dark_50">#80201711</color>
     <color name="bronze_50">#80251c17</color>
     <color name="bronze_light_50">#80332a25</color>
-    <color name="bronze_very_light_50">#803b312c</color>
-    <color name="bronze_ultra_light_50">#80433933</color>
 
     <color name="bronze_gold_mega_dark">#593601</color>
     <color name="bronze_gold_ultra_dark">#724c18</color>
@@ -585,41 +445,17 @@
     <color name="bronze_gold_very_light">#ebc775</color>
     <color name="bronze_gold_ultra_light">#e2ca98</color>
 
-    <color name="bronze_rose_gold_mega_dark">#71433a</color>
     <color name="bronze_rose_gold_ultra_dark">#7f5147</color>
     <color name="bronze_rose_gold_very_dark">#95645a</color>
     <color name="bronze_rose_gold_dark">#a9766c</color>
     <color name="bronze_rose_gold">#bf8b80</color>
     <color name="bronze_rose_gold_light">#ca968a</color>
-    <color name="bronze_rose_gold_very_light">#dfa99d</color>
-    <color name="bronze_rose_gold_ultra_light">#f2bbaf</color>
 
-    <color name="bronze_gold_mega_dark_75">#BF593601</color>
-    <color name="bronze_gold_ultra_dark_75">#BF724c18</color>
-    <color name="bronze_gold_very_dark_75">#BF966123</color>
-    <color name="bronze_gold_dark_75">#BFa87328</color>
     <color name="bronze_gold_75">#BFc18f3a</color>
-    <color name="bronze_gold_light_75">#BFdaac54</color>
-    <color name="bronze_gold_very_light_75">#BFebc775</color>
-    <color name="bronze_gold_ultra_light_75">#BFe2ca98</color>
 
-    <color name="bronze_gold_mega_dark_50">#80593601</color>
-    <color name="bronze_gold_ultra_dark_50">#80724c18</color>
-    <color name="bronze_gold_very_dark_50">#80966123</color>
-    <color name="bronze_gold_dark_50">#80a87328</color>
     <color name="bronze_gold_50">#80c18f3a</color>
-    <color name="bronze_gold_light_50">#80daac54</color>
-    <color name="bronze_gold_very_light_50">#80ebc775</color>
-    <color name="bronze_gold_ultra_light_50">#80e2ca98</color>
 
-    <color name="bronze_gold_mega_dark_25">#40593601</color>
-    <color name="bronze_gold_ultra_dark_25">#40724c18</color>
-    <color name="bronze_gold_very_dark_25">#40966123</color>
-    <color name="bronze_gold_dark_25">#40a87328</color>
     <color name="bronze_gold_25">#40c18f3a</color>
-    <color name="bronze_gold_light_25">#40daac54</color>
-    <color name="bronze_gold_very_light_25">#40ebc775</color>
-    <color name="bronze_gold_ultra_light_25">#40e2ca98</color>
 
     <color name="gold">#fdd408</color>
 

@@ -339,19 +339,6 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- High Contrast Theme -->
 
-  <style name="dialogTitle_black">
-    <item name="android:textColor">@color/solidWhite</item>
-    <item name="android:textAppearance">@style/dialogTitleText_black</item>
-    <item name="android:background">@color/grey_very_dark</item>
-    <item name="android:textSize">22sp</item>
-  </style>
-
-  <style name="dialogTitleText_black">
-    <item name="android:textSize">22sp</item>
-    <item name="android:textStyle">bold</item>
-    <item name="android:textColor">@color/solidWhite</item>
-  </style>
-
 <!--  <style name="dialogButtonBar_black">-->
 <!--    <item name="android:background">@color/buttonDisabledFill_black</item>-->
 <!--  </style>-->
@@ -1282,18 +1269,4 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <style name="WindowAnimations">
-    <item name="android:activityOpenEnterAnimation">
-      @anim/fade_out</item>
-    <item name="android:activityOpenExitAnimation">
-      @anim/fade_out</item>
-    <item name="android:activityCloseEnterAnimation">
-      @anim/fade_in</item>
-    <item name="android:activityCloseExitAnimation">
-      @anim/fade_in</item>
-  </style>
-    <style name="MyDialogTheme" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowMinWidthMajor">80%</item>
-        <item name="android:windowMinWidthMinor">90%</item>
-    </style>
 </resources>

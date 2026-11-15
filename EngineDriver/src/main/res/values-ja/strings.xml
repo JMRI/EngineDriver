@@ -49,7 +49,6 @@
     <string name="brake">ブレーキ</string>
     <string name="ca_recent_conn_notice">最近の接続は利用できません - SD カードが見つかりません。</string>
     <string name="cancel">キャンセル</string>
-    <string name="ClearConnList">最近のリストをクリア</string>
     <string name="clearLocoList">リストをクリア</string>
     <string name="close_button">定位（直進）</string>
     <string name="connect_button">接続する</string>
@@ -119,7 +118,6 @@
     <string name="dccexSendCommandLabel">DCC-EX コマンド (「&lt;」と「&gt;」を除く)</string>
 
     <string name="dccexWriteCvValueLabel">値</string>
-    <string name="prefRosterSummary">サーバーからの名簿に関するオプション</string>
     <string name="deviceSoundsMenu">ロコサウンド</string>
     <string name="deviceSoundsMuteButton">ミュート</string>
     <string name="dialogConfirmClearTitle">リストをクリア</string>
@@ -348,7 +346,6 @@
 
 
     <string name="mrc_settings">MRC設定</string>
-    <string name="neutral">ニュートラル</string>
     <string name="no">いいえ</string>
     <string name="none">なし</string>
     <string name="toastWasInBackgroundTitle">Engine Driverはバックグラウンドで実行され続けるようには設計されておらず、システムによっていつでも強制終了される可能性があります。\\nどうしてもバックグラウンドで実行する必要がある場合は、「Androidシステム設定」→「アプリ」→「Engine Driver」→「アプリのバッテリー使用量」→「バックグラウンド使用を許可」を有効にしてください。</string>
@@ -984,7 +981,6 @@
     <string name="shareFile">ファイルを共有: %s</string>
     <string name="sharedFileProcessing" tools:ignore="TypographyEllipsis">共有ファイルを処理しています...</string>
     <string name="sharedFileProcessingCount" tools:ignore="TypographyEllipsis">%d 個の共有ファイルを処理しています...</string>
-    <string name="sharedFileReceivedCount" tools:ignore="TypographyEllipsis">%d 個の共有ファイルを受信しました...</string>
     <string name="sharedFileSavingCount">%d 個のファイルを保存しています</string>
     <string name="sharedFileSavedCount">%d 個のファイルを保存</string>
     <string name="sharedFileFailedToSaveCount">%d 個のファイルを保存できませんでした</string>
@@ -1023,7 +1019,6 @@
     <string name="statusThreadedAppServerDiscoverySsidUnavailable">ネットワーク名にアクセスできません。サーバー検出が制限される場合があります。</string>
     <string name="statusThreadedAppNotConnected">ネットワークに接続されていません。 WiFi設定を確認してください。再試行中</string>
     <string name="statusThreadedAppNotconnectedToWifi">WiFiに接続されていません</string>
-    <string name="statusThreadedAppServerDiscoveryNotPossible">WiFi 接続がなければサーバー検出はできません。</string>
     <string name="statusThreadedAppUnableToConnect">%3$s から %1$s:%2$s のサーバーに接続できません。再試行中</string>
     <string name="steal_text">アドレス %1$s を盗みますか?</string>
     <string name="steal_title">スチール</string>
@@ -1071,7 +1066,6 @@
     <string name="toastConnectFontSizeWarning">お使いのシステムフォントサイズが非常に大きいです！(%1$1.2f)\n一部の要素やテキストが画面に収まらない可能性があります。Androidのシステム設定を開き、フォントサイズを1.5未満に小さくすることをお勧めします。</string>
     <string name="toastPreferencesImportServerAutoSucceeded">サーバーからの自動設定のインポートが成功しました。 (%1$s)</string>
 
-    <string name="toastPreferencesImportServerManualFailed">サーバーからの環境設定のインポートに失敗しました。ファイルが正しいことを確認してください。 (%1$s)</string>
     <string name="toastPreferencesImportServerManualSucceeded">サーバーからの環境設定のインポートが成功しました。 (%1$s)</string>
 
 
@@ -1187,9 +1181,7 @@
     <string name="web">ウェブ</string>
 
     <string name="webViewButtonBar">Webビューボタン</string>
-    <string name="witActionTypeLabel">アクション</string>
     <string name="witHeadingCvProgrammerPoM">WiThrottle - メインでのプログラミング (動作モード)</string>
-    <string name="witPomMaxValueWarning">値 \'%1$s\' がサポートされている最大値 (\'%2$s\') を超えています</string>
     <string name="witPomWarning">注: \n- これは一部の DCC システムでは機能しません。 \n- ロコアドレスの変更は禁止されています - CV 1、17、および18 と CV 29 のビット 5。\n\n注意して使用してください。</string>
     <string name="witWriteAddressLabel">DCCアドレス</string>
     <string name="yes">はい</string>
@@ -1215,7 +1207,6 @@
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeMidValueEsuSummary">ESU - 中間ファンクション番号をアクティブにするブレーキのパーセンテージ</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuTitle">ESU の高ブレーキ値 (パーセント)</string>
     <string name="prefSemiRealisticThrottleDecoderBrakeTypeHighValueEsuSummary">ESU - 高ファンクション番号をアクティブにするブレーキのパーセンテージ</string>
-    <string name="air_reservoir">空気リザーバー</string>
     <string name="toastImportExportCouldNotParseAddress">アドレスを解析できませんでした\n%1$s</string>
     <string name="app_name_withrottle_cv_programmer">MAIN の履歴書プログラム</string>
     <string name="prefHideFunctionButtonsOfNonSelectedThrottleTitle">選択されていないスロットルのファンクションボタンを非表示にしますか?</string>
@@ -1270,7 +1261,6 @@
 
     <string name="dccexCvBitCalculatorConfirmButtonLabel">確認する</string>
     <string name="dccexAutomationTitle">EXRAIL Automatioの機関車アドレス</string>
-    <string name="autoServerConnectTitle">自動サーバー接続</string>
     <string name="autoServerConnectLabel">サーバー名</string>
     <string name="autoServerConnectCurrentServerButtonLabel">現在のサーバーを取得</string>
     <string name="prefAutoServerNamedConnectSummary">名前付きサーバーが検出された場合は自動的に接続します</string>
