@@ -2283,14 +2283,16 @@ public class ThrottleActivity extends AppCompatActivity implements
                 int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
 
                 boolean inDeadZone = false;
-                if ( (prefVolumeDeadZoneSize>0) && (currentSpeed==0) ) {
-                    volumeDeadZoneCurrentCount--;
-                    if (volumeDeadZoneCurrentCount > (prefVolumeDeadZoneSize*-1)) { // still in the dead zone
-                        inDeadZone = true;
-                        mainapp.volumeButtonAcceleration = 1;
+                if (mainapp.isSwitchingLayout) { // the dead zone is not relevant to the non-switching layouts
+                    if ((prefVolumeDeadZoneSize > 0) && (currentSpeed == 0)) {
+                        volumeDeadZoneCurrentCount--;
+                        if (volumeDeadZoneCurrentCount > (prefVolumeDeadZoneSize * -1)) { // still in the dead zone
+                            inDeadZone = true;
+                            mainapp.volumeButtonAcceleration = 1;
+                        }
+                    } else {
+                        volumeDeadZoneCurrentCount = 0;
                     }
-                } else {
-                    volumeDeadZoneCurrentCount = 0;
                 }
 
                 threaded_application.extendedLogging(activityName + ": decrementSpeed(): VOLUME: currentSpeed: " + currentSpeed+ " speedChangeAmount: " + speedChangeAmount + " newSpeed: "  + newSpeed + " volumeDeadZoneCurrentCount: " + volumeDeadZoneCurrentCount);
@@ -2384,15 +2386,19 @@ public class ThrottleActivity extends AppCompatActivity implements
                 int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
 
                 boolean inDeadZone = false;
-                if ( (prefVolumeDeadZoneSize>0) && (currentSpeed==0) ) {
-                    volumeDeadZoneCurrentCount++;
-                    if (volumeDeadZoneCurrentCount < prefVolumeDeadZoneSize) { // still in the dead zone
-                        inDeadZone = true;
-                        mainapp.volumeButtonAcceleration = 1;
+
+                if (mainapp.isSwitchingLayout) { // the dead zone is not relevant to the non-switching layouts
+                    if ( (prefVolumeDeadZoneSize>0) && (currentSpeed==0) ) {
+                        volumeDeadZoneCurrentCount++;
+                        if (volumeDeadZoneCurrentCount < prefVolumeDeadZoneSize) { // still in the dead zone
+                            inDeadZone = true;
+                            mainapp.volumeButtonAcceleration = 1;
+                        }
+                    } else {
+                        volumeDeadZoneCurrentCount = 0;
                     }
-                } else {
-                    volumeDeadZoneCurrentCount = 0;
                 }
+
 
                 threaded_application.extendedLogging(activityName + ": incrementSpeed(): VOLUME: currentSpeed: " + currentSpeed+ " speedChangeAmount: " + speedChangeAmount + " newSpeed: "  + newSpeed + " volumeDeadZoneCurrentCount: " + volumeDeadZoneCurrentCount);
 
@@ -5931,6 +5937,8 @@ public class ThrottleActivity extends AppCompatActivity implements
             mainapp.throttleSwitchAllowed = true;
             mainapp.displayThrottleSwitchMenuButton(overflowMenu);
         }, 6000);
+
+        mainapp.isSwitchingLayout = prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SWITCHING);
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.THROTTLE;

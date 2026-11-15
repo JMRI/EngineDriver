@@ -463,6 +463,8 @@ public class threaded_application extends Application {
 
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
 
+    public boolean isSwitchingLayout = false;
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // volume button - more relevant to the built in encoder on the Alps M30
 
