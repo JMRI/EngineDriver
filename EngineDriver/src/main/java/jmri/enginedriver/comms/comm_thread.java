@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 import java.net.Inet4Address;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.Locale;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -72,10 +74,20 @@ public class comm_thread extends Thread {
     static SocketUdp socketUdp;
     PhoneListener phone;
     static Heartbeat heart = new Heartbeat();
-    private static long lastSentMs = System.currentTimeMillis();
-    private static long lastQueuedMs = System.currentTimeMillis();
 
     protected static threaded_application mainapp;  // hold pointer to mainapp
+    private static comm_thread instance;            // for the static queue handling
+
+    private static final OutboundQueue outboundQueue = new OutboundQueue();
+    private static final Runnable outboundQueueDrainer = comm_thread::drainOutboundQueue;
+    private static boolean shutdownWhenQueueEmpty = false;          // only used on the comm thread
+    private static final long QUEUED_SHUTDOWN_TIMEOUT_MS = 3000L;   // longest wait for queued messages before shutdown
+    private static final Runnable queuedShutdownTimeout = () -> {
+        threaded_application.logging(activityName + ": queued shutdown: timed out with " + outboundQueue.size() + " message(s) unsent");
+        shutdownWhenQueueEmpty = false;
+        instance.shutdown(true);
+    };
+
     protected static SharedPreferences prefs;
 
     protected String LATCHING_DEFAULT;
@@ -92,6 +104,7 @@ public class comm_thread extends Thread {
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         mainapp = myApp;
         prefs = myPrefs;
+        instance = this;
 
         mainapp.prefUseDccexProtocol = prefs.getString("prefUseDccexProtocol", mainapp.getResources().getString(R.string.prefUseDccexProtocolDefaultValue));
         mainapp.prefAlwaysUseFunctionsFromServer = prefs.getBoolean("prefAlwaysUseFunctionsFromServer", mainapp.getResources().getBoolean(R.bool.prefAlwaysUseFunctionsFromServerDefaultValue));
@@ -144,7 +157,7 @@ public class comm_thread extends Thread {
                     String host_name = modifyHostName(resolvedServiceInfo.getServiceName(), appServiceType);
                     
                     String serverType = ""; 
-                    if (resolvedServiceInfo.getServiceName().toLowerCase().contains("jmri")) serverType = "JMRI";
+                    if (resolvedServiceInfo.getServiceName().toLowerCase(Locale.ROOT).contains("jmri")) serverType = "JMRI";
 
                     String key = ip_address + ":" + port;
                     mainapp.knownDccexServerIps.put(key, serverType);
@@ -263,7 +276,7 @@ public class comm_thread extends Thread {
             bundle.putString(alert_bundle_tag_type.SERVICE_TYPE, event.getInfo().getType());
             mainapp.alertActivitiesWithBundle(message_type.SERVICE_RESOLVED, bundle);
 
-            threaded_application.logging(activityName + ": " + String.format("serviceResolved(): %s(%s):%d -- %s",
+            threaded_application.logging(activityName + ": " + String.format(Locale.ROOT, "serviceResolved(): %s(%s):%d -- %s",
                     host_name, ip_address, port,
                     event.toString().replace(Objects.requireNonNull(System.getProperty("line.separator")), " ")));
 
@@ -351,7 +364,7 @@ public class comm_thread extends Thread {
                         }
                     } catch (Exception e) {
                         threaded_application.logging(activityName + ": startJmdns(): attempt " + attempts + " failed: " + e.getMessage());
-                        String errMsg = (e.getMessage() != null) ? e.getMessage().toUpperCase() : "";
+                        String errMsg = (e.getMessage() != null) ? e.getMessage().toUpperCase(Locale.ROOT) : "";
                         if (errMsg.contains("EADDRINUSE") || errMsg.contains("ADDRESS ALREADY IN USE")) {
                             if (attempts < 3) {
                                 threaded_application.logging(activityName + ": startJmdns(): port in use, will retry...");
@@ -632,6 +645,14 @@ public class comm_thread extends Thread {
 
     protected void shutdown(boolean fast) {
         threaded_application.logging(activityName + ": Shutdown()");
+
+        // discard anything still queued, so nothing is sent to (or reconnects to) the server after this
+        outboundQueue.clear();
+        shutdownWhenQueueEmpty = false;
+        if (mainapp.commBundleMessageHandler != null) {
+            mainapp.commBundleMessageHandler.removeCallbacks(outboundQueueDrainer);
+            mainapp.commBundleMessageHandler.removeCallbacks(queuedShutdownTimeout);
+        }
 
         if (mainapp.connectionType == connection_type.TCP) {
             if (socketWiT != null) {
@@ -921,8 +942,10 @@ public class comm_thread extends Thread {
     //
     // wifiSend(String msg)
     //
-    //send formatted msg to the socket
-    //  intermessage gap enforced by requeueing messages as needed
+    //queue a formatted msg to be sent to the socket
+    //  messages are sent in order, with at least wifi_send_interval between them;
+    //  timing-sensitive messages are sent ahead of the others without waiting for the interval
+    //  the socket is always written on the comm thread
     protected static void wifiSend(String msg) {
         threaded_application.extendedLogging(activityName + ": wifiSend(): message: '" + msg + "'");
         if (msg == null) { //exit if no message
@@ -942,40 +965,67 @@ public class comm_thread extends Thread {
             }
         }
 
-        long now = System.currentTimeMillis();
-        long lastGap = now - lastSentMs;
-
-        //send if sufficient gap between messages or msg is timingSensitive, requeue if not
-        if (lastGap >= threaded_application.wifi_send_interval || timingSensitive(msg)) {
-            //perform the 'send'
-            //noinspection UnnecessaryUnicodeEscape
-            threaded_application.logging(activityName + ": wifiSend(): " + (mainapp.isDccexProtocol() ? "DCC-EX" : "      ") + "            :<>: -->: " + msg.replaceAll("\n", "\u21B5") + " (" + lastGap + ")"); //replace newline with cr arrow
-            lastSentMs = now;
-            if (mainapp.connectionType == connection_type.TCP) {
-                socketWiT.Send(msg);
-            } else {
-                socketUdp.Send(msg);
-            }
-
-            if (threaded_application.dccexScreenIsOpen) { // only relevant to some DCC-EX commands that we want to see in the DCC-EC Screen.
-                Bundle bundle = new Bundle();
-                bundle.putString(alert_bundle_tag_type.COMMAND, msg);
-                mainapp.alertActivitiesWithBundle(message_type.DCCEX_COMMAND_ECHO, bundle);
-            }
+        if (timingSensitive(msg)) {
+            outboundQueue.addPriority(msg);
         } else {
-            //requeue this message
-            int nextGap = Math.max((int) (lastQueuedMs - now), 0) + (threaded_application.wifi_send_interval + 5); //extra 5 for processing
-            //noinspection UnnecessaryUnicodeEscape
-            threaded_application.logging(activityName + ": wifiSend(): requeue:" + msg.replaceAll("\n", "\u21B5") +
-                    ", lastGap=" + lastGap + ", nextGap=" + nextGap); //replace newline with cr arrow
+            outboundQueue.add(msg);
+        }
 
-            Bundle bundle = new Bundle();
-            bundle.putString(alert_bundle_tag_type.MESSAGE, msg);
-            mainapp.alertCommHandlerWithBundle(message_type.WIFI_SEND, nextGap, bundle);
-
-            lastQueuedMs = now + nextGap;
+        Handler handler = mainapp.commBundleMessageHandler;
+        if (Looper.myLooper() == handler.getLooper()) {
+            drainOutboundQueue();
+        } else {
+            handler.post(outboundQueueDrainer);
         }
     }  //end wifiSend()
+
+    // Send every queued message that may go now, then schedule the next send. Runs on the comm thread.
+    private static void drainOutboundQueue() {
+        Handler handler = mainapp.commBundleMessageHandler;
+        handler.removeCallbacks(outboundQueueDrainer);
+        long interval = threaded_application.wifi_send_interval;
+        String msg;
+        while ((msg = outboundQueue.poll(SystemClock.uptimeMillis(), interval)) != null) {
+            sendNow(msg);
+        }
+        long delay = outboundQueue.delayUntilNext(SystemClock.uptimeMillis(), interval);
+        if (delay >= 0) {
+            handler.postDelayed(outboundQueueDrainer, delay);
+        } else if (shutdownWhenQueueEmpty) {
+            shutdownWhenQueueEmpty = false;
+            handler.removeCallbacks(queuedShutdownTimeout);
+            instance.shutdown(true);
+        }
+    }
+
+    // write one message to the socket
+    private static void sendNow(String msg) {
+        //noinspection UnnecessaryUnicodeEscape
+        threaded_application.logging(activityName + ": wifiSend(): " + (mainapp.isDccexProtocol() ? "DCC-EX" : "      ") + "            :<>: -->: " + msg.replace("\n", "\u21B5")); //replace newline with cr arrow
+        if (mainapp.connectionType == connection_type.TCP) {
+            if (socketWiT != null) socketWiT.Send(msg);
+        } else {
+            if (socketUdp != null) socketUdp.Send(msg);
+        }
+
+        if (threaded_application.dccexScreenIsOpen) { // only relevant to some DCC-EX commands that we want to see in the DCC-EC Screen.
+            Bundle bundle = new Bundle();
+            bundle.putString(alert_bundle_tag_type.COMMAND, msg);
+            mainapp.alertActivitiesWithBundle(message_type.DCCEX_COMMAND_ECHO, bundle);
+        }
+    }
+
+    // Shut the connection down once the messages already queued (such as releases and the quit message) have been sent.
+    // Runs on the comm thread.
+    protected void shutdownAfterQueuedMessages() {
+        if (outboundQueue.isEmpty()) {
+            shutdown(true);
+        } else {
+            threaded_application.logging(activityName + ": shutdownAfterQueuedMessages(): waiting for " + outboundQueue.size() + " queued message(s)");
+            shutdownWhenQueueEmpty = true;
+            mainapp.commBundleMessageHandler.postDelayed(queuedShutdownTimeout, QUEUED_SHUTDOWN_TIMEOUT_MS);
+        }
+    }
 
     /* true indicates that message should NOT be requeued as the timing of this message
          is critical.

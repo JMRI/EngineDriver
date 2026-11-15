@@ -139,7 +139,7 @@ public class SendProcessorDccex {
         if (mainapp.getServerType().equals("IoTT")) {
             comm_thread.wifiSend("<U DISCONNECT>");  // special command to disconnect IoTT clients
         }
-        commThread.shutdown(true);
+        commThread.shutdownAfterQueuedMessages();
     }
 
     /* ******************************************************************************************** */
