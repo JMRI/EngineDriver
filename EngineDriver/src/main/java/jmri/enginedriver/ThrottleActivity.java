@@ -60,6 +60,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.ToneGenerator;
+import android.media.audiofx.Equalizer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -2284,8 +2285,10 @@ public class ThrottleActivity extends AppCompatActivity implements
                 boolean inDeadZone = false;
                 if ( (prefVolumeDeadZoneSize>0) && (currentSpeed==0) ) {
                     volumeDeadZoneCurrentCount--;
-                    if (volumeDeadZoneCurrentCount > (prefVolumeDeadZoneSize*-1)) // still in the dead zone
+                    if (volumeDeadZoneCurrentCount > (prefVolumeDeadZoneSize*-1)) { // still in the dead zone
                         inDeadZone = true;
+                        mainapp.volumeButtonAcceleration = 1;
+                    }
                 } else {
                     volumeDeadZoneCurrentCount = 0;
                 }
@@ -2296,7 +2299,7 @@ public class ThrottleActivity extends AppCompatActivity implements
                     if (newSpeed >= getMaxSpeed(whichThrottle)) {
                         gamepadBeep(beep_type.NAK);
                     } else if (newSpeed == 0) {
-                        gamepadBeep(beep_type.ACK);
+                        gamepadBeep(beep_type.ZERO_SPEED);
                     }
                 }
 
@@ -2383,8 +2386,10 @@ public class ThrottleActivity extends AppCompatActivity implements
                 boolean inDeadZone = false;
                 if ( (prefVolumeDeadZoneSize>0) && (currentSpeed==0) ) {
                     volumeDeadZoneCurrentCount++;
-                    if (volumeDeadZoneCurrentCount < prefVolumeDeadZoneSize) // still in the dead zone
+                    if (volumeDeadZoneCurrentCount < prefVolumeDeadZoneSize) { // still in the dead zone
                         inDeadZone = true;
+                        mainapp.volumeButtonAcceleration = 1;
+                    }
                 } else {
                     volumeDeadZoneCurrentCount = 0;
                 }
@@ -2395,7 +2400,7 @@ public class ThrottleActivity extends AppCompatActivity implements
                     if (newSpeed >= getMaxSpeed(whichThrottle)) {
                         gamepadBeep(beep_type.NAK);
                     } else if (newSpeed == 0) {
-                        gamepadBeep(beep_type.ACK);
+                        gamepadBeep(beep_type.ZERO_SPEED);
                     }
                 }
 

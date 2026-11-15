@@ -49,6 +49,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.ToneGenerator;
+import android.media.audiofx.Equalizer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -580,6 +581,7 @@ public class threaded_application extends Application {
 
     private ToneGenerator tg;
     protected MediaPlayer _mediaPlayer;
+    protected Equalizer _eq;
 
     public SoundPool soundPool;
 
