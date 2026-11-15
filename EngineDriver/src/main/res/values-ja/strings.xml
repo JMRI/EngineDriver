@@ -641,6 +641,10 @@
     <string name="prefGamepadTestEnforceTestingTitle">ゲームパッドテストを強制する</string>
     <string name="prefGamepadTestNowSummary">選択した設定が正しく機能することを確認できます。\nテスト ページは選択するとすぐに起動します。</string>
     <string name="prefGamepadTestNowTitle">今すぐゲームパッドの設定をテストしてください!</string>
+    <string name="prefVolumeAccelerationMaximumSummary">音量ボタンを素早く押した場合の速度ステップ乗数。ロータリーエンコーダーに最適です。</string>
+    <string name="prefVolumeAccelerationMaximumTitle">最大加速度</string>
+    <string name="prefVolumeAccelerationPeriodSummary">音量ボタンが素早く押されたかどうかを認識するまでの時間（ミリ秒）</string>
+    <string name="prefVolumeAccelerationPeriodTitle">加速期間</string>
     <string name="prefGamePadTitle">ゲームパッドの設定</string>
 
     <string name="prefGamePadTypeSummary">ゲームパッドを最もサポートするオプションを選択してください。</string>
@@ -940,6 +944,10 @@
     <string name="prefVerticalStopButtonMarginSummary">速度ボタンと画面の下部から停止ボタンのマージンをオフセットするピクセル数。</string>
     <string name="prefVerticalStopButtonMarginTitle">停止ボタンの垂直マージン</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">音量キーの速度コントロールは、最後にタッチしたスロットルに従います。</string>
+    <string name="prefVolumeDeadZoneSizeSummary">スロットルレイアウトを切り替える場合、速度が変化しないゼロに近いステップの数。</string>
+    <string name="prefVolumeKeysSoundsSummary">最大速度とゼロ速度で音を再生する</string>
+    <string name="prefVolumeKeysSoundsTitle">サウンドを再生</string>
+    <string name="prefVolumeDeadZoneSizeTitle">デッドゾーン</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">音量キーはタッチに追従します</string>
 
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">音量ボタンがスロットル速度をどれだけジャンプさせるか。</string>

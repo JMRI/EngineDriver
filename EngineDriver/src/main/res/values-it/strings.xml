@@ -203,6 +203,10 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Incremento Pulsante Velocità</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Quanto il pulsante volume aumenta la velocità.</string>
 
+    <string name="prefVolumeAccelerationMaximumSummary">Moltiplicatore Speed ​​Step se il pulsante del volume viene premuto rapidamente. Particolarmente utile per un encoder rotativo.</string>
+    <string name="prefVolumeAccelerationMaximumTitle">Accelerazione massima</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Periodo di tempo necessario per rilevare se il pulsante del volume viene premuto rapidamente (in millisecondi)</string>
+    <string name="prefVolumeAccelerationPeriodTitle">Periodo di accelerazione</string>
     <string name="prefGamePadTitle">Preferenze Gamepad\/USB</string>
     <string name="prefGamePadSummary">Scelta del tipo de Gamepad\/USB e altre opzioni</string>
     <string name="prefGamePadTypeTitle">Tipo di Gamepad\/USB</string>
@@ -397,6 +401,10 @@
 
     <string name="prefDisableVolumeKeysTitle">Disabilita tasti Volume</string>
     <string name="prefDisableVolumeKeysSummary">Disabilita i tasti fisici del telefono/tablet che controllerebbero la velocità. Nota: se selezionato, ignora \'Indicatore Addizionale Locomotiva Selezionata\'.</string>
+    <string name="prefVolumeDeadZoneSizeSummary">Per cambiare la configurazione dell\'acceleratore, il numero di passi vicino a zero non modificherà la velocità.</string>
+    <string name="prefVolumeKeysSoundsSummary">Riproduci i suoni alla velocità massima e a velocità zero</string>
+    <string name="prefVolumeKeysSoundsTitle">Riproduci suoni</string>
+    <string name="prefVolumeDeadZoneSizeTitle">Zona morta</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Tasti volume seguono Tocco</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Il controllo di velocità via Tasti Volume seguirà l\'ultimo controllore toccato.</string>
     <string name="prefSpeedButtonsRepeatTitle">Ritardo di ripetizione Pulsante di velocità.</string>

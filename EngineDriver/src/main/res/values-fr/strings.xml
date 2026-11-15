@@ -190,6 +190,10 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Nombre de crans par pression sur touches de vitesse</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Nombre de crans par pression sur touches de volume</string>
 
+    <string name="prefVolumeAccelerationMaximumSummary">Multiplicateur de vitesse par paliers si le bouton de volume est enfoncé rapidement. Particulièrement utile pour un encodeur rotatif.</string>
+    <string name="prefVolumeAccelerationMaximumTitle">Accélération maximale</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Période de détection d\'une pression rapide sur le bouton de volume (en millisecondes)</string>
+    <string name="prefVolumeAccelerationPeriodTitle">Période d\'accélération</string>
     <string name="prefGamePadTitle">Préférences Gamepad\/USB</string>
     <string name="prefGamePadSummary">Choix du type de Gamepad\/USB et autres options</string>
     <string name="prefGamePadTypeTitle">Type de Gamepad\/USB</string>
@@ -375,6 +379,10 @@
 
     <string name="prefDisableVolumeKeysTitle">Desactive touches de volume</string>
     <string name="prefDisableVolumeKeysSummary">Desactivation des touches de volume sur le téléphone/la tablette qui sinon controleraient la vitesse. A noter: si option activée, cela annule l option \'Indicateur additionnel locomotive choisie\'.</string>
+    <string name="prefVolumeDeadZoneSizeSummary">Pour la modification de la configuration des commandes d\'accélérateur, le nombre de crans proches de zéro qui ne modifieront pas la vitesse.</string>
+    <string name="prefVolumeKeysSoundsSummary">Jouez les sons à vitesse maximale et à vitesse nulle.</string>
+    <string name="prefVolumeKeysSoundsTitle">Jouer des sons</string>
+    <string name="prefVolumeDeadZoneSizeTitle">Zone morte</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Rappel touches de volume</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Le contrôle de vitesse par les touches de volume dépendra du dernier régulateur utilisé.</string>
     <string name="prefSpeedButtonsRepeatTitle">Intervalle de répétition touche de controle vitesse</string>

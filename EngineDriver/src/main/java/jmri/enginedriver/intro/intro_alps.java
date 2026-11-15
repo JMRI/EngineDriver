@@ -53,9 +53,6 @@ public class intro_alps extends Fragment {
     public void onStart() {
         threaded_application.logging(activityName + ": onStart()");
         super.onStart();
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        threaded_application.logging(activityName + ":");
-//        super.onActivityCreated(savedInstanceState);
 
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
 

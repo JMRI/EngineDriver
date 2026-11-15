@@ -291,11 +291,11 @@
     <string name="prefVolumeSpeedButtonsSpeedStepDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefVolumeAccelerationMaximumTitle">Maximum Acceleration</string>
-    <string name="prefVolumeAccelerationMaximumSummary">Speed Step multiplier if the volume button is pressed rapidly. Most useful for a rotary encode.</string>
+    <string name="prefVolumeAccelerationMaximumSummary">Speed Step multiplier if the volume button is pressed rapidly. Most useful for a rotary encoder</string>
     <string name="prefVolumeAccelerationMaximumDefaultValue" translatable="false">1</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefVolumeAccelerationPeriodTitle">Acceleration Period</string>
-    <string name="prefVolumeAccelerationPeriodSummary">Period to recognise if the volume button is pressed rapidly. (in Milliseconds))</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Period to recognise if the volume button is pressed rapidly (in Milliseconds)</string>
     <string name="prefVolumeAccelerationPeriodDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
     <!--     Gamepad preferences  -->
@@ -648,7 +648,7 @@
     <string name="prefVolumeKeysSoundsSummary">Play sounds at maximum and zero speed</string>
 
     <string name="prefVolumeDeadZoneSizeTitle">Dead Zone</string>
-    <string name="prefVolumeDeadZoneSizeSummary">For shunting throttle layouts, the number of steps near zero that will no change the speed.</string>
+    <string name="prefVolumeDeadZoneSizeSummary">For switching throttle layouts, the number of steps near zero that will not change the speed.</string>
     <string name="prefVolumeDeadZoneSizeDefaultValue" translatable="false">0</string>  <!-- DO NOT TRANSLATE -->
 
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Volume keys follow touch?</string>

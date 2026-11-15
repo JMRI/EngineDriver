@@ -189,6 +189,10 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Cantidad a modificar de la velocidad al pulsar tecla</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Cantidad a modificar de la velocidad con las teclas de volúmen</string>
 
+    <string name="prefVolumeAccelerationMaximumSummary">Multiplicador de velocidad al presionar rápidamente el botón de volumen. Muy útil para codificadores rotatorios.</string>
+    <string name="prefVolumeAccelerationMaximumTitle">Aceleración máxima</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Periodo para detectar si se pulsa rápidamente el botón de volumen (en milisegundos)</string>
+    <string name="prefVolumeAccelerationPeriodTitle">Período de aceleración</string>
     <string name="prefGamePadTitle">Preferencias de gamepad</string>
     <string name="prefGamePadSummary">Escoge tipo de gamepad y otras opciones</string>
     <string name="prefGamePadTypeTitle">Tipo de gamepad</string>
@@ -367,6 +371,10 @@
 
     <string name="prefDisableVolumeKeysTitle">Deshabilita las teclas de volúmen</string>
     <string name="prefDisableVolumeKeysSummary">Deshabilita las teclas físicas de volúmen del teléfono/tablet para el control de velocidad. Nota: si se selecciona, sobreescribe \'Indicador de Locomotora adicional seleccionada\'. </string>
+    <string name="prefVolumeDeadZoneSizeSummary">Para cambiar la configuración del acelerador, el número de pasos cercanos a cero no cambiará la velocidad.</string>
+    <string name="prefVolumeKeysSoundsSummary">Reproducir sonidos a velocidad máxima y a velocidad cero.</string>
+    <string name="prefVolumeKeysSoundsTitle">Reproducir sonidos</string>
+    <string name="prefVolumeDeadZoneSizeTitle">Zona muerta</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Teclas de volúmen siguen el toque</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Las teclas de volúmen para el control de velocidad deben seguir el último Controlador tocado</string>
     <string name="prefSpeedButtonsRepeatTitle">Retraso de repetición de la tecla de velocidad</string>
