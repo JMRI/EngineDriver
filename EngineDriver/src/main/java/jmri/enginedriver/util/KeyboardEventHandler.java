@@ -40,6 +40,7 @@ import static android.view.KeyEvent.KEYCODE_F11;
 import static android.view.KeyEvent.KEYCODE_G;
 import static android.view.KeyEvent.KEYCODE_H;
 import static android.view.KeyEvent.KEYCODE_I;
+import static android.view.KeyEvent.KEYCODE_J;
 import static android.view.KeyEvent.KEYCODE_K;
 import static android.view.KeyEvent.KEYCODE_L;
 import static android.view.KeyEvent.KEYCODE_LEFT_BRACKET;
@@ -376,6 +377,11 @@ public class KeyboardEventHandler {
                 keyboardString = "T";
                 tempGamepadOrKeyboardThrottle = -1;  //reset it
             }
+        } else if (keyCode == KEYCODE_J) {  // Start of a change default throttle specification
+            if (action == ACTION_DOWN) {
+                keyboardString = "J";
+                tempGamepadOrKeyboardThrottle = -1;  //reset it
+            }
         } else if (keyCode == KEYCODE_U) {  // Start of a turnout/point specification
             if (action == ACTION_DOWN) {
                 keyboardString = "U";
@@ -433,7 +439,7 @@ public class KeyboardEventHandler {
                     keyboardString = keyboardString + num;
                 }
                 if (keyboardString.length() == 3) {  // have a two digit function number now
-                    int fKey = Integer.parseInt(keyboardString.substring(1, 3));
+                    int fKey = getIntFromString(keyboardString.substring(1, 3));
                     if (fKey < MAX_FUNCTIONS) {
                         if ( (waitToSendUpFunctionDelay <= 0) && (waitToSendUpFunctionPeriods[fKey] <= 0) ) {
                             if (action == ACTION_DOWN) {
@@ -461,7 +467,7 @@ public class KeyboardEventHandler {
                     keyboardString = keyboardString + num;
                 }
                 if (keyboardString.length() == 3) {  // have a two digit function number now
-                    int fKey = Integer.parseInt(keyboardString.substring(1, 3));
+                    int fKey = getIntFromString(keyboardString.substring(1, 3));
                     if (fKey < MAX_FUNCTIONS) {
                         if (action == ACTION_DOWN) {
                             keyboardNotifierInterface.keyboardEventNotificationHandler(
@@ -481,7 +487,7 @@ public class KeyboardEventHandler {
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
                     if (keyboardString.length() == 4) {  // have a three digit speed amount now
-                        int newSpeed = Math.min(Integer.parseInt(keyboardString.substring(1, 4)), 100);
+                        int newSpeed = Math.min(getIntFromString(keyboardString.substring(1, 4)), 100);
                         float vSpeed = 126 * ((float) newSpeed) / 100;
                         newSpeed = (int) vSpeed;
 
@@ -500,7 +506,7 @@ public class KeyboardEventHandler {
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
                     if (keyboardString.length() == 4) {  // have a three digit turnout address now
-                        tempKeyboardTurnout = Integer.parseInt(keyboardString.substring(1, 4));
+                        tempKeyboardTurnout = getIntFromString(keyboardString.substring(1, 4));
 
                         keyboardNotifierInterface.keyboardEventNotificationHandler(
                                 gamepad_or_keyboard_event_type.TURNOUT_TOGGLE, tempKeyboardTurnout, repeatCnt,
@@ -516,7 +522,7 @@ public class KeyboardEventHandler {
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
                     if (keyboardString.length() == 4) {  // have a three digit turnout address now
-                        tempKeyboardTurnout = Integer.parseInt(keyboardString.substring(1, 4));
+                        tempKeyboardTurnout = getIntFromString(keyboardString.substring(1, 4));
 
                         keyboardNotifierInterface.keyboardEventNotificationHandler(
                                 gamepad_or_keyboard_event_type.TURNOUT_THROW, tempKeyboardTurnout, repeatCnt,
@@ -533,7 +539,7 @@ public class KeyboardEventHandler {
                 if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
                     keyboardString = keyboardString + num;
                     if (keyboardString.length() == 4) {  // have a three digit turnout address now
-                        tempKeyboardTurnout = Integer.parseInt(keyboardString.substring(1, 4));
+                        tempKeyboardTurnout = getIntFromString(keyboardString.substring(1, 4));
 
                         keyboardNotifierInterface.keyboardEventNotificationHandler(
                                 gamepad_or_keyboard_event_type.TURNOUT_CLOSE, tempKeyboardTurnout, repeatCnt,
@@ -552,11 +558,30 @@ public class KeyboardEventHandler {
                 }
                 if (action == ACTION_DOWN) {
                     if (keyboardString.length() == 2) {  // have a complete Throttle number
-                        tempGamepadOrKeyboardThrottle = Integer.parseInt(keyboardString.substring(1, 2));
+                        tempGamepadOrKeyboardThrottle = getIntFromString(keyboardString.substring(1, 2));
                         if (tempGamepadOrKeyboardThrottle > MAX_SCREEN_THROTTLES) {
                             tempGamepadOrKeyboardThrottle = -1;
                         }
                         threaded_application.extendedLogging(activityName + ": throttle: " + tempGamepadOrKeyboardThrottle);
+                    }
+                } else {
+                    keyboardString = "";
+                }
+
+            } else if ((!keyboardString.isEmpty()) && (keyboardString.charAt(0) == 'J')) {    // change the current/default Throttle number
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                }
+                if (action == ACTION_DOWN) {
+                    if (keyboardString.length() == 2) {  // have a complete Throttle number
+                        tempGamepadOrKeyboardThrottle = getIntFromString(keyboardString.substring(1, 2));
+                        if (tempGamepadOrKeyboardThrottle < MAX_SCREEN_THROTTLES) {
+                            keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                    gamepad_or_keyboard_event_type.CHANGE_THROTTLE,
+                                    0, 0,
+                                    tempGamepadOrKeyboardThrottle, isActive, whichGamePadIsEventFrom);
+                            tempGamepadOrKeyboardThrottle = -1;
+                        }
                     }
                 } else {
                     keyboardString = "";
@@ -568,7 +593,7 @@ public class KeyboardEventHandler {
                 }
                 if (action == ACTION_DOWN) {
                     if (keyboardString.length() == 2) {  // we have a complete value
-                        int newState = Integer.parseInt(keyboardString.substring(1, 2));
+                        int newState = getIntFromString(keyboardString.substring(1, 2));
                         keyboardNotifierInterface.keyboardEventNotificationHandler(
                                 newState==1 ? gamepad_or_keyboard_event_type.POWER_ON : gamepad_or_keyboard_event_type.POWER_OFF,
                                 0, 0,
@@ -584,7 +609,7 @@ public class KeyboardEventHandler {
                 }
                 if (action == ACTION_DOWN) {
                     if (keyboardString.length() == 2) {  // we have a complete value
-                        int track = Integer.parseInt(keyboardString.substring(1, 2));
+                        int track = getIntFromString(keyboardString.substring(1, 2));
                         keyboardNotifierInterface.keyboardEventNotificationHandler(
                                 gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_TOGGLE,
                                 track, 0,
@@ -600,8 +625,8 @@ public class KeyboardEventHandler {
                 }
                 if (action == ACTION_DOWN) {
                     if (keyboardString.length() == 3) {  // we have a complete value
-                        int track = Integer.parseInt(keyboardString.substring(1, 2));
-                        int newState = Integer.parseInt(keyboardString.substring(2, 3));
+                        int track = getIntFromString(keyboardString.substring(1, 2));
+                        int newState = getIntFromString(keyboardString.substring(2, 3));
                         keyboardNotifierInterface.keyboardEventNotificationHandler(
                                 newState==1 ? gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_ON : gamepad_or_keyboard_event_type.POWER_DCCEX_TRACK_OFF,
                                 track, 0,
@@ -617,7 +642,7 @@ public class KeyboardEventHandler {
                 }
                 if (action == ACTION_DOWN) {
                     if (keyboardString.length() == 5) {  // we have a complete wait period
-                        waitToSendUpFunctionDelay = Integer.parseInt(keyboardString.substring(1, 5));
+                        waitToSendUpFunctionDelay = getIntFromString(keyboardString.substring(1, 5));
 
                         threaded_application.extendedLogging(activityName + ": :<>: wait: " + waitToSendUpFunctionDelay);
                         keyboardString = "";
@@ -716,5 +741,15 @@ public class KeyboardEventHandler {
         threaded_application.logging(activityName + ": resetKeyboardString()");
         keyboardString = "";
         tempGamepadOrKeyboardThrottle = -1;  //reset it
+    }
+
+    int getIntFromString(String s) {
+        int result = -1;
+        try {
+            result = Integer.parseInt(s);
+        } catch (Exception ignore) {
+            threaded_application.logging(activityName + ": getIntFromString() invalid number: " + s);
+        }
+        return result;
     }
 }

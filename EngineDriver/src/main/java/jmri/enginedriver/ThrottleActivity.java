@@ -3357,6 +3357,28 @@ public class ThrottleActivity extends AppCompatActivity implements
     }
 
     /** @noinspection UnusedReturnValue*/ //
+    private int setActiveThrottleForGamePad(int whichThrottle,int fromThrottle, boolean quiet) {
+        int tempThrottle = whichThrottle;
+
+        if ( (fromThrottle == whichThrottle) || (whichThrottle < 0) || (whichThrottle > MAX_SCREEN_THROTTLES)
+        || (!mainapp.gamePadDescriptorsAssignedToThrottles[whichThrottle].isEmpty())  // already assigned
+        || (!getConsist(whichThrottle).isActive()) ) { // throttle is not active
+            if (!quiet) GamepadFeedbackSound(true);
+            return fromThrottle;  // didn't work. leave it alone
+        }
+
+        mainapp.gamePadDescriptorsAssignedToThrottles[whichThrottle] = mainapp.gamePadDescriptorsAssignedToThrottles[fromThrottle];
+        mainapp.gamePadThrottleAssignment[whichThrottle] = mainapp.gamePadThrottleAssignment[fromThrottle];
+        mainapp.gamePadDescriptorsAssignedToThrottles[fromThrottle] = "";
+        mainapp.gamePadThrottleAssignment[fromThrottle] = -1;
+        setGamepadIndicator();
+
+        if (!quiet) GamepadFeedbackSound(false);
+        return whichThrottle;
+     }
+
+
+    /** @noinspection UnusedReturnValue*/ //
     private int swapToNextAvailableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
         int index;
@@ -3571,6 +3593,10 @@ public class ThrottleActivity extends AppCompatActivity implements
                 } else {
                     gamepadOrKeyboardThrottle = setNextActiveThrottle(true);
                 }
+                break;
+            }
+            case gamepad_or_keyboard_event_type.CHANGE_THROTTLE: {
+                gamepadOrKeyboardThrottle = setActiveThrottleForGamePad(whichThrottle, whichGamePadIsEventFrom, false);
                 break;
             }
             case gamepad_or_keyboard_event_type.FORWARD: {

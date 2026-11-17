@@ -32,7 +32,7 @@ public interface gamepad_or_keyboard_event_type {
     int DECREASE_SPEED               =  10;
 //    int DECREASE_SPEED_END           = 10;
     int NEXT_THROTTLE                = 11;
-//    int CHANGE_THROTTLE              = 12;
+    int CHANGE_THROTTLE              = 12;
     int SRT_NEUTRAL                  = 13;
     int SRT_BRAKE_INCREASE           = 14;
     int SRT_BRAKE_DECREASE           = 15;

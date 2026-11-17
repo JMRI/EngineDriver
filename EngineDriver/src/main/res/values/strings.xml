@@ -907,7 +907,8 @@
 \n\'Left\' or \'\[\' = Reverse (Fwd if swapped)
 \n\'Right\' or \'\]\' = Forward (Ahead) (Rev if swapped)
 \n\'d\' = Direction - Toggle Forward/Reverse
-\n\'n\' = Next Throttle
+\n\'n\' = Next Available Throttle
+\n\'j\' \'0\' - \'j\' \'5\' = Specify a throttle (\'j\' + one digit)
 \n\'z\' or Home = All stop
 \n\'l\' Limit Speed toggle
 \n\'p\' Pause Speed toggle
@@ -933,7 +934,7 @@
 \n\'Shift\' + \'h\' = Short Horn
 \n\'m\' or Volume Mute = Mute IPLS
 \n
-\n\'t\' \'0\' - \'t\' \'5\' = Specify a throttle for next command (\'t\' + one digit)
+\n\'t\' \'0\' - \'t\' \'5\' = Specify a throttle for next command only (\'t\' + one digit)
 \n
 \nThe following command will be sent to the specified throttle regardless of the currently selected gamepad throttle.
 \n
@@ -948,7 +949,7 @@
 \n
 \nAll other keyCodes are ignored
 \n
-\nFailure to follow the \'f\', \'g\', \'s\', \'u\', \'i\' or \'o\' with the correct number of digits will ignore the command</string>
+\nFailure to follow the \'f\', \'g\', \'s\', \'u\', \'i\', \'j\' or \'o\' with the correct number of digits will ignore the command</string>
     <string name="gamepadTestHelpNonForced">If you can\'t activate all buttons, change the gamepad mode (see the instructions that came with your device) or try a different gamepad Type (above).\nYou may be required to re-test the gamepad when you first use it from the throttle screen.</string>
     <string name="gamepadTestIncomplete">Test Incomplete</string>
     <string name="gamepadTestComplete">Test Complete</string>
