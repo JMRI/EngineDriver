@@ -121,7 +121,7 @@ public class AboutActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification();
+        mainapp.removeNotification(this.getIntent());
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.ABOUT;

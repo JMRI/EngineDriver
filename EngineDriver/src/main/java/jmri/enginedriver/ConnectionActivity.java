@@ -818,13 +818,14 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         }
     } // end onStart()
 
+    @SuppressLint("UnsafeIntentLaunch")
     @Override
     public void onResume() {
         threaded_application.logging(activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         threaded_application.inBackgroundForImageOrPermission = false;
-        mainapp.removeNotification();
+        mainapp.removeNotification(this.getIntent());
 
         mainapp.applyTheme(this);
 

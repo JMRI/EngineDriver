@@ -242,7 +242,7 @@ public class FunctionSettingsActivity extends AppCompatActivity implements Permi
     public void onResume() {
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification();
+        mainapp.removeNotification(this.getIntent());
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.FUNCTION_SETTINGS;
