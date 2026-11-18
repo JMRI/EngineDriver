@@ -482,7 +482,7 @@ public class WebActivity extends AppCompatActivity implements android.gesture.Ge
 
         super.onResume();
         threaded_application.activityResumed(activityName);
-        mainapp.removeNotification(this.getIntent());
+        mainapp.removeNotification();
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.WEB;
