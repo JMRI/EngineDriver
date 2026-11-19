@@ -306,6 +306,10 @@
     <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">For Keyboards only. \'Num *\' and \'Num /\' commands only. Period to recognise if the volume button is pressed rapidly (in Milliseconds)</string>
     <string name="prefGamePadSpeedChangeAccelerationPeriodDefaultValue" translatable="false">200</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefGamePadSpeedChangeDeadZoneSizeTitle">Keyboard Dead Zone</string>
+    <string name="prefGamePadSpeedChangeDeadZoneSizeSummary">For Keyboards only with switching throttle layouts. \'Num *\' and \'Num /\' commands only. The number of steps near zero that will not change the speed.</string>
+    <string name="prefGamePadSpeedChangeDeadZoneSizeDefaultValue" translatable="false">3</string>  <!-- DO NOT TRANSLATE -->
+
     <!--     Gamepad preferences  -->
     <string name="prefGamePadTitle">Gamepad\/USB Preferences</string>
     <string name="prefGamePadSummary">Choose the Gamepad\/USB type and related options</string>

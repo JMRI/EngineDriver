@@ -7,7 +7,7 @@
       * New keyboard commands for non-repeating speed changes - 'NumPad *' and 'NumPad /'
       * New keyboard command to specify the current throttle 'j'
       * Added preference for the volume button presses to play sounds at maximum and zero speed
-      * For volume control, added a dead zone preference
+      * For volume control and keyboard encoder commands, added a dead zone preference
 * Bug Fixes
       * WiThrottle: speed and direction were not re-read from the server when the throttle screen opened, so changes made elsewhere were not shown until the next heartbeat.
       * ESU MC II, semi-realistic layout: a speed report for one throttle could move the slider, target speed and knob of the throttle with the knob.

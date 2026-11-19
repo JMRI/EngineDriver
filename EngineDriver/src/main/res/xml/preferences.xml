@@ -2018,6 +2018,15 @@
                     android:summary="@string/prefGamePadSpeedChangeAccelerationPeriodSummary"
                     android:title="@string/prefGamePadSpeedChangeAccelerationPeriodTitle" />
 
+                <EditTextPreference
+                    android:defaultValue="@string/prefGamePadSpeedChangeDeadZoneSizeDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
+                    android:dialogTitle="@string/prefGamePadSpeedChangeDeadZoneSizeTitle"
+                    android:key="prefGamePadSpeedChangeDeadZoneSize"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefGamePadSpeedChangeDeadZoneSizeSummary"
+                    android:title="@string/prefGamePadSpeedChangeDeadZoneSizeTitle" />
+
             </PreferenceCategory>
 
             <!-- Blank spacer at the bottom -->

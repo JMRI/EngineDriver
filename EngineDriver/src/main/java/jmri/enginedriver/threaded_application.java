@@ -4207,8 +4207,9 @@ public class threaded_application extends Application {
 
     public int getVolumeAcceleratedSpeedChange(int prefVolumeSpeedButtonsSpeedStep) {
         int speedChange = prefVolumeSpeedButtonsSpeedStep;
-        if (volumeButtonAcceleration > 3) speedChange = (volumeButtonAcceleration-2) *  (volumeButtonAcceleration-2) * prefVolumeSpeedButtonsSpeedStep;
-        threaded_application.extendedLogging(activityName + ": doVolumeButtonAction(): speedChange " + speedChange);
+        if (volumeButtonAcceleration > 3)
+            speedChange = (volumeButtonAcceleration-2) *  (volumeButtonAcceleration-2) * prefVolumeSpeedButtonsSpeedStep;
+        threaded_application.extendedLogging(activityName + ": getVolumeAcceleratedSpeedChange(): speedChange " + speedChange);
         return speedChange;
     }
 }
