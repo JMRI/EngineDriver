@@ -1999,6 +1999,25 @@
                     android:summary="@string/prefGamePadIgnoreJoystickSummary"
                     android:title="@string/prefGamePadIgnoreJoystickTitle" />
 
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefGamePadSpeedChangeAccelerationMaximumDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
+                    android:dialogTitle="@string/prefGamePadSpeedChangeAccelerationMaximumTitle"
+                    android:key="prefGamePadSpeedChangeAccelerationMaximum"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefGamePadSpeedChangeAccelerationMaximumSummary"
+                    android:title="@string/prefGamePadSpeedChangeAccelerationMaximumTitle" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefGamePadSpeedChangeAccelerationPeriodDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
+                    android:dialogTitle="@string/prefGamePadSpeedChangeAccelerationPeriodTitle"
+                    android:key="prefGamePadSpeedChangeAccelerationPeriod"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefGamePadSpeedChangeAccelerationPeriodSummary"
+                    android:title="@string/prefGamePadSpeedChangeAccelerationPeriodTitle" />
+
             </PreferenceCategory>
 
             <!-- Blank spacer at the bottom -->

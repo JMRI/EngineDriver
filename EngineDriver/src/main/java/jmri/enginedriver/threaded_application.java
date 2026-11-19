@@ -663,6 +663,11 @@ public class threaded_application extends Application {
     // BT or USB keyboard
     public static Handler waitToSendUpUpdateHandler = new Handler(Looper.getMainLooper());
 
+    // one per throttle, not per gamepad
+    // needed for the encoders on programmable keyboards that can't replicate holding the key down
+    public long [] gamePadSpeedChangeLastDownTime = {-1, -1, -1, -1, -1, -1};
+    public int [] gamePadSpeedChangeAcceleration = {1, 1, 1, 1, 1, 1};
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // WiThrottle PoM
 

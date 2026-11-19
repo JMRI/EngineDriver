@@ -206,6 +206,10 @@
     <string name="prefVolumeAccelerationMaximumTitle">Aceleração máxima</string>
     <string name="prefVolumeAccelerationPeriodSummary">Período para detectar se o botão de volume foi pressionado rapidamente (em milissegundos)</string>
     <string name="prefVolumeAccelerationPeriodTitle">Período de aceleração</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Período de aceleração do teclado</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">Apenas para teclados. Somente comandos \'Num *\' e \'Num /\'. Ponto para reconhecer se o botão de volume foi pressionado rapidamente (em milissegundos).</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Aceleração de mudança de velocidade máxima do teclado</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">Apenas para teclados. Somente comandos \'Num *\' e \'Num /\'. Multiplicador de velocidade se o botão de volume for pressionado rapidamente. Mais útil para um codificador rotativo.</string>
     <string name="prefGamePadTitle">Preferências Gamepad\/USB</string>
     <string name="prefGamePadSummary">Escolha do tipo de Gamepad\/USB e outras opções</string>
     <string name="prefGamePadTypeTitle">Tipo de Gamepad\/USB</string>

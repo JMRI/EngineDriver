@@ -192,6 +192,10 @@
     <string name="prefVolumeAccelerationMaximumTitle">Maximale Beschleunigung</string>
     <string name="prefVolumeAccelerationPeriodSummary">Zeitspanne zur Erkennung, ob die Lautstärketaste schnell gedrückt wird (in Millisekunden)</string>
     <string name="prefVolumeAccelerationPeriodTitle">Beschleunigungsphase</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Tastaturbeschleunigungsperiode</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">Nur für Tastaturen. Nur die Befehle „Num *“ und „Num /“. Zeitspanne zur Erkennung schneller Tastendrücke (in Millisekunden).</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Beschleunigung der maximalen Tastaturgeschwindigkeit</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">Nur für Tastaturen. Nur für die Befehle „Num *“ und „Num /“. Geschwindigkeitsstufenmultiplikator bei schnellem Drücken der Lautstärketaste. Besonders nützlich für Drehgeber.</string>
     <string name="prefGamePadTitle">Voreinstellungen für Gamepad\/USB</string>
     <string name="prefGamePadSummary">Wähle den Gamepad\/USB Typ und andere Optionen</string>
     <string name="prefGamePadTypeTitle">Gamepad\/USB Typ</string>

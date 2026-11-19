@@ -16,10 +16,11 @@
 * Other
       * DCC-EX: each loco broadcast now updates only the functions that changed, rather than all 32, and long lists (roster, turnouts) are split much faster.
       * added 'NUCLEO' to the DCC-EX server types that show the 'Web' menu option
-      * Initial support for the alps M30.
-      * Added a close button to the Preferences Screen.
+      * Initial support for the alps M30
+      * Added a close button to the Preferences Screen
       * Small tweak to the way TTS loads
       * Add key click to volume button presses
+      * Improvements to keyboard speed control for encoders, including acceleration for the 'num /' and 'nem *' commands
 **Version 2.44.236
 * New Features
       * Shrink Route long button labels.  (Doesn't work on early versions of Android.)

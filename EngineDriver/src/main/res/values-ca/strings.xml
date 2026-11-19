@@ -194,6 +194,10 @@
     <string name="prefVolumeAccelerationMaximumTitle">Acceleració màxima</string>
     <string name="prefVolumeAccelerationPeriodSummary">Període per reconèixer si es prem ràpidament el botó de volum (en mil·lisegons)</string>
     <string name="prefVolumeAccelerationPeriodTitle">Període d\'acceleració</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Període d\'acceleració del teclat</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">Només per a teclats. Només les ordres \'Num *\' i \'Num /\'. Període per reconèixer si es prem el botó de volum ràpidament (en mil·lisegons).</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Acceleració del canvi de velocitat màxima del teclat</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">Només per a teclats. Només les ordres \'Num *\' i \'Num /\'. Multiplicador de passos de velocitat si es prem ràpidament el botó de volum. Més útil per a un codificador rotatiu.</string>
     <string name="prefGamePadTitle">Preferències de gamepad\/USB</string>
     <string name="prefGamePadSummary">Escull tipus de gamepad\/USB i altres opcions</string>
     <string name="prefGamePadTypeTitle">Tipus de gamepad\/USB</string>

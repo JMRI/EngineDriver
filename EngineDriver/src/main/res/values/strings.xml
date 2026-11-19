@@ -298,6 +298,14 @@
     <string name="prefVolumeAccelerationPeriodSummary">Period to recognise if the volume button is pressed rapidly (in Milliseconds)</string>
     <string name="prefVolumeAccelerationPeriodDefaultValue" translatable="false">100</string>  <!-- DO NOT TRANSLATE -->
 
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Keyboard Maximum Speed Change Acceleration</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">For Keyboards only. \'Num *\' and \'Num /\' commands only. Speed Step multiplier if the volume button is pressed rapidly. Most useful for a rotary encoder</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumDefaultValue" translatable="false">4</string>  <!-- DO NOT TRANSLATE -->
+
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Keyboard Acceleration Period</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">For Keyboards only. \'Num *\' and \'Num /\' commands only. Period to recognise if the volume button is pressed rapidly (in Milliseconds)</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodDefaultValue" translatable="false">200</string>  <!-- DO NOT TRANSLATE -->
+
     <!--     Gamepad preferences  -->
     <string name="prefGamePadTitle">Gamepad\/USB Preferences</string>
     <string name="prefGamePadSummary">Choose the Gamepad\/USB type and related options</string>

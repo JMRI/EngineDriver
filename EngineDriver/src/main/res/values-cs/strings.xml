@@ -235,6 +235,10 @@
     <string name="prefVolumeAccelerationMaximumTitle">Maximální zrychlení</string>
     <string name="prefVolumeAccelerationPeriodSummary">Doba pro rozpoznání rychlého stisknutí tlačítka hlasitosti (v milisekundách)</string>
     <string name="prefVolumeAccelerationPeriodTitle">Období zrychlení</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Perioda zrychlení klávesnice</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">Pouze pro klávesnice. Pouze příkazy \'Num *\' a \'Num /\'. Tečka pro rozpoznání rychlého stisknutí tlačítka hlasitosti (v milisekundách)</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Maximální rychlost klávesnice Změna zrychlení</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">Pouze pro klávesnice. Pouze příkazy \'Num *\' a \'Num /\'. Násobitel kroku rychlosti, pokud je tlačítko hlasitosti stisknuto rychle. Nejužitečnější pro rotační enkodér.</string>
     <string name="prefGamePadTitle">Předvolby Gamepad\/USB</string>
     <string name="prefGamePadSummary">Zvolte typ Gamepad\/USB a ostatní volby</string>
     <string name="prefGamePadTypeTitle">Typ Gamepad\/USB</string>
