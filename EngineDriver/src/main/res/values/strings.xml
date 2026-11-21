@@ -913,8 +913,10 @@
 \n\'Down\ or \'-\' = Decrease Speed
 \n\'►►\' = Increase Speed * 2
 \n\'◄◄\' = Decrease Speed * 2
-\n\'NumPad *\' = Increase Speed - Non-repeating
-\n\'NumPad /\' = Decrease Speed - Non-repeating
+\n\'NumPad *\' = Increase Speed - Non-repeating - obeys acceleration
+\n\'NumPad /\' = Decrease Speed - Non-repeating - obeys acceleration
+\n\'q\' \'0\' \'0\' - \'q\' \'9\' \'9\' = Increase Speed by amount - Non-repeating - obeys acceleration (\'q\' + two digits)
+\n\'a\' \'0\' \'0\' - \'a\' \'9\' \'9\' = Decrease Speed by amount - Non-repeating - obeys acceleration (\'d\' + two digits)
 \n\'x\' or End = Stop
 \n\'Left\' or \'\[\' = Reverse (Fwd if swapped)
 \n\'Right\' or \'\]\' = Forward (Ahead) (Rev if swapped)

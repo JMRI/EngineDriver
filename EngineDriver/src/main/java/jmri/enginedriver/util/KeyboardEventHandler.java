@@ -22,6 +22,7 @@ import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_0;
 import static android.view.KeyEvent.KEYCODE_9;
 import static android.view.KeyEvent.KEYCODE_APOSTROPHE;
+import static android.view.KeyEvent.KEYCODE_A;
 import static android.view.KeyEvent.KEYCODE_B;
 import static android.view.KeyEvent.KEYCODE_BACKSLASH;
 import static android.view.KeyEvent.KEYCODE_BREAK;
@@ -65,6 +66,7 @@ import static android.view.KeyEvent.KEYCODE_PAGE_DOWN;
 import static android.view.KeyEvent.KEYCODE_PAGE_UP;
 import static android.view.KeyEvent.KEYCODE_PERIOD;
 import static android.view.KeyEvent.KEYCODE_PLUS;
+import static android.view.KeyEvent.KEYCODE_Q;
 import static android.view.KeyEvent.KEYCODE_R;
 import static android.view.KeyEvent.KEYCODE_RIGHT_BRACKET;
 import static android.view.KeyEvent.KEYCODE_S;
@@ -411,6 +413,15 @@ public class KeyboardEventHandler {
                 keyboardString = "K";
             }
 
+        } else if (keyCode == KEYCODE_Q) {  // Start of a speed increment by a specific amount
+            if (action == ACTION_DOWN) {
+                keyboardString = "Q";
+            }
+        } else if (keyCode == KEYCODE_A) {  // Start of a speed decrement by a specific amount
+            if (action == ACTION_DOWN) {
+                keyboardString = "A";
+            }
+
         } else if (keyCode == KEYCODE_W) {  // Start of a wait to sent Up specification
             if (action == ACTION_DOWN) {
                 keyboardString = "W";
@@ -649,6 +660,26 @@ public class KeyboardEventHandler {
                     }
                 } // ignore up
 
+            } else if ((!keyboardString.isEmpty())
+                    && ((keyboardString.charAt(0) == 'Q') || (keyboardString.charAt(0) == 'A')) ) {  // Increment or decrement by a specific amount
+                if ((action == ACTION_DOWN) && (repeatCnt == 0)) {
+                    keyboardString = keyboardString + num;
+                }
+                if (keyboardString.length() == 3) {  // have a two digit number now
+                    int speedChange = getIntFromString(keyboardString.substring(1, 3));
+                    if (speedChange > 0) {
+                        int incrementOrDecrement = (keyboardString.charAt(0) == 'Q') ? gamepad_or_keyboard_event_type.INCREASE_SPEED_BY : gamepad_or_keyboard_event_type.DECREASE_SPEED_BY;
+                        if (action == ACTION_DOWN) {
+                            keyboardNotifierInterface.keyboardEventNotificationHandler(
+                                    incrementOrDecrement,
+                                    speedChange, 0,
+                                    0, isActive, whichGamePadIsEventFrom);
+
+                            keyboardString = "";
+                        }
+                    }
+                }
+
             } else if (keyboardString.isEmpty()) {  // direct function 0-9
                 int fKey;
                 if ((keyCode >= KEYCODE_0) && (keyCode <= KEYCODE_9)) {
@@ -738,7 +769,7 @@ public class KeyboardEventHandler {
     }
 
     void resetKeyboardString() {
-        threaded_application.logging(activityName + ": resetKeyboardString()");
+//        threaded_application.logging(activityName + ": resetKeyboardString()");
         keyboardString = "";
         tempGamepadOrKeyboardThrottle = -1;  //reset it
     }
