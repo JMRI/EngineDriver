@@ -582,6 +582,9 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         }
     }
 
+    // true if this instance was started on top of the already running app and finished at once
+    private boolean startedOnRunningApp = false;
+
     /**
      * Called when the activity is first created.
      */
@@ -591,6 +594,20 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         super.onCreate(savedInstanceState);
         //    timestamp = SystemClock.uptimeMillis();
         threaded_application.logging(activityName + ": onCreate()");
+
+        // Started from the launcher or the background notification while the app is already running
+        // (some Android versions start the launcher activity again on top of the running task instead
+        // of bringing the task to the front): the app is already open, so just return to it.
+        // Starting a second connection screen would clear the connection details of the running one.
+        Intent startIntent = getIntent();
+        if (!isTaskRoot() && startIntent != null && Intent.ACTION_MAIN.equals(startIntent.getAction())
+                && startIntent.hasCategory(Intent.CATEGORY_LAUNCHER)) {
+            threaded_application.logging(activityName + ": onCreate() app already running, returning to it");
+            startedOnRunningApp = true;
+            finish();
+            return;
+        }
+
         mainapp = (threaded_application) this.getApplication();
 
         if (mainapp.activityBundleMessageHandlers[activity_id_type.CONNECTION] == null)
@@ -818,14 +835,13 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
         }
     } // end onStart()
 
-    @SuppressLint("UnsafeIntentLaunch")
     @Override
     public void onResume() {
         threaded_application.logging(activityName + ": onResume()");
         super.onResume();
         threaded_application.activityResumed(activityName);
         threaded_application.inBackgroundForImageOrPermission = false;
-        mainapp.removeNotification(this.getIntent());
+        mainapp.removeNotification();
 
         mainapp.applyTheme(this);
 
@@ -903,6 +919,9 @@ public class ConnectionActivity extends AppCompatActivity implements Permissions
     public void onDestroy() {
         threaded_application.logging(activityName + ": onDestroy()");
         super.onDestroy();
+        if (startedOnRunningApp) {
+            return; // nothing was set up, and the running connection screen's handler is not ours to clear
+        }
 
         if (!isRestarting) {
             mainapp.clearActivityBundleMessageHandler(activity_id_type.CONNECTION);
