@@ -60,6 +60,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.ToneGenerator;
+import android.media.audiofx.Equalizer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -371,9 +372,16 @@ public class ThrottleActivity extends AppCompatActivity implements
     protected int prefVolumeAccelerationMaximum = 1;
     protected int prefVolumeAccelerationPeriod = 100;
     protected boolean prefVolumeKeysSounds = true;
+    protected int prefVolumeDeadZoneSize = 0;
+    protected int volumeDeadZoneCurrentCount = 0;
     protected int prefGamePadSpeedButtonsSpeedStep = 4;
     protected boolean prefSpeedButtonsSpeedStepDecrement = false;
     protected boolean prefStopButtonEStopOnLongPress = false;
+
+    protected int prefGamePadSpeedChangeAccelerationMaximum = 4;
+    protected int prefGamePadSpeedChangeAccelerationPeriod = 200;
+    protected int prefGamePadSpeedChangeDeadZoneSize = 0;
+    protected int [] gamePadSpeedChangeDeadZoneCurrentCount = {0, 0, 0, 0, 0, 0};
 
     protected String speedButtonLeftText;
     protected String speedButtonRightText;
@@ -1723,9 +1731,14 @@ public class ThrottleActivity extends AppCompatActivity implements
         prefVolumeAccelerationMaximum = threaded_application.getIntPrefValue(prefs, "prefVolumeAccelerationMaximum", getApplicationContext().getResources().getString(R.string.prefVolumeAccelerationMaximumDefaultValue));
         prefVolumeAccelerationPeriod = threaded_application.getIntPrefValue(prefs, "prefVolumeAccelerationPeriod", getApplicationContext().getResources().getString(R.string.prefVolumeAccelerationPeriodDefaultValue));
         prefVolumeKeysSounds = prefs.getBoolean("prefVolumeKeysSounds", getResources().getBoolean(R.bool.prefVolumeKeysSoundsDefaultValue));
+        prefVolumeDeadZoneSize = threaded_application.getIntPrefValue(prefs, "prefVolumeDeadZoneSize", getApplicationContext().getResources().getString(R.string.prefVolumeDeadZoneSizeDefaultValue));
         prefGamePadSpeedButtonsSpeedStep = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedButtonsSpeedStep", getApplicationContext().getResources().getString(R.string.prefVolumeSpeedButtonsSpeedStepDefaultValue));
         prefSpeedButtonsSpeedStepDecrement = prefs.getBoolean("prefSpeedButtonsSpeedStepDecrement", getResources().getBoolean(R.bool.prefSpeedButtonsSpeedStepDecrementDefaultValue));
         prefStopButtonEStopOnLongPress = prefs.getBoolean("prefStopButtonEStopOnLongPress", getResources().getBoolean(R.bool.prefStopButtonEStopOnLongPressDefaultValue));
+
+        prefGamePadSpeedChangeAccelerationMaximum = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedChangeAccelerationMaximum", getApplicationContext().getResources().getString(R.string.prefGamePadSpeedChangeAccelerationMaximumDefaultValue));
+        prefGamePadSpeedChangeAccelerationPeriod = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedChangeAccelerationPeriod", getApplicationContext().getResources().getString(R.string.prefGamePadSpeedChangeAccelerationPeriodDefaultValue));
+        prefGamePadSpeedChangeDeadZoneSize = threaded_application.getIntPrefValue(prefs, "prefGamePadSpeedChangeDeadZoneSize", getApplicationContext().getResources().getString(R.string.prefGamePadSpeedChangeDeadZoneSizeDefaultValue));
 
         mainapp.prefGamepadOnlyOneGamepad = prefs.getBoolean("prefGamepadOnlyOneGamepad", getResources().getBoolean(R.bool.prefGamepadOnlyOneGamepadDefaultValue));
 
@@ -2091,13 +2104,50 @@ public class ThrottleActivity extends AppCompatActivity implements
 
     // returns true if throttle is set for the maximum speed
     boolean atMaxSpeed(int whichThrottle) {
-        return (getSpeed(whichThrottle) >= getMaxSpeed(whichThrottle));
+//        return (getSpeed(whichThrottle) >= getMaxSpeed(whichThrottle));
+        if (!isLimitSpeeds[whichThrottle]) {
+            return (getSpeedFromCurrentSliderPosition(whichThrottle, false) >= 126);
+        } else {
+            return (getSpeedFromCurrentSliderPosition(whichThrottle, false) >= ((float) prefLimitSpeedPercent/100*126) );
+        }
     }
 
     // returns true if throttle is set for the minimum speed
     boolean atMinSpeed(int whichThrottle) {
-        return (getSpeed(whichThrottle) <= getMinSpeed(whichThrottle));
+//        return (getSpeed(whichThrottle) <= getMinSpeed(whichThrottle));
+        return (getSpeedFromCurrentSliderPosition(whichThrottle, false) <= 0);
     }
+
+
+    // find the projected speed, but don't actually change the speed
+    int getProjectedSpeedAfterSpeedChange(int whichThrottle, int change) {
+        SeekBar throttle_slider = getThrottleSlider(whichThrottle);
+        double displayUnitScale = getDisplayUnitScale(whichThrottle);
+        int lastSpeed = throttle_slider.getProgress();
+        int lastScaleSpeed = (int) Math.round(lastSpeed * displayUnitScale);
+        int scaleSpeed = lastScaleSpeed + change;
+
+        int speed = (int) Math.round(scaleSpeed / displayUnitScale);
+        threaded_application.extendedLogging(activityName + ": getProjectedSpeedAfterSpeedChange():  change: " + change + " lastSpeed: " + lastSpeed+ " lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed:" + scaleSpeed);
+
+        if (lastScaleSpeed == scaleSpeed) {
+            speed += (int) Math.signum(change);
+        }
+
+        if (speed < 0)  //insure speed is inside bounds
+            speed = 0;
+        if (speed > MAX_SPEED_VAL_WIT)
+            speed = MAX_SPEED_VAL_WIT;
+
+        if (prefLimitSpeedButton && isLimitSpeeds[whichThrottle]) {
+            int limitScaleSpeedMax = (int) (126 * ( (float) limitSpeedMax[whichThrottle]/100 * displayUnitScale));
+            if (scaleSpeed > limitScaleSpeedMax) {
+                speed =  (int) (126 * ((float) limitSpeedMax[whichThrottle]) / 100);
+            }
+        }
+
+        return speed;
+    } // end getProjectedSpeedAfterSpeedChange
 
     // change speed slider by scaled display unit value
     int speedChange(int whichThrottle, int change) {
@@ -2188,7 +2238,7 @@ public class ThrottleActivity extends AppCompatActivity implements
     }
 
     public void decrementSpeed(int whichThrottle, int from, int stepMultiplier, int stepSize) {
-//        threaded_application.extendedLogging(activityName + ": decrementSpeed(): from " + from);
+//        threaded_application.extendedLogging(activityName + ": decrementSpeed(): from " + from + " stepMultiplier: " + stepMultiplier + " stepSize: " + stepSize);
         switch (from) {
             case speed_commands_from_type.BUTTONS:
                 if ((isPauseSpeeds[whichThrottle] == pause_speed_type.INACTIVE)
@@ -2243,18 +2293,40 @@ public class ThrottleActivity extends AppCompatActivity implements
 
             case speed_commands_from_type.VOLUME: {
                 vThrottleScreen.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
-                int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
-                if (prefVolumeKeysSounds) {
-                    if (getSpeed(whichThrottle) - speedChangeAmount >= getMaxSpeed(whichThrottle)) {
-                        gamepadBeep(beep_type.NAK);
-                    } else if (getSpeed(whichThrottle) - speedChangeAmount <= 0) {
-                        gamepadBeep(beep_type.ACK);
+
+                int currentSpeed  = getSpeedFromCurrentSliderPosition(whichThrottle, true);
+                int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep) * -1;
+                int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
+
+                boolean inDeadZone = false;
+                if (mainapp.isSwitchingLayout) { // the dead zone is not relevant to the non-switching layouts
+                    if ((prefVolumeDeadZoneSize > 0) && (currentSpeed == 0)) {
+                        volumeDeadZoneCurrentCount--;
+                        if (volumeDeadZoneCurrentCount > (prefVolumeDeadZoneSize * -1)) { // still in the dead zone
+                            inDeadZone = true;
+                            mainapp.volumeButtonAcceleration = 1;
+                        }
+                    } else {
+                        volumeDeadZoneCurrentCount = 0;
                     }
                 }
-                speedChangeAndNotify(whichThrottle, -speedChangeAmount);
+
+                threaded_application.extendedLogging(activityName + ": decrementSpeed(): VOLUME: currentSpeed: " + currentSpeed+ " speedChangeAmount: " + speedChangeAmount + " newSpeed: "  + newSpeed + " volumeDeadZoneCurrentCount: " + volumeDeadZoneCurrentCount);
+
+                if (prefVolumeKeysSounds) {
+                    if (newSpeed >= getMaxSpeed(whichThrottle)) {
+                        gamepadBeep(beep_type.NAK);
+                    } else if (newSpeed == 0) {
+                        gamepadBeep(beep_type.ZERO_SPEED);
+                    }
+                }
+
+                if (!inDeadZone)
+                    speedChangeAndNotify(whichThrottle, speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
             }
+
             case speed_commands_from_type.GAMEPAD:
                 speedChangeAndNotify(whichThrottle, -prefGamePadSpeedButtonsSpeedStep * stepMultiplier);
                 mainapp.whichThrottleLastTouch = whichThrottle;
@@ -2279,7 +2351,7 @@ public class ThrottleActivity extends AppCompatActivity implements
     }
 
     public void incrementSpeed(int whichThrottle, int from, int stepMultiplier, int stepSize) {
-//        threaded_application.extendedLogging(activityName + ": incrementSpeed(): from " + from);
+//        threaded_application.extendedLogging(activityName + ": incrementSpeed(): from " + from + " stepMultiplier: " + stepMultiplier + " stepSize: " + stepSize);
         switch (from) {
             case speed_commands_from_type.BUTTONS:
                 if ((isPauseSpeeds[whichThrottle] == pause_speed_type.INACTIVE)
@@ -2324,15 +2396,38 @@ public class ThrottleActivity extends AppCompatActivity implements
 
             case speed_commands_from_type.VOLUME: {
                 vThrottleScreen.playSoundEffect(SoundEffectConstants.CLICK);  // make the click sound once
+
+                int currentSpeed  = getSpeedFromCurrentSliderPosition(whichThrottle, true);
                 int speedChangeAmount = mainapp.getVolumeAcceleratedSpeedChange(prefVolumeSpeedButtonsSpeedStep);
-                if (prefVolumeKeysSounds) {
-                    if (getSpeed(whichThrottle) + speedChangeAmount >= getMaxSpeed(whichThrottle)) {
-                        gamepadBeep(beep_type.NAK);
-                    } else if (getSpeed(whichThrottle) + speedChangeAmount <= 0) {
-                        gamepadBeep(beep_type.ACK);
+                int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
+
+                boolean inDeadZone = false;
+
+                if (mainapp.isSwitchingLayout) { // the dead zone is not relevant to the non-switching layouts
+                    if ( (prefVolumeDeadZoneSize>0) && (currentSpeed==0) ) {
+                        volumeDeadZoneCurrentCount++;
+                        if (volumeDeadZoneCurrentCount < prefVolumeDeadZoneSize) { // still in the dead zone
+                            inDeadZone = true;
+                            mainapp.volumeButtonAcceleration = 1;
+                        }
+                    } else {
+                        volumeDeadZoneCurrentCount = 0;
                     }
                 }
-                speedChangeAndNotify(whichThrottle, speedChangeAmount);
+
+
+                threaded_application.extendedLogging(activityName + ": incrementSpeed(): VOLUME: currentSpeed: " + currentSpeed+ " speedChangeAmount: " + speedChangeAmount + " newSpeed: "  + newSpeed + " volumeDeadZoneCurrentCount: " + volumeDeadZoneCurrentCount);
+
+                if (prefVolumeKeysSounds) {
+                    if (newSpeed >= getMaxSpeed(whichThrottle)) {
+                        gamepadBeep(beep_type.NAK);
+                    } else if (newSpeed == 0) {
+                        gamepadBeep(beep_type.ZERO_SPEED);
+                    }
+                }
+
+                if (!inDeadZone)
+                    speedChangeAndNotify(whichThrottle, speedChangeAmount);
                 mainapp.whichThrottleLastTouch = whichThrottle;
                 break;
             }
@@ -3277,6 +3372,28 @@ public class ThrottleActivity extends AppCompatActivity implements
     }
 
     /** @noinspection UnusedReturnValue*/ //
+    private int setActiveThrottleForGamePad(int whichThrottle,int fromThrottle, boolean quiet) {
+        int tempThrottle = whichThrottle;
+
+        if ( (fromThrottle == whichThrottle) || (whichThrottle < 0) || (whichThrottle > MAX_SCREEN_THROTTLES)
+        || (!mainapp.gamePadDescriptorsAssignedToThrottles[whichThrottle].isEmpty())  // already assigned
+        || (!getConsist(whichThrottle).isActive()) ) { // throttle is not active
+            if (!quiet) GamepadFeedbackSound(true);
+            return fromThrottle;  // didn't work. leave it alone
+        }
+
+        mainapp.gamePadDescriptorsAssignedToThrottles[whichThrottle] = mainapp.gamePadDescriptorsAssignedToThrottles[fromThrottle];
+        mainapp.gamePadThrottleAssignment[whichThrottle] = mainapp.gamePadThrottleAssignment[fromThrottle];
+        mainapp.gamePadDescriptorsAssignedToThrottles[fromThrottle] = "";
+        mainapp.gamePadThrottleAssignment[fromThrottle] = -1;
+        setGamepadIndicator();
+
+        if (!quiet) GamepadFeedbackSound(false);
+        return whichThrottle;
+     }
+
+
+    /** @noinspection UnusedReturnValue*/ //
     private int swapToNextAvailableThrottleForGamePad(int fromThrottle, boolean quiet) {
         int whichThrottle = -1;
         int index;
@@ -3493,6 +3610,10 @@ public class ThrottleActivity extends AppCompatActivity implements
                 }
                 break;
             }
+            case gamepad_or_keyboard_event_type.CHANGE_THROTTLE: {
+                gamepadOrKeyboardThrottle = setActiveThrottleForGamePad(whichThrottle, whichGamePadIsEventFrom, false);
+                break;
+            }
             case gamepad_or_keyboard_event_type.FORWARD: {
                 boolean dirChangeFailed = !changeActualOrTargetDirectionIfAllowed(whichThrottle,
                         direction_type.FORWARD,
@@ -3535,15 +3656,79 @@ public class ThrottleActivity extends AppCompatActivity implements
                 break;
             }
             case gamepad_or_keyboard_event_type.INCREASE_SPEED: { // non-repeating
-                mGamepadAutoIncrement = true;
+                checkGamepadSpeedChangeAcceleration(whichThrottle);
+//                threaded_application.extendedLogging(activityName + ": keyboardEventNotification(): gamePadSpeedChangeAcceleration " + mainapp.gamePadSpeedChangeAcceleration[whichThrottle]);
+
+                mGamepadAutoIncrement = false;
                 int stepMultiplier = Math.max(val, 1);
-                GamepadIncrementSpeed(whichThrottle, stepMultiplier);
+
+                int currentSpeed  = getSpeedFromCurrentSliderPosition(whichThrottle, true);
+                int speedChangeAmount = getGamepadAcceleratedSpeedChange(whichThrottle, stepMultiplier);
+                int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
+
+                if (!isInGamepadDeadZone(whichThrottle, currentSpeed)) {
+                    gamepadSetSpeed(whichThrottle, newSpeed);
+                }
+
+                playFeedbackSound = -1;
+                mainapp.gamePadSpeedChangeLastDownTime[whichThrottle] = Calendar.getInstance().getTimeInMillis();
                 break;
             }
             case gamepad_or_keyboard_event_type.DECREASE_SPEED: { // non-repeating
-                mGamepadAutoDecrement = true;
+                checkGamepadSpeedChangeAcceleration(whichThrottle);
+//                threaded_application.extendedLogging(activityName + ": keyboardEventNotification(): gamePadSpeedChangeAcceleration " + mainapp.gamePadSpeedChangeAcceleration[whichThrottle]);
+
+                mGamepadAutoIncrement = false;
                 int stepMultiplier = Math.max(val, 1);
-                GamepadDecrementSpeed(whichThrottle, stepMultiplier);
+
+                int currentSpeed  = getSpeedFromCurrentSliderPosition(whichThrottle, true);
+                int speedChangeAmount = getGamepadAcceleratedSpeedChange(whichThrottle, stepMultiplier) * -1;
+                int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
+
+                if (!isInGamepadDeadZone(whichThrottle, currentSpeed)) {
+                    gamepadSetSpeed(whichThrottle, newSpeed);
+                }
+
+                playFeedbackSound = -1;
+                mainapp.gamePadSpeedChangeLastDownTime[whichThrottle] = Calendar.getInstance().getTimeInMillis();
+                break;
+            }
+            case gamepad_or_keyboard_event_type.INCREASE_SPEED_BY: { // non-repeating
+                checkGamepadSpeedChangeAcceleration(whichThrottle);
+                threaded_application.extendedLogging(activityName + ": keyboardEventNotification(): INCREASE_SPEED_BY: gamePadSpeedChangeAcceleration " + mainapp.gamePadSpeedChangeAcceleration[whichThrottle]);
+
+                mGamepadAutoIncrement = false;
+                int speedChange = Math.max(val, 1);
+
+                int currentSpeed  = getSpeedFromCurrentSliderPosition(whichThrottle, true);
+                int speedChangeAmount = getGamepadAcceleratedSpeedChange(whichThrottle, speedChange, 1);
+                int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
+
+                if (!isInGamepadDeadZone(whichThrottle, currentSpeed)) {
+                    gamepadSetSpeed(whichThrottle, newSpeed);
+                }
+
+                playFeedbackSound = -1;
+                mainapp.gamePadSpeedChangeLastDownTime[whichThrottle] = Calendar.getInstance().getTimeInMillis();
+                break;
+            }
+            case gamepad_or_keyboard_event_type.DECREASE_SPEED_BY: { // non-repeating
+                checkGamepadSpeedChangeAcceleration(whichThrottle);
+                threaded_application.extendedLogging(activityName + ": keyboardEventNotification(): DECREASE_SPEED_BY: gamePadSpeedChangeAcceleration " + mainapp.gamePadSpeedChangeAcceleration[whichThrottle]);
+
+                mGamepadAutoIncrement = false;
+                int speedChange = Math.max(val, 1);
+
+                int currentSpeed  = getSpeedFromCurrentSliderPosition(whichThrottle, true);
+                int speedChangeAmount = getGamepadAcceleratedSpeedChange(whichThrottle, speedChange, 1) * -1;
+                int newSpeed = getProjectedSpeedAfterSpeedChange(whichThrottle, speedChangeAmount);
+
+                if (!isInGamepadDeadZone(whichThrottle, currentSpeed)) {
+                    gamepadSetSpeed(whichThrottle, newSpeed);
+                }
+
+                playFeedbackSound = -1;
+                mainapp.gamePadSpeedChangeLastDownTime[whichThrottle] = Calendar.getInstance().getTimeInMillis();
                 break;
             }
             case gamepad_or_keyboard_event_type.SRT_NEUTRAL: {
@@ -4171,8 +4356,21 @@ public class ThrottleActivity extends AppCompatActivity implements
         }
     }
 
-    void GamepadIncrementSpeed(int whichThrottle, int stepMultiplier) {
-        threaded_application.extendedLogging(activityName + ": GamepadIncrementSpeed()");
+    void gamepadSetSpeed(int whichThrottle, int speed) {
+        threaded_application.extendedLogging(activityName + ": gamepadSetSpeed()");
+        setSpeed(whichThrottle, speed, speed_commands_from_type.GAMEPAD);
+        GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
+        tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
+                , getMaxSpeed(whichThrottle)
+                , getSpeedFromCurrentSliderPosition(whichThrottle, false)
+                , getSpeedFromCurrentSliderPosition(whichThrottle, true)
+                , getScaleSpeedFromSemiRealisticThrottleCurrentSliderPosition(whichThrottle)
+                , isSemiRealisticThrottle
+                , "");
+    }
+
+    void gamepadIncrementSpeed(int whichThrottle, int stepMultiplier) {
+        threaded_application.extendedLogging(activityName + ": gamepadIncrementSpeed()");
         incrementSpeed(whichThrottle, speed_commands_from_type.GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMaxSpeed(whichThrottle) || atMinSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -4184,8 +4382,8 @@ public class ThrottleActivity extends AppCompatActivity implements
                 , "");
     }
 
-    void GamepadDecrementSpeed(int whichThrottle, int stepMultiplier) {
-        threaded_application.extendedLogging(activityName + ": GamepadDecrementSpeed()");
+    void gamepadDecrementSpeed(int whichThrottle, int stepMultiplier) {
+        threaded_application.extendedLogging(activityName + ": gamepadDecrementSpeed()");
         decrementSpeed(whichThrottle, speed_commands_from_type.GAMEPAD, stepMultiplier);
         GamepadFeedbackSound(atMinSpeed(whichThrottle) || atMaxSpeed(whichThrottle));
         tts.speakWords(tts_msg_type.GAMEPAD_THROTTLE_SPEED, whichThrottle, false
@@ -4275,10 +4473,10 @@ public class ThrottleActivity extends AppCompatActivity implements
             }
 
             if (mGamepadAutoIncrement) {
-                GamepadIncrementSpeed(whichThrottle, stepMultiplier);
+                gamepadIncrementSpeed(whichThrottle, stepMultiplier);
                 gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle, stepMultiplier), REP_DELAY);
             } else if (mGamepadAutoDecrement) {
-                GamepadDecrementSpeed(whichThrottle, stepMultiplier);
+                gamepadDecrementSpeed(whichThrottle, stepMultiplier);
                 gamepadRepeatUpdateHandler.postDelayed(new GamepadRptUpdater(whichThrottle, stepMultiplier), REP_DELAY);
             }
         }
@@ -5858,6 +6056,8 @@ public class ThrottleActivity extends AppCompatActivity implements
             mainapp.throttleSwitchAllowed = true;
             mainapp.displayThrottleSwitchMenuButton(overflowMenu);
         }, 6000);
+
+        mainapp.isSwitchingLayout = prefThrottleScreenType.contains(throttle_screen_type.CONTAINS_SWITCHING);
 
         //noinspection AssignmentToStaticFieldFromInstanceMethod
         threaded_application.currentActivity = activity_id_type.THROTTLE;
@@ -8393,5 +8593,43 @@ public class ThrottleActivity extends AppCompatActivity implements
         }
 
         return newSliderPosition;
+    }
+
+    protected int getGamepadAcceleratedSpeedChange(int whichThrottle, int stepMultiplier) {
+        return getGamepadAcceleratedSpeedChange(whichThrottle, prefGamePadSpeedButtonsSpeedStep, stepMultiplier);
+    }
+    protected int getGamepadAcceleratedSpeedChange(int whichThrottle, int speedChange, int stepMultiplier) {
+        if (mainapp.gamePadSpeedChangeAcceleration[whichThrottle] > 2)
+            speedChange = (mainapp.gamePadSpeedChangeAcceleration[whichThrottle]-1) * (mainapp.gamePadSpeedChangeAcceleration[whichThrottle]-1) * prefGamePadSpeedButtonsSpeedStep;
+        speedChange= speedChange * stepMultiplier;
+
+        threaded_application.extendedLogging(activityName + ": getGamepadAcceleratedSpeedChange(): speedChange " + speedChange + " gamePadSpeedChangeAcceleration: " + mainapp.gamePadSpeedChangeAcceleration[whichThrottle]);
+        return speedChange;
+    }
+
+    protected boolean isInGamepadDeadZone(int whichThrottle, int currentSpeed) {
+        boolean inDeadZone = false;
+        if (mainapp.isSwitchingLayout) { // the dead zone is not relevant to the non-switching layouts
+            if ((prefGamePadSpeedChangeDeadZoneSize > 0) && (currentSpeed == 0)) {
+                gamePadSpeedChangeDeadZoneCurrentCount[whichThrottle]--;
+                if (gamePadSpeedChangeDeadZoneCurrentCount[whichThrottle] > (prefGamePadSpeedChangeDeadZoneSize * -1)) { // still in the dead zone
+                    inDeadZone = true;
+                    mainapp.gamePadSpeedChangeAcceleration[whichThrottle] = 1;
+                }
+            } else {
+                gamePadSpeedChangeDeadZoneCurrentCount[whichThrottle] = 0;
+            }
+        }
+        return inDeadZone;
+    }
+
+    protected void checkGamepadSpeedChangeAcceleration (int whichThrottle) {
+        if (Calendar.getInstance().getTimeInMillis() <= (mainapp.gamePadSpeedChangeLastDownTime[whichThrottle] + prefGamePadSpeedChangeAccelerationPeriod) ) {
+            mainapp.gamePadSpeedChangeAcceleration[whichThrottle]++;
+            if (mainapp.gamePadSpeedChangeAcceleration[whichThrottle] > prefGamePadSpeedChangeAccelerationMaximum)
+                mainapp.gamePadSpeedChangeAcceleration[whichThrottle] = prefGamePadSpeedChangeAccelerationMaximum;
+        } else {
+            mainapp.gamePadSpeedChangeAcceleration[whichThrottle] = 1;
+        }
     }
 }

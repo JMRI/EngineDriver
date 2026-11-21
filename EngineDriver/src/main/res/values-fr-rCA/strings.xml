@@ -589,6 +589,8 @@
     <string name="prefGamepadTestEnforceTestingTitle">Vérification systématique des manettes de jeu</string>
     <string name="prefGamepadTestNowSummary">Permet de confirmer que les paramètres en place fonctionnent convenablement.\nLa page de vérification démarrera AUTOMATIQUEMENT la confirmation.</string>
     <string name="prefGamepadTestNowTitle">Confirmer les paramètres de la manette de jeu maintenant!</string>
+
+
     <string name="prefGamePadTitle">Préférences de la manette de jeu</string>
 
     <string name="prefGamePadTypeSummary">Sélectionner les options appropriées de votre manette de jeu.</string>

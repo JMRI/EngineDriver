@@ -32,7 +32,7 @@ public interface gamepad_or_keyboard_event_type {
     int DECREASE_SPEED               =  10;
 //    int DECREASE_SPEED_END           = 10;
     int NEXT_THROTTLE                = 11;
-//    int CHANGE_THROTTLE              = 12;
+    int CHANGE_THROTTLE              = 12;
     int SRT_NEUTRAL                  = 13;
     int SRT_BRAKE_INCREASE           = 14;
     int SRT_BRAKE_DECREASE           = 15;
@@ -64,4 +64,8 @@ public interface gamepad_or_keyboard_event_type {
     int POWER_DCCEX_TRACK_TOGGLE     = 39;
     int POWER_DCCEX_TRACK_ON         = 40;
     int POWER_DCCEX_TRACK_OFF        = 41;
+
+    int INCREASE_SPEED_BY           = 42;
+    int DECREASE_SPEED_BY           = 43;
+
 }

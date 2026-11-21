@@ -738,6 +738,52 @@ public class ThrottleActivityVerticalSwitching extends ThrottleActivity {
         return vsbSwitchingSpeeds[whichThrottle];
     }
 
+    // find the projected speed, but don't actually change the speed
+    @Override
+    int getProjectedSpeedAfterSpeedChange(int whichThrottle, int change) {
+
+        VerticalSeekBar switchingThrottleSlider = getSwitchingThrottleSlider(whichThrottle);
+        int lastSliderPosition = switchingThrottleSlider.getProgress();
+        int lastScaleSpeed;
+        int scaleSpeed;
+        int speed;
+
+        if (getDirection(whichThrottle)==direction_type.REVERSE) {  // treat negative as positive
+            change = change * -1;
+        }
+
+        lastScaleSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
+        scaleSpeed = lastScaleSpeed + change;
+
+        if ((lastScaleSpeed>0) && (scaleSpeed<0)) {   // force a zero speed at least once when changing directions
+            scaleSpeed = 0;
+        }
+
+        if (scaleSpeed<0) {
+            int dir = getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD;
+            dirs[whichThrottle] = dir;
+            setEngineDirection(whichThrottle, dir, false);
+            showDirectionIndication(whichThrottle, dir);
+        }
+
+        scaleSpeed = Math.abs(scaleSpeed);
+
+        int newSliderPosition = getNewSliderPositionFromSpeed(scaleSpeed, whichThrottle, true);
+
+        if (lastScaleSpeed == scaleSpeed) {
+            newSliderPosition += Math.round(Math.signum(change));
+        }
+
+        if (newSliderPosition < 0)  //insure speed is inside bounds
+            newSliderPosition = 0;
+
+        if (newSliderPosition > throttleSwitchingMax[whichThrottle])
+            newSliderPosition = throttleSwitchingMax[whichThrottle];
+
+        speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
+        return speed;
+
+    } // end getProjectedSpeedAfterSpeedChange
 
     // change speed slider by scaled display unit value
     @Override
@@ -779,6 +825,7 @@ public class ThrottleActivityVerticalSwitching extends ThrottleActivity {
 
         int newSliderPosition = getNewSliderPositionFromSpeed(scaleSpeed, whichThrottle, true);
 //        threaded_application.logging(activityName + ": speedChange(): newSliderPosition: " + newSliderPosition );
+
 
         if (lastScaleSpeed == scaleSpeed) {
             newSliderPosition += Math.round(Math.signum(change));

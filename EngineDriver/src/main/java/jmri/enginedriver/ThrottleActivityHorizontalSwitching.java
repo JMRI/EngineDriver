@@ -666,47 +666,30 @@ public class ThrottleActivityHorizontalSwitching extends ThrottleActivity {
         return hsbSwitchingSpeeds[whichThrottle];
     }
 
-
-    // change speed slider by scaled display unit value
+    // find the projected speed, but don't actually change the speed
     @Override
-    int speedChange(int whichThrottle, int change) {
+    int getProjectedSpeedAfterSpeedChange(int whichThrottle, int change) {
 
         HorizontalSeekBar switchingThrottleSlider = getSwitchingThrottleSlider(whichThrottle);
-//        double displayUnitScale = getDisplayUnitScale(whichThrottle);
         int lastSliderPosition = switchingThrottleSlider.getProgress();
         int lastScaleSpeed;
         int scaleSpeed;
         int speed;
-//        int lastSpeed;
 
         if (getDirection(whichThrottle)==direction_type.REVERSE) {  // treat negative as positive
             change = change * -1;
         }
-//        threaded_application.logging(activityName + ": speedChange(): change: " + change + " lastSliderPosition: " + lastSliderPosition);
 
         lastScaleSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
         scaleSpeed = lastScaleSpeed + change;
-//        lastSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, false);
 
-         if ((lastScaleSpeed>0) && (scaleSpeed<0)) {   // force a zero speed at least once when changing directions
-             scaleSpeed = 0;
-         }
-
-//        threaded_application.logging(activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
-        if (scaleSpeed<0) {
-            int dir = getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD;
-//            threaded_application.logging(activityName + ": speedChange(): - auto Reverse - dir:" + dir);
-            dirs[whichThrottle] = dir;
-            setEngineDirection(whichThrottle, dir, false);
-            showDirectionIndication(whichThrottle, dir);
+        if ((lastScaleSpeed>0) && (scaleSpeed<0)) {   // force a zero speed at least once when changing directions
+            scaleSpeed = 0;
         }
-//        threaded_application.logging(activityName + ": speedChange(): lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) );
-//        threaded_application.logging(activityName + ": speedChange(): change: " + change);
 
         scaleSpeed = Math.abs(scaleSpeed);
 
         int newSliderPosition = getNewSliderPositionFromSpeed(scaleSpeed, whichThrottle, true);
-//        threaded_application.logging(activityName + ": speedChange(): newSliderPosition: " + newSliderPosition );
 
         if (lastScaleSpeed == scaleSpeed) {
             newSliderPosition += Math.round(Math.signum(change));
@@ -718,15 +701,59 @@ public class ThrottleActivityHorizontalSwitching extends ThrottleActivity {
         if (newSliderPosition > throttleSwitchingMax[whichThrottle])
             newSliderPosition = throttleSwitchingMax[whichThrottle];
 
-//        threaded_application.logging(activityName + ": speedChange() - lastScaleSpeed: " + lastScaleSpeed + " scaleSpeed: " + scaleSpeed + " dir: " + getDirection(whichThrottle) + " newSliderPosition: " + newSliderPosition);
-//        threaded_application.logging(activityName + ": speedChange() - change: " + change);
+        speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
+
+        return speed;
+
+    } // end getProjectedSpeedAfterSpeedChange
+
+
+    // change speed slider by scaled display unit value
+    @Override
+    int speedChange(int whichThrottle, int change) {
+
+        HorizontalSeekBar switchingThrottleSlider = getSwitchingThrottleSlider(whichThrottle);
+        int lastSliderPosition = switchingThrottleSlider.getProgress();
+        int lastScaleSpeed;
+        int scaleSpeed;
+        int speed;
+
+        if (getDirection(whichThrottle)==direction_type.REVERSE) {  // treat negative as positive
+            change = change * -1;
+        }
+
+        lastScaleSpeed = getSpeedFromSliderPosition(lastSliderPosition, whichThrottle, true);
+        scaleSpeed = lastScaleSpeed + change;
+
+         if ((lastScaleSpeed>0) && (scaleSpeed<0)) {   // force a zero speed at least once when changing directions
+             scaleSpeed = 0;
+         }
+
+        if (scaleSpeed<0) {
+            int dir = getDirection(whichThrottle) == direction_type.FORWARD ? direction_type.REVERSE : direction_type.FORWARD;
+            dirs[whichThrottle] = dir;
+            setEngineDirection(whichThrottle, dir, false);
+            showDirectionIndication(whichThrottle, dir);
+        }
+
+        scaleSpeed = Math.abs(scaleSpeed);
+
+        int newSliderPosition = getNewSliderPositionFromSpeed(scaleSpeed, whichThrottle, true);
+
+        if (lastScaleSpeed == scaleSpeed) {
+            newSliderPosition += Math.round(Math.signum(change));
+        }
+
+        if (newSliderPosition < 0)  //insure speed is inside bounds
+            newSliderPosition = 0;
+
+        if (newSliderPosition > throttleSwitchingMax[whichThrottle])
+            newSliderPosition = throttleSwitchingMax[whichThrottle];
 
         switchingThrottleSlider.setProgress(newSliderPosition);
         speed = Math.abs(getSpeedFromSliderPosition(newSliderPosition, whichThrottle, false));
         setDisplayedSpeed(whichThrottle, speed);
         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
-
-//        threaded_application.logging(activityName + ": speedChange():  speed: " + speed + " change: " + change);
 
         if(ipls!=null) ipls.doLocoSound(whichThrottle, getSpeedFromCurrentSliderPosition(whichThrottle, false), dirs[whichThrottle], mainapp.soundsIsMuted[whichThrottle]);
 
@@ -819,7 +846,6 @@ public class ThrottleActivityHorizontalSwitching extends ThrottleActivity {
         } else { // zero - dead zone
             speed = 0;
         }
-//        threaded_application.logging(activityName + ": getSpeedFromSliderPosition():  scale: " + scale + " sliderPosition: " + sliderPosition + " speed: " + speed );
         return speed;
     }
 

@@ -49,6 +49,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.ToneGenerator;
+import android.media.audiofx.Equalizer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -462,6 +463,8 @@ public class threaded_application extends Application {
 
     public boolean webMenuSelected = false;  // used as an override for the auto-web code when the web menu is selected.
 
+    public boolean isSwitchingLayout = false;
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // volume button - more relevant to the built in encoder on the Alps M30
 
@@ -580,6 +583,7 @@ public class threaded_application extends Application {
 
     private ToneGenerator tg;
     protected MediaPlayer _mediaPlayer;
+    protected Equalizer _eq;
 
     public SoundPool soundPool;
 
@@ -658,6 +662,11 @@ public class threaded_application extends Application {
 
     // BT or USB keyboard
     public static Handler waitToSendUpUpdateHandler = new Handler(Looper.getMainLooper());
+
+    // one per throttle, not per gamepad
+    // needed for the encoders on programmable keyboards that can't replicate holding the key down
+    public long [] gamePadSpeedChangeLastDownTime = {-1, -1, -1, -1, -1, -1};
+    public int [] gamePadSpeedChangeAcceleration = {1, 1, 1, 1, 1, 1};
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
     // WiThrottle PoM
@@ -4204,8 +4213,9 @@ public class threaded_application extends Application {
 
     public int getVolumeAcceleratedSpeedChange(int prefVolumeSpeedButtonsSpeedStep) {
         int speedChange = prefVolumeSpeedButtonsSpeedStep;
-        if (volumeButtonAcceleration > 3) speedChange = (volumeButtonAcceleration-2) *  (volumeButtonAcceleration-2) * prefVolumeSpeedButtonsSpeedStep;
-        threaded_application.extendedLogging(activityName + ": doVolumeButtonAction(): speedChange " + speedChange);
+        if (volumeButtonAcceleration > 3)
+            speedChange = (volumeButtonAcceleration-2) *  (volumeButtonAcceleration-2) * prefVolumeSpeedButtonsSpeedStep;
+        threaded_application.extendedLogging(activityName + ": getVolumeAcceleratedSpeedChange(): speedChange " + speedChange);
         return speedChange;
     }
 }
