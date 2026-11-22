@@ -220,6 +220,11 @@ public class SelectLocoActivity extends AppCompatActivity {
             result -> {
                 threaded_application.logging(activityName + ": consistEditActivityLauncher callback received. ResultCode: " + result.getResultCode());
 
+                EditText locoAddress = findViewById(R.id.loco_address);
+                locoAddress.setText("");  // clear the loco address regardless of the outcome
+                char cWhichThrottle = (char) ('0' + whichThrottle);
+                sWhichThrottle = String.valueOf(cWhichThrottle);
+
                 int resultCode = result.getResultCode();
                 if ( (resultCode == Activity.RESULT_OK) || (resultCode >= RESULT_FIRST_USER) )  {
                     handleConsistEditActivityResult(result.getData(), resultCode);

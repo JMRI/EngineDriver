@@ -53,9 +53,6 @@ public class intro_alps extends Fragment {
     public void onStart() {
         threaded_application.logging(activityName + ": onStart()");
         super.onStart();
-//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-//        threaded_application.logging(activityName + ":");
-//        super.onActivityCreated(savedInstanceState);
 
         prefs = this.requireActivity().getSharedPreferences("jmri.enginedriver_preferences", 0);
 
@@ -78,19 +75,16 @@ public class intro_alps extends Fragment {
                     alpsYes = true;
                 }
                 if (alpsYes) {
+                    prefs.edit().putBoolean("prefDisableVolumeKeys", false).commit();
                     prefs.edit().putString("prefVolumeSpeedButtonsSpeedStep", "2");
                     prefs.edit().putString("prefVolumeAccelerationMaximum", "6");
                     prefs.edit().putString("prefVolumeAccelerationPeriod", "100");
                     prefs.edit().putString("prefToolbarButtonSize", toolbar_button_size_type.SMALL);
                     prefs.edit().putBoolean("prefDisplaySpeedButtons", true).commit();
                     prefs.edit().putString("prefThrottleScreenType", throttle_screen_type.VERTICAL_RIGHT).commit();
-//                    prefs.edit().putString("prefTheme", "Bronze").commit();
+                    prefs.edit().putString("prefVolumeDeadZoneSize", "4").commit();
+                    prefs.edit().putBoolean("prefVolumeKeysSounds", true).commit();
                 }
-//                prefs.edit().putBoolean("prefHideSlider", alpsYes).commit();
-//                prefs.edit().putBoolean("prefHideSliderAndSpeedButtons", alpsYes).commit();
-//                prefs.edit().putBoolean("prefHideFunctionButtonsOfNonSelectedThrottle", alpsYes).commit();
-//                prefs.edit().putBoolean("prefVolumeKeysFollowLastTouchedThrottleDefaultValue", alpsYes).commit();
-//                prefs.edit().putBoolean("prefDoubleBackButtonToExit", alpsYes).commit();
 
          }
         });

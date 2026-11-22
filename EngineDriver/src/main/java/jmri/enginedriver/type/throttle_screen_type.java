@@ -34,7 +34,7 @@ public interface throttle_screen_type {
     String TABLET_VERTICAL_LEFT_TWO_FUNCTION_COLUMNS     = "Tablet Vertical Left - two function columns";
     String SEMI_REALISTIC_LEFT      = "Semi Realistic Left";
 
-    String CONTAINS_VERTICAL        = "Vertical";
+//    String CONTAINS_VERTICAL        = "Vertical";
     String CONTAINS_SWITCHING       = "Switching";
     String CONTAINS_SEMI_REALISTIC  = "Semi Realistic";
 }

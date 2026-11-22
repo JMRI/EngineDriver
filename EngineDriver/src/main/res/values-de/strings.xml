@@ -188,6 +188,14 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Veränderung durch Geschwindigkeitsknöpfe</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Wie viel die Geschwindigkeit durch Lautstärkeknöpfe geändert wird.</string>
 
+    <string name="prefVolumeAccelerationMaximumSummary">Geschwindigkeitsstufenmultiplikator bei schnellem Drücken der Lautstärketaste. Besonders nützlich für Drehgeber.</string>
+    <string name="prefVolumeAccelerationMaximumTitle">Maximale Beschleunigung</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Zeitspanne zur Erkennung, ob die Lautstärketaste schnell gedrückt wird (in Millisekunden)</string>
+    <string name="prefVolumeAccelerationPeriodTitle">Beschleunigungsphase</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Tastaturbeschleunigungsperiode</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">Nur für Tastaturen. Nur die Befehle „Num *“ und „Num /“. Zeitspanne zur Erkennung schneller Tastendrücke (in Millisekunden).</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Beschleunigung der maximalen Tastaturgeschwindigkeit</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">Nur für Tastaturen. Nur für die Befehle „Num *“ und „Num /“. Geschwindigkeitsstufenmultiplikator bei schnellem Drücken der Lautstärketaste. Besonders nützlich für Drehgeber.</string>
     <string name="prefGamePadTitle">Voreinstellungen für Gamepad\/USB</string>
     <string name="prefGamePadSummary">Wähle den Gamepad\/USB Typ und andere Optionen</string>
     <string name="prefGamePadTypeTitle">Gamepad\/USB Typ</string>
@@ -360,6 +368,10 @@
     <string name="prefSelectedLocoIndicatorSummary">Zusätzliches Hervorheben des Knopfes für Lokauswahl basierend auf der Auswahlmethode.</string>
     <string name="prefDisableVolumeKeysTitle">Lautstärketasten ausschalten</string>
     <string name="prefDisableVolumeKeysSummary">Schaltet die Lautstärketasten des Telefons/Tablets aus, welche sonst Geschwindigkeit steuern. Hinweis: Wenn gewählt wird \'Zusätzlicher Indikator für gewählte Lok\' ignoriert.</string>
+    <string name="prefVolumeDeadZoneSizeSummary">Bei der Umschaltung von Gashebelanordnungen ist die Anzahl der Schritte nahe Null, die die Geschwindigkeit nicht verändern.</string>
+    <string name="prefVolumeKeysSoundsSummary">Töne mit maximaler und null Geschwindigkeit abspielen</string>
+    <string name="prefVolumeKeysSoundsTitle">Töne abspielen</string>
+    <string name="prefVolumeDeadZoneSizeTitle">Todeszone</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Lautstärketasten folgen Berührung</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Die Geschwindigkeitssteuerung mit Lautstärketasten folgt dem zuletzt berührten Fahrregler.</string>
     <string name="prefSpeedButtonsRepeatTitle">Wiederholungsverzögerung bei Geschwindigkeitsknöpfen</string>

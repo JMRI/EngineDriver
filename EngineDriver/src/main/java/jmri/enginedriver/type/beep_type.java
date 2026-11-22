@@ -24,4 +24,5 @@ public interface beep_type {
     int PAUSE_SPEED_END = 3;
     int ACK = 4;
     int NAK = 5;
+    int ZERO_SPEED = 6;  //deep
 }

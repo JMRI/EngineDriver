@@ -231,6 +231,14 @@
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Jak moc tlačítko hlasitosti posune rychlost ovladače.</string>
 
     <!--     Gamepad preferences  -->
+    <string name="prefVolumeAccelerationMaximumSummary">Násobitel kroku rychlosti, pokud je tlačítko hlasitosti stisknuto rychle. Nejužitečnější pro rotační enkodér.</string>
+    <string name="prefVolumeAccelerationMaximumTitle">Maximální zrychlení</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Doba pro rozpoznání rychlého stisknutí tlačítka hlasitosti (v milisekundách)</string>
+    <string name="prefVolumeAccelerationPeriodTitle">Období zrychlení</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Perioda zrychlení klávesnice</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">Pouze pro klávesnice. Pouze příkazy \'Num *\' a \'Num /\'. Tečka pro rozpoznání rychlého stisknutí tlačítka hlasitosti (v milisekundách)</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Maximální rychlost klávesnice Změna zrychlení</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">Pouze pro klávesnice. Pouze příkazy \'Num *\' a \'Num /\'. Násobitel kroku rychlosti, pokud je tlačítko hlasitosti stisknuto rychle. Nejužitečnější pro rotační enkodér.</string>
     <string name="prefGamePadTitle">Předvolby Gamepad\/USB</string>
     <string name="prefGamePadSummary">Zvolte typ Gamepad\/USB a ostatní volby</string>
     <string name="prefGamePadTypeTitle">Typ Gamepad\/USB</string>
@@ -463,6 +471,10 @@
     <string name="prefDisableVolumeKeysTitle">Zakázat klávesy hlasitost</string>
     <string name="prefDisableVolumeKeysSummary">Zakáže hardwarové klávesy hlasitost na telefonu/tabletu které jinak mohou řídit rychlost. Poznámka: Pokud je vybráno přepíše \'Doplňkový vybraný indikátor lokomotivy\'.</string>
 
+    <string name="prefVolumeDeadZoneSizeSummary">Pro přepínání rozložení škrticí klapky se jedná o počet kroků blízkých nule, které nezmění rychlost.</string>
+    <string name="prefVolumeKeysSoundsSummary">Přehrávání zvuků maximální a nulovou rychlostí</string>
+    <string name="prefVolumeKeysSoundsTitle">Přehrát zvuky</string>
+    <string name="prefVolumeDeadZoneSizeTitle">Mrtvá zóna</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Klávesy hlasitosti sledují Dotyk</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Klávesy hlasitosti ovládající rychlost budou sledovat poslední dotek ovladače.</string>
 

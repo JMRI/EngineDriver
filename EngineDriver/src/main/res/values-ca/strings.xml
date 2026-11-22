@@ -190,6 +190,14 @@
     <string name="prefVolumeSpeedButtonsSpeedStepTitle">Quantitat a modificar la velocitat al prèmer la tecla</string>
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">Quantitat a modificar la velocitat amb les tecles de volum</string>
 
+    <string name="prefVolumeAccelerationMaximumSummary">Multiplicador de velocitat si es prem ràpidament el botó de volum. Més útil per a un codificador rotatiu.</string>
+    <string name="prefVolumeAccelerationMaximumTitle">Acceleració màxima</string>
+    <string name="prefVolumeAccelerationPeriodSummary">Període per reconèixer si es prem ràpidament el botó de volum (en mil·lisegons)</string>
+    <string name="prefVolumeAccelerationPeriodTitle">Període d\'acceleració</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">Període d\'acceleració del teclat</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">Només per a teclats. Només les ordres \'Num *\' i \'Num /\'. Període per reconèixer si es prem el botó de volum ràpidament (en mil·lisegons).</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">Acceleració del canvi de velocitat màxima del teclat</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">Només per a teclats. Només les ordres \'Num *\' i \'Num /\'. Multiplicador de passos de velocitat si es prem ràpidament el botó de volum. Més útil per a un codificador rotatiu.</string>
     <string name="prefGamePadTitle">Preferències de gamepad\/USB</string>
     <string name="prefGamePadSummary">Escull tipus de gamepad\/USB i altres opcions</string>
     <string name="prefGamePadTypeTitle">Tipus de gamepad\/USB</string>
@@ -369,6 +377,10 @@
 
     <string name="prefDisableVolumeKeysTitle">Deshabilita les tecles de volum</string>
     <string name="prefDisableVolumeKeysSummary">Deshabilita les tecles físiques de volum del telèfon/tablet per a el control de velocitat. Nota: si es selecciona sobreescriu \'Indicador de Locomotora addicional seleccionada\'.</string>
+    <string name="prefVolumeDeadZoneSizeSummary">Per canviar la disposició de l\'accelerador, el nombre de passos propers a zero que no canviaran la velocitat.</string>
+    <string name="prefVolumeKeysSoundsSummary">Reprodueix sons a velocitat màxima i zero</string>
+    <string name="prefVolumeKeysSoundsTitle">Reprodueix sons</string>
+    <string name="prefVolumeDeadZoneSizeTitle">Zona morta</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">Tecles de volum segueixen el Toc</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">Las tecles de Volum per al control de velocitat han de seguir l\'últim Controlador tocat</string>
     <string name="prefSpeedButtonsRepeatTitle">Retard de repetició de la tecla de velocitat</string>

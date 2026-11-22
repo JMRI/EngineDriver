@@ -1713,6 +1713,15 @@
                     android:summary="@string/prefVolumeAccelerationPeriodSummary"
                     android:title="@string/prefVolumeAccelerationPeriodTitle" />
 
+                <EditTextPreference
+                    android:defaultValue="@string/prefVolumeDeadZoneSizeDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
+                    android:dialogTitle="@string/prefVolumeDeadZoneSizeTitle"
+                    android:key="prefVolumeDeadZoneSize"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefVolumeDeadZoneSizeSummary"
+                    android:title="@string/prefVolumeDeadZoneSizeTitle" />
+
                 <SwitchPreferenceCompat
                     android:defaultValue="@bool/prefDisableVolumeKeysDefaultValue"
                     android:key="prefDisableVolumeKeys"
@@ -1989,6 +1998,34 @@
                     android:layout="@layout/preference_item_switch_no_icon"
                     android:summary="@string/prefGamePadIgnoreJoystickSummary"
                     android:title="@string/prefGamePadIgnoreJoystickTitle" />
+
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefGamePadSpeedChangeAccelerationMaximumDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
+                    android:dialogTitle="@string/prefGamePadSpeedChangeAccelerationMaximumTitle"
+                    android:key="prefGamePadSpeedChangeAccelerationMaximum"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefGamePadSpeedChangeAccelerationMaximumSummary"
+                    android:title="@string/prefGamePadSpeedChangeAccelerationMaximumTitle" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefGamePadSpeedChangeAccelerationPeriodDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_3"
+                    android:dialogTitle="@string/prefGamePadSpeedChangeAccelerationPeriodTitle"
+                    android:key="prefGamePadSpeedChangeAccelerationPeriod"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefGamePadSpeedChangeAccelerationPeriodSummary"
+                    android:title="@string/prefGamePadSpeedChangeAccelerationPeriodTitle" />
+
+                <EditTextPreference
+                    android:defaultValue="@string/prefGamePadSpeedChangeDeadZoneSizeDefaultValue"
+                    android:dialogLayout="@layout/preference_dialog_layout_number_unsigned_integer_length_2"
+                    android:dialogTitle="@string/prefGamePadSpeedChangeDeadZoneSizeTitle"
+                    android:key="prefGamePadSpeedChangeDeadZoneSize"
+                    android:layout="@layout/preference_item_common_no_icon"
+                    android:summary="@string/prefGamePadSpeedChangeDeadZoneSizeSummary"
+                    android:title="@string/prefGamePadSpeedChangeDeadZoneSizeTitle" />
 
             </PreferenceCategory>
 

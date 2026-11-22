@@ -246,6 +246,14 @@
     <string name="prefVolumeSpeedButtonsSpeedStepSummary">音量按钮调整控制器速度的幅度</string>
 
     <!--     Gamepad preferences  -->
+    <string name="prefVolumeAccelerationMaximumSummary">快速按下音量按钮时，速度步进倍增器会启动。这对于旋转编码器最为有用。</string>
+    <string name="prefVolumeAccelerationMaximumTitle">最大加速度</string>
+    <string name="prefVolumeAccelerationPeriodSummary">识别音量按钮是否被快速按下的周期（以毫秒为单位）</string>
+    <string name="prefVolumeAccelerationPeriodTitle">加速期</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodTitle">键盘加速期</string>
+    <string name="prefGamePadSpeedChangeAccelerationPeriodSummary">仅适用于键盘。“Num *”和“Num /”命令。句点用于识别音量按钮是否被快速按下（以毫秒为单位）。</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumTitle">键盘最大速度变化加速度</string>
+    <string name="prefGamePadSpeedChangeAccelerationMaximumSummary">仅适用于键盘。“Num *”和“Num /”命令。快速按下音量按钮时，速度步进倍增器生效。最适用于旋转编码器。</string>
     <string name="prefGamePadTitle">游戏手柄\/USB偏好设置</string>
     <string name="prefGamePadSummary">选择游戏手柄\/USB类型及相关选项</string>
     <string name="prefGamePadTypeTitle">游戏手柄\/USB类型</string>
@@ -497,6 +505,10 @@
     <string name="prefDisableVolumeKeysTitle">禁用音量键？</string>
     <string name="prefDisableVolumeKeysSummary">禁用手机/平板上原本用于控制速度的硬件音量键</string>
 
+    <string name="prefVolumeDeadZoneSizeSummary">对于切换油门布局，接近零的步数不会改变速度。</string>
+    <string name="prefVolumeKeysSoundsSummary">以最大速度和零速度播放声音</string>
+    <string name="prefVolumeKeysSoundsTitle">播放声音</string>
+    <string name="prefVolumeDeadZoneSizeTitle">死区</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleTitle">音量键跟随触控</string>
     <string name="prefVolumeKeysFollowLastTouchedThrottleSummary">音量键速度控制将跟随最后触摸的控制器</string>
 
