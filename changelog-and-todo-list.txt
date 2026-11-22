@@ -14,6 +14,7 @@
       * ESU MC II, semi-realistic layout: a speed report for one throttle could move the slider, target speed and knob of the throttle with the knob.
       * DCC-EX over UDP: one response that could not be processed stopped all later responses. Also, the second of two commands in one packet was lost.
       * Phones set to Turkish or Azerbaijani: function labels, consist function following and some name checks did not match (e.g. 'Light' became 'LİGHT').
+      * Bug fix for the 'return' from the consist edit page
 * Other
       * DCC-EX: each loco broadcast now updates only the functions that changed, rather than all 32, and long lists (roster, turnouts) are split much faster.
       * added 'NUCLEO' to the DCC-EX server types that show the 'Web' menu option
