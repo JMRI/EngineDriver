@@ -1,0 +1,87 @@
+# Builds the debug APK and runs Android lint for every pull request and every push to master.
+# For a pull request it also lints the branch the PR is going into, and fails only if the PR
+# adds lint issues; the issues already in master don't fail it. The debug APK and the lint
+# report are kept with each run for 14 days, for anyone to download and try.
+name: Build and lint
+
+on:
+  pull_request:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  GRADLE_ARGS: --console=plain -Dorg.gradle.jvmargs=-Xmx4g
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic   # the open-source (MIT) cache, not the proprietary default
+
+      - name: Build the debug APK
+        run: ./gradlew assembleDebug $GRADLE_ARGS
+
+      - name: Lint
+        run: ./gradlew lintDebug $GRADLE_ARGS
+
+      - name: Keep the debug APK
+        uses: actions/upload-artifact@v7
+        with:
+          name: EngineDriver-debug-apk
+          path: EngineDriver/build/outputs/apk/debug/*.apk
+          retention-days: 14
+
+      - name: Keep the lint report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lint-report
+          path: EngineDriver/build/reports/lint-results-debug.*
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Check out the base branch, to compare lint
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+
+      - name: Lint the base branch
+        if: github.event_name == 'pull_request'
+        working-directory: base
+        run: ./gradlew lintDebug $GRADLE_ARGS
+
+      - name: Compare lint with the base branch
+        if: github.event_name == 'pull_request'
+        run: >-
+          python3 .github/scripts/compare_lint.py "$GITHUB_STEP_SUMMARY"
+          EngineDriver/build/reports/lint-results-debug.xml .
+          base/EngineDriver/build/reports/lint-results-debug.xml base
+
+      - name: Summarise lint
+        if: github.event_name != 'pull_request'
+        run: >-
+          python3 .github/scripts/compare_lint.py "$GITHUB_STEP_SUMMARY"
+          EngineDriver/build/reports/lint-results-debug.xml .
